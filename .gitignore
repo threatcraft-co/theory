@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+venv/
+.env
+
+# API keys / config with secrets
+config/sources.yaml
+
+# macOS
+.DS_Store
+
+# Output files (optional - remove this if you want dossiers committed)
+# output/dossiers/
