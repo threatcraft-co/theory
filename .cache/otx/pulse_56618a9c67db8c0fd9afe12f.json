@@ -1,0 +1,40 @@
+{
+  "id": "56618a9c67db8c0fd9afe12f",
+  "name": "Sofacy APT hits high profile targets with updated toolset",
+  "description": "Sofacy (also known as \u201cFancy Bear\u201d, \u201cSednit\u201d, \u201cSTRONTIUM\u201d and \u201cAPT28\u201d) is an advanced threat group that has been active since around 2008, targeting mostly military and government entities worldwide, with a focus on NATO countries. More recently, we have also seen an increase in activity targeting Ukraine.",
+  "author_name": "CyberAnarchist",
+  "modified": "2015-12-04T12:44:12.220000",
+  "created": "2015-12-04T12:44:12.220000",
+  "tags": [
+    "sofacy",
+    "azzy",
+    "windows",
+    "may",
+    "appdata",
+    "carberp",
+    "coreshell",
+    "microsoft office"
+  ],
+  "references": [
+    "https://securelist.com/blog/research/72924/sofacy-apt-hits-high-profile-targets-with-updated-toolset/"
+  ],
+  "public": 1,
+  "adversary": null,
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "white",
+  "indicators": [],
+  "revision": 1,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "CyberAnarchist",
+    "id": "2064",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/CyberAnarchist/resized/80/doom_tron_by_enymy-d34uztq.jpg",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

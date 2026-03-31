@@ -1,0 +1,49 @@
+{
+  "technique_id": "T1056.001",
+  "cached_at": "2026-03-31T04:55:34.843341+00:00",
+  "rules": [
+    {
+      "title": "Linux Keylogging with Pam.d",
+      "status": "test",
+      "level": "high",
+      "logsource": "auditd / linux",
+      "condition_summary": "1 of selection_*",
+      "description": "Detect attempt to enable auditing of TTY input",
+      "tags": [
+        "attack.collection",
+        "attack.credential-access",
+        "attack.t1003",
+        "attack.t1056.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/linux/auditd/lnx_auditd_keylogging_with_pam_d.yml"
+    },
+    {
+      "title": "Powershell Keylogging",
+      "status": "test",
+      "level": "medium",
+      "logsource": "ps_script / windows",
+      "condition_summary": "1 of selection_*",
+      "description": "Adversaries may log user keystrokes to intercept credentials as the user types them.",
+      "tags": [
+        "attack.credential-access",
+        "attack.collection",
+        "attack.t1056.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/powershell/powershell_script/posh_ps_keylogging.yml"
+    },
+    {
+      "title": "Potential Keylogger Activity",
+      "status": "test",
+      "level": "medium",
+      "logsource": "ps_script / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects PowerShell scripts that contains reference to keystroke capturing functions",
+      "tags": [
+        "attack.collection",
+        "attack.credential-access",
+        "attack.t1056.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/powershell/powershell_script/posh_ps_susp_keylogger_activity.yml"
+    }
+  ]
+}

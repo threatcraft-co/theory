@@ -1,0 +1,32 @@
+{
+  "technique_id": "T1030",
+  "cached_at": "2026-03-31T05:01:21.129528+00:00",
+  "rules": [
+    {
+      "title": "Split A File Into Pieces - Linux",
+      "status": "test",
+      "level": "low",
+      "logsource": "auditd / linux",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detection use of the command \"split\" to split files into parts and possible transfer.",
+      "tags": [
+        "attack.exfiltration",
+        "attack.t1030"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/linux/auditd/syscall/lnx_auditd_split_file_into_pieces.yml"
+    },
+    {
+      "title": "Split A File Into Pieces",
+      "status": "test",
+      "level": "low",
+      "logsource": "process_creation / macos",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detection use of the command \"split\" to split files into parts and possible transfer.",
+      "tags": [
+        "attack.exfiltration",
+        "attack.t1030"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/macos/process_creation/proc_creation_macos_split_file_into_pieces.yml"
+    }
+  ]
+}

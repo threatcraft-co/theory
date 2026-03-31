@@ -1,0 +1,19 @@
+{
+  "technique_id": "T1014",
+  "cached_at": "2026-03-31T05:00:57.160949+00:00",
+  "rules": [
+    {
+      "title": "Triple Cross eBPF Rootkit Install Commands",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / linux",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects default install commands of the Triple Cross eBPF rootkit based on the \"deployer.sh\" script",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1014"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/linux/process_creation/proc_creation_lnx_triple_cross_rootkit_install.yml"
+    }
+  ]
+}

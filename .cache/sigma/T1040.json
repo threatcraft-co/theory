@@ -1,0 +1,76 @@
+{
+  "technique_id": "T1040",
+  "cached_at": "2026-03-31T05:02:07.061999+00:00",
+  "rules": [
+    {
+      "title": "Cisco Sniffing",
+      "status": "test",
+      "level": "medium",
+      "logsource": "aaa / cisco",
+      "condition_summary": "keywords",
+      "description": "Show when a monitor or a span/rspan is setup or modified",
+      "tags": [
+        "attack.credential-access",
+        "attack.discovery",
+        "attack.t1040"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/network/cisco/aaa/cisco_cli_net_sniff.yml"
+    },
+    {
+      "title": "Network Sniffing - Linux",
+      "status": "test",
+      "level": "low",
+      "logsource": "auditd / linux",
+      "condition_summary": "1 of selection_*",
+      "description": "|",
+      "tags": [
+        "attack.credential-access",
+        "attack.discovery",
+        "attack.t1040"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/linux/auditd/execve/lnx_auditd_network_sniffing.yml"
+    },
+    {
+      "title": "Windows Pcap Drivers",
+      "status": "test",
+      "level": "medium",
+      "logsource": "security / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects Windows Pcap driver installation based on a list of associated .sys files.",
+      "tags": [
+        "attack.discovery",
+        "attack.credential-access",
+        "attack.t1040"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/security/win_security_pcap_drivers.yml"
+    },
+    {
+      "title": "Network Sniffing - MacOs",
+      "status": "test",
+      "level": "informational",
+      "logsource": "process_creation / macos",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.discovery",
+        "attack.credential-access",
+        "attack.t1040"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/macos/process_creation/proc_creation_macos_network_sniffing.yml"
+    },
+    {
+      "title": "PktMon.EXE Execution",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects execution of PktMon, a tool that captures network packets.",
+      "tags": [
+        "attack.discovery",
+        "attack.credential-access",
+        "attack.t1040"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_pktmon_execution.yml"
+    }
+  ]
+}

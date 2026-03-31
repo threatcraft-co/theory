@@ -1,0 +1,95 @@
+{
+  "technique_id": "T1078.004",
+  "cached_at": "2026-03-31T04:58:51.820758+00:00",
+  "rules": [
+    {
+      "title": "Temporary Access Pass Added To An Account",
+      "status": "test",
+      "level": "high",
+      "logsource": "auditlogs / azure",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects when a temporary access pass (TAP) is added to an account. TAPs added to priv accounts should be investigated",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.initial-access",
+        "attack.defense-evasion",
+        "attack.persistence",
+        "attack.t1078.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/cloud/azure/audit_logs/azure_tap_added.yml"
+    },
+    {
+      "title": "AWS IAM S3Browser LoginProfile Creation",
+      "status": "test",
+      "level": "high",
+      "logsource": "cloudtrail / aws",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects S3 Browser utility performing reconnaissance looking for existing IAM Users without a LoginProfile defined then (when found) creating a LoginProfile.",
+      "tags": [
+        "attack.execution",
+        "attack.persistence",
+        "attack.defense-evasion",
+        "attack.initial-access",
+        "attack.privilege-escalation",
+        "attack.t1059.009",
+        "attack.t1078.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/cloud/aws/cloudtrail/aws_iam_s3browser_loginprofile_creation.yml"
+    },
+    {
+      "title": "Multifactor Authentication Interrupted",
+      "status": "test",
+      "level": "medium",
+      "logsource": "signinlogs / azure",
+      "condition_summary": "1 of selection_*",
+      "description": "Identifies user login with multifactor authentication failures, which might be an indication an attacker has the password for the account but can't pass the MFA challenge.",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.persistence",
+        "attack.defense-evasion",
+        "attack.initial-access",
+        "attack.credential-access",
+        "attack.t1078.004",
+        "attack.t1110",
+        "attack.t1621"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/cloud/azure/signin_logs/azure_mfa_interrupted.yml"
+    },
+    {
+      "title": "Multifactor Authentication Denied",
+      "status": "test",
+      "level": "medium",
+      "logsource": "signinlogs / azure",
+      "condition_summary": "selection exclusion filter",
+      "description": "User has indicated they haven't instigated the MFA prompt and could indicate an attacker has the password for the account.",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.persistence",
+        "attack.defense-evasion",
+        "attack.initial-access",
+        "attack.credential-access",
+        "attack.t1078.004",
+        "attack.t1110",
+        "attack.t1621"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/cloud/azure/signin_logs/azure_mfa_denies.yml"
+    },
+    {
+      "title": "Password Reset By User Account",
+      "status": "test",
+      "level": "medium",
+      "logsource": "auditlogs / azure",
+      "condition_summary": "selection exclusion filter and exclusion filter",
+      "description": "Detect when a user has reset their password in Azure AD",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.initial-access",
+        "attack.defense-evasion",
+        "attack.persistence",
+        "attack.credential-access",
+        "attack.t1078.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/cloud/azure/audit_logs/azure_user_password_change.yml"
+    }
+  ]
+}

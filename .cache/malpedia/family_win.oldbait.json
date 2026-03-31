@@ -1,0 +1,24 @@
+{
+  "urls": [
+    "https://www.mandiant.com/sites/default/files/2021-09/APT28-Center-of-Storm-2017.pdf",
+    "https://www.secjuice.com/fancy-bear-review/",
+    "https://www2.fireeye.com/rs/fireye/images/rpt-apt28.pdf"
+  ],
+  "uuid": "b79a6b61-f122-4823-a4ab-bbab89fcaf75",
+  "notes": [],
+  "sources": [],
+  "updated": "2022-05-04",
+  "alt_names": [
+    "Sasfis"
+  ],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "OLDBAIT",
+  "description": "According to FireEye, OLDBAIT is a credential stealer that has been observed to be used by APT28.\r\nIt targets Internet Explorer, Mozilla Firefox, Eudora, The Bat! (an email client by a Moldovan company), and Becky! (an email client made by a Japanese company). It can use both HTTP or SMTP to exfiltrate data.\r\nIn some places it is mistakenly named \"Sasfis\", which however seems to be a completely different and unrelated malware family.",
+  "library_entries": [
+    "fireeye:2014:apt28:277f9ab",
+    "intelligence:20170110:apt28:2f371ee",
+    "secjuice:20180826:remember:d5f1006"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "technique_id": "T1119",
+  "cached_at": "2026-03-31T04:58:43.377876+00:00",
+  "rules": [
+    {
+      "title": "Recon Information for Export with Command Prompt",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection exclusion filter*",
+      "description": "Once established within a system or network, an adversary may use automated techniques for collecting internal data.",
+      "tags": [
+        "attack.collection",
+        "attack.t1119"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_susp_recon.yml"
+    },
+    {
+      "title": "Automated Collection Command Prompt",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection_ext and 1 of selection_other_*",
+      "description": "Once established within a system or network, an adversary may use automated techniques for collecting internal data.",
+      "tags": [
+        "attack.collection",
+        "attack.t1119",
+        "attack.credential-access",
+        "attack.t1552.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_susp_automated_collection.yml"
+    },
+    {
+      "title": "Automated Collection Command PowerShell",
+      "status": "test",
+      "level": "medium",
+      "logsource": "ps_script / windows",
+      "condition_summary": "all of selection exclusion filter*",
+      "description": "Once established within a system or network, an adversary may use automated techniques for collecting internal data.",
+      "tags": [
+        "attack.collection",
+        "attack.t1119"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/powershell/powershell_script/posh_ps_automated_collection.yml"
+    },
+    {
+      "title": "Recon Information for Export with PowerShell",
+      "status": "test",
+      "level": "medium",
+      "logsource": "ps_script / windows",
+      "condition_summary": "all of selection exclusion filter*",
+      "description": "Once established within a system or network, an adversary may use automated techniques for collecting internal data",
+      "tags": [
+        "attack.collection",
+        "attack.t1119"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/powershell/powershell_script/posh_ps_susp_recon_export.yml"
+    }
+  ]
+}

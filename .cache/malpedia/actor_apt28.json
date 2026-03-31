@@ -1,0 +1,1418 @@
+{
+  "families": {
+    "apk.popr-d30": {
+      "urls": [
+        "http://blog.crysys.hu/2017/01/technical-details-on-the-fancy-bear-android-malware-poprd30-apk/",
+        "http://blog.crysys.hu/2017/03/update-on-the-fancy-bear-android-malware-poprd30-apk/"
+      ],
+      "uuid": "0a7d9d22-a26d-4a2b-ab9b-b296176c3ecf",
+      "notes": [],
+      "sources": [],
+      "updated": "2017-01-09",
+      "alt_names": [
+        "Popr-d30"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "X-Agent",
+      "description": "",
+      "library_entries": [
+        "bencsath:20170103:technical:1c2e81e",
+        "bencsath:20170302:update:0e03ee6"
+      ]
+    },
+    "ios.xagent": {
+      "urls": [
+        "https://blog.trendmicro.com/trendlabs-security-intelligence/pawn-storm-update-ios-espionage-app-found/",
+        "https://www.secureworks.com/research/threat-profiles/iron-twilight"
+      ],
+      "uuid": "430b9f30-5e37-49c8-b4e7-21589f120d89",
+      "notes": [],
+      "sources": [],
+      "updated": "2020-05-23",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "X-Agent",
+      "description": "",
+      "library_entries": [
+        "secureworks:2020:iron:48c68a0",
+        "sun:20150204:pawn:58d080c"
+      ]
+    },
+    "osx.komplex": {
+      "urls": [
+        "http://researchcenter.paloaltonetworks.com/2016/09/unit42-sofacys-komplex-os-x-trojan/",
+        "https://objective-see.com/blog/blog_0x16.html",
+        "https://blog.malwarebytes.com/threat-analysis/2016/09/komplex-mac-backdoor-answers-old-questions/",
+        "https://contagiodump.blogspot.de/2017/02/russian-apt-apt28-collection-of-samples.html",
+        "http://www.welivesecurity.com/wp-content/uploads/2016/10/eset-sednit-part1.pdf"
+      ],
+      "uuid": "d26b5518-8d7f-41a6-b539-231e4962853e",
+      "notes": [],
+      "sources": [],
+      "updated": "2017-02-15",
+      "alt_names": [
+        "SedUploader",
+        "JHUHUGIT",
+        "JKEYSKW"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Komplex",
+      "description": "",
+      "library_entries": [
+        "creus:20160926:sofacys:2c11dc9",
+        "parkour:20170220:part:c54b5de",
+        "reed:20160927:komplex:0cd401d",
+        "research:201608:en:0617083",
+        "wardle:20170101:mac:8c2d52b"
+      ]
+    },
+    "osx.xagent": {
+      "urls": [
+        "http://researchcenter.paloaltonetworks.com/2017/02/unit42-xagentosx-sofacys-xagent-macos-tool/",
+        "https://download.bitdefender.com/resources/files/News/CaseStudies/study/143/Bitdefender-Whitepaper-APT-Mac-A4-en-EN-web.pdf",
+        "https://twitter.com/PhysicalDrive0/status/845009226388918273",
+        "https://www.secureworks.com/research/threat-profiles/iron-twilight"
+      ],
+      "uuid": "858f4396-8bc9-4df8-9370-490bbb3b4535",
+      "notes": [],
+      "sources": [],
+      "updated": "2020-05-23",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "X-Agent",
+      "description": "",
+      "library_entries": [
+        "bitdefender:20170221:dissecting:eec4e1f",
+        "falcone:20170214:xagentosx:33ef060",
+        "physicaldrive0:20170323:xagent:74f4c95",
+        "secureworks:2020:iron:48c68a0"
+      ]
+    },
+    "win.arguepatch": {
+      "urls": [
+        "https://www.mandiant.com/resources/blog/gru-rise-telegram-minions",
+        "https://www.welivesecurity.com/2022/04/12/industroyer2-industroyer-reloaded/"
+      ],
+      "uuid": "e9b4bec3-ad18-49cc-b6af-c0ffcc283153",
+      "notes": [],
+      "sources": [],
+      "updated": "2022-09-26",
+      "alt_names": [],
+      "attribution": [
+        "APT28",
+        "Sandworm"
+      ],
+      "common_name": "ArguePatch",
+      "description": "During a campaign against a Ukrainian energy provider, a new loader of a new version of CaddyWiper called \"ArguePatch\" was observed by ESET researchers. ArguePatch is a modified version of Hex-Ray's Remote Debugger Server (win32_remote.exe).\r\nArguePatch expects a decryption key and the file of the CaddyWiper shellcode as command line parameters.",
+      "library_entries": [
+        "intelligence:20220923:gru:511ea47",
+        "research:20220412:industroyer2:4d6c5f8"
+      ]
+    },
+    "win.cannon": {
+      "urls": [
+        "https://researchcenter.paloaltonetworks.com/2018/11/unit42-sofacy-continues-global-attacks-wheels-new-cannon-trojan/",
+        "https://unit42.paloaltonetworks.com/atoms/fighting-ursa/",
+        "https://www.vkremez.com/2018/11/lets-learn-in-depth-on-sofacy-canon.html"
+      ],
+      "uuid": "3fada5b6-0b3d-4b83-97c9-2157c959704c",
+      "notes": [],
+      "sources": [],
+      "updated": "2022-07-29",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Cannon",
+      "description": "",
+      "library_entries": [
+        "42:20220718:fighting:865c81e",
+        "falcone:20181120:sofacy:b1ef88a",
+        "kremez:20181127:lets:e9928d7"
+      ]
+    },
+    "win.driveocean": {
+      "urls": [
+        "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2023-CTI-009.pdf",
+        "https://www.trendmicro.com/en_us/research/20/l/pawn-storm-lack-of-sophistication-as-a-strategy.html"
+      ],
+      "uuid": "730a4e94-4f9b-4f34-a1f3-1c97d341332c",
+      "notes": [],
+      "sources": [],
+      "updated": "2023-11-14",
+      "alt_names": [
+        "Google Drive RAT"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "DriveOcean",
+      "description": "Communicates via Google Drive.",
+      "library_entries": [
+        "anssi:20231026:attack:c121d4d",
+        "hacquebord:20201217:pawn:0e42861"
+      ]
+    },
+    "win.unidentified_114": {
+      "urls": [
+        "https://www.trendmicro.com/en_us/research/24/a/pawn-storm-uses-brute-force-and-stealth.html"
+      ],
+      "uuid": "1f59adb5-43e1-438b-b1c0-18af13ee3b12",
+      "notes": [],
+      "sources": [],
+      "updated": "2024-02-02",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Unidentified 114 (APT28 InfoStealer)",
+      "description": "According to Trend Micro, this is a small information stealer written in .NET, that pushes its loot to a benign file sharing service and does not have a direct C&C callback.",
+      "library_entries": [
+        "hacquebord:20240131:pawn:876f2e6"
+      ]
+    },
+    "win.xp_privesc": {
+      "urls": [
+        "https://download.bitdefender.com/resources/media/materials/white-papers/en/Bitdefender_In-depth_analysis_of_APT28%E2%80%93The_Political_Cyber-Espionage.pdf"
+      ],
+      "uuid": "33f97c52-0bcd-43f4-88bb-99e7da9f49ae",
+      "notes": [],
+      "sources": [],
+      "updated": "2017-02-15",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "XP PrivEsc (CVE-2014-4076)",
+      "description": "",
+      "library_entries": [
+        "bitdefender:20151217:apt28:fca586f"
+      ]
+    },
+    "win.xtunnel_net": {
+      "urls": [
+        "https://www.ncsc.gov.uk/alerts/indicators-compromise-malware-used-apt28"
+      ],
+      "uuid": "000e25a4-4623-4afc-883d-ecc15be8f9d0",
+      "notes": [],
+      "sources": [],
+      "updated": "2018-10-24",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "X-Tunnel (.NET)",
+      "description": "This is a rewrite of win.xtunnel using the .NET framework that surfaced late 2017.",
+      "library_entries": [
+        "uk:20181004:indicators:65560f3"
+      ]
+    },
+    "elf.xagent": {
+      "urls": [
+        "http://researchcenter.paloaltonetworks.com/2016/02/a-look-into-fysbis-sofacys-linux-backdoor/",
+        "http://www.welivesecurity.com/wp-content/uploads/2016/10/eset-sednit-part-2.pdf",
+        "https://contagiodump.blogspot.de/2017/02/russian-apt-apt28-collection-of-samples.html",
+        "https://download.bitdefender.com/resources/media/materials/white-papers/en/Bitdefender_In-depth_analysis_of_APT28%E2%80%93The_Political_Cyber-Espionage.pdf",
+        "https://securelist.com/a-slice-of-2017-sofacy-activity/83930/",
+        "https://securelist.com/an-overview-of-targeted-attacks-and-apts-on-linux/98440/",
+        "https://unit42.paloaltonetworks.com/a-look-into-fysbis-sofacys-linux-backdoor/",
+        "https://www.crowdstrike.com/blog/bears-midst-intrusion-democratic-national-committee/",
+        "https://www.secureworks.com/research/threat-profiles/iron-twilight"
+      ],
+      "uuid": "a8404a31-968a-47e8-8434-533ceaf84c1f",
+      "notes": [],
+      "sources": [],
+      "updated": "2024-07-10",
+      "alt_names": [
+        "splm",
+        "chopstick",
+        "fysbis"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "X-Agent",
+      "description": "",
+      "library_entries": [
+        "alperovitch:20160615:bears:604c1d9",
+        "bitdefender:20151217:apt28:fca586f",
+        "great:20180220:slice:0f910f7",
+        "great:20200910:overview:f751b73",
+        "lee:20160212:look:1483b5a",
+        "lee:20160212:look:4113ea1",
+        "parkour:20170220:part:c54b5de",
+        "research:20161020:en:e2e6603",
+        "secureworks:2020:iron:48c68a0"
+      ]
+    },
+    "win.zebrocy_au3": {
+      "urls": [
+        "https://securelist.com/a-slice-of-2017-sofacy-activity/83930/",
+        "https://www.secureworks.com/research/threat-profiles/iron-twilight",
+        "https://www.welivesecurity.com/2018/04/24/sednit-update-analysis-zebrocy/"
+      ],
+      "uuid": "4a5f2088-18cb-426a-92e2-1eb752c294c0",
+      "notes": [],
+      "sources": [],
+      "updated": "2024-07-10",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Zebrocy (AutoIT)",
+      "description": "",
+      "library_entries": [
+        "great:20180220:slice:0f910f7",
+        "research:20180424:sednit:ab398cd",
+        "secureworks:2020:iron:48c68a0"
+      ]
+    },
+    "win.lojax": {
+      "urls": [
+        "https://blogs.vmware.com/security/2021/06/detecting-uefi-bootkits-in-the-wild-part-1.html",
+        "https://habr.com/ru/amp/post/668154/",
+        "https://symantec-blogs.broadcom.com/blogs/election-security/apt28-espionage-military-government",
+        "https://ti.qianxin.com/uploads/2020/02/13/cb78386a082f465f259b37dae5df4884.pdf",
+        "https://www.welivesecurity.com/2022/01/11/signed-kernel-drivers-unguarded-gateway-windows-core/",
+        "https://www.welivesecurity.com/wp-content/uploads/2018/09/ESET-LoJax.pdf",
+        "https://www.youtube.com/watch?v=VeoXT0nEcFU"
+      ],
+      "uuid": "15228ae0-26f9-44d8-8d6e-87b0bd2d2aba",
+      "notes": [],
+      "sources": [],
+      "updated": "2024-11-25",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "LoJax",
+      "description": "",
+      "library_entries": [
+        "belousov:20220527:how:d00c942",
+        "boutin:20181105:bluehat:65f6d65",
+        "center:20200213:report:146d333",
+        "haruyama:20210615:detecting:63536a8",
+        "poslun:20220111:signed:1c59d41",
+        "research:201809:lojax:747e1e3",
+        "team:20181004:apt28:97a1356"
+      ]
+    },
+    "win.credomap": {
+      "urls": [
+        "https://blog.bushidotoken.net/2022/06/overview-of-russian-gru-and-svr.html",
+        "https://cert.gov.ua/article/341128",
+        "https://github.com/blackorbird/APT_REPORT/blob/master/APT28/APT28%20the%20long%20hand%20of%20Russian%20interests.pdf",
+        "https://securityscorecard.com/research/apt28s-stealer-called-credomap",
+        "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2023-CTI-009.pdf",
+        "https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/overview-of-the-cyber-weapons-used-in-the-ukraine-russia-war",
+        "https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/overview-of-the-cyber-weapons-used-in-the-ukraine-russia-war/"
+      ],
+      "uuid": "37e6844c-4e45-4297-ac6e-afc98d37d994",
+      "notes": [],
+      "sources": [],
+      "updated": "2025-02-17",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "CredoMap",
+      "description": "",
+      "library_entries": [
+        "anssi:20231026:attack:c121d4d",
+        "bushidotoken:20220626:overview:97370ff",
+        "certua:20220620:apt28:2c02bf5",
+        "knapczyk:20220818:overview:a12950c",
+        "knapczyk:20220818:overview:bf3eca2",
+        "maverits:20241231:apt28:edb7884",
+        "pasca:20220927:deep:203b1f0"
+      ]
+    },
+    "win.mocky_lnk": {
+      "urls": [
+        "https://cert.gov.ua/article/4492467",
+        "https://go.recordedfuture.com/hubfs/reports/CTA-RU-2024-0530.pdf",
+        "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2023-CTI-009.pdf",
+        "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2025-CTI-007.pdf",
+        "https://www.recordedfuture.com/research/grus-bluedelta-targets-key-networks-in-europe-with-multi-phase-espionage-camp",
+        "https://www.trendmicro.com/en_us/research/24/a/pawn-storm-uses-brute-force-and-stealth.html",
+        "https://www.zscaler.com/blogs/security-research/steal-it-campaign"
+      ],
+      "uuid": "0eb52072-a2db-4689-bc2d-ac0ae65bdd8c",
+      "notes": [],
+      "sources": [],
+      "updated": "2025-05-02",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Mocky LNK",
+      "description": "LNK files used to lure and orchestrate execution of various scripts, interacting with the Mocky API service.",
+      "library_entries": [
+        "anssi:20231026:attack:c121d4d",
+        "certfr:20250429:targeting:a623e6c",
+        "certua:20230428:apt28:2246cc6",
+        "group:20240530:grus:103ceb8",
+        "group:20240530:grus:a238aff",
+        "hacquebord:20240131:pawn:876f2e6",
+        "shivtarkar:20230906:stealit:f5d0054"
+      ]
+    },
+    "win.oceanmap": {
+      "urls": [
+        "https://cert.gov.ua/article/6276894",
+        "https://github.com/blackorbird/APT_REPORT/blob/master/APT28/APT28%20the%20long%20hand%20of%20Russian%20interests.pdf",
+        "https://harfanglab.io/en/insidethelab/compromised-routers-infrastructure-target-europe-caucasus/",
+        "https://medium.com/@knight0x07/analyzing-apt28s-oceanmap-backdoor-exploring-its-c2-server-artifacts-db2c3cb4556b",
+        "https://thehackernews.com/2024/03/apt28-hacker-group-targeting-europe.html?m=1",
+        "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2025-CTI-007.pdf"
+      ],
+      "uuid": "6e33d8cd-f8aa-4be4-9619-867a469a1425",
+      "notes": [],
+      "sources": [],
+      "updated": "2025-05-02",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "OCEANMAP",
+      "description": "",
+      "library_entries": [
+        "certfr:20250429:targeting:a623e6c",
+        "certua:20231228:apt28:29b5be4",
+        "ctr:20240129:compromised:e6b2fb6",
+        "knight0x07:20240110:analyzing:1cf13da",
+        "maverits:20241231:apt28:edb7884",
+        "newsroom:20240318:apt28:0bb8481"
+      ]
+    },
+    "js.spypress": {
+      "urls": [
+        "https://www.welivesecurity.com/en/eset-research/operation-roundpress/"
+      ],
+      "uuid": "6a74d86a-af26-4dd3-96fa-71e248288d54",
+      "notes": [],
+      "sources": [],
+      "updated": "2025-05-20",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "SpyPress",
+      "description": "According to ESET, SpyPress is a set of Javascript payloads targeting different webmail frameworks (HORDE, MDAEMON, ROUNDCUBE, ZIMBRA). The observed payloads have common characteristics. All are similarly obfuscated, with variable and function names replaced with random-looking strings. Furthermore, strings used by the code, such as webmail and C&C server URLs, are also obfuscated and contained in an encrypted list. Each of those strings is only decrypted when it is used. Note that the variable and function names are randomized for each sample, so the final SpyPress payloads will have different hashes. Another common characteristic is that there are no persistence or update mechanisms. The payload is fully contained in the email and only executed when the email message is viewed from a vulnerable webmail instance.\r\n\r\nFinally, all payloads communicate with their hardcoded C&C servers via HTTP POST requests. There is a small number of C&C servers that are shared by all payloads (there is no separation by victim or payload type).",
+      "library_entries": [
+        "faou:20250515:operation:b141a4e"
+      ]
+    },
+    "ps1.steelhook": {
+      "urls": [
+        "https://cert.gov.ua/article/6276894",
+        "https://github.com/blackorbird/APT_REPORT/blob/master/APT28/APT28%20the%20long%20hand%20of%20Russian%20interests.pdf",
+        "https://media.defense.gov/2025/May/21/2003719846/-1/-1/0/CSA_RUSSIAN_GRU_TARGET_LOGISTICS.PDF",
+        "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2025-CTI-007.pdf"
+      ],
+      "uuid": "f963e3df-13d1-4fd0-abdd-792c0d05e41c",
+      "notes": [],
+      "sources": [],
+      "updated": "2025-05-22",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "STEELHOOK",
+      "description": "",
+      "library_entries": [
+        "certfr:20250429:targeting:a623e6c",
+        "certua:20231228:apt28:29b5be4",
+        "defense:20250520:russian:73a0ae3",
+        "maverits:20241231:apt28:edb7884"
+      ]
+    },
+    "py.masepie": {
+      "urls": [
+        "https://cert.gov.ua/article/6276894",
+        "https://github.com/blackorbird/APT_REPORT/blob/master/APT28/APT28%20the%20long%20hand%20of%20Russian%20interests.pdf",
+        "https://harfanglab.io/en/insidethelab/compromised-routers-infrastructure-target-europe-caucasus/",
+        "https://media.defense.gov/2025/May/21/2003719846/-1/-1/0/CSA_RUSSIAN_GRU_TARGET_LOGISTICS.PDF",
+        "https://thehackernews.com/2024/03/apt28-hacker-group-targeting-europe.html?m=1",
+        "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2025-CTI-007.pdf"
+      ],
+      "uuid": "9233f6e6-9dd7-4b30-adaa-5baf5359d22a",
+      "notes": [],
+      "sources": [],
+      "updated": "2025-05-22",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "MASEPIE",
+      "description": "",
+      "library_entries": [
+        "certfr:20250429:targeting:a623e6c",
+        "certua:20231228:apt28:29b5be4",
+        "ctr:20240129:compromised:e6b2fb6",
+        "defense:20250520:russian:73a0ae3",
+        "maverits:20241231:apt28:edb7884",
+        "newsroom:20240318:apt28:0bb8481"
+      ]
+    },
+    "py.lamehug": {
+      "urls": [
+        "https://cert.gov.ua/article/6284730",
+        "https://www.catonetworks.com/blog/cato-ctrl-threat-research-analyzing-lamehug/"
+      ],
+      "uuid": "033d549c-2429-4837-9b3d-53871a2d8520",
+      "notes": [],
+      "sources": [],
+      "updated": "2025-09-09",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "LAMEHUG",
+      "description": "According to CERT-UA, LAMEHUG uses an LLM (Qwen) to dynamically generate commands to gather basic information about a computer and recursively exfiltrate Office documents from a set of folders, to be uploaded either by SFTP or HTTP POST requests.",
+      "library_entries": [
+        "certua:20250717:uac0001:e0a6d4c",
+        "simonovich:20250723:cato:68d4b3f"
+      ]
+    },
+    "win.caddywiper": {
+      "urls": [
+        "https://blog.eset.ie/2022/04/12/industroyer2-industroyer-reloaded/",
+        "https://blog.malwarebytes.com/threat-intelligence/2022/03/double-header-isaacwiper-and-caddywiper/",
+        "https://blog.morphisec.com/caddywiper-analysis-new-malware-attacking-ukraine",
+        "https://blog.talosintelligence.com/2022/03/threat-advisory-caddywiper.html",
+        "https://blogs.microsoft.com/on-the-issues/2022/12/03/preparing-russian-cyber-offensive-ukraine/",
+        "https://cert.gov.ua/article/3718487",
+        "https://cert.gov.ua/article/39518",
+        "https://cip.gov.ua/en/news/khto-stoyit-za-kiberatakami-na-ukrayinsku-kritichnu-informaciinu-infrastrukturu-statistika-15-22-bereznya",
+        "https://cybernews.com/cyber-war/new-destructive-wiper-malware-deployed-in-ukraine/",
+        "https://cybersecurity.att.com/blogs/labs-research/analysis-on-recent-wiper-attacks-examples-and-how-they-wiper-malware-works",
+        "https://cybersecuritynews.com/destructive-data-wiper-malware/",
+        "https://mandiant.widen.net/s/pkffwrbjlz/m-trends-2023",
+        "https://maxkersten.nl/binary-analysis-course/analysis-scripts/ghidra-script-to-handle-stack-strings/",
+        "https://msrc-blog.microsoft.com/2022/02/28/analysis-resources-cyber-threat-activity-ukraine/",
+        "https://n0p.me/2022/03/2022-03-26-caddywiper/",
+        "https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE4Vwwd",
+        "https://securityaffairs.co/wordpress/129069/cyber-warfare-2/caddywiper-wiper-hits-ukraine.html",
+        "https://securityintelligence.com/posts/caddywiper-malware-targeting-ukrainian-organizations/",
+        "https://services.google.com/fh/files/blogs/google_fog_of_war_research_report.pdf",
+        "https://services.google.com/fh/files/misc/apt44-unearthing-sandworm.pdf",
+        "https://thehackernews.com/2022/03/caddywiper-yet-another-data-wiping.html",
+        "https://twitter.com/ESETresearch/status/1503436420886712321",
+        "https://twitter.com/HackPatch/status/1503538555611607042",
+        "https://twitter.com/silascutler/status/1513870210398363651",
+        "https://www.bleepingcomputer.com/news/security/new-caddywiper-data-wiping-malware-hits-ukrainian-networks/",
+        "https://www.crowdstrike.com/blog/the-anatomy-of-wiper-malware-part-1/",
+        "https://www.crowdstrike.com/blog/the-anatomy-of-wiper-malware-part-3/",
+        "https://www.esentire.com/blog/esentire-threat-intelligence-malware-analysis-caddywiper",
+        "https://www.fortinet.com/blog/threat-research/the-increasing-wiper-malware-threat",
+        "https://www.fortinet.com/blog/threat-research/the-year-of-the-wiper",
+        "https://www.mandiant.com/resources/blog/gru-disruptive-playbook",
+        "https://www.mandiant.com/resources/blog/gru-rise-telegram-minions",
+        "https://www.mandiant.com/resources/blog/sandworm-disrupts-power-ukraine-operational-technology",
+        "https://www.microsoft.com/en-us/security/business/security-insider/wp-content/uploads/2023/03/A-year-of-Russian-hybrid-warfare-in-Ukraine_MS-Threat-Intelligence-1.pdf",
+        "https://www.nextgov.com/cybersecurity/2022/03/ukrainian-cyber-lead-least-4-types-malware-are-targeting-ukrainian-institutions/363558/",
+        "https://www.nioguard.com/2022/03/analysis-of-caddywiper.html",
+        "https://www.splunk.com/en_us/blog/security/threat-update-caddywiper.html",
+        "https://www.truesec.com/hub/blog/analysis-of-caddywiper-wiper-targeting-ukraine",
+        "https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/overview-of-the-cyber-weapons-used-in-the-ukraine-russia-war",
+        "https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/overview-of-the-cyber-weapons-used-in-the-ukraine-russia-war/",
+        "https://www.welivesecurity.com/2022/03/15/caddywiper-new-wiper-malware-discovered-ukraine/",
+        "https://www.welivesecurity.com/2022/04/12/industroyer2-industroyer-reloaded/",
+        "https://www.youtube.com/watch?v=mrTdSdMMgnk"
+      ],
+      "uuid": "c6053700-5f3b-48cc-8176-191393522fc3",
+      "notes": [],
+      "sources": [],
+      "updated": "2024-06-13",
+      "alt_names": [
+        "KillDisk.NCX"
+      ],
+      "attribution": [
+        "APT28",
+        "Sandworm"
+      ],
+      "common_name": "CaddyWiper",
+      "description": "CaddyWiper is another destructive malware believed to be deployed to target Ukraine.\r\n\r\nCaddyWiper wipes all files under C:\\Users and all also all files under available drives from D: to Z: by overwriting the data with NULL value. If the target file is greater than 0xA00000 bytes in size (10MB), it will only wipe the first 0xA00000 bytes.\r\n\r\nIt also wipes disk partitions from \\\\.\\PHYSICALDRIVE9 to \\\\.\\PHYSICALDRIVE0 by overwriting the first 0x780 bytes with NULL.",
+      "library_entries": [
+        "adamov:20221024:russian:97d3e2a",
+        "black:20230712:grus:7a7b81d",
+        "certua:20220412:cyberattack:5f28c75",
+        "certua:20230127:cyber:b31b337",
+        "cip:20220325:who:e75f0ac",
+        "cutler:20220412:analysis:561c2a2",
+        "dereviashkin:20220405:new:2f2f8a9",
+        "dsu:20220427:special:f1a2031",
+        "fierro:20220315:caddywiper:6504bd2",
+        "gatlan:20220314:new:b53c7a5",
+        "group:20230215:fog:0d99aaa",
+        "gurubaran:20220316:destructive:f915ddf",
+        "hacknpatch:20220315:exploring:5399622",
+        "iacob:20220812:anatomy:b13ce32",
+        "iacob:20220926:anatomy:248e6ff",
+        "intelligence:20220923:gru:511ea47",
+        "intelligence:20230315:year:01e29b1",
+        "ireland:20220412:industroyer2:aa61be3",
+        "keijser:20220315:analysis:648df73",
+        "kersten:20220412:ghidra:4afe367",
+        "knapczyk:20220818:overview:a12950c",
+        "knapczyk:20220818:overview:bf3eca2",
+        "lab:20220317:analysis:90c9558",
+        "lakshmanan:20220315:caddywiper:f70771d",
+        "lapienyt:20220314:new:965eae1",
+        "mandiant:20230418:mtrends:af1a28e",
+        "martinez:20220502:analysis:e5d626b",
+        "mosajjal:20220326:analysis:b94c029",
+        "paganini:20220315:caddywiper:13b5403",
+        "proska:20231109:sandworm:2079242",
+        "research:20220314:caddywiper:ac25105",
+        "research:20220315:caddywiper:0edb827",
+        "research:20220412:industroyer2:4d6c5f8",
+        "revay:20220428:overview:0ac963f",
+        "revay:20230124:year:00a1450",
+        "roncone:20240416:apt44:acbe432",
+        "talos:20220315:threat:67922cf",
+        "team:20220228:cyber:69efe8b",
+        "team:20220318:double:fde615f",
+        "team:20220401:threat:1955941",
+        "tru:20220331:esentire:287e4dd",
+        "vincent:20220324:ukrainian:74b1566",
+        "watts:20221203:preparing:139621a"
+      ]
+    },
+    "win.computrace": {
+      "urls": [
+        "https://asert.arbornetworks.com/lojack-becomes-a-double-agent/",
+        "https://bartblaze.blogspot.de/2014/11/thoughts-on-absolute-computrace.html",
+        "https://www.lastline.com/labsblog/apt28-rollercoaster-the-lowdown-on-hijacked-lojack/",
+        "https://www.secureworks.com/research/threat-profiles/iron-twilight"
+      ],
+      "uuid": "d24882f9-8645-4f6a-8a86-2f85daaad685",
+      "notes": [],
+      "sources": [],
+      "updated": "2020-05-23",
+      "alt_names": [
+        "lojack"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Computrace",
+      "description": "",
+      "library_entries": [
+        "bartblaze:20141110:thoughts:d7d0d68",
+        "secureworks:2020:iron:48c68a0",
+        "team:20180501:lojack:244d59b"
+      ]
+    },
+    "win.coreshell": {
+      "urls": [
+        "http://malware.prevenity.com/2014/08/malware-info.html",
+        "http://www.malware-reversing.com/2012/12/3-disclosure-of-another-0day-malware.html",
+        "http://www2.fireeye.com/rs/fireye/images/rpt-apt28.pdf",
+        "https://contagiodump.blogspot.de/2017/02/russian-apt-apt28-collection-of-samples.html",
+        "https://securelist.com/sofacy-apt-hits-high-profile-targets-with-updated-toolset/72924/",
+        "https://www.mandiant.com/sites/default/files/2021-09/APT28-Center-of-Storm-2017.pdf"
+      ],
+      "uuid": "579cc23d-4ba4-419f-bf8a-f235ed33125e",
+      "notes": [],
+      "sources": [],
+      "updated": "2022-05-04",
+      "alt_names": [
+        "SOURFACE"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Coreshell",
+      "description": "",
+      "library_entries": [
+        "fireeye:2014:apt28:27799d1",
+        "great:20151204:sofacy:b437b35",
+        "intelligence:20170110:apt28:2f371ee",
+        "parkour:20170220:part:c54b5de",
+        "prevenity:20140811:mht:d828ead",
+        "r136a1:20121215:disclosure:c36a5a8"
+      ]
+    },
+    "win.downdelph": {
+      "urls": [
+        "http://www.welivesecurity.com/wp-content/uploads/2016/10/eset-sednit-part3.pdf",
+        "https://contagiodump.blogspot.de/2017/02/russian-apt-apt28-collection-of-samples.html",
+        "https://labs.sentinelone.com/a-deep-dive-into-zebrocys-dropper-docs/",
+        "https://www.picussecurity.com/blog/picus-10-critical-mitre-attck-techniques-t1055-process-injection"
+      ],
+      "uuid": "e6a077cb-42cc-4193-9006-9ceda8c0dff2",
+      "notes": [],
+      "sources": [],
+      "updated": "2021-04-20",
+      "alt_names": [
+        "DELPHACY"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Downdelph",
+      "description": "",
+      "library_entries": [
+        "figueroa:20210419:deep:f5cf649",
+        "parkour:20170220:part:c54b5de",
+        "research:20160911:en:28dbd06",
+        "zarslan:20200521:t1055:4400f98"
+      ]
+    },
+    "win.fusiondrive": {
+      "urls": [
+        "https://www.youtube.com/watch?v=_qdCGgQlHJE"
+      ],
+      "uuid": "5de632a3-bf82-4cef-90fa-e7199fdb932c",
+      "notes": [],
+      "sources": [],
+      "updated": "2023-04-25",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "FusionDrive",
+      "description": "",
+      "library_entries": [
+        "warner:20230419:exploring:c68c1d0"
+      ]
+    },
+    "win.gooseegg": {
+      "urls": [
+        "https://www.microsoft.com/en-us/security/blog/2024/04/22/analyzing-forest-blizzards-custom-post-compromise-tool-for-exploiting-cve-2022-38028-to-obtain-credentials/"
+      ],
+      "uuid": "5d38cab2-ad33-467f-9ce9-27fea834fb13",
+      "notes": [],
+      "sources": [],
+      "updated": "2024-05-21",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "GooseEgg",
+      "description": "",
+      "library_entries": [
+        "intelligence:20240422:analyzing:5cb3448"
+      ]
+    },
+    "win.graphite": {
+      "urls": [
+        "https://blog.cluster25.duskrise.com/2022/09/23/in-the-footsteps-of-the-fancy-bear-powerpoint-graphite/",
+        "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2023-CTI-009.pdf",
+        "https://www.trellix.com/en-gb/about/newsroom/stories/threat-labs/prime-ministers-office-compromised.html"
+      ],
+      "uuid": "8ecc6605-eed1-416c-bc8b-0dc1147d3c2b",
+      "notes": [],
+      "sources": [],
+      "updated": "2023-11-14",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Graphite",
+      "description": "Trellix describes Graphite as a malware using the Microsoft Graph API and OneDrive for C&C. It was found being deployed in-memory only and served as a downloader for Empire.",
+      "library_entries": [
+        "anssi:20231026:attack:c121d4d",
+        "cluster25:20220923:in:ea96772",
+        "elias:20220125:prime:20a5b0c"
+      ]
+    },
+    "win.koadic": {
+      "urls": [
+        "http://www.secureworks.com/research/threat-profiles/cobalt-ulster",
+        "http://www.secureworks.com/research/threat-profiles/gold-drake",
+        "https://blog.tofile.dev/2020/11/28/koadic_jarm.html",
+        "https://cdn-cybersecurity.att.com/docs/global-perspective-of-the-sidewinder-apt.pdf",
+        "https://github.com/zerosum0x0/koadic",
+        "https://jsac.jpcert.or.jp/archive/2024/pdf/JSAC2024_1_9_takeda_furukawa_en.pdf",
+        "https://labs.bitdefender.com/2020/03/5-times-more-coronavirus-themed-malware-reports-during-march/?utm_campaign=twitter&utm_medium=twitter&utm_source=twitter",
+        "https://researchcenter.paloaltonetworks.com/2018/06/unit42-sofacy-groups-parallel-attacks/",
+        "https://resources.malwarebytes.com/files/2021/02/LazyScripter.pdf",
+        "https://www.prodaft.com/m/uploads/SilverFish_TLPWHITE.pdf",
+        "https://www.secureworks.com/research/threat-profiles/cobalt-trinity",
+        "https://www.secureworks.com/research/threat-profiles/cobalt-ulster",
+        "https://www.secureworks.com/research/threat-profiles/gold-drake"
+      ],
+      "uuid": "3b5faa15-e87e-4aaf-b791-2c5e593793e6",
+      "notes": [],
+      "sources": [],
+      "updated": "2024-01-31",
+      "alt_names": [],
+      "attribution": [
+        "APT28",
+        "Stone Panda"
+      ],
+      "common_name": "Koadic",
+      "description": "Koadic is an open-source post-exploitation framework for Windows, created by zerosum0x0 and available on GitHub. The framework is written in Python and can generate JScript and VBScript payloads which can be written to disk or mapped directly into memory. Its capabilities include remote desktop access, command execution, lateral movement via SMB, file transfer, credential theft using Mimikatz, port scanning, and system information collection. It can also collect specific system information and targeted files based on their name or extension.",
+      "library_entries": [
+        "arsene:20200320:5:46813c6",
+        "hegel:20210113:global:72b7b9d",
+        "jazi:20210224:lazyscripter:433f4bc",
+        "lee:20180606:sofacy:6d3e723",
+        "pathtofile:20201128:hunting:21f38be",
+        "prodaft:20210318:silverfish:f203208",
+        "secureworks:2020:cobalt:8d36ac3",
+        "secureworks:2020:cobalt:e50c4e9",
+        "secureworks:2020:gold:0d8c853",
+        "secureworks:2021:threat:dbd7ed7",
+        "takeda:20240125:threat:5cff906",
+        "zerosum0x0:20200109:koadic:2b6e0c1"
+      ]
+    },
+    "win.oldbait": {
+      "urls": [
+        "https://www.mandiant.com/sites/default/files/2021-09/APT28-Center-of-Storm-2017.pdf",
+        "https://www.secjuice.com/fancy-bear-review/",
+        "https://www2.fireeye.com/rs/fireye/images/rpt-apt28.pdf"
+      ],
+      "uuid": "b79a6b61-f122-4823-a4ab-bbab89fcaf75",
+      "notes": [],
+      "sources": [],
+      "updated": "2022-05-04",
+      "alt_names": [
+        "Sasfis"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "OLDBAIT",
+      "description": "According to FireEye, OLDBAIT is a credential stealer that has been observed to be used by APT28.\r\nIt targets Internet Explorer, Mozilla Firefox, Eudora, The Bat! (an email client by a Moldovan company), and Becky! (an email client made by a Japanese company). It can use both HTTP or SMTP to exfiltrate data.\r\nIn some places it is mistakenly named \"Sasfis\", which however seems to be a completely different and unrelated malware family.",
+      "library_entries": [
+        "fireeye:2014:apt28:277f9ab",
+        "intelligence:20170110:apt28:2f371ee",
+        "secjuice:20180826:remember:d5f1006"
+      ]
+    },
+    "win.pocodown": {
+      "urls": [
+        "https://threatvector.cylance.com/en_us/home/flirting-with-ida-and-apt28.html",
+        "https://threatvector.cylance.com/en_us/home/inside-the-apt28-dll-backdoor-blitz.html",
+        "https://twitter.com/cyb3rops/status/1129653190444703744"
+      ],
+      "uuid": "25804d6d-447f-4933-9ba0-876f9d054b68",
+      "notes": [],
+      "sources": [],
+      "updated": "2020-03-25",
+      "alt_names": [
+        "Blitz",
+        "PocoDownloader"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "PocoDown",
+      "description": "uses POCO C++ cross-platform library, Xor-based string obfuscation, SSL library code and string overlap with Xtunnel, infrastructure overlap with X-Agent, probably in use since mid-2018",
+      "library_entries": [
+        "roth:20190518:yara:b6d66a4",
+        "team:20190710:flirting:dbf23d3",
+        "team:20190828:inside:c3051c2"
+      ]
+    },
+    "win.sedreco": {
+      "urls": [
+        "http://www.malware-reversing.com/2012/12/3-disclosure-of-another-0day-malware_15.html",
+        "http://www.welivesecurity.com/wp-content/uploads/2016/10/eset-sednit-part-2.pdf",
+        "http://www2.fireeye.com/rs/fireye/images/rpt-apt28.pdf",
+        "https://contagiodump.blogspot.de/2017/02/russian-apt-apt28-collection-of-samples.html",
+        "https://securelist.com/blog/research/72924/sofacy-apt-hits-high-profile-targets-with-updated-toolset/",
+        "https://securelist.com/sofacy-apt-hits-high-profile-targets-with-updated-toolset/72924/",
+        "https://www.mandiant.com/sites/default/files/2021-09/APT28-Center-of-Storm-2017.pdf",
+        "https://www.secureworks.com/research/threat-profiles/iron-twilight",
+        "https://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-papers/wp-operation-pawn-storm.pdf"
+      ],
+      "uuid": "21ab9e14-602a-4a76-a308-dbf5d6a91d75",
+      "notes": [],
+      "sources": [],
+      "updated": "2022-05-04",
+      "alt_names": [
+        "azzy",
+        "eviltoss"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Sedreco",
+      "description": "",
+      "library_entries": [
+        "fireeye:2014:apt28:27799d1",
+        "great:20151204:sofacy:664b5a8",
+        "great:20151204:sofacy:b437b35",
+        "intelligence:20170110:apt28:2f371ee",
+        "kharouni:20141027:operation:1b13f15",
+        "parkour:20170220:part:c54b5de",
+        "r136a1:20121215:disclosure:fdfe8f2",
+        "research:20161020:en:e2e6603",
+        "secureworks:2020:iron:48c68a0"
+      ]
+    },
+    "win.seduploader": {
+      "urls": [
+        "http://blog.talosintelligence.com/2017/10/cyber-conflict-decoy-document.html",
+        "http://blog.trendmicro.com/trendlabs-security-intelligence/new-adobe-flash-zero-day-used-in-pawn-storm-campaign/",
+        "http://www.welivesecurity.com/2015/07/10/sednit-apt-group-meets-hacking-team/",
+        "http://www.welivesecurity.com/wp-content/uploads/2016/10/eset-sednit-part1.pdf",
+        "https://blog.xpnsec.com/apt28-hospitality-malware-part-2/",
+        "https://blog.yoroi.company/research/apt28-and-upcoming-elections-possible-interference-signals-part-ii/",
+        "https://contagiodump.blogspot.de/2017/02/russian-apt-apt28-collection-of-samples.html",
+        "https://researchcenter.paloaltonetworks.com/2016/06/unit42-new-sofacy-attacks-against-us-government-agency/",
+        "https://securelist.com/a-slice-of-2017-sofacy-activity/83930/",
+        "https://securelist.com/sofacy-apt-hits-high-profile-targets-with-updated-toolset/72924/",
+        "https://symantec-blogs.broadcom.com/blogs/election-security/apt28-espionage-military-government",
+        "https://www.crowdstrike.com/blog/bears-midst-intrusion-democratic-national-committee/",
+        "https://www.emanueledelucia.net/apt28-sofacy-seduploader-under-the-christmas-tree/",
+        "https://www.fireeye.com/blog/threat-research/2017/08/apt28-targets-hospitality-sector.html",
+        "https://www.mandiant.com/sites/default/files/2021-09/APT28-Center-of-Storm-2017.pdf",
+        "https://www.proofpoint.com/us/threat-insight/post/apt28-racing-exploit-cve-2017-11292-flash-vulnerability-patches-are-deployed",
+        "https://www.secureworks.com/research/threat-profiles/iron-twilight",
+        "https://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-papers/wp-operation-pawn-storm.pdf",
+        "https://www.welivesecurity.com/2017/05/09/sednit-adds-two-zero-day-exploits-using-trumps-attack-syria-decoy/",
+        "https://www.welivesecurity.com/2017/12/21/sednit-update-fancy-bear-spent-year/"
+      ],
+      "uuid": "6bd20349-1231-4aaa-ba2a-f4b09d3b344c",
+      "notes": [],
+      "sources": [],
+      "updated": "2024-07-10",
+      "alt_names": [
+        "jhuhugit",
+        "jkeyskw",
+        "downrage",
+        "carberplike",
+        "GAMEFISH"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Seduploader",
+      "description": "simple tool to facilitate download and persistence of a next-stage tool; collects system information and metadata probably in an attempt to tell sandbox-environments apart from real targets on the server-side; uses domains of search engines like Google to check for Internet connectivity; XOR-based string obfuscation with a 16-byte key",
+      "library_entries": [
+        "alperovitch:20160615:bears:604c1d9",
+        "chester:20170813:analysis:11db4f8",
+        "falcone:20160614:new:b51d1ab",
+        "great:20151204:sofacy:b437b35",
+        "great:20180220:slice:0f910f7",
+        "intelligence:20170110:apt28:2f371ee",
+        "kafeine:20171019:apt28:927b889",
+        "kharouni:20141027:operation:1b13f15",
+        "li:20151013:new:34dc6b1",
+        "lucia:20181221:apt28:466f390",
+        "mercer:20171022:cyber:b26ac86",
+        "parkour:20170220:part:c54b5de",
+        "research:201608:en:0617083",
+        "research:20170509:sednit:dde92c1",
+        "research:20171221:sednit:630ff7c",
+        "secureworks:2020:iron:48c68a0",
+        "smith:20170811:apt28:a39510a",
+        "team:20181004:apt28:97a1356",
+        "zlabyoroi:20190418:apt28:709f72a"
+      ]
+    },
+    "win.unidentified_078": {
+      "urls": [
+        "https://twitter.com/Vishnyak0v/status/1300704689865060353"
+      ],
+      "uuid": "99099489-eeb9-415a-a3b8-6133e774bed0",
+      "notes": [],
+      "sources": [],
+      "updated": "2020-09-01",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Unidentified 078 (Zebrocy Nim Loader?)",
+      "description": "Suspected Zebrocy loader written in Nim.",
+      "library_entries": [
+        "vishnyakov:20200901:sample:cbed5e0"
+      ]
+    },
+    "win.zebrocy": {
+      "urls": [
+        "https://brandefense.io/zebrocy-malware-technical-analysis-report/",
+        "https://cocomelonc.github.io/persistence/2022/12/09/malware-pers-20.html",
+        "https://github.com/microsoft/Microsoft-365-Defender-Hunting-Queries",
+        "https://ics-cert.kaspersky.com/media/Kaspersky-ICS-CERT-APT-attacks-on-industrial-organizations-in-H1-2021-En.pdf",
+        "https://meltx0r.github.io/tech/2019/10/24/apt28.html",
+        "https://mp.weixin.qq.com/s/6R7bFs9lH1I3BNdkatCC9g",
+        "https://mp.weixin.qq.com/s/pE_6VRDk-2aTI996sff0og",
+        "https://quointelligence.eu/2020/09/apt28-zebrocy-malware-campaign-nato-theme/",
+        "https://research.checkpoint.com/malware-against-the-c-monoculture/",
+        "https://researchcenter.paloaltonetworks.com/2018/06/unit42-sofacy-groups-parallel-attacks/",
+        "https://securelist.com/a-slice-of-2017-sofacy-activity/83930/",
+        "https://securelist.com/a-zebrocy-go-downloader/89419/",
+        "https://securelist.com/apt-trends-report-q2-2019/91897/",
+        "https://securelist.com/greyenergys-overlap-with-zebrocy/89506/",
+        "https://securelist.com/zebrocys-multilanguage-malware-salad/90680/",
+        "https://symantec-blogs.broadcom.com/blogs/election-security/apt28-espionage-military-government",
+        "https://ti.qianxin.com/uploads/2020/02/13/cb78386a082f465f259b37dae5df4884.pdf",
+        "https://unit42.paloaltonetworks.com/atoms/fighting-ursa/",
+        "https://unit42.paloaltonetworks.com/sandbox-evasion-memory-detection/",
+        "https://unit42.paloaltonetworks.com/sofacy-creates-new-go-variant-of-zebrocy-tool/",
+        "https://us-cert.cisa.gov/ncas/analysis-reports/ar20-303b",
+        "https://www.accenture.com/us-en/blogs/blogs-snakemackerel-delivers-zekapab-malware",
+        "https://www.blackberry.com/content/dam/blackberry-com/asset/enterprise/pdf/direct/report-old-dogs-new-tricks.pdf",
+        "https://www.bleepingcomputer.com/news/security/russian-hackers-use-fake-nato-training-docs-to-breach-govt-networks/",
+        "https://www.intezer.com/blog/research/russian-apt-uses-covid-19-lures-to-deliver-zebrocy/",
+        "https://www.intezer.com/wp-content/uploads/2021/02/Intezer-2020-Go-Malware-Round-Up.pdf",
+        "https://www.macnica.net/file/mpressioncss_ta_report_2019.pdf",
+        "https://www.secureworks.com/research/threat-profiles/iron-twilight",
+        "https://www.vkremez.com/2018/12/lets-learn-dissecting-apt28sofacy.html",
+        "https://www.vkremez.com/2018/12/lets-learn-reviewing-sofacys-zebrocy-c.html",
+        "https://www.welivesecurity.com/2018/04/24/sednit-update-analysis-zebrocy/",
+        "https://www.welivesecurity.com/2018/11/20/sednit-whats-going-zebrocy/",
+        "https://www.welivesecurity.com/2019/05/22/journey-zebrocy-land/",
+        "https://www.welivesecurity.com/2019/09/24/no-summer-vacations-zebrocy/"
+      ],
+      "uuid": "973124e2-0d84-4be5-9c8e-3ff16bb43b42",
+      "notes": [],
+      "sources": [],
+      "updated": "2024-07-10",
+      "alt_names": [
+        "Zekapab"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Zebrocy",
+      "description": "According to brandefense, Zebrocy is malware that falls into the Trojan category, which the threat actor group APT28/Sofacy has used since 2015. Zebrocy malware consists of 3 main components; Backdoor, Downloader, and Dropper. The Downloader and Dropper take responsibility for discovery processes and downloading the main malware on the systems. At the same time, Backdoor undertakes the duties such as persistence in the system, espionage, and data extraction.\r\n\r\nThis malware, which is not considered new, has variants in many languages from the past to the present. These include programming languages such as Delphi, C#, Visual C++, VB.net, and Golang. Furthermore, we know advanced threat actors and groups revise their malicious software among their toolkits at certain time intervals using different languages and technologies.",
+      "library_entries": [
+        "42:20220718:fighting:865c81e",
+        "brandefense:20220410:zebrocy:467d0a0",
+        "center:20200213:report:146d333",
+        "center:20200701::fc5fdee",
+        "center:20201023:apt28:099c6cd",
+        "cert:20190124:greyenergys:523e803",
+        "cert:20211026:attacks:6f30d0f",
+        "cocomelonc:20221209:malware:cff0b3d",
+        "falcone:20181218:sofacy:3573b82",
+        "great:20180220:slice:0f910f7",
+        "great:20190111:zebrocy:671fed1",
+        "great:20190603:zebrocys:25be7a9",
+        "great:20190801:trends:5e25d5b",
+        "herzog:20190520:malware:dac1524",
+        "idrizovic:20221227:navigating:4cd52c5",
+        "intezer:20210225:year:eb47cd1",
+        "kennedy:20201209:zebra:1c73168",
+        "kremez:20181210:lets:f947fb1",
+        "kremez:20181221:lets:46e594a",
+        "lee:20180606:sofacy:6d3e723",
+        "meltx0r:20191024:10242019:6438b53",
+        "microsoft:20210520:microsoft:41112d3",
+        "networks:20190401:trends:cf738dc",
+        "quointelligence:20200922:apt28:9bfda0c",
+        "research:20180424:sednit:ab398cd",
+        "research:20181120:sednit:caedbdb",
+        "research:20190522:journey:0627ad7",
+        "research:20190924:no:a84b64a",
+        "secureworks:2020:iron:48c68a0",
+        "sharma:20200922:russian:c3158b2",
+        "team:20181004:apt28:97a1356",
+        "team:20210727:old:3060d53",
+        "uscert:20201029:malware:8122496",
+        "yip:20181129:snakemackerel:aa02eba"
+      ]
+    },
+    "win.gonepostal": {
+      "urls": [
+        "https://lab52.io/blog/analyzing-notdoor-inside-apt28s-expanding-arsenal/",
+        "https://prezi.com/view/eZ3CSNMxPMOfIWEHwTje/",
+        "https://strikeready.com/blog/apt28s-campaign-leveraging-cve%E2%80%912026%E2%80%9121509-and-cloud-c2-infrastructure/",
+        "https://www.kroll.com/en/publications/cyber/fancy-bear-gonepostal-espionage-tool-backdoor-access-microsoft-outlook",
+        "https://www.trellix.com/blogs/research/apt28-stealthy-campaign-leveraging-cve-2026-21509-cloud-c2/",
+        "https://x.com/Laughing_Mantis/status/1963608292468346968"
+      ],
+      "uuid": "0dae45ab-ad92-4d78-8d5b-f0d48ebafd92",
+      "notes": [],
+      "sources": [],
+      "updated": "2026-03-03",
+      "alt_names": [
+        "Cordyceps",
+        "NOTDOOR"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "GONEPOSTAL",
+      "description": "The malware consists of a dropper DLL and an obfuscated, password protected VbaProject.OTM file, which houses macros written for Microsoft Outlook. The malware was originally written by Greg Linares as a backdoor POC called Cordyceps, and presented at Hushcon in 2017. ",
+      "library_entries": [
+        "lab52:20250903:analyzing:9fb829f",
+        "lanstein:20260204:apt28s:433aec7",
+        "lanstein:20260204:apt28s:67ed75d",
+        "linares:2017:next:b18ad3f",
+        "linares:20250904:similarity:51bd560",
+        "messer:20250501:fancy:b092058",
+        "truman:20250905:fancy:b092058"
+      ]
+    },
+    "win.badpaw": {
+      "urls": [
+        "https://www.clearskysec.com/wp-content/uploads/2026/03/BadPaw_and_MeowMeow.pdf"
+      ],
+      "uuid": "0d55ab26-119c-497b-9a63-b5e04cb30383",
+      "notes": [],
+      "sources": [],
+      "updated": "2026-03-04",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "BadPaw",
+      "description": "",
+      "library_entries": [
+        "clearsky:20260302:exposing:36a6693"
+      ]
+    },
+    "win.beardshell": {
+      "urls": [
+        "https://blog.sekoia.io/apt28-operation-phantom-net-voxel/",
+        "https://cert.gov.ua/article/6284080",
+        "https://www.welivesecurity.com/en/eset-research/sednit-reloaded-back-trenches/"
+      ],
+      "uuid": "cecbcf0d-c3f7-48d6-87af-0bbd82103c56",
+      "notes": [],
+      "sources": [],
+      "updated": "2026-03-11",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "BEARDSHELL",
+      "description": "According to CERT-UA, this is a malware developed using the C++ programming language. It provides capabilities for downloading, decryption (chacha20-poly150) and performing PowerShell scripts, as well as uploading the command's results. ",
+      "library_entries": [
+        "certua:20250621:cyberattacks:78d85d0",
+        "g:20250916:apt28:f3d2b20",
+        "research:20260310:sednit:86e9801"
+      ]
+    },
+    "win.slimagent": {
+      "urls": [
+        "https://blog.sekoia.io/apt28-operation-phantom-net-voxel/",
+        "https://cert.gov.ua/article/6284080",
+        "https://www.welivesecurity.com/en/eset-research/sednit-reloaded-back-trenches/"
+      ],
+      "uuid": "6cffb991-95b2-4c3f-b9a5-9eda2b71b621",
+      "notes": [],
+      "sources": [],
+      "updated": "2026-03-11",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "SLIMAGENT",
+      "description": "According to CERT-UA, this is a malware developed using the C++ programming language. The main functional purpose is the production of screenshots.",
+      "library_entries": [
+        "certua:20250621:cyberattacks:78d85d0",
+        "g:20250916:apt28:f3d2b20",
+        "research:20260310:sednit:86e9801"
+      ]
+    },
+    "win.xagent": {
+      "urls": [
+        "http://csecybsec.com/download/zlab/20180713_CSE_APT28_X-Agent_Op-Roman%20Holiday-Report_v6_1.pdf",
+        "http://www.welivesecurity.com/wp-content/uploads/2016/10/eset-sednit-part-2.pdf",
+        "http://www2.fireeye.com/rs/fireye/images/rpt-apt28.pdf",
+        "https://assets.documentcloud.org/documents/3461560/Google-Aquarium-Clean.pdf",
+        "https://contagiodump.blogspot.de/2017/02/russian-apt-apt28-collection-of-samples.html",
+        "https://securelist.com/a-slice-of-2017-sofacy-activity/83930/",
+        "https://securelist.com/apt-trends-report-q2-2020/97937/",
+        "https://securelist.com/sofacy-apt-hits-high-profile-targets-with-updated-toolset/72924/",
+        "https://symantec-blogs.broadcom.com/blogs/election-security/apt28-espionage-military-government",
+        "https://ti.qianxin.com/uploads/2020/02/13/cb78386a082f465f259b37dae5df4884.pdf",
+        "https://www.crowdstrike.com/blog/bears-midst-intrusion-democratic-national-committee/",
+        "https://www.fireeye.com/content/dam/fireeye-www/global/en/current-threats/pdfs/wp-operation-quantum-entanglement.pdf",
+        "https://www.mandiant.com/sites/default/files/2021-09/APT28-Center-of-Storm-2017.pdf",
+        "https://www.secureworks.com/research/threat-profiles/iron-twilight",
+        "https://www.thecssc.com/wp-content/uploads/2018/10/4OctoberIOC-APT28-malware-advisory.pdf",
+        "https://www.welivesecurity.com/2017/12/21/sednit-update-fancy-bear-spent-year/",
+        "https://www.welivesecurity.com/en/eset-research/sednit-reloaded-back-trenches/"
+      ],
+      "uuid": "e8b38fbd-a7ce-4073-a660-44dfabc1b678",
+      "notes": [],
+      "sources": [],
+      "updated": "2026-03-11",
+      "alt_names": [
+        "splm",
+        "chopstick"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "X-Agent",
+      "description": "",
+      "library_entries": [
+        "alperovitch:20160615:bears:604c1d9",
+        "center:20200213:report:146d333",
+        "fireeye:2014:apt28:27799d1",
+        "fireeye:2014:operation:2160679",
+        "great:20151204:sofacy:b437b35",
+        "great:20180220:slice:0f910f7",
+        "great:20200729:trends:6810325",
+        "intelligence:20170110:apt28:2f371ee",
+        "mehta:20140905:peering:8ce5720",
+        "parkour:20170220:part:c54b5de",
+        "research:20161020:en:e2e6603",
+        "research:20171221:sednit:630ff7c",
+        "research:20260310:sednit:86e9801",
+        "secureworks:2020:iron:48c68a0",
+        "team:20181004:apt28:97a1356",
+        "uk:20181004:indicators:af0d14a"
+      ]
+    },
+    "win.xtunnel": {
+      "urls": [
+        "http://download.microsoft.com/download/4/4/C/44CDEF0E-7924-4787-A56A-16261691ACE3/Microsoft_Security_Intelligence_Report_Volume_19_English.pdf",
+        "http://www.welivesecurity.com/wp-content/uploads/2016/10/eset-sednit-part-2.pdf",
+        "https://contagiodump.blogspot.de/2017/02/russian-apt-apt28-collection-of-samples.html",
+        "https://netzpolitik.org/2015/digital-attack-on-german-parliament-investigative-report-on-the-hack-of-the-left-party-infrastructure-in-bundestag/",
+        "https://securelist.com/apt-trends-report-q2-2020/97937/",
+        "https://securelist.com/big-threats-using-code-similarity-part-1/97239/",
+        "https://symantec-blogs.broadcom.com/blogs/election-security/apt28-espionage-military-government",
+        "https://www.crowdstrike.com/blog/bears-midst-intrusion-democratic-national-committee/",
+        "https://www.root9b.com/sites/default/files/whitepapers/R9b_FSOFACY_0.pdf",
+        "https://www.root9b.com/sites/default/files/whitepapers/root9b_follow_up_report_apt28.pdf",
+        "https://www.secureworks.com/research/threat-profiles/iron-twilight",
+        "https://www.symantec.com/blogs/election-security/apt28-espionage-military-government",
+        "https://www.welivesecurity.com/en/eset-research/sednit-reloaded-back-trenches/"
+      ],
+      "uuid": "53089817-6d65-4802-a7d2-5ccc3d919b74",
+      "notes": [],
+      "sources": [],
+      "updated": "2026-03-11",
+      "alt_names": [
+        "Shunnael",
+        "X-Tunnel",
+        "xaps"
+      ],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "XTunnel",
+      "description": "X-Tunnel is a network proxy tool that implements a custom network protocol encapsulated in the TLS protocol.",
+      "library_entries": [
+        "alperovitch:20160615:bears:604c1d9",
+        "great:20200729:trends:6810325",
+        "guarnieri:20150619:digital:6c1a11b",
+        "microsoft:20151120:microsoft:d41c5ad",
+        "parkour:20170220:part:c54b5de",
+        "raiu:20200609:looking:3038dce",
+        "research:20161020:en:e2e6603",
+        "research:20260310:sednit:86e9801",
+        "root9b:201508:technical:fff6a0b",
+        "secureworks:2020:iron:48c68a0",
+        "team:20181004:apt28:97a1356",
+        "team:20181004:apt28:f5e15cf"
+      ]
+    },
+    "js.unidentified_007": {
+      "urls": [
+        "https://www.seqrite.com/blog/operation-ghostmail-zimbra-xss-russian-apt-ukraine/"
+      ],
+      "uuid": "a5679fd9-ea71-4efd-98d3-b27cd6a980b7",
+      "notes": [],
+      "sources": [],
+      "updated": "2026-03-24",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "Unidentified JS 007 (Zimbra Stealer)",
+      "description": "According to Seqrite, this collector is delivered via a phishing mail and triggers via XSS in an active Zimbra session. ",
+      "library_entries": [
+        "prakki:20260317:operation:63ee57d"
+      ]
+    },
+    "win.pixynet_loader": {
+      "urls": [
+        "https://www.zscaler.com/blogs/security-research/apt28-leverages-cve-2026-21509-operation-neusploit"
+      ],
+      "uuid": "8d5d09c9-2090-442e-bebb-713069c0ec94",
+      "notes": [],
+      "sources": [],
+      "updated": "2026-03-26",
+      "alt_names": [],
+      "attribution": [
+        "APT28"
+      ],
+      "common_name": "PixyNetLoader",
+      "description": "",
+      "library_entries": [
+        "singh:20260202:apt28:a1a580d"
+      ]
+    }
+  },
+  "description": "The Sofacy Group (also known as APT28, Pawn Storm, Fancy Bear and Sednit) is a cyber espionage group believed to have ties to the Russian government. Likely operating since 2007, the group is known to target government, military, and security organizations. It has been characterized as an advanced persistent threat.",
+  "meta": {
+    "GRU": "Military unit 26165",
+    "attribution-confidence": "50",
+    "cfr-suspected-state-sponsor": "Russian Federation",
+    "cfr-suspected-victims": [
+      "Georgia",
+      "France",
+      "Jordan",
+      "United States",
+      "Hungary",
+      "World Anti-Doping Agency",
+      "Armenia",
+      "Tajikistan",
+      "Japan",
+      "NATO",
+      "Ukraine",
+      "Belgium",
+      "Pakistan",
+      "Asia Pacific Economic Cooperation",
+      "International Association of Athletics Federations",
+      "Turkey",
+      "Mongolia",
+      "OSCE",
+      "United Kingdom",
+      "Germany",
+      "Poland",
+      "European Commission",
+      "Afghanistan",
+      "Kazakhstan",
+      "China"
+    ],
+    "cfr-target-category": [
+      "Government",
+      "Military"
+    ],
+    "cfr-type-of-incident": "Espionage",
+    "country": "RU",
+    "refs": [
+      "https://attack.mitre.org/groups/G0007/",
+      "https://en.wikipedia.org/wiki/Fancy_Bear",
+      "https://en.wikipedia.org/wiki/Sofacy_Group",
+      "https://www.bbc.com/news/technology-37590375",
+      "https://www.bbc.co.uk/news/technology-45257081",
+      "https://www.cfr.org/interactive/cyber-operations/apt-28",
+      "https://www.apnews.com/4d174e45ef5843a0ba82e804f080988f",
+      "https://www.voanews.com/a/iaaf-hack-fancy-bears/3793874.html",
+      "https://securelist.com/a-slice-of-2017-sofacy-activity/83930/",
+      "https://www.dw.com/en/hackers-lurking-parliamentarians-told/a-19564630",
+      "https://unit42.paloaltonetworks.com/unit42-sofacys-komplex-os-x-trojan/",
+      "https://unit42.paloaltonetworks.com/dear-joohn-sofacy-groups-global-campaign/",
+      "https://www.fireeye.com/blog/threat-research/2015/04/probable_apt28_useo.html",
+      "https://www2.fireeye.com/rs/848-DID-242/images/wp-mandiant-matryoshka-mining.pdf",
+      "https://www.eff.org/deeplinks/2015/08/new-spear-phishing-campaign-pretends-be-eff",
+      "https://aptnotes.malwareconfig.com/web/viewer.html?file=../APTnotes/2014/apt28.pdf",
+      "https://www.accenture.com/us-en/blogs/blogs-snakemackerel-delivers-zekapab-malware",
+      "https://www.wired.com/story/russian-fancy-bears-hackers-release-apparent-ioc-emails/",
+      "https://symantec-blogs.broadcom.com/blogs/election-security/apt28-espionage-military-government",
+      "https://www.crowdstrike.com/blog/bears-midst-intrusion-democratic-national-committee/",
+      "https://unit42.paloaltonetworks.com/unit42-sofacy-attacks-multiple-government-entities/",
+      "https://securelist.com/sofacy-apt-hits-high-profile-targets-with-updated-toolset/72924/",
+      "https://www.msn.com/en-nz/news/world/russian-hackers-accused-of-targeting-un-chemical-weapons-watchdog-mh17-files/ar-BBNV2ny",
+      "https://unit42.paloaltonetworks.com/unit42-new-sofacy-attacks-against-us-government-agency/",
+      "https://unit42.paloaltonetworks.com/unit42-let-ride-sofacy-groups-dealerschoice-attacks-continue/",
+      "https://www.welivesecurity.com/2018/09/27/lojax-first-uefi-rootkit-found-wild-courtesy-sednit-group/",
+      "https://unit42.paloaltonetworks.com/unit42-sofacy-continues-global-attacks-wheels-new-cannon-trojan/",
+      "https://www.bleepingcomputer.com/news/security/apt28-uses-lojax-first-uefi-rootkit-seen-in-the-wild/",
+      "https://blog.trendmicro.com/trendlabs-security-intelligence/pawn-storm-targets-mh17-investigation-team/",
+      "https://researchcenter.paloaltonetworks.com/2016/06/unit42-new-sofacy-attacks-against-us-government-agency/",
+      "https://www.trendmicro.com/cloud-content/us/pdfs/security-intelligence/white-papers/wp-operation-pawn-storm.pdf",
+      "https://blog.trendmicro.com/trendlabs-security-intelligence/new-adobe-flash-zero-day-used-in-pawn-storm-campaign/",
+      "https://blogs.microsoft.com/on-the-issues/2018/08/20/we-are-taking-new-steps-against-broadening-threats-to-democracy/",
+      "https://www.lse.co.uk/AllNews.asp?code=kwdwehme&headline=Russian_Hackers_Suspected_In_Cyberattack_On_German_Parliament",
+      "https://www.volkskrant.nl/cultuur-media/russen-faalden-bij-hackpogingen-ambtenaren-op-nederlandse-ministeries~b77ff391/",
+      "https://www.ibtimes.co.uk/russian-hackers-fancy-bear-likely-breached-olympic-drug-testing-agency-dnc-experts-say-1577508",
+      "https://www.bleepingcomputer.com/news/security/microsoft-disrupts-apt28-hacking-campaign-aimed-at-us-midterm-elections/",
+      "https://www.justice.gov/opa/pr/justice-department-announces-actions-disrupt-advanced-persistent-threat-28-botnet-infected",
+      "https://www.accenture.com/t20181129T203820Z__w__/us-en/_acnmedia/PDF-90/Accenture-snakemackerel-delivers-zekapab-malware.pdf",
+      "https://www.reuters.com/article/us-sweden-doping/swedish-sports-body-says-anti-doping-unit-hit-by-hacking-attack-idUSKCN1IG2GN",
+      "https://researchcenter.paloaltonetworks.com/2016/10/unit42-dealerschoice-sofacys-flash-player-exploit-platform/",
+      "https://netzpolitik.org/2015/digital-attack-on-german-parliament-investigative-report-on-the-hack-of-the-left-party-infrastructure-in-bundestag/",
+      "https://www.washingtonpost.com/technology/2019/02/20/microsoft-says-it-has-found-another-russian-operation-targeting-prominent-think-tanks/?utm_term=.870ff11468ae",
+      "https://www.handelsblatt.com/today/politics/election-risks-russia-linked-hackers-target-german-political-foundations/23569188.html?ticket=ST-2696734-GRHgtQukDIEXeSOwksXO-ap1",
+      "https://www.accenture.com/t20190213T141124Z__w__/us-en/_acnmedia/PDF-94/Accenture-SNAKEMACKEREL-Threat-Campaign-Likely-Targeting-NATO-Members-Defense-and-Military-Outlets.pdf",
+      "https://marcoramilli.com/2019/12/05/apt28-attacks-evolution/",
+      "https://www.microsoft.com/security/blog/2020/09/10/strontium-detecting-new-patters-credential-harvesting/",
+      "https://www.bleepingcomputer.com/news/security/russian-hackers-use-fake-nato-training-docs-to-breach-govt-networks/",
+      "https://quointelligence.eu/2020/09/apt28-zebrocy-malware-campaign-nato-theme/",
+      "https://unit42.paloaltonetworks.com/atoms/fighting-ursa/",
+      "https://blog.google/threat-analysis-group/continued-cyber-activity-in-eastern-europe-observed-by-tag",
+      "https://blog.google/threat-analysis-group/fog-of-war-how-the-ukraine-conflict-transformed-the-cyber-threat-landscape/",
+      "https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Cyber-Sicherheitslage/Analysen-und-Prognosen/Threat-Intelligence/Aktive_APT-Gruppen/aktive-apt-gruppen_node.html",
+      "https://bluepurple.binaryfirefly.com/p/bluepurple-pulse-week-ending-june-64e",
+      "https://www.volexity.com/blog/2024/11/22/the-nearest-neighbor-attack-how-a-russian-apt-weaponized-nearby-wi-fi-networks-for-covert-access/"
+    ],
+    "synonyms": [
+      "Pawn Storm",
+      "FANCY BEAR",
+      "Sednit",
+      "SNAKEMACKEREL",
+      "Tsar Team",
+      "TG-4127",
+      "STRONTIUM",
+      "Swallowtail",
+      "IRON TWILIGHT",
+      "Group 74",
+      "SIG40",
+      "Grizzly Steppe",
+      "G0007",
+      "ATK5",
+      "Fighting Ursa",
+      "ITG05",
+      "Blue Athena",
+      "TA422",
+      "T-APT-12",
+      "APT-C-20",
+      "UAC-0028",
+      "UAC-0001",
+      "FROZENLAKE",
+      "Sofacy",
+      "Forest Blizzard",
+      "BlueDelta",
+      "Fancy Bear",
+      "GruesomeLarch",
+      "APT 28",
+      "TsarTeam",
+      "Group-4127",
+      "Grey-Cloud"
+    ],
+    "targeted-sector": [
+      "Military",
+      "Government, Administration",
+      "Security Service"
+    ]
+  },
+  "related": [
+    {
+      "dest-uuid": "bef4c620-0787-42a8-a96d-b7eb6e85917c",
+      "tags": [
+        "estimative-language:likelihood-probability=\"likely\""
+      ],
+      "type": "similar"
+    },
+    {
+      "dest-uuid": "213cdde9-c11a-4ea9-8ce0-c868e9826fec",
+      "tags": [
+        "estimative-language:likelihood-probability=\"likely\""
+      ],
+      "type": "similar"
+    },
+    {
+      "dest-uuid": "8d84d7b0-7716-5ab3-a3a4-f373dd148347",
+      "tags": [
+        "estimative-language:likelihood-probability=\"likely\""
+      ],
+      "type": "similar"
+    },
+    {
+      "dest-uuid": "3d9f700c-5eb5-5d36-a6e7-47b55f2844cd",
+      "tags": [
+        "estimative-language:likelihood-probability=\"likely\""
+      ],
+      "type": "similar"
+    }
+  ],
+  "uuid": "5b4ee3ea-eee3-4c8e-8323-85ae32658754",
+  "value": "APT28"
+}

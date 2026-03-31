@@ -1,0 +1,103 @@
+{
+  "technique_id": "T1059.003",
+  "cached_at": "2026-03-31T04:57:33.101667+00:00",
+  "rules": [
+    {
+      "title": "DNS Query by Finger Utility",
+      "status": "experimental",
+      "level": "high",
+      "logsource": "dns_query / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.command-and-control",
+        "attack.t1071.004",
+        "attack.execution",
+        "attack.t1059.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/dns_query/dns_query_win_finger.yml"
+    },
+    {
+      "title": "Suspicious HH.EXE Execution",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection_*",
+      "description": "Detects a suspicious execution of a Microsoft HTML Help (HH.exe)",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.execution",
+        "attack.initial-access",
+        "attack.t1047",
+        "attack.t1059.001",
+        "attack.t1059.003",
+        "attack.t1059.005",
+        "attack.t1059.007",
+        "attack.t1218",
+        "attack.t1218.001",
+        "attack.t1218.010",
+        "attack.t1218.011",
+        "attack.t1566",
+        "attack.t1566.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hh_susp_execution.yml"
+    },
+    {
+      "title": "PUA - AdvancedRun Execution",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects the execution of AdvancedRun utility",
+      "tags": [
+        "attack.execution",
+        "attack.defense-evasion",
+        "attack.privilege-escalation",
+        "attack.t1564.003",
+        "attack.t1134.002",
+        "attack.t1059.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_pua_advancedrun.yml"
+    },
+    {
+      "title": "HackTool - Koadic Execution",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection_*",
+      "description": "Detects command line parameters used by Koadic hack tool",
+      "tags": [
+        "attack.execution",
+        "attack.t1059.003",
+        "attack.t1059.005",
+        "attack.t1059.007"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hktl_koadic.yml"
+    },
+    {
+      "title": "HTML Help HH.EXE Suspicious Child Process",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects a suspicious child process of a Microsoft HTML Help (HH.exe)",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.execution",
+        "attack.initial-access",
+        "attack.t1047",
+        "attack.t1059.001",
+        "attack.t1059.003",
+        "attack.t1059.005",
+        "attack.t1059.007",
+        "attack.t1218",
+        "attack.t1218.001",
+        "attack.t1218.010",
+        "attack.t1218.011",
+        "attack.t1566",
+        "attack.t1566.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hh_html_help_susp_child_process.yml"
+    }
+  ]
+}

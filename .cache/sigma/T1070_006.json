@@ -1,0 +1,71 @@
+{
+  "technique_id": "T1070.006",
+  "cached_at": "2026-03-31T04:53:13.811430+00:00",
+  "rules": [
+    {
+      "title": "Touch Suspicious Service File",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / linux",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects usage of the \"touch\" process in service file.",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070.006"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/linux/process_creation/proc_creation_lnx_touch_susp.yml"
+    },
+    {
+      "title": "Powershell Timestomp",
+      "status": "test",
+      "level": "medium",
+      "logsource": "ps_script / windows",
+      "condition_summary": "selection_ioc",
+      "description": "|",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070.006"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/powershell/powershell_script/posh_ps_timestomp.yml"
+    },
+    {
+      "title": "Unauthorized System Time Modification",
+      "status": "test",
+      "level": "low",
+      "logsource": "security / windows",
+      "condition_summary": "selection exclusion filter excluding 1 of filter_main_* excluding 1 of filter_optional_*",
+      "description": "Detect scenarios where a potentially unauthorized application or user is modifying the system time.",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070.006"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/security/win_security_susp_time_modification.yml"
+    },
+    {
+      "title": "File Time Attribute Change",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / macos",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detect file time attribute change to hide new or changes to existing files",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070.006"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/macos/process_creation/proc_creation_macos_change_file_time_attr.yml"
+    },
+    {
+      "title": "File Time Attribute Change - Linux",
+      "status": "test",
+      "level": "medium",
+      "logsource": "auditd / linux",
+      "condition_summary": "execve and touch and selection2",
+      "description": "Detect file time attribute change to hide new or changes to existing files.",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070.006"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/linux/auditd/execve/lnx_auditd_change_file_time_attr.yml"
+    }
+  ]
+}

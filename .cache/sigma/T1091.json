@@ -1,0 +1,21 @@
+{
+  "technique_id": "T1091",
+  "cached_at": "2026-03-31T05:03:48.306455+00:00",
+  "rules": [
+    {
+      "title": "External Disk Drive Or USB Storage Device Was Recognized By The System",
+      "status": "test",
+      "level": "low",
+      "logsource": "security / windows",
+      "condition_summary": "all of selection_*",
+      "description": "Detects external disk drives or plugged-in USB devices.",
+      "tags": [
+        "attack.t1091",
+        "attack.t1200",
+        "attack.lateral-movement",
+        "attack.initial-access"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/security/win_security_external_device.yml"
+    }
+  ]
+}

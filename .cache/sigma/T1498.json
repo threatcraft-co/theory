@@ -1,0 +1,32 @@
+{
+  "technique_id": "T1498",
+  "cached_at": "2026-03-31T04:57:47.412272+00:00",
+  "rules": [
+    {
+      "title": "OpenCanary - NTP Monlist Request",
+      "status": "test",
+      "level": "high",
+      "logsource": "application / opencanary",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects instances where an NTP service on an OpenCanary node has had a NTP monlist request.",
+      "tags": [
+        "attack.impact",
+        "attack.t1498"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/application/opencanary/opencanary_ntp_monlist.yml"
+    },
+    {
+      "title": "Deployment Deleted From Kubernetes Cluster",
+      "status": "test",
+      "level": "low",
+      "logsource": "application / kubernetes",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.t1498",
+        "attack.impact"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/application/kubernetes/audit/kubernetes_audit_deployment_deleted.yml"
+    }
+  ]
+}

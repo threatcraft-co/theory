@@ -1,0 +1,35 @@
+{
+  "technique_id": "T1137.002",
+  "cached_at": "2026-03-31T05:02:22.975338+00:00",
+  "rules": [
+    {
+      "title": "Suspicious Microsoft Office Child Process - MacOS",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / macos",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects suspicious child processes spawning from microsoft office suite applications such as word or excel. This could indicates malicious macro execution",
+      "tags": [
+        "attack.execution",
+        "attack.persistence",
+        "attack.t1059.002",
+        "attack.t1137.002",
+        "attack.t1204.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/macos/process_creation/proc_creation_macos_office_susp_child_processes.yml"
+    },
+    {
+      "title": "Office Application Startup - Office Test",
+      "status": "test",
+      "level": "medium",
+      "logsource": "registry_event / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects the addition of office test registry that allows a user to specify an arbitrary DLL that will be executed every time an Office application is started",
+      "tags": [
+        "attack.persistence",
+        "attack.t1137.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/registry/registry_event/registry_event_office_test_regadd.yml"
+    }
+  ]
+}

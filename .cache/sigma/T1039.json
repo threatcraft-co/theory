@@ -1,0 +1,36 @@
+{
+  "technique_id": "T1039",
+  "cached_at": "2026-03-31T04:56:06.427832+00:00",
+  "rules": [
+    {
+      "title": "Suspicious Access to Sensitive File Extensions",
+      "status": "test",
+      "level": "medium",
+      "logsource": "security / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects known sensitive file extensions accessed on a network share",
+      "tags": [
+        "attack.collection",
+        "attack.t1039"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/security/win_security_susp_raccess_sensitive_fext.yml"
+    },
+    {
+      "title": "Copy From Or To Admin Share Or Sysvol Folder",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection_target and (selection_other_tools or all of selection_cmd_* or all of selection_pwsh_*)",
+      "description": "Detects a copy command or a copy utility execution to or from an Admin share or remote",
+      "tags": [
+        "attack.lateral-movement",
+        "attack.collection",
+        "attack.exfiltration",
+        "attack.t1039",
+        "attack.t1048",
+        "attack.t1021.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_susp_copy_lateral_movement.yml"
+    }
+  ]
+}

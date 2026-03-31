@@ -1,0 +1,34 @@
+{
+  "id": "5851b2be87d2d95b741dd743",
+  "name": "PROMETHIUM and NEODYMIUM: Parallel zero-day attacks targeting individuals in Europe",
+  "description": "Microsoft proactively monitors the threat landscape for emerging threats. Part of this job involves observing the activities of targeted activity groups, which are often the first ones to introduce new exploits and techniques that are later used by other attackers. The previous two volumes of the Microsoft Security Intelligence Report explored the activities of two such groups, code-named STRONTIUM and PLATINUM, which used previously unknown vulnerabilities and aggressive, persistent techniques to target specific individuals and institutions\u2014often including military installations, intelligence agencies, and other government bodies.",
+  "author_name": "bartblaze",
+  "modified": "2016-12-14T21:00:22.789000",
+  "created": "2016-12-14T20:59:41.982000",
+  "tags": [
+    "PROMETHIUM",
+    "NEODYMIUM"
+  ],
+  "references": [
+    "https://blogs.technet.microsoft.com/mmpc/2016/12/14/twin-zero-day-attacks-promethium-and-neodymium-target-individuals-in-europe/"
+  ],
+  "public": 1,
+  "adversary": "",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [],
+  "revision": 3,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "bartblaze",
+    "id": "1009",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/bartblaze/resized/80/av-22617.jpeg",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

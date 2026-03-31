@@ -1,0 +1,73 @@
+{
+  "technique_id": "T1564.001",
+  "cached_at": "2026-03-31T04:52:45.004119+00:00",
+  "rules": [
+    {
+      "title": "Displaying Hidden Files Feature Disabled",
+      "status": "test",
+      "level": "medium",
+      "logsource": "registry_set / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1564.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/registry/registry_set/registry_set_hide_file.yml"
+    },
+    {
+      "title": "Hidden Files and Directories",
+      "status": "test",
+      "level": "low",
+      "logsource": "auditd / linux",
+      "condition_summary": "all of selection_*",
+      "description": "Detects adversary creating hidden file or directory, by detecting directories or files with . as the first character",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1564.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/linux/auditd/execve/lnx_auditd_hidden_files_directories.yml"
+    },
+    {
+      "title": "PowerShell Logging Disabled Via Registry Key Tampering",
+      "status": "test",
+      "level": "high",
+      "logsource": "registry_set / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects changes to the registry for the currently logged-in user. In order to disable PowerShell module logging, script block logging or transcription and script execution logging",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1564.001",
+        "attack.t1112",
+        "attack.persistence"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/registry/registry_set/registry_set_powershell_logging_disabled.yml"
+    },
+    {
+      "title": "Set Suspicious Files as System Files Using Attrib.EXE",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection exclusion filter* excluding 1 of filter_optional_*",
+      "description": "|",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1564.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_attrib_system_susp_paths.yml"
+    },
+    {
+      "title": "Hiding Files with Attrib.exe",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection_* excluding 1 of filter_main_* excluding 1 of filter_optional_*",
+      "description": "Detects usage of attrib.exe to hide files from users.",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1564.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_attrib_hiding_files.yml"
+    }
+  ]
+}

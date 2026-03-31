@@ -1,0 +1,47 @@
+{
+  "id": "5760037c43ca080134251a38",
+  "name": "New Sofacy Attacks Against US Government Agency",
+  "description": "The Sofacy group, also known as APT28, is a well-known threat group that frequently conducts cyber espionage campaigns. Recently, Unit 42 identified a spear phishing e-mail from the Sofacy group that targeted the United States government. The e-mail was sent from a potentially compromised account belonging to the Ministry of Foreign Affairs of another government entity and carried the Carberp variant of the Sofacy Trojan. The developer implemented a clever persistence mechanism in the Trojan, one which had not been observed in previous attacks. The focus of this blog will be on the attacks and the infrastructure associated with Sofacy using the new persistence mechanism as a correlation point.",
+  "author_name": "bartblaze",
+  "modified": "2016-06-14T13:15:45.874000",
+  "created": "2016-06-14T13:15:40.142000",
+  "tags": [
+    "sofacy",
+    "carberp",
+    "apt28",
+    "tsar team",
+    "RTF exploit",
+    "CVE-2015-1641"
+  ],
+  "references": [
+    "http://researchcenter.paloaltonetworks.com/2016/06/unit42-new-sofacy-attacks-against-us-government-agency/"
+  ],
+  "public": 1,
+  "adversary": null,
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [],
+  "revision": 2,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    },
+    {
+      "name": "MISP FEED",
+      "id": 76
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "bartblaze",
+    "id": "1009",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/bartblaze/resized/80/av-22617.jpeg",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

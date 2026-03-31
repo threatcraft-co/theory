@@ -1,0 +1,22 @@
+{
+  "urls": [
+    "https://securelist.com/a-slice-of-2017-sofacy-activity/83930/",
+    "https://www.secureworks.com/research/threat-profiles/iron-twilight",
+    "https://www.welivesecurity.com/2018/04/24/sednit-update-analysis-zebrocy/"
+  ],
+  "uuid": "4a5f2088-18cb-426a-92e2-1eb752c294c0",
+  "notes": [],
+  "sources": [],
+  "updated": "2024-07-10",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "Zebrocy (AutoIT)",
+  "description": "",
+  "library_entries": [
+    "great:20180220:slice:0f910f7",
+    "research:20180424:sednit:ab398cd",
+    "secureworks:2020:iron:48c68a0"
+  ]
+}

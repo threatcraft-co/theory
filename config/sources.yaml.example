@@ -1,0 +1,91 @@
+# Theory — Source Registry
+# Copy this file to config/sources.yaml and add your API keys to .env
+# sources.yaml is gitignored. sources.yaml.example is committed (no secrets).
+
+sources:
+
+  mitre_attack:
+    enabled: true
+    api_key_env: null
+    base_url: https://attack.mitre.org/taxii/
+    taxii_collection: enterprise-attack
+    cache_ttl_hours: 24
+    timeout_seconds: 60
+    registration_url: null
+    free_tier: true
+    notes: >
+      Public TAXII 2.1 feed. No authentication required.
+      Bundle is large (~50MB); cached locally in .cache/attack_bundle.json.
+
+  cisa_advisories:
+    enabled: true
+    api_key_env: null
+    base_url: https://www.cisa.gov
+    kev_url: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+    advisories_url: https://www.cisa.gov/news-events/cybersecurity-advisories
+    rate_limit_rps: 1
+    cache_ttl_hours: 24
+    timeout_seconds: 30
+    registration_url: null
+    free_tier: true
+    notes: >
+      Public government feed. Rate-limit courtesy: 1 req/s.
+      Advisory pages are static HTML; cache aggressively.
+
+  alienvault_otx:
+    enabled: true
+    api_key_env: OTX_API_KEY
+    base_url: https://otx.alienvault.com/api/v1
+    rate_limit_rps: 10
+    timeout_seconds: 30
+    registration_url: https://otx.alienvault.com/accounts/register
+    free_tier: true
+    notes: >
+      Free registration required. Returns community pulse data.
+      API key passed via X-OTX-KEY header.
+
+  threatfox:
+    enabled: true
+    api_key_env: null
+    base_url: https://threatfox-api.abuse.ch/api/v1/
+    rate_limit_rps: null
+    timeout_seconds: 30
+    registration_url: null
+    free_tier: true
+    notes: >
+      Public POST-based API. No authentication required.
+      Include descriptive User-Agent header per Abuse.ch policy.
+
+  malpedia:
+    enabled: true
+    api_key_env: MALPEDIA_API_KEY
+    base_url: https://malpedia.caad.fkie.fraunhofer.de/api
+    rate_limit_rps: null
+    timeout_seconds: 30
+    registration_url: https://malpedia.caad.fkie.fraunhofer.de/register
+    free_tier: true
+    notes: >
+      Free API key required. Provides malware family to actor attribution graph.
+      API key passed via Authorization header.
+
+  circl_misp:
+    enabled: true
+    api_key_env: null
+    base_url: https://www.circl.lu/doc/misp/
+    rate_limit_rps: 1
+    timeout_seconds: 30
+    registration_url: null
+    free_tier: true
+    notes: >
+      Public MISP feed from CIRCL. No authentication required.
+
+  nvd:
+    enabled: false
+    api_key_env: NVD_API_KEY
+    base_url: https://services.nvd.nist.gov/rest/json/cves/2.0
+    rate_limit_rps: 1
+    timeout_seconds: 30
+    registration_url: https://nvd.nist.gov/developers/request-an-api-key
+    free_tier: true
+    notes: >
+      Future collector — not in initial build scope.

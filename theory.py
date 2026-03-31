@@ -1,1 +1,811 @@
+"""
+theory.py
+---------
+THEORY — Multi-source Threat Actor Intelligence Framework
 
+An open-source alternative to enterprise threat intelligence platforms.
+Built for analysts, hunters, students, and researchers who believe
+good intelligence shouldn't require a six-figure subscription.
+
+Usage examples
+--------------
+  # Basic dossier
+  python theory.py --actor APT28
+
+  # Multi-source with all enrichments
+  python theory.py --actor APT28 --sources mitre,malpedia,otx,sigma,threatfox
+
+  # Export all formats
+  python theory.py --actor "Lazarus Group" --sources mitre,malpedia --output all
+
+  # STIX bundle for MISP/OpenCTI import
+  python theory.py --actor Turla --sources mitre,otx --output stix
+
+  # Don't save files, just print
+  python theory.py --actor APT41 --sources mitre --no-save
+
+  # See what's available
+  python theory.py --list-sources
+  python theory.py --list-actors
+
+  # Refresh cached data
+  python theory.py --update-bundles
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import logging
+import sys
+from typing import Any
+
+# ---------------------------------------------------------------------------
+# Logging — clean format, WARNING by default
+# ---------------------------------------------------------------------------
+
+logging.basicConfig(
+    level=logging.WARNING,
+    format="%(levelname)s  %(name)s  %(message)s",
+)
+logger = logging.getLogger("theory")
+
+
+# ---------------------------------------------------------------------------
+# Source registry
+# ---------------------------------------------------------------------------
+
+SUPPORTED_SOURCES: dict[str, str | None] = {
+    "mitre":     "collectors.mitre_attack.MitreAttackCollector",
+    "cisa":      "collectors.cisa_advisories.CisaAdvisoriesCollector",
+    "malpedia":  "collectors.malpedia.MalpediaCollector",
+    "otx":       "collectors.alienvault_otx.AlienVaultOTXCollector",
+    # Enrichment-only — accepted by CLI but handled separately
+    "sigma":     None,
+    "threatfox": None,
+}
+
+SOURCE_DESCRIPTIONS: dict[str, str] = {
+    "mitre":     "MITRE ATT&CK — techniques, malware, campaigns (local bundle, offline)",
+    "cisa":      "CISA advisories + KEV catalog (free, no auth)",
+    "malpedia":  "Malpedia malware family database (free, no auth)",
+    "otx":       "AlienVault OTX pulses + IOCs (free, requires OTX_API_KEY in .env)",
+    "sigma":     "SigmaHQ detection rules mapped to ATT&CK (free, optional GITHUB_TOKEN)",
+    "threatfox": "ThreatFox IOCs by malware family (free, no auth)",
+}
+
+SOURCE_REQUIRES: dict[str, str] = {
+    "otx":   "OTX_API_KEY",
+    "sigma": "GITHUB_TOKEN (optional, recommended)",
+}
+
+ENRICHMENT_SOURCES: dict[str, str] = {
+    "sigma":     "collectors.sigma_rules.SigmaCollector",
+    "threatfox": "collectors.threatfox.ThreatFoxCollector",
+}
+
+MAPPER_REGISTRY: dict[str, str] = {
+    "mitre":    "mappers.mitre.MitreMapper",
+    "cisa":     "mappers.cisa.CisaMapper",
+    "malpedia": "collectors.malpedia.MalpediaMapper",
+    "otx":      "collectors.alienvault_otx.AlienVaultOTXMapper",
+}
+
+# Default source combination — good balance of coverage vs speed
+DEFAULT_SOURCES = "mitre,malpedia,otx"
+
+
+# ---------------------------------------------------------------------------
+# Info commands
+# ---------------------------------------------------------------------------
+
+def cmd_list_sources() -> None:
+    """Print a formatted table of all available sources."""
+    try:
+        from rich.console import Console
+        from rich.table   import Table
+        from rich         import box as rich_box
+        console = Console()
+        console.print()
+        console.print("[bold cyan]THEORY — Available Sources[/]")
+        console.print()
+
+        t = Table("Key", "Description", "Auth Required", "Cache",
+                  box=rich_box.SIMPLE_HEAD, header_style="bold magenta")
+
+        cache_ttls = {
+            "mitre":     "7 days (.cache/enterprise-attack.json)",
+            "cisa":      "per request",
+            "malpedia":  "per request (.cache/malpedia/)",
+            "otx":       "per request (.cache/otx/)",
+            "sigma":     "7 days (.cache/sigma/)",
+            "threatfox": "24 hours (.cache/threatfox/)",
+        }
+
+        for key, desc in SOURCE_DESCRIPTIONS.items():
+            auth = SOURCE_REQUIRES.get(key, "none")
+            cache = cache_ttls.get(key, "—")
+            t.add_row(
+                f"[cyan]{key}[/]",
+                desc,
+                f"[yellow]{auth}[/]" if auth != "none" else "[dim]none[/]",
+                f"[dim]{cache}[/]",
+            )
+        console.print(t)
+        console.print()
+        console.print("[dim]Usage: python theory.py --actor APT28 --sources mitre,malpedia,otx,sigma,threatfox[/]")
+        console.print()
+
+    except ImportError:
+        print("\nTHEORY — Available Sources\n")
+        print(f"{'Key':<12} {'Auth':<25} Description")
+        print("-" * 80)
+        for key, desc in SOURCE_DESCRIPTIONS.items():
+            auth = SOURCE_REQUIRES.get(key, "none")
+            print(f"{key:<12} {auth:<25} {desc}")
+        print()
+
+
+def cmd_list_actors() -> None:
+    """Print all actors in the cross-source alias table."""
+    try:
+        from collectors.cisa_advisories import ALIAS_TABLE
+    except ImportError:
+        print("Could not load alias table.")
+        return
+
+    try:
+        from rich.console import Console
+        from rich.table   import Table
+        from rich         import box as rich_box
+        console = Console()
+        console.print()
+        console.print(f"[bold cyan]THEORY — Known Actors ({len(ALIAS_TABLE)})[/]")
+        console.print("[dim]These actors have cross-source alias resolution built in.[/]")
+        console.print("[dim]Any actor name or alias in this list will resolve correctly across all sources.[/]")
+        console.print()
+
+        t = Table("Canonical Name", "Alias Count", "Sample Aliases",
+                  box=rich_box.SIMPLE_HEAD, header_style="bold magenta")
+
+        for canonical, aliases in sorted(ALIAS_TABLE.items()):
+            sample = ", ".join(sorted(aliases)[:4])
+            if len(aliases) > 4:
+                sample += f" +{len(aliases)-4} more"
+            t.add_row(
+                f"[cyan]{canonical}[/]",
+                str(len(aliases)),
+                f"[dim]{sample}[/]",
+            )
+        console.print(t)
+        console.print()
+        console.print("[dim]Tip: --actor accepts any alias. 'Fancy Bear', 'Strontium', and 'APT28' all work.[/]")
+        console.print()
+
+    except ImportError:
+        from collectors.cisa_advisories import ALIAS_TABLE
+        print(f"\nTHEORY — Known Actors ({len(ALIAS_TABLE)})\n")
+        for canonical, aliases in sorted(ALIAS_TABLE.items()):
+            print(f"  {canonical:<25} ({len(aliases)} aliases)")
+        print()
+
+
+def cmd_update_bundles() -> None:
+    """Refresh the ATT&CK bundle and clear stale caches."""
+    import subprocess
+    import shutil
+    from pathlib import Path
+
+    try:
+        from rich.console import Console
+        console = Console()
+    except ImportError:
+        console = None
+
+    def _print(msg: str, style: str = "") -> None:
+        if console:
+            console.print(f"[{style}]{msg}[/]" if style else msg)
+        else:
+            print(msg)
+
+    _print("\nTHEORY — Update Bundles\n", "bold cyan")
+
+    # 1. ATT&CK bundle
+    bundle_path = Path(".cache/enterprise-attack.json")
+    bundle_path.parent.mkdir(exist_ok=True)
+    url = (
+        "https://github.com/mitre-attack/attack-stix-data/raw/master/"
+        "enterprise-attack/enterprise-attack.json"
+    )
+    _print("Downloading MITRE ATT&CK bundle…", "dim")
+    _print(f"  Source: {url}", "dim")
+
+    try:
+        result = subprocess.run(
+            ["curl", "-L", "--progress-bar", "-o", str(bundle_path), url],
+            check=True,
+        )
+        size_mb = bundle_path.stat().st_size / 1_048_576
+        _print(f"  ✓ ATT&CK bundle updated ({size_mb:.1f} MB)", "green")
+    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
+        _print(f"  ✗ ATT&CK bundle update failed: {exc}", "red")
+        _print("  Run manually: curl -L {url} -o .cache/enterprise-attack.json", "dim")
+
+    # 2. Clear Sigma cache (rules update frequently)
+    sigma_cache = Path(".cache/sigma")
+    if sigma_cache.exists():
+        count = len(list(sigma_cache.glob("*.json")))
+        shutil.rmtree(sigma_cache)
+        _print(f"  ✓ Sigma cache cleared ({count} cached rule files)", "green")
+    else:
+        _print("  ✓ Sigma cache already empty", "dim")
+
+    # 3. Clear ThreatFox cache (24hr TTL, but explicit refresh is useful)
+    tf_cache = Path(".cache/threatfox")
+    if tf_cache.exists():
+        count = len(list(tf_cache.glob("*.json")))
+        shutil.rmtree(tf_cache)
+        _print(f"  ✓ ThreatFox cache cleared ({count} cached family files)", "green")
+    else:
+        _print("  ✓ ThreatFox cache already empty", "dim")
+
+    # 4. Leave Malpedia + OTX caches — they're per-family/per-pulse and expensive to rebuild
+    _print("\n  Malpedia + OTX caches preserved (clear manually if needed).", "dim")
+    _print("  Run THEORY normally to rebuild Sigma + ThreatFox caches.\n", "dim")
+    _print("Update complete.\n", "bold green")
+
+
+# ---------------------------------------------------------------------------
+# Progress bar support
+# ---------------------------------------------------------------------------
+
+def _make_progress():
+    """Return a Rich progress context manager if Rich is available, else None."""
+    try:
+        from rich.progress import (
+            Progress, SpinnerColumn, TextColumn,
+            BarColumn, TaskProgressColumn, TimeElapsedColumn,
+        )
+        return Progress(
+            SpinnerColumn(),
+            TextColumn("[bold cyan]{task.description}"),
+            BarColumn(),
+            TaskProgressColumn(),
+            TimeElapsedColumn(),
+            transient=True,
+        )
+    except ImportError:
+        return None
+
+
+# ---------------------------------------------------------------------------
+# Core helpers
+# ---------------------------------------------------------------------------
+
+def _load_class(dotted_path: str):
+    import importlib
+    module_path, class_name = dotted_path.rsplit(".", 1)
+    return getattr(importlib.import_module(module_path), class_name)
+
+
+def _load_normalize_fn():
+    try:
+        from processors.normalizer import Normalizer  # type: ignore
+        return Normalizer().normalize
+    except (ImportError, AttributeError):
+        pass
+    try:
+        from processors.normalizer import normalizer  # type: ignore
+        return normalizer
+    except ImportError:
+        pass
+    try:
+        from processors.normalizer import normalize  # type: ignore
+        return normalize
+    except ImportError:
+        pass
+    logger.warning("Could not import normalizer — records will not be normalised.")
+    return lambda r: r
+
+
+def _sanitize_profile(profile: dict[str, Any]) -> dict[str, Any]:
+    """
+    Recursively strip non-JSON-serialisable keys and types.
+    The scaffold's deduplicator stores internal indexes:
+      _technique_index  → dict with tuple keys
+      _malware_index    → set
+      _indicator_index  → dict with tuple keys
+    These must be removed before any output.
+    """
+    def _clean(obj: Any) -> Any:
+        if isinstance(obj, dict):
+            return {k: _clean(v) for k, v in obj.items() if isinstance(k, str)}
+        if isinstance(obj, list):
+            return [_clean(i) for i in obj]
+        if isinstance(obj, set):
+            return sorted(str(i) for i in obj)
+        return obj
+    return _clean(profile)
+
+
+def _collect_and_map(actor: str, source_key: str) -> dict[str, Any] | None:
+    collector_path = SUPPORTED_SOURCES.get(source_key, "NOT_FOUND")
+    if collector_path == "NOT_FOUND":
+        logger.warning("Unknown source %r — skipping.", source_key)
+        return None
+    if collector_path is None:
+        return None   # enrichment-only
+    try:
+        raw = _load_class(collector_path)().query(actor)
+    except Exception as exc:
+        logger.error("Collector %r failed: %s", source_key, exc)
+        return None
+    if raw is None:
+        return None
+    mapper_path = MAPPER_REGISTRY.get(source_key)
+    if mapper_path:
+        try:
+            raw = _load_class(mapper_path)().map(raw)
+        except Exception as exc:
+            logger.error("Mapper %r failed: %s", source_key, exc)
+            return None
+    return raw
+
+
+def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
+    enricher_path = ENRICHMENT_SOURCES.get(source_key)
+    if not enricher_path:
+        return profile
+    try:
+        enricher = _load_class(enricher_path)()
+
+        if source_key == "sigma":
+            tids = [
+                t.get("technique_id", "")
+                for t in (profile.get("techniques") or [])
+                if t.get("technique_id")
+            ]
+            if not tids:
+                return profile
+            sigma_map = enricher.collect_for_techniques(tids)
+            for t in (profile.get("techniques") or []):
+                tid   = t.get("technique_id", "")
+                rules = sigma_map.get(tid, [])
+                if rules:
+                    t["sigma_rules"]      = rules
+                    t["sigma_rule_count"] = len(rules)
+                    first = rules[0]["title"]
+                    extra = len(rules) - 1
+                    t["detection"] = (
+                        f"{first} (+{extra} more)" if extra > 0 else first
+                    )
+            profile["sigma_rule_count"] = sum(len(v) for v in sigma_map.values())
+            logger.info("Sigma: enriched %d techniques with %d rules",
+                        len(sigma_map), profile["sigma_rule_count"])
+
+        elif source_key == "threatfox":
+            malware_names = [
+                m.get("name", "")
+                for m in (profile.get("malware") or [])
+                if m.get("name")
+            ]
+            if not malware_names:
+                return profile
+            result = enricher.collect_for_malware_families(
+                malware_names, profile.get("actor_name", "")
+            )
+            if not result:
+                return profile
+            existing = profile.get("indicators", [])
+            seen = {
+                f"{i.get('type','')}:{i.get('value','').lower()}"
+                for i in existing
+            }
+            new_iocs = []
+            for ioc in (result.get("indicators") or []):
+                key = f"{ioc.get('type','')}:{ioc.get('value','').lower()}"
+                if key not in seen:
+                    seen.add(key)
+                    new_iocs.append(ioc)
+            profile["indicators"] = existing + new_iocs
+            profile["threatfox_ioc_count"]   = len(new_iocs)
+            profile["threatfox_family_hits"]  = result.get("family_hits", {})
+            logger.info("ThreatFox: added %d IOCs", len(new_iocs))
+
+    except Exception as exc:
+        logger.error("Enrichment %r failed: %s", source_key, exc)
+    return profile
+
+
+# ---------------------------------------------------------------------------
+# Main pipeline
+# ---------------------------------------------------------------------------
+
+def run(
+    actor:   str,
+    sources: list[str],
+    output:  str  = "dossier",
+    save:    bool = True,
+    verbose: bool = False,
+) -> dict[str, Any] | None:
+
+    if verbose:
+        logging.getLogger().setLevel(logging.DEBUG)
+
+    progress = _make_progress()
+
+    # ── 1. Collect & map ──────────────────────────────────────────────
+    collect_sources  = [s for s in sources if s not in ENRICHMENT_SOURCES]
+    enrich_sources   = [s for s in sources if s in ENRICHMENT_SOURCES]
+    raw_records: list[dict] = []
+
+    if progress:
+        with progress:
+            task = progress.add_task(
+                f"Collecting intelligence for [bold]{actor}[/]…",
+                total=len(collect_sources),
+            )
+            for source_key in collect_sources:
+                progress.update(task, description=f"Querying [cyan]{source_key}[/]…")
+                record = _collect_and_map(actor, source_key)
+                if record:
+                    raw_records.append(record)
+                progress.advance(task)
+    else:
+        for source_key in collect_sources:
+            record = _collect_and_map(actor, source_key)
+            if record:
+                raw_records.append(record)
+
+    if not raw_records:
+        print(f"\n[theory] No data found for actor: {actor!r}", file=sys.stderr)
+        print("[theory] Try --list-actors to see supported actors, or check your source keys with --list-sources.\n",
+              file=sys.stderr)
+        return None
+
+    # ── 2. Normalise ──────────────────────────────────────────────────
+    _normalize  = _load_normalize_fn()
+    normalised: list[dict] = []
+    for record in raw_records:
+        try:
+            normalised.append(_normalize(record))
+        except Exception as exc:
+            logger.warning("Normalizer rejected a record: %s", exc)
+
+    if not normalised:
+        print("[theory] All records failed normalisation.", file=sys.stderr)
+        return None
+
+    # ── 3. Deduplicate ────────────────────────────────────────────────
+    from processors.deduplicator import deduplicate
+    profile = deduplicate(normalised)
+
+    # Remap normalizer field names → reporter field names
+    if not profile.get("origin") and profile.get("suspected_origin"):
+        profile["origin"] = profile["suspected_origin"]
+    if not profile.get("motivations"):
+        raw_mot = profile.get("motivation")
+        if raw_mot:
+            profile["motivations"] = [raw_mot] if isinstance(raw_mot, str) else list(raw_mot)
+    if not profile.get("sectors") and profile.get("target_sectors"):
+        profile["sectors"] = profile["target_sectors"]
+
+    # Restore technique metadata stripped by normalizer
+    _technique_meta: dict[str, dict] = {}
+    for raw in raw_records:
+        for t in (raw.get("techniques") or []):
+            tid = (t.get("technique_id") or "").strip().upper()
+            if tid and tid not in _technique_meta:
+                _technique_meta[tid] = {
+                    "technique_name": t.get("technique_name", ""),
+                    "detection":      t.get("detection", ""),
+                    "tactic":         t.get("tactic", ""),
+                }
+    for t in (profile.get("techniques") or []):
+        tid  = (t.get("technique_id") or "").upper()
+        meta = _technique_meta.get(tid, {})
+        if not t.get("name") and meta.get("technique_name"):
+            t["name"] = meta["technique_name"]
+        if not t.get("detection_recs") and meta.get("detection"):
+            t["detection_recs"] = [meta["detection"]]
+        t["technique_name"] = t.get("name") or meta.get("technique_name", "")
+        t["detection"]      = (t.get("detection_recs") or [meta.get("detection", "")])[0]
+        if not t.get("tactic") and meta.get("tactic"):
+            t["tactic"] = meta["tactic"]
+
+    # Pass through CISA/OTX/ThreatFox enrichments
+    all_cves: list = []; all_advisories: list = []; all_sectors: list = []; all_iocs: list = []
+    seen_cves: set[str] = set(); seen_adv: set[str] = set()
+    seen_sect: set[str] = set(); seen_iocs: set[str] = set()
+    for raw in raw_records:
+        for cve in (raw.get("cves") or []):
+            cid = cve.get("cve_id", "")
+            if cid and cid not in seen_cves:
+                seen_cves.add(cid); all_cves.append(cve)
+        for adv in (raw.get("advisories") or []):
+            key = adv.get("url") or adv.get("title", "")
+            if key and key not in seen_adv:
+                seen_adv.add(key); all_advisories.append(adv)
+        for s in (raw.get("sectors") or []):
+            if s and s.lower() not in seen_sect:
+                seen_sect.add(s.lower()); all_sectors.append(s)
+        for ioc in (raw.get("indicators") or []):
+            key = f"{ioc.get('type','')}:{ioc.get('value','').lower()}"
+            if key not in seen_iocs:
+                seen_iocs.add(key); all_iocs.append(ioc)
+
+    if all_cves:        profile["cves"]       = all_cves
+    if all_advisories:  profile["advisories"]  = all_advisories
+    if all_sectors and not profile.get("sectors"): profile["sectors"] = all_sectors
+    if all_iocs:        profile["indicators"]  = all_iocs
+
+    # Malpedia malware enrichment
+    malpedia_meta: dict[str, dict] = {}
+    for raw in raw_records:
+        if raw.get("source_id") == "malpedia":
+            for m in (raw.get("malware") or []):
+                name = (m.get("name") or "").lower()
+                if name: malpedia_meta[name] = m
+    for m in (profile.get("malware") or []):
+        name = (m.get("name") or "").lower()
+        meta = malpedia_meta.get(name, {})
+        if meta.get("aliases")    and not m.get("aliases"):    m["aliases"]    = meta["aliases"]
+        if meta.get("yara_count") and not m.get("yara_count"): m["yara_count"] = meta["yara_count"]
+        if meta.get("description") and not m.get("description"): m["description"] = meta["description"]
+
+    # Metadata
+    if not profile.get("origin") or not profile.get("motivations"):
+        for raw in raw_records:
+            if not profile.get("origin") and raw.get("origin"):
+                profile["origin"] = raw["origin"]
+            if not profile.get("motivations") and raw.get("motivations"):
+                profile["motivations"] = raw["motivations"]
+
+    profile["sources_cited"] = list({r.get("source_id", "unknown") for r in normalised})
+    for r in raw_records:
+        if r.get("mitre_id") or r.get("mitre_group_id"):
+            profile["mitre_group_id"] = r.get("mitre_id") or r.get("mitre_group_id")
+            break
+
+    # ── 4. Enrichment (Sigma + ThreatFox) ────────────────────────────
+    for source_key in enrich_sources:
+        if source_key == "sigma" and progress:
+            tids = [t.get("technique_id","") for t in (profile.get("techniques") or []) if t.get("technique_id")]
+            with progress:
+                task = progress.add_task(
+                    f"Fetching Sigma rules for [bold]{len(tids)} techniques[/]…",
+                    total=len(tids),
+                )
+                # Monkey-patch the sigma collector to update progress
+                _orig_fetch = None
+                try:
+                    from collectors import sigma_rules as _sm
+                    _orig_fetch = _sm.SigmaCollector._fetch_rules_for_technique
+                    def _patched(self, tid):
+                        result = _orig_fetch(self, tid)
+                        progress.advance(task)
+                        return result
+                    _sm.SigmaCollector._fetch_rules_for_technique = _patched
+                    profile = _enrich_profile(profile, source_key)
+                finally:
+                    if _orig_fetch:
+                        _sm.SigmaCollector._fetch_rules_for_technique = _orig_fetch
+        else:
+            profile = _enrich_profile(profile, source_key)
+
+    # ── 5. Output ─────────────────────────────────────────────────────
+    if output == "json":
+        _output_json(profile, save)
+    elif output == "stix":
+        _output_stix(profile, save)
+    elif output == "all":
+        _output_dossier(profile, save)
+        _output_json(profile, save)
+        _output_stix(profile, save)
+    else:
+        _output_dossier(profile, save)
+
+    return profile
+
+
+# ---------------------------------------------------------------------------
+# Output helpers
+# ---------------------------------------------------------------------------
+
+def _output_dossier(profile: dict[str, Any], save: bool) -> None:
+    from reporters.dossier import DossierReporter
+    reporter = DossierReporter()
+    reporter.render(profile)
+    if save:
+        path = reporter.save_markdown(profile)
+        print(f"\n[theory] Dossier saved → {path}")
+
+
+def _output_stix(profile: dict[str, Any], save: bool) -> None:
+    import signal
+    try:
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+    except AttributeError:
+        pass
+    from reporters.stix_reporter import StixReporter
+    clean  = _sanitize_profile(profile)
+    bundle = StixReporter().build_bundle(clean)
+    try:
+        print(json.dumps(bundle, indent=2, default=str))
+    except BrokenPipeError:
+        pass
+    if save:
+        path = StixReporter().save(clean)
+        print(f"\n[theory] STIX bundle saved → {path}", file=sys.stderr)
+
+
+def _output_json(profile: dict[str, Any], save: bool) -> None:
+    clean = _sanitize_profile(profile)
+    try:
+        print(json.dumps(clean, indent=2, default=str))
+    except BrokenPipeError:
+        pass
+    if save:
+        from reporters.json_reporter import JsonReporter
+        path = JsonReporter().save(clean)
+        print(f"\n[theory] JSON saved → {path}", file=sys.stderr)
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+
+EPILOG = """
+examples:
+  python theory.py --actor APT28
+  python theory.py --actor "Fancy Bear" --sources mitre,malpedia,otx
+  python theory.py --actor Lazarus --sources mitre,malpedia,otx,sigma,threatfox
+  python theory.py --actor APT41 --sources mitre,otx --output stix
+  python theory.py --actor Turla --sources mitre,malpedia --output all
+  python theory.py --actor APT29 --sources mitre --no-save
+  python theory.py --list-sources
+  python theory.py --list-actors
+  python theory.py --update-bundles
+
+notes:
+  - --actor accepts any name or alias (e.g. "Cozy Bear" = APT29 = Midnight Blizzard)
+  - Run --update-bundles periodically to refresh ATT&CK data and Sigma rules
+  - First run with --sources sigma takes ~10 min to build the cache (instant after)
+  - Set OTX_API_KEY and GITHUB_TOKEN in .env for best results
+  - Output files are saved to output/dossiers/
+"""
+
+def _build_parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(
+        prog="theory",
+        description=(
+            "THEORY — open-source multi-source threat actor intelligence framework.\n"
+            "Generates analyst-grade dossiers from MITRE ATT&CK, Malpedia, OTX, Sigma, ThreatFox, and more."
+        ),
+        epilog=EPILOG,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+
+    # ── Actor ──────────────────────────────────────────────────────────
+    p.add_argument(
+        "--actor", "-a",
+        metavar="NAME",
+        help=(
+            'Threat actor name or any known alias. '
+            'Examples: "APT28", "Fancy Bear", "Cozy Bear", "Lazarus Group", "Volt Typhoon". '
+            'Use --list-actors to see all supported actors and their aliases.'
+        ),
+    )
+
+    # ── Sources ────────────────────────────────────────────────────────
+    source_keys = ", ".join(SOURCE_DESCRIPTIONS.keys())
+    p.add_argument(
+        "--sources", "-s",
+        metavar="SOURCE[,SOURCE...]",
+        default=DEFAULT_SOURCES,
+        help=(
+            f"Comma-separated intelligence sources. Available: {source_keys}. "
+            f"Default: {DEFAULT_SOURCES}. "
+            "Use --list-sources for details on each source."
+        ),
+    )
+
+    # ── Output format ──────────────────────────────────────────────────
+    p.add_argument(
+        "--output", "-o",
+        choices=["dossier", "json", "stix", "all"],
+        default="dossier",
+        metavar="FORMAT",
+        help=(
+            "Output format. "
+            "dossier = terminal + markdown file (default). "
+            "json = raw profile JSON. "
+            "stix = STIX 2.1 bundle for MISP/OpenCTI/Sentinel import. "
+            "all = write all three formats."
+        ),
+    )
+
+    # ── File saving ────────────────────────────────────────────────────
+    p.add_argument(
+        "--no-save",
+        action="store_true",
+        help="Print output to terminal only — do not write files to output/dossiers/.",
+    )
+
+    # ── Verbosity ──────────────────────────────────────────────────────
+    p.add_argument(
+        "--verbose", "-v",
+        action="store_true",
+        help="Enable debug logging. Shows which sources are queried and what data is returned.",
+    )
+
+    # ── Info commands ──────────────────────────────────────────────────
+    info = p.add_argument_group("information commands (no actor required)")
+    info.add_argument(
+        "--list-sources",
+        action="store_true",
+        help="Show all available intelligence sources with auth requirements and cache info.",
+    )
+    info.add_argument(
+        "--list-actors",
+        action="store_true",
+        help="Show all actors with built-in cross-source alias resolution.",
+    )
+    info.add_argument(
+        "--update-bundles",
+        action="store_true",
+        help=(
+            "Refresh the local ATT&CK STIX bundle and clear Sigma/ThreatFox caches. "
+            "Run periodically to stay current with new ATT&CK releases and Sigma rules."
+        ),
+    )
+
+    return p
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = _build_parser()
+    args   = parser.parse_args(argv)
+
+    # ── Info commands (no --actor needed) ─────────────────────────────
+    if args.list_sources:
+        cmd_list_sources()
+        return
+
+    if args.list_actors:
+        cmd_list_actors()
+        return
+
+    if args.update_bundles:
+        cmd_update_bundles()
+        return
+
+    # ── Require --actor for everything else ───────────────────────────
+    if not args.actor:
+        parser.print_help()
+        print("\nerror: --actor is required. Try: python theory.py --actor APT28\n")
+        sys.exit(1)
+
+    sources = [s.strip().lower() for s in args.sources.split(",") if s.strip()]
+
+    # Validate sources
+    unknown = [s for s in sources if s not in SUPPORTED_SOURCES]
+    if unknown:
+        print(f"\n[theory] Unknown source(s): {', '.join(unknown)}")
+        print(f"[theory] Available: {', '.join(SUPPORTED_SOURCES.keys())}")
+        print("[theory] Run --list-sources for details.\n")
+        sys.exit(1)
+
+    profile = run(
+        actor   = args.actor,
+        sources = sources,
+        output  = args.output,
+        save    = not args.no_save,
+        verbose = args.verbose,
+    )
+
+    sys.exit(0 if profile else 1)
+
+
+if __name__ == "__main__":
+    main()

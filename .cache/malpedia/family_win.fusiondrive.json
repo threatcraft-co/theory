@@ -1,0 +1,18 @@
+{
+  "urls": [
+    "https://www.youtube.com/watch?v=_qdCGgQlHJE"
+  ],
+  "uuid": "5de632a3-bf82-4cef-90fa-e7199fdb932c",
+  "notes": [],
+  "sources": [],
+  "updated": "2023-04-25",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "FusionDrive",
+  "description": "",
+  "library_entries": [
+    "warner:20230419:exploring:c68c1d0"
+  ]
+}

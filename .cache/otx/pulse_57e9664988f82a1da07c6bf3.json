@@ -1,0 +1,155 @@
+{
+  "id": "57e9664988f82a1da07c6bf3",
+  "name": "Sofacys Komplex OS X Trojan",
+  "description": "Unit 42 researchers identified a new OS X Trojan associated with the Sofacy group that we are now tracking with the \u2018Komplex\u2019 tag using the Palo Alto Networks AutoFocus threat intelligence platform.\nThe Sofacy group, also known as APT28, Pawn Storm, Fancy Bear, and Sednit, continues to add to the variety of tools they use in attacks; in this case, targeting individuals in the aerospace industry running the OS X operating system. During our analysis, we determined that Komplex was used in a previous attack campaign targeting individuals running OS X that exploited a vulnerability in the MacKeeper antivirus application to deliver Komplex as a payload. Komplex shares a significant amount of functionality and traits with another tool used by Sofacy \u2013 the Carberp variant that Sofacy had used in previous attack campaigns on systems running Windows.",
+  "author_name": "AlienVault",
+  "modified": "2017-08-30T17:39:24.075000",
+  "created": "2016-09-26T18:17:45.168000",
+  "tags": [
+    "sofacy",
+    "komplex",
+    "macosx",
+    "apt",
+    "malware",
+    "aerospace",
+    "unit42"
+  ],
+  "references": [
+    "http://researchcenter.paloaltonetworks.com/2016/09/unit42-sofacys-komplex-os-x-trojan/"
+  ],
+  "public": 1,
+  "adversary": "Sofacy",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 123173,
+      "indicator": "45a93e4b9ae5bece0d53a3a9a83186b8975953344d4dfb340e9de0015a247c54",
+      "type": "FileHash-SHA256",
+      "created": "2016-09-26T18:17:45",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 123174,
+      "indicator": "cffa1d9fc336a1ad89af90443b15c98b71e679aeb03b3a68a5e9c3e7ecabc3d4",
+      "type": "FileHash-SHA256",
+      "created": "2016-09-26T18:17:45",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 123177,
+      "indicator": "2a06f142d87bd9b66621a30088683d6fcec019ba5cc9e5793e54f8d920ab0134",
+      "type": "FileHash-SHA256",
+      "created": "2016-09-26T18:17:45",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 123179,
+      "indicator": "227b7fe495ad9951aebf0aae3c317c1ac526cdd255953f111341b0b11be3bbc5",
+      "type": "FileHash-SHA256",
+      "created": "2016-09-26T18:17:45",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 123180,
+      "indicator": "96a19a90caa41406b632a2046f3a39b5579fbf730aca2357f84bf23f2cbc1fd3",
+      "type": "FileHash-SHA256",
+      "created": "2016-09-26T18:17:45",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 123182,
+      "indicator": "c1b8fc00d815e777e39f34a520342d1942ebd29695c9453951a988c61875bcd7",
+      "type": "FileHash-SHA256",
+      "created": "2016-09-26T18:17:45",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 123183,
+      "indicator": "apple-iclouds.net",
+      "type": "domain",
+      "created": "2016-09-26T18:17:45",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 489967,
+      "indicator": "appleupdate.com",
+      "type": "domain",
+      "created": "2016-09-26T18:17:45",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 123186,
+      "indicator": "itunes-helper.net",
+      "type": "domain",
+      "created": "2016-09-26T18:17:45",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 123189,
+      "indicator": "185.10.58.170",
+      "type": "IPv4",
+      "created": "2016-09-26T18:17:45",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 4,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

@@ -1,0 +1,83 @@
+{
+  "technique_id": "T1005",
+  "cached_at": "2026-03-31T04:59:07.323245+00:00",
+  "rules": [
+    {
+      "title": "Cisco Collect Data",
+      "status": "test",
+      "level": "low",
+      "logsource": "aaa / cisco",
+      "condition_summary": "keywords",
+      "description": "Collect pertinent data from the configuration files",
+      "tags": [
+        "attack.discovery",
+        "attack.credential-access",
+        "attack.collection",
+        "attack.t1087.001",
+        "attack.t1552.001",
+        "attack.t1005"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/network/cisco/aaa/cisco_cli_collect_data.yml"
+    },
+    {
+      "title": "OpenCanary - SMB File Open Request",
+      "status": "test",
+      "level": "high",
+      "logsource": "application / opencanary",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects instances where an SMB service on an OpenCanary node has had a file open request.",
+      "tags": [
+        "attack.lateral-movement",
+        "attack.collection",
+        "attack.t1021",
+        "attack.t1005"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/application/opencanary/opencanary_smb_file_open.yml"
+    },
+    {
+      "title": "AWS EC2 VM Export Failure",
+      "status": "test",
+      "level": "low",
+      "logsource": "cloudtrail / aws",
+      "condition_summary": "selection exclusion filter excluding 1 of exclusion filter*",
+      "description": "An attempt to export an AWS EC2 instance has been detected. A VM Export might indicate an attempt to extract information from an instance.",
+      "tags": [
+        "attack.collection",
+        "attack.t1005",
+        "attack.exfiltration",
+        "attack.t1537"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/cloud/aws/cloudtrail/aws_ec2_vm_export_failure.yml"
+    },
+    {
+      "title": "VeeamBackup Database Credentials Dump Via Sqlcmd.EXE",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection_*",
+      "description": "Detects dump of credentials in VeeamBackup dbo",
+      "tags": [
+        "attack.collection",
+        "attack.t1005"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_sqlcmd_veeam_dump.yml"
+    },
+    {
+      "title": "Script Interpreter Spawning Credential Scanner - Linux",
+      "status": "experimental",
+      "level": "high",
+      "logsource": "process_creation / linux",
+      "condition_summary": "all of selection_*",
+      "description": "|",
+      "tags": [
+        "attack.credential-access",
+        "attack.t1552",
+        "attack.execution",
+        "attack.collection",
+        "attack.t1005",
+        "attack.t1059.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/linux/process_creation/proc_creation_lnx_susp_script_interpretor_spawn_credential_scanner.yml"
+    }
+  ]
+}

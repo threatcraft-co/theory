@@ -1,0 +1,40 @@
+{
+  "id": "58067d78c8e97c028a3ca210",
+  "name": "DealersChoice is Sofacy\u2019s Flash Player Exploit Platform",
+  "description": "Unit 42 has reported on various Sofacy group attacks over the last year, most recently with a post on Komplex, an OS X variant of a tool commonly used by the Sofacy group. In the same timeframe of the Komplex attacks, we collected several weaponized documents that use a tactic previously not observed in use by the Sofacy group. Weaponizing documents to exploit known Microsoft Word vulnerabilities is a common tactic deployed by many adversary groups, but in this example, we discovered RTF documents containing embedded OLE Word documents further containing embedded Adobe Flash (.SWF) files, designed to exploit Flash vulnerabilities rather than Microsoft Word. We have named this tool that generates these documents DealersChoice.",
+  "author_name": "dan8",
+  "modified": "2016-10-18T19:52:24.723000",
+  "created": "2016-10-18T19:52:24.723000",
+  "tags": [],
+  "references": [
+    "http://researchcenter.paloaltonetworks.com/2016/10/unit42-dealerschoice-sofacys-flash-player-exploit-platform/?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed%3A+PaloAltoNetworks+%28Palo+Alto+Networks+Research+Center%29"
+  ],
+  "public": 1,
+  "adversary": "",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [],
+  "revision": 1,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    },
+    {
+      "name": "MISP FEED",
+      "id": 76
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "dan8",
+    "id": "20034",
+    "avatar_url": "https://otx.alienvault.com/assets/images/default-avatar.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

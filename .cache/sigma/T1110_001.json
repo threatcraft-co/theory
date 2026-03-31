@@ -1,0 +1,46 @@
+{
+  "technique_id": "T1110.001",
+  "cached_at": "2026-03-31T04:56:22.680380+00:00",
+  "rules": [
+    {
+      "title": "HackTool - Hydra Password Bruteforce Execution",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects command line parameters used by Hydra password guessing hack tool",
+      "tags": [
+        "attack.credential-access",
+        "attack.t1110",
+        "attack.t1110.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hktl_hydra.yml"
+    },
+    {
+      "title": "Suspicious Connection to Remote Account",
+      "status": "test",
+      "level": "low",
+      "logsource": "ps_script / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.credential-access",
+        "attack.t1110.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/powershell/powershell_script/posh_ps_susp_networkcredential.yml"
+    },
+    {
+      "title": "Suspicious Rejected SMB Guest Logon From IP",
+      "status": "test",
+      "level": "medium",
+      "logsource": "smbclient-security / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detect Attempt PrintNightmare (CVE-2021-1675) Remote code execution in Windows Spooler Service",
+      "tags": [
+        "attack.credential-access",
+        "attack.t1110.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/smbclient/security/win_smbclient_security_susp_failed_guest_logon.yml"
+    }
+  ]
+}

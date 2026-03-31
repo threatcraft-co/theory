@@ -1,0 +1,30 @@
+{
+  "urls": [
+    "http://researchcenter.paloaltonetworks.com/2016/09/unit42-sofacys-komplex-os-x-trojan/",
+    "https://objective-see.com/blog/blog_0x16.html",
+    "https://blog.malwarebytes.com/threat-analysis/2016/09/komplex-mac-backdoor-answers-old-questions/",
+    "https://contagiodump.blogspot.de/2017/02/russian-apt-apt28-collection-of-samples.html",
+    "http://www.welivesecurity.com/wp-content/uploads/2016/10/eset-sednit-part1.pdf"
+  ],
+  "uuid": "d26b5518-8d7f-41a6-b539-231e4962853e",
+  "notes": [],
+  "sources": [],
+  "updated": "2017-02-15",
+  "alt_names": [
+    "SedUploader",
+    "JHUHUGIT",
+    "JKEYSKW"
+  ],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "Komplex",
+  "description": "",
+  "library_entries": [
+    "creus:20160926:sofacys:2c11dc9",
+    "parkour:20170220:part:c54b5de",
+    "reed:20160927:komplex:0cd401d",
+    "research:201608:en:0617083",
+    "wardle:20170101:mac:8c2d52b"
+  ]
+}

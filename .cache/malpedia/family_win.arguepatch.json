@@ -1,0 +1,21 @@
+{
+  "urls": [
+    "https://www.mandiant.com/resources/blog/gru-rise-telegram-minions",
+    "https://www.welivesecurity.com/2022/04/12/industroyer2-industroyer-reloaded/"
+  ],
+  "uuid": "e9b4bec3-ad18-49cc-b6af-c0ffcc283153",
+  "notes": [],
+  "sources": [],
+  "updated": "2022-09-26",
+  "alt_names": [],
+  "attribution": [
+    "APT28",
+    "Sandworm"
+  ],
+  "common_name": "ArguePatch",
+  "description": "During a campaign against a Ukrainian energy provider, a new loader of a new version of CaddyWiper called \"ArguePatch\" was observed by ESET researchers. ArguePatch is a modified version of Hex-Ray's Remote Debugger Server (win32_remote.exe).\r\nArguePatch expects a decryption key and the file of the CaddyWiper shellcode as command line parameters.",
+  "library_entries": [
+    "intelligence:20220923:gru:511ea47",
+    "research:20220412:industroyer2:4d6c5f8"
+  ]
+}

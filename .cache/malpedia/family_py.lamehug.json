@@ -1,0 +1,20 @@
+{
+  "urls": [
+    "https://cert.gov.ua/article/6284730",
+    "https://www.catonetworks.com/blog/cato-ctrl-threat-research-analyzing-lamehug/"
+  ],
+  "uuid": "033d549c-2429-4837-9b3d-53871a2d8520",
+  "notes": [],
+  "sources": [],
+  "updated": "2025-09-09",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "LAMEHUG",
+  "description": "According to CERT-UA, LAMEHUG uses an LLM (Qwen) to dynamically generate commands to gather basic information about a computer and recursively exfiltrate Office documents from a set of folders, to be uploaded either by SFTP or HTTP POST requests.",
+  "library_entries": [
+    "certua:20250717:uac0001:e0a6d4c",
+    "simonovich:20250723:cato:68d4b3f"
+  ]
+}

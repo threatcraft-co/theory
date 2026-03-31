@@ -1,0 +1,49 @@
+{
+  "technique_id": "T1037.001",
+  "cached_at": "2026-03-31T04:54:54.227400+00:00",
+  "rules": [
+    {
+      "title": "Potential Persistence Via Logon Scripts - CommandLine",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects the addition of a new LogonScript to the registry value \"UserInitMprLogonScript\" for potential persistence",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.persistence",
+        "attack.t1037.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_registry_logon_script.yml"
+    },
+    {
+      "title": "Uncommon Userinit Child Process",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter excluding 1 of filter_main_* excluding 1 of filter_optional_*",
+      "description": "Detects uncommon \"userinit.exe\" child processes, which could be a sign of uncommon shells or login scripts used for persistence.",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.t1037.001",
+        "attack.persistence"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_userinit_uncommon_child_processes.yml"
+    },
+    {
+      "title": "Potential Persistence Via Logon Scripts - Registry",
+      "status": "test",
+      "level": "medium",
+      "logsource": "registry_set / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects creation of \"UserInitMprLogonScript\" registry value which can be used as a persistence method by malicious actors",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.t1037.001",
+        "attack.persistence",
+        "attack.lateral-movement"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/registry/registry_set/registry_set_persistence_logon_scripts_userinitmprlogonscript.yml"
+    }
+  ]
+}

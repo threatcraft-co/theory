@@ -1,0 +1,48 @@
+{
+  "technique_id": "T1102.002",
+  "cached_at": "2026-03-31T05:03:02.712240+00:00",
+  "rules": [
+    {
+      "title": "Telegram API Access",
+      "status": "test",
+      "level": "medium",
+      "logsource": "proxy",
+      "condition_summary": "selection exclusion filter excluding exclusion filter",
+      "description": "Detects suspicious requests to Telegram API without the usual Telegram User-Agent",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.command-and-control",
+        "attack.t1071.001",
+        "attack.t1102.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/web/proxy_generic/proxy_telegram_api.yml"
+    },
+    {
+      "title": "Telegram Bot API Request",
+      "status": "test",
+      "level": "medium",
+      "logsource": "dns",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects suspicious DNS queries to api.telegram.org used by Telegram Bots of any kind",
+      "tags": [
+        "attack.command-and-control",
+        "attack.t1102.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/network/dns/net_dns_susp_telegram_api.yml"
+    },
+    {
+      "title": "Github Self-Hosted Runner Execution",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection_worker_* or all of selection_listener_*",
+      "description": "|",
+      "tags": [
+        "attack.command-and-control",
+        "attack.t1102.002",
+        "attack.t1071"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_github_self_hosted_runner.yml"
+    }
+  ]
+}

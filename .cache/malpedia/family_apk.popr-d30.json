@@ -1,0 +1,22 @@
+{
+  "urls": [
+    "http://blog.crysys.hu/2017/01/technical-details-on-the-fancy-bear-android-malware-poprd30-apk/",
+    "http://blog.crysys.hu/2017/03/update-on-the-fancy-bear-android-malware-poprd30-apk/"
+  ],
+  "uuid": "0a7d9d22-a26d-4a2b-ab9b-b296176c3ecf",
+  "notes": [],
+  "sources": [],
+  "updated": "2017-01-09",
+  "alt_names": [
+    "Popr-d30"
+  ],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "X-Agent",
+  "description": "",
+  "library_entries": [
+    "bencsath:20170103:technical:1c2e81e",
+    "bencsath:20170302:update:0e03ee6"
+  ]
+}

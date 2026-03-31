@@ -1,0 +1,74 @@
+{
+  "technique_id": "T1070.004",
+  "cached_at": "2026-03-31T04:57:55.814229+00:00",
+  "rules": [
+    {
+      "title": "Cisco File Deletion",
+      "status": "test",
+      "level": "medium",
+      "logsource": "aaa / cisco",
+      "condition_summary": "keywords",
+      "description": "See what files are being deleted from flash file systems",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.impact",
+        "attack.t1070.004",
+        "attack.t1561.001",
+        "attack.t1561.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/network/cisco/aaa/cisco_cli_file_deletion.yml"
+    },
+    {
+      "title": "File Deletion",
+      "status": "stable",
+      "level": "informational",
+      "logsource": "process_creation / linux",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects file deletion using \"rm\", \"shred\" or \"unlink\" commands which are used often by adversaries to delete files left behind by the actions of their intrusion activity",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/linux/process_creation/proc_creation_lnx_file_deletion.yml"
+    },
+    {
+      "title": "Prefetch File Deleted",
+      "status": "test",
+      "level": "high",
+      "logsource": "file_delete / windows",
+      "condition_summary": "selection exclusion filter excluding 1 of filter_main_*",
+      "description": "Detects the deletion of a prefetch file which may indicate an attempt to destroy forensic evidence",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/file/file_delete/file_delete_win_delete_prefetch.yml"
+    },
+    {
+      "title": "Directory Removal Via Rmdir",
+      "status": "test",
+      "level": "low",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection_*",
+      "description": "|",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_cmd_rmdir_execution.yml"
+    },
+    {
+      "title": "File Deletion Via Del",
+      "status": "test",
+      "level": "low",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection_*",
+      "description": "|",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_cmd_del_execution.yml"
+    }
+  ]
+}

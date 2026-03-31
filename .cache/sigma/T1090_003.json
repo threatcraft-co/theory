@@ -1,0 +1,45 @@
+{
+  "technique_id": "T1090.003",
+  "cached_at": "2026-03-31T04:55:18.775152+00:00",
+  "rules": [
+    {
+      "title": "DNS Query Tor .Onion Address - Sysmon",
+      "status": "test",
+      "level": "high",
+      "logsource": "dns_query / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects DNS queries to an \".onion\" address related to Tor routing networks",
+      "tags": [
+        "attack.command-and-control",
+        "attack.t1090.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/dns_query/dns_query_win_tor_onion_domain_query.yml"
+    },
+    {
+      "title": "Query Tor Onion Address - DNS Client",
+      "status": "test",
+      "level": "high",
+      "logsource": "dns-client / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects DNS resolution of an .onion address related to Tor routing networks",
+      "tags": [
+        "attack.command-and-control",
+        "attack.t1090.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/dns_client/win_dns_client_tor_onion.yml"
+    },
+    {
+      "title": "Tor Client/Browser Execution",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects the use of Tor or Tor-Browser to connect to onion routing networks",
+      "tags": [
+        "attack.command-and-control",
+        "attack.t1090.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_browsers_tor_execution.yml"
+    }
+  ]
+}

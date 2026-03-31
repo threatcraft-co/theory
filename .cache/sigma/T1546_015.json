@@ -1,0 +1,76 @@
+{
+  "technique_id": "T1546.015",
+  "cached_at": "2026-03-31T04:57:09.744436+00:00",
+  "rules": [
+    {
+      "title": "COM Hijacking via TreatAs",
+      "status": "test",
+      "level": "medium",
+      "logsource": "registry_set / windows",
+      "condition_summary": "selection exclusion filter excluding 1 of filter_*",
+      "description": "Detect modification of TreatAs key to enable \"rundll32.exe -sta\" command",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.persistence",
+        "attack.t1546.015"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/registry/registry_set/registry_set_treatas_persistence.yml"
+    },
+    {
+      "title": "Potential Persistence Via Scrobj.dll COM Hijacking",
+      "status": "test",
+      "level": "medium",
+      "logsource": "registry_set / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detect use of scrobj.dll as this DLL looks for the ScriptletURL key to get the location of the script to execute",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.persistence",
+        "attack.t1546.015"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/registry/registry_set/registry_set_persistence_scrobj_dll.yml"
+    },
+    {
+      "title": "Suspicious GetTypeFromCLSID ShellExecute",
+      "status": "test",
+      "level": "medium",
+      "logsource": "ps_script / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects suspicious Powershell code that execute COM Objects",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.persistence",
+        "attack.t1546.015"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/powershell/powershell_script/posh_ps_susp_gettypefromclsid.yml"
+    },
+    {
+      "title": "Potential Persistence Using DebugPath",
+      "status": "test",
+      "level": "medium",
+      "logsource": "registry_set / windows",
+      "condition_summary": "1 of selection_*",
+      "description": "Detects potential persistence using Appx DebugPath",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.persistence",
+        "attack.t1546.015"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/registry/registry_set/registry_set_persistence_appx_debugger.yml"
+    },
+    {
+      "title": "Potential COM Object Hijacking Via TreatAs Subkey - Registry",
+      "status": "test",
+      "level": "medium",
+      "logsource": "registry_set / windows",
+      "condition_summary": "selection exclusion filter excluding 1 of filter_main_*",
+      "description": "Detects COM object hijacking via TreatAs subkey",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.persistence",
+        "attack.t1546.015"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/registry/registry_set/registry_set_persistence_com_key_linking.yml"
+    }
+  ]
+}

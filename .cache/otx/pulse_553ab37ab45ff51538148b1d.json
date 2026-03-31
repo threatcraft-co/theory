@@ -1,0 +1,360 @@
+{
+  "id": "553ab37ab45ff51538148b1d",
+  "name": "APT28 DOMAINS (REPORT)",
+  "description": "Domains used by APT28.",
+  "author_name": "AlienVault",
+  "modified": "2017-08-24T10:45:09.360000",
+  "created": "2015-04-24T21:19:54.553000",
+  "tags": [
+    "apt28",
+    "sofacy",
+    "russia"
+  ],
+  "references": [
+    "https://github.com/fireeye/iocs/tree/master/APT28"
+  ],
+  "public": 1,
+  "adversary": "Sofacy",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 5278,
+      "indicator": "n0vinite.com",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5279,
+      "indicator": "standartnevvs.com",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5280,
+      "indicator": "kavkazcentr.info",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5281,
+      "indicator": "mail.g0v.pl",
+      "type": "hostname",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5282,
+      "indicator": "login-osce.org",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5283,
+      "indicator": "qov.hu.com",
+      "type": "hostname",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5284,
+      "indicator": "poczta.mon.q0v.pl",
+      "type": "hostname",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 33793,
+      "indicator": "smigroup-online.co.uk",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 33794,
+      "indicator": "natoexhibitionff14.com",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5287,
+      "indicator": "q0v.pl",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5288,
+      "indicator": "rnil.am",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5289,
+      "indicator": "baltichost.org",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5290,
+      "indicator": "novinitie.com",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5291,
+      "indicator": "nato.nshq.in",
+      "type": "hostname",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5292,
+      "indicator": "scanmalware.info",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5293,
+      "indicator": "checkmalware.org",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5294,
+      "indicator": "malwarecheck.info",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5295,
+      "indicator": "adawareblock.com",
+      "type": "domain",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5296,
+      "indicator": "8c4fa713c5e2b009114adda758adc445",
+      "type": "FileHash-MD5",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5297,
+      "indicator": "3b0ecd011500f61237c205834db0e13a",
+      "type": "FileHash-MD5",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5298,
+      "indicator": "791428601ad12b9230b9ace4f2138713",
+      "type": "FileHash-MD5",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5299,
+      "indicator": "5882fda97fdf78b47081cc4105d44f7c",
+      "type": "FileHash-MD5",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5300,
+      "indicator": "da2a657dc69d7320f2ffc87013f257ad",
+      "type": "FileHash-MD5",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5301,
+      "indicator": "48656a93f9ba39410763a2196aabc67f",
+      "type": "FileHash-MD5",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5302,
+      "indicator": "9eebfebe3987fec3c395594dc57a0c4c",
+      "type": "FileHash-MD5",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5303,
+      "indicator": "8b92fe86c5b7a9e34f433a6fbac8bc3a",
+      "type": "FileHash-MD5",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5304,
+      "indicator": "ead4ec18ebce6890d20757bb9f5285b1",
+      "type": "FileHash-MD5",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5305,
+      "indicator": "1259c4fe5efd9bf07fc4c78466f2dd09",
+      "type": "FileHash-MD5",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 5306,
+      "indicator": "272f0fde35dbdfccbca1e33373b3570d",
+      "type": "FileHash-MD5",
+      "created": "2017-08-24T10:45:09",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 11,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

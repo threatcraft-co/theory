@@ -1,0 +1,89 @@
+{
+  "technique_id": "T1210",
+  "cached_at": "2026-03-31T05:00:50.029517+00:00",
+  "rules": [
+    {
+      "title": "DNS Query Request By QuickAssist.EXE",
+      "status": "experimental",
+      "level": "low",
+      "logsource": "dns_query / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.command-and-control",
+        "attack.initial-access",
+        "attack.lateral-movement",
+        "attack.t1071.001",
+        "attack.t1210"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/dns_query/dns_query_win_quickassist.yml"
+    },
+    {
+      "title": "Audit CVE Event",
+      "status": "test",
+      "level": "critical",
+      "logsource": "application / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.execution",
+        "attack.t1203",
+        "attack.privilege-escalation",
+        "attack.t1068",
+        "attack.defense-evasion",
+        "attack.t1211",
+        "attack.credential-access",
+        "attack.t1212",
+        "attack.lateral-movement",
+        "attack.t1210",
+        "attack.impact",
+        "attack.t1499.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/application/microsoft-windows_audit_cve/win_audit_cve.yml"
+    },
+    {
+      "title": "Apache Threading Error",
+      "status": "test",
+      "level": "medium",
+      "logsource": "apache",
+      "condition_summary": "keywords",
+      "description": "Detects an issue in apache logs that reports threading related errors",
+      "tags": [
+        "attack.initial-access",
+        "attack.lateral-movement",
+        "attack.t1190",
+        "attack.t1210"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/web/product/apache/web_apache_threading_error.yml"
+    },
+    {
+      "title": "Terminal Service Process Spawn",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter excluding 1 of filter_*",
+      "description": "Detects a process spawned by the terminal service server process (this could be an indicator for an exploitation of CVE-2019-0708)",
+      "tags": [
+        "attack.initial-access",
+        "attack.t1190",
+        "attack.lateral-movement",
+        "attack.t1210",
+        "car.2013-07-002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_svchost_termserv_proc_spawn.yml"
+    },
+    {
+      "title": "Suspicious SysAidServer Child",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects suspicious child processes of SysAidServer (as seen in MERCURY threat actor intrusions)",
+      "tags": [
+        "attack.lateral-movement",
+        "attack.t1210"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_java_sysaidserver_susp_child_process.yml"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "technique_id": "T1211",
+  "cached_at": "2026-03-31T05:03:17.598463+00:00",
+  "rules": [
+    {
+      "title": "Audit CVE Event",
+      "status": "test",
+      "level": "critical",
+      "logsource": "application / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.execution",
+        "attack.t1203",
+        "attack.privilege-escalation",
+        "attack.t1068",
+        "attack.defense-evasion",
+        "attack.t1211",
+        "attack.credential-access",
+        "attack.t1212",
+        "attack.lateral-movement",
+        "attack.t1210",
+        "attack.impact",
+        "attack.t1499.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/application/microsoft-windows_audit_cve/win_audit_cve.yml"
+    },
+    {
+      "title": "Writing Of Malicious Files To The Fonts Folder",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection_*",
+      "description": "Monitors for the hiding possible malicious files in the C:\\Windows\\Fonts\\ location. This folder doesn't require admin privillege to be written and executed from.",
+      "tags": [
+        "attack.t1211",
+        "attack.t1059",
+        "attack.defense-evasion",
+        "attack.persistence",
+        "attack.execution"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_susp_hiding_malware_in_fonts_folder.yml"
+    },
+    {
+      "title": "Microsoft Malware Protection Engine Crash",
+      "status": "test",
+      "level": "high",
+      "logsource": "application / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "This rule detects a suspicious crash of the Microsoft Malware Protection Engine",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1211",
+        "attack.t1562.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/application/application_error/win_application_error_msmpeng_crash.yml"
+    },
+    {
+      "title": "Microsoft Malware Protection Engine Crash - WER",
+      "status": "test",
+      "level": "high",
+      "logsource": "application / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "This rule detects a suspicious crash of the Microsoft Malware Protection Engine",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1211",
+        "attack.t1562.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/application/windows_error_reporting/win_application_msmpeng_crash_wer.yml"
+    }
+  ]
+}

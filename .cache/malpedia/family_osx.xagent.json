@@ -1,0 +1,24 @@
+{
+  "urls": [
+    "http://researchcenter.paloaltonetworks.com/2017/02/unit42-xagentosx-sofacys-xagent-macos-tool/",
+    "https://download.bitdefender.com/resources/files/News/CaseStudies/study/143/Bitdefender-Whitepaper-APT-Mac-A4-en-EN-web.pdf",
+    "https://twitter.com/PhysicalDrive0/status/845009226388918273",
+    "https://www.secureworks.com/research/threat-profiles/iron-twilight"
+  ],
+  "uuid": "858f4396-8bc9-4df8-9370-490bbb3b4535",
+  "notes": [],
+  "sources": [],
+  "updated": "2020-05-23",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "X-Agent",
+  "description": "",
+  "library_entries": [
+    "bitdefender:20170221:dissecting:eec4e1f",
+    "falcone:20170214:xagentosx:33ef060",
+    "physicaldrive0:20170323:xagent:74f4c95",
+    "secureworks:2020:iron:48c68a0"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "technique_id": "T1591",
+  "cached_at": "2026-03-31T04:52:36.762502+00:00",
+  "rules": [
+    {
+      "title": "Bitbucket User Details Export Attempt Detected",
+      "status": "test",
+      "level": "medium",
+      "logsource": "audit / bitbucket",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects user data export activity.",
+      "tags": [
+        "attack.collection",
+        "attack.reconnaissance",
+        "attack.discovery",
+        "attack.t1213",
+        "attack.t1082",
+        "attack.t1591.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/application/bitbucket/audit/bitbucket_audit_user_details_export_attempt_detected.yml"
+    },
+    {
+      "title": "Bitbucket User Permissions Export Attempt",
+      "status": "test",
+      "level": "medium",
+      "logsource": "audit / bitbucket",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects user permission data export attempt.",
+      "tags": [
+        "attack.reconnaissance",
+        "attack.collection",
+        "attack.discovery",
+        "attack.t1213",
+        "attack.t1082",
+        "attack.t1591.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/application/bitbucket/audit/bitbucket_audit_user_permissions_export_attempt_detected.yml"
+    }
+  ]
+}

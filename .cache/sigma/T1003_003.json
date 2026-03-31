@@ -1,0 +1,81 @@
+{
+  "technique_id": "T1003.003",
+  "cached_at": "2026-03-31T04:52:22.544800+00:00",
+  "rules": [
+    {
+      "title": "PUA - DIT Snapshot Viewer",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects the use of Ditsnap tool, an inspection tool for Active Directory database, ntds.dit.",
+      "tags": [
+        "attack.credential-access",
+        "attack.t1003.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_pua_ditsnap.yml"
+    },
+    {
+      "title": "Possible Impacket SecretDump Remote Activity - Zeek",
+      "status": "test",
+      "level": "high",
+      "logsource": "smb_files / zeek",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detect AD credential dumping using impacket secretdump HKTL. Based on the SIGMA rules/windows/builtin/win_impacket_secretdump.yml",
+      "tags": [
+        "attack.credential-access",
+        "attack.t1003.002",
+        "attack.t1003.004",
+        "attack.t1003.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/network/zeek/zeek_smb_converted_win_impacket_secretdump.yml"
+    },
+    {
+      "title": "Cred Dump Tools Dropped Files",
+      "status": "test",
+      "level": "high",
+      "logsource": "file_event / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Files with well-known filenames (parts of credential dump software or files produced by them) creation",
+      "tags": [
+        "attack.credential-access",
+        "attack.t1003.001",
+        "attack.t1003.002",
+        "attack.t1003.003",
+        "attack.t1003.004",
+        "attack.t1003.005"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/file/file_event/file_event_win_cred_dump_tools_dropped_files.yml"
+    },
+    {
+      "title": "Possible Impacket SecretDump Remote Activity",
+      "status": "test",
+      "level": "high",
+      "logsource": "security / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detect AD credential dumping using impacket secretdump HKTL",
+      "tags": [
+        "attack.credential-access",
+        "attack.t1003.002",
+        "attack.t1003.004",
+        "attack.t1003.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/security/win_security_impacket_secretdump.yml"
+    },
+    {
+      "title": "Transferring Files with Credential Data via Network Shares - Zeek",
+      "status": "test",
+      "level": "medium",
+      "logsource": "smb_files / zeek",
+      "condition_summary": "selection exclusion filter",
+      "description": "Transferring files with well-known filenames (sensitive files with credential data) using network shares",
+      "tags": [
+        "attack.credential-access",
+        "attack.t1003.002",
+        "attack.t1003.001",
+        "attack.t1003.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/network/zeek/zeek_smb_converted_win_transferring_files_with_credential_data.yml"
+    }
+  ]
+}

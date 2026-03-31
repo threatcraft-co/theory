@@ -1,0 +1,76 @@
+{
+  "technique_id": "T1070.001",
+  "cached_at": "2026-03-31T04:56:31.210357+00:00",
+  "rules": [
+    {
+      "title": "Security Eventlog Cleared",
+      "status": "test",
+      "level": "high",
+      "logsource": "security / windows",
+      "condition_summary": "1 of selection_*",
+      "description": "One of the Windows Eventlogs has been cleared. e.g. caused by \"wevtutil cl\" command execution",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070.001",
+        "car.2016-04-002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/security/win_security_audit_log_cleared.yml"
+    },
+    {
+      "title": "Suspicious Eventlog Clear",
+      "status": "test",
+      "level": "medium",
+      "logsource": "ps_script / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects usage of known powershell cmdlets such as \"Clear-EventLog\" to clear the Windows event logs",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/powershell/powershell_script/posh_ps_susp_clear_eventlog.yml"
+    },
+    {
+      "title": "Suspicious Eventlog Clearing or Configuration Change Activity",
+      "status": "stable",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "(all of selection_wevtutil_*) or (all of selection_other_ps_*) or (selection_other_wmi) excluding 1 of filter_main_*",
+      "description": "|",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070.001",
+        "attack.t1562.002",
+        "car.2016-04-002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_susp_eventlog_clear.yml"
+    },
+    {
+      "title": "Important Windows Eventlog Cleared",
+      "status": "test",
+      "level": "high",
+      "logsource": "system / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects the clearing of one of the Windows Core Eventlogs. e.g. caused by \"wevtutil cl\" command execution",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070.001",
+        "car.2016-04-002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/system/microsoft_windows_eventlog/win_system_susp_eventlog_cleared.yml"
+    },
+    {
+      "title": "Suspicious Windows Trace ETW Session Tamper Via Logman.EXE",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection exclusion filter*",
+      "description": "Detects the execution of \"logman\" utility in order to disable or delete Windows trace sessions",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1562.001",
+        "attack.t1070.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_logman_disable_eventlog.yml"
+    }
+  ]
+}

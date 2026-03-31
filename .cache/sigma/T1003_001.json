@@ -1,0 +1,89 @@
+{
+  "technique_id": "T1003.001",
+  "cached_at": "2026-03-31T05:03:26.187800+00:00",
+  "rules": [
+    {
+      "title": "Antivirus Password Dumper Detection",
+      "status": "stable",
+      "level": "critical",
+      "logsource": "antivirus",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.credential-access",
+        "attack.t1003",
+        "attack.t1558",
+        "attack.t1003.001",
+        "attack.t1003.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/category/antivirus/av_password_dumper.yml"
+    },
+    {
+      "title": "Mimikatz Use",
+      "status": "test",
+      "level": "high",
+      "logsource": "windows",
+      "condition_summary": "keywords excluding exclusion filter",
+      "description": "This method detects mimikatz keywords in different Eventlogs (some of them only appear in older Mimikatz version that are however still used by different threat groups)",
+      "tags": [
+        "attack.s0002",
+        "attack.lateral-movement",
+        "attack.credential-access",
+        "car.2013-07-001",
+        "car.2019-04-004",
+        "attack.t1003.002",
+        "attack.t1003.004",
+        "attack.t1003.001",
+        "attack.t1003.006"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/win_alert_mimikatz_keywords.yml"
+    },
+    {
+      "title": "Time Travel Debugging Utility Usage - Image",
+      "status": "test",
+      "level": "high",
+      "logsource": "image_load / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects usage of Time Travel Debugging Utility. Adversaries can execute malicious processes and dump processes, such as lsass.exe, via tttracer.exe.",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.credential-access",
+        "attack.t1218",
+        "attack.t1003.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/image_load/image_load_dll_tttracer_module_load.yml"
+    },
+    {
+      "title": "HackTool - Windows Credential Editor (WCE) Execution",
+      "status": "test",
+      "level": "critical",
+      "logsource": "process_creation / windows",
+      "condition_summary": "1 of selection_*",
+      "description": "|",
+      "tags": [
+        "attack.credential-access",
+        "attack.t1003.001",
+        "attack.s0005"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hktl_wce.yml"
+    },
+    {
+      "title": "Remote LSASS Process Access Through Windows Remote Management",
+      "status": "stable",
+      "level": "high",
+      "logsource": "process_access / windows",
+      "condition_summary": "selection exclusion filter excluding 1 of filter_main_*",
+      "description": "Detects remote access to the LSASS process via WinRM. This could be a sign of credential dumping from tools like mimikatz.",
+      "tags": [
+        "attack.credential-access",
+        "attack.execution",
+        "attack.t1003.001",
+        "attack.t1059.001",
+        "attack.lateral-movement",
+        "attack.t1021.006",
+        "attack.s0002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_access/proc_access_win_lsass_remote_access_trough_winrm.yml"
+    }
+  ]
+}

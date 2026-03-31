@@ -1,0 +1,76 @@
+{
+  "technique_id": "T1505.003",
+  "cached_at": "2026-03-31T04:54:31.264182+00:00",
+  "rules": [
+    {
+      "title": "Shellshock Expression",
+      "status": "test",
+      "level": "high",
+      "logsource": "linux",
+      "condition_summary": "keywords",
+      "description": "Detects shellshock expressions in log files",
+      "tags": [
+        "attack.persistence",
+        "attack.t1505.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/linux/builtin/lnx_shellshock.yml"
+    },
+    {
+      "title": "Webshell ReGeorg Detection Via Web Logs",
+      "status": "test",
+      "level": "high",
+      "logsource": "webserver",
+      "condition_summary": "selection exclusion filter and exclusion filter",
+      "description": "Certain strings in the uri_query field when combined with null referer and null user agent can indicate activity associated with the webshell ReGeorg.",
+      "tags": [
+        "attack.persistence",
+        "attack.t1505.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/web/webserver_generic/web_webshell_regeorg.yml"
+    },
+    {
+      "title": "Suspicious ASPX File Drop by Exchange",
+      "status": "test",
+      "level": "high",
+      "logsource": "file_event / windows",
+      "condition_summary": "all of selection exclusion filter*",
+      "description": "Detects suspicious file type dropped by an Exchange component in IIS into a suspicious folder",
+      "tags": [
+        "attack.persistence",
+        "attack.t1505.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/file/file_event/file_event_win_exchange_webshell_drop.yml"
+    },
+    {
+      "title": "Suspicious MSExchangeMailboxReplication ASPX Write",
+      "status": "test",
+      "level": "high",
+      "logsource": "file_event / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects suspicious activity in which the MSExchangeMailboxReplication process writes .asp and .apsx files to disk, which could be a sign of ProxyShell exploitation",
+      "tags": [
+        "attack.initial-access",
+        "attack.t1190",
+        "attack.persistence",
+        "attack.t1505.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/file/file_event/file_event_win_susp_exchange_aspx_write.yml"
+    },
+    {
+      "title": "Suspicious Child Process Of SQL Server",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter excluding 1 of filter_optional_*",
+      "description": "Detects suspicious child processes of the SQLServer process. This could indicate potential RCE or SQL Injection.",
+      "tags": [
+        "attack.t1505.003",
+        "attack.t1190",
+        "attack.initial-access",
+        "attack.persistence",
+        "attack.privilege-escalation"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_mssql_susp_child_process.yml"
+    }
+  ]
+}

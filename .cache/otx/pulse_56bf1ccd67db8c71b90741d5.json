@@ -1,0 +1,171 @@
+{
+  "id": "56bf1ccd67db8c71b90741d5",
+  "name": "A Look Into Fysbis: Sofacy\u2019s Linux Backdoor",
+  "description": "The Sofacy group, also known as APT28 and Sednit, is a fairly well known cyber espionage group believed to have ties to Russia. Their targets have spanned all across the world, with a focus on government, defense organizations and various Eastern European governments. \nFrom these reports, we know that the group uses an abundance of tools and tactics, ranging across zero-day exploits targeting common applications such as Java or Microsoft Office, heavy use of spear-phishing attacks, compromising legitimate websites to stage watering-hole attacks, and targeting over a variety of operating systems \u2013 Windows, OSX, Linux, even mobile iOS.",
+  "author_name": "AlienVault",
+  "modified": "2017-08-23T14:11:14.299000",
+  "created": "2016-02-13T12:08:45.919000",
+  "tags": [
+    "Sofacy",
+    "apt28",
+    "sednit",
+    "linux",
+    "Fysbis",
+    "backdoor",
+    "unit42",
+    "russia"
+  ],
+  "references": [
+    "http://researchcenter.paloaltonetworks.com/2016/02/a-look-into-fysbis-sofacys-linux-backdoor"
+  ],
+  "public": 1,
+  "adversary": "Sofacy",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 212204,
+      "indicator": "fd8b2ea9a2e8a67e4cb3904b49c789d57ed9b1ce5bebfe54fe3d98214d6a0f61",
+      "type": "FileHash-SHA256",
+      "created": "2017-08-23T14:11:14",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 212202,
+      "indicator": "8bca0031f3b691421cb15f9c6e71ce193355d2d8cf2b190438b6962761d0c6bb",
+      "type": "FileHash-SHA256",
+      "created": "2017-08-23T14:11:14",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 212203,
+      "indicator": "02c7cf55fd5c5809ce2dce56085ba43795f2480423a4256537bfdfda0df85592",
+      "type": "FileHash-SHA256",
+      "created": "2017-08-23T14:11:14",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 212192,
+      "indicator": "azureon-line.com",
+      "type": "domain",
+      "created": "2017-08-23T14:11:14",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 212193,
+      "indicator": "mozilla-plugins.com",
+      "type": "domain",
+      "created": "2017-08-23T14:11:14",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 212195,
+      "indicator": "364ff454dcf00420cff13a57bcb78467",
+      "type": "FileHash-MD5",
+      "created": "2017-08-23T14:11:14",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 212196,
+      "indicator": "e107c5c84ded6cd9391aede7f04d64c8",
+      "type": "FileHash-MD5",
+      "created": "2017-08-23T14:11:14",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 212197,
+      "indicator": "075b6695ab63f36af65f7ffd45cccd39",
+      "type": "FileHash-MD5",
+      "created": "2017-08-23T14:11:14",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 212194,
+      "indicator": "mozillaplagins.com",
+      "type": "domain",
+      "created": "2017-08-23T14:11:14",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 30357077,
+      "indicator": "d2f582c70bb93bf81ff8179513402df63c245ae7",
+      "type": "YARA",
+      "created": "2017-08-23T14:11:14",
+      "content": "rule Sofacy_Fybis_ELF_Backdoor_Gen1   \n   {   \n          \n       meta:   \n           description = \"Detects Sofacy Fysbis Linux Backdoor_Naikon_APT_Sample1\"   \n           author = \"Florian Roth\"   \n           reference = \"http://researchcenter.paloaltonetworks.com/2016/02/a-look-into-fysbis-sofacys-linux-backdoor/\"   \n           date = \"2016-02-13\"   \n           score = 80   \n           hash1 = \"02c7cf55fd5c5809ce2dce56085ba43795f2480423a4256537bfdfda0df85592\"   \n           hash2 = \"8bca0031f3b691421cb15f9c6e71ce193355d2d8cf2b190438b6962761d0c6bb\"   \n          \n       strings:   \n           $x1 = \"Your command not writed to pipe\" fullword ascii   \n           $x2 = \"Terminal don`t started for executing command\" fullword ascii   \n           $x3 = \"Command will have end with \\\\n\" fullword ascii   \n           $s1 = \"WantedBy=multi-user.target' >> /usr/lib/systemd/system/\" fullword ascii   \n           $s2 = \"Success execute command or long for waiting executing your command\" fullword ascii   \n           $s3 = \"ls /etc | egrep -e\\\"fedora*|debian*|gentoo*|mandriva*|mandrake*|meego*|redhat*|lsb-*|sun-*|SUSE*|release\\\"\" fullword ascii   \n           $s4 = \"rm -f /usr/lib/systemd/system/\" fullword ascii   \n           $s5 = \"ExecStart=\" fullword ascii   \n           $s6 = \"<table><caption><font size=4 color=red>TABLE EXECUTE FILES</font></caption>\" fullword ascii   \n      \n       condition:   \n           ( uint16(0) == 0x457f and filesize < 500KB and 1 of ($x*) ) or ( 1 of ($x*) and 3 of ($s*) )   \n   }",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 30357078,
+      "indicator": "55a38e3869f093256fd1deda5bdca6fdfda42905",
+      "type": "YARA",
+      "created": "2017-08-23T14:11:14",
+      "content": "rule Sofacy_Fysbis_ELF_Backdoor_Gen2    \n   {   \n      \n       meta:   \n           description = \"Detects Sofacy Fysbis Linux Backdoor\"   \n           author = \"Florian Roth\"   \n           reference = \"http://researchcenter.paloaltonetworks.com/2016/02/a-look-into-fysbis-sofacys-linux-backdoor/\"   \n           date = \"2016-02-13\"   \n           score = 80   \n           hash1 = \"02c7cf55fd5c5809ce2dce56085ba43795f2480423a4256537bfdfda0df85592\"   \n           hash2 = \"8bca0031f3b691421cb15f9c6e71ce193355d2d8cf2b190438b6962761d0c6bb\"   \n           hash3 = \"fd8b2ea9a2e8a67e4cb3904b49c789d57ed9b1ce5bebfe54fe3d98214d6a0f61\"   \n        \n       strings:   \n           $s1 = \"RemoteShell\" ascii   \n           $s2 = \"basic_string::_M_replace_dispatch\" fullword ascii   \n           $s3 = \"HttpChannel\" ascii   \n        \n       condition:   \n           uint16(0) == 0x457f and filesize < 500KB and all of them   \n   }",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 3,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    },
+    {
+      "name": "Linux IOCs",
+      "id": 901
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

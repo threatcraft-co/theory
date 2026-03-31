@@ -1,0 +1,25 @@
+{
+  "urls": [
+    "https://threatvector.cylance.com/en_us/home/flirting-with-ida-and-apt28.html",
+    "https://threatvector.cylance.com/en_us/home/inside-the-apt28-dll-backdoor-blitz.html",
+    "https://twitter.com/cyb3rops/status/1129653190444703744"
+  ],
+  "uuid": "25804d6d-447f-4933-9ba0-876f9d054b68",
+  "notes": [],
+  "sources": [],
+  "updated": "2020-03-25",
+  "alt_names": [
+    "Blitz",
+    "PocoDownloader"
+  ],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "PocoDown",
+  "description": "uses POCO C++ cross-platform library, Xor-based string obfuscation, SSL library code and string overlap with Xtunnel, infrastructure overlap with X-Agent, probably in use since mid-2018",
+  "library_entries": [
+    "roth:20190518:yara:b6d66a4",
+    "team:20190710:flirting:dbf23d3",
+    "team:20190828:inside:c3051c2"
+  ]
+}

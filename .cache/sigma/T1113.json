@@ -1,0 +1,71 @@
+{
+  "technique_id": "T1113",
+  "cached_at": "2026-03-31T04:56:14.867349+00:00",
+  "rules": [
+    {
+      "title": "Screen Capture with Xwd",
+      "status": "test",
+      "level": "low",
+      "logsource": "auditd / linux",
+      "condition_summary": "selection exclusion filter and 1 of xwd_*",
+      "description": "Detects adversary creating screen capture of a full with xwd. Highly recommended using rule on servers, due high usage of screenshot utilities on user workstations",
+      "tags": [
+        "attack.collection",
+        "attack.t1113"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/linux/auditd/execve/lnx_auditd_screencaputre_xwd.yml"
+    },
+    {
+      "title": "Screen Capture - macOS",
+      "status": "test",
+      "level": "low",
+      "logsource": "process_creation / macos",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects attempts to use screencapture to collect macOS screenshots",
+      "tags": [
+        "attack.collection",
+        "attack.t1113"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/macos/process_creation/proc_creation_macos_screencapture.yml"
+    },
+    {
+      "title": "Windows Screen Capture with CopyFromScreen",
+      "status": "test",
+      "level": "medium",
+      "logsource": "ps_script / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.collection",
+        "attack.t1113"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/powershell/powershell_script/posh_ps_capture_screenshots.yml"
+    },
+    {
+      "title": "Windows Recall Feature Enabled - Registry",
+      "status": "test",
+      "level": "medium",
+      "logsource": "registry_set / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.collection",
+        "attack.t1113"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/registry/registry_set/registry_set_enable_windows_recall.yml"
+    },
+    {
+      "title": "Periodic Backup For System Registry Hives Enabled",
+      "status": "test",
+      "level": "medium",
+      "logsource": "registry_set / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.collection",
+        "attack.t1113"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/registry/registry_set/registry_set_enable_periodic_backup.yml"
+    }
+  ]
+}

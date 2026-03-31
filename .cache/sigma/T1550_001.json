@@ -1,0 +1,75 @@
+{
+  "technique_id": "T1550.001",
+  "cached_at": "2026-03-31T05:01:13.693301+00:00",
+  "rules": [
+    {
+      "title": "AWS Suspicious SAML Activity",
+      "status": "test",
+      "level": "medium",
+      "logsource": "cloudtrail / aws",
+      "condition_summary": "1 of selection_*",
+      "description": "Identifies when suspicious SAML activity has occurred in AWS. An adversary could gain backdoor access via SAML.",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.initial-access",
+        "attack.lateral-movement",
+        "attack.persistence",
+        "attack.privilege-escalation",
+        "attack.t1078",
+        "attack.t1548",
+        "attack.t1550",
+        "attack.t1550.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/cloud/aws/cloudtrail/aws_susp_saml_activity.yml"
+    },
+    {
+      "title": "AWS STS AssumeRole Misuse",
+      "status": "test",
+      "level": "low",
+      "logsource": "cloudtrail / aws",
+      "condition_summary": "selection exclusion filter",
+      "description": "Identifies the suspicious use of AssumeRole. Attackers could move laterally and escalate privileges.",
+      "tags": [
+        "attack.lateral-movement",
+        "attack.privilege-escalation",
+        "attack.defense-evasion",
+        "attack.t1548",
+        "attack.t1550",
+        "attack.t1550.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/cloud/aws/cloudtrail/aws_sts_assumerole_misuse.yml"
+    },
+    {
+      "title": "AWS Console GetSigninToken Potential Abuse",
+      "status": "test",
+      "level": "medium",
+      "logsource": "cloudtrail / aws",
+      "condition_summary": "selection exclusion filter excluding 1 of filter_main_*",
+      "description": "|",
+      "tags": [
+        "attack.lateral-movement",
+        "attack.defense-evasion",
+        "attack.t1021.007",
+        "attack.t1550.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/cloud/aws/cloudtrail/aws_console_getsignintoken.yml"
+    },
+    {
+      "title": "AWS STS GetSessionToken Misuse",
+      "status": "test",
+      "level": "low",
+      "logsource": "cloudtrail / aws",
+      "condition_summary": "selection exclusion filter",
+      "description": "Identifies the suspicious use of GetSessionToken. Tokens could be created and used by attackers to move laterally and escalate privileges.",
+      "tags": [
+        "attack.lateral-movement",
+        "attack.privilege-escalation",
+        "attack.defense-evasion",
+        "attack.t1548",
+        "attack.t1550",
+        "attack.t1550.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/cloud/aws/cloudtrail/aws_sts_getsessiontoken_misuse.yml"
+    }
+  ]
+}

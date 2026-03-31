@@ -1,0 +1,19 @@
+{
+  "technique_id": "T1559.002",
+  "cached_at": "2026-03-31T04:58:26.923919+00:00",
+  "rules": [
+    {
+      "title": "Enable Microsoft Dynamic Data Exchange",
+      "status": "test",
+      "level": "medium",
+      "logsource": "registry_set / windows",
+      "condition_summary": "1 of selection_*",
+      "description": "Enable Dynamic Data Exchange protocol (DDE) in all supported editions of Microsoft Word or Excel.",
+      "tags": [
+        "attack.execution",
+        "attack.t1559.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/registry/registry_set/registry_set_office_enable_dde.yml"
+    }
+  ]
+}

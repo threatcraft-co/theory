@@ -1,0 +1,24 @@
+{
+  "urls": [
+    "https://cert.gov.ua/article/6276894",
+    "https://github.com/blackorbird/APT_REPORT/blob/master/APT28/APT28%20the%20long%20hand%20of%20Russian%20interests.pdf",
+    "https://media.defense.gov/2025/May/21/2003719846/-1/-1/0/CSA_RUSSIAN_GRU_TARGET_LOGISTICS.PDF",
+    "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2025-CTI-007.pdf"
+  ],
+  "uuid": "f963e3df-13d1-4fd0-abdd-792c0d05e41c",
+  "notes": [],
+  "sources": [],
+  "updated": "2025-05-22",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "STEELHOOK",
+  "description": "",
+  "library_entries": [
+    "certfr:20250429:targeting:a623e6c",
+    "certua:20231228:apt28:29b5be4",
+    "defense:20250520:russian:73a0ae3",
+    "maverits:20241231:apt28:edb7884"
+  ]
+}

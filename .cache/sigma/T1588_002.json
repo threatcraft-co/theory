@@ -1,0 +1,75 @@
+{
+  "technique_id": "T1588.002",
+  "cached_at": "2026-03-31T04:55:02.689544+00:00",
+  "rules": [
+    {
+      "title": "Suspicious Keyboard Layout Load",
+      "status": "test",
+      "level": "medium",
+      "logsource": "registry_set / windows",
+      "condition_summary": "selection_registry",
+      "description": "Detects the keyboard preload installation with a suspicious keyboard layout, e.g. Chinese, Iranian or Vietnamese layout load in user session on systems maintained by US staff only",
+      "tags": [
+        "attack.resource-development",
+        "attack.t1588.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/registry/registry_set/registry_set_susp_keyboard_layout_load.yml"
+    },
+    {
+      "title": "Hacktool Execution - PE Metadata",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects the execution of different Windows based hacktools via PE metadata (company, product, etc.) even if the files have been renamed",
+      "tags": [
+        "attack.credential-access",
+        "attack.resource-development",
+        "attack.t1588.002",
+        "attack.t1003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hktl_execution_via_pe_metadata.yml"
+    },
+    {
+      "title": "Hacktool Execution - Imphash",
+      "status": "test",
+      "level": "critical",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects the execution of different Windows based hacktools via their import hash (imphash) even if the files have been renamed",
+      "tags": [
+        "attack.credential-access",
+        "attack.resource-development",
+        "attack.t1588.002",
+        "attack.t1003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hktl_execution_via_imphashes.yml"
+    },
+    {
+      "title": "Renamed SysInternals DebugView Execution",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter excluding exclusion filter",
+      "description": "Detects suspicious renamed SysInternals DebugView execution",
+      "tags": [
+        "attack.resource-development",
+        "attack.t1588.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_renamed_sysinternals_debugview.yml"
+    },
+    {
+      "title": "Usage of Renamed Sysinternals Tools - RegistrySet",
+      "status": "test",
+      "level": "high",
+      "logsource": "registry_set / windows",
+      "condition_summary": "selection exclusion filter excluding 1 of filter_main_* excluding 1 of filter_optional_*",
+      "description": "Detects non-sysinternals tools setting the \"accepteula\" key which normally is set on sysinternals tool execution",
+      "tags": [
+        "attack.resource-development",
+        "attack.t1588.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/registry/registry_set/registry_set_renamed_sysinternals_eula_accepted.yml"
+    }
+  ]
+}

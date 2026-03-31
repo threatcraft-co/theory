@@ -1,0 +1,32 @@
+{
+  "technique_id": "T1120",
+  "cached_at": "2026-03-31T04:57:24.344828+00:00",
+  "rules": [
+    {
+      "title": "Powershell Suspicious Win32_PnPEntity",
+      "status": "test",
+      "level": "low",
+      "logsource": "ps_script / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Adversaries may attempt to gather information about attached peripheral devices and components connected to a computer system.",
+      "tags": [
+        "attack.discovery",
+        "attack.t1120"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/powershell/powershell_script/posh_ps_susp_win32_pnpentity.yml"
+    },
+    {
+      "title": "Fsutil Drive Enumeration",
+      "status": "test",
+      "level": "low",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection_*",
+      "description": "Attackers may leverage fsutil to enumerated connected drives.",
+      "tags": [
+        "attack.discovery",
+        "attack.t1120"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_fsutil_drive_enumeration.yml"
+    }
+  ]
+}

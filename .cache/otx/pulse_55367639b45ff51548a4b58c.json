@@ -1,0 +1,418 @@
+{
+  "id": "55367639b45ff51548a4b58c",
+  "name": "The Sofacy plot thickens",
+  "description": "More information from PWC about Sofacy",
+  "author_name": "AlienVault",
+  "modified": "2017-03-06T17:15:03.469000",
+  "created": "2015-04-21T16:09:29.291000",
+  "tags": [
+    "sofacy",
+    "fancy bear",
+    "apt28",
+    "PWC"
+  ],
+  "references": [],
+  "public": 1,
+  "adversary": "Sofacy",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 4528,
+      "indicator": "67ecc3b8c6057090c7982883e8d9d0389a8a8f6e8b00f9e9b73c45b008241322",
+      "type": "FileHash-SHA256",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4529,
+      "indicator": "nato-int.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4530,
+      "indicator": "intelsupport.net",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4531,
+      "indicator": "globalnewsweekly.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4532,
+      "indicator": "westinqhousenuclear.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4533,
+      "indicator": "softupdates.info",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4534,
+      "indicator": "natopress.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4535,
+      "indicator": "techcruncln.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4536,
+      "indicator": "mediarea.org",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4537,
+      "indicator": "defencereview.eu",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4538,
+      "indicator": "netassistcache.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4539,
+      "indicator": "privacy-live.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4540,
+      "indicator": "settings-live.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4541,
+      "indicator": "enisa-europa.org",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4542,
+      "indicator": "defencereview.net",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4543,
+      "indicator": "natopress.org",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4544,
+      "indicator": "brnlv-gv.eu",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4545,
+      "indicator": "nato-hq.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4546,
+      "indicator": "enisa-europa.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4547,
+      "indicator": "europeanda.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4548,
+      "indicator": "militaryobserver.net",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4549,
+      "indicator": "bmlv-gv.eu",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4550,
+      "indicator": "osce-oscc.org",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4551,
+      "indicator": "nato-info.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4552,
+      "indicator": "aolnets.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4553,
+      "indicator": "iacr-tcc.org",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4554,
+      "indicator": "osce-military.org",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4555,
+      "indicator": "asus-service.net",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4556,
+      "indicator": "webmail.westinqhousenuclear.com",
+      "type": "hostname",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4280,
+      "indicator": "CVE-2015-3043",
+      "type": "CVE",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4281,
+      "indicator": "CVE-2015-1701",
+      "type": "CVE",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4557,
+      "indicator": "privacy-yahoo.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4558,
+      "indicator": "foreignreview.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4559,
+      "indicator": "delivery-yahoo.com",
+      "type": "domain",
+      "created": "2015-04-21T16:09:29",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 2,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    },
+    {
+      "name": "MISP FEED",
+      "id": 76
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

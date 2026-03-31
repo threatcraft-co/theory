@@ -1,0 +1,28 @@
+{
+  "urls": [
+    "https://cert.gov.ua/article/6276894",
+    "https://github.com/blackorbird/APT_REPORT/blob/master/APT28/APT28%20the%20long%20hand%20of%20Russian%20interests.pdf",
+    "https://harfanglab.io/en/insidethelab/compromised-routers-infrastructure-target-europe-caucasus/",
+    "https://medium.com/@knight0x07/analyzing-apt28s-oceanmap-backdoor-exploring-its-c2-server-artifacts-db2c3cb4556b",
+    "https://thehackernews.com/2024/03/apt28-hacker-group-targeting-europe.html?m=1",
+    "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2025-CTI-007.pdf"
+  ],
+  "uuid": "6e33d8cd-f8aa-4be4-9619-867a469a1425",
+  "notes": [],
+  "sources": [],
+  "updated": "2025-05-02",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "OCEANMAP",
+  "description": "",
+  "library_entries": [
+    "certfr:20250429:targeting:a623e6c",
+    "certua:20231228:apt28:29b5be4",
+    "ctr:20240129:compromised:e6b2fb6",
+    "knight0x07:20240110:analyzing:1cf13da",
+    "maverits:20241231:apt28:edb7884",
+    "newsroom:20240318:apt28:0bb8481"
+  ]
+}

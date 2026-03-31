@@ -1,0 +1,85 @@
+{
+  "technique_id": "T1021.002",
+  "cached_at": "2026-03-31T05:04:05.065768+00:00",
+  "rules": [
+    {
+      "title": "Suspicious PsExec Execution - Zeek",
+      "status": "test",
+      "level": "high",
+      "logsource": "smb_files / zeek",
+      "condition_summary": "selection exclusion filter excluding exclusion filter",
+      "description": "detects execution of psexec or paexec with renamed service name, this rule helps to filter out the noise if psexec is used for legit purposes or if attacker uses a different psexec client other than s",
+      "tags": [
+        "attack.lateral-movement",
+        "attack.t1021.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/network/zeek/zeek_smb_converted_win_susp_psexec.yml"
+    },
+    {
+      "title": "Copy From Or To Admin Share Or Sysvol Folder",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection_target and (selection_other_tools or all of selection_cmd_* or all of selection_pwsh_*)",
+      "description": "Detects a copy command or a copy utility execution to or from an Admin share or remote",
+      "tags": [
+        "attack.lateral-movement",
+        "attack.collection",
+        "attack.exfiltration",
+        "attack.t1039",
+        "attack.t1048",
+        "attack.t1021.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_susp_copy_lateral_movement.yml"
+    },
+    {
+      "title": "CobaltStrike Service Installations - System",
+      "status": "test",
+      "level": "critical",
+      "logsource": "system / windows",
+      "condition_summary": "selection_id and (selection1 or selection2 or selection3 or selection4)",
+      "description": "Detects known malicious service installs that appear in cases in which a Cobalt Strike beacon elevates privileges or lateral movement",
+      "tags": [
+        "attack.persistence",
+        "attack.execution",
+        "attack.privilege-escalation",
+        "attack.lateral-movement",
+        "attack.t1021.002",
+        "attack.t1543.003",
+        "attack.t1569.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/system/service_control_manager/win_system_cobaltstrike_service_installs.yml"
+    },
+    {
+      "title": "Metasploit Or Impacket Service Installation Via SMB PsExec",
+      "status": "test",
+      "level": "high",
+      "logsource": "security / windows",
+      "condition_summary": "selection exclusion filter excluding exclusion filter",
+      "description": "Detects usage of Metasploit SMB PsExec (exploit/windows/smb/psexec) and Impacket psexec.py by triggering on specific service installation",
+      "tags": [
+        "attack.lateral-movement",
+        "attack.t1021.002",
+        "attack.t1570",
+        "attack.execution",
+        "attack.t1569.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/security/win_security_metasploit_or_impacket_smb_psexec_service_install.yml"
+    },
+    {
+      "title": "PUA - RemCom Default Named Pipe",
+      "status": "test",
+      "level": "medium",
+      "logsource": "pipe_created / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects default RemCom pipe creation",
+      "tags": [
+        "attack.lateral-movement",
+        "attack.t1021.002",
+        "attack.execution",
+        "attack.t1569.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/pipe_created/pipe_created_pua_remcom_default_pipe.yml"
+    }
+  ]
+}

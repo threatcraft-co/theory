@@ -1,0 +1,18 @@
+{
+  "urls": [
+    "https://download.bitdefender.com/resources/media/materials/white-papers/en/Bitdefender_In-depth_analysis_of_APT28%E2%80%93The_Political_Cyber-Espionage.pdf"
+  ],
+  "uuid": "33f97c52-0bcd-43f4-88bb-99e7da9f49ae",
+  "notes": [],
+  "sources": [],
+  "updated": "2017-02-15",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "XP PrivEsc (CVE-2014-4076)",
+  "description": "",
+  "library_entries": [
+    "bitdefender:20151217:apt28:fca586f"
+  ]
+}

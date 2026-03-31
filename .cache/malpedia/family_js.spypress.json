@@ -1,0 +1,18 @@
+{
+  "urls": [
+    "https://www.welivesecurity.com/en/eset-research/operation-roundpress/"
+  ],
+  "uuid": "6a74d86a-af26-4dd3-96fa-71e248288d54",
+  "notes": [],
+  "sources": [],
+  "updated": "2025-05-20",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "SpyPress",
+  "description": "According to ESET, SpyPress is a set of Javascript payloads targeting different webmail frameworks (HORDE, MDAEMON, ROUNDCUBE, ZIMBRA). The observed payloads have common characteristics. All are similarly obfuscated, with variable and function names replaced with random-looking strings. Furthermore, strings used by the code, such as webmail and C&C server URLs, are also obfuscated and contained in an encrypted list. Each of those strings is only decrypted when it is used. Note that the variable and function names are randomized for each sample, so the final SpyPress payloads will have different hashes. Another common characteristic is that there are no persistence or update mechanisms. The payload is fully contained in the email and only executed when the email message is viewed from a vulnerable webmail instance.\r\n\r\nFinally, all payloads communicate with their hardcoded C&C servers via HTTP POST requests. There is a small number of C&C servers that are shared by all payloads (there is no separation by victim or payload type).",
+  "library_entries": [
+    "faou:20250515:operation:b141a4e"
+  ]
+}

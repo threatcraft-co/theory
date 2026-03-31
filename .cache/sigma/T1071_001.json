@@ -1,0 +1,75 @@
+{
+  "technique_id": "T1071.001",
+  "cached_at": "2026-03-31T04:59:38.205300+00:00",
+  "rules": [
+    {
+      "title": "PwnDrp Access",
+      "status": "test",
+      "level": "critical",
+      "logsource": "proxy",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects downloads from PwnDrp web servers developed for red team testing and most likely also used for criminal activity",
+      "tags": [
+        "attack.command-and-control",
+        "attack.t1071.001",
+        "attack.t1102.001",
+        "attack.t1102.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/web/proxy_generic/proxy_pwndrop.yml"
+    },
+    {
+      "title": "Telegram API Access",
+      "status": "test",
+      "level": "medium",
+      "logsource": "proxy",
+      "condition_summary": "selection exclusion filter excluding exclusion filter",
+      "description": "Detects suspicious requests to Telegram API without the usual Telegram User-Agent",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.command-and-control",
+        "attack.t1071.001",
+        "attack.t1102.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/web/proxy_generic/proxy_telegram_api.yml"
+    },
+    {
+      "title": "DNS Query To Visual Studio Code Tunnels Domain",
+      "status": "test",
+      "level": "medium",
+      "logsource": "dns_query / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.command-and-control",
+        "attack.t1071.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/dns_query/dns_query_win_vscode_tunnel_communication.yml"
+    },
+    {
+      "title": "Change User Agents with WebRequest",
+      "status": "test",
+      "level": "medium",
+      "logsource": "ps_script / windows",
+      "condition_summary": "all of selection_*",
+      "description": "|",
+      "tags": [
+        "attack.command-and-control",
+        "attack.t1071.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/powershell/powershell_script/posh_ps_susp_invoke_webrequest_useragent.yml"
+    },
+    {
+      "title": "Malware User Agent",
+      "status": "test",
+      "level": "high",
+      "logsource": "proxy",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects suspicious user agent strings used by malware in proxy logs",
+      "tags": [
+        "attack.command-and-control",
+        "attack.t1071.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/web/proxy_generic/proxy_ua_malware.yml"
+    }
+  ]
+}

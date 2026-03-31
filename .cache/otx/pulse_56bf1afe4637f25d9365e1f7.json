@@ -1,0 +1,53 @@
+{
+  "id": "56bf1afe4637f25d9365e1f7",
+  "name": "A Look Into Fysbis: Sofacy\u2019s Linux Backdoor",
+  "description": "The Sofacy group, also known as APT28 and Sednit, is a fairly well known cyber espionage group believed to have ties to Russia. Their targets have spanned all across the world, with a focus on government, defense organizations and various Eastern European governments. There have been numerous reports on their activities, to the extent that a Wikipedia entry has even been created for them.\n\nThe Linux malware Fysbis is a preferred tool of Sofacy, and though it is not particularly sophisticated, Linux security in general is still a maturing area, especially in regards to malware. In short, it is entirely plausible that this tool has contributed to the success of associated attacks by this group. This blog post focuses specifically on this Linux tool preferred by Sofacy and describes considerations and implications when it comes to Linux malware.",
+  "author_name": "CyberAnarchist",
+  "modified": "2016-02-13T12:35:41.379000",
+  "created": "2016-02-13T12:01:02.136000",
+  "tags": [
+    "linux",
+    "sofacy",
+    "fysbis",
+    "remoteshell",
+    "sednit",
+    "c2",
+    "java",
+    "osx",
+    "february",
+    "elf",
+    "russia",
+    "apt28"
+  ],
+  "references": [
+    "http://researchcenter.paloaltonetworks.com/2016/02/a-look-into-fysbis-sofacys-linux-backdoor/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+PaloAltoNetworks+%28Palo+Alto+Networks+Research+Center%29"
+  ],
+  "public": 1,
+  "adversary": null,
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "white",
+  "indicators": [],
+  "revision": 4,
+  "groups": [
+    {
+      "name": "Linux malware",
+      "id": 65
+    },
+    {
+      "name": "MISP FEED",
+      "id": 76
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "CyberAnarchist",
+    "id": "2064",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/CyberAnarchist/resized/80/doom_tron_by_enymy-d34uztq.jpg",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

@@ -1,0 +1,82 @@
+{
+  "technique_id": "T1134.001",
+  "cached_at": "2026-03-31T05:01:29.530382+00:00",
+  "rules": [
+    {
+      "title": "HackTool - NoFilter Execution",
+      "status": "test",
+      "level": "high",
+      "logsource": "security / windows",
+      "condition_summary": "1 of selection_*",
+      "description": "|",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.privilege-escalation",
+        "attack.t1134",
+        "attack.t1134.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/security/win_security_hktl_nofilter.yml"
+    },
+    {
+      "title": "HackTool - Koh Default Named Pipe",
+      "status": "test",
+      "level": "critical",
+      "logsource": "pipe_created / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects creation of default named pipes used by the Koh tool",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.privilege-escalation",
+        "attack.credential-access",
+        "attack.t1528",
+        "attack.t1134.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/pipe_created/pipe_created_hktl_koh_default_pipe.yml"
+    },
+    {
+      "title": "Potential Meterpreter/CobaltStrike Activity",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection_img and 1 of selection_technique_* excluding 1 of filter_*",
+      "description": "Detects the use of getsystem Meterpreter/Cobalt Strike command by detecting a specific service starting",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.privilege-escalation",
+        "attack.t1134.001",
+        "attack.t1134.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hktl_meterpreter_getsystem.yml"
+    },
+    {
+      "title": "HackTool - Impersonate Execution",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection_commandline_* or selection_hash",
+      "description": "Detects execution of the Impersonate tool. Which can be used to manipulate tokens on a Windows computers remotely (PsExec/WmiExec) or interactively",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.defense-evasion",
+        "attack.t1134.001",
+        "attack.t1134.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hktl_impersonate.yml"
+    },
+    {
+      "title": "HackTool - SharpImpersonation Execution",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "1 of selection_*",
+      "description": "Detects execution of the SharpImpersonation tool. Which can be used to manipulate tokens on a Windows computers remotely (PsExec/WmiExec) or interactively",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.defense-evasion",
+        "attack.t1134.001",
+        "attack.t1134.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hktl_sharp_impersonation.yml"
+    }
+  ]
+}

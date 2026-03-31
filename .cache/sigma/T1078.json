@@ -1,0 +1,92 @@
+{
+  "technique_id": "T1078",
+  "cached_at": "2026-03-31T04:59:22.878145+00:00",
+  "rules": [
+    {
+      "title": "Temporary Access Pass Added To An Account",
+      "status": "test",
+      "level": "high",
+      "logsource": "auditlogs / azure",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects when a temporary access pass (TAP) is added to an account. TAPs added to priv accounts should be investigated",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.initial-access",
+        "attack.defense-evasion",
+        "attack.persistence",
+        "attack.t1078.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/cloud/azure/audit_logs/azure_tap_added.yml"
+    },
+    {
+      "title": "Password Provided In Command Line Of Net.EXE",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection_* excluding 1 of filter_main_*",
+      "description": "Detects a when net.exe is called with a password in the command line",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.initial-access",
+        "attack.persistence",
+        "attack.privilege-escalation",
+        "attack.lateral-movement",
+        "attack.t1021.002",
+        "attack.t1078"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_net_use_password_plaintext.yml"
+    },
+    {
+      "title": "Cisco BGP Authentication Failures",
+      "status": "test",
+      "level": "low",
+      "logsource": "bgp / cisco",
+      "condition_summary": "keywords_bgp_cisco",
+      "description": "Detects BGP failures which may be indicative of brute force attacks to manipulate routing",
+      "tags": [
+        "attack.initial-access",
+        "attack.persistence",
+        "attack.privilege-escalation",
+        "attack.defense-evasion",
+        "attack.credential-access",
+        "attack.collection",
+        "attack.t1078",
+        "attack.t1110",
+        "attack.t1557"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/network/cisco/bgp/cisco_bgp_md5_auth_failed.yml"
+    },
+    {
+      "title": "Atypical Travel",
+      "status": "test",
+      "level": "high",
+      "logsource": "riskdetection / azure",
+      "condition_summary": "selection exclusion filter",
+      "description": "Identifies two sign-ins originating from geographically distant locations, where at least one of the locations may also be atypical for the user, given past behavior.",
+      "tags": [
+        "attack.t1078",
+        "attack.persistence",
+        "attack.defense-evasion",
+        "attack.privilege-escalation",
+        "attack.initial-access"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/cloud/azure/identity_protection/azure_identity_protection_atypical_travel.yml"
+    },
+    {
+      "title": "Okta New Admin Console Behaviours",
+      "status": "test",
+      "level": "high",
+      "logsource": "okta / okta",
+      "condition_summary": "all of selection_*",
+      "description": "Detects when Okta identifies new activity in the Admin Console.",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.persistence",
+        "attack.defense-evasion",
+        "attack.initial-access",
+        "attack.t1078.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/identity/okta/okta_new_behaviours_admin_console.yml"
+    }
+  ]
+}

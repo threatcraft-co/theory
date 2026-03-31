@@ -1,0 +1,97 @@
+{
+  "technique_id": "T1059.001",
+  "cached_at": "2026-03-31T04:53:38.211109+00:00",
+  "rules": [
+    {
+      "title": "AWS EC2 Startup Shell Script Change",
+      "status": "test",
+      "level": "high",
+      "logsource": "cloudtrail / aws",
+      "condition_summary": "selection_source",
+      "description": "Detects changes to the EC2 instance startup script. The shell script will be executed as root/SYSTEM every time the specific instances are booted up.",
+      "tags": [
+        "attack.execution",
+        "attack.t1059.001",
+        "attack.t1059.003",
+        "attack.t1059.004"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/cloud/aws/cloudtrail/aws_ec2_startup_script_change.yml"
+    },
+    {
+      "title": "HackTool - Default PowerSploit/Empire Scheduled Task Creation",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects the creation of a schtask via PowerSploit or Empire Default Configuration.",
+      "tags": [
+        "attack.execution",
+        "attack.persistence",
+        "attack.privilege-escalation",
+        "attack.s0111",
+        "attack.g0022",
+        "attack.g0060",
+        "car.2013-08-001",
+        "attack.t1053.005",
+        "attack.t1059.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hktl_powersploit_empire_default_schtasks.yml"
+    },
+    {
+      "title": "HackTool - CrackMapExec Execution",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "1 of selection_* or all of part_localauth*",
+      "description": "This rule detect common flag combinations used by CrackMapExec in order to detect its use even if the binary has been replaced.",
+      "tags": [
+        "attack.execution",
+        "attack.persistence",
+        "attack.privilege-escalation",
+        "attack.credential-access",
+        "attack.discovery",
+        "attack.t1047",
+        "attack.t1053",
+        "attack.t1059.003",
+        "attack.t1059.001",
+        "attack.t1110",
+        "attack.t1201"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hktl_crackmapexec_execution.yml"
+    },
+    {
+      "title": "Malicious PowerShell Commandlets - PoshModule",
+      "status": "test",
+      "level": "high",
+      "logsource": "ps_module / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects Commandlet names from well-known PowerShell exploitation frameworks",
+      "tags": [
+        "attack.execution",
+        "attack.discovery",
+        "attack.t1482",
+        "attack.t1087",
+        "attack.t1087.001",
+        "attack.t1087.002",
+        "attack.t1069.001",
+        "attack.t1069.002",
+        "attack.t1069",
+        "attack.t1059.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/powershell/powershell_module/posh_pm_malicious_commandlets.yml"
+    },
+    {
+      "title": "Execution of Powershell Script in Public Folder",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "This rule detects execution of PowerShell scripts located in the \"C:\\Users\\Public\" folder",
+      "tags": [
+        "attack.execution",
+        "attack.t1059.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_powershell_public_folder.yml"
+    }
+  ]
+}

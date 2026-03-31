@@ -1,0 +1,2231 @@
+{
+  "actor_name": "APT28",
+  "aliases": [
+    "IRON TWILIGHT",
+    "SNAKEMACKEREL",
+    "Swallowtail",
+    "Group 74",
+    "Sednit",
+    "Sofacy",
+    "Pawn Storm",
+    "Fancy Bear",
+    "STRONTIUM",
+    "Tsar Team",
+    "Threat Group-4127",
+    "TG-4127",
+    "Forest Blizzard",
+    "FROZENLAKE",
+    "GruesomeLarch",
+    "SIG40",
+    "Grizzly Steppe",
+    "G0007",
+    "ATK5",
+    "Fighting Ursa",
+    "ITG05",
+    "Blue Athena",
+    "TA422",
+    "T-APT-12",
+    "APT-C-20",
+    "UAC-0028",
+    "UAC-0001",
+    "BlueDelta",
+    "APT 28",
+    "TsarTeam",
+    "Group-4127",
+    "Grey-Cloud"
+  ],
+  "suspected_origin": null,
+  "motivation": [],
+  "first_seen": "2004",
+  "sponsorship": null,
+  "target_sectors": [],
+  "target_countries": [],
+  "techniques": [
+    {
+      "technique_id": "T1003.003",
+      "name": "NTDS",
+      "tactic": "Credential Access",
+      "description": "Adversaries may attempt to access or create a copy of the Active Directory domain database in order to steal credential information, as well as obtain other information about domain members such as devices, users, and access rights. By default, the NTDS file (NTDS.dit) is located in <code>%SystemRoot%\\NTDS\\Ntds.dit</code> of a domain controller.(Citation: Wikipedia Active Directory)\n\nIn addition to looking for NTDS files on active Domain Controllers, adversaries may search for backups that contain the same or similar information.(Citation: Metcalf 2015)\n\nThe following tools and techniques can be used to enumerate the NTDS file and the contents of the entire Active Directory hashes.\n\n* Volume Shadow Copy\n* secretsdump.py\n* Using the in-built Windows tool, ntdsutil.exe\n* Invoke-NinjaCopy",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "NTDS",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1589.001",
+      "name": "Credentials",
+      "tactic": "Reconnaissance",
+      "description": "Adversaries may gather credentials that can be used during targeting. Account credentials gathered by adversaries may be those directly associated with the target victim organization or attempt to take advantage of the tendency for users to use the same passwords across personal and business accounts.\n\nAdversaries may gather credentials from potential victims in various ways, such as direct elicitation via [Phishing for Information](https://attack.mitre.org/techniques/T1598). Adversaries may also compromise sites then add malicious content designed to collect website authentication cookies from visitors.(Citation: ATT ScanBox) (Citation: Register Deloitte)(Citation: Register Uber)(Citation: Detectify Slack Tokens)(Citation: Forbes GitHub Creds)(Citation: GitHub truffleHog)(Citation: GitHub\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Credentials",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1591",
+      "name": "Gather Victim Org Information",
+      "tactic": "Reconnaissance",
+      "description": "Adversaries may gather information about the victim's organization that can be used during targeting. Information about an organization may include a variety of details, including the names of divisions/departments, specifics of business operations, as well as the roles and responsibilities of key employees.\n\nAdversaries may gather this information in various ways, such as direct elicitation via [Phishing for Information](https://attack.mitre.org/techniques/T1598). Information about an organization may also be exposed to adversaries via online or other accessible data sets (ex: [Social Media](https://attack.mitre.org/techniques/T1593/001) or [Search Victim-Owned Websites](https://attack.mitre.org/techniques/T1594)).(Citation: ThreatPost Broadvoice Leak)(Citation: SEC EDGAR Search) Gatherin\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Gather Victim Org Information",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1564.001",
+      "name": "Hidden Files and Directories",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may set files and directories to be hidden to evade detection mechanisms. To prevent normal users from accidentally changing special files on a system, most operating systems have the concept of a \u2018hidden\u2019 file. These files don\u2019t show up when a user browses the file system with a GUI or when using normal commands on the command line. Users must explicitly ask to show the hidden files either via a series of Graphical User Interface (GUI) prompts or with command line switches (<code>dir /a</code> for Windows and <code>ls \u2013a</code> for Linux and macOS).\n\nOn Linux and Mac, users can mark specific files as hidden simply by putting a \u201c.\u201d as the first character in the file or folder name  (Citation: Sofacy Komplex Trojan) (Citation: Antiquated Mac Malware). Files and folders that star\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Hidden Files and Directories",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1583.003",
+      "name": "Virtual Private Server",
+      "tactic": "Resource Development",
+      "description": "Adversaries may rent Virtual Private Servers (VPSs)\u00a0that can be used during targeting. There exist a variety of cloud service providers that will sell virtual machines/containers as a service. By utilizing a VPS, adversaries can make it difficult to physically tie back operations to them. The use of cloud infrastructure can also make it easier for adversaries to rapidly provision, modify, and shut down their infrastructure.\n\nAcquiring a VPS for use in later stages of the adversary lifecycle, such as Command and Control, can allow adversaries to benefit from the ubiquity and trust associated with higher reputation cloud service providers. Adversaries may also acquire infrastructure from VPS service providers that are known for renting VPSs with minimal registration information, allowing for\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Virtual Private Server",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1596",
+      "name": "Search Open Technical Databases",
+      "tactic": "Reconnaissance",
+      "description": "Adversaries may search freely available technical databases for information about victims that can be used during targeting. Information about victims may be available in online databases and repositories, such as registrations of domains/certificates as well as public collections of network data/artifacts gathered from traffic and/or scans.(Citation: WHOIS)(Citation: DNS Dumpster)(Citation: Circl Passive DNS)(Citation: Medium SSL Cert)(Citation: SSLShopper Lookup)(Citation: DigitalShadows CDN)(Citation: Shodan)\n\nAdversaries may search in different open databases depending on what information they seek to gather. Information from these sources may reveal opportunities for other forms of reconnaissance (ex: [Phishing for Information](https://attack.mitre.org/techniques/T1598) or [Search Ope\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Search Open Technical Databases",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1583.001",
+      "name": "Domains",
+      "tactic": "Resource Development",
+      "description": "Adversaries may acquire domains that can be used during targeting. Domain names are the human readable names used to represent one or more IP addresses. They can be purchased or, in some cases, acquired for free.\n\nAdversaries may use acquired domains for a variety of purposes, including for [Phishing](https://attack.mitre.org/techniques/T1566), [Drive-by Compromise](https://attack.mitre.org/techniques/T1189), and Command and Control.(Citation: CISA MSS Sep 2020) Adversaries may choose domains that are similar to legitimate domains, including through use of homoglyphs or use of a different top-level domain (TLD).(Citation: FireEye APT28)(Citation: PaypalScam) Typosquatting may be used to aid in delivery of payloads via [Drive-by Compromise](https://attack.mitre.org/techniques/T1189). Advers\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Domains",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1070.006",
+      "name": "Timestomp",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may modify file time attributes to hide new files or changes to existing files. Timestomping is a technique that modifies the timestamps of a file (the modify, access, create, and change times), often to mimic files that are in the same folder and blend malicious files with legitimate files.\n\nIn Windows systems, both the `$STANDARD_INFORMATION` (`$SI`) and `$FILE_NAME` (`$FN`) attributes record times in a Master File Table (MFT) file.(Citation: Inversecos Timestomping 2022) `$SI` (dates/time stamps) is displayed to the end user, including in the File System view, while `$FN` is dealt with by the kernel.(Citation: Magnet Forensics)\n\nModifying the `$SI` attribute is the most common method of timestomping because it can be modified at the user level using API calls. `$FN` timestom\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Timestomp",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1090.002",
+      "name": "External Proxy",
+      "tactic": "Command and Control",
+      "description": "Adversaries may use an external proxy to act as an intermediary for network communications to a command and control server to avoid direct connections to their infrastructure. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap. (Citation: Trend Micro APT Attack Tools) Adversaries use these types of proxies to manage command and control communications, to provide resiliency in the face of connection loss, or to ride over existing trusted communications paths to avoid suspicion.\n\nExternal connection proxies are used to mask the destination of C2 traffic and are typically implemented with port redirectors. Compromised systems outside of the victim environment may be used for t\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "External Proxy",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1566.001",
+      "name": "Spearphishing Attachment",
+      "tactic": "Initial Access",
+      "description": "Adversaries may send spearphishing emails with a malicious attachment in an attempt to gain access to victim systems. Spearphishing attachment is a specific variant of spearphishing. Spearphishing attachment is different from other forms of spearphishing in that it employs the use of malware attached to an email. All forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this scenario, adversaries attach a file to the spearphishing email and usually rely upon [User Execution](https://attack.mitre.org/techniques/T1204) to gain execution.(Citation: Unit 42 DarkHydrus July 2018) Spearphishing may also involve social engineering techniques, such as posing as a trusted source.\n\nThere are many options for the attachment\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Spearphishing Attachment",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1059.001",
+      "name": "PowerShell",
+      "tactic": "Execution",
+      "description": "Adversaries may abuse PowerShell commands and scripts for execution. PowerShell is a powerful interactive command-line interface and scripting environment included in the Windows operating system.(Citation: TechNet PowerShell) Adversaries can use PowerShell to perform a number of actions, including discovery of information and execution of code. Examples include the <code>Start-Process</code> cmdlet which can be used to run an executable and the <code>Invoke-Command</code> cmdlet which runs a command locally or on a remote computer (though administrator permissions are required to use PowerShell to connect to remote systems).\n\nPowerShell may also be used to download and run executables from the Internet, which can be executed from disk or in memory without touching disk.\n\nA number of Power\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "PowerShell",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1048.002",
+      "name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
+      "tactic": "Exfiltration",
+      "description": "Adversaries may steal data by exfiltrating it over an asymmetrically encrypted network protocol other than that of the existing command and control channel. The data may also be sent to an alternate network location from the main command and control server. \n\nAsymmetric encryption algorithms are those that use different keys on each end of the channel. Also known as public-key cryptography, this requires pairs of cryptographic keys that can encrypt/decrypt data from the corresponding key. Each end of the communication channels requires a private key (only in the procession of that entity) and the public key of the other entity. The public keys of each entity are exchanged before encrypted communications begin. \n\nNetwork protocols that use asymmetric encryption (such as HTTPS/TLS/SSL) often\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1547.001",
+      "name": "Registry Run Keys / Startup Folder",
+      "tactic": "Persistence",
+      "description": "Adversaries may achieve persistence by adding a program to a startup folder or referencing it with a Registry run key. Adding an entry to the \"run keys\" in the Registry or startup folder will cause the program referenced to be executed when a user logs in.(Citation: Microsoft Run Key) These programs will be executed under the context of the user and will have the account's associated permissions level.\n\nThe following run keys are created by default on Windows systems:\n\n* <code>HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run</code>\n* <code>HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce</code>\n* <code>HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run</code>\n* <code>HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce</code>\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Registry Run Keys / Startup Folder",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1027.013",
+      "name": "Encrypted/Encoded File",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may encrypt or encode files to obfuscate strings, bytes, and other specific patterns to impede detection. Encrypting and/or encoding file content aims to conceal malicious artifacts within a file used in an intrusion. Many other techniques, such as [Software Packing](https://attack.mitre.org/techniques/T1027/002), [Steganography](https://attack.mitre.org/techniques/T1027/003), and [Embedded Payloads](https://attack.mitre.org/techniques/T1027/009), share this same broad objective. Encrypting and/or encoding files could lead to a lapse in detection of static signatures, only for this malicious content to be revealed (i.e., [Deobfuscate/Decode Files or Information](https://attack.mitre.org/techniques/T1140)) at the time of execution/use.\n\nThis type of file obfuscation can be appli\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Encrypted/Encoded File",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1203",
+      "name": "Exploitation for Client Execution",
+      "tactic": "Execution",
+      "description": "Adversaries may exploit software vulnerabilities in client applications to execute code. Vulnerabilities can exist in software due to unsecure coding practices that can lead to unanticipated behavior. Adversaries can take advantage of certain vulnerabilities through targeted exploitation for the purpose of arbitrary code execution. Oftentimes the most valuable exploits to an offensive toolkit are those that can be used to obtain code execution on a remote system because they can be used to gain access to that system. Users will expect to see files related to the applications they commonly used to do work, so they are a useful target for exploit research and development because of their high utility.\n\nSeveral types exist:\n\n### Browser-based Exploitation\n\nWeb browsers are a common target thr\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Exploitation for Client Execution",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1586.002",
+      "name": "Email Accounts",
+      "tactic": "Resource Development",
+      "description": "Adversaries may compromise email accounts that can be used during targeting. Adversaries can use compromised email accounts to further their operations, such as leveraging them to conduct [Phishing for Information](https://attack.mitre.org/techniques/T1598), [Phishing](https://attack.mitre.org/techniques/T1566), or large-scale spam email campaigns. Utilizing an existing persona with a compromised email account may engender a level of trust in a potential victim if they have a relationship with, or knowledge of, the compromised persona. Compromised email accounts can also be used in the acquisition of infrastructure (ex: [Domains](https://attack.mitre.org/techniques/T1583/001)).\n\nA variety of methods exist for compromising email accounts, such as gathering credentials via [Phishing for Info\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Email Accounts",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1114.002",
+      "name": "Remote Email Collection",
+      "tactic": "Collection",
+      "description": "Adversaries may target an Exchange server, Office 365, or Google Workspace to collect sensitive information. Adversaries may leverage a user's credentials and interact directly with the Exchange server to acquire information from within a network. Adversaries may also access externally facing Exchange services, Office 365, or Google Workspace to access email using credentials or access tokens. Tools such as [MailSniper](https://attack.mitre.org/software/S0413) can be used to automate searches for specific keywords.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Remote Email Collection",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1505.003",
+      "name": "Web Shell",
+      "tactic": "Persistence",
+      "description": "Adversaries may backdoor web servers with web shells to establish persistent access to systems. A Web shell is a Web script that is placed on an openly accessible Web server to allow an adversary to access the Web server as a gateway into a network. A Web shell may provide a set of functions to execute or a command-line interface on the system that hosts the Web server.(Citation: volexity_0day_sophos_FW)\n\nIn addition to a server-side script, a Web shell may have a client interface program that is used to talk to the Web server (e.g. [China Chopper](https://attack.mitre.org/software/S0020) Web shell client).(Citation: Lee 2013)",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Web Shell",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1584.008",
+      "name": "Network Devices",
+      "tactic": "Resource Development",
+      "description": "Adversaries may compromise third-party network devices that can be used during targeting. Network devices, such as small office/home office (SOHO) routers, may be compromised where the adversary's ultimate goal is not [Initial Access](https://attack.mitre.org/tactics/TA0001) to that environment, but rather to leverage these devices to support additional targeting.\n\nOnce an adversary has control, compromised network devices can be used to launch additional operations, such as hosting payloads for [Phishing](https://attack.mitre.org/techniques/T1566) campaigns (i.e., [Link Target](https://attack.mitre.org/techniques/T1608/005)) or enabling the required access to execute [Content Injection](https://attack.mitre.org/techniques/T1659) operations. Adversaries may also be able to harvest reusable\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Network Devices",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1550.002",
+      "name": "Pass the Hash",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may \u201cpass the hash\u201d using stolen password hashes to move laterally within an environment, bypassing normal system access controls. Pass the hash (PtH) is a method of authenticating as a user without having access to the user's cleartext password. This method bypasses standard authentication steps that require a cleartext password, moving directly into the portion of the authentication that uses the password hash.\n\nWhen performing PtH, valid password hashes for the account being used are captured using a [Credential Access](https://attack.mitre.org/tactics/TA0006) technique. Captured hashes are used with PtH to authenticate as that user. Once authenticated, PtH may be used to perform actions on local or remote systems.\n\nAdversaries may also use stolen password hashes to \"overpas\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Pass the Hash",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1037.001",
+      "name": "Logon Script (Windows)",
+      "tactic": "Persistence",
+      "description": "Adversaries may use Windows logon scripts automatically executed at logon initialization to establish persistence. Windows allows logon scripts to be run whenever a specific user or group of users log into a system.(Citation: TechNet Logon Scripts) This is done via adding a path to a script to the <code>HKCU\\Environment\\UserInitMprLogonScript</code> Registry key.(Citation: Hexacorn Logon Scripts)\n\nAdversaries may use these scripts to maintain persistence on a single system. Depending on the access configuration of the logon scripts, either local credentials or an administrator account may be necessary.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Logon Script (Windows)",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1588.002",
+      "name": "Tool",
+      "tactic": "Resource Development",
+      "description": "Adversaries may buy, steal, or download software tools that can be used during targeting. Tools can be open or closed source, free or commercial. A tool can be used for malicious purposes by an adversary, but (unlike malware) were not intended to be used for those purposes (ex: [PsExec](https://attack.mitre.org/software/S0029)). \n\nAdversaries may obtain tools to support their operations, including to support execution of post-compromise behaviors. Tools may also be leveraged for testing \u2013 for example, evaluating malware against commercial antivirus or endpoint detection and response (EDR) applications.(Citation: Forescout Conti Leaks 2022)(Citation: Sentinel Labs Top Tier Target 2025)\n\nTool acquisition may involve the procurement of commercial software licenses, including for red teaming t\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Tool",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1564.003",
+      "name": "Hidden Window",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may use hidden windows to conceal malicious activity from the plain sight of users. In some cases, windows that would typically be displayed when an application carries out an operation can be hidden. This may be utilized by system administrators to avoid disrupting user work environments when carrying out administrative tasks. \n\nAdversaries may abuse these functionalities to hide otherwise visible windows from users so as not to alert the user to adversary activity on the system.(Citation: Antiquated Mac Malware)\n\nOn macOS, the configurations for how applications run are listed in property list (plist) files. One of the tags in these files can be <code>apple.awt.UIElement</code>, which allows for Java applications to prevent the application's icon from appearing in the Dock. A\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Hidden Window",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1090.003",
+      "name": "Multi-hop Proxy",
+      "tactic": "Command and Control",
+      "description": "Adversaries may chain together multiple proxies to disguise the source of malicious traffic. Typically, a defender will be able to identify the last proxy traffic traversed before it enters their network; the defender may or may not be able to identify any previous proxies before the last-hop proxy. This technique makes identifying the original source of the malicious traffic even more difficult by requiring the defender to trace malicious traffic through several proxies to identify its source.\n\nFor example, adversaries may construct or use onion routing networks \u2013 such as the publicly available [Tor](https://attack.mitre.org/software/S0183) network \u2013 to transport encrypted C2 traffic through a compromised population, allowing communication with any device within the network.(Citation: Oni\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Multi-hop Proxy",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1567",
+      "name": "Exfiltration Over Web Service",
+      "tactic": "Exfiltration",
+      "description": "Adversaries may use an existing, legitimate external Web service to exfiltrate data rather than their primary command and control channel. Popular Web services acting as an exfiltration mechanism may give a significant amount of cover due to the likelihood that hosts within a network are already communicating with them prior to compromise. Firewall rules may also already exist to permit traffic to these services.\n\nWeb service providers also commonly use SSL/TLS encryption, giving adversaries an added level of protection.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Exfiltration Over Web Service",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1056.001",
+      "name": "Keylogging",
+      "tactic": "Collection",
+      "description": "Adversaries may log user keystrokes to intercept credentials as the user types them. Keylogging is likely to be used to acquire credentials for new access opportunities when [OS Credential Dumping](https://attack.mitre.org/techniques/T1003) efforts are not effective, and may require an adversary to intercept keystrokes on a system for a substantial period of time before credentials can be successfully captured. In order to increase the likelihood of capturing credentials quickly, an adversary may also perform actions such as clearing browser cookies to force users to reauthenticate to systems.(Citation: Talos Kimsuky Nov 2021)\n\nKeylogging is the most prevalent type of input capture, with many different ways of intercepting keystrokes.(Citation: Adventures of a Keystroke) Some methods inclu\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Keylogging",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1083",
+      "name": "File and Directory Discovery",
+      "tactic": "Discovery",
+      "description": "Adversaries may enumerate files and directories or may search in specific locations of a host or network share for certain information within a file system. Adversaries may use the information from [File and Directory Discovery](https://attack.mitre.org/techniques/T1083) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.\n\nMany command shell utilities can be used to obtain this information. Examples include <code>dir</code>, <code>tree</code>, <code>ls</code>, <code>find</code>, and <code>locate</code>.(Citation: Windows Commands JPCERT) Custom tools may also be used to gather file and directory information and interact with the [Native API](https://attack.mitre.org/techniques/T1106). Adv\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "File and Directory Discovery",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1190",
+      "name": "Exploit Public-Facing Application",
+      "tactic": "Initial Access",
+      "description": "Adversaries may attempt to exploit a weakness in an Internet-facing host or system to initially access a network. The weakness in the system can be a software bug, a temporary glitch, or a misconfiguration.\n\nExploited applications are often websites/web servers, but can also include databases (like SQL), standard services (like SMB or SSH), network device administration and management protocols (like SNMP and Smart Install), and any other system with Internet-accessible open sockets.(Citation: NVD CVE-2016-6662)(Citation: CIS Multiple SMB Vulnerabilities)(Citation: US-CERT TA18-106A Network Infrastructure Devices 2018)(Citation: Cisco Blog Legacy Device Attacks)(Citation: NVD CVE-2014-7169) On ESXi infrastructure, adversaries may exploit exposed OpenSLP services; they may alternatively exp\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Exploit Public-Facing Application",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1669",
+      "name": "Wi-Fi Networks",
+      "tactic": "Initial Access",
+      "description": "Adversaries may gain initial access to target systems by connecting to wireless networks. They may accomplish this by exploiting open Wi-Fi networks used by target devices or by accessing secured Wi-Fi networks \u2014 requiring [Valid Accounts](https://attack.mitre.org/techniques/T1078) \u2014 belonging to a target organization.(Citation: DOJ GRU Charges 2018)(Citation: Nearest Neighbor Volexity) Establishing a connection to a Wi-Fi access point requires a certain level of proximity to both discover and maintain a stable network connection. \n\nAdversaries may establish a wireless connection through various methods, such as by physically positioning themselves near a Wi-Fi network to conduct close access operations. To bypass the need for physical proximity, adversaries may attempt to remotely comprom\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Wi-Fi Networks",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1039",
+      "name": "Data from Network Shared Drive",
+      "tactic": "Collection",
+      "description": "Adversaries may search network shares on computers they have compromised to find files of interest. Sensitive data can be collected from remote systems via shared network drives (host shared directory, network file server, etc.) that are accessible from the current system prior to Exfiltration. Interactive command shells may be in use, and common functionality within [cmd](https://attack.mitre.org/software/S0106) may be used to gather information.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Data from Network Shared Drive",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1113",
+      "name": "Screen Capture",
+      "tactic": "Collection",
+      "description": "Adversaries may attempt to take screen captures of the desktop to gather information over the course of an operation. Screen capturing functionality may be included as a feature of a remote access tool used in post-compromise operations. Taking a screenshot is also typically possible through native utilities or API calls, such as <code>CopyFromScreen</code>, <code>xwd</code>, or <code>screencapture</code>.(Citation: CopyFromScreen .NET)(Citation: Antiquated Mac Malware)",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Screen Capture",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1110.001",
+      "name": "Password Guessing",
+      "tactic": "Credential Access",
+      "description": "Adversaries with no prior knowledge of legitimate credentials within the system or environment may guess passwords to attempt access to accounts. Without knowledge of the password for an account, an adversary may opt to systematically guess the password using a repetitive or iterative mechanism. An adversary may guess login credentials without prior knowledge of system or environment passwords during an operation by using a list of common passwords. Password guessing may or may not take into account the target's policies on password complexity or use policies that may lock accounts out after a number of failed attempts.\n\nGuessing passwords can be a risky option because it could cause numerous authentication failures and account lockouts, depending on the organization's login failure polici\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Password Guessing",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1070.001",
+      "name": "Clear Windows Event Logs",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may clear Windows Event Logs to hide the activity of an intrusion. Windows Event Logs are a record of a computer's alerts and notifications. There are three system-defined sources of events: System, Application, and Security, with five event types: Error, Warning, Information, Success Audit, and Failure Audit.\n\n\nWith administrator privileges, the event logs can be cleared with the following utility commands:\n\n* <code>wevtutil cl system</code>\n* <code>wevtutil cl application</code>\n* <code>wevtutil cl security</code>\n\nThese logs may also be cleared through other mechanisms, such as the event viewer GUI or [PowerShell](https://attack.mitre.org/techniques/T1059/001). For example, adversaries may use the PowerShell command <code>Remove-EventLog -LogName Security</code> to delete th\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Clear Windows Event Logs",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1583.006",
+      "name": "Web Services",
+      "tactic": "Resource Development",
+      "description": "Adversaries may register for web services\u00a0that can be used during targeting. A variety of popular websites exist for adversaries to register for a web-based service that can be abused during later stages of the adversary lifecycle, such as during Command and Control ([Web Service](https://attack.mitre.org/techniques/T1102)), [Exfiltration Over Web Service](https://attack.mitre.org/techniques/T1567), or [Phishing](https://attack.mitre.org/techniques/T1566). Using common services, such as those offered by Google, GitHub, or Twitter, makes it easier for adversaries to hide in expected noise.(Citation: FireEye APT29)(Citation: Hacker News GitHub Abuse 2024) By utilizing a web service, adversaries can make it difficult to physically tie back operations to them.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Web Services",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1057",
+      "name": "Process Discovery",
+      "tactic": "Discovery",
+      "description": "Adversaries may attempt to get information about running processes on a system. Information obtained could be used to gain an understanding of common software/applications running on systems within the network. Administrator or otherwise elevated access may provide better process details. Adversaries may use the information from [Process Discovery](https://attack.mitre.org/techniques/T1057) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.\n\nIn Windows environments, adversaries could obtain details on running processes using the [Tasklist](https://attack.mitre.org/software/S0057) utility via [cmd](https://attack.mitre.org/software/S0106) or <code>Get-Process</code> via [PowerShell](https\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Process Discovery",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1189",
+      "name": "Drive-by Compromise",
+      "tactic": "Initial Access",
+      "description": "Adversaries may gain access to a system through a user visiting a website over the normal course of browsing. Multiple ways of delivering exploit code to a browser exist (i.e., [Drive-by Target](https://attack.mitre.org/techniques/T1608/004)), including:\n\n* A legitimate website is compromised, allowing adversaries to inject malicious code\n* Script files served to a legitimate website from a publicly writeable cloud storage bucket are modified by an adversary\n* Malicious ads are paid for and served through legitimate ad providers (i.e., [Malvertising](https://attack.mitre.org/techniques/T1583/008))\n* Built-in web application interfaces that allow user-controllable content are leveraged for the insertion of malicious scripts or iFrames (e.g., cross-site scripting)\n\nBrowser push notifications\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Drive-by Compromise",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1595.002",
+      "name": "Vulnerability Scanning",
+      "tactic": "Reconnaissance",
+      "description": "Adversaries may scan victims for vulnerabilities that can be used during targeting. Vulnerability scans typically check if the configuration of a target host/application (ex: software and version) potentially aligns with the target of a specific exploit the adversary may seek to use.\n\nThese scans may also include more broad attempts to [Gather Victim Host Information](https://attack.mitre.org/techniques/T1592) that can be used to identify more commonly known, exploitable vulnerabilities. Vulnerability scans typically harvest running software and version numbers via server banners, listening ports, or other network artifacts.(Citation: OWASP Vuln Scanning) Information from these scans may reveal opportunities for other forms of reconnaissance (ex: [Search Open Websites/Domains](https://atta\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Vulnerability Scanning",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1546.015",
+      "name": "Component Object Model Hijacking",
+      "tactic": "Privilege Escalation",
+      "description": "Adversaries may establish persistence by executing malicious content triggered by hijacked references to Component Object Model (COM) objects. COM is a system within Windows to enable interaction between software components through the operating system.(Citation: Microsoft Component Object Model)  References to various COM objects are stored in the Registry. \n\nAdversaries may use the COM system to insert malicious code that can be executed in place of legitimate software through hijacking the COM references and relationships as a means for persistence. Hijacking a COM object requires a change in the Registry to replace a reference to a legitimate system component which may cause that component to not work when executed. When that system component is executed through normal system operation\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Component Object Model Hijacking",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1199",
+      "name": "Trusted Relationship",
+      "tactic": "Initial Access",
+      "description": "Adversaries may breach or otherwise leverage organizations who have access to intended victims. Access through trusted third party relationship abuses an existing connection that may not be protected or receives less scrutiny than standard mechanisms of gaining access to a network.\n\nOrganizations often grant elevated access to second or third-party external providers in order to allow them to manage internal systems as well as cloud-based environments. Some examples of these relationships include IT services contractors, managed security providers, infrastructure contractors (e.g. HVAC, elevators, physical security). The third-party provider's access may be intended to be limited to the infrastructure being maintained, but may exist on the same network as the rest of the enterprise. As suc\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Trusted Relationship",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1120",
+      "name": "Peripheral Device Discovery",
+      "tactic": "Discovery",
+      "description": "Adversaries may attempt to gather information about attached peripheral devices and components connected to a computer system.(Citation: Peripheral Discovery Linux)(Citation: Peripheral Discovery macOS) Peripheral devices could include auxiliary resources that support a variety of functionalities such as keyboards, printers, cameras, smart card readers, or removable storage. The information may be used to enhance their awareness of the system and network environment or may be used for further actions.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Peripheral Device Discovery",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1059.003",
+      "name": "Windows Command Shell",
+      "tactic": "Execution",
+      "description": "Adversaries may abuse the Windows command shell for execution. The Windows command shell ([cmd](https://attack.mitre.org/software/S0106)) is the primary command prompt on Windows systems. The Windows command prompt can be used to control almost any aspect of a system, with various permission levels required for different subsets of commands. The command prompt can be invoked remotely via [Remote Services](https://attack.mitre.org/techniques/T1021) such as [SSH](https://attack.mitre.org/techniques/T1021/004).(Citation: SSH in Windows)\n\nBatch files (ex: .bat or .cmd) also provide the shell with a list of sequential commands to run, as well as normal scripting operations such as conditionals and loops. Common uses of batch files include long or repetitive tasks, or the need to run the same se\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Windows Command Shell",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1557.004",
+      "name": "Evil Twin",
+      "tactic": "Credential Access",
+      "description": "Adversaries may host seemingly genuine Wi-Fi access points to deceive users into connecting to malicious networks as a way of supporting follow-on behaviors such as [Network Sniffing](https://attack.mitre.org/techniques/T1040), [Transmitted Data Manipulation](https://attack.mitre.org/techniques/T1565/002), or [Input Capture](https://attack.mitre.org/techniques/T1056).(Citation: Australia \u2018Evil Twin\u2019)\n\nBy using a Service Set Identifier (SSID) of a legitimate Wi-Fi network, fraudulent Wi-Fi access points may trick devices or users into connecting to malicious Wi-Fi networks.(Citation: Kaspersky evil twin)(Citation: medium evil twin)  Adversaries may provide a stronger signal strength or block access to Wi-Fi access points to coerce or entice victim devices into connecting to malicious networ\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Evil Twin",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1498",
+      "name": "Network Denial of Service",
+      "tactic": "Impact",
+      "description": "Adversaries may perform Network Denial of Service (DoS) attacks to degrade or block the availability of targeted resources to users. Network DoS can be performed by exhausting the network bandwidth services rely on. Example resources include specific websites, email services, DNS, and web-based applications. Adversaries have been observed conducting network DoS attacks for political purposes(Citation: FireEye OpPoisonedHandover February 2016) and to support other malicious activities, including distraction(Citation: FSISAC FraudNetDoS September 2012), hacktivism, and extortion.(Citation: Symantec DDoS October 2014)\n\nA Network DoS will occur when the bandwidth capacity of the network connection to a system is exhausted due to the volume of malicious traffic directed at the resource or the n\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Network Denial of Service",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1070.004",
+      "name": "File Deletion",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may delete files left behind by the actions of their intrusion activity. Malware, tools, or other non-native files dropped or created on a system by an adversary (ex: [Ingress Tool Transfer](https://attack.mitre.org/techniques/T1105)) may leave traces to indicate to what was done within a network and how. Removal of these files can occur during an intrusion, or as part of a post-intrusion process to minimize the adversary's footprint.\n\nThere are tools available from the host operating system to perform cleanup, but adversaries may use other tools as well.(Citation: Microsoft SDelete July 2016) Examples of built-in [Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059) functions include <code>del</code> on Windows, <code>rm</code> or <code>unlink</code> o\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "File Deletion",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1560",
+      "name": "Archive Collected Data",
+      "tactic": "Collection",
+      "description": "An adversary may compress and/or encrypt data that is collected prior to exfiltration. Compressing the data can help to obfuscate the collected data and minimize the amount of data sent over the network.(Citation: DOJ GRU Indictment Jul 2018) Encryption can be used to hide information that is being exfiltrated from detection or make exfiltration less conspicuous upon inspection by a defender.\n\nBoth compression and encryption are done prior to exfiltration, and can be performed using a utility, 3rd party library, or custom method.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Archive Collected Data",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1105",
+      "name": "Ingress Tool Transfer",
+      "tactic": "Command and Control",
+      "description": "Adversaries may transfer tools or other files from an external system into a compromised environment. Tools or files may be copied from an external adversary-controlled system to the victim network through the command and control channel or through alternate protocols such as [ftp](https://attack.mitre.org/software/S0095). Once present, adversaries may also transfer/spread tools between victim devices within a compromised environment (i.e. [Lateral Tool Transfer](https://attack.mitre.org/techniques/T1570)). \n\nOn Windows, adversaries may use various utilities to download tools, such as `copy`, `finger`, [certutil](https://attack.mitre.org/software/S0160), and [PowerShell](https://attack.mitre.org/techniques/T1059/001) commands such as <code>IEX(New-Object Net.WebClient).downloadString()</co\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Ingress Tool Transfer",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1598",
+      "name": "Phishing for Information",
+      "tactic": "Reconnaissance",
+      "description": "Adversaries may send phishing messages to elicit sensitive information that can be used during targeting. Phishing for information is an attempt to trick targets into divulging information, frequently credentials or other actionable information. Phishing for information is different from [Phishing](https://attack.mitre.org/techniques/T1566) in that the objective is gathering data from the victim rather than executing malicious code.\n\nAll forms of phishing are electronically delivered social engineering. Phishing can be targeted, known as spearphishing. In spearphishing, a specific individual, company, or industry will be targeted by the adversary. More generally, adversaries can conduct non-targeted phishing, such as in mass credential harvesting campaigns.\n\nAdversaries may also try to obt\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Phishing for Information",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1559.002",
+      "name": "Dynamic Data Exchange",
+      "tactic": "Execution",
+      "description": "Adversaries may use Windows Dynamic Data Exchange (DDE) to execute arbitrary commands. DDE is a client-server protocol for one-time and/or continuous inter-process communication (IPC) between applications. Once a link is established, applications can autonomously exchange transactions consisting of strings, warm data links (notifications when a data item changes), hot data links (duplications of changes to a data item), and requests for command execution.\n\nObject Linking and Embedding (OLE), or the ability to link data between documents, was originally implemented through DDE. Despite being superseded by [Component Object Model](https://attack.mitre.org/techniques/T1559/001), DDE may be enabled in Windows 10 and most of Microsoft Office 2016 via Registry keys.(Citation: BleepingComputer DD\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Dynamic Data Exchange",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1036.005",
+      "name": "Match Legitimate Resource Name or Location",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may match or approximate the name or location of legitimate files, Registry keys, or other resources when naming/placing them. This is done for the sake of evading defenses and observation. \n\nThis may be done by placing an executable in a commonly trusted directory (ex: under System32) or giving it the name of a legitimate, trusted program (ex: `svchost.exe`). Alternatively, a Windows Registry key may be given a close approximation to a key used by a legitimate program. In containerized environments, a threat actor may create a resource in a trusted namespace or one that matches the naming convention of a container pod or cluster.(Citation: Aquasec Kubernetes Backdoor 2023)",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Match Legitimate Resource Name or Location",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1119",
+      "name": "Automated Collection",
+      "tactic": "Collection",
+      "description": "Once established within a system or network, an adversary may use automated techniques for collecting internal data. Methods for performing this technique could include use of a [Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059) to search for and copy information fitting set criteria such as file type, location, or name at specific time intervals. \n\nIn cloud-based environments, adversaries may also use cloud APIs, data pipelines, command line interfaces, or extract, transform, and load (ETL) services to automatically collect data.(Citation: Mandiant UNC3944 SMS Phishing 2023) \n\nThis functionality could also be built into remote access tools. \n\nThis technique may incorporate use of other techniques such as [File and Directory Discovery](https://attack.mitre.org/t\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Automated Collection",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1078.004",
+      "name": "Cloud Accounts",
+      "tactic": "Defense Evasion",
+      "description": "Valid accounts in cloud environments may allow adversaries to perform actions to achieve Initial Access, Persistence, Privilege Escalation, or Defense Evasion. Cloud accounts are those created and configured by an organization for use by users, remote support, services, or for administration of resources within a cloud service provider or SaaS application. Cloud Accounts can exist solely in the cloud; alternatively, they may be hybrid-joined between on-premises systems and the cloud through syncing or federation with other identity sources such as Windows Active Directory.(Citation: AWS Identity Federation)(Citation: Google Federating GC)(Citation: Microsoft Deploying AD Federation)\n\nService or user accounts may be targeted by adversaries through [Brute Force](https://attack.mitre.org/tech\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Cloud Accounts",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1221",
+      "name": "Template Injection",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may create or modify references in user document templates to conceal malicious code or force authentication attempts. For example, Microsoft\u2019s Office Open XML (OOXML) specification defines an XML-based format for Office documents (.docx, xlsx, .pptx) to replace older binary formats (.doc, .xls, .ppt). OOXML files are packed together ZIP archives compromised of various XML files, referred to as parts, containing properties that collectively define how a document is rendered.(Citation: Microsoft Open XML July 2017)\n\nProperties within parts may reference shared public resources accessed via online URLs. For example, template properties may reference a file, serving as a pre-formatted document blueprint, that is fetched when the document is loaded.\n\nAdversaries may abuse these tem\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Template Injection",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1005",
+      "name": "Data from Local System",
+      "tactic": "Collection",
+      "description": "Adversaries may search local system sources, such as file systems, configuration files, local databases, virtual machine files, or process memory, to find files of interest and sensitive data prior to Exfiltration.\n\nAdversaries may do this using a [Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059), such as [cmd](https://attack.mitre.org/software/S0106) as well as a [Network Device CLI](https://attack.mitre.org/techniques/T1059/008), which have functionality to interact with the file system to gather information.(Citation: show_run_config_cmd_cisco) Adversaries may also use [Automated Collection](https://attack.mitre.org/techniques/T1119) on the local system.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Data from Local System",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1213.002",
+      "name": "Sharepoint",
+      "tactic": "Collection",
+      "description": "Adversaries may leverage the SharePoint repository as a source to mine valuable information. SharePoint will often contain useful information for an adversary to learn about the structure and functionality of the internal network and systems. For example, the following is a list of example information that may hold potential value to an adversary and may also be found on SharePoint:\n\n* Policies, procedures, and standards\n* Physical / logical network diagrams\n* System architecture diagrams\n* Technical system documentation\n* Testing / development credentials (i.e., [Unsecured Credentials](https://attack.mitre.org/techniques/T1552))\n* Work / project schedules\n* Source code snippets\n* Links to network shares and other internal resources",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Sharepoint",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1078",
+      "name": "Valid Accounts",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may obtain and abuse credentials of existing accounts as a means of gaining Initial Access, Persistence, Privilege Escalation, or Defense Evasion. Compromised credentials may be used to bypass access controls placed on various resources on systems within the network and may even be used for persistent access to remote systems and externally available services, such as VPNs, Outlook Web Access, network devices, and remote desktop.(Citation: volexity_0day_sophos_FW) Compromised credentials may also grant an adversary increased privilege to specific systems or access to restricted areas of the network. Adversaries may choose not to use malware or tools in conjunction with the legitimate access those credentials provide to make it harder to detect their presence.\n\nIn some cases, ad\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Valid Accounts",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1025",
+      "name": "Data from Removable Media",
+      "tactic": "Collection",
+      "description": "Adversaries may search connected removable media on computers they have compromised to find files of interest. Sensitive data can be collected from any removable media (optical disk drive, USB memory, etc.) connected to the compromised system prior to Exfiltration. Interactive command shells may be in use, and common functionality within [cmd](https://attack.mitre.org/software/S0106) may be used to gather information. \n\nSome adversaries may also use [Automated Collection](https://attack.mitre.org/techniques/T1119) on removable media.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Data from Removable Media",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1071.001",
+      "name": "Web Protocols",
+      "tactic": "Command and Control",
+      "description": "Adversaries may communicate using application layer protocols associated with web traffic to avoid detection/network filtering by blending in with existing traffic. Commands to the remote system, and often the results of those commands, will be embedded within the protocol traffic between the client and server. \n\nProtocols such as HTTP/S(Citation: CrowdStrike Putter Panda) and WebSocket(Citation: Brazking-Websockets) that carry web traffic may be very common in environments. HTTP/S packets have many fields and headers in which data can be concealed. An adversary may abuse these protocols to communicate with systems under their control within a victim network while also mimicking normal, expected traffic.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Web Protocols",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1213",
+      "name": "Data from Information Repositories",
+      "tactic": "Collection",
+      "description": "Adversaries may leverage information repositories to mine valuable information. Information repositories are tools that allow for storage of information, typically to facilitate collaboration or information sharing between users, and can store a wide variety of data that may aid adversaries in further objectives, such as Credential Access, Lateral Movement, or Defense Evasion, or direct access to the target information. Adversaries may also abuse external sharing features to share sensitive documents with recipients outside of the organization (i.e., [Transfer Data to Cloud Account](https://attack.mitre.org/techniques/T1537)). \n\nThe following is a brief list of example information that may hold potential value to an adversary and may also be found on an information repository:\n\n* Policies,\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Data from Information Repositories",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1218.011",
+      "name": "Rundll32",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may abuse rundll32.exe to proxy execution of malicious code. Using rundll32.exe, vice executing directly (i.e. [Shared Modules](https://attack.mitre.org/techniques/T1129)), may avoid triggering security tools that may not monitor execution of the rundll32.exe process because of allowlists or false positives from normal operations. Rundll32.exe is commonly associated with executing DLL payloads (ex: <code>rundll32.exe {DLLname, DLLfunction}</code>).\n\nRundll32.exe can also be used to execute [Control Panel](https://attack.mitre.org/techniques/T1218/002) Item files (.cpl) through the undocumented shell32.dll functions <code>Control_RunDLL</code> and <code>Control_RunDLLAsUser</code>. Double-clicking a .cpl file also causes rundll32.exe to execute.(Citation: Trend Micro CPL) For ex\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Rundll32",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1560.001",
+      "name": "Archive via Utility",
+      "tactic": "Collection",
+      "description": "Adversaries may use utilities to compress and/or encrypt collected data prior to exfiltration. Many utilities include functionalities to compress, encrypt, or otherwise package data into a format that is easier/more secure to transport.\n\nAdversaries may abuse various utilities to compress or encrypt data before exfiltration. Some third party utilities may be preinstalled, such as <code>tar</code> on Linux and macOS or <code>zip</code> on Windows systems. \n\nOn Windows, <code>diantz</code> or <code> makecab</code> may be used to package collected files into a cabinet (.cab) file. <code>diantz</code> may also be used to download and compress files from remote locations (i.e. [Remote Data Staging](https://attack.mitre.org/techniques/T1074/002)).(Citation: diantz.exe_lolbas) <code>xcopy</code>\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Archive via Utility",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1140",
+      "name": "Deobfuscate/Decode Files or Information",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may use [Obfuscated Files or Information](https://attack.mitre.org/techniques/T1027) to hide artifacts of an intrusion from analysis. They may require separate mechanisms to decode or deobfuscate that information depending on how they intend to use it. Methods for doing that include built-in functionality of malware or by using utilities present on the system.\n\nOne such example is the use of [certutil](https://attack.mitre.org/software/S0160) to decode a remote access tool portable executable file that has been hidden inside a certificate file.(Citation: Malwarebytes Targeted Attack against Saudi Arabia) Another example is using the Windows <code>copy /b</code> or <code>type</code> command to reassemble binary fragments into a malicious payload.(Citation: Carbon Black Obfuscati\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Deobfuscate/Decode Files or Information",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1598.003",
+      "name": "Spearphishing Link",
+      "tactic": "Reconnaissance",
+      "description": "Adversaries may send spearphishing messages with a malicious link to elicit sensitive information that can be used during targeting. Spearphishing for information is an attempt to trick targets into divulging information, frequently credentials or other actionable information. Spearphishing for information frequently involves social engineering techniques, such as posing as a source with a reason to collect information (ex: [Establish Accounts](https://attack.mitre.org/techniques/T1585) or [Compromise Accounts](https://attack.mitre.org/techniques/T1586)) and/or sending multiple, seemingly urgent messages.\n\nAll forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this scenario, the malicious emails contain links g\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Spearphishing Link",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1542.003",
+      "name": "Bootkit",
+      "tactic": "Persistence",
+      "description": "Adversaries may use bootkits to persist on systems. A bootkit is a malware variant that modifies the boot sectors of a hard drive, allowing malicious code to execute before a computer's operating system has loaded. Bootkits reside at a layer below the operating system and may make it difficult to perform full remediation unless an organization suspects one was used and can act accordingly.\n\nIn BIOS systems, a bootkit may modify the Master Boot Record (MBR) and/or Volume Boot Record (VBR).(Citation: Mandiant M Trends 2016) The MBR is the section of disk that is first loaded after completing hardware initialization by the BIOS. It is the location of the boot loader. An adversary who has raw access to the boot drive may overwrite this area, diverting execution during startup from the normal b\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Bootkit",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1071.003",
+      "name": "Mail Protocols",
+      "tactic": "Command and Control",
+      "description": "Adversaries may communicate using application layer protocols associated with electronic mail delivery to avoid detection/network filtering by blending in with existing traffic. Commands to the remote system, and often the results of those commands, will be embedded within the protocol traffic between the client and server. \n\nProtocols such as SMTP/S, POP3/S, and IMAP that carry electronic mail may be very common in environments.  Packets produced from these protocols may have many fields and headers in which data can be concealed. Data could also be concealed within the email messages themselves. An adversary may abuse these protocols to communicate with systems under their control within a victim network while also mimicking normal, expected traffic.(Citation: FireEye APT28)",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Mail Protocols",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1036",
+      "name": "Masquerading",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may attempt to manipulate features of their artifacts to make them appear legitimate or benign to users and/or security tools. Masquerading occurs when the name or location of an object, legitimate or malicious, is manipulated or abused for the sake of evading defenses and observation. This may include manipulating file metadata, tricking users into misidentifying the file type, and giving legitimate task or service names.\n\nRenaming abusable system utilities to evade security monitoring is also a form of [Masquerading](https://attack.mitre.org/techniques/T1036).(Citation: LOLBAS Main Site)",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Masquerading",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1210",
+      "name": "Exploitation of Remote Services",
+      "tactic": "Lateral Movement",
+      "description": "Adversaries may exploit remote services to gain unauthorized access to internal systems once inside of a network. Exploitation of a software vulnerability occurs when an adversary takes advantage of a programming error in a program, service, or within the operating system software or kernel itself to execute adversary-controlled code.\u00a0A common goal for post-compromise exploitation of remote services is for lateral movement to enable access to a remote system.\n\nAn adversary may need to determine if the remote system is in a vulnerable state, which may be done through [Network Service Discovery](https://attack.mitre.org/techniques/T1046) or other Discovery methods looking for common, vulnerable software that may be deployed in the network, the lack of certain patches that may indicate vulner\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Exploitation of Remote Services",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1014",
+      "name": "Rootkit",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may use rootkits to hide the presence of programs, files, network connections, services, drivers, and other system components. Rootkits are programs that hide the existence of malware by intercepting/hooking and modifying operating system API calls that supply system information. (Citation: Symantec Windows Rootkits) \n\nRootkits or rootkit enabling functionality may reside at the user or kernel level in the operating system or lower, to include a hypervisor or [System Firmware](https://attack.mitre.org/techniques/T1542/001). (Citation: Wikipedia Rootkit) Rootkits have been seen for Windows, Linux, and Mac OS X systems. (Citation: CrowdStrike Linux Rootkit) (Citation: BlackHat Mac OSX Rootkit)\n\nRootkits that reside or modify boot sectors are known as [Bootkit](https://attack.mitr\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Rootkit",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1204.002",
+      "name": "Malicious File",
+      "tactic": "Execution",
+      "description": "An adversary may rely upon a user opening a malicious file in order to gain execution. Users may be subjected to social engineering to get them to open a file that will lead to code execution. This user action will typically be observed as follow-on behavior from [Spearphishing Attachment](https://attack.mitre.org/techniques/T1566/001). Adversaries may use several types of files that require a user to execute them, including .doc, .pdf, .xls, .rtf, .scr, .exe, .lnk, .pif, .cpl, .reg, and .iso.(Citation: Mandiant Trojanized Windows 10)\n\nAdversaries may employ various forms of [Masquerading](https://attack.mitre.org/techniques/T1036) and [Obfuscated Files or Information](https://attack.mitre.org/techniques/T1027) to increase the likelihood that a user will open and successfully execute a mal\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Malicious File",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1550.001",
+      "name": "Application Access Token",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may use stolen application access tokens to bypass the typical authentication process and access restricted accounts, information, or services on remote systems. These tokens are typically stolen from users or services and used in lieu of login credentials.\n\nApplication access tokens are used to make authorized API requests on behalf of a user or service and are commonly used to access resources in cloud, container-based applications, and software-as-a-service (SaaS).(Citation: Auth0 - Why You Should Always Use Access Tokens to Secure APIs Sept 2019) \n\nOAuth is one commonly implemented framework that issues tokens to users for access to systems. These frameworks are used collaboratively to verify the user and determine what actions the user is allowed to perform. Once identity\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Application Access Token",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1030",
+      "name": "Data Transfer Size Limits",
+      "tactic": "Exfiltration",
+      "description": "An adversary may exfiltrate data in fixed size chunks instead of whole files or limit packet sizes below certain thresholds. This approach may be used to avoid triggering network data transfer threshold alerts.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Data Transfer Size Limits",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1134.001",
+      "name": "Token Impersonation/Theft",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may duplicate then impersonate another user's existing token to escalate privileges and bypass access controls. For example, an adversary can duplicate an existing token using `DuplicateToken` or `DuplicateTokenEx`.(Citation: DuplicateToken function) The token can then be used with `ImpersonateLoggedOnUser` to allow the calling thread to impersonate a logged on user's security context, or with `SetThreadToken` to assign the impersonated token to a thread.\n\nAn adversary may perform [Token Impersonation/Theft](https://attack.mitre.org/techniques/T1134/001) when they have a specific, existing process they want to assign the duplicated token to. For example, this may be useful for when the target user has a non-network logon session on the system.\n\nWhen an adversary would instead u\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Token Impersonation/Theft",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1074.002",
+      "name": "Remote Data Staging",
+      "tactic": "Collection",
+      "description": "Adversaries may stage data collected from multiple systems in a central location or directory on one system prior to Exfiltration. Data may be kept in separate files or combined into one file through techniques such as [Archive Collected Data](https://attack.mitre.org/techniques/T1560). Interactive command shells may be used, and common functionality within [cmd](https://attack.mitre.org/software/S0106) and bash may be used to copy data into a staging location.\n\nIn cloud environments, adversaries may stage data within a particular instance or virtual machine before exfiltration. An adversary may [Create Cloud Instance](https://attack.mitre.org/techniques/T1578/002) and stage data in that instance.(Citation: Mandiant M-Trends 2020)\n\nBy staging data on one system prior to Exfiltration, adver\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Remote Data Staging",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1092",
+      "name": "Communication Through Removable Media",
+      "tactic": "Command and Control",
+      "description": "Adversaries can perform command and control between compromised hosts on potentially disconnected networks using removable media to transfer commands from system to system.(Citation: ESET Sednit USBStealer 2014) Both systems would need to be compromised, with the likelihood that an Internet-connected system was compromised first and the second through lateral movement by [Replication Through Removable Media](https://attack.mitre.org/techniques/T1091). Commands and files would be relayed from the disconnected system to the Internet-connected system to which the adversary has direct access.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Communication Through Removable Media",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1098.002",
+      "name": "Additional Email Delegate Permissions",
+      "tactic": "Persistence",
+      "description": "Adversaries may grant additional permission levels to maintain persistent access to an adversary-controlled email account. \n\nFor example, the <code>Add-MailboxPermission</code> [PowerShell](https://attack.mitre.org/techniques/T1059/001) cmdlet, available in on-premises Exchange and in the cloud-based service Office 365, adds permissions to a mailbox.(Citation: Microsoft - Add-MailboxPermission)(Citation: FireEye APT35 2018)(Citation: Crowdstrike Hiding in Plain Sight 2018) In Google Workspace, delegation can be enabled via the Google Admin console and users can delegate accounts via their Gmail settings.(Citation: Gmail Delegation)(Citation: Google Ensuring Your Information is Safe) \n\nAdversaries may also assign mailbox folder permissions through individual folder permissions or roles. In\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Additional Email Delegate Permissions",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1003",
+      "name": "OS Credential Dumping",
+      "tactic": "Credential Access",
+      "description": "Adversaries may attempt to dump credentials to obtain account login and credential material, normally in the form of a hash or a clear text password. Credentials can be obtained from OS caches, memory, or structures.(Citation: Brining MimiKatz to Unix) Credentials can then be used to perform [Lateral Movement](https://attack.mitre.org/tactics/TA0008) and access restricted information.\n\nSeveral of the tools mentioned in associated sub-techniques may be used by both adversaries and professional security testers. Additional custom tools likely exist as well.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "OS Credential Dumping",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1040",
+      "name": "Network Sniffing",
+      "tactic": "Credential Access",
+      "description": "Adversaries may passively sniff network traffic to capture information about an environment, including authentication material passed over the network. Network sniffing refers to using the network interface on a system to monitor or capture information sent over a wired or wireless connection. An adversary may place a network interface into promiscuous mode to passively access data in transit over the network, or use span ports to capture a larger amount of data.\n\nData captured via this technique may include user credentials, especially those sent over an insecure, unencrypted protocol. Techniques for name service resolution poisoning, such as [LLMNR/NBT-NS Poisoning and SMB Relay](https://attack.mitre.org/techniques/T1557/001), can also be used to capture credentials to websites, proxies,\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Network Sniffing",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1068",
+      "name": "Exploitation for Privilege Escalation",
+      "tactic": "Privilege Escalation",
+      "description": "Adversaries may exploit software vulnerabilities in an attempt to elevate privileges. Exploitation of a software vulnerability occurs when an adversary takes advantage of a programming error in a program, service, or within the operating system software or kernel itself to execute adversary-controlled code. Security constructs such as permission levels will often hinder access to information and use of certain techniques, so adversaries will likely need to perform privilege escalation to include use of software exploitation to circumvent those restrictions.\n\nWhen initially gaining access to a system, an adversary may be operating within a lower privileged process which will prevent them from accessing certain resources on the system. Vulnerabilities may exist, usually in operating system c\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Exploitation for Privilege Escalation",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1137.002",
+      "name": "Office Test",
+      "tactic": "Persistence",
+      "description": "Adversaries may abuse the Microsoft Office \"Office Test\" Registry key to obtain persistence on a compromised system. An Office Test Registry location exists that allows a user to specify an arbitrary DLL that will be executed every time an Office application is started. This Registry key is thought to be used by Microsoft to load DLLs for testing and debugging purposes while developing Office applications. This Registry key is not created by default during an Office installation.(Citation: Hexacorn Office Test)(Citation: Palo Alto Office Test Sofacy)\n\nThere exist user and global Registry keys for the Office Test feature, such as:\n\n* <code>HKEY_CURRENT_USER\\Software\\Microsoft\\Office test\\Special\\Perf</code>\n* <code>HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Office test\\Special\\Perf</code>\n\nAdver\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Office Test",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1528",
+      "name": "Steal Application Access Token",
+      "tactic": "Credential Access",
+      "description": "Adversaries can steal application access tokens as a means of acquiring credentials to access remote systems and resources.\n\nApplication access tokens are used to make authorized API requests on behalf of a user or service and are commonly used as a way to access resources in cloud and container-based applications and software-as-a-service (SaaS).(Citation: Auth0 - Why You Should Always Use Access Tokens to Secure APIs Sept 2019)  Adversaries who steal account API tokens in cloud and containerized environments may be able to access data and perform actions with the permissions of these accounts, which can lead to privilege escalation and further compromise of the environment.\n\nFor example, in Kubernetes environments, processes running inside a container may communicate with the Kubernetes\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Steal Application Access Token",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1110.003",
+      "name": "Password Spraying",
+      "tactic": "Credential Access",
+      "description": "Adversaries may use a single or small list of commonly used passwords against many different accounts to attempt to acquire valid account credentials. Password spraying uses one password (e.g. 'Password01'), or a small list of commonly used passwords, that may match the complexity policy of the domain. Logins are attempted with that password against many different accounts on a network to avoid account lockouts that would normally occur when brute forcing a single account with many passwords. (Citation: BlackHillsInfosec Password Spraying)\n\nTypically, management services over commonly used ports are used when password spraying. Commonly targeted services include the following:\n\n* SSH (22/TCP)\n* Telnet (23/TCP)\n* FTP (21/TCP)\n* NetBIOS / SMB / Samba (139/TCP & 445/TCP)\n* LDAP (389/TCP)\n* Ke\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Password Spraying",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1204.001",
+      "name": "Malicious Link",
+      "tactic": "Execution",
+      "description": "An adversary may rely upon a user clicking a malicious link in order to gain execution. Users may be subjected to social engineering to get them to click on a link that will lead to code execution. This user action will typically be observed as follow-on behavior from [Spearphishing Link](https://attack.mitre.org/techniques/T1566/002). Clicking on a link may also lead to other execution techniques such as exploitation of a browser or application vulnerability via [Exploitation for Client Execution](https://attack.mitre.org/techniques/T1203). Links may also lead users to download files that require execution via [Malicious File](https://attack.mitre.org/techniques/T1204/002).",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Malicious Link",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1133",
+      "name": "External Remote Services",
+      "tactic": "Persistence",
+      "description": "Adversaries may leverage external-facing remote services to initially access and/or persist within a network. Remote services such as VPNs, Citrix, and other access mechanisms allow users to connect to internal enterprise network resources from external locations. There are often remote service gateways that manage connections and credential authentication for these services. Services such as [Windows Remote Management](https://attack.mitre.org/techniques/T1021/006) and [VNC](https://attack.mitre.org/techniques/T1021/005) can also be used externally.(Citation: MacOS VNC software for Remote Desktop)\n\nAccess to [Valid Accounts](https://attack.mitre.org/techniques/T1078) to use the service is often a requirement, which could be obtained through credential pharming or by obtaining the credenti\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "External Remote Services",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1102.002",
+      "name": "Bidirectional Communication",
+      "tactic": "Command and Control",
+      "description": "Adversaries may use an existing, legitimate external Web service as a means for sending commands to and receiving output from a compromised system over the Web service channel. Compromised systems may leverage popular websites and social media to host command and control (C2) instructions. Those infected systems can then send the output from those commands back over that Web service channel. The return traffic may occur in a variety of ways, depending on the Web service being utilized. For example, the return traffic may take the form of the compromised system posting a comment on a forum, issuing a pull request to development project, updating a document hosted on a Web service, or by sending a Tweet. \n\nPopular websites and social media acting as a mechanism for C2 may give a significant\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Bidirectional Communication",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1001.001",
+      "name": "Junk Data",
+      "tactic": "Command and Control",
+      "description": "Adversaries may add junk data to protocols used for command and control to make detection more difficult.(Citation: FireEye SUNBURST Backdoor December 2020) By adding random or meaningless data to the protocols used for command and control, adversaries can prevent trivial methods for decoding, deciphering, or otherwise analyzing the traffic. Examples may include appending/prepending data with junk characters or writing junk characters between significant characters.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Junk Data",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1211",
+      "name": "Exploitation for Defense Evasion",
+      "tactic": "Defense Evasion",
+      "description": "Adversaries may exploit a system or application vulnerability to bypass security features. Exploitation of a vulnerability occurs when an adversary takes advantage of a programming error in a program, service, or within the operating system software or kernel itself to execute adversary-controlled code.\u00a0Vulnerabilities may exist in defensive security software that can be used to disable or circumvent them.\n\nAdversaries may have prior knowledge through reconnaissance that security software exists within an environment or they may perform checks during or shortly after the system is compromised for [Security Software Discovery](https://attack.mitre.org/techniques/T1518/001). The security software will likely be targeted directly for exploitation. There are examples of antivirus software bein\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Exploitation for Defense Evasion",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1003.001",
+      "name": "LSASS Memory",
+      "tactic": "Credential Access",
+      "description": "Adversaries may attempt to access credential material stored in the process memory of the Local Security Authority Subsystem Service (LSASS). After a user logs on, the system generates and stores a variety of credential materials in LSASS process memory. These credential materials can be harvested by an administrative user or SYSTEM and used to conduct [Lateral Movement](https://attack.mitre.org/tactics/TA0008) using [Use Alternate Authentication Material](https://attack.mitre.org/techniques/T1550).\n\nAs well as in-memory techniques, the LSASS process memory can be dumped from the target host and analyzed on a local system.\n\nFor example, on the target host use procdump:\n\n* <code>procdump -ma lsass.exe lsass_dump</code>\n\nLocally, mimikatz can be run using:\n\n* <code>sekurlsa::Minidump lsassdu\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "LSASS Memory",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1573.001",
+      "name": "Symmetric Cryptography",
+      "tactic": "Command and Control",
+      "description": "Adversaries may employ a known symmetric encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Symmetric encryption algorithms use the same key for plaintext encryption and ciphertext decryption. Common symmetric encryption algorithms include AES, DES, 3DES, Blowfish, and RC4.",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Symmetric Cryptography",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1074.001",
+      "name": "Local Data Staging",
+      "tactic": "Collection",
+      "description": "Adversaries may stage collected data in a central location or directory on the local system prior to Exfiltration. Data may be kept in separate files or combined into one file through techniques such as [Archive Collected Data](https://attack.mitre.org/techniques/T1560). Interactive command shells may be used, and common functionality within [cmd](https://attack.mitre.org/software/S0106) and bash may be used to copy data into a staging location.\n\nAdversaries may also stage collected data in various available formats/locations of a system, including local storage databases/repositories or the Windows Registry.(Citation: Prevailion DarkWatchman 2021)",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Local Data Staging",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1091",
+      "name": "Replication Through Removable Media",
+      "tactic": "Lateral Movement",
+      "description": "Adversaries may move onto systems, possibly those on disconnected or air-gapped networks, by copying malware to removable media and taking advantage of Autorun features when the media is inserted into a system and executes. In the case of Lateral Movement, this may occur through modification of executable files stored on removable media or by copying malware and renaming it to look like a legitimate file to trick users into executing it on a separate system. In the case of Initial Access, this may occur through manual manipulation of the media, modification of systems used to initially format the media, or modification to the media's firmware itself.\n\nMobile devices may also be used to infect PCs with malware if connected via USB.(Citation: Exploiting Smartphone USB ) This infection may be\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Replication Through Removable Media",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1110",
+      "name": "Brute Force",
+      "tactic": "Credential Access",
+      "description": "Adversaries may use brute force techniques to gain access to accounts when passwords are unknown or when password hashes are obtained.(Citation: TrendMicro Pawn Storm Dec 2020) Without knowledge of the password for an account or set of accounts, an adversary may systematically guess the password using a repetitive or iterative mechanism.(Citation: Dragos Crashoverride 2018) Brute forcing passwords can take place via interaction with a service that will check the validity of those credentials or offline against previously acquired credential data, such as password hashes.\n\nBrute forcing credentials may take place at various points during a breach. For example, adversaries may attempt to brute force access to [Valid Accounts](https://attack.mitre.org/techniques/T1078) within a victim environ\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "Brute Force",
+      "detection": ""
+    },
+    {
+      "technique_id": "T1021.002",
+      "name": "SMB/Windows Admin Shares",
+      "tactic": "Lateral Movement",
+      "description": "Adversaries may use [Valid Accounts](https://attack.mitre.org/techniques/T1078) to interact with a remote network share using Server Message Block (SMB). The adversary may then perform actions as the logged-on user.\n\nSMB is a file, printer, and serial port sharing protocol for Windows machines on the same network or domain. Adversaries may use SMB to interact with file shares, allowing them to move laterally throughout a network. Linux and macOS implementations of SMB typically use Samba.\n\nWindows systems have hidden network shares that are accessible only to administrators and provide the ability for remote file copy and other administrative functions. Example network shares include `C$`, `ADMIN$`, and `IPC$`. Adversaries may use this technique in conjunction with administrator-level [Val\u2026",
+      "source": "mitre_attack",
+      "detection_recs": [],
+      "_sources": [
+        "mitre_attack"
+      ],
+      "confidence": "MEDIUM",
+      "technique_name": "SMB/Windows Admin Shares",
+      "detection": ""
+    }
+  ],
+  "malware": [
+    {
+      "name": "Wevtutil",
+      "type": "malware",
+      "description": "Wevtutil is a Windows command-line utility that enables administrators to retrieve information about event logs and publishers.(Citation: Wevtutil Microsoft Documentation)"
+    },
+    {
+      "name": "certutil",
+      "type": "malware",
+      "description": "certutil is a command-line utility that can be used to obtain certificate authority information and configure Certificate Services. (Citation: TechNet Certutil)"
+    },
+    {
+      "name": "CHOPSTICK",
+      "type": "malware",
+      "description": "CHOPSTICK is a malware family of modular backdoors used by APT28. It has been used since at least 2012 and is usually dropped on victims as second-stage malware, though it has been used as first-stage malware in several cases. It has both Windows and Linux variants. (Citation: FireEye APT28) (Citation: ESET Sednit Part 2) (Citation: FireEye APT28 January 2017) (Citation: DOJ GRU Indictment Jul 201\u2026"
+    },
+    {
+      "name": "Net",
+      "type": "malware",
+      "description": "The Net utility is a component of the Windows operating system. It is used in command-line operations for control of users, groups, services, and network connections. (Citation: Microsoft Net Utility)\n\nNet has a great deal of functionality, (Citation: Savill 1999) much of which is useful for an adversary, such as gathering system and network information for Discovery, moving laterally through SMB/\u2026"
+    },
+    {
+      "name": "Forfiles",
+      "type": "malware",
+      "description": "Forfiles is a Windows utility commonly used in batch jobs to execute commands on one or more selected files or directories (ex: list all directories in a drive, read the first line of all files created yesterday, etc.). Forfiles can be executed from either the command line, Run window, or batch files/scripts. (Citation: Microsoft Forfiles Aug 2016)"
+    },
+    {
+      "name": "DealersChoice",
+      "type": "malware",
+      "description": "DealersChoice is a Flash exploitation framework used by APT28. (Citation: Sofacy DealersChoice)"
+    },
+    {
+      "name": "Mimikatz",
+      "type": "malware",
+      "description": "Mimikatz is a credential dumper capable of obtaining plaintext Windows account logins and passwords, along with many other features that make it useful for testing the security of networks. (Citation: Deply Mimikatz) (Citation: Adsecurity Mimikatz Guide)"
+    },
+    {
+      "name": "ADVSTORESHELL",
+      "type": "malware",
+      "description": "ADVSTORESHELL is a spying backdoor that has been used by APT28 from at least 2012 to 2016. It is generally used for long-term espionage and is deployed on targets deemed interesting after a reconnaissance phase. (Citation: Kaspersky Sofacy) (Citation: ESET Sednit Part 2)"
+    },
+    {
+      "name": "Cannon",
+      "type": "malware",
+      "description": "Cannon is a Trojan with variants written in C# and Delphi. It was first observed in April 2018. (Citation: Unit42 Cannon Nov 2018)(Citation: Unit42 Sofacy Dec 2018)"
+    },
+    {
+      "name": "Komplex",
+      "type": "malware",
+      "description": "Komplex is a backdoor that has been used by APT28 on OS X and appears to be developed in a similar manner to XAgentOSX (Citation: XAgentOSX 2017) (Citation: Sofacy Komplex Trojan).",
+      "aliases": [
+        "SedUploader",
+        "JHUHUGIT",
+        "JKEYSKW"
+      ]
+    },
+    {
+      "name": "HIDEDRV",
+      "type": "malware",
+      "description": "HIDEDRV is a rootkit used by APT28. It has been deployed along with Downdelph to execute and hide that malware. (Citation: ESET Sednit Part 3) (Citation: Sekoia HideDRV Oct 2016)"
+    },
+    {
+      "name": "JHUHUGIT",
+      "type": "malware",
+      "description": "JHUHUGIT is malware used by APT28. It is based on Carberp source code and serves as reconnaissance malware. (Citation: Kaspersky Sofacy) (Citation: F-Secure Sofacy 2015) (Citation: ESET Sednit Part 1) (Citation: FireEye APT28 January 2017)"
+    },
+    {
+      "name": "Koadic",
+      "type": "malware",
+      "description": "Koadic is a Windows post-exploitation framework and penetration testing tool that is publicly available on GitHub. Koadic has several options for staging payloads and creating implants, and performs most of its operations using Windows Script Host.(Citation: Github Koadic)(Citation: Palo Alto Sofacy 06-2018)(Citation: MalwareBytes LazyScripter Feb 2021)"
+    },
+    {
+      "name": "Winexe",
+      "type": "malware",
+      "description": "Winexe is a lightweight, open source tool similar to PsExec designed to allow system administrators to execute commands on remote servers. (Citation: Winexe Github Sept 2013) Winexe is unique in that it is a GNU/Linux based client. (Citation: \u00dcberwachung APT28 Forfiles June 2015)"
+    },
+    {
+      "name": "Responder",
+      "type": "malware",
+      "description": "Responder is an open source tool used for LLMNR, NBT-NS and MDNS poisoning, with built-in HTTP/SMB/MSSQL/FTP/LDAP rogue authentication server supporting NTLMv1/NTLMv2/LMv2, Extended Security NTLMSSP and Basic HTTP authentication. (Citation: GitHub Responder)"
+    },
+    {
+      "name": "cipher.exe",
+      "type": "malware",
+      "description": "cipher.exe is a native Microsoft utility that manages encryption of directories and files on NTFS (New Technology File System) partitions by using the Encrypting File System (EFS).(Citation: cipher.exe)"
+    },
+    {
+      "name": "XTunnel",
+      "type": "malware",
+      "description": "XTunnel a VPN-like network proxy tool that can relay traffic between a C2 server and a victim. It was first seen in May 2013 and reportedly used by APT28 during the compromise of the Democratic National Committee. (Citation: Crowdstrike DNC June 2016) (Citation: Invincea XTunnel) (Citation: ESET Sednit Part 2)"
+    },
+    {
+      "name": "Drovorub",
+      "type": "malware",
+      "description": "Drovorub is a Linux malware toolset comprised of an agent, client, server, and kernel modules, that has been used by APT28.(Citation: NSA/FBI Drovorub August 2020)"
+    },
+    {
+      "name": "Tor",
+      "type": "malware",
+      "description": "Tor is a software suite and network that provides increased anonymity on the Internet. It creates a multi-hop proxy network and utilizes multilayer encryption to protect both the message and routing information. Tor utilizes \"Onion Routing,\" in which messages are encrypted with multiple layers of encryption; at each step in the proxy network, the topmost layer is decrypted and the contents forward\u2026"
+    },
+    {
+      "name": "CORESHELL",
+      "type": "malware",
+      "description": "CORESHELL is a downloader used by APT28. The older versions of this malware are known as SOURFACE and newer versions as CORESHELL.(Citation: FireEye APT28) (Citation: FireEye APT28 January 2017)",
+      "aliases": [
+        "SOURFACE"
+      ]
+    },
+    {
+      "name": "OLDBAIT",
+      "type": "malware",
+      "description": "OLDBAIT is a credential harvester used by APT28. (Citation: FireEye APT28) (Citation: FireEye APT28 January 2017)",
+      "aliases": [
+        "Sasfis"
+      ]
+    },
+    {
+      "name": "Downdelph",
+      "type": "malware",
+      "description": "Downdelph is a first-stage downloader written in Delphi that has been used by APT28 in rare instances between 2013 and 2015. (Citation: ESET Sednit Part 3)",
+      "aliases": [
+        "DELPHACY"
+      ]
+    },
+    {
+      "name": "XAgentOSX",
+      "type": "malware",
+      "description": "XAgentOSX is a trojan that has been used by APT28  on OS X and appears to be a port of their standard CHOPSTICK or XAgent trojan. (Citation: XAgentOSX 2017)"
+    },
+    {
+      "name": "USBStealer",
+      "type": "malware",
+      "description": "USBStealer is malware that has been used by APT28 since at least 2005 to extract information from air-gapped networks. It does not have the capability to communicate over the Internet and has been used in conjunction with ADVSTORESHELL. (Citation: ESET Sednit USBStealer 2014) (Citation: Kaspersky Sofacy)"
+    },
+    {
+      "name": "Zebrocy",
+      "type": "malware",
+      "description": "Zebrocy is a Trojan that has been used by APT28 since at least November 2015. The malware comes in several programming language variants, including C++, Delphi, AutoIt, C#, VB.NET, and Golang. (Citation: Palo Alto Sofacy 06-2018)(Citation: Unit42 Cannon Nov 2018)(Citation: Unit42 Sofacy Dec 2018)(Citation: CISA Zebrocy Oct 2020)"
+    },
+    {
+      "name": "reGeorg",
+      "type": "malware",
+      "description": "reGeorg is an open-source web shell written in Python that can be used as a proxy to bypass firewall rules and tunnel data in and out of targeted networks.(Citation: Fortinet reGeorg MAR 2019)(Citation: GitHub reGeorg 2016)"
+    },
+    {
+      "name": "Fysbis",
+      "type": "malware",
+      "description": "Fysbis is a Linux-based backdoor used by APT28 that dates back to at least 2014.(Citation: Fysbis Palo Alto Analysis)"
+    },
+    {
+      "name": "LoJax",
+      "type": "malware",
+      "description": "LoJax is a UEFI rootkit used by APT28 to persist remote access software on targeted systems.(Citation: ESET LoJax Sept 2018)"
+    },
+    {
+      "name": "X-Agent",
+      "type": "malware",
+      "description": "",
+      "aliases": [
+        "splm",
+        "chopstick",
+        "fysbis"
+      ]
+    },
+    {
+      "name": "ArguePatch",
+      "type": "malware",
+      "description": "During a campaign against a Ukrainian energy provider, a new loader of a new version of CaddyWiper called \"ArguePatch\" was observed by ESET researchers. ArguePatch is a modified version of Hex-Ray's Remote Debugger Server (win32_remote.exe).\r\nArguePatch expects a decryption key and the file of the CaddyWiper shellcode as command line parameters."
+    },
+    {
+      "name": "DriveOcean",
+      "type": "malware",
+      "description": "Communicates via Google Drive.",
+      "aliases": [
+        "Google Drive RAT"
+      ]
+    },
+    {
+      "name": "Unidentified 114 (APT28 InfoStealer)",
+      "type": "malware",
+      "description": "According to Trend Micro, this is a small information stealer written in .NET, that pushes its loot to a benign file sharing service and does not have a direct C&C callback."
+    },
+    {
+      "name": "XP PrivEsc (CVE-2014-4076)",
+      "type": "malware",
+      "description": ""
+    },
+    {
+      "name": "X-Tunnel (.NET)",
+      "type": "malware",
+      "description": "This is a rewrite of win.xtunnel using the .NET framework that surfaced late 2017."
+    },
+    {
+      "name": "Zebrocy (AutoIT)",
+      "type": "malware",
+      "description": ""
+    },
+    {
+      "name": "CredoMap",
+      "type": "malware",
+      "description": ""
+    },
+    {
+      "name": "Mocky LNK",
+      "type": "malware",
+      "description": "LNK files used to lure and orchestrate execution of various scripts, interacting with the Mocky API service."
+    },
+    {
+      "name": "OCEANMAP",
+      "type": "malware",
+      "description": ""
+    },
+    {
+      "name": "SpyPress",
+      "type": "malware",
+      "description": "According to ESET, SpyPress is a set of Javascript payloads targeting different webmail frameworks (HORDE, MDAEMON, ROUNDCUBE, ZIMBRA). The observed payloads have common characteristics. All are similarly obfuscated, with variable and function names replaced with random-looking strings. Furthermore, strings used by the code, such as webmail and C&C server URLs, are also obfuscated and contained in\u2026"
+    },
+    {
+      "name": "STEELHOOK",
+      "type": "malware",
+      "description": ""
+    },
+    {
+      "name": "MASEPIE",
+      "type": "malware",
+      "description": ""
+    },
+    {
+      "name": "LAMEHUG",
+      "type": "malware",
+      "description": "According to CERT-UA, LAMEHUG uses an LLM (Qwen) to dynamically generate commands to gather basic information about a computer and recursively exfiltrate Office documents from a set of folders, to be uploaded either by SFTP or HTTP POST requests."
+    },
+    {
+      "name": "CaddyWiper",
+      "type": "malware",
+      "description": "CaddyWiper is another destructive malware believed to be deployed to target Ukraine.\r\n\r\nCaddyWiper wipes all files under C:\\Users and all also all files under available drives from D: to Z: by overwriting the data with NULL value. If the target file is greater than 0xA00000 bytes in size (10MB), it will only wipe the first 0xA00000 bytes.\r\n\r\nIt also wipes disk partitions from \\\\.\\PHYSICALDRIVE9 to\u2026",
+      "aliases": [
+        "KillDisk.NCX"
+      ]
+    },
+    {
+      "name": "Computrace",
+      "type": "malware",
+      "description": "",
+      "aliases": [
+        "lojack"
+      ]
+    },
+    {
+      "name": "FusionDrive",
+      "type": "malware",
+      "description": ""
+    },
+    {
+      "name": "GooseEgg",
+      "type": "malware",
+      "description": ""
+    },
+    {
+      "name": "Graphite",
+      "type": "malware",
+      "description": "Trellix describes Graphite as a malware using the Microsoft Graph API and OneDrive for C&C. It was found being deployed in-memory only and served as a downloader for Empire."
+    },
+    {
+      "name": "PocoDown",
+      "type": "malware",
+      "description": "uses POCO C++ cross-platform library, Xor-based string obfuscation, SSL library code and string overlap with Xtunnel, infrastructure overlap with X-Agent, probably in use since mid-2018",
+      "aliases": [
+        "Blitz",
+        "PocoDownloader"
+      ]
+    }
+  ],
+  "indicators": [
+    {
+      "type": "cve",
+      "value": "CVE-2015-3043",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2015-1701",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2014-0515",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2015-5119",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2015-7645",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2015-1641",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2014-1776",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2015-4902",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2014-3897",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "cve",
+      "value": "CVE-2014-6332",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "domain",
+      "value": "ssl-icloud.com",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "domain",
+      "value": "updatecenter.name",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "domain",
+      "value": "securitypractic.com",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "domain",
+      "value": "pass-google.com",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "domain",
+      "value": "drivers-update.info",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "domain",
+      "value": "nato-press.com",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "domain",
+      "value": "n0vinite.com",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "domain",
+      "value": "standartnevvs.com",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "domain",
+      "value": "kavkazcentr.info",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "domain",
+      "value": "mail.g0v.pl",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "email",
+      "value": "morata_al@mail.com",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "email",
+      "value": "partanencomp@mail.com",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "email",
+      "value": "olivier_servgr@mail.com",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_md5",
+      "value": "8c4fa713c5e2b009114adda758adc445",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_md5",
+      "value": "3b0ecd011500f61237c205834db0e13a",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_md5",
+      "value": "791428601ad12b9230b9ace4f2138713",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_md5",
+      "value": "5882fda97fdf78b47081cc4105d44f7c",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_md5",
+      "value": "da2a657dc69d7320f2ffc87013f257ad",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_md5",
+      "value": "48656a93f9ba39410763a2196aabc67f",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_md5",
+      "value": "9eebfebe3987fec3c395594dc57a0c4c",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_md5",
+      "value": "8b92fe86c5b7a9e34f433a6fbac8bc3a",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_md5",
+      "value": "ead4ec18ebce6890d20757bb9f5285b1",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_md5",
+      "value": "1259c4fe5efd9bf07fc4c78466f2dd09",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha1",
+      "value": "ed9f3e5e889d281437b945993c6c2a80c60fdedc",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha1",
+      "value": "e742b917d3ef41992e67389cd2fe2aab0f9ace5b",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha1",
+      "value": "17661a04b4b150a6f70afdabe3fd9839cc56bee8",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha1",
+      "value": "90c3b756b1bb849cba80994d445e96a9872d0cf5",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha1",
+      "value": "9b276a0f5fd824c3dff638c5c127567c65222230",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha1",
+      "value": "3956cfe34566ba8805f9b1fe0d2639606a404cd4",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha1",
+      "value": "351c3762be9948d01034c69aced97628099a90b0",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha1",
+      "value": "ef755f3fa59960838fa2b37b7dedce83ce41f05c",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha1",
+      "value": "80dca565807fa69a75a7dd278cef1daaee34236e",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha1",
+      "value": "c2e8c584d5401952af4f1db08cf4b6016874ddac",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha256",
+      "value": "fd8b2ea9a2e8a67e4cb3904b49c789d57ed9b1ce5bebfe54fe3d98214d6a0f61",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha256",
+      "value": "8bca0031f3b691421cb15f9c6e71ce193355d2d8cf2b190438b6962761d0c6bb",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha256",
+      "value": "02c7cf55fd5c5809ce2dce56085ba43795f2480423a4256537bfdfda0df85592",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha256",
+      "value": "45a93e4b9ae5bece0d53a3a9a83186b8975953344d4dfb340e9de0015a247c54",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha256",
+      "value": "cffa1d9fc336a1ad89af90443b15c98b71e679aeb03b3a68a5e9c3e7ecabc3d4",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha256",
+      "value": "2a06f142d87bd9b66621a30088683d6fcec019ba5cc9e5793e54f8d920ab0134",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha256",
+      "value": "227b7fe495ad9951aebf0aae3c317c1ac526cdd255953f111341b0b11be3bbc5",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha256",
+      "value": "96a19a90caa41406b632a2046f3a39b5579fbf730aca2357f84bf23f2cbc1fd3",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha256",
+      "value": "c1b8fc00d815e777e39f34a520342d1942ebd29695c9453951a988c61875bcd7",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "hash_sha256",
+      "value": "1f81609d9bbdc7f1d2c8846dcfc4292b3e2642301d9c59130f58e21abb0001be",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "ip",
+      "value": "185.10.58.170",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "ip",
+      "value": "104.171.117.216",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    },
+    {
+      "type": "ip",
+      "value": "141.255.160.52",
+      "description": "",
+      "sources": [
+        "alienvault_otx"
+      ]
+    }
+  ],
+  "campaigns": [
+    {
+      "name": "APT28 Nearest Neighbor Campaign",
+      "date": "",
+      "description": "[APT28 Nearest Neighbor Campaign](https://attack.mitre.org/campaigns/C0051) was conducted by [APT28](https://attack.mitre.org/groups/G0007) from early February 2022 to November 2024 against organizations and individuals with expertise on Ukraine. APT28 primarily leveraged living-off-the-land techniques, while leveraging the zero-day exploitation of CVE-2022-38028. Notably, APT28 leveraged Wi-Fi ne\u2026",
+      "reference": ""
+    }
+  ],
+  "_sources": [
+    {
+      "source_id": "mitre_attack",
+      "source_citation": "mitre_attack",
+      "source_url": "",
+      "retrieved_at": "2026-03-31T06:03:04.400463+00:00"
+    },
+    {
+      "source_id": "malpedia",
+      "source_citation": "malpedia",
+      "source_url": "",
+      "retrieved_at": "2026-03-31T06:03:04.400684+00:00"
+    },
+    {
+      "source_id": "alienvault_otx",
+      "source_citation": "alienvault_otx",
+      "source_url": "",
+      "retrieved_at": "2026-03-31T06:03:04.400708+00:00"
+    }
+  ],
+  "_technique_index": {
+    "T1003.003": 0,
+    "T1589.001": 1,
+    "T1591": 2,
+    "T1564.001": 3,
+    "T1583.003": 4,
+    "T1596": 5,
+    "T1583.001": 6,
+    "T1070.006": 7,
+    "T1090.002": 8,
+    "T1566.001": 9,
+    "T1059.001": 10,
+    "T1048.002": 11,
+    "T1547.001": 12,
+    "T1027.013": 13,
+    "T1203": 14,
+    "T1586.002": 15,
+    "T1114.002": 16,
+    "T1505.003": 17,
+    "T1584.008": 18,
+    "T1550.002": 19,
+    "T1037.001": 20,
+    "T1588.002": 21,
+    "T1564.003": 22,
+    "T1090.003": 23,
+    "T1567": 24,
+    "T1056.001": 25,
+    "T1083": 26,
+    "T1190": 27,
+    "T1669": 28,
+    "T1039": 29,
+    "T1113": 30,
+    "T1110.001": 31,
+    "T1070.001": 32,
+    "T1583.006": 33,
+    "T1057": 34,
+    "T1189": 35,
+    "T1595.002": 36,
+    "T1546.015": 37,
+    "T1199": 38,
+    "T1120": 39,
+    "T1059.003": 40,
+    "T1557.004": 41,
+    "T1498": 42,
+    "T1070.004": 43,
+    "T1560": 44,
+    "T1105": 45,
+    "T1598": 46,
+    "T1559.002": 47,
+    "T1036.005": 48,
+    "T1119": 49,
+    "T1078.004": 50,
+    "T1221": 51,
+    "T1005": 52,
+    "T1213.002": 53,
+    "T1078": 54,
+    "T1025": 55,
+    "T1071.001": 56,
+    "T1213": 57,
+    "T1218.011": 58,
+    "T1560.001": 59,
+    "T1140": 60,
+    "T1598.003": 61,
+    "T1542.003": 62,
+    "T1071.003": 63,
+    "T1036": 64,
+    "T1210": 65,
+    "T1014": 66,
+    "T1204.002": 67,
+    "T1550.001": 68,
+    "T1030": 69,
+    "T1134.001": 70,
+    "T1074.002": 71,
+    "T1092": 72,
+    "T1098.002": 73,
+    "T1003": 74,
+    "T1040": 75,
+    "T1068": 76,
+    "T1137.002": 77,
+    "T1528": 78,
+    "T1110.003": 79,
+    "T1204.001": 80,
+    "T1133": 81,
+    "T1102.002": 82,
+    "T1001.001": 83,
+    "T1211": 84,
+    "T1003.001": 85,
+    "T1573.001": 86,
+    "T1074.001": 87,
+    "T1091": 88,
+    "T1110": 89,
+    "T1021.002": 90
+  },
+  "_malware_index": [
+    "advstoreshell",
+    "arguepatch",
+    "caddywiper",
+    "cannon",
+    "certutil",
+    "chopstick",
+    "cipher.exe",
+    "computrace",
+    "coreshell",
+    "credomap",
+    "dealerschoice",
+    "downdelph",
+    "driveocean",
+    "drovorub",
+    "forfiles",
+    "fusiondrive",
+    "fysbis",
+    "gooseegg",
+    "graphite",
+    "hidedrv",
+    "jhuhugit",
+    "koadic",
+    "komplex",
+    "lamehug",
+    "lojax",
+    "masepie",
+    "mimikatz",
+    "mocky lnk",
+    "net",
+    "oceanmap",
+    "oldbait",
+    "pocodown",
+    "regeorg",
+    "responder",
+    "spypress",
+    "steelhook",
+    "tor",
+    "unidentified 114 (apt28 infostealer)",
+    "usbstealer",
+    "wevtutil",
+    "winexe",
+    "x-agent",
+    "x-tunnel (.net)",
+    "xagentosx",
+    "xp privesc (cve-2014-4076)",
+    "xtunnel",
+    "zebrocy",
+    "zebrocy (autoit)"
+  ],
+  "_indicator_index": {},
+  "generated_at": "2026-03-31T06:03:04.400888+00:00",
+  "sectors": [
+    "Government",
+    "Military",
+    "Aerospace"
+  ],
+  "origin": "Russia",
+  "motivations": [
+    "espionage"
+  ],
+  "sources_cited": [
+    "malpedia",
+    "alienvault_otx",
+    "mitre_attack"
+  ],
+  "mitre_group_id": "G0007"
+}

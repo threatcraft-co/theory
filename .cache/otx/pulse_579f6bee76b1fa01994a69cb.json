@@ -1,0 +1,52 @@
+{
+  "id": "579f6bee76b1fa01994a69cb",
+  "name": "Tunnel of Gov: DNC Hack and the Russian XTunnel",
+  "description": "In April 2016, Russian APT threat actor Fancy Bear successfully penetrated the network at the Democrat National Committee (DNC).  This was apparently the second time a Russian threat actor had done so.  According to Crowdstrike, a different Russian threat actor named Cozy Bear also compromised the DNC network back in the summer of 2015.  Crowdstrike was hired by the DNC to provide forensics and recovery services after DNC employees began to receive popups warning them of potential compromise of their Yahoo accounts.",
+  "author_name": "zer0daydan",
+  "modified": "2016-08-01T15:34:06.082000",
+  "created": "2016-08-01T15:34:06.082000",
+  "tags": [
+    "xtunnel",
+    "dnc",
+    "russian",
+    "voip",
+    "crowdstrike",
+    "fancy bear",
+    "yahoo",
+    "ldap",
+    "cozy bear",
+    "usb",
+    "skype",
+    "openssl",
+    "putty",
+    "smtp",
+    "udp"
+  ],
+  "references": [
+    "https://www.invincea.com/2016/07/tunnel-of-gov-dnc-hack-and-the-russian-xtunnel/"
+  ],
+  "public": 1,
+  "adversary": null,
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [],
+  "revision": 1,
+  "groups": [
+    {
+      "name": "APT",
+      "id": 51
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "zer0daydan",
+    "id": "10931",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_10931/resized/80/avatar_645faabb2e.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

@@ -1,0 +1,42 @@
+{
+  "urls": [
+    "http://www.secureworks.com/research/threat-profiles/cobalt-ulster",
+    "http://www.secureworks.com/research/threat-profiles/gold-drake",
+    "https://blog.tofile.dev/2020/11/28/koadic_jarm.html",
+    "https://cdn-cybersecurity.att.com/docs/global-perspective-of-the-sidewinder-apt.pdf",
+    "https://github.com/zerosum0x0/koadic",
+    "https://jsac.jpcert.or.jp/archive/2024/pdf/JSAC2024_1_9_takeda_furukawa_en.pdf",
+    "https://labs.bitdefender.com/2020/03/5-times-more-coronavirus-themed-malware-reports-during-march/?utm_campaign=twitter&utm_medium=twitter&utm_source=twitter",
+    "https://researchcenter.paloaltonetworks.com/2018/06/unit42-sofacy-groups-parallel-attacks/",
+    "https://resources.malwarebytes.com/files/2021/02/LazyScripter.pdf",
+    "https://www.prodaft.com/m/uploads/SilverFish_TLPWHITE.pdf",
+    "https://www.secureworks.com/research/threat-profiles/cobalt-trinity",
+    "https://www.secureworks.com/research/threat-profiles/cobalt-ulster",
+    "https://www.secureworks.com/research/threat-profiles/gold-drake"
+  ],
+  "uuid": "3b5faa15-e87e-4aaf-b791-2c5e593793e6",
+  "notes": [],
+  "sources": [],
+  "updated": "2024-01-31",
+  "alt_names": [],
+  "attribution": [
+    "APT28",
+    "Stone Panda"
+  ],
+  "common_name": "Koadic",
+  "description": "Koadic is an open-source post-exploitation framework for Windows, created by zerosum0x0 and available on GitHub. The framework is written in Python and can generate JScript and VBScript payloads which can be written to disk or mapped directly into memory. Its capabilities include remote desktop access, command execution, lateral movement via SMB, file transfer, credential theft using Mimikatz, port scanning, and system information collection. It can also collect specific system information and targeted files based on their name or extension.",
+  "library_entries": [
+    "arsene:20200320:5:46813c6",
+    "hegel:20210113:global:72b7b9d",
+    "jazi:20210224:lazyscripter:433f4bc",
+    "lee:20180606:sofacy:6d3e723",
+    "pathtofile:20201128:hunting:21f38be",
+    "prodaft:20210318:silverfish:f203208",
+    "secureworks:2020:cobalt:8d36ac3",
+    "secureworks:2020:cobalt:e50c4e9",
+    "secureworks:2020:gold:0d8c853",
+    "secureworks:2021:threat:dbd7ed7",
+    "takeda:20240125:threat:5cff906",
+    "zerosum0x0:20200109:koadic:2b6e0c1"
+  ]
+}

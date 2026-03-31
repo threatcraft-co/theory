@@ -1,0 +1,21 @@
+{
+  "technique_id": "T1542.003",
+  "cached_at": "2026-03-31T05:00:26.140613+00:00",
+  "rules": [
+    {
+      "title": "Potential Ransomware or Unauthorized MBR Tampering Via Bcdedit.EXE",
+      "status": "test",
+      "level": "medium",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection_*",
+      "description": "Detects potential malicious and unauthorized usage of bcdedit.exe",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.t1070",
+        "attack.persistence",
+        "attack.t1542.003"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_bcdedit_susp_execution.yml"
+    }
+  ]
+}

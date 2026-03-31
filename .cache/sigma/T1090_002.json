@@ -1,0 +1,39 @@
+{
+  "technique_id": "T1090.002",
+  "cached_at": "2026-03-31T04:53:21.183682+00:00",
+  "rules": [
+    {
+      "title": "RDP over Reverse SSH Tunnel WFP",
+      "status": "test",
+      "level": "high",
+      "logsource": "security / windows",
+      "condition_summary": "selection exclusion filter and ( sourceRDP or destinationRDP ) excluding 1 of exclusion filter*",
+      "description": "Detects svchost hosting RDP termsvcs communicating with the loopback address",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.command-and-control",
+        "attack.lateral-movement",
+        "attack.t1090.001",
+        "attack.t1090.002",
+        "attack.t1021.001",
+        "car.2013-07-002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/security/win_security_rdp_reverse_tunnel.yml"
+    },
+    {
+      "title": "Network Communication Initiated To Portmap.IO Domain",
+      "status": "test",
+      "level": "medium",
+      "logsource": "network_connection / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects an executable accessing the portmap.io domain, which could be a sign of forbidden C2 traffic or data exfiltration by malicious actors",
+      "tags": [
+        "attack.t1041",
+        "attack.command-and-control",
+        "attack.t1090.002",
+        "attack.exfiltration"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/network_connection/net_connection_win_domain_portmap.yml"
+    }
+  ]
+}

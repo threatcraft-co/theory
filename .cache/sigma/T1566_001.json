@@ -1,0 +1,99 @@
+{
+  "technique_id": "T1566.001",
+  "cached_at": "2026-03-31T04:53:29.579225+00:00",
+  "rules": [
+    {
+      "title": "ISO Image Mounted",
+      "status": "test",
+      "level": "medium",
+      "logsource": "security / windows",
+      "condition_summary": "selection exclusion filter excluding 1 of filter_main_*",
+      "description": "Detects the mount of an ISO image on an endpoint",
+      "tags": [
+        "attack.initial-access",
+        "attack.t1566.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/builtin/security/win_security_iso_mount.yml"
+    },
+    {
+      "title": "Suspicious HWP Sub Processes",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects suspicious Hangul Word Processor (Hanword) sub processes that could indicate an exploitation",
+      "tags": [
+        "attack.initial-access",
+        "attack.t1566.001",
+        "attack.execution",
+        "attack.t1203",
+        "attack.t1059.003",
+        "attack.g0032"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hwp_exploits.yml"
+    },
+    {
+      "title": "Suspicious HH.EXE Execution",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "all of selection_*",
+      "description": "Detects a suspicious execution of a Microsoft HTML Help (HH.exe)",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.execution",
+        "attack.initial-access",
+        "attack.t1047",
+        "attack.t1059.001",
+        "attack.t1059.003",
+        "attack.t1059.005",
+        "attack.t1059.007",
+        "attack.t1218",
+        "attack.t1218.001",
+        "attack.t1218.010",
+        "attack.t1218.011",
+        "attack.t1566",
+        "attack.t1566.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hh_susp_execution.yml"
+    },
+    {
+      "title": "HTML Help HH.EXE Suspicious Child Process",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects a suspicious child process of a Microsoft HTML Help (HH.exe)",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.execution",
+        "attack.initial-access",
+        "attack.t1047",
+        "attack.t1059.001",
+        "attack.t1059.003",
+        "attack.t1059.005",
+        "attack.t1059.007",
+        "attack.t1218",
+        "attack.t1218.001",
+        "attack.t1218.010",
+        "attack.t1218.011",
+        "attack.t1566",
+        "attack.t1566.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_hh_html_help_susp_child_process.yml"
+    },
+    {
+      "title": "ISO or Image Mount Indicator in Recent Files",
+      "status": "test",
+      "level": "medium",
+      "logsource": "file_event / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.initial-access",
+        "attack.t1566.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/file/file_event/file_event_win_iso_file_recent.yml"
+    }
+  ]
+}

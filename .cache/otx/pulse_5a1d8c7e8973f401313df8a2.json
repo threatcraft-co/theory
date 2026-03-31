@@ -1,0 +1,104 @@
+{
+  "id": "5a1d8c7e8973f401313df8a2",
+  "name": "FancyBear Exploits NYC Terrorism Fears In Latest Spear Phishing Campaign",
+  "description": "PT28, (also known as FancyBear, Sofacy, Sednit, and Pawn Storm) the Russian-speaking actors allegedly tied to the Kremlin, have launched another campaign. The latest, thought to have started in late October, utilises the recently discovered DDE exploit in Microsoft Office applications to download the Seduploader reconnaissance tool onto target machines in two stages.\nThe seemingly blank documents, named \u201cIsisAttackInNewYork.docx\u201d and \u201cSabreGaurdian.docx\u201d, reference current events\u200a\u2014\u200athe recent attack in Manhattan claimed by ISIS, and the ongoing US military operation in Eastern Europe.",
+  "author_name": "AlienVault",
+  "modified": "2018-03-26T22:10:45.277000",
+  "created": "2017-11-28T16:19:10.570000",
+  "tags": [
+    "fancy bear",
+    "gru",
+    "sofacy",
+    "isis",
+    "russia"
+  ],
+  "references": [
+    "https://medium.com/@0x736A/fancybear-exploits-nyc-terrorism-fears-in-latest-spear-phishing-campaign-22672e9aeeda"
+  ],
+  "public": 1,
+  "adversary": "Sofacy",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "white",
+  "indicators": [
+    {
+      "id": 142778157,
+      "indicator": "netmediaresources.com",
+      "type": "domain",
+      "created": "2017-11-28T16:19:11",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 140381353,
+      "indicator": "webviewres.net",
+      "type": "domain",
+      "created": "2017-11-28T16:19:11",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 204114164,
+      "indicator": "11cd541511cc793e7416655cda1e100d0a70fb043dfe7f6664564b91733431d0",
+      "type": "FileHash-SHA256",
+      "created": "2017-11-28T16:19:11",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 204114165,
+      "indicator": "55fc23f006b9beb777ab1423af4cd6b2a10ca1e144a0580b2ec85c321732c036",
+      "type": "FileHash-SHA256",
+      "created": "2017-11-28T16:19:11",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 140381357,
+      "indicator": "1c6c700ceebfbe799e115582665105caa03c5c9e",
+      "type": "FileHash-SHA1",
+      "created": "2017-11-28T16:19:11",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 140381358,
+      "indicator": "4bc722a9b0492a50bd86a1341f02c74c0d773db7",
+      "type": "FileHash-SHA1",
+      "created": "2017-11-28T16:19:11",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 2,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

@@ -1,0 +1,84 @@
+{
+  "technique_id": "T1204.002",
+  "cached_at": "2026-03-31T05:01:05.546789+00:00",
+  "rules": [
+    {
+      "title": "Flash Player Update from Suspicious Location",
+      "status": "test",
+      "level": "high",
+      "logsource": "proxy",
+      "condition_summary": "selection exclusion filter excluding exclusion filter",
+      "description": "Detects a flashplayer update from an unofficial location",
+      "tags": [
+        "attack.initial-access",
+        "attack.t1189",
+        "attack.execution",
+        "attack.t1204.002",
+        "attack.defense-evasion",
+        "attack.t1036.005"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/web/proxy_generic/proxy_susp_flash_download_loc.yml"
+    },
+    {
+      "title": "Suspicious Microsoft Office Child Process - MacOS",
+      "status": "test",
+      "level": "high",
+      "logsource": "process_creation / macos",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects suspicious child processes spawning from microsoft office suite applications such as word or excel. This could indicates malicious macro execution",
+      "tags": [
+        "attack.execution",
+        "attack.persistence",
+        "attack.t1059.002",
+        "attack.t1137.002",
+        "attack.t1204.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/macos/process_creation/proc_creation_macos_office_susp_child_processes.yml"
+    },
+    {
+      "title": "Suspicious Startup Folder Persistence",
+      "status": "test",
+      "level": "high",
+      "logsource": "file_event / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.privilege-escalation",
+        "attack.execution",
+        "attack.t1204.002",
+        "attack.persistence",
+        "attack.t1547.001"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/file/file_event/file_event_win_susp_startup_folder_persistence.yml"
+    },
+    {
+      "title": "Windows MSIX Package Support Framework AI_STUBS Execution",
+      "status": "experimental",
+      "level": "low",
+      "logsource": "process_creation / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "|",
+      "tags": [
+        "attack.defense-evasion",
+        "attack.execution",
+        "attack.t1218",
+        "attack.t1553.005",
+        "attack.t1204.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/process_creation/proc_creation_win_msix_ai_stub_execution.yml"
+    },
+    {
+      "title": "Microsoft Excel Add-In Loaded From Uncommon Location",
+      "status": "test",
+      "level": "medium",
+      "logsource": "image_load / windows",
+      "condition_summary": "selection exclusion filter",
+      "description": "Detects Microsoft Excel loading an Add-In (.xll) file from an uncommon location",
+      "tags": [
+        "attack.execution",
+        "attack.t1204.002"
+      ],
+      "url": "https://github.com/SigmaHQ/sigma/blob/2f84ca2f1652977cd59f48b6556dfc3f6f14fb5a/rules/windows/image_load/image_load_office_excel_xll_susp_load.yml"
+    }
+  ]
+}
