@@ -1811,7 +1811,7 @@ $ /Users/terminal/theory/venv/bin/python theory.py --actor APT28 --sources mitre
       "id": "identity--5f6b2c4a-1234-4321-abcd-theory000001",
       "name": "THEORY",
       "identity_class": "system",
-      "description": "THEORY \u2014 open-source multi-source threat actor intelligence framework. https://github.com/isabellasanlorenzo/theory",
+      "description": "THEORY \u2014 open-source multi-source threat actor intelligence framework. https://github.com/threatcraft-co/theory",
       "created": "2025-01-01T00:00:00.000Z",
       "modified": "2025-01-01T00:00:00.000Z"
     },
@@ -11015,7 +11015,7 @@ Generated 2026-03-31 06:03 UTC
       "id": "identity--5f6b2c4a-1234-4321-abcd-theory000001",
       "name": "THEORY",
       "identity_class": "system",
-      "description": "THEORY \u2014 open-source multi-source threat actor intelligence framework. https://github.com/isabellasanlorenzo/theory",
+      "description": "THEORY \u2014 open-source multi-source threat actor intelligence framework. https://github.com/threatcraft-co/theory",
       "created": "2025-01-01T00:00:00.000Z",
       "modified": "2025-01-01T00:00:00.000Z"
     },

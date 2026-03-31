@@ -48,7 +48,7 @@ THEORY_IDENTITY = {
     "identity_class": "system",
     "description":    (
         "THEORY — open-source multi-source threat actor intelligence framework. "
-        "https://github.com/isabellasanlorenzo/theory"
+        "https://github.com/threatcraft-co/theory"
     ),
     "created":        "2025-01-01T00:00:00.000Z",
     "modified":       "2025-01-01T00:00:00.000Z",

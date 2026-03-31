@@ -137,7 +137,7 @@ sectors, with notable intrusions at high-profile organizations throughout 2023-2
 
 ```bash
 # Clone the repository
-git clone https://github.com/isabellasanlorenzo/Theory.git
+git clone https://github.com/threatcraft-co/theory.git
 cd Theory
 
 # Create a virtual environment (recommended)
