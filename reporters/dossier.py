@@ -235,6 +235,41 @@ class DossierReporter:
                 if a.get("url"):
                     console.print(f"    [dim]{a['url']}[/]")
 
+        # Recent Intelligence (vendor synthesis)
+        vendor_intel = profile.get("vendor_intel", [])
+        if vendor_intel:
+            console.print()
+            console.print("[bold]Recent Intelligence[/]")
+            console.print(f"  [dim]Synthesized from {len(vendor_intel)} vendor research articles[/]")
+            console.print()
+            for item in vendor_intel:
+                relevance  = item.get("relevance", 0)
+                rel_badge  = (
+                    "[green]●[/]" if relevance >= 70 else
+                    "[yellow]●[/]" if relevance >= 40 else
+                    "[dim]●[/]"
+                )
+                console.print(
+                    f"  {rel_badge} [bold]{item.get('source','')}[/]  "
+                    f"[dim]{item.get('date','')}[/]"
+                )
+                console.print(f"    [dim italic]{item.get('title','')}[/]")
+                console.print()
+                # Actor-specific synthesis
+                actor_sum = item.get("actor_summary", "")
+                if actor_sum:
+                    for line in textwrap.wrap(actor_sum, 80):
+                        console.print(f"    {line}")
+                    console.print()
+                # Landscape context
+                land_sum = item.get("landscape_summary", "")
+                if land_sum:
+                    console.print(f"    [dim]Context: {textwrap.shorten(land_sum, 120, placeholder='…')}[/]")
+                    console.print()
+                if item.get("url"):
+                    console.print(f"    [dim]{item['url']}[/]")
+                console.print()
+
         # Campaigns
         campaigns = profile.get("campaigns", [])
         if campaigns:
@@ -406,6 +441,29 @@ class DossierReporter:
             a("|---|---|---|")
             for m in malware:
                 a(f"| {m.get('name','')} | {m.get('type','')} | {textwrap.shorten(m.get('description',''), 120, placeholder='…')} |")
+            a("")
+
+        vendor_intel = profile.get("vendor_intel", [])
+        if vendor_intel:
+            a("## Recent Intelligence")
+            a("")
+            a(f"> Synthesized from {len(vendor_intel)} vendor research articles using AI.")
+            a("")
+            for item in vendor_intel:
+                relevance = item.get("relevance", 0)
+                rel_label = "HIGH" if relevance >= 70 else "MEDIUM" if relevance >= 40 else "LOW"
+                a(f"### {item.get('source','')} — {item.get('date','')}  `{rel_label} relevance`")
+                a("")
+                a(f"**[{item.get('title','')}]({item.get('url','')})**")
+                a("")
+                actor_sum = item.get("actor_summary", "")
+                if actor_sum:
+                    a(actor_sum)
+                    a("")
+                land_sum = item.get("landscape_summary", "")
+                if land_sum:
+                    a(f"*Landscape context: {land_sum}*")
+                    a("")
             a("")
 
         if camps:

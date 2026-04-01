@@ -37,6 +37,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import sys
 from typing import Any
 
@@ -63,6 +64,7 @@ SUPPORTED_SOURCES: dict[str, str | None] = {
     # Enrichment-only — accepted by CLI but handled separately
     "sigma":     None,
     "threatfox": None,
+    "vendor":    None,   # vendor intelligence synthesis (requires LLM provider)
 }
 
 SOURCE_DESCRIPTIONS: dict[str, str] = {
@@ -72,16 +74,19 @@ SOURCE_DESCRIPTIONS: dict[str, str] = {
     "otx":       "AlienVault OTX pulses + IOCs (free, requires OTX_API_KEY in .env)",
     "sigma":     "SigmaHQ detection rules mapped to ATT&CK (free, optional GITHUB_TOKEN)",
     "threatfox": "ThreatFox IOCs by malware family (free, no auth)",
+    "vendor":    "Vendor intelligence synthesis — LLM-synthesized summaries from 35+ research blogs (requires LLM provider in .env)",
 }
 
 SOURCE_REQUIRES: dict[str, str] = {
-    "otx":   "OTX_API_KEY",
-    "sigma": "GITHUB_TOKEN (optional, recommended)",
+    "otx":    "OTX_API_KEY",
+    "sigma":  "GITHUB_TOKEN (optional, recommended)",
+    "vendor": "ANTHROPIC_API_KEY or OPENAI_API_KEY or Ollama running locally",
 }
 
 ENRICHMENT_SOURCES: dict[str, str] = {
-    "sigma":     "collectors.sigma_rules.SigmaCollector",
-    "threatfox": "collectors.threatfox.ThreatFoxCollector",
+    "sigma":       "collectors.sigma_rules.SigmaCollector",
+    "threatfox":   "collectors.threatfox.ThreatFoxCollector",
+    "vendor":      "collectors.vendor_intel.VendorIntelCollector",
 }
 
 MAPPER_REGISTRY: dict[str, str] = {
@@ -383,6 +388,50 @@ def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
             logger.info("Sigma: enriched %d techniques with %d rules",
                         len(sigma_map), profile["sigma_rule_count"])
 
+        elif source_key == "vendor":
+            from collectors.intelligence_synthesizer import (
+                IntelligenceSynthesizer, load_provider
+            )
+            provider    = load_provider()
+            if not provider:
+                logger.warning(
+                    "No LLM provider available for vendor synthesis. "
+                    "Set ANTHROPIC_API_KEY, OPENAI_API_KEY, or start Ollama."
+                )
+                return profile
+
+            synthesizer = IntelligenceSynthesizer(provider)
+            actor_name  = profile.get("actor_name", "")
+            aliases     = profile.get("aliases", []) or []
+
+            # Fetch articles from vendor feeds
+            collector   = enricher   # VendorIntelCollector
+            articles    = collector.collect(
+                actor_name  = actor_name,
+                aliases     = aliases,
+                lookback_days = int(os.environ.get("THEORY_INTEL_LOOKBACK", "365")),
+            )
+
+            if not articles:
+                logger.info("Vendor intel: no relevant articles found for %r", actor_name)
+                return profile
+
+            # Synthesize with LLM
+            synthesized = synthesizer.synthesize_batch(
+                articles   = articles,
+                actor_name = actor_name,
+                aliases    = aliases,
+                max_items  = int(os.environ.get("THEORY_INTEL_MAX_ITEMS", "8")),
+            )
+
+            if synthesized:
+                profile["vendor_intel"]       = synthesized
+                profile["vendor_intel_count"] = len(synthesized)
+                logger.info(
+                    "Vendor intel: synthesized %d articles using %s",
+                    len(synthesized), provider.name,
+                )
+
         elif source_key == "threatfox":
             malware_names = [
                 m.get("name", "")
@@ -590,6 +639,8 @@ def run(
                 finally:
                     if _orig_fetch:
                         _sm.SigmaCollector._fetch_rules_for_technique = _orig_fetch
+        elif source_key == "vendor":
+            profile = _enrich_profile(profile, source_key)
         else:
             profile = _enrich_profile(profile, source_key)
 
