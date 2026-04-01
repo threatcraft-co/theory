@@ -325,7 +325,13 @@ and extract whatever is relevant. If there is nothing specific to \
 {actor_name}, respond with exactly: NO_ACTOR_SPECIFIC_INTEL
 
 Write in past or present tense as appropriate. Be specific. Cite dates \
-or timeframes if mentioned in the article."""
+or timeframes if mentioned in the article.
+
+CRITICAL FORMATTING RULES — your response must follow these exactly:
+- Plain prose only. No markdown of any kind.
+- No headers, no bold (**), no italic (*), no bullet points, no numbered lists.
+- No label or preamble before your answer — start directly with the intelligence.
+- Maximum 3 sentences."""
 
 LANDSCAPE_SYNTHESIS_PROMPT = """Article source: {source}
 Article date: {date}
@@ -348,7 +354,13 @@ Examples of good landscape context:
 - "The technique described aligns with a wider shift toward \
   identity-based attacks that bypass traditional endpoint controls."
 
-Be specific to what the article actually covers. No generic statements."""
+Be specific to what the article actually covers. No generic statements.
+
+CRITICAL FORMATTING RULES — your response must follow these exactly:
+- Plain prose only. No markdown of any kind.
+- No headers, no bold (**), no italic (*), no bullet points.
+- No label like "Threat Landscape Context:" — start directly with the sentence.
+- Maximum 2 sentences."""
 
 
 class IntelligenceSynthesizer:

@@ -649,10 +649,13 @@ def run(
         _output_json(profile, save)
     elif output == "stix":
         _output_stix(profile, save)
+    elif output == "csv":
+        _output_csv(profile, save)
     elif output == "all":
         _output_dossier(profile, save)
         _output_json(profile, save)
         _output_stix(profile, save)
+        _output_csv(profile, save)
     else:
         _output_dossier(profile, save)
 
@@ -690,6 +693,19 @@ def _output_stix(profile: dict[str, Any], save: bool) -> None:
         print(f"\n[theory] STIX bundle saved → {path}", file=sys.stderr)
 
 
+def _output_csv(profile: dict[str, Any], save: bool) -> None:
+    from reporters.csv_reporter import CsvReporter
+    reporter = CsvReporter()
+    clean    = _sanitize_profile(profile)
+    try:
+        print(reporter.to_string(clean))
+    except BrokenPipeError:
+        pass
+    if save:
+        path = reporter.save(clean)
+        print(f"\n[theory] IOC CSV saved → {path}", file=sys.stderr)
+
+
 def _output_json(profile: dict[str, Any], save: bool) -> None:
     clean = _sanitize_profile(profile)
     try:
@@ -712,6 +728,7 @@ examples:
   python theory.py --actor "Fancy Bear" --sources mitre,malpedia,otx
   python theory.py --actor Lazarus --sources mitre,malpedia,otx,sigma,threatfox
   python theory.py --actor APT41 --sources mitre,otx --output stix
+  python theory.py --actor APT28 --sources mitre,otx,threatfox --output csv
   python theory.py --actor Turla --sources mitre,malpedia --output all
   python theory.py --actor APT29 --sources mitre --no-save
   python theory.py --list-sources
@@ -764,7 +781,7 @@ def _build_parser() -> argparse.ArgumentParser:
     # ── Output format ──────────────────────────────────────────────────
     p.add_argument(
         "--output", "-o",
-        choices=["dossier", "json", "stix", "all"],
+        choices=["dossier", "json", "stix", "csv", "all"],
         default="dossier",
         metavar="FORMAT",
         help=(
@@ -772,7 +789,8 @@ def _build_parser() -> argparse.ArgumentParser:
             "dossier = terminal + markdown file (default). "
             "json = raw profile JSON. "
             "stix = STIX 2.1 bundle for MISP/OpenCTI/Sentinel import. "
-            "all = write all three formats."
+            "csv = IOC-only CSV table (for SIEM ingestion). "
+            "all = write all formats."
         ),
     )
 

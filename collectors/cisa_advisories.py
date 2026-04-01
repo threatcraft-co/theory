@@ -61,70 +61,203 @@ _RETRY_WAIT = 2
 # travels with the code and can be extended via PR.
 
 ALIAS_TABLE: dict[str, frozenset[str]] = {
+
+    # ── Russia ────────────────────────────────────────────────────────
+
     "APT28": frozenset({
         "apt28", "fancy bear", "sofacy", "sofacy group", "pawn storm",
         "sednit", "strontium", "iron twilight", "threat group-4127",
-        "tg-4127", "forest blizzard", "frozenlake", "ta422",
-        "unc2589", "g0007",
+        "tg-4127", "forest blizzard", "frozenlake", "gruesomeLarch",
+        "sig40", "grizzly steppe", "atk5", "fighting ursa", "itg05",
+        "blue athena", "ta422", "t-apt-12", "apt-c-20", "uac-0028",
+        "uac-0001", "bluedelta", "apt 28", "tsarteam", "group-4127",
+        "grey-cloud", "snakemackerel", "swallowtail", "g0007",
     }),
+
     "APT29": frozenset({
-        "apt29", "cozy bear", "the dukes", "office monkeys", "cozyduke",
-        "minidionis", "seaduke", "hammertoss", "yttrium", "iron hemlock",
-        "nobelium", "midnight blizzard", "unc2452", "g0016",
+        "apt29", "cozy bear", "cozyduke", "the dukes", "office monkeys",
+        "midnight blizzard", "nobelium", "iron hemlock", "dark halo",
+        "unc2452", "yttrium", "minidionis", "hammertoss", "g0016",
+        "itg11", "npu", "cozy duke",
     }),
-    "APT41": frozenset({
-        "apt41", "double dragon", "winnti group", "barium", "bronze atlas",
-        "ta415", "wicked panda", "wicked spider", "g0096",
-    }),
-    "Lazarus Group": frozenset({
-        "lazarus group", "hidden cobra", "zinc", "diamond sleet",
-        "apt38", "temp.hermit", "whois team", "g0032",
-    }),
-    "APT10": frozenset({
-        "apt10", "stone panda", "menupass", "red apollo", "cvnx",
-        "potassium", "bronze riverside", "g0045",
-    }),
+
     "Sandworm": frozenset({
-        "sandworm", "sandworm team", "voodoo bear", "quedagh",
-        "electrum", "iridium", "seashell blizzard", "ta74", "g0034",
+        "sandworm", "sandworm team", "voodoo bear", "iridium",
+        "seashell blizzard", "electrum", "quedagh", "iron viking",
+        "telebots", "blackenergy", "g0034", "uac-0113", "uac-0082",
+        "industroyer", "notpetya group",
     }),
+
     "Turla": frozenset({
-        "turla", "snake", "venomous bear", "waterbug", "uroboros",
-        "krypton", "secret blizzard", "g0010",
+        "turla", "snake", "uroburos", "venomous bear", "krypton",
+        "secret blizzard", "iron hunter", "waterbug", "g0010",
+        "carbon spider", "penquin turla", "kazuar",
     }),
-    "Equation Group": frozenset({
-        "equation group", "equation", "g0020",
+
+    "Gamaredon": frozenset({
+        "gamaredon", "primitive bear", "shuckworm", "actinium",
+        "iron tilden", "uac-0010", "g0047", "armageddon",
+        "callisto group",
     }),
+
+    # ── China ────────────────────────────────────────────────────────
+
+    "APT10": frozenset({
+        "apt10", "menupass", "stone panda", "bronze riverside",
+        "potassium", "cvnx", "happyyongzi", "cloud hopper",
+        "g0045", "red apollo", "hogfish",
+    }),
+
+    "APT41": frozenset({
+        "apt41", "double dragon", "barium", "winnti group",
+        "bronze atlas", "wicked spider", "wicked panda",
+        "lead", "g0096", "axiom", "blackfly",
+    }),
+
+    "Volt Typhoon": frozenset({
+        "volt typhoon", "bronze silhouette", "vanguard panda",
+        "dev-0391", "unc3236", "insidious taurus", "g1017",
+    }),
+
+    "Salt Typhoon": frozenset({
+        "salt typhoon", "ghostemperor", "earth estries",
+        "famsec", "unc2286", "g1045",
+    }),
+
+    "APT40": frozenset({
+        "apt40", "temp.periscope", "temp.jumper", "bronze mohawk",
+        "leviathan", "gadolinium", "ta423", "g0065",
+        "red ladon", "indrik spider",
+    }),
+
+    "APT31": frozenset({
+        "apt31", "zirconium", "judgment panda", "bronze vinewood",
+        "g0128", "violet typhoon",
+    }),
+
+    "APT34": frozenset({
+        "apt34", "oilrig", "crambus", "cobalt gypsy",
+        "chrysene", "g0049", "helix kitten", "hazel sandstorm",
+    }),
+
+    "BlackTech": frozenset({
+        "blacktech", "circuit panda", "radio panda",
+        "palmerworm", "temp.overboard", "g0098",
+    }),
+
+    "Earth Lusca": frozenset({
+        "earth lusca", "charcoal typhoon", "fishmonger",
+        "bronze university", "ta428", "g1006",
+    }),
+
+    # ── North Korea (DPRK) ───────────────────────────────────────────
+
+    "Lazarus Group": frozenset({
+        "lazarus group", "lazarus", "hidden cobra", "zinc",
+        "nickel academy", "diamond sleet", "apt38", "whois team",
+        "g0032", "temp.hermit",
+        "labyrinth chollima", "stardust chollima",
+    }),
+
+    "Kimsuky": frozenset({
+        "kimsuky", "black banshee", "emerald sleet", "velvet chollima",
+        "thallium", "g0094", "ta406", "spring dragon",
+    }),
+
+    "Andariel": frozenset({
+        "andariel", "silent chollima", "stonefly", "plutonium",
+        "g0138", "dark seoul", "operation troy",
+    }),
+
+    "Bluenoroff": frozenset({
+        "bluenoroff", "sapphire sleet", "copernicium",
+    }),
+
+    # ── Iran ────────────────────────────────────────────────────────
+
     "APT33": frozenset({
         "apt33", "refined kitten", "magnallium", "holmium",
-        "peach sandstorm", "g0064",
+        "elfin", "g0064", "peach sandstorm", "raspite",
     }),
-    "APT34": frozenset({
-        "apt34", "oilrig", "helix kitten", "crambus", "cobalt gypsy",
-        "hazel sandstorm", "g0049",
+
+    "Charming Kitten": frozenset({
+        "charming kitten", "apt35", "phosphorus", "mint sandstorm",
+        "ta453", "newscaster", "g0059", "cobalt illusion",
+        "tortoiseshell", "iridescent ursa",
     }),
-    "Kimsuky": frozenset({
-        "kimsuky", "velvet chollima", "thallium", "black banshee",
-        "emerald sleet", "g0094",
+
+    "MuddyWater": frozenset({
+        "muddywater", "mercury", "static kitten", "seedworm",
+        "temp.zagros", "mango sandstorm", "g0069", "ta450",
     }),
+
+    "Moses Staff": frozenset({
+        "moses staff", "cobalt sapling", "g1009",
+    }),
+
+    "Agrius": frozenset({
+        "agrius", "pink sandstorm", "americium", "unc2322",
+        "g1030", "BlackShadow",
+    }),
+
+    # ── Financially Motivated ────────────────────────────────────────
+
     "FIN7": frozenset({
-        "fin7", "carbanak", "navigator group", "g0046",
+        "fin7", "carbanak", "navigator group", "sangria tempest", "g0046",
     }),
+
     "FIN8": frozenset({
         "fin8", "syssphinx", "g0061",
     }),
-    "Volt Typhoon": frozenset({
-        "volt typhoon", "bronze silhouette", "vanguard panda",
-        "dev-0391", "unc3236", "g1017",
+
+    "FIN6": frozenset({
+        "fin6", "itg08", "skeleton spider", "g0037",
+        "magecart group 6",
     }),
-    "Salt Typhoon": frozenset({
-        "salt typhoon", "ghostemperor", "famsec", "earth estries",
-        "unc2286",
+
+    "Lapsus$": frozenset({
+        "lapsus$", "lapsus", "scatter swine", "dev-0537",
+        "unc3661", "g1004", "strawberry tempest",
     }),
+
     "Scattered Spider": frozenset({
-        "scattered spider", "unc3944", "octo tempest", "0ktapus",
-        "starfraud", "muddled libra",
+        "scattered spider", "0ktapus", "starfraud", "unc3944",
+        "muddled libra", "octo tempest", "g1015", "dev-0671",
+        "roasted 0ktapus",
     }),
+
+    "Wizard Spider": frozenset({
+        "wizard spider", "unc1878", "gold blackburn",
+        "g0102", "ryuk group", "conti group",
+    }),
+
+    "TA505": frozenset({
+        "ta505", "cl0p group", "gold tahoe",
+        "g0092", "hive0065",
+    }),
+
+    "Cl0p": frozenset({
+        "cl0p", "clop", "fin11", "g0158",
+    }),
+
+    # ── Hacktivism / Gray Zone ───────────────────────────────────────
+
+    "KillNet": frozenset({
+        "killnet", "killmilk",
+    }),
+
+    "Anonymous Sudan": frozenset({
+        "anonymous sudan", "anonsud", "g1024",
+    }),
+
+    "Predatory Sparrow": frozenset({
+        "predatory sparrow", "gonjeshke darande",
+    }),
+
+    "Equation Group": frozenset({
+        "equation group", "equation", "g0020",
+    }),
+
 }
 
 # Inverted index: alias_lower → canonical name
