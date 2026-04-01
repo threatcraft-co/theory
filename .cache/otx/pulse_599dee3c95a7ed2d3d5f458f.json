@@ -1,0 +1,33 @@
+{
+  "id": "599dee3c95a7ed2d3d5f458f",
+  "name": "TA17-164A: HIDDEN COBRA",
+  "description": "This joint Technical Alert (TA) is the result of analytic efforts between the Department of Homeland Security (DHS) and the Federal Bureau of Investigation (FBI). This alert provides technical details on the tools and infrastructure used by cyber actors of the North Korean government to target the media, aerospace, financial, and critical infrastructure sectors in the United States and globally. Working with U.S. Government partners, DHS and FBI identified Internet Protocol (IP) addresses associated with a malware variant, known as DeltaCharlie, used to manage North Korea\u2019s distributed denial-of-service (DDoS) botnet infrastructure. This alert contains indicators of compromise (IOCs), malware descriptions, network signatures, and host-based rules to help network defenders detect activity conducted by the North Korean government.",
+  "author_name": "hitman",
+  "modified": "2020-05-13T16:08:47.754000",
+  "created": "2017-08-23T21:06:04.597000",
+  "tags": [
+    "North Korean"
+  ],
+  "references": [
+    "https://www.us-cert.gov/ncas/alerts/TA17-164A"
+  ],
+  "public": 1,
+  "adversary": "North Korea",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "white",
+  "indicators": [],
+  "revision": 4,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "hitman",
+    "id": "195",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/hitman/resized/80/MtDewBot.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

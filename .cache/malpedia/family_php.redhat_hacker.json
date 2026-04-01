@@ -1,0 +1,18 @@
+{
+  "urls": [
+    "https://github.com/xl7dev/WebShell/blob/master/Asp/RedHat%20Hacker.asp"
+  ],
+  "uuid": "e94a5b44-f2c2-41dc-8abb-6de69eb38241",
+  "notes": [],
+  "sources": [],
+  "updated": "2020-12-16",
+  "alt_names": [],
+  "attribution": [
+    "Lazarus Group"
+  ],
+  "common_name": "RedHat Hacker WebShell",
+  "description": "",
+  "library_entries": [
+    "xl7dev:20160307:redhat:5d504f1"
+  ]
+}

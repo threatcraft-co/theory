@@ -1,0 +1,38 @@
+{
+  "id": "594b629fe38b7f7577190596",
+  "name": "HIDDEN COBRA \u2013 North Korea\u2019s DDoS Botnet Infrastructure",
+  "description": "Overview\nThis joint Technical Alert (TA) is the result of analytic efforts between the Department of\nHomeland Security (DHS) and the Federal Bureau of Investigation (FBI). This alert provides\ntechnical details on the tools and infrastructure used by cyber actors of the North Korean\ngovernment to target the media, aerospace, financial, and critical infrastructure sectors in the\nUnited States and globally. Working with U.S. Government partners, DHS and FBI identified\nInternet Protocol (IP) addresses associated with a malware variant, known as DeltaCharlie,\nused to manage North Korea\u2019s distributed denial-of-service (DDoS) botnet infrastructure. This\nalert contains indicators of compromise (IOCs), malware descriptions, network signatures,\nand host-based rules to help network defenders detect activity conducted by the North Korean\ngovernment. The U.S. Government refers to the malicious cyber activity by the North Korean\ngovernment as HIDDEN COBRA.",
+  "author_name": "HMcDowell",
+  "modified": "2017-06-22T06:24:31.749000",
+  "created": "2017-06-22T06:24:31.749000",
+  "tags": [
+    "North Korea\u2019s DDoS Botnet Infrastructure"
+  ],
+  "references": [
+    "ip.txt",
+    "https://www.us-cert.gov/ncas/alerts/TA17-164A"
+  ],
+  "public": 1,
+  "adversary": "North Korean cyber Operations [Destover, Wild Positron/Duuzer, and Hangman]",
+  "targeted_countries": [
+    "United States"
+  ],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [
+    "media, aerospace, financial, and critical infrastructure sectors"
+  ],
+  "TLP": "white",
+  "indicators": [],
+  "revision": 1,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "HMcDowell",
+    "id": "30681",
+    "avatar_url": "https://otx.alienvault.com/assets/images/default-avatar.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

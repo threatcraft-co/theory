@@ -1,0 +1,22 @@
+{
+  "urls": [
+    "https://labs.k7computing.com/index.php/lazarus-apts-operation-interception-uses-signed-binary/",
+    "https://twitter.com/ESETresearch/status/1559553324998955010",
+    "https://www.sentinelone.com/blog/lazarus-operation-interception-targets-macos-users-dreaming-of-jobs-in-crypto"
+  ],
+  "uuid": "d4f7ea92-04e7-405c-9faf-7993ffd5c473",
+  "notes": [],
+  "sources": [],
+  "updated": "2023-08-14",
+  "alt_names": [],
+  "attribution": [
+    "Lazarus Group"
+  ],
+  "common_name": "Interception",
+  "description": "",
+  "library_entries": [
+    "devadoss:20220926:lazarus:36bd682",
+    "klnai:20220816:twitter:cb6878b",
+    "s:20221220:lazarus:41a5f95"
+  ]
+}

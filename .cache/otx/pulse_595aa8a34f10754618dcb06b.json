@@ -1,0 +1,42 @@
+{
+  "id": "595aa8a34f10754618dcb06b",
+  "name": "HIDDEN COBRA \u2013 North Korea\u2019s DDoS Botnet Infrastructure",
+  "description": "",
+  "author_name": "jocephus",
+  "modified": "2017-07-03T20:27:15.072000",
+  "created": "2017-07-03T20:27:15.072000",
+  "tags": [
+    "North Korea",
+    "DDoS",
+    "botnet",
+    "delta charlie",
+    "HIDDEN COBRA",
+    "Flash",
+    "Adobe",
+    "Microsoft",
+    "Silverlight",
+    "Hangul"
+  ],
+  "references": [
+    "TA-17-164A_csv.csv"
+  ],
+  "public": 1,
+  "adversary": "North Korea",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "white",
+  "indicators": [],
+  "revision": 1,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "jocephus",
+    "id": "22079",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_22079/resized/80/avatar_785e864abb.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

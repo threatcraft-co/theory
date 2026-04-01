@@ -1,0 +1,33 @@
+{
+  "id": "5940445fcfb8971659315cfd",
+  "name": "TA17-164A: HIDDEN COBRA \u2013 North Korea\u2019s DDoS Botnet Infrastructure",
+  "description": "Internet Protocol (IP) addresses associated with a malware variant, known as DeltaCharlie, used to manage North Korea\u2019s distributed denial-of-service (DDoS) botnet infrastructure. This alert contains indicators of compromise (IOCs), malware descriptions, network signatures, and host-based rules to help network defenders detect activity conducted by the North Korean government. The U.S. Government refers to the malicious cyber activity by the North Korean government as HIDDEN COBRA.",
+  "author_name": "hitman",
+  "modified": "2017-06-13T20:05:44.717000",
+  "created": "2017-06-13T20:00:31.571000",
+  "tags": [
+    "North Korea"
+  ],
+  "references": [
+    "https://www.us-cert.gov/ncas/alerts/TA17-164A"
+  ],
+  "public": 1,
+  "adversary": "North Korea",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [],
+  "revision": 6,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "hitman",
+    "id": "195",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/hitman/resized/80/MtDewBot.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

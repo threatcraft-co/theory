@@ -1,6 +1,12 @@
 {
-  "cached_at": "2026-03-31T18:52:12.882505+00:00",
+  "cached_at": "2026-04-01T05:37:44.563079+00:00",
   "entries": [
+    {
+      "title": "Weaponizing the Protectors: TeamPCP\u2019s Multi-Stage Supply Chain Attack on Security Infrastructure",
+      "url": "https://unit42.paloaltonetworks.com/teampcp-supply-chain-attacks/",
+      "date": "2026-03-31",
+      "summary": "TeamPCP continues its string of supply chain attacks, and announces a partnership with Vect ransomware group. The post Weaponizing the Protectors: TeamPCP\u2019s Multi-Stage Supply Chain Attack on Security Infrastructure appeared first on Unit 42 ."
+    },
     {
       "title": "Double Agents: Exposing Security Blind Spots in GCP Vertex AI",
       "url": "https://unit42.paloaltonetworks.com/double-agents-vertex-ai/",
@@ -84,12 +90,6 @@
       "url": "https://unit42.paloaltonetworks.com/fuzzing-ai-judges-security-bypass/",
       "date": "2026-03-10",
       "summary": "Unit 42 research reveals AI judges are vulnerable to stealthy prompt injection. Benign formatting symbols can bypass security controls. The post Auditing the Gatekeepers: Fuzzing &quot;AI Judges&quot; to Bypass Security Controls appeared first on Unit 42 ."
-    },
-    {
-      "title": "An Investigation Into Years of Undetected Operations Targeting High-Value Sectors",
-      "url": "https://unit42.paloaltonetworks.com/cl-unk-1068-targets-critical-sectors/",
-      "date": "2026-03-06",
-      "summary": "In-depth analysis of threat activity we call CL-UNK-1068. We discuss their toolset, including tunneling, reconnaissance and credential theft. The post An Investigation Into Years of Undetected Operations Targeting High-Value Sectors appeared first on Unit 42 ."
     }
   ]
 }

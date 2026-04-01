@@ -1,0 +1,20 @@
+{
+  "urls": [
+    "https://blog.sekoia.io/bluenoroffs-rustbucket-campaign/",
+    "https://sansorg.egnyte.com/dl/3P3HxFiNgL"
+  ],
+  "uuid": "832680ff-8b29-492e-8523-62510eb5d021",
+  "notes": [],
+  "sources": [],
+  "updated": "2023-12-11",
+  "alt_names": [],
+  "attribution": [
+    "Lazarus Group"
+  ],
+  "common_name": "RustBucket",
+  "description": "",
+  "library_entries": [
+    "b:20230522:bluenoroffs:4fd8a5c",
+    "scenarelli:20231120:king:0624a7c"
+  ]
+}

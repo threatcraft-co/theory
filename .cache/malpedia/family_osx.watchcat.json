@@ -1,0 +1,20 @@
+{
+  "urls": [
+    "https://objective-see.com/blog/blog_0x5F.html",
+    "https://www.sentinelone.com/blog/four-distinct-families-of-lazarus-malware-target-apples-macos-platform/"
+  ],
+  "uuid": "a73468d5-2dee-4828-8bbb-c37ea9295584",
+  "notes": [],
+  "sources": [],
+  "updated": "2021-01-11",
+  "alt_names": [],
+  "attribution": [
+    "Lazarus Group"
+  ],
+  "common_name": "WatchCat",
+  "description": "",
+  "library_entries": [
+    "stokes:20200727:four:9d80c60",
+    "wardle:20210101:mac:a6f5a3b"
+  ]
+}

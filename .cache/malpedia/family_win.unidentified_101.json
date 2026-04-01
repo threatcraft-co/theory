@@ -1,0 +1,20 @@
+{
+  "urls": [
+    "https://securelist.com/bluenoroff-methods-bypass-motw/108383/",
+    "https://twitter.com/RedDrip7/status/1595365451495706624"
+  ],
+  "uuid": "cca4f240-ac69-437e-b02a-5483ebef5087",
+  "notes": [],
+  "sources": [],
+  "updated": "2023-06-29",
+  "alt_names": [],
+  "attribution": [
+    "Lazarus Group"
+  ],
+  "common_name": "Unidentified 101 (Lazarus?)",
+  "description": "Potential Lazarus sample.",
+  "library_entries": [
+    "park:20221227:bluenoroff:383c86f",
+    "team:20221123:tweets:726f590"
+  ]
+}

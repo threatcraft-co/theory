@@ -1,0 +1,32 @@
+{
+  "urls": [
+    "https://blog.lexfo.fr/ressources/Lexfo-WhitePaper-The_Lazarus_Constellation.pdf",
+    "https://blog.trendmicro.com/trendlabs-security-intelligence/lazarus-campaign-targeting-cryptocurrencies-reveals-remote-controller-tool-evolved-ratankba/",
+    "https://content.fireeye.com/apt/rpt-apt38",
+    "https://ti.qianxin.com/uploads/2020/02/13/cb78386a082f465f259b37dae5df4884.pdf",
+    "https://www.flashpoint-intel.com/blog/disclosure-chilean-redbanc-intrusion-lazarus-ties/",
+    "https://www.proofpoint.com/sites/default/files/pfpt-us-wp-north-korea-bitten-by-bitcoin-bug.pdf",
+    "https://www.riskiq.com/blog/labs/lazarus-group-cryptocurrency/"
+  ],
+  "uuid": "606f778a-8b99-4880-8da8-b923651d627b",
+  "notes": [],
+  "sources": [],
+  "updated": "2020-03-11",
+  "alt_names": [
+    "QUICKRIDE.POWER"
+  ],
+  "attribution": [
+    "Lazarus Group"
+  ],
+  "common_name": "PowerRatankba",
+  "description": "QUICKRIDE.POWER is a PowerShell variant of the QUICKRIDE backdoor. Its payloads are often saved to C:\\windows\\temp\\",
+  "library_entries": [
+    "center:20200213:report:146d333",
+    "fireeye:2018:apt38:20161b7",
+    "huss:20171219:north:b2da03e",
+    "klijnsma:20171220:mining:4b3dc11",
+    "kremez:20190115:disclosure:0e74c4e",
+    "lei:20180124:lazarus:63d2701",
+    "lexfo:20200219:lazarus:f293c37"
+  ]
+}
