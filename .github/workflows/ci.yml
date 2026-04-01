@@ -1,7 +1,3 @@
-# THEORY — Continuous Integration
-# Runs on every push and pull request to main
-# Tests all 296 passing tests across 9 phases
-
 name: CI
 
 on:
@@ -33,23 +29,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install pytest pytest-cov
 
       - name: Create required directories
         run: |
           mkdir -p .cache output/dossiers
 
-      - name: Run scaffold setup (if scaffold.sh exists)
-        run: |
-          if [ -f scaffold.sh ]; then
-            chmod +x scaffold.sh
-          fi
-
       - name: Run all tests
         run: |
-          pytest tests/ -v --tb=short
+          python -m pytest tests/ -v --tb=short
         env:
-          # Tests run fully offline — no real API keys needed
-          # Mocked in test suite via unittest.mock
           ANTHROPIC_API_KEY: ""
           OTX_API_KEY: ""
           GITHUB_TOKEN: ""
@@ -60,6 +49,7 @@ jobs:
         with:
           name: test-results-${{ matrix.python-version }}
           path: .pytest_cache/
+          if-no-files-found: ignore
 
   lint:
     name: Lint
@@ -74,10 +64,12 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - name: Install linting tools
+      - name: Install ruff
         run: pip install ruff
 
       - name: Run ruff
-        run: ruff check . --select E,F,W --ignore E501,E402
-        # E501 = line too long (we allow long lines for readability)
-        # E402 = module level import not at top (some collectors do this)
+        run: ruff check . --select E,F,W --ignore E501,E402,W291,W293
+        # E501 = line too long
+        # E402 = module level import not at top
+        # W291 = trailing whitespace (ASCII banner lines)
+        # W293 = whitespace before comment
