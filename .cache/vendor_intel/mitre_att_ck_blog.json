@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-03-31T18:52:40.461084+00:00",
+  "entries": [
+    {
+      "title": "Defense Evasion Split: A Tale of Two Tactics",
+      "url": "https://medium.com/mitre-attack/defense-evasion-split-5d533545fa32?source=rss----6da19bd08fba---4",
+      "date": "2026-03-31",
+      "summary": "By Allison Henao and Alice Koeninger, Art by Cat Self If you\u2019ve been following the ATT&amp;CK community channels, you\u2019ve probably heard us talking about changes to Enterprise\u2019s Defense Evasion tactic ( ATT&amp;CKcon 5.0 , ATT&amp;CKcon 6.0 , #att&amp;cking-mondays on Slack , etc). Those changes are almost here, with the release of ATT&amp;CK v19 coming on April 28th. This post walks through what\u2019s changing, why, what\u2019s shipping in April, and what\u2019s still ahead. A Tactic Divided Against Itself It was the best of tactics and the worst of tactics. Defense Evasion has been o"
+    },
+    {
+      "title": "ATT&CK v18: Detection Strategies, More Adversary Insights,",
+      "url": "https://medium.com/mitre-attack/attack-v18-8f82d839ee9e?source=rss----6da19bd08fba---4",
+      "date": "2025-10-28",
+      "summary": "ATT&amp;CK v18: The Detection Overhaul You\u2019ve Been Waiting For We\u2019ve spent the last six months focused on making ATT&amp;CK more usable and actionable for defenders, and with the help of the community the results are here! First, we\u2019re excited for you to finally experience the detection overhaul with two new ATT&amp;CK objects, Detection Strategies and Analytics, that shift guidance from single-sentence notes to structured, behavior-focused strategies. Workbench now supports Detection Strategies, so upgrade your instance to take full advantage of the defensive updates. Across domains, we\u2019ve deepened coverage of threats organizations are facing today. Enterprise adds techniques for modern infrastructure, Kubernetes, CI/CD pipelines, and cloud databases, along with ransomware preparation behaviors and adversaries monitoring their own threat intel. CTI features"
+    },
+    {
+      "title": "What Comes After Detection Rules? Smarter Detection Strategies in ATT&CK",
+      "url": "https://medium.com/mitre-attack/smarter-detection-strategies-in-attack-7e6738fec31f?source=rss----6da19bd08fba---4",
+      "date": "2025-07-15",
+      "summary": "By Lex Crumpton Updated: October 22, 2025 Key updates: - Website example images added - No more Log Source SDO \u2192 log sources now live as a x_mitre_log_sources field on the Data Components SDO. - No more &lt;detects&gt; SRO between Data Components and Techniques \u2192 Techniques now map to Detection Strategy SDOs. Defenders have often used the information in ATT&amp;CK Detections to help build useful analytics. But as detection engineering has matured, the current format hasn\u2019t always scaled well. The text in ATT&amp;CK\u2019s Detections often packed too many behaviors into a single block of text, making them hard to interpret or apply. Important platform differences were sometimes lost, and mapping from an adversary behavior to log telemetry, especially in complex environments, was more art th"
+    },
+    {
+      "title": "ATT&CK v17: New Platform (ESXi), Collection Optimization, & More Countermeasures",
+      "url": "https://medium.com/mitre-attack/attack-v17-dfb59eae2204?source=rss----6da19bd08fba---4",
+      "date": "2025-04-22",
+      "summary": "By: Amy Robertson and Adam Pennington Our goal with ATT&amp;CK v17 is to help defenders stay aligned with where adversaries are headed by looking at where they\u2019ve recently been. This release aims to inform defensive efforts by focusing on the platforms adversaries are exploiting, the techniques they\u2019re adapting, and the environments they\u2019re targeting. Enterprise now includes the ESXi platform , reflecting the rise in attacks on virtualization infrastructure. We also renamed the Network platform to Network Devices (because let\u2019s call things what they are). On the Defensive side, we\u2019ve made Data Components more useful, showing you how to collect , not just what, with platform-specific tips and tools . Mitigations also got an upgrade, with more guidance, real-world examples, and integration tips. We updated content for Mobile, including five new tools and a cross-domain campaign ,"
+    },
+    {
+      "title": "v16 Cloud Rebalancing, Analytics,",
+      "url": "https://medium.com/mitre-attack/attack-v16-561c76af94cf?source=rss----6da19bd08fba---4",
+      "date": "2024-10-31",
+      "summary": "V16 Brings (Re)Balance: Restructured Cloud, New Analytics, and More Cybercriminals In v16, we\u2019re all about balance \u2014 striking that perfect chord between familiar and pioneering to keep things real and actionable. This update fine-tunes how we cover cloud environments, finding equilibrium between depth and practicality to ensure it remains practical for defenders. As part of our balancing act, we\u2019re also expanding on familiar threats while introducing some fresh behaviors and groups. This release also features optimized detection engineering offerings and enhanced usability across ATT&amp;CK tools, with the goal of a balanced resource for everyone. For all the details on our updates/additions across Techniques, Software, Groups and Campaigns take a look at our <a href=\"https://attack.mitre.org/resources/updates/updates-october-2024/\""
+    },
+    {
+      "title": "Introducing TAXII 2.1 and a fond farewell to the TAXII 2.0 Server",
+      "url": "https://medium.com/mitre-attack/introducing-taxii-2-1-and-a-fond-farewell-to-taxii-2-0-d9fca6ce4c58?source=rss----6da19bd08fba---4",
+      "date": "2024-08-22",
+      "summary": "As mentioned in our 2024 Roadmap and the v15 release blog , we\u2019re excited to introduce our new TAXII server and the latest addition to the ATT&amp;CK Workbench software suite: the MITRE ATT&amp;CK Workbench TAXII 2.1 Server . We\u2019ve open-sourced the TAXII 2.1 code on GitHub , allowing you to set up your own servers within your organization and contribute to its improvement. While you\u2019re diving into the new 2.1 server, don\u2019t forget: our TAXII 2.0 server is retiring on December 18. To continue receiving updated ATT&amp;CK data, you\u2019ll need to migrate from cti-taxii.mitre.org to attack-taxii.mitre.org. Howeve"
+    },
+    {
+      "title": "ATT&CK v15 Brings the Action",
+      "url": "https://medium.com/mitre-attack/attack-v15-26685f300acc?source=rss----6da19bd08fba---4",
+      "date": "2024-04-23",
+      "summary": "ATT&amp;CK v15 Brings the Action: Upgraded Detections, New Analytic Format, &amp; Cross-Domain Adversary Insights v15 is all about actionability and bringing defenders\u2019 reality into focus \u2014 we prioritized what you need to detect, and how you can do it more effectively with detection engineering upgrades, and deeper intelligence insights across platforms. This release also reflects the new expansion rhythm, balancing both well-known and emerging behaviors to reflect how trends and activity are experienced in the field. For the details on our updates/additions across Techniques, Software, Groups and Campaigns take a look at our release notes , our detailed changelog , or our"
+    },
+    {
+      "title": "ATT&CK 2024 Roadmap",
+      "url": "https://medium.com/mitre-attack/attack-2024-roadmap-8dfc46d1ad1b?source=rss----6da19bd08fba---4",
+      "date": "2024-04-18",
+      "summary": "Enhancing usability, expanding scope, optimizing defenses 2023 was dynamic year for ATT&amp;CK. We marked a decade of progress since the framework\u2019s inception and achieved some key milestones to make ATT&amp;CK more accessible for a wider community. Our scope (slightly) expanded to encompass activities adjacent to direct Enterprise interactions, such as non-technical, deceptive practices and social engineering techniques ( Financial Theft , Impersonation , and Spearphishing Voice ). We enhanced detection capabilities with integrated notes, pseudocode from CAR , and BZAR -based analytics. The ICS matrix welcomed the addit"
+    },
+    {
+      "title": "ATT&CK v14 Unleashes Detection Enhancements, ICS Assets, and Mobile Structured Detections",
+      "url": "https://medium.com/mitre-attack/attack-v14-fa473603f86b?source=rss----6da19bd08fba---4",
+      "date": "2023-10-31",
+      "summary": "Credit: https://flic.kr/p/dzyK9x CC BY-SA 2.0 ATT&amp;CK has been brewing up something eerie for this Halloween \u2014 a release so hauntingly powerful that it will send a chill down the spine of even the most formidable adversaries. As v14 emerges from the depths, we\u2019re proud to present a more robust and finely-tuned knowledge base. So, grab your flashlights and keep your wits about you as you navigate the latest changes, including enhanced detection guidance for many techniques, a (slightly) expanded scope on Enterprise and Mobile, Assets in ICS, and Mobile Structured Detections. For the rest of our regular updates/additions across Techniques, Software, Groups and Campaigns take a look at our release notes , our <a href=\"http"
+    },
+    {
+      "title": "ATT&CK v13 Enters the Room",
+      "url": "https://medium.com/mitre-attack/attack-v13-enters-the-room-5cef174c32ff?source=rss----6da19bd08fba---4",
+      "date": "2023-04-25",
+      "summary": "ATT&amp;CK v13 Enters the Room: Pseudocode, Swifter Search, and Mobile Data Sources It\u2019s not like a regular Tuesday, it\u2019s a lucky Tuesday \u2014 ATT&amp;CK v13 has arrived. As we outlined in our Roadmap , we\u2019re working toward enhanced tools for lower-resourced defenders, improving ATT&amp;CK\u2019s website usability, enhancing ICS and Mobile parity with Enterprise, and evolving overall content and structure this year. ATT&amp;CK v13 is bringing some analytics pseudocode, Mobile-specific data sources, key website updates, ICS Asset refactoring, and more Cloud and Linux coverage. For the rest of our regular updates/additions across Techniques, Software, Groups and Campaigns take a look at our release notes , our (new) <a"
+    }
+  ]
+}

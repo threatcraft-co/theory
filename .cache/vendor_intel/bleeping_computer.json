@@ -1,0 +1,95 @@
+{
+  "cached_at": "2026-03-31T18:52:41.840393+00:00",
+  "entries": [
+    {
+      "title": "Cisco source code stolen in Trivy-linked dev environment breach",
+      "url": "https://www.bleepingcomputer.com/news/security/cisco-source-code-stolen-in-trivy-linked-dev-environment-breach/",
+      "date": "2026-03-31",
+      "summary": "Cisco has suffered a cyberattack after threat actors used stolen credentials from the recent Trivy supply chain attack to breach its internal development environment and steal source code belonging to the company and its customers. [...]"
+    },
+    {
+      "title": "How to Categorize AI Agents and Prioritize Risk",
+      "url": "https://www.bleepingcomputer.com/news/security/how-to-categorize-ai-agents-and-prioritize-risk/",
+      "date": "2026-03-31",
+      "summary": "AI agent risk isn't equal, it scales with access to systems and level of autonomy. Token Security explains how CISOs should categorize agents and prioritize what to secure first. [...]"
+    },
+    {
+      "title": "Hackers compromise Axios npm package to drop cross-platform malware",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-compromise-axios-npm-package-to-drop-cross-platform-malware/",
+      "date": "2026-03-31",
+      "summary": "Hackers hijacked the npm account of the Axios package, a JavaScript HTTP client with 100M+ weekly downloads, to deliver remote access trojans to Linux, Windows, and macOS systems. [...]"
+    },
+    {
+      "title": "Microsoft fixes Outlook Classic crashes caused by Teams Meeting add-in",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-outlook-classic-crashes-caused-by-teams-meeting-add-in/",
+      "date": "2026-03-31",
+      "summary": "\u200bMicrosoft has resolved a known issue that rendered the classic Outlook email client unusable for users who enabled the Microsoft Teams Meeting Add-in. [...]"
+    },
+    {
+      "title": "Hacker charged with stealing $53 million from Uranium crypto exchange",
+      "url": "https://www.bleepingcomputer.com/news/security/hacker-charged-with-stealing-53-million-from-uranium-crypto-exchange/",
+      "date": "2026-03-31",
+      "summary": "U.S. prosecutors have charged a Maryland man with stealing more than $53 million after hacking the Uranium Finance crypto exchange twice and laundering the proceeds through a cryptocurrency mixer. [...]"
+    },
+    {
+      "title": "Dutch Finance Ministry takes treasury banking portal offline after breach",
+      "url": "https://www.bleepingcomputer.com/news/security/dutch-finance-ministry-takes-treasury-banking-portal-offline-after-breach/",
+      "date": "2026-03-31",
+      "summary": "The Dutch Ministry of Finance took some of its systems offline, including the digital portal for treasury banking, while investigating a cyberattack detected two weeks ago. [...]"
+    },
+    {
+      "title": "CISA orders feds to patch actively exploited Citrix flaw by Thursday",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-orders-feds-to-patch-actively-exploited-citrix-flaw-by-thursday/",
+      "date": "2026-03-31",
+      "summary": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) ordered government agencies to patch their Citrix NetScaler appliances against an actively exploited vulnerability by Thursday. [...]"
+    },
+    {
+      "title": "Healthcare tech firm CareCloud says hackers stole patient data",
+      "url": "https://www.bleepingcomputer.com/news/security/healthcare-tech-firm-carecloud-says-hackers-stole-patient-data/",
+      "date": "2026-03-30",
+      "summary": "Healthcare IT firm CareCloud has disclosed a data breach incident that exposed sensitive data and caused a network disruption lasting approximately eight hours. [...]"
+    },
+    {
+      "title": "New RoadK1ll WebSocket implant used to pivot on breached networks",
+      "url": "https://www.bleepingcomputer.com/news/security/new-roadk1ll-websocket-implant-used-to-pivot-on-breached-networks/",
+      "date": "2026-03-30",
+      "summary": "A newly identified malicious implant named RoadK1ll is enabling threat actors to quietly move from a compromised host to other systems on the network. [...]"
+    },
+    {
+      "title": "Critical Citrix NetScaler memory flaw actively exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/critical-citrix-netscaler-memory-flaw-actively-exploited-in-attacks/",
+      "date": "2026-03-30",
+      "summary": "Hackers are exploiting a critical severity vulnerability, tracked as CVE-2026-3055, in Citrix NetScaler ADC and NetScaler Gateway appliances to obtain sensitive data. [...]"
+    },
+    {
+      "title": "Apple adds macOS Terminal warning to block ClickFix attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/apple-adds-macos-terminal-warning-to-block-clickfix-attacks/",
+      "date": "2026-03-30",
+      "summary": "Apple has introduced a security feature in macOS Tahoe 26.4 that blocks pasting and executing potentially harmful commands in Terminal and alerts users to possible risks. [...]"
+    },
+    {
+      "title": "How to Evaluate AI SOC Agents: 7 Questions Gartner Says You Should Be Asking",
+      "url": "https://www.bleepingcomputer.com/news/security/how-to-evaluate-ai-soc-agents-7-questions-gartner-says-you-should-be-asking/",
+      "date": "2026-03-30",
+      "summary": "AI SOC agents can reduce alert fatigue, but most teams fail to measure real outcomes. Prophet Security breaks down Gartner's questions for evaluating AI SOC agents and separating real impact from hype. [...]"
+    },
+    {
+      "title": "Hackers exploiting critical F5 BIG-IP flaw in attacks, patch now",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-now-exploit-critical-f5-big-ip-flaw-in-attacks-patch-now/",
+      "date": "2026-03-30",
+      "summary": "F5 has reclassified a BIG-IP APM denial-of-service (DoS) vulnerability as a critical-severity remote code execution (RCE) flaw, warning that attackers are exploiting it to deploy webshells on unpatched devices. [...]"
+    },
+    {
+      "title": "Microsoft pulls KB5079391 Windows update over install issues",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-pulls-windows-kb5079391-update-over-0x80073712-install-errors/",
+      "date": "2026-03-30",
+      "summary": "Microsoft has pulled a buggy Windows 11 non-security preview update to investigate a known issue that triggers 0x80073712 errors during installation. [...]"
+    },
+    {
+      "title": "Critical Fortinet Forticlient EMS flaw now exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/critical-fortinet-forticlient-ems-flaw-now-exploited-in-attacks/",
+      "date": "2026-03-30",
+      "summary": "Attackers are now actively exploiting a critical vulnerability in Fortinet's FortiClient EMS platform, according to threat intelligence company Defused. [...]"
+    }
+  ]
+}

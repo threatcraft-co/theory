@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-03-31T18:52:32.579608+00:00",
+  "entries": [
+    {
+      "title": "RSAC 2026 Recap: From AI Hype to Real SaaS Security Outcomes",
+      "url": "https://appomni.com/blog/rsac-ai-saas-security-and-supply-chain-risk/",
+      "date": "2026-03-30",
+      "summary": "RSAC reinforced that AI is everywhere, but real value comes from applying it thoughtfully. Strong data, governed identities, and continuous SaaS monitoring matter more than speed or features. The post RSAC 2026 Recap: From AI Hype to Real SaaS Security Outcomes appeared first on AppOmni ."
+    },
+    {
+      "title": "AO-labs",
+      "url": "https://appomni.com/ao-labs/",
+      "date": "2026-03-27",
+      "summary": "LEADING SAAS and AI SECURITY RESEARCH AppOmni Labs We&#8217;re an elite team of SaaS threat researchers dedicated to uncovering and neutralizing vulnerabilities, potential SaaS misconfigurations, exposed attack vectors in SaaS and AI applications. We publish CVEs and remediation guidance to contribute to a more secure world. The SaaS and AI threat landscape are continuously evolving. [&#8230;] The post AO-labs appeared first on AppOmni ."
+    },
+    {
+      "title": "Okta and Auth0 Security and Data Protection \u2013 AppOmni",
+      "url": "https://appomni.com/critical-apps/okta-auth0-security/",
+      "date": "2026-03-24",
+      "summary": "Harden your Okta and Auth0 security with AppOmni Deepen security for the identity platforms that govern access across your entire organization AppOmni: The Leader in Okta and Auth0 Security Okta and Auth0 are central to your IT and security teams identity management strategy. From multi-factor authentication (MFA), single sign-on (SSO), agentic AI, human and non-human [&#8230;] The post Okta and Auth0 Security and Data Protection &#8211; AppOmni appeared first on AppOmni ."
+    },
+    {
+      "title": "To Scale AI Agents Successfully, Think of Them Like Team Members",
+      "url": "https://hbr.org/2026/03/to-scale-ai-agents-successfully-think-of-them-like-team-members#new_tab",
+      "date": "2026-03-24",
+      "summary": "In 2025, AppOmni demonstrated how insecure configurations in ServiceNow\u2019s Now Assist environment could allow \"second-order prompt injection.\" The post To Scale AI Agents Successfully, Think of Them Like Team Members appeared first on AppOmni ."
+    },
+    {
+      "title": "Trivy Scanner Compromise Explained and What it Means For Your SaaS and CI/CD Security",
+      "url": "https://appomni.com/ao-labs/trivy-compromise-supply-chain-attack-explained/",
+      "date": "2026-03-23",
+      "summary": "The Trivy supply chain compromise gave attackers a way to deliver malicious infostealer code. Learn how it happened and required remediation steps to audit your environment. The post Trivy Scanner Compromise Explained and What it Means For Your SaaS and CI/CD Security appeared first on AppOmni ."
+    },
+    {
+      "title": "Security and generative AI are learning to get along",
+      "url": "https://www.itbrew.com/stories/2026/03/12/security-and-generative-ai-are-learning-to-get-along#new_tab",
+      "date": "2026-03-17",
+      "summary": "\u201cUsers want generative AI to do everything they want for them, but they also want to be safe,\u201d AppOmni AI director says. The post Security and generative AI are learning to get along appeared first on AppOmni ."
+    },
+    {
+      "title": "Interview With CMO Chandra Sekar About The SaaS and AI Security Company",
+      "url": "https://pulse2.com/appomni-profile-chandra-sekar-interview/#new_tab",
+      "date": "2026-03-12",
+      "summary": "Chandra Sekar discusses his leadership journey, AppOmni's mission to prevent SaaS data breaches, and how we deliver deep visibility and continuous security for business-critical SaaS applications to help enterprises operationalize secure SaaS productivity. The post Interview With CMO Chandra Sekar About The SaaS and AI Security Company appeared first on AppOmni ."
+    },
+    {
+      "title": "Salesforce guest flaws fuel large-scale data harvesting",
+      "url": "https://securitybrief.news/story/salesforce-guest-flaws-fuel-large-scale-data-harvesting#new_tab",
+      "date": "2026-03-11",
+      "summary": "AppOmni said new attacker tooling has increased the impact of a long-standing exposure, making exploitation faster, more scalable, and more damaging. The post Salesforce guest flaws fuel large-scale data harvesting appeared first on AppOmni ."
+    },
+    {
+      "title": "What is the Salesforce GraphQL Exploit and What You Should Do",
+      "url": "https://appomni.com/ao-labs/salesforce-graphql-exploit-explained/",
+      "date": "2026-03-09",
+      "summary": "Salesforce GraphQL exploit exposed misconfigured guest data in Experience Cloud. Learn how it happened and how to prevent exposure. The post What is the Salesforce GraphQL Exploit and What You Should Do appeared first on AppOmni ."
+    },
+    {
+      "title": "ShinyHunters Claims Woflow Breach in Supply Chain Hack",
+      "url": "https://securitybrief.news/story/shinyhunters-claims-woflow-breach-in-supply-chain-hack#new_tab",
+      "date": "2026-03-09",
+      "summary": "ShinyHunters claims a breach of SaaS provider Woflow in a supply-chain attack impacting major brands, highlighting escalating third-party SaaS security risks and the need for continuous monitoring. The post ShinyHunters Claims Woflow Breach in Supply Chain Hack appeared first on AppOmni ."
+    }
+  ]
+}

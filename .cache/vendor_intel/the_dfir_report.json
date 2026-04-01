@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-03-31T18:52:42.370700+00:00",
+  "entries": [
+    {
+      "title": "Apache ActiveMQ Exploit Leads to LockBit Ransomware",
+      "url": "https://thedfirreport.com/2026/02/23/apache-activemq-exploit-leads-to-lockbit-ransomware/",
+      "date": "2026-02-23",
+      "summary": "Key Takeaways An audio version of this report can be found on&#160;Spotify,&#160;Apple,&#160;YouTube,&#160;Audible, &#38;&#160;Amazon.&#160; This intrusion began in mid-February 2024 after a threat actor exploited a vulnerability (CVE-2023-46604) on an exposed Apache ActiveMQ server. The threat actor was able to perform remote code execution (RCE) by using a Java Spring class and a custom Java Spring [&#8230;] The post Apache ActiveMQ Exploit Leads to LockBit Ransomware appeared first on The DFIR Report ."
+    },
+    {
+      "title": "Cat\u2019s Got Your Files: Lynx Ransomware",
+      "url": "https://thedfirreport.com/2025/12/17/cats-got-your-files-lynx-ransomware/",
+      "date": "2025-12-17",
+      "summary": "Key Takeaways The DFIR Report Services Contact us today for pricing or a demo! The intrusion began in early March 2025 with a single successful Remote Desktop Protocol (RDP) logon to an internet-exposed system. Notably, there was no evidence of credential stuffing, brute forcing, or other failed authentication attempts from the source IP, indicating the [&#8230;] The post Cat\u2019s Got Your Files: Lynx Ransomware appeared first on The DFIR Report ."
+    },
+    {
+      "title": "From Bing Search to Ransomware: Bumblebee and AdaptixC2 Deliver Akira",
+      "url": "https://thedfirreport.com/2025/11/04/from-bing-search-to-ransomware-bumblebee-and-adaptixc2-deliver-akira-2/",
+      "date": "2025-11-04",
+      "summary": "Overview Bumblebee malware has been an initial access tool used by threat actors since late 2021. In 2023 the malware was first reported as using SEO poisoning as a delivery mechanism. Recently in May of 2025 Cyjax reported on a campaign using this method again, impersonating various IT tools. We observed a similar campaign in [&#8230;] The post From Bing Search to Ransomware: Bumblebee and AdaptixC2 Deliver Akira appeared first on The DFIR Report ."
+    },
+    {
+      "title": "From a Single Click: How Lunar Spider Enabled a Near Two-Month Intrusion",
+      "url": "https://thedfirreport.com/2025/09/29/from-a-single-click-how-lunar-spider-enabled-a-near-two-month-intrusion/",
+      "date": "2025-09-29",
+      "summary": "Key Takeaways Private Threat Briefs: 20+ private DFIR reports annually. &#160; Contact us today for pricing or a demo! &#160; Table of Contents: Case Summary Analysts Initial Access Execution Persistence Privilege Escalation Defense Evasion Credential Access Discovery Lateral Movement Command and Control Exfiltration Impact Timeline Diamond Model Indicators Detections MITRE ATT&#38;CK Case Summary The intrusion [&#8230;] The post From a Single Click: How Lunar Spider Enabled a Near Two-Month Intrusion appeared first on The DFIR Report ."
+    },
+    {
+      "title": "Blurring the Lines: Intrusion Shows Connection With Three Major Ransomware Gangs",
+      "url": "https://thedfirreport.com/2025/09/08/blurring-the-lines-intrusion-shows-connection-with-three-major-ransomware-gangs/",
+      "date": "2025-09-08",
+      "summary": "Key Takeaways Private Threat Briefs: 20+ private DFIR reports annually. Contact us today for pricing or a demo! Table of Contents: Case Summary Analysts Initial Access Execution Persistence Privilege Escalation Defense Evasion Credential Access Discovery Lateral Movement Collection Command and Control Exfiltration Impact Timeline Diamond Model Indicators Detections MITRE ATT&#38;CK Case Summary The intrusion began in [&#8230;] The post Blurring the Lines: Intrusion Shows Connection With Three Major Ransomware Gangs appeared first on The DFIR Report ."
+    },
+    {
+      "title": "KongTuke FileFix Leads to New Interlock RAT Variant",
+      "url": "https://thedfirreport.com/2025/07/14/kongtuke-filefix-leads-to-new-interlock-rat-variant/",
+      "date": "2025-07-14",
+      "summary": "Researchers from The DFIR Report, in partnership with Proofpoint, have identified a new and resilient variant of the Interlock ransomware group&#8217;s remote access trojan (RAT). This new malware, a shift from the previously identified JavaScript-based Interlock RAT (aka NodeSnake), uses PHP and is being used in a widespread campaign. Since May 2025, activity related to [&#8230;] The post KongTuke FileFix Leads to New Interlock RAT Variant appeared first on The DFIR Report ."
+    },
+    {
+      "title": "Hide Your RDP: Password Spray Leads to RansomHub Deployment",
+      "url": "https://thedfirreport.com/2025/06/30/hide-your-rdp-password-spray-leads-to-ransomhub-deployment/",
+      "date": "2025-06-30",
+      "summary": "Key Takeaways Case Summary This intrusion began in November 2024 with a password spray attack targeting an internet-facing RDP server. Over the course of several hours, the threat actor attempted logins against multiple accounts using known malicious IPs (based on OSINT). Several hours later they then logged in via RDP with one of the previously [&#8230;] The post Hide Your RDP: Password Spray Leads to RansomHub Deployment appeared first on The DFIR Report ."
+    },
+    {
+      "title": "Another Confluence Bites the Dust: Falling to ELPACO-team Ransomware",
+      "url": "https://thedfirreport.com/2025/05/19/another-confluence-bites-the-dust-falling-to-elpaco-team-ransomware/",
+      "date": "2025-05-19",
+      "summary": "Key Takeaways The DFIR Report Services Table of Contents: Case Summary In late June 2024, an unpatched Confluence server was compromised via CVE-2023-22527, a template injection vulnerability, first from IP address 45.227.254[.]124, which just ran whoami and exited. Shortly thereafter, a different IP address used the same exploit, running curl to deploy a Metasploit payload [&#8230;] The post Another Confluence Bites the Dust: Falling to ELPACO-team Ransomware appeared first on The DFIR Report ."
+    },
+    {
+      "title": "Navigating Through The Fog",
+      "url": "https://thedfirreport.com/2025/04/28/navigating-through-the-fog/",
+      "date": "2025-04-28",
+      "summary": "Key Takeaways An open directory associated with a ransomware affiliate, likely linked to the Fog ransomware group, was discovered in December 2024. It contained tools and scripts for reconnaissance, exploitation, lateral movement, and persistence... The post Navigating Through The Fog appeared first on The DFIR Report ."
+    },
+    {
+      "title": "Fake Zoom Ends in BlackSuit Ransomware",
+      "url": "https://thedfirreport.com/2025/03/31/fake-zoom-ends-in-blacksuit-ransomware/",
+      "date": "2025-03-31",
+      "summary": "Key Takeaways Case Summary This case from May 2024 started with a malicious download from a website mimicking the teleconferencing application Zoom. When visiting the website and downloading a file that seems intended for installing Zoom, the user was, in fact, installing a malicious program created with Inno Setup. The malicious program was a d3f@ck [&#8230;] The post Fake Zoom Ends in BlackSuit Ransomware appeared first on The DFIR Report ."
+    }
+  ]
+}

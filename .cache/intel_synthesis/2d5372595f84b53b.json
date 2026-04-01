@@ -1,0 +1,14 @@
+{
+  "cached_at": "2026-03-31T18:52:53.377682+00:00",
+  "result": {
+    "actor_summary": "APT28 exploited a Microsoft Office zero-day vulnerability during January 2026, demonstrating continued focus on widely-used productivity software as an attack vector. The article provides no additional details regarding targeting scope, geographic focus, or tactical evolution beyond this single exploit activity.",
+    "landscape_summary": "The January 2026 CVE landscape reflects an accelerating pattern of nation-state actors like APT28 moving away from custom exploit development and toward rapid weaponization of public zero-days, particularly targeting productivity suites that maintain privileged access within enterprise environments. This shift underscores a strategic pivot toward exploits with immediate operational impact over traditional persistence mechanisms, driven by the expanding public disclosure cycle and compressed patching windows in enterprise deployments.",
+    "relevance": 60,
+    "source": "Recorded Future (Public)",
+    "source_tier": 2,
+    "date": "2026-02-24",
+    "title": "January 2026 CVE Landscape: 23 Critical Vulnerabilities Mark 5% Increase, APT28 Exploits Microsoft Office Zero-Day",
+    "url": "https://www.recordedfuture.com/blog/january-2026-cve-landscape",
+    "provider": "claude"
+  }
+}

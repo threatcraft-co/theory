@@ -1,0 +1,125 @@
+{
+  "cached_at": "2026-03-31T18:52:12.114184+00:00",
+  "entries": [
+    {
+      "title": "M-Trends 2026: Data, Insights, and Strategies From the Frontlines",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026/",
+      "date": "2026-03-23",
+      "summary": "Every year, the cyber threat landscape forces defenders to adapt to evolving adversary tactics, techniques, and procedures (TTPs). In 2025, Mandiant observed a clear divergence in adversary pacing that closely aligns with the trends we have been documenting for defenders over the past year. On one end of the spectrum, cyber criminal groups optimized for immediate impact and deliberate recovery denial. On the other end, sophisticated cyber espionage groups and insider threats optimized for extreme persistence, utilizing unmonitored edge devices and native network functionalities to evade detection. Today, we release M-Trends 2026. Grounded in over 500,000 hours of f"
+    },
+    {
+      "title": "The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/darksword-ios-exploit-chain/",
+      "date": "2026-03-18",
+      "summary": "Introduction Google Threat Intelligence Group (GTIG) has identified a new iOS full-chain exploit that leveraged multiple zero-day vulnerabilities to fully compromise devices. Based on toolmarks in recovered payloads, we believe the exploit chain to be called DarkSword. Since at least November 2025, GTIG has observed multiple commercial surveillance vendors and suspected state-sponsored actors utilizing DarkSword in distinct campaigns. These threat actors have deployed the exploit chain against targets in Saudi Arabia, Turkey, Malaysia, and Ukraine. DarkSword supports iOS versions 18.4 through 18.7 and utilizes six different vulnerabilities to deploy final-stage payloads. GTIG has identified three distinct malware families deployed following a succ"
+    },
+    {
+      "title": "Ransomware Under Pressure: Tactics, Techniques, and Procedures in a Shifting Threat Landscape",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/ransomware-ttps-shifting-threat-landscape/",
+      "date": "2026-03-16",
+      "summary": "Written by: Bavi Sadayappan, Zach Riddle, Ioana Teaca, Kimberly Goody, Genevieve Stark Introduction Since 2018, when many financially motivated threat actors began shifting their monetization strategy to post-compromise ransomware deployments, ransomware has become one of the most pervasive threats to organizations across almost every industry vertical and region. In recent years ransomware operations have evolved, creating a robust ecosystem that has lowered the barrier to entry via the commoditization and specialization of the supporting underground communities, which is exemplified by the proliferation of the ransomware-as-a-service (RaaS) business model. While ransomware remains a dominant threat due to the volume of activity and the potent"
+    },
+    {
+      "title": "Proactive Preparation and Hardening Against Destructive Attacks: 2026 Edition",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/preparation-hardening-destructive-attacks/",
+      "date": "2026-03-06",
+      "summary": "Written by: Matthew McWhirt, Bhavesh Dhake, Emilio Oropeza, Gautam Krishnan, Stuart Carrera, Greg Blaum, Michael Rudden UPDATE (March 13): Added guidance around abuse or misuse of endpoint / MDM platforms . Background Threat actors leverage destructive malware to destroy data, eliminate evidence of malicious activity, or manipulate systems in a way that renders them inoperable. Destructive cyberattacks can be a powerful means to achieve strategic or tactical objectives; however, the risk of reprisal is likely to limit the frequency of use to very select incidents. Destructive cyberattacks can include destructive malware, wipers, or modified ransomware. <span style=\"vertical-align:"
+    },
+    {
+      "title": "Look What You Made Us Patch: 2025 Zero-Days in Review",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/2025-zero-day-review/",
+      "date": "2026-03-05",
+      "summary": "Written by: Casey Charrier, James Sadowski, Zander Work, Clement Lecigne, Beno\u00eet Sevens, Fred Plan Executive Summary Google Threat Intelligence Group (GTIG) tracked 90 zero-day vulnerabilities exploited in-the-wild in 2025. Although that volume of zero-days is lower than the record high observed in 2023 (100), it is higher than 2024\u2019s count (78) and remained within the 60\u2013100 range established over the previous four years, indicating a trend toward stabilization at these levels. In 2025, we continued to observe the structural shift, first identified in 2024, toward increased enterprise exploitation. Both the raw number (43) and proportion (48%) of vulnerabilities impacting enterprise technologies reached all-time highs, accounting for almost"
+    },
+    {
+      "title": "Coruna: The Mysterious Journey of a Powerful iOS Exploit Kit",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/coruna-powerful-ios-exploit-kit/",
+      "date": "2026-03-03",
+      "summary": "Introduction Google Threat Intelligence Group (GTIG) has identified a new and powerful exploit kit targeting Apple iPhone models running iOS version 13.0 (released in September 2019) up to version 17.2.1 (released in December 2023) . The exploit kit, named \u201cCoruna\u201d by its developers, contained five full iOS exploit chains and a total of 23 exploits. The core technical value of this exploit kit lies in its comprehensive collection of iOS exploits, with the most advanced ones using non-public exploitation techniques and mitigation bypasses. The Coruna exploit kit p"
+    },
+    {
+      "title": "Exposing the Undercurrent: Disrupting the GRIDTIDE Global Cyber Espionage Campaign",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/disrupting-gridtide-global-espionage-campaign/",
+      "date": "2026-02-25",
+      "summary": "Introduction Last week, Google Threat Intelligence Group (GTIG), Mandiant, and partners took action to disrupt a global espionage campaign targeting telecommunications and government organizations in dozens of nations across four continents. The threat actor, UNC2814, is a suspected People's Republic of China (PRC)-nexus cyber espionage group that GTIG has tracked since 2017. This prolific, elusive actor has a long history of targeting international governments and global telecommunications organizations across Africa, Asia, and the Americas and had confirmed intrusions in 42 countries when the disruption was executed. The attacker was using API calls to communicate with SaaS apps as command-and-control (C2) infrastructure to disguise their malicious traffic as benign, a common tactic used by threat actors when attempting"
+    },
+    {
+      "title": "From BRICKSTORM to GRIMBOLT: UNC6201 Exploiting a Dell RecoverPoint for Virtual Machines Zero-Day",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/unc6201-exploiting-dell-recoverpoint-zero-day/",
+      "date": "2026-02-17",
+      "summary": "Written by: Peter Ukhanov, Daniel Sislo, Nick Harbour, John Scarbrough, Fernando Tomlinson, Jr., Rich Reece Introduction Mandiant and Google Threat Intelligence Group (GTIG) have identified the zero-day exploitation of a high-risk vulnerability in Dell RecoverPoint for Virtual Machines , tracked as CVE-2026-22769 , with a CVSSv3.1 score of 10.0 <span style=\"vertical-ali"
+    },
+    {
+      "title": "GTIG AI Threat Tracker: Distillation, Experimentation, and (Continued) Integration of AI for Adversarial Use",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/distillation-experimentation-integration-ai-adversarial-use/",
+      "date": "2026-02-12",
+      "summary": "Introduction In the final quarter of 2025, Google Threat Intelligence Group (GTIG) observed threat actors increasingly integrating artificial intelligence (AI) to accelerate the attack lifecycle, achieving productivity gains in reconnaissance, social engineering, and malware development. This report serves as an update to our November 2025 findings regarding the advances in threat actor usage of AI tools. By identifying these early indicators and offensive proofs of concept, GTIG aims to arm defenders with the intelligence necessary to anticipate the next phase of AI-enabled thr"
+    },
+    {
+      "title": "Beyond the Battlefield: Threats to the Defense Industrial Base",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/threats-to-defense-industrial-base/",
+      "date": "2026-02-10",
+      "summary": "Introduction In modern warfare, the front lines are no longer confined to the battlefield; they extend directly into the servers and supply chains of the industry that safeguards the nation. Today, the defense sector faces a relentless barrage of cyber operations conducted by state-sponsored actors and criminal groups alike. In recent years, Google Threat Intelligence Group (GTIG) has observed several distinct areas of focus in adversarial targeting of the defense industrial base (DIB). While not exhaustive of all actors and means, some of the more prominent themes in the landscape today include: Consistent effort has been dedicated to targeting defense entities fielding technologies on the battl"
+    },
+    {
+      "title": "UNC1069 Targets Cryptocurrency Sector with New Tooling and AI-Enabled Social Engineering",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering/",
+      "date": "2026-02-09",
+      "summary": "Written by: Ross Inman, Adrian Hernandez Introduction North Korean threat actors continue to evolve their tradecraft to target the cryptocurrency and decentralized finance (DeFi) verticals. Mandiant recently investigated an intrusion targeting a FinTech entity within this sector, attributed to UNC1069 , a financially motivated threat actor active since at least 2018. This investigation revealed a tailored intrusion resulting in the deployment of seven unique malware families, including a new set of tooling designed to capture host"
+    },
+    {
+      "title": "Vishing for Access: Tracking the Expansion of ShinyHunters-Branded SaaS Data Theft",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/expansion-shinyhunters-saas-data-theft/",
+      "date": "2026-01-30",
+      "summary": "Introduction Mandiant has identified an expansion in threat activity that uses tactics, techniques, and procedures (TTPs) consistent with prior ShinyHunters-branded extortion operations. These operations primarily leverage sophisticated voice phishing (vishing) and victim-branded credential harvesting sites to gain initial access to corporate environments by obtaining single sign-on (SSO) credentials and multi-factor authentication (MFA) codes. Once inside, the threat actors target cloud-based software-as-a-service (SaaS) applications to exfiltrate sensitive data and internal communications for use in subsequent extortion demands. Google Threat Intelligence Group (GTIG) is currently tracking this activity under multiple threat clusters (UNC6661, U"
+    },
+    {
+      "title": "Guidance from the Frontlines: Proactive Defense Against ShinyHunters-Branded Data Theft Targeting SaaS",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/defense-against-shinyhunters-cybercrime-saas/",
+      "date": "2026-01-30",
+      "summary": "Introduction Mandiant is tracking a significant expansion and escalation in the operations of threat clusters associated with ShinyHunters-branded extortion. As detailed in our companion report, 'Vishing for Access: Tracking the Expansion of ShinyHunters-Branded SaaS Data Theft' , these campaigns leverage evolved voice phishing (vishing) and victim-branded credential harvesting to successfully compromise single sign-on (SSO) credentials and enroll unauthorized devices into victim multi-factor authentication (MFA) solutions. T"
+    },
+    {
+      "title": "No Place Like Home Network: Disrupting the World's Largest Residential Proxy Network",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/disrupting-largest-residential-proxy-network/",
+      "date": "2026-01-28",
+      "summary": "Introduction This week Google and partners took action to disrupt what we believe is one of the largest residential proxy networks in the world, the IPIDEA proxy network. IPIDEA\u2019s proxy infrastructure is a little-known component of the digital ecosystem leveraged by a wide array of bad actors. This disruption, led by Google Threat Intelligence Group (GTIG) in partnership with other teams, included three main actions: Took legal action to take down domains used to control devices and proxy traffic through them. <span style=\""
+    },
+    {
+      "title": "Diverse Threat Actors Exploiting Critical WinRAR Vulnerability CVE-2025-8088",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/exploiting-critical-winrar-vulnerability/",
+      "date": "2026-01-27",
+      "summary": "Introduction The Google Threat Intelligence Group (GTIG) has identified widespread, active exploitation of the critical vulnerability CVE-2025-8088 in WinRAR, a popular file archiver tool for Windows, to establish initial access and deliver diverse payloads. Discovered and patched in July 2025, government-backed threat actors linked to Russia and China as well as financially motivated threat actors continue to exploit this n-day across disparate operations. The consistent exploitation method, a path traversal flaw allowing files to be dropped into the Windows Startup folder for persistence,"
+    },
+    {
+      "title": "Closing the Door on Net-NTLMv1: Releasing Rainbow Tables to Accelerate Protocol Deprecation",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/net-ntlmv1-deprecation-rainbow-tables/",
+      "date": "2026-01-15",
+      "summary": "Written by: Nic Losby Introduction Mandiant is publicly releasing a comprehensive dataset of Net-NTLMv1 rainbow tables to underscore the urgency of migrating away from this outdated protocol. Despite Net-NTLMv1 being deprecated and known to be insecure for over two decades\u2014with cryptanalysis dating back to 1999\u2014Mandiant consultants continue to identify its use in active environments. This legacy protocol leaves organizations vulnerable to trivial credential theft, yet it remains prevalent due to inertia and a lack of demonstrated immediate ri"
+    },
+    {
+      "title": "AuraInspector: Auditing Salesforce Aura for Data Exposure",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/auditing-salesforce-aura-data-exposure/",
+      "date": "2026-01-12",
+      "summary": "Written by: Amine Ismail, Anirudha Kanodia Introduction Mandiant is releasing AuraInspector, a new open-source tool designed to help defenders identify and audit access control misconfigurations within the Salesforce Aura framework . Salesforce Experience Cloud is a foundational platform for many businesses, but Mandiant Offensive Security Services (OSS) frequently identifies misconfigurations that allow unauthorized users to access s"
+    },
+    {
+      "title": "Multiple Threat Actors Exploit React2Shell (CVE-2025-55182)",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/threat-actors-exploit-react2shell-cve-2025-55182/",
+      "date": "2025-12-12",
+      "summary": "Written by: Aragorn Tseng, Robert Weiner, Casey Charrier, Zander Work, Genevieve Stark, Austin Larsen Introduction On Dec. 3, 2025, a critical unauthenticated remote code execution (RCE) vulnerability in React Server Components, tracked as CVE-2025-55182 (aka \"React2Shell\"), was publicly disclosed. Shortly after disclosure, Google Threat Intelligence Group (GTIG) had begun observing widespread exploitation across many threat clusters, ranging from opportunistic cyber crime actors to suspected espionage groups. <span style=\"ver"
+    },
+    {
+      "title": "Sanctioned but Still Spying: Intellexa\u2019s Prolific Zero-Day Exploits Continue",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/intellexa-zero-day-exploits-continue/",
+      "date": "2025-12-03",
+      "summary": "Introduction Despite extensive scrutiny and public reporting , commercial surveillance vendors continue to operate unimpeded. A prominent name continues to surface in the world of mercenary spyware, Intellexa. Known for its \u201cPredator\u201d spyware, the company was sanctioned by the US Government . New Google Threat Intelligence Group (G"
+    },
+    {
+      "title": "Beyond the Watering Hole: APT24's Pivot to Multi-Vector Attacks",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/apt24-pivot-to-multi-vector-attacks/",
+      "date": "2025-11-20",
+      "summary": "Written by: Harsh Parashar, Tierra Duncan, Dan Perez Google Threat Intelligence Group (GTIG) is tracking a long-running and adaptive cyber espionage campaign by APT24, a People's Republic of China (PRC)-nexus threat actor. Spanning three years, APT24 has been deploying BADAUDIO, a highly obfuscated first-stage downloader used to establish persistent access to victim networks. While earlier operations relied on broad strategic web compromises to compromise legitimate websites, APT24 has recently pivoted to using more sophisticated vectors targeting organizations in Taiwan. This includes the repeated compromise of a regional digital marketing firm to execute supply chain attacks and the use of targeted phishing campaigns. This report provides a t"
+    }
+  ]
+}

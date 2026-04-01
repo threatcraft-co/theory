@@ -1,0 +1,125 @@
+{
+  "cached_at": "2026-03-31T18:52:30.488388+00:00",
+  "entries": [
+    {
+      "title": "Cloudflare Client-Side Security: smarter detection, now open to everyone",
+      "url": "https://blog.cloudflare.com/client-side-security-open-to-everyone/",
+      "date": "2026-03-30",
+      "summary": "We are opening our advanced Client-Side Security tools to all users, featuring a new cascading AI detection system. By combining graph neural networks and LLMs, we've reduced false positives by up to 200x while catching sophisticated zero-day exploits."
+    },
+    {
+      "title": "Announcing Cloudflare Account Abuse Protection: prevent fraudulent attacks from bots and humans",
+      "url": "https://blog.cloudflare.com/account-abuse-protection/",
+      "date": "2026-03-12",
+      "summary": "Blocking bots isn\u2019t enough anymore. Cloudflare\u2019s new fraud prevention capabilities \u2014 now available in Early Access \u2014 help stop account abuse before it starts."
+    },
+    {
+      "title": "AI Security for Apps is now generally available",
+      "url": "https://blog.cloudflare.com/ai-security-for-apps-ga/",
+      "date": "2026-03-11",
+      "summary": "Cloudflare AI Security for Apps is now generally available, providing a security layer to discover and protect AI-powered applications, regardless of the model or hosting provider. We are also making AI discovery free for all plans, to help teams find and secure shadow AI deployments."
+    },
+    {
+      "title": "Investigating multi-vector attacks in Log Explorer",
+      "url": "https://blog.cloudflare.com/investigating-multi-vector-attacks-in-log-explorer/",
+      "date": "2026-03-10",
+      "summary": "Log Explorer customers can now identify and investigate multi-vector attacks. Log Explorer supports 14 additional Cloudflare datasets, enabling users to have a 360-degree view of their network."
+    },
+    {
+      "title": "Fixing request smuggling vulnerabilities in Pingora OSS deployments",
+      "url": "https://blog.cloudflare.com/pingora-oss-smuggling-vulnerabilities/",
+      "date": "2026-03-09",
+      "summary": "Today we\u2019re disclosing request smuggling vulnerabilities when our open source Pingora service is deployed as an ingress proxy and how we\u2019ve fixed them in Pingora 0.8.0."
+    },
+    {
+      "title": "Active defense: introducing a stateful vulnerability scanner for APIs",
+      "url": "https://blog.cloudflare.com/vulnerability-scanner/",
+      "date": "2026-03-09",
+      "summary": "Cloudflare\u2019s new Web and API Vulnerability Scanner helps teams proactively find logic flaws. By using AI to build API call graphs, we identify vulnerabilities that standard defensive tools miss."
+    },
+    {
+      "title": "How Cloudy translates complex security into human action",
+      "url": "https://blog.cloudflare.com/cloudy-upgrades-for-cloudflare-one/",
+      "date": "2026-03-03",
+      "summary": "Cloudy is our LLM-powered explanation layer built directly into Cloudflare One. Its explanations, now part of Phishnet and API CASB, can improve user decisions and SOC efficiency."
+    },
+    {
+      "title": "From reactive to proactive: closing the phishing gap with LLMs",
+      "url": "https://blog.cloudflare.com/email-security-phishing-gap-llm/",
+      "date": "2026-03-03",
+      "summary": "Email security is a constant arms race. Like WWII engineers reinforcing only the planes that returned, survivorship bias hides real gaps. But LLMs can help us find the invisible weaknesses."
+    },
+    {
+      "title": "Bringing more transparency to post-quantum usage, encrypted messaging, and routing security",
+      "url": "https://blog.cloudflare.com/radar-origin-pq-key-transparency-aspa/",
+      "date": "2026-02-27",
+      "summary": "Cloudflare Radar has added new tools for monitoring PQ adoption, KT logs for messaging, and ASPA routing records to track the Internet's migration toward more secure encryption and routing standards."
+    },
+    {
+      "title": "2025 Q4 DDoS threat report: A record-setting 31.4 Tbps attack caps a year of massive DDoS assaults",
+      "url": "https://blog.cloudflare.com/ddos-threat-report-2025-q4/",
+      "date": "2026-02-05",
+      "summary": "The number of DDoS attacks more than doubled in 2025. The network layer is under particular threat as hyper-volumetric attacks grew 700%."
+    },
+    {
+      "title": "Building a serverless, post-quantum Matrix homeserver",
+      "url": "https://blog.cloudflare.com/serverless-matrix-homeserver-workers/",
+      "date": "2026-01-27",
+      "summary": "As a proof of concept, we built a Matrix homeserver to Cloudflare Workers \u2014 delivering encrypted messaging at the edge with automatic post-quantum cryptography."
+    },
+    {
+      "title": "How we mitigated a vulnerability in Cloudflare\u2019s ACME validation logic",
+      "url": "https://blog.cloudflare.com/acme-path-vulnerability/",
+      "date": "2026-01-19",
+      "summary": "A vulnerability was recently identified in Cloudflare\u2019s automation of certificate validation. Here we explain the vulnerability and outline the steps we\u2019ve taken to mitigate it."
+    },
+    {
+      "title": "Astro is joining Cloudflare",
+      "url": "https://blog.cloudflare.com/astro-joins-cloudflare/",
+      "date": "2026-01-16",
+      "summary": "The Astro Technology Company team \u2014 the creators of the Astro web framework \u2014 is joining Cloudflare. We\u2019re doubling down on making Astro the best framework for content-driven websites, today and in the years to come."
+    },
+    {
+      "title": "The 2025 Cloudflare Radar Year in Review: The rise of AI, post-quantum, and record-breaking DDoS attacks",
+      "url": "https://blog.cloudflare.com/radar-2025-year-in-review/",
+      "date": "2025-12-15",
+      "summary": "We present our 6th annual review of Internet trends and patterns observed across the globe, revealing the disruptions, advances and metrics that defined 2025."
+    },
+    {
+      "title": "How Workers VPC Services connects to your regional private networks from anywhere in the world",
+      "url": "https://blog.cloudflare.com/workers-vpc-open-beta/",
+      "date": "2025-11-05",
+      "summary": "Workers VPC Services enter open beta today. We look under the hood to see how Workers VPC connects your globally-deployed Workers to your regional private networks by using Cloudflare's global network, while abstracting cross-cloud networking complexity."
+    },
+    {
+      "title": "One IP address, many users: detecting CGNAT to reduce collateral effects",
+      "url": "https://blog.cloudflare.com/detecting-cgn-to-reduce-collateral-damage/",
+      "date": "2025-10-29",
+      "summary": "IPv4 scarcity drives widespread use of Carrier-Grade Network Address Translation, a practice in ISPs and mobile networks that places many users behind each IP address, along with their collected activity and volumes of traffic. We introduce the method we\u2019ve developed to detect large-scale IP sharing globally and mitigate the issues that result."
+    },
+    {
+      "title": "Defending QUIC from acknowledgement-based DDoS attacks",
+      "url": "https://blog.cloudflare.com/defending-quic-from-acknowledgement-based-ddos-attacks/",
+      "date": "2025-10-29",
+      "summary": "We identified and patched two DDoS vulnerabilities in our QUIC implementation related to packet acknowledgements. Cloudflare customers were not affected. We examine the \"Optimistic ACK\" attack vector and our solution, which dynamically skips packet numbers to validate client behavior."
+    },
+    {
+      "title": "Keeping the Internet fast and secure: introducing Merkle Tree Certificates",
+      "url": "https://blog.cloudflare.com/bootstrap-mtc/",
+      "date": "2025-10-28",
+      "summary": "Cloudflare is launching an experiment with Chrome to evaluate fast, scalable, and quantum-ready Merkle Tree Certificates, all without degrading performance or changing WebPKI trust relationships."
+    },
+    {
+      "title": "Improving the trustworthiness of Javascript on the Web",
+      "url": "https://blog.cloudflare.com/improving-the-trustworthiness-of-javascript-on-the-web/",
+      "date": "2025-10-16",
+      "summary": "There's no way to audit a site\u2019s client-side code as it changes, making it hard to trust sites that use cryptography. We preview a specification we co-authored that adds auditability to the web."
+    },
+    {
+      "title": "15 years of helping build a better Internet: a look back at Birthday Week 2025",
+      "url": "https://blog.cloudflare.com/birthday-week-2025-wrap-up/",
+      "date": "2025-09-29",
+      "summary": "Rust-powered core systems, post-quantum upgrades, developer access for students, PlanetScale integration, open-source partnerships, and our biggest internship program ever \u2014 1,111 interns in 2026."
+    }
+  ]
+}

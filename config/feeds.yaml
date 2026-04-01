@@ -1,0 +1,396 @@
+# THEORY — Vendor Intelligence Feed Registry
+# ============================================
+# Curated threat intelligence sources with RSS feeds and research blog URLs.
+#
+# Structure:
+#   name:       Display name in dossier
+#   url:        Primary blog/research URL
+#   rss:        RSS feed URL (preferred for fetching)
+#   type:       rss | blog
+#   tier:       1=government/nonprofit  2=major vendor  3=community
+#   apt_focus:  true if source specifically covers nation-state actors
+#   tags:       Topic tags for relevance filtering
+#   enabled:    true/false
+#
+# Adding paywalled sources:
+#   Add session cookie to .env as FEED_COOKIE_<NAME_SLUG>=value
+#   Example: FEED_COOKIE_RECORDED_FUTURE=your_cookie
+#
+# Adding custom sources:
+#   Add entries to the "custom" list at the bottom of this file.
+#   Same format — THEORY picks them up automatically.
+
+sources:
+
+  # ── Tier 1: Government & Nonprofit ──────────────────────────────────
+
+  - name: CISA Cybersecurity Advisories
+    url: https://www.cisa.gov/uscert/ncas/alerts
+    rss: https://us-cert.cisa.gov/ncas/alerts.xml
+    type: rss
+    tier: 1
+    apt_focus: true
+    tags: [government, advisories, critical-infrastructure]
+    enabled: true
+
+  - name: NSA Cybersecurity Advisories
+    url: https://www.nsa.gov/Press-Room/Cybersecurity-Advisories-Guidance/
+    rss: https://www.nsa.gov/rss/cybersecurity-advisories.xml
+    type: blog
+    tier: 1
+    apt_focus: true
+    tags: [government, nation-state, advisories]
+    enabled: true
+
+  - name: NCSC (UK) Threat Reports
+    url: https://www.ncsc.gov.uk/section/keep-up-to-date/reports
+    rss: https://www.ncsc.gov.uk/feeds/all-products.xml
+    type: rss
+    tier: 1
+    apt_focus: true
+    tags: [government, uk, nation-state, advisories]
+    enabled: true
+
+  # ── Tier 2: Major Vendor Research ───────────────────────────────────
+
+  - name: Mandiant Threat Intelligence
+    url: https://www.mandiant.com/resources/blog
+    rss: https://www.mandiant.com/resources/blog/rss.xml
+    type: rss
+    tier: 2
+    apt_focus: true
+    tags: [apt, unc, nation-state, malware, campaigns]
+    enabled: true
+
+  - name: Google TAG
+    url: https://blog.google/threat-analysis-group/
+    rss: https://blog.google/threat-analysis-group/rss/
+    type: rss
+    tier: 2
+    apt_focus: true
+    tags: [apt, nation-state, 0day, campaigns]
+    enabled: true
+
+  - name: Unit 42 (Palo Alto Networks)
+    url: https://unit42.paloaltonetworks.com
+    rss: https://unit42.paloaltonetworks.com/feed/
+    type: rss
+    tier: 2
+    apt_focus: true
+    tags: [apt, malware, campaigns, ransomware, nation-state]
+    enabled: true
+
+  - name: Microsoft MSTIC
+    url: https://www.microsoft.com/en-us/security/blog/topic/threat-intelligence/
+    rss: https://www.microsoft.com/en-us/security/blog/feed/
+    type: rss
+    tier: 2
+    apt_focus: true
+    tags: [apt, nation-state, blizzard, campaigns]
+    enabled: true
+
+  - name: CrowdStrike Blog
+    url: https://www.crowdstrike.com/blog/
+    rss: https://www.crowdstrike.com/blog/feed/
+    type: rss
+    tier: 2
+    apt_focus: true
+    tags: [apt, bear, panda, nation-state, ecrime]
+    enabled: true
+
+  - name: Secureworks CTU
+    url: https://www.secureworks.com/blog
+    rss: https://www.secureworks.com/rss?category=research
+    type: rss
+    tier: 2
+    apt_focus: true
+    tags: [apt, iron, nation-state, campaigns]
+    enabled: true
+
+  - name: Recorded Future (Public)
+    url: https://www.recordedfuture.com/blog
+    rss: https://www.recordedfuture.com/feed
+    type: rss
+    tier: 2
+    apt_focus: true
+    tags: [apt, nation-state, insikt, threat-intel]
+    enabled: true
+
+  - name: Kaspersky GReAT
+    url: https://securelist.com
+    rss: https://securelist.com/feed/
+    type: rss
+    tier: 2
+    apt_focus: true
+    tags: [apt, nation-state, malware, campaigns]
+    enabled: true
+
+  - name: SentinelOne Labs
+    url: https://www.sentinelone.com/labs/
+    rss: https://www.sentinelone.com/blog/feed/
+    type: rss
+    tier: 2
+    apt_focus: true
+    tags: [apt, malware, ransomware, nation-state]
+    enabled: true
+
+  - name: Elastic Security Labs
+    url: https://www.elastic.co/security-labs
+    rss: https://www.elastic.co/security-labs/rss/feed.xml
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [malware, detection, evasion, campaigns]
+    enabled: true
+
+  - name: Splunk Threat Research
+    url: https://www.splunk.com/en_us/blog/security.html
+    rss: https://www.splunk.com/en_us/blog/security/rss.xml
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [detection, threat-hunting, analytics]
+    enabled: true
+
+  - name: Datadog Security Labs
+    url: https://securitylabs.datadoghq.com
+    rss: https://securitylabs.datadoghq.com/rss.xml
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [cloud, containers, supply-chain, malware]
+    enabled: true
+
+  - name: Cloudflare Security Blog
+    url: https://blog.cloudflare.com/tag/security/
+    rss: https://blog.cloudflare.com/tag/security/rss/
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [ddos, dns, network, campaigns]
+    enabled: true
+
+  - name: Proofpoint Threat Insight
+    url: https://www.proofpoint.com/us/blog/threat-insight
+    rss: https://www.proofpoint.com/us/rss.xml
+    type: rss
+    tier: 2
+    apt_focus: true
+    tags: [apt, ta-naming, phishing, email, campaigns]
+    enabled: true
+
+  - name: Okta Threat Intelligence
+    url: https://www.okta.com/blog/threat-intelligence/
+    rss: https://www.okta.com/blog/feed/
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [identity, social-engineering, mfa, it-fraud, dprk]
+    enabled: true
+
+  - name: Mimecast Threat Intelligence
+    url: https://www.mimecast.com/blog/threat-intelligence/
+    rss: https://www.mimecast.com/blog/feed/
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [email, phishing, bec, campaigns]
+    enabled: true
+
+  - name: Wiz Research
+    url: https://www.wiz.io/blog/tag/research
+    rss: https://www.wiz.io/blog/rss.xml
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [cloud, misconfigurations, supply-chain, apt]
+    enabled: true
+
+  - name: GitLab Security Blog
+    url: https://about.gitlab.com/blog/categories/security/
+    rss: https://about.gitlab.com/atom.xml
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [supply-chain, devsecops, vulnerabilities]
+    enabled: true
+
+  - name: AppOmni Research
+    url: https://appomni.com/blog/
+    rss: https://appomni.com/feed/
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [saas, identity, cloud, campaigns]
+    enabled: true
+
+  - name: ThreatLocker Blog
+    url: https://www.threatlocker.com/blog
+    rss: https://www.threatlocker.com/blog/rss.xml
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [endpoint, allowlisting, ransomware]
+    enabled: true
+
+  - name: Sumo Logic Security
+    url: https://www.sumologic.com/blog/security/
+    rss: https://www.sumologic.com/blog/feed/
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [detection, cloud, siem]
+    enabled: true
+
+  - name: Anthropic Security Research
+    url: https://www.anthropic.com/research
+    rss: https://www.anthropic.com/rss.xml
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [ai-security, llm, red-teaming]
+    enabled: true
+
+  - name: Sysdig Threat Research
+    url: https://sysdig.com/blog/category/threat-research/
+    rss: https://sysdig.com/blog/feed/
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [cloud, containers, cryptomining, runtime]
+    enabled: true
+
+  - name: Chainguard Research
+    url: https://www.chainguard.dev/unchained
+    rss: https://www.chainguard.dev/unchained/rss.xml
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [supply-chain, containers, sigstore]
+    enabled: true
+
+  - name: Orca Security Research
+    url: https://orca.security/resources/blog/
+    rss: https://orca.security/resources/blog/feed/
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [cloud, attack-paths, misconfigurations]
+    enabled: true
+
+  - name: Aikido Security Blog
+    url: https://www.aikido.dev/blog
+    rss: https://www.aikido.dev/blog/rss.xml
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [supply-chain, code-security, vulnerabilities]
+    enabled: true
+
+  - name: Semgrep Security Research
+    url: https://semgrep.dev/blog/
+    rss: https://semgrep.dev/blog/rss.xml
+    type: rss
+    tier: 2
+    apt_focus: false
+    tags: [code-security, sast, vulnerabilities]
+    enabled: true
+
+  - name: Nebulock Research
+    url: https://nebulock.io/blog
+    rss: https://nebulock.io/feed/
+    type: rss
+    tier: 2
+    apt_focus: true
+    tags: [threat-hunting, detection, agentic]
+    enabled: true
+
+  # ── Tier 3: Community & Independent ─────────────────────────────────
+
+  - name: MITRE ATT&CK Blog
+    url: https://medium.com/mitre-attack
+    rss: https://medium.com/feed/mitre-attack
+    type: rss
+    tier: 3
+    apt_focus: true
+    tags: [framework, techniques, updates]
+    enabled: true
+
+  - name: abuse.ch Blog
+    url: https://abuse.ch/blog/
+    rss: https://abuse.ch/blog/feed/
+    type: rss
+    tier: 3
+    apt_focus: false
+    tags: [iocs, malware, botnet, c2]
+    enabled: true
+
+  - name: Bleeping Computer
+    url: https://www.bleepingcomputer.com/news/security/
+    rss: https://www.bleepingcomputer.com/feed/
+    type: rss
+    tier: 3
+    apt_focus: false
+    tags: [news, ransomware, breaches, campaigns]
+    enabled: true
+
+  - name: Krebs on Security
+    url: https://krebsonsecurity.com
+    rss: https://krebsonsecurity.com/feed/
+    type: rss
+    tier: 3
+    apt_focus: false
+    tags: [cybercrime, fraud, breaches, investigative]
+    enabled: true
+
+  - name: The DFIR Report
+    url: https://thedfirreport.com
+    rss: https://thedfirreport.com/feed/
+    type: rss
+    tier: 3
+    apt_focus: false
+    tags: [ransomware, intrusion, forensics, campaigns]
+    enabled: true
+
+  - name: Red Canary Blog
+    url: https://redcanary.com/blog/
+    rss: https://redcanary.com/blog/feed/
+    type: rss
+    tier: 3
+    apt_focus: false
+    tags: [detection, threat-hunting, campaigns]
+    enabled: true
+
+  - name: Huntress Labs Blog
+    url: https://www.huntress.com/blog
+    rss: https://www.huntress.com/blog/rss.xml
+    type: rss
+    tier: 3
+    apt_focus: false
+    tags: [smb, ransomware, detection, campaigns]
+    enabled: true
+
+  - name: VX Underground
+    url: https://vx-underground.org
+    rss: https://vx-underground.org/feed
+    type: rss
+    tier: 3
+    apt_focus: false
+    tags: [malware, samples, research]
+    enabled: true
+
+# ── User Custom Sources ──────────────────────────────────────────────
+# Add your own feeds here. Paywalled sources: add session cookie to .env
+# as FEED_COOKIE_<NAME_UPPERCASED_SLUGIFIED>=your_cookie_value
+#
+# Example:
+# - name: Mandiant Advantage (Paywalled)
+#   url: https://advantage.mandiant.com/reports
+#   rss: https://advantage.mandiant.com/rss
+#   type: rss
+#   tier: 2
+#   apt_focus: true
+#   tags: [apt, nation-state]
+#   enabled: true
+
+custom: []

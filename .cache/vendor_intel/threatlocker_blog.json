@@ -1,0 +1,605 @@
+{
+  "cached_at": "2026-03-31T18:52:32.807158+00:00",
+  "entries": [
+    {
+      "title": "USB Rubber Ducky attacks explained: Keystroke injection, evasion, and defense",
+      "url": "https://www.threatlocker.com/blog/usb-rubber-ducky-attacks-explained-keystroke-injection-evasion-and-defense",
+      "date": "2026-03-31",
+      "summary": ""
+    },
+    {
+      "title": "Why FedRAMP matters to organizations that need Zero Trust enforcement, not just compliance claims",
+      "url": "https://www.threatlocker.com/blog/why-fedramp-matters-to-organizations-that-need-zero-trust-enforcement-not-just-compliance-claims",
+      "date": "2026-03-30",
+      "summary": ""
+    },
+    {
+      "title": "What is endpoint privilege management?",
+      "url": "https://www.threatlocker.com/blog/what-is-endpoint-privilege-management",
+      "date": "2026-03-30",
+      "summary": "Endpoint privilege management is used to control and monitor access to an organization's most critical information and infrastructure."
+    },
+    {
+      "title": "Cybercriminals are increasing credential theft attacks",
+      "url": "https://www.threatlocker.com/blog/cybercriminals-are-increasing-credential-theft-attacks",
+      "date": "2026-03-28",
+      "summary": "Credential theft is driving modern cyberattacks. Learn how attackers steal credentials, why it\u2019s so dangerous, and how to protect your organization from account"
+    },
+    {
+      "title": "How vishing and AI voice cloning attacks target businesses",
+      "url": "https://www.threatlocker.com/blog/ai-voice-cloning-and-vishing-attacks-what-every-business-must-know",
+      "date": "2026-03-27",
+      "summary": "AI voice cloning has made vishing scalable and convincing. Learn how these attacks work, real-world cases, and how businesses can defend against them."
+    },
+    {
+      "title": "Best practices to prevent insider threats in cybersecurity",
+      "url": "https://www.threatlocker.com/blog/prevent-insider-threats-in-cybersecurity",
+      "date": "2026-03-26",
+      "summary": "Insider threats, whether malicious or negligent, are extremely damaging. Learn about their types and effective prevention strategies."
+    },
+    {
+      "title": "Powercat malware campaign: Fake game cheats deliver infostealer targeting Discord, Roblox, and crypto wallets",
+      "url": "https://www.threatlocker.com/blog/powercat-malware-campaign-fake-game-cheats-deliver-infostealer-targeting-discord-roblox-and-crypto-wallets",
+      "date": "2026-03-26",
+      "summary": "Powercat malware campaign uses fake game cheats to deploy a multi-stage infostealer targeting Discord, Roblox, Minecraft, and crypto wallets."
+    },
+    {
+      "title": "Malvertising emerges as growing access point for cybercriminals",
+      "url": "https://www.threatlocker.com/blog/malvertising-emerges-as-growing-access-point-for-cybercriminals",
+      "date": "2026-03-26",
+      "summary": "Malicious online ads, or malvertising, have become one of the easiest ways for cybercriminals to break into systems, no hacking required."
+    },
+    {
+      "title": "What is a vulnerability scan?",
+      "url": "https://www.threatlocker.com/blog/what-is-a-vulnerability-scan",
+      "date": "2026-03-18",
+      "summary": "Learn about vulnerability scans and how they can help identify hidden weaknesses and potential exploits."
+    },
+    {
+      "title": "What you need to know about privilege escalation attacks",
+      "url": "https://www.threatlocker.com/blog/privilege-escalation-attacks-what-to-know",
+      "date": "2026-03-18",
+      "summary": "Privilege escalation attacks exploit system vulnerabilities to gain unauthorized access and elevate permissions, compromising data security and system integrity. Understanding these attacks, their consequences, and prevention strategies is crucial for cybersecurity."
+    },
+    {
+      "title": "What the Stryker cyberattack teaches us",
+      "url": "https://www.threatlocker.com/blog/what-the-stryker-cyberattack-teaches-us",
+      "date": "2026-03-13",
+      "summary": "Cyberattack targets medical technology company Stryker on March 11, 2026, affecting 56,000 employees globally."
+    },
+    {
+      "title": "Conduent data breach among the largest in U.S. history",
+      "url": "https://www.threatlocker.com/blog/conduent-data-breach-among-the-largest-in-u-s-history",
+      "date": "2026-03-12",
+      "summary": "Third-party breach exposes healthcare data of at least 25 million people"
+    },
+    {
+      "title": "Cybersecurity simplified: 10 ways to shut down cyber threats before they start",
+      "url": "https://www.threatlocker.com/blog/cybersecurity-simplified-10-ways-to-shut-down-cyber-threats-before-they-start",
+      "date": "2026-03-11",
+      "summary": "ThreatLocker CEO and Co-founder Danny Jenkins outlines 10 proven strategies to prevent cyberattacks before they begin. From default-deny policies to dynamic network segmentation, these scalable solutions help enterprise IT teams reduce risk, stop ransomware, and harden environments\u2014without disrupting business or relying on detection-based tools."
+    },
+    {
+      "title": "Stopping Scattered Spider: 5 steps to secure your front line",
+      "url": "https://www.threatlocker.com/blog/stopping-scattered-spider-5-steps-to-secure-your-front-line",
+      "date": "2026-03-11",
+      "summary": "A sneaky tactic has opened the doors for the Scattered Spider collective, showing how social engineering works to manipulate people who are trying to do the right thing, using their best instincts to foil them. Learn how to avoid this pitfall."
+    },
+    {
+      "title": "Enable conditional access for stronger security",
+      "url": "https://www.threatlocker.com/blog/enable-conditional-access-for-stronger-security",
+      "date": "2026-03-11",
+      "summary": "Conditional access policies offer a powerful way to harden your Microsoft Entra tenant. When properly implemented and tested, it provides robust, granular control over who can access what, and from where."
+    },
+    {
+      "title": "Google lawsuit targets operators of \u2018BADBOX 2.0\u2019 in major botnet disruption",
+      "url": "https://www.threatlocker.com/blog/google-lawsuit-targets-operators-of-badbox-2-0-in-major-botnet-disruption",
+      "date": "2026-03-11",
+      "summary": "The global botnet BADBOX 2.0 has allegedly infiltrated more than 10 million internet-connected devices to spoof user traffic and defraud ad platforms. Google has filed a lawsuit against the alleged perpetrators."
+    },
+    {
+      "title": "How to curb cyberloafing: Protect productivity and reduce risk with web filtering",
+      "url": "https://www.threatlocker.com/blog/how-to-curb-cyberloafing-protect-productivity-and-reduce-risk-with-web-filtering",
+      "date": "2026-03-11",
+      "summary": "Employees spending work hours on non-business websites isn\u2019t just a productivity issue\u2014it\u2019s a security risk. ThreatLocker Web Control helps organizations stay focused and protected by blocking inappropriate, unapproved, or risky sites. Its user-level controls, customizable policies, and real-time scanning offer a practical way to manage web access across environments."
+    },
+    {
+      "title": "Securing data in the cloud: Lessons from the Oracle legacy breach",
+      "url": "https://www.threatlocker.com/blog/securing-data-in-the-cloud-lessons-from-the-oracle-legacy-breach",
+      "date": "2026-03-11",
+      "summary": "Oracle experienced two alleged data breaches in 2025 linked to an outdated Oracle Cloud Classic server. A threat actor exploited a decade-old vulnerability to access sensitive data, including encrypted credentials."
+    },
+    {
+      "title": "Turn off your VPN for enhanced security",
+      "url": "https://www.threatlocker.com/blog/turn-off-your-vpn-for-enhanced-security",
+      "date": "2026-03-11",
+      "summary": "Virtual Private Networks (VPNs) are often viewed as essential for secure remote access, but for many organizations, they can introduce unnecessary risks."
+    },
+    {
+      "title": "Wiper malware explained: How it works and why it\u2019s so devastating",
+      "url": "https://www.threatlocker.com/blog/wiper-malware-explained-how-it-works-and-why-its-so-devastating",
+      "date": "2026-03-11",
+      "summary": "A newly discovered wiper malware, PathWiper, was deployed in Ukraine in June 2025 via legitimate endpoint administration tools."
+    },
+    {
+      "title": "Block this first: the critical baseline every IT team needs",
+      "url": "https://www.threatlocker.com/blog/block-this-first-the-critical-baseline-every-it-team-needs",
+      "date": "2026-03-11",
+      "summary": "One of the first steps in establishing a secure IT environment is to disable legacy protocols in Microsoft Office. These simple changes can dramatically reduce your attack surface."
+    },
+    {
+      "title": "Why traditional firewalls fall short and how to fix it",
+      "url": "https://www.threatlocker.com/blog/why-traditional-firewalls-fall-short-and-how-to-fix-it",
+      "date": "2026-03-11",
+      "summary": "Most users will rarely interact with the Windows Defender Firewall, often only ever seeing a pop up informing them of the type of connection they are using, but it is a powerful tool in preventing cyberattacks, both to individual users and businesses."
+    },
+    {
+      "title": "Manage application risk with approved software policies",
+      "url": "https://www.threatlocker.com/blog/manage-application-risk-with-approved-software-policies",
+      "date": "2026-03-11",
+      "summary": "To keep your environment secure, your IT department must maintain a list of approved software used within the organization. Offering multiple choices can expand the attack surface for cybercriminals. Good IT teams can recommend the right software. Great ones document it. The best enforce it."
+    },
+    {
+      "title": "Disable Office application macros and block macro-enabled Office files to prevent cyberattacks",
+      "url": "https://www.threatlocker.com/blog/block-macro-enabled-office-files-to-prevent-cyberattacks",
+      "date": "2026-03-11",
+      "summary": "Cybercriminals have long exploited macro-enabled Office files to carry out attacks. While they have a use case for some businesses, almost all security frameworks suggest disabling or at least mitigating the use of macro-enabled Office files."
+    },
+    {
+      "title": "Enable BitLocker with XTS-AES 256-bit encryption for stronger security",
+      "url": "https://www.threatlocker.com/blog/enable-bitlocker-with-xts-aes-256-bit-encryption-for-stronger-security",
+      "date": "2026-03-11",
+      "summary": "BitLocker is a built-in Windows feature designed to protect data by encrypting entire drives, helping to safeguard against data theft or exposure from lost or stolen devices. While essential for securing sensitive information, organizations must carefully configure BitLocker policies for both security and usability."
+    },
+    {
+      "title": "Enforce a password protected screensaver",
+      "url": "https://www.threatlocker.com/blog/enforce-a-password-protected-screensaver",
+      "date": "2026-03-11",
+      "summary": "Here are three methods to configure a secure screensaver on a Windows workstation that requires a password upon return, to help prevent unauthorized access when devices are idle."
+    },
+    {
+      "title": "Audit and eliminate unused local admin accounts",
+      "url": "https://www.threatlocker.com/blog/audit-and-eliminate-unused-local-admin-accounts-to-further-secure-your-environment",
+      "date": "2026-03-11",
+      "summary": "Before you can enforce least privilege across your environment, you need clear visibility into which local administrator accounts exist and when they were last active."
+    },
+    {
+      "title": "Setting password policies in Entra ID, Active Directory Group Policy and local security policies",
+      "url": "https://www.threatlocker.com/blog/setting-password-policies-in-entra-id-active-directory-group-policy-and-local-security-policies",
+      "date": "2026-03-11",
+      "summary": "Implementing strong password policies is one of the first steps to securing your environment. These policies can be enforced through ThreatLocker Configuration Manager, Group Policy, or Entra ID, providing flexibility across different management approaches."
+    },
+    {
+      "title": "Disable Windows from Getting to Know You component",
+      "url": "https://www.threatlocker.com/blog/disable-windows-from-getting-to-know-you-component",
+      "date": "2026-03-11",
+      "summary": "Windows includes a default privacy setting that enables a \"keylogging\" component, known as Inking & typing personalization, in both Windows 10 and 11. While users can disable this feature manually in Settings, it\u2019s also possible to enforce this setting across domain-joined devices using Group Policy."
+    },
+    {
+      "title": "The illusion of impenetrability: Debunking the myth of macOS immunity",
+      "url": "https://www.threatlocker.com/blog/the-illusion-of-impenetrability-debunking-the-myth-of-macos-immunity",
+      "date": "2026-03-11",
+      "summary": "We've increasingly witnessed the rise of macOS vulnerabilities and the misconception that these systems are somehow impervious to cyberattacks."
+    },
+    {
+      "title": "Broadcom discloses three VMware vulnerabilities: VMSA-2025-0004",
+      "url": "https://www.threatlocker.com/blog/broadcom-discloses-three-vmware-vulnerabilities-vmsa-2025-0004",
+      "date": "2026-03-11",
+      "summary": "Broadcom has publicly disclosed three VMware vulnerabilities. ThreatLocker customers and non-customers can learn how to mitigate them in this blog!"
+    },
+    {
+      "title": "How can ransomware be delivered?",
+      "url": "https://www.threatlocker.com/blog/how-can-ransomware-be-delivered",
+      "date": "2026-03-11",
+      "summary": "Learn about the many ways ransomware can be delivered so you can best protect your organization from this type of threat."
+    },
+    {
+      "title": "How to identify and prevent backdoor attacks",
+      "url": "https://www.threatlocker.com/blog/what-is-a-backdoor-attack-how-to-prevent",
+      "date": "2026-03-11",
+      "summary": "Backdoor attacks can wreak havoc on your business. Learn more about what they are and how to prevent backdoor attacks."
+    },
+    {
+      "title": "Threat Detection and Response",
+      "url": "https://www.threatlocker.com/blog/threat-detection-and-response-easy-to-understand",
+      "date": "2026-03-11",
+      "summary": "Join us as we break down the basics of threat detection and response (TDR) so you can improve your business\u2019s cybersecurity posture."
+    },
+    {
+      "title": "The top 10 ThreatLocker policies for 2025",
+      "url": "https://www.threatlocker.com/blog/top-10-threatlocker-policies-for-2025",
+      "date": "2026-03-11",
+      "summary": "ThreatLocker has curated a list of the top policies of 2024 used by real customers and engineers to improve their endpoint security posture."
+    },
+    {
+      "title": "Cyberattack fallout surfaces in Exela Technologies bankruptcy",
+      "url": "https://www.threatlocker.com/blog/cyberattack-fallout-surfaces-in-exela-technologies-bankruptcy",
+      "date": "2026-03-11",
+      "summary": "Exela Technologies\u2019 2025 bankruptcy, linked to an alleged ransomware attack on its subsidiary DocuData Solutions, reveals the devastating financial impact of cyber incidents. With over $1 billion in liabilities, the case underscores how security failures can escalate into corporate collapse\u2014especially for data-centric businesses handling sensitive legal, healthcare, or government information."
+    },
+    {
+      "title": "Securing your backups: Why ransomware targets recovery data",
+      "url": "https://www.threatlocker.com/blog/securing-your-backups-why-ransomware-targets-recovery-data",
+      "date": "2026-03-11",
+      "summary": "Ransomware attackers often target backup systems to prevent recovery and increase ransom pressure. ThreatLocker\u00ae outlines how to protect hot, warm, and cold backups using isolation, access controls, and integrity checks. A resilient backup strategy is essential for maintaining business continuity and strengthening overall cyber resilience in the face of attacks."
+    },
+    {
+      "title": "Zero Trust in action: Blocking and containing applications",
+      "url": "https://www.threatlocker.com/blog/zero-trust-in-action-blocking-and-containing-applications",
+      "date": "2026-03-11",
+      "summary": "ThreatLocker\u00ae enforces Zero Trust by default-denying unapproved software and containing approved apps with Ringfencing\u2122, which limits access to files, internet, and other applications. This minimizes risk from even trusted tools. Learning Mode and monitor-only policies streamline adoption without disrupting operations, while the Application Store reduces user friction."
+    },
+    {
+      "title": "SharePoint zero-day vulnerabilities CVE-2025-53770 and 53771 exploited by ToolShell",
+      "url": "https://www.threatlocker.com/blog/sharepoint-zero-day-vulnerabilities-cve-2025-53770-and-53771-exploited-by-toolshell",
+      "date": "2026-03-11",
+      "summary": "ToolShell is a set of critical, actively exploited vulnerabilities affecting SharePoint Server 2016, 2019, and Subscription Edition. It enables unauthenticated remote code execution via chained CVEs (2025-53771 and 2025-53770). Organizations should urgently apply patches, enable AMSI, rotate machine keys, and follow tailored ThreatLocker recommendations to mitigate risk."
+    },
+    {
+      "title": "Margaritaville at Sea: A ransomware reality check for the travel industry",
+      "url": "https://www.threatlocker.com/blog/margaritaville-at-sea-ransomware-attack-travel-industry",
+      "date": "2026-03-11",
+      "summary": "The Margaritaville at Sea ransomware case exposes the risk of remote access misuse in hospitality. Learn how Zero Trust prevents ransomware."
+    },
+    {
+      "title": "What is privileged identity management (PIM) and how can ThreatLocker help?",
+      "url": "https://www.threatlocker.com/blog/what-is-privileged-identity-management-pim-and-how-can-threatlocker-help",
+      "date": "2026-03-11",
+      "summary": "Privileged Identity Management (PIM) limits when and how admin accounts access sensitive resources, reducing risks from credential theft, insider threats, and human error."
+    },
+    {
+      "title": "Federal employee union lawsuit highlights federal cybersecurity and data protection gaps",
+      "url": "https://www.threatlocker.com/blog/federal-employee-union-lawsuit-highlights-federal-cybersecurity-and-data-protection-gaps",
+      "date": "2026-03-11",
+      "summary": "AFGE v. OMB underscores systemic government data risk. Learn how Zero Trust and FedRAMP solutions like ThreatLocker help protect federal systems."
+    },
+    {
+      "title": "Swearingen v. Salesforce and Air France exposes cost of token abuse",
+      "url": "https://www.threatlocker.com/blog/swearingen-v-salesforce-and-air-france-exposes-cost-of-token-abuse",
+      "date": "2026-03-11",
+      "summary": "Swearingen v. Salesforce reveals the high cost of token abuse. Learn how ThreatLocker helps prevent OAuth token exploitation and SaaS data breaches."
+    },
+    {
+      "title": "How to build the right security stack",
+      "url": "https://www.threatlocker.com/blog/how-to-build-the-right-security-stack",
+      "date": "2026-03-11",
+      "summary": "Part 3 of our series explores the modern security stack\u2014how to layer defenses, enhance visibility, and protect endpoints without sacrificing system performance."
+    },
+    {
+      "title": "How ThreatLocker\u00ae Defense Against Configurations helps move machines from Windows 10 to Windows 11",
+      "url": "https://www.threatlocker.com/blog/how-threatlocker-defense-against-configurations-helps-move-machines-from-windows-10-to-windows-11",
+      "date": "2026-03-11",
+      "summary": "Upgrade to Windows 11 faster with ThreatLocker\u00ae Defense Against Configurations. Identify unsupported machines and upgrade eligible systems in one place."
+    },
+    {
+      "title": "Los Angeles hotelier sues Qatar royals over alleged Microsoft 365 breach",
+      "url": "https://www.threatlocker.com/blog/los-angeles-hotelier-sues-qatar-royals-over-alleged-microsoft-365-breach",
+      "date": "2026-03-11",
+      "summary": "A new lawsuit alleges a cyberattack involving stolen data, leaked emails, and reputational harm in an international business dispute."
+    },
+    {
+      "title": "How to build a modern security operations team",
+      "url": "https://www.threatlocker.com/blog/how-to-build-a-modern-security-operations-team",
+      "date": "2026-03-11",
+      "summary": "Learn how to build a modern SOC team, from baseline skills to specialization, hiring strategy, and staffing for true 24/7 coverage."
+    },
+    {
+      "title": "Union Home Mortgage data breach: Lessons and hardening checklist for CISOs",
+      "url": "https://www.threatlocker.com/blog/union-home-mortgage-data-breach-lessons-and-hardening-checklist-for-cisos",
+      "date": "2026-03-11",
+      "summary": "Union Home Mortgage breach exposes PII of 25k+ people. See what CISOs can learn, cost estimates, and a one-week hardening checklist to prevent recurrence."
+    },
+    {
+      "title": "Morton v. Salesforce and TransUnion puts SaaS trust on trial",
+      "url": "https://www.threatlocker.com/blog/morton-v-salesforce-and-transunion-puts-saas-trust-on-trial",
+      "date": "2026-03-11",
+      "summary": "Morton v. Salesforce and TransUnion separates allegations from acknowledged facts and shows CISOs how to blunt vishing-driven SaaS breaches with concrete controls."
+    },
+    {
+      "title": "From click to containment: How RumbergerKirk stopped a business email compromise in minutes with ThreatLocker",
+      "url": "https://www.threatlocker.com/blog/from-click-to-containment-how-rumbergerkirk-stopped-a-business-email-compromise-in-minutes-with-threatlocker",
+      "date": "2026-03-11",
+      "summary": "RumbergerKirk CIO Avi Solomon shares how ThreatLocker stopped a business email compromise (BEC) attack and contained risk enterprise-wide in minutes."
+    },
+    {
+      "title": "What is patch management? A guide to staying secure and compliant",
+      "url": "https://www.threatlocker.com/blog/what-is-patch-management-a-guide-to-staying-secure-and-compliant",
+      "date": "2026-03-11",
+      "summary": "With ThreatLocker Patch Management, enterprises gain the control and automation needed to turn patching from a reactive chore into a proactive defense."
+    },
+    {
+      "title": "Meta lawsuit puts permissions creep in the spotlight",
+      "url": "https://www.threatlocker.com/blog/meta-lawsuit-puts-permissions-creep-in-the-spotlight",
+      "date": "2026-03-11",
+      "summary": "Permissions creep quietly expands access rights across enterprises, creating major security risks. The Meta whistleblower lawsuit highlights the dangers of unchecked access. Learn how Zero Trust principles\u2014least privilege, JITA, segmentation, and Ringfencing\u2014help organizations regain control and reduce insider and external threats."
+    },
+    {
+      "title": "Zero Trust vs. EDR: What\u2019s the difference and why you need both",
+      "url": "https://www.threatlocker.com/blog/zero-trust-vs-edr-whats-the-difference-and-why-you-need-both",
+      "date": "2026-03-11",
+      "summary": "Zero Trust and EDR serve different purposes but work better together. Learn the differences, why EDR alone isn\u2019t enough, and how ThreatLocker\u00ae helps."
+    },
+    {
+      "title": "Vibe hacking: How AI-driven cybercrime outpaces EDR and signature defenses",
+      "url": "https://www.threatlocker.com/blog/vibe-hacking-how-ai-driven-cybercrime-outpaces-edr-and-signature-defenses",
+      "date": "2026-03-11",
+      "summary": "AI-enabled attack automation, the Claude extortion campaign, and the LameHug case illustrate why Zero Trust application control changes the defense equation."
+    },
+    {
+      "title": "MIDDLEWARE Group: From ClickFix to Lumma Stealer",
+      "url": "https://www.threatlocker.com/blog/middleware-group-from-clickfix-to-lumma-stealer",
+      "date": "2026-03-11",
+      "summary": "ClickFix is a social engineering technique threat groups are leveraging to coerce unsuspecting users into executing malicious PowerShell commands in the Windows Run dialog box or shell commands in the Spotlight search bar on macOS. Due to the ease of use for attackers, it has seen widespread adoption in 2025."
+    },
+    {
+      "title": "How authoritative policies build successful enterprise security",
+      "url": "https://www.threatlocker.com/blog/how-authoritative-policies-build-successful-enterprise-security",
+      "date": "2026-03-11",
+      "summary": "Security operations can\u2019t mature without a strong policy foundation. Learn how authoritative policies build resilience and support Zero Trust."
+    },
+    {
+      "title": "Why data breach class actions are surging and how CISOs can respond",
+      "url": "https://www.threatlocker.com/blog/cottage-industry-thrives-on-breach-fallout",
+      "date": "2026-03-11",
+      "summary": "Data breach lawsuits are rising fast, with class actions filed within hours of disclosure. Learn why litigation is accelerating and how CISOs can reduce risk."
+    },
+    {
+      "title": "The dangers of vibe coding: Why careless development leads to application vulnerabilities and data breaches",
+      "url": "https://www.threatlocker.com/blog/the-dangers-of-vibe-coding-why-careless-development-leads-to-application-vulnerabilities-and-data-breaches",
+      "date": "2026-03-11",
+      "summary": "\u201cVibe coding\u201d is software development enabled by an AI chat service. It\u2019s often done impulsively or without structure, guided more by intuition than secure coding standards. It may feel fast and agile, but it opens the door to application vulnerabilities that attackers exploit."
+    },
+    {
+      "title": "AI risks in cybersecurity: Zero Trust strategies for security leaders",
+      "url": "https://www.threatlocker.com/blog/ai-risks-in-cybersecurity-zero-trust-strategies-for-security-leaders",
+      "date": "2026-03-11",
+      "summary": "They say AI is rewriting the rules of cybersecurity, but some things never change. While external threats are faster and insider risks are deeper, Zero Trust is still the answer."
+    },
+    {
+      "title": "Warlock ransomware group targets global industries via RaaS affiliates",
+      "url": "https://www.threatlocker.com/blog/warlock-ransomware-group-targets-global-industries-via-raas-affiliates",
+      "date": "2026-03-11",
+      "summary": "The Warlock ransomware group is targeting industries worldwide with a ransomware-as-a-service model. Using advanced tools, affiliates exploit vulnerabilities, exfiltrate data, and encrypt systems. Learn how Warlock operates, its tactics, and how ThreatLocker controls can help businesses defend against these evolving attacks."
+    },
+    {
+      "title": "Why breach notification delays can trigger lawsuits and liability",
+      "url": "https://www.threatlocker.com/blog/why-breach-notification-delays-can-trigger-lawsuits-and-liability",
+      "date": "2026-03-11",
+      "summary": "On August 14, 2025, in Boston federal court, two former employees of DTiQ Technologies filed a class action lawsuit claiming the company failed to promptly notify them after their sensitive information was exposed in a cyberattack. The plaintiffs allege they did not learn of the breach until more than six months after DTiQ discovered it, leaving them vulnerable to fraud and identity theft."
+    },
+    {
+      "title": "Staying cyber safe in a world full of threats",
+      "url": "https://www.threatlocker.com/blog/staying-cyber-safe-in-a-world-full-of-threats",
+      "date": "2026-03-11",
+      "summary": "Ransomware attacks are rising, driven by global cybercrime networks. From phishing scams to multimillion-dollar breaches, businesses and individuals face growing risks. Learn how attacks happen, why paying ransom is risky, and practical steps to protect yourself and your organization."
+    },
+    {
+      "title": "5 ways to find out if your business is at risk for a cyberattack",
+      "url": "https://www.threatlocker.com/blog/5-ways-to-find-out-if-your-business-is-at-risk-for-a-cyberattack",
+      "date": "2026-03-11",
+      "summary": "If your IT provider isn\u2019t testing your systems, you're operating on blind trust. Here we suggest a practical checklist that every SMB should follow. These steps will show you, in real time, whether you're wide open to an attack."
+    },
+    {
+      "title": "Why businesses must prevent their data from fueling \u201cFullz\u201d packages",
+      "url": "https://www.threatlocker.com/blog/why-businesses-must-prevent-their-data-from-fueling-fullz-packages",
+      "date": "2026-03-11",
+      "summary": "A class action against DTiQ Technologies reveals how stolen Social Security numbers and bank details fuel the black-market trade of \u201cFullz\u201d identity kits. Businesses face legal, financial, and reputational damage when breaches occur\u2014making strong cybersecurity essential to protect employees, customers, and company trust."
+    },
+    {
+      "title": "How a hacker deleted one Gmail account and disrupted an entire business",
+      "url": "https://www.threatlocker.com/blog/how-a-hacker-deleted-one-gmail-account-and-disrupted-an-entire-business",
+      "date": "2026-03-11",
+      "summary": "A hacker hijacked Caf\u00e9 Melo\u2019s sole Gmail account, wiping years of records, contracts, and customer contacts. The incident triggered a lawsuit and highlights how small businesses risk collapse when operations rely on a single account without proper cybersecurity safeguards."
+    },
+    {
+      "title": "Former employees accused of exploiting access to steal company data",
+      "url": "https://www.threatlocker.com/blog/former-employees-accused-of-exploiting-access-to-steal-company-data",
+      "date": "2026-03-11",
+      "summary": "A federal lawsuit filed in the U.S. District Court for the District of Arizona, Phoenix Division highlights how quickly sensitive business data can be taken and used by competitors if the right cybersecurity protections aren\u2019t in place."
+    },
+    {
+      "title": "How to detect impossible travel in Microsoft 365: Your early warning for credential theft",
+      "url": "https://www.threatlocker.com/blog/how-to-detect-impossible-travel-in-microsoft-365-your-early-warning-for-credential-theft",
+      "date": "2026-03-11",
+      "summary": "Impossible travel is a key indicator of account compromise, when login attempts occur from geographically distant locations in a timeframe that defies physical possibility. With advanced anomaly detection, IT teams can block these threats and strengthen defenses."
+    },
+    {
+      "title": "Why macOS malware like ZuRu still works, and how to stop it before it runs",
+      "url": "https://www.threatlocker.com/blog/why-macos-malware-like-zuru-still-works-and-how-to-stop-it-before-it-runs",
+      "date": "2026-03-11",
+      "summary": "A newly observed variant of ZuRu malware is once again targeting macOS users\u2014this time by hiding inside a doctored version of a legitimate app, Termius. It\u2019s a growing trend: threat actors exploiting user trust to gain a foothold."
+    },
+    {
+      "title": "RaaS meets misconfiguration: How Akira is exploiting SonicWall SSLVPN weaknesses",
+      "url": "https://www.threatlocker.com/blog/raas-meets-misconfiguration-how-akira-is-exploiting-sonicwall-sslvpn-weaknesses",
+      "date": "2026-03-11",
+      "summary": "A spike in Akira ransomware attacks is linked to SonicWall SSL VPNs, with hackers exploiting unchanged credentials after firewall upgrades."
+    },
+    {
+      "title": "What Is LameHug? How APT28 is using LLMs to generate attack commands",
+      "url": "https://www.threatlocker.com/blog/what-is-lamehug-how-apt28-is-using-llms-to-generate-attack-commands",
+      "date": "2026-03-11",
+      "summary": "LameHug is a newly discovered infostealer linked to APT28 that uses AI to generate attack commands, marking a shift in how cyberattacks are executed."
+    },
+    {
+      "title": "Why patching prevents cyber disasters",
+      "url": "https://www.threatlocker.com/blog/why-patching-prevents-cyber-disasters",
+      "date": "2026-03-11",
+      "summary": "Patching is essential because many major cyberattacks could have been prevented by applying available updates. While patching is not a complete solution, it is a foundational defense against many of the vulnerabilities attackers exploit in high-profile cyber incidents."
+    },
+    {
+      "title": "SafePay ransomware explained: IOCs, TTPs, and defense strategies",
+      "url": "https://www.threatlocker.com/blog/safepay-ransomware-explained-iocs-ttps-and-defense-strategies",
+      "date": "2026-03-11",
+      "summary": "Observing SafePay ransomware, the ThreatLocker Detect team has seen Mutexes being created to prevent additional copies of the ransomware running on already affected/encrypted devices."
+    },
+    {
+      "title": "Tampa Bay manufacturer files lawsuit over cybersecurity breach",
+      "url": "https://www.threatlocker.com/blog/tampa-bay-manufacturer-files-lawsuit-over-cybersecurity-breach",
+      "date": "2026-03-11",
+      "summary": "A former VP is accused of accessing proprietary design files after termination, prompting a federal lawsuit by Tampa Bay-based Coating Technology Inc. The case highlights the importance of securing cloud-stored data."
+    },
+    {
+      "title": "Ransom screen hijacks Treasure Global website in apparent cyberattack",
+      "url": "https://www.threatlocker.com/blog/ransom-screen-hijacks-treasure-global-website-in-apparent-cyberattack",
+      "date": "2026-03-11",
+      "summary": "Treasure Global\u2019s domain was allegedly hijacked in a cyberattack redirecting users to an intimidating ransomware screen. The company has sued both Namecheap and an unknown hacker."
+    },
+    {
+      "title": "Traditional endpoint security exposes quantitative trading firm to breach",
+      "url": "https://www.threatlocker.com/blog/traditional-endpoint-security-exposes-quantitative-trading-firm-to-breach",
+      "date": "2026-03-11",
+      "summary": "Trade secrets walked out the door. Zero Trust could have stopped it. A senior developer is accused of converting intellectual property he had created for one company into a startup blueprint for another in a classic case of insider-led data exfiltration."
+    },
+    {
+      "title": "Intern sues Fujifilm Diosynth over alleged data breach exposing employee records",
+      "url": "https://www.threatlocker.com/blog/fujifilm-diosynth-data-breach-lawsuit",
+      "date": "2026-03-10",
+      "summary": "A former intern has sued Fujifilm Diosynth Biotechnologies following a data breach exposing employee records. Learn how this case reflects wider cybersecurity risks in biotech and how Zero Trust protection mitigates them."
+    },
+    {
+      "title": "Employee data security lawsuit case hits major U.S. mushroom producer",
+      "url": "https://www.threatlocker.com/blog/employee-data-breach-lawsuit-monterey-mushrooms",
+      "date": "2026-03-10",
+      "summary": "The Monterey Mushrooms breach triggers a major employee data lawsuit, testing how far employer responsibility extends for cybersecurity compliance"
+    },
+    {
+      "title": "The legal fallout of Sapp Bros.\u2019 alleged delayed breach disclosure | ThreatLocker Cybersecurity Analysis",
+      "url": "https://www.threatlocker.com/blog/sapp-bros-data-breach-delayed-disclosure-lawsuit",
+      "date": "2026-03-10",
+      "summary": "Discover how the Sapp Bros. data breach and alleged delayed disclosure sparked a class-action lawsuit \u2014 and what CISOs can learn about compliance, breach timing, and FTC standards from this case."
+    },
+    {
+      "title": "Qilin Ransomware: Technical analysis, from initial access to beaconing",
+      "url": "https://www.threatlocker.com/blog/qilin-raas-group-technical-analysis-from-initial-access-to-beaconing",
+      "date": "2026-03-10",
+      "summary": "Deep technical analysis of Qilin RaaS operations, initial access methods, C2 beaconing, and detection guidance from ThreatLocker Threat Intelligence."
+    },
+    {
+      "title": "Scam and credential theft activity spikes during open enrollment: What CISOs need to know",
+      "url": "https://www.threatlocker.com/blog/open-enrollment-scam-credential-theft-cybersecurity",
+      "date": "2026-03-10",
+      "summary": "Open enrollment drives major spikes in phishing, credential theft, and supply chain breaches. Learn how stolen health data fuels enrollment scams and what CISOs must do to harden vendor risk and protect member information."
+    },
+    {
+      "title": "Cyber Hero MDR catches NetSupport RAT",
+      "url": "https://www.threatlocker.com/blog/cyber-hero-mdr-catches-netsupport-rat",
+      "date": "2026-03-10",
+      "summary": "ClickFix is actively tricking users into Run commands to drop signed NetSupport RAT\u2014ThreatLocker Detect and Threat Intelligence saw it fast."
+    },
+    {
+      "title": "Stop VM-based attacks with Zero Trust policy",
+      "url": "https://www.threatlocker.com/blog/vm-based-cyberattacks-zero-trust-protection",
+      "date": "2026-03-10",
+      "summary": "Attackers now use hidden virtual machines to evade detection. Learn how Zero Trust and ThreatLocker block VM-based attacks and secure your environment"
+    },
+    {
+      "title": "A vendor\u2019s breach becomes a business crisis: Lessons from the Cierant Data breach",
+      "url": "https://www.threatlocker.com/blog/vendor-breach-cierant-data-breach-third-party-risk",
+      "date": "2026-03-10",
+      "summary": "The Cierant data breach shows how quickly a supplier\u2019s security failure can escalate into lawsuits, reputational harm, and long-term costs for the businesses that rely on them."
+    },
+    {
+      "title": "Qilin ransomware\u2019s newest tactics: Widespread encryption by any means necessary",
+      "url": "https://www.threatlocker.com/blog/qilin-ransomwares-newest-tactics-widespread-encryption-by-any-means-necessary",
+      "date": "2026-03-10",
+      "summary": "The Russia-based ransomware group Qilin has rapidly ascended to become the world\u2019s most prominent ransomware threat, claiming responsibility for over 800 attacks this year alone \u2014 a dramatic surge from just 45 incidents when the group first emerged in 2022."
+    },
+    {
+      "title": "A teachable moment: What the Penn breach reveals about modern cyber risk",
+      "url": "https://www.threatlocker.com/blog/penn-university-data-breach-cybersecurity-lessons",
+      "date": "2026-03-10",
+      "summary": "The University of Pennsylvania data breach shows how academic networks remain prime cyber targets. Learn what the Penn breach reveals about higher-education cybersecurity and how Zero Trust principles can help."
+    },
+    {
+      "title": "Headlands source code theft tests insider risk defenses",
+      "url": "https://www.threatlocker.com/blog/headlands-source-code-theft-insider-risk-case",
+      "date": "2026-03-10",
+      "summary": "Federal filings in the Headlands case highlight how insider misuse of source code tests access controls, auditability, and trade secret protections."
+    },
+    {
+      "title": "Top 10 post-exploitation tools threat actors use in real intrusions",
+      "url": "https://www.threatlocker.com/blog/top-post-exploitation-tools-threat-actors-use",
+      "date": "2026-03-10",
+      "summary": "Learn the top post-exploitation tools attackers use after initial access, including Cobalt Strike, Impacket, Rubeus, and Rclone, plus defensive takeaways."
+    },
+    {
+      "title": "Ransomware cases highlight ongoing security pressure in financial services",
+      "url": "https://www.threatlocker.com/blog/ransomware-lawsuits-financial-services-vendor-breaches",
+      "date": "2026-03-10",
+      "summary": "Recent ransomware lawsuits against banks, credit unions, and lenders show how vendor breaches, notification delays, and data handling drive legal exposure."
+    },
+    {
+      "title": "From Armillaria loader to EDR killer",
+      "url": "https://www.threatlocker.com/blog/from-armillaria-loader-to-edr-killer",
+      "date": "2026-03-10",
+      "summary": "In the criminal sphere of ransomware, Akira is known for its abundance of victims and utilizing its opportunism to achieve its goals. The Threat Intelligence team has captured samples of both the Armillaria loader and the EDR killer used by Akira, and this analysis aims to highlight the tactics leveraged to successfully terminate endpoint security vendor products."
+    },
+    {
+      "title": "How law firms can reduce liability when sensitive client data is breached",
+      "url": "https://www.threatlocker.com/blog/law-firm-data-breach-liability-sensitive-information",
+      "date": "2026-03-10",
+      "summary": "Learn how breach timing, encryption, access controls, and incident response influence liability when law firms lose sensitive client or employee data."
+    },
+    {
+      "title": "How internal communications shape data breach liability for employers",
+      "url": "https://www.threatlocker.com/blog/how-internal-communications-impact-breach-liability",
+      "date": "2026-03-10",
+      "summary": "Learn how delayed or inaccurate internal communications increases data breach liability. See what courts expect and how employers can reduce legal exposure."
+    },
+    {
+      "title": "Restrict Microsoft 365 access to a specific IP address using Conditional Access",
+      "url": "https://www.threatlocker.com/blog/restrict-microsoft-365-access-to-a-specific-ip-address-using-conditional-access",
+      "date": "2026-03-10",
+      "summary": "Access to Microsoft 365 plays a key role in the day-to-day operations of many organizations. Unfortunately, developing cybercriminal capabilities have rendered that role a point of potential vulnerability, with vital data is held outside of your immediate network."
+    },
+    {
+      "title": "Windows Notepad vulnerability: Markdown risk explained",
+      "url": "https://www.threatlocker.com/blog/windows-notepad-vulnerability-markdown-risk-explained",
+      "date": "2026-03-10",
+      "summary": "Windows Notepad vulnerability (CVE-2026-20841) shows how new features expand the attack surface. Understand the risk and mitigation steps."
+    },
+    {
+      "title": "Zero Trust security: Overcoming common challenges",
+      "url": "https://www.threatlocker.com/blog/zero-trust-security-overcoming-common-challenges",
+      "date": "2026-03-10",
+      "summary": "Zero Trust can't be ignored. Ransomware keeps getting faster. Attackers keep getting smarter. AI keeps getting smarter. The cyberattack landscape is evolving faster than ever before, and traditional security principles are completely outpaced."
+    },
+    {
+      "title": "Moving into the modern era of security operations: Pulling it all together",
+      "url": "https://www.threatlocker.com/blog/moving-into-the-modern-era-of-security-operations-pulling-it-all-together",
+      "date": "2026-03-10",
+      "summary": "Modern security operations require alignment between policy, people, and technology. Learn how to unify your SOC, security stack, and governance."
+    },
+    {
+      "title": "Notepad++ supply chain compromise: Trojanized updates used in suspected nation-state attack",
+      "url": "https://www.threatlocker.com/blog/notepad-supply-chain-compromise-trojanized-updates-used-in-suspected-nation-state-attack",
+      "date": "2026-03-10",
+      "summary": "A suspected nation-state threat actor compromised the Notepad++ update infrastructure, delivering trojanized installers to target users."
+    },
+    {
+      "title": "WinRAR CVE-2025-8088 explained: Directory traversal vulnerability enables arbitrary file writes",
+      "url": "https://www.threatlocker.com/blog/winrar-cve-2025-8088-explained-directory-traversal-vulnerability-enables-arbitrary-file-writes",
+      "date": "2026-03-10",
+      "summary": "WinRAR versions 7.12 and earlier are vulnerable to CVE-2025-8088, a directory traversal flaw that allows malicious archives to write payloads to arbitrary locations."
+    },
+    {
+      "title": "Malicious VS Code tasks.json abuse enables multi-stage infostealer deployment",
+      "url": "https://www.threatlocker.com/blog/malicious-vs-code-tasks-json-abuse-enables-multi-stage-infostealer-deployment",
+      "date": "2026-03-10",
+      "summary": "ThreatLocker Threat Intelligence analyzes a malicious VS Code attack that abuses workspace trust to execute obfuscated commands, install Node.js dependencies, and deploy a feature-rich infostealer targeting sensitive data."
+    },
+    {
+      "title": "Fake Booking.com ClickFix attack abuses Cloudflare verification to deliver malware",
+      "url": "https://www.threatlocker.com/blog/fake-booking-com-clickfix-attack-abuses-cloudflare-verification-to-deliver-malware",
+      "date": "2026-03-10",
+      "summary": "Threat analysis of a Booking.com ClickFix campaign using social engineering and fake Cloudflare checks to deliver multi-stage malware."
+    },
+    {
+      "title": "Type 1 Hypervisor Security: Risks, limitations, and compensating controls",
+      "url": "https://www.threatlocker.com/blog/type-1-hypervisor-security-risks-and-controls",
+      "date": "2026-03-10",
+      "summary": "Type 1 hypervisors introduce unique security risks due to limited support for traditional controls. Learn how MFA, network segmentation, and continuous monitoring reduce hypervisor attack surface."
+    }
+  ]
+}

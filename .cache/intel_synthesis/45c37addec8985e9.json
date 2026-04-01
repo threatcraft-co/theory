@@ -1,0 +1,14 @@
+{
+  "cached_at": "2026-03-31T18:52:50.268633+00:00",
+  "result": {
+    "actor_summary": "APT28 (tracked as BlueDelta by Insikt Group) evolved credential-harvesting campaigns targeting government, energy, and research organizations across Europe and Eurasia as of early 2026. The group's operational focus reflects a shift toward intensified collection against critical infrastructure and state institutions in the specified regions. No specific tactical innovations, tool changes, or temporal details beyond the January 2026 reporting date are provided in the article excerpt.",
+    "landscape_summary": "This reflects an ongoing shift toward persistent, low-detection-risk credential harvesting as a precursor to targeted intrusions, particularly against critical infrastructure where initial access brokers command premium value in the espionage supply chain. The geographic focus on Europe and Eurasia signals GRU's prioritization of strategic sectors where credential compromise enables sustained intelligence collection with minimal operational exposure.",
+    "relevance": 60,
+    "source": "Recorded Future (Public)",
+    "source_tier": 2,
+    "date": "2026-01-07",
+    "title": "GRU-Linked BlueDelta Evolves Credential Harvesting",
+    "url": "https://www.recordedfuture.com/research/gru-linked-bluedelta-evolves-credential-harvesting",
+    "provider": "claude"
+  }
+}

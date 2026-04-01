@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-03-31T18:52:13.331011+00:00",
+  "entries": [
+    {
+      "title": "The threat to critical infrastructure has changed. Has your readiness?",
+      "url": "https://www.microsoft.com/en-us/security/security-insider/threat-landscape/threat-to-critical-infrastructure-has-changed",
+      "date": "2026-03-31",
+      "summary": "Five facts critical infrastructure (CI) leaders need to act on in 2026, grounded in what Microsoft Threat Intelligence is observing across sectors right now. The post The threat to critical infrastructure has changed. Has your readiness? appeared first on Microsoft Security Blog ."
+    },
+    {
+      "title": "Applying security fundamentals to AI: Practical advice for CISOs",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/03/31/applying-security-fundamentals-to-ai-practical-advice-for-cisos/",
+      "date": "2026-03-31",
+      "summary": "Read actionable advice for CISOs on securing AI, managing risk, and applying core security principles in today\u2019s AI\u2011powered environment. The post Applying security fundamentals to AI: Practical advice for CISOs appeared first on Microsoft Security Blog ."
+    },
+    {
+      "title": "WhatsApp malware campaign delivers VBScript and MSI backdoors",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/03/31/whatsapp-malware-campaign-delivers-vbs-payloads-msi-backdoors/",
+      "date": "2026-03-31",
+      "summary": "A malware campaign uses WhatsApp messages to deliver VBS scripts that initiate a multi-stage infection chain. The attack leverages renamed Windows tools and cloud-hosted payloads to install MSI backdoors and maintain persistent access to compromised systems. The post WhatsApp malware campaign delivers VBScript and MSI backdoors appeared first on Microsoft Security Blog ."
+    },
+    {
+      "title": "Addressing the OWASP Top 10 Risks in Agentic AI with Microsoft Copilot Studio",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/03/30/addressing-the-owasp-top-10-risks-in-agentic-ai-with-microsoft-copilot-studio/",
+      "date": "2026-03-30",
+      "summary": "Agentic AI introduces new security risks. Learn how the OWASP Top 10 Risks for Agentic Applications maps to real mitigations in Microsoft Copilot Studio. The post Addressing the OWASP Top 10 Risks in Agentic AI with Microsoft Copilot Studio appeared first on Microsoft Security Blog ."
+    },
+    {
+      "title": "How Microsoft Defender protects high-value assets in real-world attack scenarios",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/03/27/microsoft-defender-protects-high-value-assets/",
+      "date": "2026-03-27",
+      "summary": "High-value assets including domain controllers, web servers, and identity infrastructure are frequent targets in sophisticated attacks. Microsoft Defender applies asset-aware protection using Microsoft Security Exposure Management to detect and block threats against these critical systems. This article explores real-world attack scenarios and defense techniques. The post How Microsoft Defender protects high-value assets in real-world attack scenarios appeared first on Microsoft Security Blog ."
+    },
+    {
+      "title": "Identity security is the new pressure point for modern cyberattacks",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/03/25/identity-security-is-the-new-pressure-point-for-modern-cyberattacks/",
+      "date": "2026-03-25",
+      "summary": "Read the latest Microsoft Secure Access report for insights into why a unified identity and access strategy offers strong modern protection. The post Identity security is the new pressure point for modern cyberattacks appeared first on Microsoft Security Blog ."
+    },
+    {
+      "title": "Guidance for detecting, investigating, and defending against the Trivy supply chain compromise",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/03/24/detecting-investigating-defending-against-trivy-supply-chain-compromise/",
+      "date": "2026-03-25",
+      "summary": "Threat actors abused trusted Trivy distribution channels to inject credential\u2011stealing malware into CI/CD pipelines worldwide. This analysis walks through the Trivy supply\u2011chain compromise, attacker techniques, and concrete steps security teams can take to detect and defend against similar attacks. The post Guidance for detecting, investigating, and defending against the Trivy supply chain compromise appeared first on Microsoft Security Blog ."
+    },
+    {
+      "title": "Governing AI agent behavior: Aligning user, developer, role, and organizational intent",
+      "url": "https://techcommunity.microsoft.com/blog/microsoft-security-blog/governing-ai-agent-behavior-aligning-user-developer-role-and-organizational-inte/4503551",
+      "date": "2026-03-24",
+      "summary": "This research report explores the layers of agent intent and how to align them for secure enterprise AI adoption. The post Governing AI agent behavior: Aligning user, developer, role, and organizational intent appeared first on Microsoft Security Blog ."
+    },
+    {
+      "title": "Case study: How predictive shielding in Defender stopped GPO-based ransomware before it started",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/03/23/case-study-predictive-shielding-defender-stopped-gpo-based-ransomware-before-started/",
+      "date": "2026-03-23",
+      "summary": "Microsoft Defender stopped a human-operated ransomware attack that abused Group Policy Objects (GPOs) to disable defenses and push encryption at scale. This case study breaks down the attacker\u2019s playbook and shows how predictive shielding hardened 700 devices in time, resulting in zero GPO-based encryptions and blocking most of the attempted impact. The post Case study: How predictive shielding in Defender stopped GPO-based ransomware before it started appeared first on Microsoft Security Blog ."
+    },
+    {
+      "title": "CTI-REALM: A new benchmark for end-to-end detection rule generation with AI agents",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/03/20/cti-realm-a-new-benchmark-for-end-to-end-detection-rule-generation-with-ai-agents/",
+      "date": "2026-03-20",
+      "summary": "Excerpt: CTI-REALM is Microsoft\u2019s open-source benchmark for evaluating AI agents on real-world detection engineering\u2014turning cyber threat intelligence (CTI) into validated detections. The post CTI-REALM: A new benchmark for end-to-end detection rule generation with AI agents appeared first on Microsoft Security Blog ."
+    }
+  ]
+}

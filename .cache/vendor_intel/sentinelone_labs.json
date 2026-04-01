@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-03-31T18:52:28.693645+00:00",
+  "entries": [
+    {
+      "title": "FortiGate Edge Intrusions | Stolen Service Accounts Lead to Rogue Workstations and Deep AD Compromise",
+      "url": "https://www.sentinelone.com/blog/fortigate-edge-intrusions/",
+      "date": "2026-03-10",
+      "summary": "FortiGate SSO flaws allows attackers to steal configs, abuse AD creds, deploy RMM tools, and exfiltrate NTDS files."
+    },
+    {
+      "title": "SentinelOne Intelligence Brief: Iranian Cyber Activity Outlook",
+      "url": "https://www.sentinelone.com/blog/sentinelone-intelligence-brief-iranian-cyber-activity-outlook/",
+      "date": "2026-02-28",
+      "summary": "Iran-linked cyber activity may surge after strikes, targeting US and Israeli sectors; SentinelOne provides intel and urges vigilance."
+    },
+    {
+      "title": "From Access to Execution: Securing Identity in the Age of Autonomous Agents",
+      "url": "https://www.sentinelone.com/blog/securing-identity-in-the-age-of-autonomous-agents/",
+      "date": "2026-02-25",
+      "summary": "SentinelOne secures human and non-human identities with continuous behavioral validation across AI, browsers, and endpoints."
+    },
+    {
+      "title": "OneClaw: Discovery and Observability for the Agentic Era",
+      "url": "https://www.sentinelone.com/blog/oneclaw-discovery-and-observability-for-the-agentic-era/",
+      "date": "2026-02-18",
+      "summary": "Prompt Security from SentinelOne turns hidden agent activity into clear, actionable governance intelligence with the release of OneClaw."
+    },
+    {
+      "title": "Shadow Agents: How SentinelOne Secures the AI Tools That Act Like Users",
+      "url": "https://www.sentinelone.com/blog/how-sentinelone-secures-the-ai-tools-that-act-like-users/",
+      "date": "2026-02-17",
+      "summary": "SentinelOne secures AI from infrastructure to agents, delivering visibility, governance, and control at scale."
+    },
+    {
+      "title": "ClawSec: Hardening OpenClaw Agents from the Inside Out",
+      "url": "https://www.sentinelone.com/blog/clawsec-hardening-openclaw-agents-from-the-inside-out/",
+      "date": "2026-02-09",
+      "summary": "Learn about how ClawSec, by Prompt Security, secures OpenClaw agents, stopping malicious skills with zero-trust defenses."
+    },
+    {
+      "title": "AI Security, From Data to Runtime: A Holistic Defense Approach",
+      "url": "https://www.sentinelone.com/blog/ai-security-from-data-to-runtime-a-holistic-defense-approach/",
+      "date": "2026-02-06",
+      "summary": "SentinelOne secures AI end-to-end, protecting data, infrastructure, and runtime with Data Security Posture Management (DSPM) capabilities."
+    },
+    {
+      "title": "12 Months of Fighting Cybercrime & Defending Enterprises | The SentinelLABS 2025 Review",
+      "url": "https://www.sentinelone.com/blog/12-months-of-fighting-cybercrime-defending-enterprises-the-sentinellabs-2025-review/",
+      "date": "2026-01-06",
+      "summary": "From ransomware repurposed for espionage to increased exploitation of cloud platforms, learn about the key trends from SentinelLABS research in 2025."
+    },
+    {
+      "title": "When Your AI Coding Plugin Starts Picking Your Dependencies: Marketplace Skills and Dependency Hijack in Claude Code",
+      "url": "https://www.sentinelone.com/blog/marketplace-skills-and-dependency-hijack-in-claude-code/",
+      "date": "2026-01-06",
+      "summary": "Learn how AI coding assistants managing dependencies via plugins are now creating a new supply-chain risk when automation is compromised."
+    },
+    {
+      "title": "CyberVolk Returns | Flawed VolkLocker Brings New Features With Growing Pains",
+      "url": "https://www.sentinelone.com/blog/cybervolk-returns-flawed-volklocker-brings-new-features-with-growing-pains/",
+      "date": "2025-12-11",
+      "summary": "Deep dive into CyberVolk\u2019s new VolkLocker ransomware-as-a-service, its major design flaw, and what it signals for cyber defenders."
+    }
+  ]
+}

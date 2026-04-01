@@ -1,0 +1,605 @@
+{
+  "cached_at": "2026-03-31T18:52:38.852557+00:00",
+  "entries": [
+    {
+      "title": "axios compromised on npm: maintainer account hijacked, RAT deployed",
+      "url": "https://www.aikido.dev/blog/axios-npm-compromised-maintainer-hijacked-rat",
+      "date": "2026-03-30",
+      "summary": "Malicious axios versions 1.14.1 and 0.30.4 were published via a hijacked maintainer account. A hidden dependency deploys a cross-platform RAT. Check if you are affected and remediate now. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Popular telnyx package compromised on PyPI by TeamPCP",
+      "url": "https://www.aikido.dev/blog/telnyx-pypi-compromised-teampcp-canisterworm",
+      "date": "2026-03-27",
+      "summary": "The popular telnyx packageon PyPI, used by big AI companies, has been compromised by TeamPCP Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Aikido \u00d7 Lovable: Vibe, Fix, Ship",
+      "url": "https://www.aikido.dev/blog/lovable-aikido-pentesting",
+      "date": "2026-03-24",
+      "summary": "Lovable and Aikido bring pentesting into the platform, allowing builders to simulate real-world attacks and fix issues before shipping. Category: Product & Company Updates"
+    },
+    {
+      "title": "CanisterWorm Gets Teeth: TeamPCP's Kubernetes Wiper Targets Iran",
+      "url": "https://www.aikido.dev/blog/teampcp-stage-payload-canisterworm-iran",
+      "date": "2026-03-22",
+      "summary": "CanisterWorm Gets Teeth: TeamPCP's Kubernetes Wiper Targets Iran Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "TeamPCP deploys CanisterWorm on NPM following Trivy compromise",
+      "url": "https://www.aikido.dev/blog/teampcp-deploys-worm-npm-trivy-compromise",
+      "date": "2026-03-20",
+      "summary": "TeamPCP deploys CanisterWorm on NPM following Trivy compromise Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Security testing is validating software that no longer exists",
+      "url": "https://www.aikido.dev/blog/pentesting-speed-gap-security-testing",
+      "date": "2026-03-19",
+      "summary": "Modern teams ship faster than pentesting can keep up. Explore the growing speed gap in security testing\u2014and why traditional approaches are falling behind. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Aikido Recognized by Frost & Sullivan with the 2026 Customer Value Leadership Award in ASPM",
+      "url": "https://www.aikido.dev/blog/frost-sullivan-leadership-award-2026",
+      "date": "2026-03-19",
+      "summary": "Frost & Sullivan recognized Aikido with the 2026 Customer Value Leadership Award in ASPM. We break down what the recognition criteria reveal about how the AppSec market is maturing Category: News"
+    },
+    {
+      "title": "GlassWorm Hides a RAT Inside a Malicious Chrome Extension",
+      "url": "https://www.aikido.dev/blog/glassworm-chrome-extension-rat",
+      "date": "2026-03-18",
+      "summary": "GlassWorm deploys a multi-stage RAT that force-installs a malicious Chrome extension to log keystrokes, steal cookies, and exfiltrate data via Solana-based C2. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "fast-draft Open VSX Extension Compromised by BlokTrooper",
+      "url": "https://www.aikido.dev/blog/fast-draft-open-vsx-bloktrooper",
+      "date": "2026-03-18",
+      "summary": "The fast-draft Open VSX extension was compromised to deploy a BlokTrooper RAT and infostealer via GitHub-hosted payloads. Multiple malicious versions identified. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Glassworm Strikes Popular React Native Phone Number Packages",
+      "url": "https://www.aikido.dev/blog/glassworm-strikes-react-packages-phone-numbers",
+      "date": "2026-03-16",
+      "summary": "Aikido Security researchers recovered and decrypted the full payload chain from two malicious React Native packages. Here's what the malware does and what to look for. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Glassworm Is Back: A New Wave of Invisible Unicode Attacks Hits Hundreds of Repositories",
+      "url": "https://www.aikido.dev/blog/glassworm-returns-unicode-attack-github-npm-vscode",
+      "date": "2026-03-13",
+      "summary": "The Glassworm supply chain attack is back. Researchers uncovered malware hidden in invisible Unicode characters across 150+ GitHub repositories, plus npm packages and VS Code extensions. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "How Security Teams Fight Back Against AI-Powered Hackers",
+      "url": "https://www.aikido.dev/blog/hacker-superpower-ai",
+      "date": "2026-03-12",
+      "summary": "AI has lowered the bar for hackers dramatically. Here's what that means for defenders and how continuous AI pentesting changes the equation. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Introducing Betterleaks, an open source secrets scanner by the author of Gitleaks",
+      "url": "https://www.aikido.dev/blog/betterleaks-gitleaks-successor",
+      "date": "2026-03-12",
+      "summary": "Betterleaks is a new open source secrets scanner from the creator of Gitleaks. A drop-in replacement with faster scans, token efficiency detection, configurable validation, and more. Category: Product & Company Updates"
+    },
+    {
+      "title": "Trump\u2019s 2026 cybersecurity strategy: From compliance to consequence",
+      "url": "https://www.aikido.dev/blog/trump-cybersecurity-strategy-2026",
+      "date": "2026-03-09",
+      "summary": "The Trump administration\u2019s 2026 cybersecurity strategy shifts the focus from compliance checklists to real consequences for cybercriminals. Here\u2019s what CISOs need to know. Category: News"
+    },
+    {
+      "title": "How does AI pentesting work with compliance?",
+      "url": "https://www.aikido.dev/blog/ai-pentesting-compliance",
+      "date": "2026-03-09",
+      "summary": "AI pentesting is being accepted for SOC 2, ISO 27001, HIPAA, and PCI DSS. Here's what auditors actually look for, and where the real limitations are. Category: Compliance"
+    },
+    {
+      "title": "What continuous pentesting actually requires",
+      "url": "https://www.aikido.dev/blog/continuous-pentesting-requirements",
+      "date": "2026-03-06",
+      "summary": "Continuous pentesting promises real-time security validation, but most implementations fall short. Here\u2019s what continuous pentesting actually requires\u2014from change-aware testing to exploit validation and remediation loops. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Rare Not Random: Using Token Efficiency for Secrets Scanning",
+      "url": "https://www.aikido.dev/blog/token-efficiency-secrets-scan",
+      "date": "2026-03-03",
+      "summary": "Entropy often struggles with generic secrets and short strings. We look at how token efficiency can better identify strings that don\u2019t look like normal text. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Persistent XSS/RCE using WebSockets in Storybook\u2019s dev server",
+      "url": "https://www.aikido.dev/blog/storybooks-websockets-attack",
+      "date": "2026-03-03",
+      "summary": "CVE-2026-27148 exposes a WebSocket hijacking flaw in Storybook that can escalate into supply chain compromise. Learn the attack path, impact, and how to remediate. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Why Determinism Is Still a Necessity in Security",
+      "url": "https://www.aikido.dev/blog/why-determinism-is-necessary",
+      "date": "2026-03-03",
+      "summary": "AI scanning finds what rules miss. Deterministic scanning finds it every time. Here's why the best security pipelines don't choose between them. Category: Engineering"
+    },
+    {
+      "title": "WAF vs. RASP vs. ADR",
+      "url": "https://www.aikido.dev/blog/waf-rasp-adr",
+      "date": "2026-03-01",
+      "summary": "WAF, RASP, and ADR protect your app in completely different ways. Here's what each layer actually does, where it falls short, and which ones you need. Category: Guides"
+    },
+    {
+      "title": "Introducing Aikido Infinite: A new model of self-securing software",
+      "url": "https://www.aikido.dev/blog/introducing-aikido-infinite",
+      "date": "2026-02-26",
+      "summary": "Aikido Infinite runs AI penetration testing on every code change, validates exploitability, generates patches, and retests fixes before code hits production, making self-securing software a reality. Category: Aikido"
+    },
+    {
+      "title": "How Aikido secures AI pentesting agents by design",
+      "url": "https://www.aikido.dev/blog/ai-pentesting-agent-security",
+      "date": "2026-02-24",
+      "summary": "Learn how Aikido secures AI pentesting agents with architectural isolation, runtime scope enforcement, and network-level controls to prevent production drift and data leakage. Category: Product & Company Updates"
+    },
+    {
+      "title": "Astro Full-Read SSRF via Host Header Injection",
+      "url": "https://www.aikido.dev/blog/astro-full-read-ssrf-via-host-header-injection",
+      "date": "2026-02-23",
+      "summary": "Aikido Security's AI pentesting agent discovered a Server-Side Request Forgery vulnerability in Astro's SSR implementation. Learn how Host header injection in prerendered error pages allowed full internal network access. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "How to Get Your Board to Care About Security (Before a Breach Forces the Issue)",
+      "url": "https://www.aikido.dev/blog/how-to-get-your-board-to-care-about-security",
+      "date": "2026-02-23",
+      "summary": "Boards don\u2019t fund security because it\u2019s important. They fund defensible decisions. Here\u2019s how to frame risk, reduce ambiguity, and win real support before a breach forces the issue. Category: Guides"
+    },
+    {
+      "title": "What is Slopsquatting? The AI Package Hallucination Attack Already Happening",
+      "url": "https://www.aikido.dev/blog/slopsquatting-ai-package-hallucination-attacks",
+      "date": "2026-02-20",
+      "summary": "AI models hallucinate npm package names. Attackers register them first. Here's what slopsquatting is, how it's spreading through agent skills, and how to protect yourself. Category: Guides & Best Practices"
+    },
+    {
+      "title": "SvelteSpill: A Cache Deception Bug in SvelteKit + Vercel",
+      "url": "https://www.aikido.dev/blog/sveltespill-cache-deception-sveltekit-vercel",
+      "date": "2026-02-19",
+      "summary": "SvelteSpill is a cache deception vulnerability affecting default SvelteKit apps deployed on Vercel. Authenticated responses can be cached and exposed across users. Learn how to check if you\u2019re vulnerable and how to mitigate risk. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Top 6 Wiz Code Alternatives",
+      "url": "https://www.aikido.dev/blog/wiz-code-alternatives",
+      "date": "2026-02-17",
+      "summary": "Looking for Wiz Code alternatives? Compare 6 tools across SAST, DAST, SCA, pricing, and developer experience to find the best AppSec platform for 2026. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Aikido recognized as Platform Leader in Latio Tech's 2026 Application Security Report",
+      "url": "https://www.aikido.dev/blog/latio-2026-appsec-report-aikido-platform-leader",
+      "date": "2026-02-17",
+      "summary": "Aikido Security recognized as Platform Leader, AI Pentesting Innovator, and Supply Chain Innovator in Latio Tech\u2019s 2026 AppSec Report. Category: News"
+    },
+    {
+      "title": "From detection to prevention: How Zen stops IDOR vulnerabilities at runtime",
+      "url": "https://www.aikido.dev/blog/zen-stops-idor-vulnerabilities",
+      "date": "2026-02-16",
+      "summary": "IDOR vulnerabilities are one of the most common causes of cross-tenant data leaks in multi-tenant SaaS. Learn how Zen enforces tenant isolation at runtime by analyzing SQL queries and preventing unsafe access before it ships. Category: Product & Company Updates"
+    },
+    {
+      "title": "npm backdoor lets hackers hijack gambling outcomes",
+      "url": "https://www.aikido.dev/blog/npm-backdoor-lets-hackers-hijack-gambling-outcomes",
+      "date": "2026-02-16",
+      "summary": "A targeted npm supply chain attack installs an Express backdoor, enables remote SQL/file access, and rewrites gambling balances while keeping logs consistent. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Introducing Upgrade Impact Analysis: When breaking changes actually matter to your code",
+      "url": "https://www.aikido.dev/blog/breaking-changes",
+      "date": "2026-02-13",
+      "summary": "Aikido automatically detects breaking changes in dependency upgrades and analyzes your codebase to show real impact, so teams can merge security fixes safely. Category: Product & Company Updates"
+    },
+    {
+      "title": "Why Trying to Secure OpenClaw is Ridiculous",
+      "url": "https://www.aikido.dev/blog/why-trying-to-secure-openclaw-is-ridiculous",
+      "date": "2026-02-13",
+      "summary": "OpenClaw's security issues explained: malware in ClawHub, exposed instances, and why hardening guides miss the point. Can you use the AI agent safely?? Category: News"
+    },
+    {
+      "title": "Claude Opus 4.6 found 500 vulnerabilities. What does this change for software security?",
+      "url": "https://www.aikido.dev/blog/claude-opus-4-6-500-vulnerabilities-software-security",
+      "date": "2026-02-11",
+      "summary": "Anthropic claims Claude Opus 4.6 uncovered 500+ high-severity vulnerabilities in open source. Here\u2019s what that means for vulnerability discovery, exploitability validation, and production security workflows. Category: News"
+    },
+    {
+      "title": "Introducing Aikido Expansion Packs: Safer defaults inside the IDE",
+      "url": "https://www.aikido.dev/blog/introducing-aikido-expansion-packs",
+      "date": "2026-02-10",
+      "summary": "Aikido Expansion Packs add focused security controls directly inside your IDE. Enable secrets protection, supply chain malware checks, and AI-assisted code security without changing developer workflows. Category: Product & Company Updates"
+    },
+    {
+      "title": "International AI Safety Report 2026: What It Means for Autonomous AI Systems",
+      "url": "https://www.aikido.dev/blog/international-ai-safety-report-aikido-security-analysis",
+      "date": "2026-02-09",
+      "summary": "Aikido Security's analysis of the International AI Safety Report 2026. We examine deployment-time controls, validation requirements, and practical safety baselines for autonomous AI systems. Category: News"
+    },
+    {
+      "title": "Self-Securing Software: What It Is, Why It Matters, and How It Works",
+      "url": "https://www.aikido.dev/blog/what-is-self-securing-software",
+      "date": "2026-02-09",
+      "summary": "Self-securing software is a security model where systems continuously validate and remediate real risk as they change. Learn why periodic testing no longer scales. Category: Product & Company Updates"
+    },
+    {
+      "title": "What Is Continuous Pentesting?",
+      "url": "https://www.aikido.dev/blog/what-is-continuous-pentesting",
+      "date": "2026-02-04",
+      "summary": "Continuous pentesting automatically tests real attack paths every time software changes, validating and fixing issues as part of the development lifecycle. Learn how it compares to AI and manual pentesting. Category: Guides & Best Practices"
+    },
+    {
+      "title": "npx Confusion: Packages That Forgot to Claim Their Own Name",
+      "url": "https://www.aikido.dev/blog/npx-confusion-unclaimed-package-names",
+      "date": "2026-02-04",
+      "summary": "We claimed 128 unclaimed npm package names that official docs told developers to npx. Seven months later: 121,000 downloads. All would have run arbitrary code. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Introducing Aikido Package Health: a Better Way to Trust Your Dependencies",
+      "url": "https://www.aikido.dev/blog/introducing-aikido-package-health",
+      "date": "2026-02-03",
+      "summary": "See how stable and well-maintained an open source package really is. Aikido Package Health helps devs choose safer dependencies with confidence. Category: Product & Company Updates"
+    },
+    {
+      "title": "AI Pentesting: Minimum Safety Requirements for Security Testing",
+      "url": "https://www.aikido.dev/blog/ai-pentesting-safety-requirements",
+      "date": "2026-02-03",
+      "summary": "AI pentesting systems act autonomously against live environments. Learn when AI pentesting is safe to use, the minimum technical safeguards required, and how to evaluate AI security testing tools responsibly. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Secure SDLC for Engineering Teams (+ Checklist)",
+      "url": "https://www.aikido.dev/blog/secure-sdlc",
+      "date": "2026-02-02",
+      "summary": "Learn what a Secure SDLC is, why it matters, and the five pillars every team needs. Includes a practical Secure SDLC checklist for CTOs and engineering leaders. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Fake Clawdbot VS Code Extension Installs ScreenConnect RAT",
+      "url": "https://www.aikido.dev/blog/fake-clawdbot-vscode-extension-malware",
+      "date": "2026-01-27",
+      "summary": "A malicious VS Code extension impersonating Clawdbot is installing ScreenConnect RAT on developer machines. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "G_Wagon: npm Package Deploys Python Stealer Targeting 100+ Crypto Wallets",
+      "url": "https://www.aikido.dev/blog/npm-malware-g-wagon-python-stealer-crypto-wallets",
+      "date": "2026-01-23",
+      "summary": "npm package ansi-universal-ui delivers GWagon infostealer targeting 100+ crypto wallets, browser credentials, and cloud keys. We analyzed all 10 versions as the attacker iterated in real-time. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Gone Phishin': npm Packages Serving Custom Credential Harvesting Pages",
+      "url": "https://www.aikido.dev/blog/npm-supply-chain-phishing-campaigns",
+      "date": "2026-01-23",
+      "summary": "A targeted spear-phishing campaign used npm packages and jsDelivr as free phishing infrastructure, serving custom credential harvesters per victim Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Malicious PyPI Packages spellcheckpy and spellcheckerpy Deliver Python RAT",
+      "url": "https://www.aikido.dev/blog/malicious-pypi-packages-spellcheckpy-and-spellcheckerpy-deliver-python-rat",
+      "date": "2026-01-22",
+      "summary": "Attackers published fake spellchecker packages to PyPI with malware hidden in plain sight. We break down the attack and what developers need to watch for. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Top 10 AI Security Tools For 2026",
+      "url": "https://www.aikido.dev/blog/top-ai-security-tools",
+      "date": "2026-01-21",
+      "summary": "Explore the top AI security tools for 2026. Compare platforms for AI code review, vulnerability detection, pentesting, and risk management to secure modern applications. Category: DevSec Tools & Comparisons"
+    },
+    {
+      "title": "Agent Skills Are Spreading Hallucinated npx Commands",
+      "url": "https://www.aikido.dev/blog/agent-skills-spreading-hallucinated-npx-commands",
+      "date": "2026-01-21",
+      "summary": "AI agent skills are propagating hallucinated npx commands, creating real security and reliability risks for developers and supply chains. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Understanding Open-Source License Risk in Modern Software",
+      "url": "https://www.aikido.dev/blog/open-source-license-risk",
+      "date": "2026-01-19",
+      "summary": "Open-source license risk hides in dependencies and container images. Learn what it is, why it matters, and how to catch issues early. Category: Guides & Best Practices"
+    },
+    {
+      "title": "The CISO Vibe Coding Checklist for Security",
+      "url": "https://www.aikido.dev/blog/ciso-vibe-coding-security-checklist",
+      "date": "2026-01-16",
+      "summary": "A practical security checklist for CISOs managing AI and vibe-coded applications. Covers technical guardrails, AI controls, and organizational policies. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Top 6 Graphite alternatives for AI code review in 2026",
+      "url": "https://www.aikido.dev/blog/graphite-alternatives",
+      "date": "2026-01-16",
+      "summary": "Compare the best Graphite alternatives for AI-driven code review. Check free options like Aikido Security and enterprise tools like SonarQube to improve code quality. Category: DevSec Tools & Comparisons"
+    },
+    {
+      "title": "From \u201cNo Bullsh*t Security\u201d to $1B: We Just Raised Our $60m Series B",
+      "url": "https://www.aikido.dev/blog/aikido-funding-series-b",
+      "date": "2026-01-14",
+      "summary": "Aikido announces $60M Series B funding at a $1B valuation, accelerating its vision for self-securing software and continuous penetration testing. Category: Product & Company Updates"
+    },
+    {
+      "title": "Critical n8n Vulnerability Allows Unauthenticated Remote Code Execution (CVE-2026-21858)",
+      "url": "https://www.aikido.dev/blog/n8n-rce-vulnerability-cve-2026-21858",
+      "date": "2026-01-08",
+      "summary": "A critical vulnerability in n8n (CVE-2026-21858) allows unauthenticated remote code execution on self-hosted instances. Learn who is affected and how to remediate. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Top 14 VS Code Extensions for 2026",
+      "url": "https://www.aikido.dev/blog/top-vs-code-extensions",
+      "date": "2026-01-07",
+      "summary": "A practical guide to the best VS Code extensions for 2026, covering productivity, testing, collaboration, and security tools that improve real-world developer workflows. Category: DevSec Tools & Comparisons"
+    },
+    {
+      "title": "AI-Driven Pentesting of Coolify: Seven CVEs Identified",
+      "url": "https://www.aikido.dev/blog/ai-pentesting-coolify-cves",
+      "date": "2026-01-07",
+      "summary": "AI-driven pentesting of Coolify identified seven CVEs, including privilege escalation and remote code execution vulnerabilities. Findings were responsibly disclosed and fixed. Category: Aikido"
+    },
+    {
+      "title": "Top 6 Continuous Pentesting Tools in 2026",
+      "url": "https://www.aikido.dev/blog/top-6-continuous-pentesting-tools",
+      "date": "2026-01-06",
+      "summary": "Discover the leading continuous pentesting tools that provide real-time, AI-powered security testing for modern applications. Category: DevSec Tools & Comparisons"
+    },
+    {
+      "title": "SAST vs SCA: Securing the Code You Write and the Code You Depend On",
+      "url": "https://www.aikido.dev/blog/sast-vs-sca",
+      "date": "2026-01-06",
+      "summary": "earn how SAST and SCA differ, what risks each addresses, and why modern AppSec teams need both to secure code and dependencies. Category: Technical"
+    },
+    {
+      "title": "JavaScript, MSBuild, and the Blockchain: Anatomy of the NeoShadow npm Supply-Chain Attack",
+      "url": "https://www.aikido.dev/blog/neoshadow-npm-supply-chain-attack-javascript-msbuild-blockchain",
+      "date": "2026-01-05",
+      "summary": "A deep technical analysis of the NeoShadow npm supply-chain attack, detailing how JavaScript, MSBuild, and blockchain techniques were combined to compromise developers. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "How Engineering and Security Teams Can Meet DORA\u2019s Technical Requirements",
+      "url": "https://www.aikido.dev/blog/dora-requirements-engineering-security",
+      "date": "2026-01-05",
+      "summary": "Understand DORA\u2019s technical requirements for engineering and security teams, including resilience testing, risk management, and audit-ready evidence. Category: Compliance"
+    },
+    {
+      "title": "IDOR Vulnerabilities Explained: Why They Persist in Modern Applications",
+      "url": "https://www.aikido.dev/blog/idor-vulnerability-explained",
+      "date": "2026-01-02",
+      "summary": "Learn what an IDOR vulnerability is, why insecure direct object references persist in modern APIs, and why traditional testing tools struggle to detect real authorization failures. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Shai Hulud strikes again - The golden path",
+      "url": "https://www.aikido.dev/blog/shai-hulud-strikes-again---the-golden-path",
+      "date": "2025-12-28",
+      "summary": "A new strain of Shai Hulud has been observed in the wild. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "MongoBleed: MongoDB Zlib Vulnerability (CVE-2025-14847) and How to Fix It",
+      "url": "https://www.aikido.dev/blog/mongobleed-mongodb-zlib-vulnerability-cve-2025-14847",
+      "date": "2025-12-26",
+      "summary": "MongoBleed, tracked as CVE-2025-14847, allows unauthenticated memory disclosure in MongoDB via zlib compression. See impact and remediation. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "First Sophisticated Malware Discovered on Maven Central via Typosquatting Attack on Jackson",
+      "url": "https://www.aikido.dev/blog/maven-central-jackson-typosquatting-malware",
+      "date": "2025-12-25",
+      "summary": "We uncovered the first sophisticated malware campaign on Maven Central: a typosquatted Jackson package delivering multi-stage payloads and Cobalt Strike beacons via Spring Boot auto-execution. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "The Fork Awakens: Why GitHub\u2019s Invisible Networks Break Package Security",
+      "url": "https://www.aikido.dev/blog/the-fork-awakens-why-githubs-invisible-networks-break-package-security",
+      "date": "2025-12-17",
+      "summary": "A deep dive into a GitHub security flaw where forked commits let attackers spoof dependencies. Understand the commit SHA issue and why package managers need API-level protection. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Top 10 Cyber Security Tools For 2026",
+      "url": "https://www.aikido.dev/blog/top-cyber-security-tools",
+      "date": "2025-12-16",
+      "summary": "A practical breakdown of the top 10 cybersecurity tools for 2026, covering endpoint, cloud, identity, vulnerability management, and XDR. Learn how to choose the right tool for your stack and risk profile. Category: DevSec Tools & Comparisons"
+    },
+    {
+      "title": "SAST in the IDE is now free: Moving SAST to where development actually happens",
+      "url": "https://www.aikido.dev/blog/sast-in-the-ide-is-now-free",
+      "date": "2025-12-15",
+      "summary": "Run free SAST scans directly in your IDE with real-time feedback and project-wide visibility. Use the same SAST rules and engine as Aikido, with optional AutoFix for supported findings. Category: Product & Company Updates"
+    },
+    {
+      "title": "AI Pentesting in Action: A TL;DV Recap of Our Live Demo",
+      "url": "https://www.aikido.dev/blog/ai-pentesting-demo",
+      "date": "2025-12-15",
+      "summary": "A recap of Aikido\u2019s AI pentesting live demo. See how autonomous agents test real apps, validate findings, generate reports, and enable retesting. Category: Guides"
+    },
+    {
+      "title": "The Top 7 Threat Intelligence Tools in 2026",
+      "url": "https://www.aikido.dev/blog/the-top-7-threat-intelligence-tools",
+      "date": "2025-12-15",
+      "summary": "A deep dive into the top threat intelligence tools of 2026, comparing how they reduce alert fatigue, add context, and help teams prioritize real-world security risks. Category: DevSec Tools & Comparisons"
+    },
+    {
+      "title": "React & Next.js DoS Vulnerability (CVE-2025-55184): What You Need to Fix After React2Shell",
+      "url": "https://www.aikido.dev/blog/react-next-js-dos-vulnerability-cve-2025-55184",
+      "date": "2025-12-12",
+      "summary": "CVE-2025-55184 is a React Server Components DoS flaw related to React2Shell. Learn who\u2019s affected, how it works, and how to fully patch it. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "OWASP Top 10 for Agentic Applications (2026): What Developers and Security Teams Need to Know",
+      "url": "https://www.aikido.dev/blog/owasp-top-10-agentic-applications",
+      "date": "2025-12-10",
+      "summary": "Learn the OWASP Top 10 for Agentic Applications. Understand the top AI agent security risks, real-world examples, and how to harden your environment. Category: Guides & Best Practices"
+    },
+    {
+      "title": "DAST vs Pentesting v AI Pentesting: Why DAST Cannot Replace Modern Pentesting",
+      "url": "https://www.aikido.dev/blog/dast-vs-pen-testing-vs-ai-pentesting",
+      "date": "2025-12-09",
+      "summary": "Compare DAST, manual penetration testing, and AI pentesting. Learn where each approach works, where DAST falls short, and how AI pentesting enables deeper, continuous testing of modern applications. Category: DevSec Tools & Comparisons"
+    },
+    {
+      "title": "PromptPwnd: Prompt Injection Vulnerabilities in GitHub Actions Using AI Agents",
+      "url": "https://www.aikido.dev/blog/promptpwnd-github-actions-ai-agents",
+      "date": "2025-12-04",
+      "summary": "AI-driven GitHub Actions expose new prompt-injection supply chain vulnerabilities. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Top 7 Cloud Security Vulnerabilities",
+      "url": "https://www.aikido.dev/blog/top-cloud-security-vulnerabilities",
+      "date": "2025-12-04",
+      "summary": "Discover the top seven cloud security vulnerabilities affecting modern environments. Learn how attackers exploit IMDS, Kubernetes, misconfigurations, and more, and explore strategies to protect your cloud infrastructure effectively. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Critical React & Next.js RCE Vulnerability (CVE-2025-55182): What You Need to Fix Now",
+      "url": "https://www.aikido.dev/blog/react-nextjs-cve-2025-55182-rce",
+      "date": "2025-12-03",
+      "summary": "Learn how CVE-2025-55182 and the related Next.js RCE affect React Server Components. See impact, affected versions, and how to fix. Aikido now detects both issues. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "How to Comply With the UK Cybersecurity & Resilience Bill: A Practical Guide for Modern Engineering Teams",
+      "url": "https://www.aikido.dev/blog/uk-cybersecurity-resilience-bill-compliance",
+      "date": "2025-12-03",
+      "summary": "Learn how to meet the UK Cybersecurity & Resilience Bill requirements, from secure-by-design practices to SBOM transparency, supply chain security, and continuous compliance. Category: Compliance"
+    },
+    {
+      "title": "Shai Hulud 2.0: What the Unknown Wonderer Tells Us About the Attackers\u2019 Endgame",
+      "url": "https://www.aikido.dev/blog/shai-hulud-2-0-unknown-wonderer-supply-chain-attack",
+      "date": "2025-12-02",
+      "summary": "New research into the Shai Hulud 2.0 malware suggests the username UnknownWonderer1 tells us more about the attackers\u2019 endgame. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "SCA Everywhere: Scan and Fix Open-Source Dependencies in Your IDE",
+      "url": "https://www.aikido.dev/blog/sca-in-ide-scan-and-fix-dependencies",
+      "date": "2025-11-28",
+      "summary": "Bring the full SCA workflow into your IDE with in-editor scanning and AutoFix. Detect vulnerable packages, review CVEs, and apply safe upgrades without leaving your development workflow. Category: Product & Company Updates"
+    },
+    {
+      "title": "Safe Chain now enforces a minimum package age before install",
+      "url": "https://www.aikido.dev/blog/safechain-minimum-package-age",
+      "date": "2025-11-28",
+      "summary": "Safe Chain now enforces a minimum 24-hour package age to stop attackers using fresh releases as an entry point. Blocks malware early and falls back to safe versions. Category: Product & Company Updates"
+    },
+    {
+      "title": "Shai Hulud Attacks Persist Through GitHub Actions Vulnerabilities",
+      "url": "https://www.aikido.dev/blog/github-actions-incident-shai-hulud-supply-chain-attack",
+      "date": "2025-11-25",
+      "summary": "Shai Hulud threat actors are leveraging GitHub Actions vulnerabilities in an ongoing exploitation campaign. Discover the impact and recommended security measures. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Shai Hulud Launches Second Supply-Chain Attack: Zapier, ENS, AsyncAPI, PostHog, Postman Compromised",
+      "url": "https://www.aikido.dev/blog/shai-hulud-strikes-again-hitting-zapier-ensdomains",
+      "date": "2025-11-24",
+      "summary": "The threat actor behind \u201cShai Hulud 2.0\u201d launched a new malware campaign compromising the supply chain of Zapier, ENS Domains and more \u2014 exposing secrets, injecting malicious code, and enabling widespread developer-environment takeover. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "CORS Security: Beyond Basic Configuration",
+      "url": "https://www.aikido.dev/blog/cors-security-beyond-basic-configuration",
+      "date": "2025-11-21",
+      "summary": "Learn what CORS really is, how browsers enforce it, and how to configure cross-origin requests securely. A practical guide to avoiding common CORS issues. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Revolut Selects Aikido Security to Power Developer-First Software Security",
+      "url": "https://www.aikido.dev/blog/revolut-selects-aikido-security",
+      "date": "2025-11-20",
+      "summary": "Aikido Security delivers fast, accurate SCA, low-noise vulnerability alerts, and automated dependency upgrades to help Revolut\u2019s global engineering teams maintain strong supply-chain security without slowing development. Category: Customer Stories"
+    },
+    {
+      "title": "The Future of Pentesting Is Autonomous",
+      "url": "https://www.aikido.dev/blog/the-future-of-pentesting-is-autonomous",
+      "date": "2025-11-19",
+      "summary": "Meet Aikido Attack: autonomous AI pentesting that detects, exploits, and validates real vulnerabilities across your stack. Fast results, full context, zero noise. Category: Product & Company Updates"
+    },
+    {
+      "title": "How Aikido and Deloitte are bringing developer-first security to enterprise",
+      "url": "https://www.aikido.dev/blog/how-aikido-and-deloitte-are-bringing-developer-first-security-to-enterprise",
+      "date": "2025-11-18",
+      "summary": "Discover how Aikido Security and Deloitte Belgium are bringing developer-first, continuous security to the enterprise. Learn how unified tooling, AI-powered testing, and seamless integration deliver real protection at development speed. Category: News"
+    },
+    {
+      "title": "Secrets Detection: A Practical Guide to Finding and Preventing Leaked Credentials",
+      "url": "https://www.aikido.dev/blog/secret-detection-application-security",
+      "date": "2025-11-12",
+      "summary": "Learn how secret detection works, what counts as a secret (API keys, tokens, creds), where teams leak them, and how to prevent exposure in git, CI, and production. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Invisible Unicode Malware Strikes OpenVSX, Again",
+      "url": "https://www.aikido.dev/blog/invisible-unicode-malware-strikes-openvsx-again",
+      "date": "2025-11-06",
+      "summary": "Another wave of Open VSX extensions were compromised today. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "AI as a Power Tool: How Windsurf and Devin Are Changing Secure Coding",
+      "url": "https://www.aikido.dev/blog/ai-as-a-power-tool-how-windsurf-and-devin-are-changing-secure-coding",
+      "date": "2025-11-06",
+      "summary": "Learn how Windsurf and Devin help developers code faster and stay secure. Real takeaways from Aikido\u2019s Security Masterclass for AI-assisted coding. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Building Fast, Staying Secure: Supabase\u2019s Approach to Secure-by-Default Development",
+      "url": "https://www.aikido.dev/blog/supabase-approach-to-secure-by-default-development",
+      "date": "2025-11-06",
+      "summary": "Supabase CISO Bill Harmer and Security Engineer Etienne Stalmans share how security is built into every layer of Supabase. From Row Level Security to pgTAP testing, learn how they design systems that move fast and stay secure by default. Category: Guides & Best Practices"
+    },
+    {
+      "title": "OWASP Top 10 2025: Official List, Changes, and What Developers Need to Know",
+      "url": "https://www.aikido.dev/blog/owasp-top-10-2025-changes-for-developers",
+      "date": "2025-11-06",
+      "summary": "Discover what\u2019s new in the OWASP Top 10 2025, including software supply chain failures and error handling risks, and how to strengthen your AppSec program. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Top 10 JavaScript Security Vulnerabilities in Modern Web Apps",
+      "url": "https://www.aikido.dev/blog/javascript-security-vulnerabilities",
+      "date": "2025-11-04",
+      "summary": "Learn the most frequent JavaScript security vulnerabilities affecting frontend and backend apps, including real-world attack vectors. Category: Guides & Best Practices"
+    },
+    {
+      "title": "The Return of the Invisible Threat: Hidden PUA Unicode Hits GitHub repositorties",
+      "url": "https://www.aikido.dev/blog/the-return-of-the-invisible-threat-hidden-pua-unicode-hits-github-repositorties",
+      "date": "2025-10-31",
+      "summary": "Threat actors are using Unprintable Unicode Characters to Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Top 7 Black Duck Alternatives in 2026",
+      "url": "https://www.aikido.dev/blog/blackduck-alternatives",
+      "date": "2025-10-27",
+      "summary": "Discover the top 7 Black Duck alternatives for 2026, including Aikido Security, Snyk, Veracode, and more. Compare features, pricing, and why modern DevSecOps teams are leaving Black Duck for faster, developer-first security tools. Category: DevSec Tools & Comparisons"
+    },
+    {
+      "title": "What Is IaC Security Scanning? Terraform, Kubernetes & Cloud Misconfigurations Explained",
+      "url": "https://www.aikido.dev/blog/iac-security-scanning-terraform-kubernetes-misconfigurations",
+      "date": "2025-10-27",
+      "summary": "Understand IaC security scanning: how it detects cloud misconfigurations in Terraform/Kubernetes, what to prioritize, and how to prevent risky changes before deploy. Category: Guides & Best Practices"
+    },
+    {
+      "title": "AutoTriage and the Swiss Cheese Model of Security Noise Reduction",
+      "url": "https://www.aikido.dev/blog/autotriage-and-the-swiss-cheese-model-of-security-noise-reduction",
+      "date": "2025-10-24",
+      "summary": "Traditional scanners overwhelm teams with false positives. Learn how Aikido\u2019s layered Swiss-cheese approach- combining reachability analysis, reasoning-based AutoTriage, contextual prioritization, and AI-powered AutoFix- reduces security noise, prevents alert fatigue, and accelerates real vulnerability remediation. Category: Engineering"
+    },
+    {
+      "title": "Top Software Supply Chain Security Vulnerabilities Explained",
+      "url": "https://www.aikido.dev/blog/software-supply-chain-security-vulnerabilities",
+      "date": "2025-10-22",
+      "summary": "Understand the biggest software supply chain security vulnerabilities, from malicious packages to dependency confusion attacks. Category: Guides & Best Practices"
+    },
+    {
+      "title": "The Top 7 Kubernetes Security Tools",
+      "url": "https://www.aikido.dev/blog/top-kubernetes-security-tools",
+      "date": "2025-10-22",
+      "summary": "Explore 7 top Kubernetes security tools, open source to AI-powered. Learn how Aikido helps teams secure clusters from code to runtime Category: DevSec Tools & Comparisons"
+    },
+    {
+      "title": "Top 10 Web Application Security Vulnerabilities Every Team Should Know",
+      "url": "https://www.aikido.dev/blog/top-web-application-security-vulnerabilities",
+      "date": "2025-10-20",
+      "summary": "Discover the most common web application security vulnerabilities, real-world examples, and how modern teams can reduce risk early. Category: Guides & Best Practices"
+    },
+    {
+      "title": "What Is CSPM (and CNAPP)? Cloud Security Posture Management Explained",
+      "url": "https://www.aikido.dev/blog/what-is-cspm-cnapp-cloud-security-posture-management",
+      "date": "2025-10-20",
+      "summary": "A clear breakdown of CSPM and CNAPP: what they cover, how they reduce cloud risk, key features to look for, and how teams actually adopt them. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Top 9 Kubernetes Security Vulnerabilities and Misconfigurations",
+      "url": "https://www.aikido.dev/blog/kubernetes-security-vulnerabilities",
+      "date": "2025-10-14",
+      "summary": "Learn the most critical Kubernetes security vulnerabilities, common misconfigurations, and why clusters are often exposed by default. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Security Masterclass: Supabase and Lovable CISOs on Building Fast and Staying Secure",
+      "url": "https://www.aikido.dev/blog/security-masterclass-supabase-and-lovable",
+      "date": "2025-10-13",
+      "summary": "Supabase and Lovable CISOs share what every builder needs to keep speed without losing control. Real lessons from the Aikido Security Masterclass. Category: Guides & Best Practices"
+    },
+    {
+      "title": "Aikido + Secureframe: Keeping compliance data fresh",
+      "url": "https://www.aikido.dev/blog/aikido-secureframe",
+      "date": "2025-10-13",
+      "summary": "Keep SOC 2 and ISO 27001 compliance accurate with live vulnerability data. Aikido syncs with Secureframe so audits stay fresh and devs keep building. Category: Compliance"
+    }
+  ]
+}

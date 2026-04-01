@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-03-31T18:52:38.626522+00:00",
+  "entries": [
+    {
+      "title": "Supply Chain Attack on Axios Delivers Cross-Platform RAT via Compromised npm Account",
+      "url": "https://orca.security/resources/blog/axios-npm-supply-chain-attack-remediation/",
+      "date": "2026-03-31",
+      "summary": "On March 31, 2026, attackers compromised the primary maintainer account of the axios npm package and published two malicious versions that silently installed a cross-platform Remote Access Trojan (RAT) on macOS, Windows, and Linux systems. Axios is one of the most widely used JavaScript libraries, with roughly 100 million weekly downloads and over 174,000 dependent [&#8230;]"
+    },
+    {
+      "title": "Credential\u2011Stealing Malware in LiteLLM Supply Chain Attack",
+      "url": "https://orca.security/resources/blog/litellm-supply-chain-attack-malware/",
+      "date": "2026-03-25",
+      "summary": "Executive Summary A severe malware incident (no formal CVE yet, but tracked as a high\u2011risk supply chain compromise) was disclosed affecting the widely used Python package LiteLLM (PyPI). Attackers from the TeamPCP threat group trojanized LiteLLM by publishing malicious versions 1.82.7 and 1.82.8, allowing them to harvest credentials and deploy backdoors when the package is [&#8230;]"
+    },
+    {
+      "title": "Mission Accomplished: Orchestrate Your Remediation Strategy With Orca Missions",
+      "url": "https://orca.security/resources/blog/remediation-strategy-orca-missions/",
+      "date": "2026-03-25",
+      "summary": "In the ever-evolving landscape of cloud security, security teams are constantly battling a deluge of alerts and operational friction. This often leads to a dispersed effort, with teams reacting to individual findings rather than collaborating on root causes and driving meaningful risk reduction. Consequently, this dispersed effort yields outcomes that are often unmeasurable, stalling progress [&#8230;]"
+    },
+    {
+      "title": "The Orca Approach to Runtime AI Security",
+      "url": "https://orca.security/resources/blog/runtime-ai-security/",
+      "date": "2026-03-24",
+      "summary": "The Runtime Gap: Why AI Security Can&#8217;t Stop at Posture Most AI security conversations in 2025 centered on posture. What models are deployed? Who has access? Are your AI pipelines misconfigured? These are the right questions, but they&#8217;re the pre-game warmup. The harder problem is what happens at runtime, when your AI systems are live, [&#8230;]"
+    },
+    {
+      "title": "CanisterWorm: When a CI/CD Breach Became a Self-Spreading npm Worm",
+      "url": "https://orca.security/resources/blog/canisterworm-npm-worm-ci-cd-breach/",
+      "date": "2026-03-23",
+      "summary": "A supply chain compromise moved from CI pipelines into the npm ecosystem, stealing secrets, hijacking packages, and persisting on developer systems through a novel malware design. Executive Summary Software supply chain attacks are no longer isolated build-time incidents. Increasingly, they are multi-stage campaigns that move across trust boundaries: from CI/CD pipelines to developer workstations, from [&#8230;]"
+    },
+    {
+      "title": "From Findings to Fixes with Code Reachability, AppSec Triage Agent, and the AppSec Dashboard",
+      "url": "https://orca.security/resources/blog/application-security-prioritization-remediation-triage/",
+      "date": "2026-03-23",
+      "summary": "Key Findings Introduction Application security teams are managing more vulnerabilities than they can realistically remediate. In 2025 alone, more than 48,000 new CVEs were published, the highest annual total on record, and most organizations now track thousands of findings across code repositories and containers. A large majority of critical vulnerabilities remain open, not because they [&#8230;]"
+    },
+    {
+      "title": "Introducing the Agentic Cloud Security Platform",
+      "url": "https://orca.security/resources/blog/introducing-agentic-cloud-security-platform/",
+      "date": "2026-03-18",
+      "summary": "Orca\u2019s AI agents: Ecosystem engineers for cloud-native apps Ecosystem engineers are living things\u2014animals, plants, insects, etc\u2014that physically modify their environment in ways that create, maintain, or destroy habitats for other species. For example, beavers chop down trees to build dams. These dams don\u2019t just serve as their home. They also filter out toxic algae, which [&#8230;]"
+    },
+    {
+      "title": "First Look: Orca\u2019s RSAC 2026 Announcements",
+      "url": "https://orca.security/resources/blog/rsac-2026-agentic-ai-announcements/",
+      "date": "2026-03-16",
+      "summary": "Over the past decade, protecting cloud-native applications has evolved. At first, security was reactive, driven by the traditional agent approach. Then came full cloud estate observability enabled by agentless technology. Now, cloud protection strategies return to a healthy balance of agentless visibility and real-time detection and response. Orca is focused on securing the entire lifecycle [&#8230;]"
+    },
+    {
+      "title": "Beyond the Sticker Price: Understanding the True Cost of Your Security Tools",
+      "url": "https://orca.security/resources/blog/security-tool-tco-true-cost-ownership/",
+      "date": "2026-03-12",
+      "summary": "Beyond the Sticker Price: Understanding the True Cost of Your Security Tools As cyber security leaders, our fundamental mission is straightforward: maximize risk reduction within the constraints of our budget. No organization operates with unlimited resources, and since risks vary for every organization, mastering the art of maximizing risk reduction per dollar is paramount. The [&#8230;]"
+    },
+    {
+      "title": "Pickle in the Pipeline: Critical RCE Vulnerabilities in SGLang\u2019s LLM Serving Framework",
+      "url": "https://orca.security/resources/blog/sglang-llm-framework-rce-vulnerabilities/",
+      "date": "2026-03-12",
+      "summary": "The Orca Security Research Pod continuously investigates the security posture of widely adopted AI/ML infrastructure. During a focused audit of LLM serving frameworks, I discovered multiple unsafe deserialization vulnerabilities in SGLang, a popular open-source framework for serving large language models and multimodal AI models. These findings were coordinated through CERT/CC (case VU#665416), with additional analysis [&#8230;]"
+    }
+  ]
+}

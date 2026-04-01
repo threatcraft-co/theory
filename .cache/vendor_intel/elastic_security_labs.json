@@ -1,0 +1,125 @@
+{
+  "cached_at": "2026-03-31T18:52:28.969780+00:00",
+  "entries": [
+    {
+      "title": "Inside the Axios supply chain compromise - one RAT to rule them all",
+      "url": "https://www.elastic.co/security-labs/axios-one-rat-to-rule-them-all",
+      "date": "2026-04-01",
+      "summary": "Elastic Security Labs analyzes a supply chain compromise of the axios npm package delivering a unified cross-platform RAT"
+    },
+    {
+      "title": "Elastic releases detections for the Axios supply chain compromise",
+      "url": "https://www.elastic.co/security-labs/axios-supply-chain-compromise-detections",
+      "date": "2026-04-01",
+      "summary": "Hunting and detection rules for the Elastic-discovered Axios supply chain compromise."
+    },
+    {
+      "title": "Fake Installers to Monero: A Multi-Tool Mining Operation",
+      "url": "https://www.elastic.co/security-labs/fake-installers-to-monero",
+      "date": "2026-03-31",
+      "summary": "Elastic Security Labs dissects a long-running operation deploying RATs, cryptominers, and CPA fraud through fake installer lures, tracking its evolution across campaigns and Monero payouts."
+    },
+    {
+      "title": "Elastic Security Labs uncovers BRUSHWORM and BRUSHLOGGER",
+      "url": "https://www.elastic.co/security-labs/brushworm-targets-financial-services",
+      "date": "2026-03-27",
+      "summary": "Elastic Security Labs observed two custom malware components targeting a South Asian financial institution: a modular backdoor with USB-based spreading and a DLL-side-loaded keylogger."
+    },
+    {
+      "title": "Illuminating VoidLink: Technical analysis of the VoidLink rootkit framework",
+      "url": "https://www.elastic.co/security-labs/illuminating-voidlink",
+      "date": "2026-03-26",
+      "summary": "Elastic Security Labs analyzes VoidLink, a sophisticated Linux malware framework that combines traditional Loadable Kernel Modules with eBPF to maintain persistence."
+    },
+    {
+      "title": "Investigating from the Endpoint Across Your Environment with Elastic Security XDR",
+      "url": "https://www.elastic.co/security-labs/investigating-from-the-endpoint-across-your-environment",
+      "date": "2026-03-24",
+      "summary": "This article highlights how Elastic Security XDR unifies endpoint protection with multi-domain security analytics to help analysts trace and contain multi-stage attacks across hybrid and cloud environments."
+    },
+    {
+      "title": "Security Automation with Elastic Workflows: From Alert to Response",
+      "url": "https://www.elastic.co/security-labs/security-automation-with-elastic-workflows",
+      "date": "2026-03-24",
+      "summary": "A practical guide to building intelligent, automated security playbooks with Elastic Workflows."
+    },
+    {
+      "title": "Streamlining the Security Analyst Experience",
+      "url": "https://www.elastic.co/security-labs/streamlining-the-security-analyst-experience",
+      "date": "2026-03-24",
+      "summary": "Alert Triage, Investigation, and Response with Elastic's Agentic Security Operations Platform."
+    },
+    {
+      "title": "Supercharge Your SOC",
+      "url": "https://www.elastic.co/security-labs/supercharge-your-soc",
+      "date": "2026-03-24",
+      "summary": "Detection Engineering in the Era of AI Agents - The New Frontier."
+    },
+    {
+      "title": "Linux & Cloud Detection Engineering - TeamPCP Container Attack Scenario",
+      "url": "https://www.elastic.co/security-labs/teampcp-container-attack-scenario",
+      "date": "2026-03-20",
+      "summary": "This publication provides a real-world walkthrough of TeamPCP's multi-stage container compromise, demonstrating how Elastic's D4C surfaces runtime signals across each stage of the attack chain."
+    },
+    {
+      "title": "Linux & Cloud Detection Engineering - Getting Started with Defend for Containers (D4C)",
+      "url": "https://www.elastic.co/security-labs/getting-started-with-defend-for-containers",
+      "date": "2026-03-19",
+      "summary": "This technical resource provides a comprehensive walkthrough of Elastic\u2019s Defend for Containers (D4C) integration, covering Kubernetes-based deployment, the analysis of BPF-enriched runtime telemetry, and the practical application of policy-driven security controls to monitor and alert on activities within containerized Linux environments."
+    },
+    {
+      "title": "From Invitation to Infection: How SILENTCONNECT Delivers ScreenConnect",
+      "url": "https://www.elastic.co/security-labs/silentconnect-delivers-screenconnect",
+      "date": "2026-03-19",
+      "summary": "SILENTCONNECT is a multi-stage loader that leverages VBScript, in-memory PowerShell execution, and PEB masquerading to silently deploy the ScreenConnect RMM tool."
+    },
+    {
+      "title": "Get started with Elastic Security from your AI agent",
+      "url": "https://www.elastic.co/security-labs/agent-skills-elastic-security",
+      "date": "2026-03-17",
+      "summary": "Go from zero to a fully populated Elastic Security environment without leaving your IDE, using open source Agent Skills."
+    },
+    {
+      "title": "Managing Elastic Security Detection Rules with Terraform",
+      "url": "https://www.elastic.co/security-labs/managing-rules-with-terraform",
+      "date": "2026-03-13",
+      "summary": "Learn to define and deploy Elastic Security detection rules and exceptions using the Elastic Stack Terraform Provider vs detection-rules repository DaC capabilities."
+    },
+    {
+      "title": "Patch diff to SYSTEM",
+      "url": "https://www.elastic.co/security-labs/patch-diff-to-system",
+      "date": "2026-03-06",
+      "summary": "Leveraging LLMs and patch diffing, this research details a Use-After-Free vulnerability in Windows DWM, demonstrating a reliable exploit that achieves escalation from low-privileged user permissions to SYSTEM."
+    },
+    {
+      "title": "Hooked on Linux: Rootkit Taxonomy, Hooking Techniques and Tradecraft",
+      "url": "https://www.elastic.co/security-labs/linux-rootkits-1-hooked-on-linux",
+      "date": "2026-03-05",
+      "summary": "In this first part of a two-part series, we explore Linux rootkit taxonomy, trace their evolution from userland shared object hijacking and kernel-space loadable kernel module hooking to modern eBPF- and io_uring-powered techniques."
+    },
+    {
+      "title": "Manage your Elastic security stack as code with the Elastic Stack Terraform provider",
+      "url": "https://www.elastic.co/security-labs/manage-elastic-with-terraform",
+      "date": "2026-02-27",
+      "summary": "From detection rules to AI connectors - the latest Terraform provider releases bring security, observability, and ML capabilities to your infrastructure-as-code workflows."
+    },
+    {
+      "title": "Why 2026 is the Year to Upgrade to an Agentic AI SOC",
+      "url": "https://www.elastic.co/security-labs/why-2026-is-the-year-to-upgrade-to-an-agentic-ai-soc",
+      "date": "2026-02-27",
+      "summary": "Agentic AI SOCs differ from copilot-only models by autonomously prioritizing attacks over alerts, executing closed-loop containment, and providing traceable reasoning for every decision, allowing analysts to focus on high-value investigations."
+    },
+    {
+      "title": "Make The Most of Network Firewall Logs with Elastic Security",
+      "url": "https://www.elastic.co/security-labs/make-the-most-of-network-firewall-logs-with-elastic",
+      "date": "2026-02-25",
+      "summary": "Make the most of your firewall logs. In Part 1 of our series, learn how to ingest and parse logs from any firewall with Elastic Agent and use the Network Page to visually explore your network traffic for instant insights."
+    },
+    {
+      "title": "Beyond Behaviors: AI-Augmented Detection Engineering with ES|QL COMPLETION",
+      "url": "https://www.elastic.co/security-labs/beyond-behaviors-ai-augmented-detection-engineering-with-esql-completion",
+      "date": "2026-02-24",
+      "summary": "Learn how Elastic's ES|QL COMPLETION command brings LLM reasoning directly into detection rules, enabling detection engineers to build intelligent alert triage without external orchestration."
+    }
+  ]
+}

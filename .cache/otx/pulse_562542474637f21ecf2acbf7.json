@@ -1,0 +1,93 @@
+{
+  "id": "562542474637f21ecf2acbf7",
+  "name": "Latest Flash Exploit Used in Pawn Storm",
+  "description": "Our analysis of the Adobe Flash zero-day vulnerability used in the latest Pawn Storm campaign reveals that the previous mitigation techniques introduced by Adobe were not enough to secure the platform.\n\nUsed in Pawn Storm to target certain foreign affairs ministries, the vulnerability identified as CVE-2015-7645 represents a significant change in tactics from previous exploits. It is important to note that Adobe has released the bulletin APSB15-27 to address this vulnerability; the latest version of Flash (19.0.0.226) is no longer vulnerable.",
+  "author_name": "AlienVault",
+  "modified": "2017-03-06T17:14:47.187000",
+  "created": "2015-10-19T19:19:35.651000",
+  "tags": [
+    "pawn storm",
+    "adobe",
+    "flash",
+    "0day",
+    "sednit",
+    "apt28",
+    "sofacy",
+    "trendmicro",
+    "russia"
+  ],
+  "references": [
+    "http://blog.trendmicro.com/trendlabs-security-intelligence/latest-flash-exploit-used-in-pawn-storm-circumvents-mitigation-techniques/",
+    "http://blog.trendmicro.com/trendlabs-security-intelligence/new-adobe-flash-zero-day-used-in-pawn-storm-campaign/",
+    "https://helpx.adobe.com/security/products/flash-player/apsb15-27.html"
+  ],
+  "public": 1,
+  "adversary": "Sofacy",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 91594,
+      "indicator": "a5fca59a2fae0a12512336ca1b78f857afc06445",
+      "type": "FileHash-SHA1",
+      "created": "2015-10-19T19:19:36",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 91595,
+      "indicator": "2df498f32d8bad89d0d6d30275c19127763d5568",
+      "type": "FileHash-SHA1",
+      "created": "2015-10-19T19:19:36",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 91596,
+      "indicator": "20f5a9c0e1d2aef36d15ca149fe71ac6b2a9af1e",
+      "type": "FileHash-SHA1",
+      "created": "2015-10-19T19:19:36",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 54228,
+      "indicator": "CVE-2015-7645",
+      "type": "CVE",
+      "created": "2015-10-19T19:19:36",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 2,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

@@ -1,6 +1,6 @@
 # Threat Actor Dossier: APT28
 > MITRE ATT&CK Group ID: **G0007**
-> Generated: 2026-03-31 06:03 UTC  |  Sources: malpedia, alienvault_otx, mitre_attack
+> Generated: 2026-03-31 18:52 UTC  |  Sources: mitre_attack, malpedia, alienvault_otx
 
 ## Overview
 
@@ -107,7 +107,7 @@
 | T1598.003 | Reconnaissance | Spearphishing Link | MEDIUM |
 | T1669 | Initial Access | Wi-Fi Networks | MEDIUM |
 
-## Indicators of Compromise (OTX: 56)
+## Indicators of Compromise (OTX: 57)
 
 | Type | Value | Confidence | Threat Type | Malware Family | First Seen |
 |---|---|---|---|---|---|
@@ -167,6 +167,7 @@
 | ip | 185.10.58.170 |  |  |  |  |
 | ip | 104.171.117.216 |  |  |  |  |
 | ip | 141.255.160.52 |  |  |  |  |
+| url | http://www.adobeincorp.net/adhoc/XAgent.ipa |  |  |  |  |
 
 ## Targeted Sectors
 
@@ -226,6 +227,47 @@
 | GooseEgg | malware |  |
 | Graphite | malware | Trellix describes Graphite as a malware using the Microsoft Graph API and OneDrive for C&C. It was found being deployed… |
 | PocoDown | malware | uses POCO C++ cross-platform library, Xor-based string obfuscation, SSL library code and string overlap with Xtunnel,… |
+
+## Recent Intelligence
+
+> Synthesized from 4 vendor research articles using AI.
+
+### Recorded Future (Public) — 2025-12-17  `MEDIUM relevance`
+
+**[BlueDelta’s Persistent Campaign Against UKR.NET](https://www.recordedfuture.com/research/bluedeltas-persistent-campaign-against-ukrnet)**
+
+APT28 (operating as BlueDelta) conducted a persistent credential-harvesting campaign targeting UKR.NET users, employing advanced phishing techniques across multiple stages. The campaign demonstrates evolved tradecraft in the actor's ongoing operations against Ukrainian infrastructure and users.
+
+*Landscape context: **Threat Landscape Context:**
+
+This campaign reflects an intensifying focus by Russian state-sponsored actors on compromising Ukrainian critical infrastructure and government communications through identity-layer attacks, exploiting the accessibility and scale advantages of phishing over direct network intrusion during sustained conflict. The evolution of BlueDelta's credential-harvesting tradecraft against UKR.NET specifically indicates Russian operators are refining targeting precision and social engineering sophistication against high-value organizational email systems as traditional perimeter defenses improve.*
+
+### Recorded Future (Public) — 2026-01-07  `MEDIUM relevance`
+
+**[GRU-Linked BlueDelta Evolves Credential Harvesting](https://www.recordedfuture.com/research/gru-linked-bluedelta-evolves-credential-harvesting)**
+
+APT28 (tracked as BlueDelta by Insikt Group) evolved credential-harvesting campaigns targeting government, energy, and research organizations across Europe and Eurasia as of early 2026. The group's operational focus reflects a shift toward intensified collection against critical infrastructure and state institutions in the specified regions. No specific tactical innovations, tool changes, or temporal details beyond the January 2026 reporting date are provided in the article excerpt.
+
+*Landscape context: This reflects an ongoing shift toward persistent, low-detection-risk credential harvesting as a precursor to targeted intrusions, particularly against critical infrastructure where initial access brokers command premium value in the espionage supply chain. The geographic focus on Europe and Eurasia signals GRU's prioritization of strategic sectors where credential compromise enables sustained intelligence collection with minimal operational exposure.*
+
+### Recorded Future (Public) — 2026-02-24  `MEDIUM relevance`
+
+**[January 2026 CVE Landscape: 23 Critical Vulnerabilities Mark 5% Increase, APT28 Exploits Microsoft Office Zero-Day](https://www.recordedfuture.com/blog/january-2026-cve-landscape)**
+
+APT28 exploited a Microsoft Office zero-day vulnerability during January 2026, demonstrating continued focus on widely-used productivity software as an attack vector. The article provides no additional details regarding targeting scope, geographic focus, or tactical evolution beyond this single exploit activity.
+
+*Landscape context: The January 2026 CVE landscape reflects an accelerating pattern of nation-state actors like APT28 moving away from custom exploit development and toward rapid weaponization of public zero-days, particularly targeting productivity suites that maintain privileged access within enterprise environments. This shift underscores a strategic pivot toward exploits with immediate operational impact over traditional persistence mechanisms, driven by the expanding public disclosure cycle and compressed patching windows in enterprise deployments.*
+
+### ThreatLocker Blog — 2026-03-11  `MEDIUM relevance`
+
+**[What Is LameHug? How APT28 is using LLMs to generate attack commands](https://www.threatlocker.com/blog/what-is-lamehug-how-apt28-is-using-llms-to-generate-attack-commands)**
+
+APT28 has integrated large language models into its attack infrastructure, deploying the LameHug infostealer to generate attack commands dynamically. This represents an evolution in the group's operational approach, shifting from static command generation to AI-assisted attack execution. The article does not specify targeting sectors, countries, or provide additional tactical details beyond the LLM integration.
+
+*Landscape context: # Threat Landscape Context
+
+This development reflects an emerging pattern of state-sponsored actors operationalizing large language models to automate command generation and reduce operational friction, potentially lowering the technical barriers for distributed attack execution. APT28's integration of LLM-assisted tooling suggests nation-state adoption of AI-driven attack orchestration is transitioning from experimental to operational deployment in live campaigns.*
+
 
 ## Campaigns
 

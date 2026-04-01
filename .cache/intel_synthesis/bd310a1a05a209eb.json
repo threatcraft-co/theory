@@ -1,0 +1,14 @@
+{
+  "cached_at": "2026-03-31T18:52:46.883538+00:00",
+  "result": {
+    "actor_summary": "APT28 (operating as BlueDelta) conducted a persistent credential-harvesting campaign targeting UKR.NET users, employing advanced phishing techniques across multiple stages. The campaign demonstrates evolved tradecraft in the actor's ongoing operations against Ukrainian infrastructure and users.",
+    "landscape_summary": "**Threat Landscape Context:**\n\nThis campaign reflects an intensifying focus by Russian state-sponsored actors on compromising Ukrainian critical infrastructure and government communications through identity-layer attacks, exploiting the accessibility and scale advantages of phishing over direct network intrusion during sustained conflict. The evolution of BlueDelta's credential-harvesting tradecraft against UKR.NET specifically indicates Russian operators are refining targeting precision and social engineering sophistication against high-value organizational email systems as traditional perimeter defenses improve.",
+    "relevance": 60,
+    "source": "Recorded Future (Public)",
+    "source_tier": 2,
+    "date": "2025-12-17",
+    "title": "BlueDelta\u2019s Persistent Campaign Against UKR.NET",
+    "url": "https://www.recordedfuture.com/research/bluedeltas-persistent-campaign-against-ukrnet",
+    "provider": "claude"
+  }
+}

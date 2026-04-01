@@ -1,0 +1,305 @@
+{
+  "cached_at": "2026-03-31T18:52:26.445668+00:00",
+  "entries": [
+    {
+      "title": "ClickFix Campaigns Targeting Windows and macOS",
+      "url": "https://www.recordedfuture.com/research/clickfix-campaigns-targeting-windows-and-macos",
+      "date": "2026-03-25",
+      "summary": "Insikt Group reveals five ClickFix social engineering clusters (QuickBooks, Booking.com, Birdeye) targeting Windows and macOS. Learn how threat actors exploit native system tools with malicious, obfuscated commands to gain initial access, and get key mitigations for defense"
+    },
+    {
+      "title": "The Iran War: What You Need to Know",
+      "url": "https://www.recordedfuture.com/blog/the-iran-war-what-you-need-to-know",
+      "date": "2026-03-20",
+      "summary": "Insikt Group tracks the cyber, physical, and geopolitical components of the US-Israeli strikes on Iran \u2014 with continuously updated threat analysis and scenarios."
+    },
+    {
+      "title": "2025 Year in Review: Malicious, Infrastructure",
+      "url": "https://www.recordedfuture.com/research/2025-year-in-review-malicious-infrastructure",
+      "date": "2026-03-19",
+      "summary": "Explore Insikt Group\u2019s 2025 Malicious Infrastructure Report. Gain insights into Cobalt Strike, Vidar infostealers, and AI-driven threats to secure your 2026 strategy."
+    },
+    {
+      "title": "2025 Identity Threat Landscape Report: Inside the Infostealer Economy: Credential Threats in 2025",
+      "url": "https://www.recordedfuture.com/blog/identity-trend-report-march-blog",
+      "date": "2026-03-16",
+      "summary": "Recorded Future's 2025 Identity Threat Landscape Report analyzes hundreds of millions of compromised credentials to reveal how infostealer malware is evolving, which systems attackers are targeting, and what security teams must do to get ahead of credential-based breaches."
+    },
+    {
+      "title": "February 2026 CVE Landscape: 13 Critical Vulnerabilities Mark 43% Drop from January",
+      "url": "https://www.recordedfuture.com/blog/february-2026-cve-landscape",
+      "date": "2026-03-12",
+      "summary": "February 2026 saw a 43% decrease in high-impact vulnerabilities, with Recorded Future's Insikt Group\u00ae identifying 13 vulnerabilities requiring immediate remediation, down from 23 in January 2026."
+    },
+    {
+      "title": "Latin America's Cybersecurity Turning Point: From Reactive Defense to Threat Intelligence",
+      "url": "https://www.recordedfuture.com/blog/latin-america-cybersecurity-turning-point",
+      "date": "2026-03-03",
+      "summary": "Latin America's threat landscape is evolving fast \u2014 and reactive defense is no longer enough. PIX fraud, ransomware, and targeted attacks are outpacing overstretched security teams. Recorded Future provides LATAM-specific intelligence, automation, and seamless integrations to help your team get ahead of threats before they hit."
+    },
+    {
+      "title": "Recorded Future Expands Coverage of Scams and Financial Fraud with Money Mule Intelligence from CYBERA",
+      "url": "https://www.recordedfuture.com/blog/recorded-future-money-mule-intelligence-cybera",
+      "date": "2026-02-26",
+      "summary": "Recorded Future is expanding its payment fraud prevention capabilities through a partnership with CYBERA, the industry leader in detecting and verifying data on scam-linked bank accounts."
+    },
+    {
+      "title": "January 2026 CVE Landscape: 23 Critical Vulnerabilities Mark 5% Increase, APT28 Exploits Microsoft Office Zero-Day",
+      "url": "https://www.recordedfuture.com/blog/january-2026-cve-landscape",
+      "date": "2026-02-24",
+      "summary": "January 2026 saw 23 actively exploited CVEs, including APT28\u2019s Microsoft Office zero-day and critical auth bypass flaws impacting enterprise systems."
+    },
+    {
+      "title": "Preparing for Russia\u2019s New Generation Warfare in Europe",
+      "url": "https://www.recordedfuture.com/research/preparing-for-russias-new-generation-warfare-in-europe",
+      "date": "2026-02-24",
+      "summary": "Russia is escalating its hybrid warfare against NATO into a coordinated, full-scale campaign blending cyber attacks, sabotage, and influence operations. Read the full report to understand what New Generation Warfare means for your organization."
+    },
+    {
+      "title": "2025 Cloud Threat Hunting and Defense Landscape",
+      "url": "https://www.recordedfuture.com/research/2025-cloud-threat-hunting-defense-landscape",
+      "date": "2026-02-19",
+      "summary": "Threat actors are doubling down on cloud infrastructure \u2014 exploiting misconfigurations, abusing native services, and pivoting through hybrid environments to maximize impact. See how attack patterns are evolving across exploitation, ransomware, credential abuse, and AI service targeting in this latest cloud threat roundup."
+    },
+    {
+      "title": "GrayCharlie Hijacks Law Firm Sites in Suspected Supply-Chain Attack",
+      "url": "https://www.recordedfuture.com/research/graycharlie-hijacks-law-firm-sites-suspected-supply-chain-attack",
+      "date": "2026-02-18",
+      "summary": "GrayCharlie turns compromised WordPress sites into malware delivery machines. Discover how this threat actor chains fake browser updates and ClickFix lures to deploy NetSupport RAT, Stealc, and SectopRAT."
+    },
+    {
+      "title": "Network Intelligence: Your Questions, Global Answers",
+      "url": "https://www.recordedfuture.com/blog/network-intelligence-questions-answered",
+      "date": "2026-02-16",
+      "summary": "Learn how network intelligence gives security teams control over threat investigation with global visibility\u2014no more drowning in generic, passive threat feeds."
+    },
+    {
+      "title": "State of Security Report | Recorded Future",
+      "url": "https://www.recordedfuture.com/research/state-of-security",
+      "date": "2026-02-12",
+      "summary": "Download Recorded Future's 2026 State of Security report which provides comprehensive threat intelligence on geopolitical fragmentation, state-sponsored operations, ransomware evolution, and emerging technology risk."
+    },
+    {
+      "title": "Fragmentation Defined 2025's Threat Landscape. Here's What It Means for 2026",
+      "url": "https://www.recordedfuture.com/blog/fragmentation-in-2025-what-it-means-for-2026",
+      "date": "2026-02-12",
+      "summary": "The global threat landscape didn't simplify in 2025 \u2014 it shattered. The 2026 State of Security report represents Insikt Group's most comprehensive threat intelligence analysis to date, drawing on proprietary intelligence, network telemetry, and deep geopolitical research to help you stay ahead of converging threats."
+    },
+    {
+      "title": "From 27 Steps to 5: How Recorded Future Reimagined Threat Hunting with Autonomous Threat Operations",
+      "url": "https://www.recordedfuture.com/blog/threat-hunting-27-steps-to-5",
+      "date": "2026-02-11",
+      "summary": "Discover how Autonomous Threat Operations reduces 27 manual steps to as few as 5 largely automated ones, delivering the speed, scale, and effectiveness that the modern threat landscape demands."
+    },
+    {
+      "title": "Rublevka Team: Anatomy of a Russian Crypto Drainer Operation",
+      "url": "https://www.recordedfuture.com/research/rublevka-team-anatomy-russian-crypto-drainer-operation",
+      "date": "2026-02-04",
+      "summary": "Rublevka Team exemplifies the industrialization of crypto scams. Learn how traffer teams and wallet drainers enable high-volume theft."
+    },
+    {
+      "title": "Autonomous Threat Operations in action: Real results from Recorded Future\u2019s own SOC team | Recorded Future",
+      "url": "https://www.recordedfuture.com/blog/autonomous-threat-operations-in-action",
+      "date": "2026-02-01",
+      "summary": "This article explores how Recorded Future served as Customer Zero for Autonomous Threat Operations, testing the new solution within our own SOC to validate its real-world impact before releasing it to the public. The article reveals how the technology transformed inconsistent, analyst-dependent threat hunting into unified, automated operations\u2014enabling junior analysts to run 15\u201320 hunts weekly and allowing our CISO to launch comprehensive network hunts in five minutes in response to critical threats like Salt Typhoon. By understanding these outcomes, security leaders can see how autonomous threat hunting empowers teams at every skill level to shift from reactive to proactive defense."
+    },
+    {
+      "title": "PurpleBravo\u2019s Targeting of the IT Software Supply Chain",
+      "url": "https://www.recordedfuture.com/research/purplebravos-targeting-it-software-supply-chain",
+      "date": "2026-01-21",
+      "summary": "Discover how PurpleBravo, a North Korean threat group, exploits fake job offers to target software supply chains, using RATs and infostealers like BeaverTail."
+    },
+    {
+      "title": "Threat and Vulnerability Management in 2026",
+      "url": "https://www.recordedfuture.com/blog/threat-and-vulnerability-management",
+      "date": "2026-01-16",
+      "summary": "Understand the future of threat and vulnerability management (TVM). Learn what TVM is, why traditional tools fail, and how intelligence is essential in today\u2019s landscape."
+    },
+    {
+      "title": "Best Ransomware Detection Tools",
+      "url": "https://www.recordedfuture.com/blog/best-ransomware-detection-tools",
+      "date": "2026-01-13",
+      "summary": "Stop ransomware before encryption begins. Learn how intelligence-driven detection tools can help identify precursor behaviors and reduce false positives for faster response."
+    },
+    {
+      "title": "December 2025 CVE Landscape: 22 Critical Vulnerabilities Mark 120% Surge, React2Shell Dominates Threat Activity",
+      "url": "https://www.recordedfuture.com/blog/december-2025-cve-landscape",
+      "date": "2026-01-13",
+      "summary": "December 2025 saw a 120% surge in critical CVEs, with 22 exploited flaws and React2Shell (CVE-2025-55182) dominating threat activity across Meta\u2019s React framework."
+    },
+    {
+      "title": "Practitioners Reveal What Makes Threat Intelligence Programs Mature",
+      "url": "https://www.recordedfuture.com/blog/practitioner-insights-advancing-threat-intelligence",
+      "date": "2026-01-09",
+      "summary": "Threat intelligence practitioners from Global Payments, Adobe, and Superhuman reveal how mature CTI programs transform data overload into strategic business value. Learn proven approaches to automation, cross-functional collaboration, and executive communication."
+    },
+    {
+      "title": "GRU-Linked BlueDelta Evolves Credential Harvesting",
+      "url": "https://www.recordedfuture.com/research/gru-linked-bluedelta-evolves-credential-harvesting",
+      "date": "2026-01-07",
+      "summary": "Insikt Group reveals how GRU-linked BlueDelta evolved credential-harvesting campaigns targeting government, energy, and research organizations across Europe and Eurasia."
+    },
+    {
+      "title": "New ransomware tactics to watch out for in 2026",
+      "url": "https://www.recordedfuture.com/blog/ransomware-tactics-2026",
+      "date": "2026-01-05",
+      "summary": "Ransomware groups made less money in 2025 despite a 47% increase in attacks, driving new tactics: bundled DDoS services, insider recruitment, and gig worker exploitation. Learn the emerging trends defenders must prepare for in 2026."
+    },
+    {
+      "title": "Digital Threat Detection Tools & Best Practices",
+      "url": "https://www.recordedfuture.com/blog/digital-threat-detection",
+      "date": "2025-12-22",
+      "summary": "Explore digital threat detection tools and learn best practices to identify, analyze, and neutralize digital threats before they impact your business."
+    },
+    {
+      "title": "BlueDelta\u2019s Persistent Campaign Against UKR.NET",
+      "url": "https://www.recordedfuture.com/research/bluedeltas-persistent-campaign-against-ukrnet",
+      "date": "2025-12-17",
+      "summary": "Discover how Russia\u2019s BlueDelta targets UKR.NET users with advanced credential-harvesting campaigns, evolving tradecraft, and multi-stage phishing techniques."
+    },
+    {
+      "title": "China\u2019s Zero-Day Pipeline: From Discovery to Deployment",
+      "url": "https://www.recordedfuture.com/research/china-zero-day-pipeline",
+      "date": "2025-12-17",
+      "summary": "China is consolidating cyber power through zero-days. Explore how state control of vulnerabilities enables long-term strategic advantage."
+    },
+    {
+      "title": "The $0 Transaction That Signaled a Nation-State Cyberattack",
+      "url": "https://www.recordedfuture.com/blog/transaction-that-signaled-nation-state-cyberattack",
+      "date": "2025-12-17",
+      "summary": "A $0 card test signaled a Chinese state-linked cyberattack on Anthropic\u2019s AI platform. Learn how card-testing fraud intelligence spots nation-state ops early."
+    },
+    {
+      "title": "Cyber on the Geopolitical, Battlefield: Beyond the, \u201cBig Four\u02ee",
+      "url": "https://www.recordedfuture.com/research/cyber-geopolitical-battlefield",
+      "date": "2025-12-17",
+      "summary": "Offensive cyber operations are spreading beyond the Big Four. Discover how regional conflicts are driving new state-linked cyber threats."
+    },
+    {
+      "title": "What\u2019s Next for Enterprise Threat Intelligence in 2026",
+      "url": "https://www.recordedfuture.com/blog/whats-next-for-enterprise-threat-intelligence-in-2026",
+      "date": "2025-12-15",
+      "summary": "Top enterprise threat intelligence trends for 2026: AI-augmented CTI, unified platforms, workflow integration, data fusion, budgets, ROI, and maturity."
+    },
+    {
+      "title": "Palestine Action: Operations and Global Network",
+      "url": "https://www.recordedfuture.com/research/palestine-action-operations-and-global-network",
+      "date": "2025-12-11",
+      "summary": "Explores Palestine Action\u2019s post-designation global network, tactics, and targets, and evaluates key physical risks and mitigations for organizations."
+    },
+    {
+      "title": "Implications of Russia-India-China Trilateral Cooperation",
+      "url": "https://www.recordedfuture.com/research/implications-of-russia-india-china-trilateral-cooperation",
+      "date": "2025-12-10",
+      "summary": "Examines Russia-India-China trilateral cooperation, U.S. tariffs and sanctions, why a formal bloc is unlikely, and implications for governments and business."
+    },
+    {
+      "title": "GrayBravo\u2019s CastleLoader Activity Clusters Target Multiple Industries",
+      "url": "https://www.recordedfuture.com/research/graybravos-castleloader-activity-clusters-target-multiple-industries",
+      "date": "2025-12-09",
+      "summary": "Note: The analysis cut-off date for this report was November 10, 2025 Executive Summary Insikt Group continues to monitor GrayBravo (formerly tracked as TAG-150), a technically sophisticated and rapidly evolving threat actor first identified in September 2025. GrayBravo demonstrates strong adaptability, responsiveness to public exposure, and operates a large-scale, multi-layered infrastructure. Recent analysis of GrayBravo\u2019s ecosystem uncovered four distinct activity clusters leveraging the group\u2019s CastleLoader malware, each defined by unique tactics, techniques, and victim profiles. These findings reinforce the assessment that GrayBravo operates a malware-as-a-service (MaaS) model. For example, one cluster, tracked as TAG-160, impersonates global logistics firms, using phishing lures and the ClickFix technique to distribute CastleLoader while spoofing legitimate emails and exploiting freight-matching platforms to target victim"
+    },
+    {
+      "title": "November 2025 CVE Landscape: 10 Critical Vulnerabilities Show 69% Drop from October",
+      "url": "https://www.recordedfuture.com/blog/november-2025-cve-landscape",
+      "date": "2025-12-09",
+      "summary": "November 2025 CVE landscape: 10 exploited critical vulnerabilities, a 69% drop from October, and why Fortinet and Samsung flaws need urgent patching."
+    },
+    {
+      "title": "5 Real-Word Third-Party Risk Examples",
+      "url": "https://www.recordedfuture.com/blog/third-party-risk-examples",
+      "date": "2025-12-09",
+      "summary": "Explore 5 third-party risk examples, from vendor data breaches to supply chain attacks and learn how third-party risk management can prevent cyberattacks."
+    },
+    {
+      "title": "When the Digital World Turns Physical: The Expanding Role of Threat Intelligence in Executive Protection",
+      "url": "https://www.recordedfuture.com/blog/digital-world-turns-physical-expanding-role-threat-intelligence-executive-protection",
+      "date": "2025-12-08",
+      "summary": "Discover how converged threat intelligence protects executives from deepfakes, doxxing, and cyber-enabled physical threats with Recorded Future."
+    },
+    {
+      "title": "Critical React2Shell Vulnerability Under Active Exploitation by Chinese Threat Actors",
+      "url": "https://www.recordedfuture.com/blog/critical-react2shell-vulnerability",
+      "date": "2025-12-08",
+      "summary": "A critical vulnerability in React Server Components is allegedly being actively exploited by multiple Chinese threat actors, Recorded Future recommends organizations patch their systems immediately."
+    },
+    {
+      "title": "The Bug That Won't Die: 10 Years of the Same Mistake",
+      "url": "https://www.recordedfuture.com/blog/the-bug-that-wont-die",
+      "date": "2025-12-05",
+      "summary": "Explore a decade of deserialization vulnerabilities, from Java to React/Next.js CVEs, and learn how to harden apps and stay ahead with Recorded Future."
+    },
+    {
+      "title": "The Hidden Cascade: Why Law Firm Breaches Destroy More than Data",
+      "url": "https://www.recordedfuture.com/blog/the-hidden-cascade",
+      "date": "2025-12-05",
+      "summary": "Discover how law firm breaches expose decades of M&A intelligence, client data, and privileged strategy\u2014and how to reduce cascading vendor risk before it hits."
+    },
+    {
+      "title": "Intellexa\u2019s Global Corporate Web",
+      "url": "https://www.recordedfuture.com/research/intellexas-global-corporate-web",
+      "date": "2025-12-03",
+      "summary": "Uncover Intellexa\u2019s global corporate web powering Predator spyware, front companies, and expanding targeting from civil society to executives worldwide."
+    },
+    {
+      "title": "The Maturity Gap: The Next Frontier in Threat Intelligence",
+      "url": "https://www.recordedfuture.com/blog/maturity-gap-next-frontier-in-threat-intelligence",
+      "date": "2025-12-03",
+      "summary": "Learn what advanced threat intelligence maturity really means and how to close the gap between current capabilities and predictive, autonomous operations."
+    },
+    {
+      "title": "Inside the CopyCop Playbook: How to Fight Back in the Age of Synthetic Media",
+      "url": "https://www.recordedfuture.com/blog/inside-the-copycop-playbook",
+      "date": "2025-12-02",
+      "summary": "Uncover how Russia\u2019s CopyCop network uses AI-generated news and fake media sites to influence global audiences\u2014and learn the key defenses against synthetic media threats."
+    },
+    {
+      "title": "AI Malware: Hype vs. Reality",
+      "url": "https://www.recordedfuture.com/blog/ai-malware-hype-vs-reality",
+      "date": "2025-12-01",
+      "summary": "A grounded look at AI malware: most threats sit at low maturity levels, with no verified autonomous BYOAI attacks. Learn what\u2019s real, what\u2019s hype, and how defenders should respond."
+    },
+    {
+      "title": "How Ransomware Affects Business Operations, Revenue, and Brand Reputation",
+      "url": "https://www.recordedfuture.com/blog/how-ransomware-affects-businesses",
+      "date": "2025-12-01",
+      "summary": "Learn how ransomware works, how it can impact operations, revenue, and brand reputation, and how to prevent ransomware from infecting your business."
+    },
+    {
+      "title": "Integrating Threat Intelligence and Vulnerability Management: A Modern Approach",
+      "url": "https://www.recordedfuture.com/blog/threat-intelligence-and-vulnerability-management",
+      "date": "2025-11-26",
+      "summary": "Learn how combining threat intelligence and vulnerability management creates a modern approach to risk reduction and how Recorded Future integrates both."
+    },
+    {
+      "title": "The Salesforce-Gainsight Security Incident: What You Need to Know",
+      "url": "https://www.recordedfuture.com/blog/salesforce-gainsight-security-incident",
+      "date": "2025-11-26",
+      "summary": "Learn how threat intelligence identifies supply-chain compromise risks in SaaS integrations and how Recorded Future helps organizations defend against attacks like the Salesforce-Gainsight incident."
+    },
+    {
+      "title": "Choosing a Digital Risk Intelligence Platform: 5 Key Capabilities to Evaluate",
+      "url": "https://www.recordedfuture.com/blog/evaluating-digital-risk-intelligence-platforms",
+      "date": "2025-11-24",
+      "summary": "Evaluating digital risk intelligence platforms? Learn the 5 essential capabilities you should consider in order to protect your brand, assets, and attack surface."
+    },
+    {
+      "title": "Threat Intelligence Automation",
+      "url": "https://www.recordedfuture.com/blog/threat-intelligence-automation",
+      "date": "2025-11-20",
+      "summary": "Discover how threat intelligence automation from Recorded Future empowers security teams with real-time insights, faster response, and greater efficiency."
+    },
+    {
+      "title": "The Future of Humanoid Robotics",
+      "url": "https://www.recordedfuture.com/research/future-humanoid-robotics",
+      "date": "2025-11-20",
+      "summary": "Humanoid robots are arriving faster than anyone expected. Discover the hidden risks, global power shifts, and breakthroughs shaping the future \u2014 before your competitors do."
+    },
+    {
+      "title": "Operational Cyber Threat Intelligence",
+      "url": "https://www.recordedfuture.com/blog/operational-cyber-threat-intelligence",
+      "date": "2025-11-19",
+      "summary": "Move beyond noise. Learn how to build effective threat intelligence operations that turn raw data into actionable insights and proactive cyber defense."
+    }
+  ]
+}
