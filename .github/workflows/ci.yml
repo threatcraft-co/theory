@@ -68,8 +68,10 @@ jobs:
         run: pip install ruff
 
       - name: Run ruff
-        run: ruff check . --select E,F,W --ignore E501,E402,W291,W293
+        run: ruff check . --select E,F,W --ignore E501,E402,W291,W293,E701,F401
         # E501 = line too long
         # E402 = module level import not at top
         # W291 = trailing whitespace (ASCII banner lines)
         # W293 = whitespace before comment
+        # E701 = multiple statements on one line (compact if/else style)
+        # F401 = imported but unused (some collectors use conditional imports)
