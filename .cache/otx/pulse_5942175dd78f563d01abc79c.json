@@ -1,0 +1,31 @@
+{
+  "id": "5942175dd78f563d01abc79c",
+  "name": "Alert (TA17-164A)",
+  "description": "HIDDEN COBRA \u2013 North Korean Malicious Cyber Activity",
+  "author_name": "bschlaps",
+  "modified": "2017-06-15T05:17:12.187000",
+  "created": "2017-06-15T05:13:01.544000",
+  "tags": [],
+  "references": [
+    "TA-17-164A_stix.xml"
+  ],
+  "public": 1,
+  "adversary": "",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "white",
+  "indicators": [],
+  "revision": 1,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "bschlaps",
+    "id": "22207",
+    "avatar_url": "https://otx.alienvault.com/assets/images/default-avatar.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

@@ -1,6 +1,12 @@
 {
-  "cached_at": "2026-03-31T18:52:28.693645+00:00",
+  "cached_at": "2026-04-01T05:38:00.118838+00:00",
   "entries": [
+    {
+      "title": "How SentinelOne\u2019s AI EDR Autonomously Discovered and Stopped Anthropic\u2019s Claude from Executing a Zero Day Supply Chain Attack, Globally",
+      "url": "https://www.sentinelone.com/blog/how-sentinelones-ai-edr-autonomously-discovered-and-stopped-anthropics-claude-from-executing-a-zero-day-supply-chain-attack-globally/",
+      "date": "2026-03-31",
+      "summary": "Read our blog post to learn how SentinelOne\u2019s AI EDR autonomously stopped a global LiteLLM supply chain attack before execution."
+    },
     {
       "title": "FortiGate Edge Intrusions | Stolen Service Accounts Lead to Rogue Workstations and Deep AD Compromise",
       "url": "https://www.sentinelone.com/blog/fortigate-edge-intrusions/",
@@ -54,12 +60,6 @@
       "url": "https://www.sentinelone.com/blog/marketplace-skills-and-dependency-hijack-in-claude-code/",
       "date": "2026-01-06",
       "summary": "Learn how AI coding assistants managing dependencies via plugins are now creating a new supply-chain risk when automation is compromised."
-    },
-    {
-      "title": "CyberVolk Returns | Flawed VolkLocker Brings New Features With Growing Pains",
-      "url": "https://www.sentinelone.com/blog/cybervolk-returns-flawed-volklocker-brings-new-features-with-growing-pains/",
-      "date": "2025-12-11",
-      "summary": "Deep dive into CyberVolk\u2019s new VolkLocker ransomware-as-a-service, its major design flaw, and what it signals for cyber defenders."
     }
   ]
 }
