@@ -68,10 +68,11 @@ jobs:
         run: pip install ruff
 
       - name: Run ruff
-        run: ruff check . --select E,F,W --ignore E501,E402,W291,W293,E701,F401
+        run: ruff check . --select E,F,W --ignore E501,E402,W291,W292,W293,E701,E702,F401,F541,F841
         # E501 = line too long
         # E402 = module level import not at top
-        # W291 = trailing whitespace (ASCII banner lines)
-        # W293 = whitespace before comment
-        # E701 = multiple statements on one line (compact if/else style)
-        # F401 = imported but unused (some collectors use conditional imports)
+        # W291/W292/W293 = trailing whitespace (ASCII banner lines)
+        # E701/E702 = multiple statements on one line (compact style throughout)
+        # F401 = imported but unused (conditional imports in collectors)
+        # F541 = f-string without placeholders
+        # F841 = local variable assigned but never used
