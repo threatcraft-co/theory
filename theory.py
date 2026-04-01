@@ -743,6 +743,25 @@ notes:
   - Output files are saved to output/dossiers/
 """
 
+
+BANNER = r"""
+░██████████░██     ░██ ░██████████   ░██████   ░█████████  ░██     ░██ 
+    ░██    ░██     ░██ ░██          ░██   ░██  ░██     ░██  ░██   ░██  
+    ░██    ░██     ░██ ░██         ░██     ░██ ░██     ░██   ░██ ░██   
+    ░██    ░██████████ ░█████████  ░██     ░██ ░█████████     ░████    
+    ░██    ░██     ░██ ░██         ░██     ░██ ░██   ░██       ░██     
+    ░██    ░██     ░██ ░██          ░██   ░██  ░██    ░██      ░██     
+    ░██    ░██     ░██ ░██████████   ░██████   ░██     ░██     ░██     
+"""
+
+BANNER_SUBTITLE = (
+    "   \n"
+    "  multi-source threat actor intelligence\n"
+    "  open-source · free forever · built for the community\n"
+    "  github.com/threatcraft-co/theory\n"
+)
+
+
 def _build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="theory",
@@ -832,7 +851,20 @@ def _build_parser() -> argparse.ArgumentParser:
     return p
 
 
+def _print_banner() -> None:
+    try:
+        from rich.console import Console
+        c = Console(stderr=True)
+        c.print(f"[cyan]{BANNER}[/cyan]", end="")
+        c.print(f"[dim]{BANNER_SUBTITLE}[/dim]")
+    except ImportError:
+        import sys
+        print(BANNER, file=sys.stderr)
+        print(BANNER_SUBTITLE, file=sys.stderr)
+
+
 def main(argv: list[str] | None = None) -> None:
+    _print_banner()
     parser = _build_parser()
     args   = parser.parse_args(argv)
 
