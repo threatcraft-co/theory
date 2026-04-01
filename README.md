@@ -158,10 +158,11 @@ python theory.py --list-actors               # see all actors and their aliases
 When you add `vendor` to your sources, THEORY fetches recent articles from 35+ threat research blogs (Mandiant, Google TAG, Unit 42, Secureworks, Recorded Future, Okta, CrowdStrike, Kaspersky GReAT, and more) and uses an LLM to synthesize what each article reveals about your actor specifically.
 
 ```bash
-# Set your preferred provider in .env
-THEORY_LLM_PROVIDER=claude    # or openai, ollama
+# 1. Set your preferred provider and API key in .env
+THEORY_LLM_PROVIDER=vendor    # or claude, openai, ollama
+LLM_API_KEY=your_key    # get yours at vendor.agnostic.com
 
-# Run with synthesis
+# 2. Run with synthesis
 python theory.py --actor "Lazarus Group" --sources mitre,malpedia,otx,vendor
 ```
 
