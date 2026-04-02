@@ -48,7 +48,7 @@ class DossierReporter:
 
     def save_markdown(self, profile: dict[str, Any]) -> Path:
         OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-        actor_slug = _slugify(profile.get("actor_name", "unknown"))
+        actor_slug = _canonical_slug(profile)
         path = OUTPUT_DIR / f"{actor_slug}.md"
         path.write_text(self._build_markdown(profile), encoding="utf-8")
         logger.info("Dossier saved → %s", path)
@@ -87,7 +87,17 @@ class DossierReporter:
         meta.add_row("Also Known As", aliases)
         console.print(meta)
 
-        if desc:
+        # Actor overview — LLM synopsis takes priority over raw MITRE description
+        overview = profile.get("actor_overview", "")
+        if overview:
+            console.print()
+            console.print(Panel(
+                textwrap.fill(overview, 90),
+                title="[bold cyan]Intelligence Overview[/]",
+                border_style="cyan",
+                subtitle="[dim]LLM-synthesized from all sources[/]",
+            ))
+        elif desc:
             console.print()
             console.print(Panel(textwrap.fill(desc, 90), title="[bold]Overview[/]", border_style="dim"))
 
@@ -149,11 +159,24 @@ class DossierReporter:
         malware = profile.get("malware", [])
         if malware:
             console.print("[bold]Associated Malware / Tools[/]")
-            mw = Table("Name", "Type", "Description", box=rich_box.SIMPLE_HEAD, header_style="bold magenta")
+            mw = Table("Name", "Type", box=rich_box.SIMPLE_HEAD,
+                       header_style="bold magenta", show_lines=False)
             for m in malware:
-                mw.add_row(m.get("name",""), m.get("type",""),
-                           textwrap.shorten(m.get("description",""), 70, placeholder="…"))
+                mw.add_row(m.get("name",""), m.get("type",""))
             console.print(mw)
+
+            # Full descriptions below the table
+            for m in malware:
+                desc = (m.get("description") or "").strip()
+                if not desc:
+                    continue
+                name = m.get("name", "")
+                console.print(f"  [bold cyan]{name}[/]")
+                wrapped = textwrap.fill(desc, width=88,
+                                        initial_indent="    ",
+                                        subsequent_indent="    ")
+                console.print(f"[dim]{wrapped}[/dim]")
+                console.print()
 
         # IOCs
         indicators = profile.get("indicators", [])
@@ -276,7 +299,18 @@ class DossierReporter:
             console.print()
             console.print("[bold]Campaigns[/]")
             for c in campaigns:
-                console.print(f"  • [cyan]{c['name']}[/]  {c.get('first_seen','')} – {c.get('last_seen','')}")
+                period = ""
+                if c.get("first_seen") or c.get("last_seen"):
+                    period = f"  {c.get('first_seen','?')} – {c.get('last_seen','?')}"
+                console.print(f"  • [cyan]{c['name']}[/]{period}")
+                if c.get("description"):
+                    # Wrap description nicely in terminal
+                    wrapped = textwrap.fill(c["description"], width=90,
+                                           initial_indent="    ",
+                                           subsequent_indent="    ")
+                    console.print(f"[dim]{wrapped}[/dim]")
+                if c.get("url"):
+                    console.print(f"    [dim]{c['url']}[/dim]")
 
         console.print()
         console.print(f"[dim]Generated {_now_utc()}[/]")
@@ -317,6 +351,14 @@ class DossierReporter:
             a(f"> MITRE ATT&CK Group ID: **{gid}**")
         a(f"> Generated: {_now_utc()}  |  Sources: {sources}")
         a("")
+        # LLM-generated synopsis — shown at the very top if available
+        overview = profile.get("actor_overview", "")
+        if overview:
+            a("## Synopsis")
+            a("")
+            a(overview)
+            a("")
+
         a("## Overview")
         a("")
         a("| Field | Value |")
@@ -327,7 +369,7 @@ class DossierReporter:
         a(f"| **Also Known As** | {aliases} |")
         a("")
 
-        if desc:
+        if desc and not overview:
             a(desc)
             a("")
 
@@ -440,7 +482,8 @@ class DossierReporter:
             a("| Name | Type | Description |")
             a("|---|---|---|")
             for m in malware:
-                a(f"| {m.get('name','')} | {m.get('type','')} | {textwrap.shorten(m.get('description',''), 120, placeholder='…')} |")
+                desc_short = textwrap.shorten(m.get("description",""), 120, placeholder="…")
+                a(f"| {m.get('name','')} | {m.get('type','')} | {desc_short} |")
             a("")
 
         vendor_intel = profile.get("vendor_intel", [])
@@ -465,15 +508,32 @@ class DossierReporter:
                     a(f"*Landscape context: {land_sum}*")
                     a("")
             a("")
+            # Full descriptions below the table for any malware with descriptions
+            detailed = [m for m in malware if m.get("description","").strip()]
+            if detailed:
+                a("### Malware Details")
+                a("")
+                for m in detailed:
+                    a(f"**{m.get('name','')}** ({m.get('type','unknown')})")
+                    a("")
+                    a(m["description"].strip())
+                    a("")
+            a("")
 
         if camps:
             a("## Campaigns")
             a("")
             for c in camps:
-                period = f" ({c.get('first_seen','?')} – {c.get('last_seen','?')})" if c.get("first_seen") or c.get("last_seen") else ""
-                a(f"- **{c['name']}**{period}")
+                period = (
+                    f" ({c.get('first_seen','?')} – {c.get('last_seen','?')})"
+                    if c.get("first_seen") or c.get("last_seen") else ""
+                )
+                url_md = f" — [ATT&CK]({c['url']})" if c.get("url") else ""
+                a(f"### {c['name']}{period}{url_md}")
+                a("")
                 if c.get("description"):
-                    a(f"  {textwrap.shorten(c['description'], 140, placeholder='…')}")
+                    a(c["description"].strip())
+                    a("")
             a("")
 
         return "\n".join(L)
@@ -481,6 +541,24 @@ class DossierReporter:
 
 def _slugify(name: str) -> str:
     return name.lower().replace(" ", "_").replace("/", "_")
+
+
+def _canonical_slug(profile: dict) -> str:
+    """
+    Build the output filename slug using the canonical actor name from
+    ALIAS_TABLE so --actor "Fancy Bear" always produces apt28.md regardless
+    of how the actor was typed. Falls back to profile actor_name if not found.
+    """
+    actor_name = profile.get("actor_name", "unknown")
+    try:
+        from collectors.cisa_advisories import ALIAS_TABLE
+        name_lower = actor_name.lower()
+        for canonical, aliases in ALIAS_TABLE.items():
+            if canonical.lower() == name_lower or name_lower in aliases:
+                return _slugify(canonical)
+    except Exception:
+        pass
+    return _slugify(actor_name)
 
 
 def _now_utc() -> str:

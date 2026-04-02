@@ -461,7 +461,105 @@ class IntelligenceSynthesizer:
         self._save_cache(cache_key, result)
         return result
 
+    def synthesize_overview(
+        self,
+        profile:        dict,
+        queried_name:   str,
+    ) -> str | None:
+        """
+        Generate a 4-6 sentence analyst synopsis of the actor using the full
+        aggregated profile as context. Uses the name the user actually queried
+        (e.g. "APT28" not "Fancy Bear").
+
+        Synthesizes across all available data: MITRE TTPs, malware, campaigns,
+        vendor intel summaries, IOCs, CVEs, and CISA advisories.
+
+        Returns a plain-text paragraph, or None if no LLM is available.
+        """
+        if not self.available:
+            return None
+
+        # Build a structured context block from the profile
+        techniques   = profile.get("techniques", [])
+        malware      = profile.get("malware", [])
+        campaigns    = profile.get("campaigns", [])
+        motivations  = ", ".join(profile.get("motivations", [])) or "unknown"
+        origin       = profile.get("origin") or profile.get("suspected_origin") or "unknown"
+        first_seen   = profile.get("first_seen", "unknown")
+        sectors      = ", ".join(profile.get("sectors", [])[:8]) or "unknown"
+        aliases      = ", ".join(profile.get("aliases", [])[:8]) or "none"
+        description  = profile.get("description", "")
+
+        # Top tactics by frequency
+        tactic_counts: dict[str, int] = {}
+        for t in techniques:
+            tac = t.get("tactic", "")
+            if tac:
+                tactic_counts[tac] = tactic_counts.get(tac, 0) + 1
+        top_tactics = ", ".join(
+            k for k, _ in sorted(tactic_counts.items(), key=lambda x: -x[1])[:5]
+        ) or "unknown"
+
+        # Top malware names
+        top_malware = ", ".join(
+            m.get("name", "") for m in malware[:8] if m.get("name")
+        ) or "none identified"
+
+        # Campaign names
+        campaign_names = ", ".join(
+            c.get("name", "") for c in campaigns[:5] if c.get("name")
+        ) or "none documented"
+
+        # Vendor intel summaries
+        vendor_intel  = profile.get("vendor_intel", []) or []
+        recent_intel  = "\n".join(
+            f"- [{v.get('source','')}] {v.get('actor_summary','')}"
+            for v in vendor_intel[:6]
+            if v.get("actor_summary")
+        ) or "No recent vendor reporting available."
+
+        prompt = f"""You are a senior threat intelligence analyst. Write a concise 4-6 sentence
+executive synopsis of the threat actor known as {queried_name}.
+
+Use ONLY the structured data below — do not invent facts. Always refer to the actor
+as "{queried_name}" (not by aliases). Write in third person, past/present tense,
+in the style of a professional threat intelligence report. Be specific and technical.
+Do not use bullet points. Do not include headers. Output only the paragraph.
+
+--- ACTOR PROFILE ---
+Name: {queried_name}
+Also known as: {aliases}
+Origin / Attribution: {origin}
+First observed: {first_seen}
+Motivations: {motivations}
+Target sectors: {sectors}
+Primary tactics: {top_tactics}
+Known malware / tools: {top_malware}
+Documented campaigns: {campaign_names}
+Technique count: {len(techniques)} ATT&CK techniques
+
+MITRE description:
+{description[:600] if description else "Not available."}
+
+Recent vendor intelligence:
+{recent_intel}
+---
+
+Write the synopsis now:"""
+
+        try:
+            overview = self._provider.complete(
+                "You are a senior threat intelligence analyst writing executive-level "
+                "actor profiles. Be concise, accurate, and technically precise.",
+                prompt,
+            )
+            return overview.strip() if overview else None
+        except Exception as exc:
+            logger.warning("Overview synthesis failed: %s", exc)
+            return None
+
     def synthesize_batch(
+
         self,
         articles:   list[dict],
         actor_name: str,

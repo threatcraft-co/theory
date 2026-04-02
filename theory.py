@@ -694,7 +694,30 @@ def run(
         else:
             profile = _enrich_profile(profile, source_key)
 
-    # ── 5. Output ─────────────────────────────────────────────────────
+    # ── 5. LLM Actor Overview ────────────────────────────────────────
+    # Generate a synthesized actor synopsis using the full profile.
+    # Works with or without vendor intel — uses all available data.
+    # Uses the name the user actually queried, not the canonical alias.
+    try:
+        from collectors.intelligence_synthesizer import (
+            IntelligenceSynthesizer, load_provider,
+        )
+        _provider = load_provider()
+        if _provider and _provider.available:
+            _synth   = IntelligenceSynthesizer(_provider)
+            _overview = _synth.synthesize_overview(
+                profile      = profile,
+                queried_name = actor,   # the name the user typed
+            )
+            if _overview:
+                profile["actor_overview"] = _overview
+                logger.info("Actor overview synthesized (%d chars)", len(_overview))
+        else:
+            logger.debug("No LLM provider — skipping actor overview")
+    except Exception as _exc:
+        logger.warning("Actor overview synthesis failed: %s", _exc)
+
+    # ── 6. Output ─────────────────────────────────────────────────────
     if output == "json":
         _output_json(profile, save)
     elif output == "stix":
@@ -788,6 +811,7 @@ examples:
 notes:
   - --actor accepts any name or alias (e.g. "Cozy Bear" = APT29 = Midnight Blizzard)
   - Run --update-bundles periodically to refresh ATT&CK data and Sigma rules
+  - See docs/SCHEDULED_UPDATES.md to automate updates with cron or launchd
   - First run with --sources sigma takes ~10 min to build the cache (instant after)
   - Set OTX_API_KEY and GITHUB_TOKEN in .env for best results
   - Output files are saved to output/dossiers/

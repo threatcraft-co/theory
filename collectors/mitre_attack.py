@@ -197,7 +197,7 @@ class MitreAttackCollector(BaseCollector):
             results.append({
                 "name":        name,
                 "type":        (getattr(sw, "labels", None) or ["malware"])[0],
-                "description": _truncate(_strip_markdown_links(desc), 400),
+                "description": _strip_markdown_links(desc),
             })
         return results
 
@@ -215,7 +215,8 @@ class MitreAttackCollector(BaseCollector):
                 continue
             results.append({
                 "name":        name,
-                "description": _truncate(getattr(c, "description", "") or "", 400),
+                "description": _strip_markdown_links(getattr(c, "description", "") or ""),
+                "url":         _campaign_url(c),
                 "first_seen":  getattr(c, "first_seen", None),
                 "last_seen":   getattr(c, "last_seen", None),
             })
@@ -400,6 +401,17 @@ class _Obj:
 # ---------------------------------------------------------------------------
 # Utilities
 # ---------------------------------------------------------------------------
+
+def _campaign_url(campaign_obj) -> str:
+    """Extract the ATT&CK URL for a campaign object."""
+    refs = getattr(campaign_obj, "external_references", []) or []
+    for ref in refs:
+        if getattr(ref, "source_name", "") == "mitre-attack":
+            return getattr(ref, "url", "")
+        if isinstance(ref, dict) and ref.get("source_name") == "mitre-attack":
+            return ref.get("url", "")
+    return ""
+
 
 def _truncate(text: str, limit: int) -> str:
     return text if len(text) <= limit else text[:limit].rstrip() + "…"
