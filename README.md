@@ -1,4 +1,4 @@
-# THEORY
+![Theory Logo](media/Theory%20Logo.png)
 
 **Multi-source threat actor intelligence for everyone.**
 
