@@ -1,6 +1,6 @@
 # Threat Actor Dossier: APT28
 > MITRE ATT&CK Group ID: **G0007**
-> Generated: 2026-03-31 18:52 UTC  |  Sources: mitre_attack, malpedia, alienvault_otx
+> Generated: 2026-04-02 21:47 UTC  |  Sources: mitre_attack
 
 ## Overview
 
@@ -9,7 +9,7 @@
 | **Origin** | Russia |
 | **First Seen** | 2004 |
 | **Motivations** | espionage |
-| **Also Known As** | IRON TWILIGHT, SNAKEMACKEREL, Swallowtail, Group 74, Sednit, Sofacy, Pawn Storm, Fancy Bear, STRONTIUM, Tsar Team, Threat Group-4127, TG-4127, Forest Blizzard, FROZENLAKE, GruesomeLarch, SIG40, Grizzly Steppe, G0007, ATK5, Fighting Ursa, ITG05, Blue Athena, TA422, T-APT-12, APT-C-20, UAC-0028, UAC-0001, BlueDelta, APT 28, TsarTeam, Group-4127, Grey-Cloud |
+| **Also Known As** | IRON TWILIGHT, SNAKEMACKEREL, Swallowtail, Group 74, Sednit, Sofacy, Pawn Storm, Fancy Bear, STRONTIUM, Tsar Team, Threat Group-4127, TG-4127, Forest Blizzard, FROZENLAKE, GruesomeLarch |
 
 ## TTP Table
 
@@ -107,169 +107,42 @@
 | T1598.003 | Reconnaissance | Spearphishing Link | MEDIUM |
 | T1669 | Initial Access | Wi-Fi Networks | MEDIUM |
 
-## Indicators of Compromise (OTX: 57)
-
-| Type | Value | Confidence | Threat Type | Malware Family | First Seen |
-|---|---|---|---|---|---|
-| cve | CVE-2015-3043 |  |  |  |  |
-| cve | CVE-2015-1701 |  |  |  |  |
-| cve | CVE-2014-0515 |  |  |  |  |
-| cve | CVE-2015-5119 |  |  |  |  |
-| cve | CVE-2015-7645 |  |  |  |  |
-| cve | CVE-2015-1641 |  |  |  |  |
-| cve | CVE-2014-1776 |  |  |  |  |
-| cve | CVE-2015-4902 |  |  |  |  |
-| cve | CVE-2014-3897 |  |  |  |  |
-| cve | CVE-2014-6332 |  |  |  |  |
-| domain | ssl-icloud.com |  |  |  |  |
-| domain | updatecenter.name |  |  |  |  |
-| domain | securitypractic.com |  |  |  |  |
-| domain | pass-google.com |  |  |  |  |
-| domain | drivers-update.info |  |  |  |  |
-| domain | nato-press.com |  |  |  |  |
-| domain | n0vinite.com |  |  |  |  |
-| domain | standartnevvs.com |  |  |  |  |
-| domain | kavkazcentr.info |  |  |  |  |
-| domain | mail.g0v.pl |  |  |  |  |
-| email | morata_al@mail.com |  |  |  |  |
-| email | partanencomp@mail.com |  |  |  |  |
-| email | olivier_servgr@mail.com |  |  |  |  |
-| hash_md5 | 8c4fa713c5e2b009114adda758adc445 |  |  |  |  |
-| hash_md5 | 3b0ecd011500f61237c205834db0e13a |  |  |  |  |
-| hash_md5 | 791428601ad12b9230b9ace4f2138713 |  |  |  |  |
-| hash_md5 | 5882fda97fdf78b47081cc4105d44f7c |  |  |  |  |
-| hash_md5 | da2a657dc69d7320f2ffc87013f257ad |  |  |  |  |
-| hash_md5 | 48656a93f9ba39410763a2196aabc67f |  |  |  |  |
-| hash_md5 | 9eebfebe3987fec3c395594dc57a0c4c |  |  |  |  |
-| hash_md5 | 8b92fe86c5b7a9e34f433a6fbac8bc3a |  |  |  |  |
-| hash_md5 | ead4ec18ebce6890d20757bb9f5285b1 |  |  |  |  |
-| hash_md5 | 1259c4fe5efd9bf07fc4c78466f2dd09 |  |  |  |  |
-| hash_sha1 | ed9f3e5e889d281437b945993c6c2a80c60fdedc |  |  |  |  |
-| hash_sha1 | e742b917d3ef41992e67389cd2fe2aab0f9ace5b |  |  |  |  |
-| hash_sha1 | 17661a04b4b150a6f70afdabe3fd9839cc56bee8 |  |  |  |  |
-| hash_sha1 | 90c3b756b1bb849cba80994d445e96a9872d0cf5 |  |  |  |  |
-| hash_sha1 | 9b276a0f5fd824c3dff638c5c127567c65222230 |  |  |  |  |
-| hash_sha1 | 3956cfe34566ba8805f9b1fe0d2639606a404cd4 |  |  |  |  |
-| hash_sha1 | 351c3762be9948d01034c69aced97628099a90b0 |  |  |  |  |
-| hash_sha1 | ef755f3fa59960838fa2b37b7dedce83ce41f05c |  |  |  |  |
-| hash_sha1 | 80dca565807fa69a75a7dd278cef1daaee34236e |  |  |  |  |
-| hash_sha1 | c2e8c584d5401952af4f1db08cf4b6016874ddac |  |  |  |  |
-| hash_sha256 | fd8b2ea9a2e8a67e4cb3904b49c789d57ed9b1ce5bebfe54fe3d98214d6a0f61 |  |  |  |  |
-| hash_sha256 | 8bca0031f3b691421cb15f9c6e71ce193355d2d8cf2b190438b6962761d0c6bb |  |  |  |  |
-| hash_sha256 | 02c7cf55fd5c5809ce2dce56085ba43795f2480423a4256537bfdfda0df85592 |  |  |  |  |
-| hash_sha256 | 45a93e4b9ae5bece0d53a3a9a83186b8975953344d4dfb340e9de0015a247c54 |  |  |  |  |
-| hash_sha256 | cffa1d9fc336a1ad89af90443b15c98b71e679aeb03b3a68a5e9c3e7ecabc3d4 |  |  |  |  |
-| hash_sha256 | 2a06f142d87bd9b66621a30088683d6fcec019ba5cc9e5793e54f8d920ab0134 |  |  |  |  |
-| hash_sha256 | 227b7fe495ad9951aebf0aae3c317c1ac526cdd255953f111341b0b11be3bbc5 |  |  |  |  |
-| hash_sha256 | 96a19a90caa41406b632a2046f3a39b5579fbf730aca2357f84bf23f2cbc1fd3 |  |  |  |  |
-| hash_sha256 | c1b8fc00d815e777e39f34a520342d1942ebd29695c9453951a988c61875bcd7 |  |  |  |  |
-| hash_sha256 | 1f81609d9bbdc7f1d2c8846dcfc4292b3e2642301d9c59130f58e21abb0001be |  |  |  |  |
-| ip | 185.10.58.170 |  |  |  |  |
-| ip | 104.171.117.216 |  |  |  |  |
-| ip | 141.255.160.52 |  |  |  |  |
-| url | http://www.adobeincorp.net/adhoc/XAgent.ipa |  |  |  |  |
-
-## Targeted Sectors
-
-- Government
-- Military
-- Aerospace
-
 ## Associated Malware / Tools
 
 | Name | Type | Description |
 |---|---|---|
-| Wevtutil | malware | Wevtutil is a Windows command-line utility that enables administrators to retrieve information about event logs and… |
-| certutil | malware | certutil is a command-line utility that can be used to obtain certificate authority information and configure… |
-| CHOPSTICK | malware | CHOPSTICK is a malware family of modular backdoors used by APT28. It has been used since at least 2012 and is usually… |
-| Net | malware | The Net utility is a component of the Windows operating system. It is used in command-line operations for control of… |
-| Forfiles | malware | Forfiles is a Windows utility commonly used in batch jobs to execute commands on one or more selected files or… |
+| Wevtutil | malware | Wevtutil is a Windows command-line utility that enables administrators to retrieve information about event logs and publishers.(Citation: Wevtutil Microsoft Documentation) |
+| certutil | malware | certutil is a command-line utility that can be used to obtain certificate authority information and configure Certificate Services. (Citation: TechNet Certutil) |
+| CHOPSTICK | malware | CHOPSTICK is a malware family of modular backdoors used by APT28. It has been used since at least 2012 and is usually dropped on victims as second-stage malware, though it has been used as first-… |
+| Net | malware | The Net utility is a component of the Windows operating system. It is used in command-line operations for control of users, groups, services, and network connections. (Citation: Microsoft Net… |
+| Forfiles | malware | Forfiles is a Windows utility commonly used in batch jobs to execute commands on one or more selected files or directories (ex: list all directories in a drive, read the first line of all files… |
 | DealersChoice | malware | DealersChoice is a Flash exploitation framework used by APT28. (Citation: Sofacy DealersChoice) |
-| Mimikatz | malware | Mimikatz is a credential dumper capable of obtaining plaintext Windows account logins and passwords, along with many… |
-| ADVSTORESHELL | malware | ADVSTORESHELL is a spying backdoor that has been used by APT28 from at least 2012 to 2016. It is generally used for… |
-| Cannon | malware | Cannon is a Trojan with variants written in C# and Delphi. It was first observed in April 2018. (Citation: Unit42… |
-| Komplex | malware | Komplex is a backdoor that has been used by APT28 on OS X and appears to be developed in a similar manner to XAgentOSX… |
-| HIDEDRV | malware | HIDEDRV is a rootkit used by APT28. It has been deployed along with Downdelph to execute and hide that malware.… |
-| JHUHUGIT | malware | JHUHUGIT is malware used by APT28. It is based on Carberp source code and serves as reconnaissance malware. (Citation:… |
-| Koadic | malware | Koadic is a Windows post-exploitation framework and penetration testing tool that is publicly available on GitHub.… |
-| Winexe | malware | Winexe is a lightweight, open source tool similar to PsExec designed to allow system administrators to execute commands… |
-| Responder | malware | Responder is an open source tool used for LLMNR, NBT-NS and MDNS poisoning, with built-in HTTP/SMB/MSSQL/FTP/LDAP rogue… |
-| cipher.exe | malware | cipher.exe is a native Microsoft utility that manages encryption of directories and files on NTFS (New Technology File… |
-| XTunnel | malware | XTunnel a VPN-like network proxy tool that can relay traffic between a C2 server and a victim. It was first seen in May… |
-| Drovorub | malware | Drovorub is a Linux malware toolset comprised of an agent, client, server, and kernel modules, that has been used by… |
-| Tor | malware | Tor is a software suite and network that provides increased anonymity on the Internet. It creates a multi-hop proxy… |
-| CORESHELL | malware | CORESHELL is a downloader used by APT28. The older versions of this malware are known as SOURFACE and newer versions as… |
+| Mimikatz | malware | Mimikatz is a credential dumper capable of obtaining plaintext Windows account logins and passwords, along with many other features that make it useful for testing the security of networks.… |
+| ADVSTORESHELL | malware | ADVSTORESHELL is a spying backdoor that has been used by APT28 from at least 2012 to 2016. It is generally used for long-term espionage and is deployed on targets deemed interesting after a… |
+| Cannon | malware | Cannon is a Trojan with variants written in C# and Delphi. It was first observed in April 2018. (Citation: Unit42 Cannon Nov 2018)(Citation: Unit42 Sofacy Dec 2018) |
+| Komplex | malware | Komplex is a backdoor that has been used by APT28 on OS X and appears to be developed in a similar manner to XAgentOSX (Citation: XAgentOSX 2017) (Citation: Sofacy Komplex Trojan). |
+| HIDEDRV | malware | HIDEDRV is a rootkit used by APT28. It has been deployed along with Downdelph to execute and hide that malware. (Citation: ESET Sednit Part 3) (Citation: Sekoia HideDRV Oct 2016) |
+| JHUHUGIT | malware | JHUHUGIT is malware used by APT28. It is based on Carberp source code and serves as reconnaissance malware. (Citation: Kaspersky Sofacy) (Citation: F-Secure Sofacy 2015) (Citation: ESET Sednit Part… |
+| Koadic | malware | Koadic is a Windows post-exploitation framework and penetration testing tool that is publicly available on GitHub. Koadic has several options for staging payloads and creating implants, and performs… |
+| Winexe | malware | Winexe is a lightweight, open source tool similar to PsExec designed to allow system administrators to execute commands on remote servers. (Citation: Winexe Github Sept 2013) Winexe is unique in that… |
+| Responder | malware | Responder is an open source tool used for LLMNR, NBT-NS and MDNS poisoning, with built-in HTTP/SMB/MSSQL/FTP/LDAP rogue authentication server supporting NTLMv1/NTLMv2/LMv2, Extended Security NTLMSSP… |
+| cipher.exe | malware | cipher.exe is a native Microsoft utility that manages encryption of directories and files on NTFS (New Technology File System) partitions by using the Encrypting File System (EFS).(Citation:… |
+| XTunnel | malware | XTunnel a VPN-like network proxy tool that can relay traffic between a C2 server and a victim. It was first seen in May 2013 and reportedly used by APT28 during the compromise of the Democratic… |
+| Drovorub | malware | Drovorub is a Linux malware toolset comprised of an agent, client, server, and kernel modules, that has been used by APT28.(Citation: NSA/FBI Drovorub August 2020) |
+| Tor | malware | Tor is a software suite and network that provides increased anonymity on the Internet. It creates a multi-hop proxy network and utilizes multilayer encryption to protect both the message and routing… |
+| CORESHELL | malware | CORESHELL is a downloader used by APT28. The older versions of this malware are known as SOURFACE and newer versions as CORESHELL.(Citation: FireEye APT28) (Citation: FireEye APT28 January 2017) |
 | OLDBAIT | malware | OLDBAIT is a credential harvester used by APT28. (Citation: FireEye APT28) (Citation: FireEye APT28 January 2017) |
-| Downdelph | malware | Downdelph is a first-stage downloader written in Delphi that has been used by APT28 in rare instances between 2013 and… |
-| XAgentOSX | malware | XAgentOSX is a trojan that has been used by APT28 on OS X and appears to be a port of their standard CHOPSTICK or… |
-| USBStealer | malware | USBStealer is malware that has been used by APT28 since at least 2005 to extract information from air-gapped networks.… |
-| Zebrocy | malware | Zebrocy is a Trojan that has been used by APT28 since at least November 2015. The malware comes in several programming… |
-| reGeorg | malware | reGeorg is an open-source web shell written in Python that can be used as a proxy to bypass firewall rules and tunnel… |
+| Downdelph | malware | Downdelph is a first-stage downloader written in Delphi that has been used by APT28 in rare instances between 2013 and 2015. (Citation: ESET Sednit Part 3) |
+| XAgentOSX | malware | XAgentOSX is a trojan that has been used by APT28 on OS X and appears to be a port of their standard CHOPSTICK or XAgent trojan. (Citation: XAgentOSX 2017) |
+| USBStealer | malware | USBStealer is malware that has been used by APT28 since at least 2005 to extract information from air-gapped networks. It does not have the capability to communicate over the Internet and has been… |
+| Zebrocy | malware | Zebrocy is a Trojan that has been used by APT28 since at least November 2015. The malware comes in several programming language variants, including C++, Delphi, AutoIt, C#, VB.NET, and Golang.… |
+| reGeorg | malware | reGeorg is an open-source web shell written in Python that can be used as a proxy to bypass firewall rules and tunnel data in and out of targeted networks.(Citation: Fortinet reGeorg MAR… |
 | Fysbis | malware | Fysbis is a Linux-based backdoor used by APT28 that dates back to at least 2014.(Citation: Fysbis Palo Alto Analysis) |
-| LoJax | malware | LoJax is a UEFI rootkit used by APT28 to persist remote access software on targeted systems.(Citation: ESET LoJax Sept… |
-| X-Agent | malware |  |
-| ArguePatch | malware | During a campaign against a Ukrainian energy provider, a new loader of a new version of CaddyWiper called "ArguePatch"… |
-| DriveOcean | malware | Communicates via Google Drive. |
-| Unidentified 114 (APT28 InfoStealer) | malware | According to Trend Micro, this is a small information stealer written in .NET, that pushes its loot to a benign file… |
-| XP PrivEsc (CVE-2014-4076) | malware |  |
-| X-Tunnel (.NET) | malware | This is a rewrite of win.xtunnel using the .NET framework that surfaced late 2017. |
-| Zebrocy (AutoIT) | malware |  |
-| CredoMap | malware |  |
-| Mocky LNK | malware | LNK files used to lure and orchestrate execution of various scripts, interacting with the Mocky API service. |
-| OCEANMAP | malware |  |
-| SpyPress | malware | According to ESET, SpyPress is a set of Javascript payloads targeting different webmail frameworks (HORDE, MDAEMON,… |
-| STEELHOOK | malware |  |
-| MASEPIE | malware |  |
-| LAMEHUG | malware | According to CERT-UA, LAMEHUG uses an LLM (Qwen) to dynamically generate commands to gather basic information about a… |
-| CaddyWiper | malware | CaddyWiper is another destructive malware believed to be deployed to target Ukraine. CaddyWiper wipes all files under… |
-| Computrace | malware |  |
-| FusionDrive | malware |  |
-| GooseEgg | malware |  |
-| Graphite | malware | Trellix describes Graphite as a malware using the Microsoft Graph API and OneDrive for C&C. It was found being deployed… |
-| PocoDown | malware | uses POCO C++ cross-platform library, Xor-based string obfuscation, SSL library code and string overlap with Xtunnel,… |
-
-## Recent Intelligence
-
-> Synthesized from 4 vendor research articles using AI.
-
-### Recorded Future (Public) — 2025-12-17  `MEDIUM relevance`
-
-**[BlueDelta’s Persistent Campaign Against UKR.NET](https://www.recordedfuture.com/research/bluedeltas-persistent-campaign-against-ukrnet)**
-
-APT28 (operating as BlueDelta) conducted a persistent credential-harvesting campaign targeting UKR.NET users, employing advanced phishing techniques across multiple stages. The campaign demonstrates evolved tradecraft in the actor's ongoing operations against Ukrainian infrastructure and users.
-
-*Landscape context: **Threat Landscape Context:**
-
-This campaign reflects an intensifying focus by Russian state-sponsored actors on compromising Ukrainian critical infrastructure and government communications through identity-layer attacks, exploiting the accessibility and scale advantages of phishing over direct network intrusion during sustained conflict. The evolution of BlueDelta's credential-harvesting tradecraft against UKR.NET specifically indicates Russian operators are refining targeting precision and social engineering sophistication against high-value organizational email systems as traditional perimeter defenses improve.*
-
-### Recorded Future (Public) — 2026-01-07  `MEDIUM relevance`
-
-**[GRU-Linked BlueDelta Evolves Credential Harvesting](https://www.recordedfuture.com/research/gru-linked-bluedelta-evolves-credential-harvesting)**
-
-APT28 (tracked as BlueDelta by Insikt Group) evolved credential-harvesting campaigns targeting government, energy, and research organizations across Europe and Eurasia as of early 2026. The group's operational focus reflects a shift toward intensified collection against critical infrastructure and state institutions in the specified regions. No specific tactical innovations, tool changes, or temporal details beyond the January 2026 reporting date are provided in the article excerpt.
-
-*Landscape context: This reflects an ongoing shift toward persistent, low-detection-risk credential harvesting as a precursor to targeted intrusions, particularly against critical infrastructure where initial access brokers command premium value in the espionage supply chain. The geographic focus on Europe and Eurasia signals GRU's prioritization of strategic sectors where credential compromise enables sustained intelligence collection with minimal operational exposure.*
-
-### Recorded Future (Public) — 2026-02-24  `MEDIUM relevance`
-
-**[January 2026 CVE Landscape: 23 Critical Vulnerabilities Mark 5% Increase, APT28 Exploits Microsoft Office Zero-Day](https://www.recordedfuture.com/blog/january-2026-cve-landscape)**
-
-APT28 exploited a Microsoft Office zero-day vulnerability during January 2026, demonstrating continued focus on widely-used productivity software as an attack vector. The article provides no additional details regarding targeting scope, geographic focus, or tactical evolution beyond this single exploit activity.
-
-*Landscape context: The January 2026 CVE landscape reflects an accelerating pattern of nation-state actors like APT28 moving away from custom exploit development and toward rapid weaponization of public zero-days, particularly targeting productivity suites that maintain privileged access within enterprise environments. This shift underscores a strategic pivot toward exploits with immediate operational impact over traditional persistence mechanisms, driven by the expanding public disclosure cycle and compressed patching windows in enterprise deployments.*
-
-### ThreatLocker Blog — 2026-03-11  `MEDIUM relevance`
-
-**[What Is LameHug? How APT28 is using LLMs to generate attack commands](https://www.threatlocker.com/blog/what-is-lamehug-how-apt28-is-using-llms-to-generate-attack-commands)**
-
-APT28 has integrated large language models into its attack infrastructure, deploying the LameHug infostealer to generate attack commands dynamically. This represents an evolution in the group's operational approach, shifting from static command generation to AI-assisted attack execution. The article does not specify targeting sectors, countries, or provide additional tactical details beyond the LLM integration.
-
-*Landscape context: # Threat Landscape Context
-
-This development reflects an emerging pattern of state-sponsored actors operationalizing large language models to automate command generation and reduce operational friction, potentially lowering the technical barriers for distributed attack execution. APT28's integration of LLM-assisted tooling suggests nation-state adoption of AI-driven attack orchestration is transitioning from experimental to operational deployment in live campaigns.*
-
+| LoJax | malware | LoJax is a UEFI rootkit used by APT28 to persist remote access software on targeted systems.(Citation: ESET LoJax Sept 2018) |
 
 ## Campaigns
 
-- **APT28 Nearest Neighbor Campaign**
-  [APT28 Nearest Neighbor Campaign](https://attack.mitre.org/campaigns/C0051) was conducted by [APT28](https://attack.mitre.org/groups/G0007)…
+### APT28 Nearest Neighbor Campaign
+
+APT28 Nearest Neighbor Campaign was conducted by APT28 from early February 2022 to November 2024 against organizations and individuals with expertise on Ukraine. APT28 primarily leveraged living-off-the-land techniques, while leveraging the zero-day exploitation of CVE-2022-38028. Notably, APT28 leveraged Wi-Fi networks in close proximity to the intended target to gain initial access to the victim environment. By daisy-chaining multiple compromised organizations nearby the intended target, APT28 discovered dual-homed systems (with both a wired and wireless network connection) to enable Wi-Fi and use compromised credentials to connect to the victim network.(Citation: Nearest Neighbor Volexity)
+

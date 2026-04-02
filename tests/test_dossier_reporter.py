@@ -171,11 +171,22 @@ class TestSaveMarkdown:
         assert "APT28" in content
 
     def test_filename_slugified(self, tmp_path, monkeypatch):
+        """Filename uses canonical alias-table name, not the typed actor name."""
         import reporters.dossier as dossier_module
         monkeypatch.setattr(dossier_module, "OUTPUT_DIR", tmp_path)
 
+        # "Fancy Bear" is an alias for APT28 — canonical slug should be apt28
         profile = {**MINIMAL_PROFILE, "actor_name": "Fancy Bear"}
         reporter = DossierReporter()
         path = reporter.save_markdown(profile)
+        assert path.name == "apt28.md"
 
-        assert path.name == "fancy_bear.md"
+    def test_filename_unknown_actor_falls_back_to_slugified_name(self, tmp_path, monkeypatch):
+        """Actors not in ALIAS_TABLE fall back to slugified actor_name."""
+        import reporters.dossier as dossier_module
+        monkeypatch.setattr(dossier_module, "OUTPUT_DIR", tmp_path)
+
+        profile = {**MINIMAL_PROFILE, "actor_name": "Unknown Threat Actor"}
+        reporter = DossierReporter()
+        path = reporter.save_markdown(profile)
+        assert path.name == "unknown_threat_actor.md"
