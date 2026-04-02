@@ -236,25 +236,57 @@ def cmd_update_bundles() -> None:
         _print(f"  ✗ ATT&CK bundle update failed: {exc}", "red")
         _print("  Run manually: curl -L {url} -o .cache/enterprise-attack.json", "dim")
 
-    # 2. Clear Sigma cache (rules update frequently)
-    sigma_cache = Path(".cache/sigma")
-    if sigma_cache.exists():
-        count = len(list(sigma_cache.glob("*.json")))
-        shutil.rmtree(sigma_cache)
-        _print(f"  ✓ Sigma cache cleared ({count} cached rule files)", "green")
+    # 2. Update Sigma repo (git pull)
+    sigma_repo = Path(".cache/sigma-repo")
+    if sigma_repo.exists():
+        _print("  Updating Sigma rules (git pull)…", "dim")
+        import subprocess as _sp
+        result = _sp.run(
+            ["git", "-C", str(sigma_repo), "pull", "--depth=1"],
+            capture_output=True, text=True, timeout=120,
+        )
+        if result.returncode == 0:
+            _print("  ✓ Sigma rules updated", "green")
+        else:
+            _print(f"  ✗ Sigma pull failed: {result.stderr[:100]}", "red")
     else:
-        _print("  ✓ Sigma cache already empty", "dim")
+        _print("  ✓ Sigma repo not yet cloned — will clone on next --sources sigma run", "dim")
 
-    # 3. Clear ThreatFox cache (24hr TTL, but explicit refresh is useful)
-    tf_cache = Path(".cache/threatfox")
-    if tf_cache.exists():
-        count = len(list(tf_cache.glob("*.json")))
-        shutil.rmtree(tf_cache)
-        _print(f"  ✓ ThreatFox cache cleared ({count} cached family files)", "green")
+    # 3. ThreatFox cache — let 24hr TTL handle expiry naturally
+    _print("  ✓ ThreatFox cache preserved (24hr TTL handles expiry automatically)", "dim")
+
+    # 4. Clone/update CyberMonitor APT Campaign Collection (historical context)
+    apt_path = Path(".cache/apt-campaigns")
+    apt_url  = "https://github.com/CyberMonitor/APT_CyberCriminal_Campagin_Collections.git"
+    if apt_path.exists():
+        _print("  Updating APT campaign collection (git pull)…", "dim")
+        try:
+            r = subprocess.run(
+                ["git", "-C", str(apt_path), "pull", "--depth=1"],
+                capture_output=True, text=True, timeout=120,
+            )
+            if r.returncode == 0:
+                _print("  ✓ APT campaign collection updated", "green")
+            else:
+                _print(f"  ✗ APT campaign update failed: {r.stderr[:80]}", "red")
+        except Exception as exc:
+            _print(f"  ✗ APT campaign update error: {exc}", "red")
     else:
-        _print("  ✓ ThreatFox cache already empty", "dim")
+        _print("  Cloning CyberMonitor APT Campaign Collection (one time, ~200MB)…", "dim")
+        try:
+            r = subprocess.run(
+                ["git", "clone", "--depth", "1", "--filter=blob:none",
+                 "--no-tags", apt_url, str(apt_path)],
+                capture_output=True, text=True, timeout=300,
+            )
+            if r.returncode == 0:
+                _print("  ✓ APT campaign collection cloned → .cache/apt-campaigns/", "green")
+            else:
+                _print(f"  ✗ APT campaign clone failed: {r.stderr[:80]}", "red")
+        except Exception as exc:
+            _print(f"  ✗ APT campaign clone error: {exc}", "red")
 
-    # 4. Leave Malpedia + OTX caches — they're per-family/per-pulse and expensive to rebuild
+    # 5. Leave Malpedia + OTX caches — per-family/per-pulse, expensive to rebuild
     _print("\n  Malpedia + OTX caches preserved (clear manually if needed).", "dim")
     _print("  Run THEORY normally to rebuild Sigma + ThreatFox caches.\n", "dim")
     _print("Update complete.\n", "bold green")
@@ -402,7 +434,25 @@ def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
 
             synthesizer = IntelligenceSynthesizer(provider)
             actor_name  = profile.get("actor_name", "")
-            aliases     = profile.get("aliases", []) or []
+
+            # Always use ALIAS_TABLE for full alias coverage regardless of
+            # which sources ran. This ensures vendor search catches articles
+            # that mention "Fancy Bear", "Strontium", "Sofacy" etc. even when
+            # the user typed --actor APT28.
+            try:
+                from collectors.cisa_advisories import ALIAS_TABLE
+                canonical = actor_name
+                # Find canonical key (profile may have stored the resolved name)
+                table_aliases: list[str] = []
+                for canon, alias_set in ALIAS_TABLE.items():
+                    if (canon.lower() == actor_name.lower()
+                            or actor_name.lower() in alias_set):
+                        canonical  = canon
+                        table_aliases = list(alias_set)
+                        break
+                aliases = table_aliases or (profile.get("aliases", []) or [])
+            except Exception:
+                aliases = profile.get("aliases", []) or []
 
             # Fetch articles from vendor feeds
             collector   = enricher   # VendorIntelCollector
@@ -421,7 +471,7 @@ def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
                 articles   = articles,
                 actor_name = actor_name,
                 aliases    = aliases,
-                max_items  = int(os.environ.get("THEORY_INTEL_MAX_ITEMS", "8")),
+                max_items  = int(os.environ.get("THEORY_INTEL_MAX_ITEMS", "15")),
             )
 
             if synthesized:
@@ -629,12 +679,12 @@ def run(
                 _orig_fetch = None
                 try:
                     from collectors import sigma_rules as _sm
-                    _orig_fetch = _sm.SigmaCollector._fetch_rules_for_technique
+                    _orig_fetch = _sm.SigmaCollector._find_rules_for_technique
                     def _patched(self, tid):
                         result = _orig_fetch(self, tid)
                         progress.advance(task)
                         return result
-                    _sm.SigmaCollector._fetch_rules_for_technique = _patched
+                    _sm.SigmaCollector._find_rules_for_technique = _patched
                     profile = _enrich_profile(profile, source_key)
                 finally:
                     if _orig_fetch:
@@ -745,17 +795,16 @@ notes:
 
 
 BANNER = r"""
-░██████████░██     ░██ ░██████████   ░██████   ░█████████  ░██     ░██ 
-    ░██    ░██     ░██ ░██          ░██   ░██  ░██     ░██  ░██   ░██  
-    ░██    ░██     ░██ ░██         ░██     ░██ ░██     ░██   ░██ ░██   
-    ░██    ░██████████ ░█████████  ░██     ░██ ░█████████     ░████    
-    ░██    ░██     ░██ ░██         ░██     ░██ ░██   ░██       ░██     
-    ░██    ░██     ░██ ░██          ░██   ░██  ░██    ░██      ░██     
-    ░██    ░██     ░██ ░██████████   ░██████   ░██     ░██     ░██     
+░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░▒▓██████▓▒░░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░
+   ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░     ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░
+   ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░     ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░
+   ░▒▓█▓▒░   ░▒▓████████▓▒░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░ ░▒▓██████▓▒░
+   ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░     ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░  ░▒▓█▓▒░
+   ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░     ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░  ░▒▓█▓▒░
+   ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░  ░▒▓█▓▒░
 """
 
 BANNER_SUBTITLE = (
-    "   \n"
     "  multi-source threat actor intelligence\n"
     "  open-source · free forever · built for the community\n"
     "  github.com/threatcraft-co/theory\n"
@@ -843,7 +892,7 @@ def _build_parser() -> argparse.ArgumentParser:
         "--update-bundles",
         action="store_true",
         help=(
-            "Refresh the local ATT&CK STIX bundle and clear Sigma/ThreatFox caches. "
+            "Refresh the local ATT&CK STIX bundle and Sigma rules. "
             "Run periodically to stay current with new ATT&CK releases and Sigma rules."
         ),
     )
