@@ -49,6 +49,7 @@ logger = logging.getLogger(__name__)
 CACHE_DIR    = Path(".cache/intel_synthesis")
 CACHE_TTL    = 7   # days
 MAX_TOKENS   = 400
+MAX_SYNTH_ITEMS = 15  # max articles to synthesize per run
 TIMEOUT      = 30
 
 

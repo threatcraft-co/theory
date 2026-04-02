@@ -1,6 +1,12 @@
 {
-  "cached_at": "2026-04-01T05:37:44.563079+00:00",
+  "cached_at": "2026-04-01T23:18:21.427079+00:00",
   "entries": [
+    {
+      "title": "Threat Brief: Widespread Impact of the Axios Supply Chain Attack",
+      "url": "https://unit42.paloaltonetworks.com/axios-supply-chain-attack/",
+      "date": "2026-04-01",
+      "summary": "Unit 42 discusses the supply chain attack targeting Axios. Learn about the full attack chain, from the dropper to forensic cleanup. The post Threat Brief: Widespread Impact of the Axios Supply Chain Attack appeared first on Unit 42 ."
+    },
     {
       "title": "Weaponizing the Protectors: TeamPCP\u2019s Multi-Stage Supply Chain Attack on Security Infrastructure",
       "url": "https://unit42.paloaltonetworks.com/teampcp-supply-chain-attacks/",
@@ -84,12 +90,6 @@
       "url": "https://unit42.paloaltonetworks.com/espionage-campaign-against-military-targets/",
       "date": "2026-03-12",
       "summary": "An espionage operation demonstrated strategic operational patience against targets in Southeast Asia, deploying custom backdoors. The post Suspected China-Based Espionage Operation Against Military Targets in Southeast Asia appeared first on Unit 42 ."
-    },
-    {
-      "title": "Auditing the Gatekeepers: Fuzzing \"AI Judges\" to Bypass Security Controls",
-      "url": "https://unit42.paloaltonetworks.com/fuzzing-ai-judges-security-bypass/",
-      "date": "2026-03-10",
-      "summary": "Unit 42 research reveals AI judges are vulnerable to stealthy prompt injection. Benign formatting symbols can bypass security controls. The post Auditing the Gatekeepers: Fuzzing &quot;AI Judges&quot; to Bypass Security Controls appeared first on Unit 42 ."
     }
   ]
 }

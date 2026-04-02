@@ -1,0 +1,95 @@
+{
+  "cached_at": "2026-04-01T23:19:45.973693+00:00",
+  "entries": [
+    {
+      "title": "Operation TrueChaos: 0-Day Exploitation Against Southeast Asian Government Targets",
+      "url": "https://research.checkpoint.com/2026/operation-truechaos-0-day-exploitation-against-southeast-asian-government-targets/",
+      "date": "2026-03-31",
+      "summary": "Key Points Introduction At the beginning of 2026, Check Point Research observed a series of targeted attacks against government entities in Southeast Asia carried out via a legitimate TrueConf software installed in the targets\u2019 environment. The investigation led to the discovery of a zero-day vulnerability in the TrueConf client, tracked as&#160;CVE-2026-3502&#160;with a&#160;CVSS score of 7.8. [&#8230;] The post Operation TrueChaos: 0-Day Exploitation Against Southeast Asian Government Targets appeared first on Check Point Research ."
+    },
+    {
+      "title": "ChatGPT Data Leakage via a Hidden Outbound Channel in the Code Execution Runtime",
+      "url": "https://research.checkpoint.com/2026/chatgpt-data-leakage-via-a-hidden-outbound-channel-in-the-code-execution-runtime/",
+      "date": "2026-03-30",
+      "summary": "Key Takeaways What Happened AI assistants now handle some of the most sensitive data people own. Users discuss symptoms and medical history. They ask questions about taxes, debts, and personal finances, upload PDFs, contracts, lab results, and identity-rich documents that contain names, addresses, account details, and private records. That trust depends on a simple expectation: [&#8230;] The post ChatGPT Data Leakage via a Hidden Outbound Channel in the Code Execution Runtime appeared first on Check Point Research ."
+    },
+    {
+      "title": "30th March \u2013 Threat Intelligence Report",
+      "url": "https://research.checkpoint.com/2026/30th-march-threat-intelligence-report/",
+      "date": "2026-03-30",
+      "summary": "For the latest discoveries in cyber research for the week of 30th March, please download our Threat Intelligence Bulletin. TOP ATTACKS AND BREACHES Iranian state-affiliated threat group Handala Hack has breached FBI director\u2019s Patel\u2019s personal Gmail account and leaked many personal photos and documents. This follows the FBI\u2019s seizure of domains related to Handala Hack\u2019s [&#8230;] The post 30th March \u2013 Threat Intelligence Report appeared first on Check Point Research ."
+    },
+    {
+      "title": "AI Threat Landscape Digest January-February 2026",
+      "url": "https://research.checkpoint.com/2026/ai-threat-landscape-digest-january-february-2026/",
+      "date": "2026-03-29",
+      "summary": "KEY FINDINGS AI-assisted malware development has reached operational maturity.VoidLink framework, which is modular, professionally engineered, and fully functional,was built by a single developer using a commercial AI-powered IDE within a compressedtimeframe. AI-assisted development is no longer experimental but produces deploymentreadyoutput. AI-assisted development is not always obvious from the final product.VoidLink was initially assessed as the [&#8230;] The post AI Threat Landscape Digest January-February 2026 appeared first on Check Point Research ."
+    },
+    {
+      "title": "23rd March \u2013 Threat Intelligence Report",
+      "url": "https://research.checkpoint.com/2026/23rd-march-threat-intelligence-report/",
+      "date": "2026-03-23",
+      "summary": "For the latest discoveries in cyber research for the week of 23rd March, please download our Threat Intelligence Bulletin. TOP ATTACKS AND BREACHES Navia Benefit Solutions, a United States-based employee benefits administrator, has disclosed a breach affecting more than 2.6 million individuals after unauthorized access and potential data exfiltration occurred between December 22, 2025 and [&#8230;] The post 23rd March \u2013 Threat Intelligence Report appeared first on Check Point Research ."
+    },
+    {
+      "title": "16th March \u2013 Threat Intelligence Report",
+      "url": "https://research.checkpoint.com/2026/16th-march-threat-intelligence-report/",
+      "date": "2026-03-16",
+      "summary": "For the latest discoveries in cyber research for the week of 16th March, please download our Threat Intelligence Bulletin. TOP ATTACKS AND BREACHES United States-based medical technology company Stryker has suffered a cyberattack that caused a global disruption to its environment. The company said its surgical robotics, clinical communications platform, and life support monitors are [&#8230;] The post 16th March \u2013 Threat Intelligence Report appeared first on Check Point Research ."
+    },
+    {
+      "title": "\u201cHandala Hack\u201d \u2013 Unveiling Group\u2019s Modus Operandi",
+      "url": "https://research.checkpoint.com/2026/handala-hack-unveiling-groups-modus-operandi/",
+      "date": "2026-03-12",
+      "summary": "Key Findings Introduction Handala Hack, also tracked by Check Point Research as Void Manticore, is an Iranian threat actor that is known for multiple destructive wiping attacks combined with \u201chack and leak\u201d operations. The threat actor operates several online personas, with the most prominent among them being&#160;Homeland Justice, maintained from mid-2022 specifically for multiple attacks [&#8230;] The post \u201cHandala Hack\u201d &#8211; Unveiling Group&#8217;s Modus Operandi appeared first on Check Point Research ."
+    },
+    {
+      "title": "Iranian MOIS Actors & the Cyber Crime Connection",
+      "url": "https://research.checkpoint.com/2026/iranian-mois-actors-the-cyber-crime-connection/",
+      "date": "2026-03-10",
+      "summary": "Key Points Iran-linked actors are increasingly engaging with the cyber crime ecosystem. Their activity suggests a growing reliance on criminal tools, services, and operational models in support of state objectives. Iranian actors have long used cyber crime and hacktivism as cover for destructive activity, but the trend now suggests direct engagement with the criminal ecosystem. [&#8230;] The post Iranian MOIS Actors &amp; the Cyber Crime Connection appeared first on Check Point Research ."
+    },
+    {
+      "title": "9th March \u2013 Threat Intelligence Report",
+      "url": "https://research.checkpoint.com/2026/9th-march-threat-intelligence-report/",
+      "date": "2026-03-09",
+      "summary": "For the latest discoveries in cyber research for the week of 9th March, please download our Threat Intelligence Bulletin. TOP ATTACKS AND BREACHES AkzoNobel, a Netherlands-based global paint manufacturer, has confirmed a cyberattack affecting one of its United States sites. The company said the intrusion was contained, while the Anubis ransomware group claimed it stole [&#8230;] The post 9th March \u2013 Threat Intelligence Report appeared first on Check Point Research ."
+    },
+    {
+      "title": "Interplay between Iranian Targeting of IP Cameras and Physical Warfare in the Middle East",
+      "url": "https://research.checkpoint.com/2026/interplay-between-iranian-targeting-of-ip-cameras-and-physical-warfare-in-the-middle-east/",
+      "date": "2026-03-04",
+      "summary": "Key Findings Introduction As highlighted in the&#160;Cyber Security Report 2026, cyber operations have increasingly become an additional tool in interstate conflicts, used both to support military operations and to enable ongoing battle damage assessment (BDA). During the 12-day conflict between Israel and Iran in June 2025, the compromise of cameras was likely used to support [&#8230;] The post Interplay between Iranian Targeting of IP Cameras and Physical Warfare in the Middle East appeared first on Check Point Research ."
+    },
+    {
+      "title": "Silver Dragon Targets Organizations in Southeast Asia and Europe",
+      "url": "https://research.checkpoint.com/2026/silver-dragon-targets-organizations-in-southeast-asia-and-europe/",
+      "date": "2026-03-03",
+      "summary": "Key Findings Introduction In recent months, Check Point Research (CPR) has been tracking a sophisticated, Chinese-aligned threat group whose activity demonstrates operational correlation with campaigns previously associated with APT41. We have designated this activity cluster as Silver Dragon. This group actively targets organizations in Southeast Asia and Europe, with a particular focus on government entities. [&#8230;] The post Silver Dragon Targets Organizations in Southeast Asia and Europe appeared first on Check Point Research ."
+    },
+    {
+      "title": "2nd March \u2013 Threat Intelligence Report",
+      "url": "https://research.checkpoint.com/2026/2nd-march-threat-intelligence-report/",
+      "date": "2026-03-02",
+      "summary": "For the latest discoveries in cyber research for the week of 2nd March, please download our Threat Intelligence Bulletin. TOP ATTACKS AND BREACHES Wynn Resorts, a United States-based casino and hotel operator, has confirmed that employee data was accessed following an extortion threat linked to ShinyHunters. The company said operations were not disrupted. Reports indicate [&#8230;] The post 2nd March \u2013 Threat Intelligence Report appeared first on Check Point Research ."
+    },
+    {
+      "title": "Caught in the Hook: RCE and API Token Exfiltration Through Claude Code Project Files | CVE-2025-59536 | CVE-2026-21852",
+      "url": "https://research.checkpoint.com/2026/rce-and-api-token-exfiltration-through-claude-code-project-files-cve-2025-59536/",
+      "date": "2026-02-25",
+      "summary": "By Aviv Donenfeld and Oded Vanunu Executive Summary Check Point Research has discovered critical vulnerabilities in Anthropic&#8217;s Claude Code that allow attackers to achieve remote code execution and steal API credentials through malicious project configurations. The vulnerabilities exploit various configuration mechanisms including Hooks, Model Context Protocol (MCP) servers, and environment variables -executing arbitrary shell commands [&#8230;] The post Caught in the Hook: RCE and API Token Exfiltration Through Claude Code Project Files | CVE-2025-59536 | CVE-2026-21852&lt;other cve=&quot;&quot; id=&quot;&quot; tbd=&quot;&quot;&gt;&lt;/other&gt; appeared first on Check Point Research ."
+    },
+    {
+      "title": "2025: The Untold Stories of Check Point Research",
+      "url": "https://research.checkpoint.com/2026/2025-the-untold-stories-of-check-point-research/",
+      "date": "2026-02-23",
+      "summary": "Introduction Check Point Research (CPR) continuously tracks threats, following the clues that lead to major players and incidents in the threat landscape. Whether it\u2019s high-end financially-motivated campaigns or state-sponsored activity, our focus is to figure out what the threat is, report our findings to the relevant parties, and make sure Check Point customers stay protected. [&#8230;] The post 2025: The Untold Stories of Check Point Research appeared first on Check Point Research ."
+    },
+    {
+      "title": "23rd February \u2013 Threat Intelligence Report",
+      "url": "https://research.checkpoint.com/2026/23rd-february-threat-intelligence-report/",
+      "date": "2026-02-23",
+      "summary": "For the latest discoveries in cyber research for the week of 23rd February, please download our Threat Intelligence Bulletin. TOP ATTACKS AND BREACHES France\u2019s Ministry of Economy has disclosed a data breach resulted from an unauthorized access to the national bank account registry FICOBA, impacting information tied to 1.2 million accounts. Exposed data includes names, [&#8230;] The post 23rd February \u2013 Threat Intelligence Report appeared first on Check Point Research ."
+    }
+  ]
+}

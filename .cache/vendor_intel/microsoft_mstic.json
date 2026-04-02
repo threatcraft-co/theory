@@ -1,6 +1,12 @@
 {
-  "cached_at": "2026-04-01T05:37:45.097017+00:00",
+  "cached_at": "2026-04-01T23:18:21.996558+00:00",
   "entries": [
+    {
+      "title": "Mitigating the Axios npm supply chain compromise",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/",
+      "date": "2026-04-01",
+      "summary": "On March 31, 2026, the popular HTTP client Axios experienced a supply chain attack, causing two newly published npm packages for version updates (1.14.1 and 0.30.4) to download from command and control (C2) that Microsoft Threat Intelligence has attributed to the North Korean state actor Sapphire Sleet. Although the malicious versions are no longer available for download, since Axios is one of the most widely used HTTP clients in the JavaScript ecosystem, this compromise exposed hundreds to potentially millions of users. The post Mitigating the Axios npm supply chain compromise appeared first on Microsoft Security Blog ."
+    },
     {
       "title": "The threat to critical infrastructure has changed. Has your readiness?",
       "url": "https://www.microsoft.com/en-us/security/security-insider/threat-landscape/threat-to-critical-infrastructure-has-changed",
@@ -54,12 +60,6 @@
       "url": "https://www.microsoft.com/en-us/security/blog/2026/03/23/case-study-predictive-shielding-defender-stopped-gpo-based-ransomware-before-started/",
       "date": "2026-03-23",
       "summary": "Microsoft Defender stopped a human-operated ransomware attack that abused Group Policy Objects (GPOs) to disable defenses and push encryption at scale. This case study breaks down the attacker\u2019s playbook and shows how predictive shielding hardened 700 devices in time, resulting in zero GPO-based encryptions and blocking most of the attempted impact. The post Case study: How predictive shielding in Defender stopped GPO-based ransomware before it started appeared first on Microsoft Security Blog ."
-    },
-    {
-      "title": "CTI-REALM: A new benchmark for end-to-end detection rule generation with AI agents",
-      "url": "https://www.microsoft.com/en-us/security/blog/2026/03/20/cti-realm-a-new-benchmark-for-end-to-end-detection-rule-generation-with-ai-agents/",
-      "date": "2026-03-20",
-      "summary": "Excerpt: CTI-REALM is Microsoft\u2019s open-source benchmark for evaluating AI agents on real-world detection engineering\u2014turning cyber threat intelligence (CTI) into validated detections. The post CTI-REALM: A new benchmark for end-to-end detection rule generation with AI agents appeared first on Microsoft Security Blog ."
     }
   ]
 }

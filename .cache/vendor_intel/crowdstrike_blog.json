@@ -1,6 +1,12 @@
 {
-  "cached_at": "2026-04-01T05:37:45.427315+00:00",
+  "cached_at": "2026-04-01T23:18:22.354829+00:00",
   "entries": [
+    {
+      "title": "Detecting CVE-2026-20929: Kerberos Authentication Relay via CNAME Abuse",
+      "url": "https://www.crowdstrike.com/en-us/blog/detecting-kerberos-relay-attack-via-dns-cname-abuse/",
+      "date": "2026-03-31",
+      "summary": ""
+    },
     {
       "title": "How Charlotte AI AgentWorks Fuels Security's Agentic Ecosystem",
       "url": "https://www.crowdstrike.com/en-us/blog/how-charlotte-ai-agentworks-fuels-securitys-agentic-ecosystem/",
@@ -8,14 +14,14 @@
       "summary": ""
     },
     {
-      "title": "Falcon Data Security Secures Data Wherever It Lives and Moves",
-      "url": "https://www.crowdstrike.com/en-us/blog/falcon-data-security-secures-data-wherever-it-lives-and-moves/",
+      "title": "CrowdStrike Flex for Services Expands Access to Elite Security Expertise",
+      "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-extends-the-falcon-flex-model-to-services/",
       "date": "2026-03-24",
       "summary": ""
     },
     {
-      "title": "CrowdStrike Services and Agentic MDR Put the Agentic SOC in Reach",
-      "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-services-and-agentic-mdr-put-the-agentic-soc-in-reach/",
+      "title": "Falcon Data Security Secures Data Wherever It Lives and Moves",
+      "url": "https://www.crowdstrike.com/en-us/blog/falcon-data-security-secures-data-wherever-it-lives-and-moves/",
       "date": "2026-03-24",
       "summary": ""
     },
@@ -26,8 +32,8 @@
       "summary": ""
     },
     {
-      "title": "CrowdStrike Flex for Services Expands Access to Elite Security Expertise",
-      "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-extends-the-falcon-flex-model-to-services/",
+      "title": "CrowdStrike Services and Agentic MDR Put the Agentic SOC in Reach",
+      "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-services-and-agentic-mdr-put-the-agentic-soc-in-reach/",
       "date": "2026-03-24",
       "summary": ""
     },
@@ -53,12 +59,6 @@
       "title": "From Scanner to Stealer: Inside the trivy-action Supply Chain Compromise",
       "url": "https://www.crowdstrike.com/en-us/blog/from-scanner-to-stealer-inside-the-trivy-action-supply-chain-compromise/",
       "date": "2026-03-20",
-      "summary": ""
-    },
-    {
-      "title": "Secure Homegrown AI Agents with CrowdStrike Falcon AIDR and NVIDIA NeMo Guardrails",
-      "url": "https://www.crowdstrike.com/en-us/blog/secure-homegrown-ai-agents-with-crowdstrike-falcon-aidr-and-nvidia-nemo-guardrails/",
-      "date": "2026-03-19",
       "summary": ""
     }
   ]

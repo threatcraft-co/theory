@@ -1,6 +1,12 @@
 {
-  "cached_at": "2026-03-31T18:52:12.114184+00:00",
+  "cached_at": "2026-04-01T23:18:20.030115+00:00",
   "entries": [
+    {
+      "title": "North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/north-korea-threat-actor-targets-axios-npm-package/",
+      "date": "2026-03-31",
+      "summary": "Written by: Austin Larsen, Dima Lenz, Adrian Hernandez, Tyler McLellan, Christopher Gardner, Ashley Zaya, Michael Rudden, Mon Liclican Introduction Google Threat Intelligence Group (GTIG) is tracking an active software supply chain attack targeting the popular Node Package Manager (NPM) package \" axios .\" Between March 31, 2026, 00:21 and 03:20 UTC, an attacker introduced a malicious dependency named \" plain-crypto-js \" into axios NPM releases versions 1.14"
+    },
     {
       "title": "M-Trends 2026: Data, Insights, and Strategies From the Frontlines",
       "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026/",
@@ -114,12 +120,6 @@
       "url": "https://cloud.google.com/blog/topics/threat-intelligence/intellexa-zero-day-exploits-continue/",
       "date": "2025-12-03",
       "summary": "Introduction Despite extensive scrutiny and public reporting , commercial surveillance vendors continue to operate unimpeded. A prominent name continues to surface in the world of mercenary spyware, Intellexa. Known for its \u201cPredator\u201d spyware, the company was sanctioned by the US Government . New Google Threat Intelligence Group (G"
-    },
-    {
-      "title": "Beyond the Watering Hole: APT24's Pivot to Multi-Vector Attacks",
-      "url": "https://cloud.google.com/blog/topics/threat-intelligence/apt24-pivot-to-multi-vector-attacks/",
-      "date": "2025-11-20",
-      "summary": "Written by: Harsh Parashar, Tierra Duncan, Dan Perez Google Threat Intelligence Group (GTIG) is tracking a long-running and adaptive cyber espionage campaign by APT24, a People's Republic of China (PRC)-nexus threat actor. Spanning three years, APT24 has been deploying BADAUDIO, a highly obfuscated first-stage downloader used to establish persistent access to victim networks. While earlier operations relied on broad strategic web compromises to compromise legitimate websites, APT24 has recently pivoted to using more sophisticated vectors targeting organizations in Taiwan. This includes the repeated compromise of a regional digital marketing firm to execute supply chain attacks and the use of targeted phishing campaigns. This report provides a t"
     }
   ]
 }

@@ -1,0 +1,245 @@
+{
+  "cached_at": "2026-04-01T23:20:00.030884+00:00",
+  "entries": [
+    {
+      "title": "Top 10 web hacking techniques of 2025",
+      "url": "https://portswigger.net/research/top-10-web-hacking-techniques-of-2025",
+      "date": "2026-02-05",
+      "summary": "Welcome to the Top 10 Web Hacking Techniques of 2025, the 19th edition of our annual community-powered effort to identify the most innovative must-read web security research published in the last year"
+    },
+    {
+      "title": "Top 10 web hacking techniques of 2025: call for nominations",
+      "url": "https://portswigger.net/research/top-10-web-hacking-techniques-of-2025-nominations-open",
+      "date": "2026-01-06",
+      "summary": "Update: nominations are now closed, and voting is live! Cast your vote here Over the last year, security researchers have shared a huge amount of work with the community through blog posts, presentati"
+    },
+    {
+      "title": "The Fragile Lock:&nbsp;Novel Bypasses For SAML Authentication",
+      "url": "https://portswigger.net/research/the-fragile-lock",
+      "date": "2025-12-10",
+      "summary": "TLDR This post shows how to achieve a full authentication bypass in the Ruby and PHP SAML ecosystem by exploiting several parser-level inconsistencies: including attribute pollution, namespace confusi"
+    },
+    {
+      "title": "Introducing HTTP Anomaly Rank",
+      "url": "https://portswigger.net/research/introducing-http-anomaly-rank",
+      "date": "2025-11-11",
+      "summary": "HTTP Anomaly Rank If you've ever used Burp Intruder or Turbo Intruder, you'll be familiar with the ritual of manually digging through thousands of responses by repeatedly sorting the table via length,"
+    },
+    {
+      "title": "WebSocket Turbo Intruder: Unearthing the WebSocket Goldmine",
+      "url": "https://portswigger.net/research/websocket-turbo-intruder-unearthing-the-websocket-goldmine",
+      "date": "2025-09-17",
+      "summary": "Many testers and tools give up the moment a protocol upgrade to WebSocket occurs, or only perform shallow analysis. This is a huge blind spot, leaving many bugs like Broken Access Controls, Race condi"
+    },
+    {
+      "title": "Cookie Chaos: How to bypass __Host and __Secure cookie prefixes",
+      "url": "https://portswigger.net/research/cookie-chaos-how-to-bypass-host-and-secure-cookie-prefixes",
+      "date": "2025-09-03",
+      "summary": "Browsers added cookie prefixes to protect your sessions and stop attackers from setting harmful cookies. In this post, you\u2019ll see how to bypass cookie defenses using discrepancies in browser and serve"
+    },
+    {
+      "title": "Inline Style Exfiltration: leaking data with chained CSS conditionals",
+      "url": "https://portswigger.net/research/inline-style-exfiltration",
+      "date": "2025-08-26",
+      "summary": "I discovered how to use CSS to steal attribute data without selectors and stylesheet imports! This means you can now exploit CSS injection via style attributes! Learn how below: Someone asked if you c"
+    },
+    {
+      "title": "Beware the false false-positive: how to distinguish HTTP pipelining from request smuggling",
+      "url": "https://portswigger.net/research/how-to-distinguish-http-pipelining-from-request-smuggling",
+      "date": "2025-08-19",
+      "summary": "Sometimes people think they've found HTTP request smuggling, when they're actually just observing HTTP keep-alive or pipelining. This is usually a false positive, but sometimes there's actually a real"
+    },
+    {
+      "title": "HTTP/1.1 must die: the desync endgame",
+      "url": "https://portswigger.net/research/http1-must-die",
+      "date": "2025-08-06",
+      "summary": "Abstract Upstream HTTP/1.1 is inherently insecure and regularly exposes millions of websites to hostile takeover. Six years of attempted mitigations have hidden the issue, but failed to fix it. This p"
+    },
+    {
+      "title": "Repeater Strike: manual testing, amplified",
+      "url": "https://portswigger.net/research/repeater-strike-manual-testing-amplified",
+      "date": "2025-07-15",
+      "summary": "Manual testing doesn't have to be repetitive. In this post, we're introducing Repeater Strike - a new AI-powered Burp Suite extension designed to automate the hunt for IDOR and similar vulnerabilities"
+    },
+    {
+      "title": "Drag and Pwnd: Leverage ASCII characters to exploit VS Code",
+      "url": "https://portswigger.net/research/drag-and-pwnd-leverage-ascii-characters-to-exploit-vs-code",
+      "date": "2025-04-30",
+      "summary": "Control characters like SOH, STX, EOT and ETX were never meant to run your code - but in the world of modern terminal emulators, they sometimes do. In this post, I'll dive into the forgotten mechanics"
+    },
+    {
+      "title": "Document My Pentest: you hack, the AI writes it up!",
+      "url": "https://portswigger.net/research/document-my-pentest",
+      "date": "2025-04-23",
+      "summary": "Tired of repeating yourself? Automate your web security audit trail. In this post I'll introduce a new Burp AI extension that takes the boring bits out of your pen test. Web security testing can be a"
+    },
+    {
+      "title": "SAML roulette: the hacker always wins",
+      "url": "https://portswigger.net/research/saml-roulette-the-hacker-always-wins",
+      "date": "2025-03-18",
+      "summary": "Introduction In this post, we\u2019ll show precisely how to chain round-trip attacks and namespace confusion to achieve unauthenticated admin access on GitLab Enterprise by exploiting the ruby-saml library"
+    },
+    {
+      "title": "Shadow Repeater:AI-enhanced manual testing",
+      "url": "https://portswigger.net/research/shadow-repeater-ai-enhanced-manual-testing",
+      "date": "2025-02-20",
+      "summary": "Have you ever wondered how many vulnerabilities you've missed by a hair's breadth, due to a single flawed choice? We've just released Shadow Repeater, which enhances your manual testing with AI-powere"
+    },
+    {
+      "title": "Top 10 web hacking techniques of 2024",
+      "url": "https://portswigger.net/research/top-10-web-hacking-techniques-of-2024",
+      "date": "2025-02-04",
+      "summary": "Welcome to the Top 10 Web Hacking Techniques of 2024, the 18th edition of our annual community-powered effort to identify the most innovative must-read web security research published in the last year"
+    },
+    {
+      "title": "Bypassing character blocklists with unicode overflows",
+      "url": "https://portswigger.net/research/bypassing-character-blocklists-with-unicode-overflows",
+      "date": "2025-01-28",
+      "summary": "Unicode codepoint truncation - also called a Unicode overflow attack - happens when a server tries to store a Unicode character in a single byte. Because the maximum value of a byte is 255, an overflo"
+    },
+    {
+      "title": "Stealing HttpOnly cookies with the cookie sandwich technique",
+      "url": "https://portswigger.net/research/stealing-httponly-cookies-with-the-cookie-sandwich-technique",
+      "date": "2025-01-22",
+      "summary": "In this post, I will introduce the \"cookie sandwich\" technique which lets you bypass the HttpOnly flag on certain servers. This research follows on from Bypassing WAFs with the phantom $Version cookie"
+    },
+    {
+      "title": "Top 10 web hacking techniques of 2024: nominations open",
+      "url": "https://portswigger.net/research/top-10-web-hacking-techniques-of-2024-nominations-open",
+      "date": "2025-01-08",
+      "summary": "Nominations are now open for the top 10 new web hacking techniques of 2024! Every year, security researchers from all over the world share their latest findings via blog posts, presentations, PoCs, an"
+    },
+    {
+      "title": "Bypassing WAFs with the phantom $Version cookie",
+      "url": "https://portswigger.net/research/bypassing-wafs-with-the-phantom-version-cookie",
+      "date": "2024-12-04",
+      "summary": "HTTP cookies often control critical website features, but their long and convoluted history exposes them to parser discrepancy vulnerabilities. In this post, I'll explore some dangerous, lesser-known"
+    },
+    {
+      "title": "New crazy payloads in the URL Validation Bypass Cheat Sheet",
+      "url": "https://portswigger.net/research/new-crazy-payloads-in-the-url-validation-bypass-cheat-sheet",
+      "date": "2024-10-29",
+      "summary": "The strength of our URL Validation Bypass Cheat Sheet lies in the contributions from the web security community, and today\u2019s update is no exception. We are excited to introduce a new and improved IP a"
+    },
+    {
+      "title": "Concealing payloads in URL credentials",
+      "url": "https://portswigger.net/research/concealing-payloads-in-url-credentials",
+      "date": "2024-10-23",
+      "summary": "Last year Johan Carlsson discovered you could conceal payloads inside the credentials part of the URL . This was fascinating to me especially because the payload is not actually visible in the URL in"
+    },
+    {
+      "title": "Introducing the URL validation bypass cheat sheet",
+      "url": "https://portswigger.net/research/introducing-the-url-validation-bypass-cheat-sheet",
+      "date": "2024-09-03",
+      "summary": "URL validation bypasses are the root cause of numerous vulnerabilities including many instances of SSRF, CORS misconfiguration, and open redirection. These work by using ambiguous URLs to trigger URL"
+    },
+    {
+      "title": "Gotta cache 'em all: bending the rules of web cache exploitation",
+      "url": "https://portswigger.net/research/gotta-cache-em-all",
+      "date": "2024-08-08",
+      "summary": "Through the years, we have seen many attacks exploiting web caches to hijack sensitive information or store malicious payloads. However, as CDNs became more popular, new discrepancies between propriet"
+    },
+    {
+      "title": "Splitting the email atom: exploiting parsers to bypass access controls",
+      "url": "https://portswigger.net/research/splitting-the-email-atom",
+      "date": "2024-08-07",
+      "summary": "Some websites parse email addresses to extract the domain and infer which organisation the owner belongs to. This pattern makes email-address parser discrepancies critical. Predicting which domain an"
+    },
+    {
+      "title": "Listen to the whispers: web timing attacks that actually work",
+      "url": "https://portswigger.net/research/listen-to-the-whispers-web-timing-attacks-that-actually-work",
+      "date": "2024-08-07",
+      "summary": "Websites are riddled with timing oracles eager to divulge their innermost secrets. It's time we started listening to them. In this paper, I'll unleash novel attack concepts to coax out server secrets"
+    },
+    {
+      "title": "Fickle PDFs: exploiting browser rendering discrepancies",
+      "url": "https://portswigger.net/research/fickle-pdfs-exploiting-browser-rendering-discrepancies",
+      "date": "2024-07-09",
+      "summary": "Imagine the CEO of a random company receives an email containing a PDF invoice file. In Safari and MacOS Preview, the total price displayed is \u00a3399. After approval, the invoice is sent to the accounti"
+    },
+    {
+      "title": "A hacking hat-trick: previewing three PortSwigger Research publications coming to DEF CON &amp; Black Hat USA",
+      "url": "https://portswigger.net/research/a-hacking-hat-trick-previewing-three-portswigger-research-publications-coming-to-def-con-amp-black-hat-usa",
+      "date": "2024-07-02",
+      "summary": "We're delighted to announce three major research releases from PortSwigger Research will be published at both Black Hat USA and DEF CON 32. In this post, we'll offer a quick teaser of each talk, info"
+    },
+    {
+      "title": "onwebkitplaybacktargetavailabilitychanged?! New exotic events in the XSS cheat sheet",
+      "url": "https://portswigger.net/research/new-exotic-events-in-the-xss-cheat-sheet",
+      "date": "2024-06-11",
+      "summary": "The power of our XSS cheat sheet is we get fantastic contributions from the web security community and this update is no exception. We had valuable contributions from Mozilla to remove events that no"
+    },
+    {
+      "title": "Refining your HTTP perspective, with bambdas",
+      "url": "https://portswigger.net/research/adjusting-your-http-perspective-with-bambdas",
+      "date": "2024-05-29",
+      "summary": "When you open a HTTP request or response, what do you instinctively look for? Suspicious parameter names? CORS headers? Some clue as to the request's origin or underlying purpose? A single HTTP messag"
+    },
+    {
+      "title": "Introducing SignSaboteur: forge signed web tokens with ease",
+      "url": "https://portswigger.net/research/introducing-signsaboteur-forge-signed-web-tokens-with-ease",
+      "date": "2024-05-22",
+      "summary": "Signed web tokens are widely used for stateless authentication and authorization throughout the web. The most popular format is JSON Web Tokens (JWT) which we've already covered in depth, but beyond t"
+    },
+    {
+      "title": "Making desync attacks easy with TRACE",
+      "url": "https://portswigger.net/research/trace-desync-attack",
+      "date": "2024-03-19",
+      "summary": "Have you ever found an HTTP desync vulnerability that seemed impossible to exploit due to its complicated constraints? In this blogpost we will explore a new exploitation technique that can be used to"
+    },
+    {
+      "title": "Using form hijacking to bypass CSP",
+      "url": "https://portswigger.net/research/using-form-hijacking-to-bypass-csp",
+      "date": "2024-03-05",
+      "summary": "In this post we'll show you how to bypass CSP by using an often overlooked technique that can enable password theft in a seemingly secure configuration. What is form hijacking? Form hijacking isn't re"
+    },
+    {
+      "title": "Top 10 web hacking techniques of 2023",
+      "url": "https://portswigger.net/research/top-10-web-hacking-techniques-of-2023",
+      "date": "2024-02-19",
+      "summary": "Welcome to the Top 10 Web Hacking Techniques of 2023, the 17th edition of our annual community-powered effort to identify the most innovative must-read web security research published in the last year"
+    },
+    {
+      "title": "Hiding payloads in Java source code strings",
+      "url": "https://portswigger.net/research/hiding-payloads-in-java-source-code-strings",
+      "date": "2024-01-23",
+      "summary": "In this post we'll show you how Java handles unicode escapes in source code strings in a way you might find surprising - and how you can abuse them to conceal payloads. We recently released a powerful"
+    },
+    {
+      "title": "Top 10 web hacking techniques of 2023 - nominations open",
+      "url": "https://portswigger.net/research/top-10-web-hacking-techniques-of-2023-nominations-open",
+      "date": "2024-01-09",
+      "summary": "Update: The results are in! Check out the final top ten here or scroll down to view all nominations Over the last year, numerous security researchers have shared their discoveries with the community t"
+    },
+    {
+      "title": "Finding that one weird endpoint, with Bambdas",
+      "url": "https://portswigger.net/research/finding-that-one-weird-endpoint-with-bambdas",
+      "date": "2023-12-12",
+      "summary": "Security research involves a lot of failure. It's a perpetual balancing act between taking small steps with a predictable but boring outcome, and trying out wild concepts that are so crazy they might"
+    },
+    {
+      "title": "Blind CSS Exfiltration: exfiltrate unknown web pages",
+      "url": "https://portswigger.net/research/blind-css-exfiltration",
+      "date": "2023-12-05",
+      "summary": "This is a gif of the exfiltration process (We've increased the speed so you're not waiting around for 1 minute). Read on to discover how this works... CSS Cafe presentation I presented this technique"
+    },
+    {
+      "title": "The single-packet attack: making remote race-conditions 'local'",
+      "url": "https://portswigger.net/research/the-single-packet-attack-making-remote-race-conditions-local",
+      "date": "2023-10-18",
+      "summary": "The single-packet attack is a new technique for triggering web race conditions. It works by completing multiple HTTP/2 requests with a single TCP packet, which effectively eliminates network jitter an"
+    },
+    {
+      "title": "How to build custom scanners for web security research automation",
+      "url": "https://portswigger.net/research/how-to-build-custom-scanners-for-web-security-research-automation",
+      "date": "2023-10-03",
+      "summary": "In this post, I'll share my approach to developing custom automation to aid research into under-appreciated attack classes and (hopefully) push the boundaries of web security. As a worked example, I'l"
+    },
+    {
+      "title": "Smashing the state machine: the true potential of web race conditions",
+      "url": "https://portswigger.net/research/smashing-the-state-machine",
+      "date": "2023-08-09",
+      "summary": "For too long, web race condition attacks have focused on a tiny handful of scenarios. Their true potential has been masked thanks to tricky workflows, missing tooling, and simple network jitter hiding"
+    }
+  ]
+}

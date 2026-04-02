@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-04-01T23:18:17.950891+00:00",
+  "entries": [
+    {
+      "title": "Malicious Script That Gets Rid of ADS, (Wed, Apr 1st)",
+      "url": "https://isc.sans.edu/diary/rss/32854",
+      "date": "2026-04-01",
+      "summary": "Today, most malware are called &#xe2;&#x80;&#x9c;fileless&#xe2;&#x80;&#x9d; because they try to reduce their footprint on the infected computer filesystem to the bare minimum. But they need to write something&#xe2;&#x80;&#xa6; think about persistence. They can use the registry as an alternative storage location. &#xd;"
+    },
+    {
+      "title": "TeamPCP Supply Chain Campaign: Update 005 - First Confirmed Victim Disclosure, Post-Compromise Cloud Enumeration Documented, and Axios Attribution Narrows, (Wed, Apr 1st)",
+      "url": "https://isc.sans.edu/diary/rss/32856",
+      "date": "2026-04-01",
+      "summary": "This is the fifth update to the TeamPCP supply chain campaign threat intelligence report, \"When the Security Scanner Became the Weapon\" (v3.0, March 25, 2026). Update 004 covered developments through March 30, including the Databricks investigation, dual ransomware operations, and AstraZeneca data release. This update consolidates two days of intelligence through April 1, 2026. &#xd;"
+    },
+    {
+      "title": "ISC Stormcast For Wednesday, April 1st, 2026 https://isc.sans.edu/podcastdetail/9874, (Wed, Apr 1st)",
+      "url": "https://isc.sans.edu/diary/rss/32852",
+      "date": "2026-04-01",
+      "summary": "(c) SANS Internet Storm Center. https://isc.sans.edu Creative Commons Attribution-Noncommercial 3.0 United States License."
+    },
+    {
+      "title": "Application Control Bypass for Data Exfiltration, (Tue, Mar 31st)",
+      "url": "https://isc.sans.edu/diary/rss/32850",
+      "date": "2026-03-31",
+      "summary": "In case of a cyber incident, most organizations fear more of data loss (via exfiltration) than regular data encryption because they have a good backup policy in place. If exfiltration happened, it means a total loss of control of the stolen data with all the consequences (PII, CC numbers, &#xe2;&#x80;&#xa6;). &#xd;"
+    },
+    {
+      "title": "ISC Stormcast For Tuesday, March 31st, 2026 https://isc.sans.edu/podcastdetail/9872, (Tue, Mar 31st)",
+      "url": "https://isc.sans.edu/diary/rss/32848",
+      "date": "2026-03-31",
+      "summary": "(c) SANS Internet Storm Center. https://isc.sans.edu Creative Commons Attribution-Noncommercial 3.0 United States License."
+    },
+    {
+      "title": "TeamPCP Supply Chain Campaign: Update 004 - Databricks Investigating Alleged Compromise, TeamPCP Runs Dual Ransomware Operations, and AstraZeneca Data Released, (Mon, Mar 30th)",
+      "url": "https://isc.sans.edu/diary/rss/32846",
+      "date": "2026-03-31",
+      "summary": "This is the fourth update to the TeamPCP supply chain campaign threat intelligence report,&&#x23&#x3b;x26&#x3b;&#x23&#x3b;xc2&#x3b;&&#x23&#x3b;x26&#x3b;&#x23&#x3b;xa0&#x3b; \"When the Security Scanner Became the Weapon\" &&#x23&#x3b;x26&#x3b;&#x23&#x3b;xc2&#x3b;&&#x23&#x3b;x26&#x3b;&#x23&#x3b;xa0&#x3b;(v3.0, March 25, 2026). Update 003 covered developments through March 28, including the first 48-hour pause in new compromises and the campaign&&#x23&#x3b;x26&#x3b;&#x23&#x3b;39&#x3b;s shift to monetization. This update consolidates intelligence from March 28-30, 2026 -- two days since our last update. &#xd;"
+    },
+    {
+      "title": "DShield (Cowrie) Honeypot Stats and When Sessions Disconnect, (Mon, Mar 30th)",
+      "url": "https://isc.sans.edu/diary/rss/32840",
+      "date": "2026-03-30",
+      "summary": "A lot of the information seen on DShield honeypots &#x5b;1&#x5d; is repeated bot traffic, especially when looking at the Cowrie &#x5b;2&#x5d; telnet and SSH sessions. However, how long a session lasts, how many commands are run per session and what the last commands run before a session disconnects can vary. Some of this information could help indicate whether a session is automated and if a honeypot was fingerprinted. This information can also be used to find more interesting honeypot sessions. &#xd;"
+    },
+    {
+      "title": "ISC Stormcast For Monday, March 30th, 2026 https://isc.sans.edu/podcastdetail/9870, (Mon, Mar 30th)",
+      "url": "https://isc.sans.edu/diary/rss/32844",
+      "date": "2026-03-30",
+      "summary": "(c) SANS Internet Storm Center. https://isc.sans.edu Creative Commons Attribution-Noncommercial 3.0 United States License."
+    },
+    {
+      "title": "TeamPCP Supply Chain Campaign: Update 003 - Operational Tempo Shift as Campaign Enters Monetization Phase With No New Compromises in 48 Hours, (Sat, Mar 28th)",
+      "url": "https://isc.sans.edu/diary/rss/32842",
+      "date": "2026-03-28",
+      "summary": "This is the third update to the TeamPCP supply chain campaign threat intelligence report, \"When the Security Scanner Became the Weapon\" (v3.0, March 25, 2026). Update 002 covered developments through March 27, including the Telnyx PyPI compromise and Vect ransomware partnership. This update covers developments from March 27-28, 2026. &#xd;"
+    },
+    {
+      "title": "TeamPCP Supply Chain Campaign: Update 002 - Telnyx PyPI Compromise, Vect Ransomware Mass Affiliate Program, and First Named Victim Claim, (Fri, Mar 27th)",
+      "url": "https://isc.sans.edu/diary/rss/32838",
+      "date": "2026-03-27",
+      "summary": "This is the second update to the TeamPCP supply chain campaign threat intelligence report, \"When the Security Scanner Became the Weapon\" (v3.0, March 25, 2026). Update 001 covered developments through March 26. This update covers developments from March 26-27, 2026. &#xd;"
+    }
+  ]
+}

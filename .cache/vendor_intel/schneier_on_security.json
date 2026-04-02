@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-04-01T23:19:59.011020+00:00",
+  "entries": [
+    {
+      "title": "Is \u201cHackback\u201d Official US Cybersecurity Strategy?",
+      "url": "https://www.schneier.com/blog/archives/2026/04/is-hackback-official-us-cybersecurity-strategy.html",
+      "date": "2026-04-01",
+      "summary": "The 2026 US &#8220; Cyber Strategy for America &#8221; document is mostly the same thing we&#8217;ve seen out of the White House for over a decade, but with a more aggressive tone. But one sentence stood out: &#8220;We will unleash the private sector by creating incentives to identify and disrupt adversary networks and scale our national capabilities.&#8221; This sounds like a call for hackback: giving private companies permission to conduct offensive cyber operations. The Economist noticed (alternate link ) this, too. I think this is an incredibly dumb idea : In warfare, the notion of counterattack is extre"
+    },
+    {
+      "title": "A Taxonomy of Cognitive Security",
+      "url": "https://www.schneier.com/blog/archives/2026/04/a-taxonomy-of-cognitive-security.html",
+      "date": "2026-04-01",
+      "summary": "Last week, I listened to a fascinating talk by K. Melton on cognitive security, cognitive hacking, and reality pentesting. The slides from the talk are here , but&#8212;even better&#8212;Menton has a long essay laying out the basic concepts and ideas. The whole thing is important and well worth reading, and I hesitate to excerpt. Here&#8217;s a taste: The NeuroCompiler is where raw sensory data gets interpreted before you&#8217;re consciously aware of it. It decides what things mean, and it does this fast, automatic, and mostly invisible. It&#8217;s also where the majority of cognitive exploits actually land, right in this sweet spot between perception and conscious thought..."
+    },
+    {
+      "title": "Inventors of Quantum Cryptography Win Turing Award",
+      "url": "https://www.schneier.com/blog/archives/2026/03/inventors-of-quantum-cryptography-win-turing-award.html",
+      "date": "2026-03-31",
+      "summary": "Charles Bennett and Gilles Brassard have won the 2026 Turing Award for inventing quantum cryptography. I am incredibly pleased to see them get this recognition. I have always thought the technology to be fantastic, even though I think it&#8217;s largely unnecessary. I wrote up my thoughts back in 2008, in an essay titled &#8220;Quantum Cryptography: As Awesome As It Is Pointless.&#8221; Back then, I wrote: While I like the science of quantum cryptography&#8212;my undergraduate degree was in physics&#8212;I don&#8217;t see any commercial value in it. I don&#8217;t believe it solves any security problem that needs solving. I don&#8217;t believe that it&#8217;s worth paying for, and I can&#8217;t imagine anyone but a few technophiles buying and deploying it. Systems that use it don&#8217;t magically become unbreakable, because the quantum pa"
+    },
+    {
+      "title": "Apple\u2019s Camera Indicator Lights",
+      "url": "https://www.schneier.com/blog/archives/2026/03/apples-camera-indicator-lights.html",
+      "date": "2026-03-30",
+      "summary": "A thoughtful review of Apple&#8217;s system to alert users that the camera is on. It&#8217;s really well-designed, and important in a world where malware could surreptitiously start recording. The reason it&#8217;s tempting to think that a dedicated camera indicator light is more secure than an on-display indicator is the fact that hardware is generally more secure than software, because it&#8217;s harder to tamper with. With hardware, a dedicated hardware indicator light can be connected to the camera hardware such that if the camera is accessed, the light must turn on, with no way for software running on the device, no matter its privileges, to change that. With an indicator light that is rendered on the display, it&#8217;s not foolish to worry that malicious software, with sufficient privileges, could draw over the pixels on the display where the camera indicator is rendered, d"
+    },
+    {
+      "title": "Friday Squid Blogging: Bioluminescent Bacteria in Squid",
+      "url": "https://www.schneier.com/blog/archives/2026/03/friday-squid-blogging-bioluminescent-bacteria-in-squid.html",
+      "date": "2026-03-27",
+      "summary": "The Hawaiian bobtail squid has bioluminescent bacteria ."
+    },
+    {
+      "title": "As the US Midterms Approach, AI Is Going to Emerge as a Key Issue Concerning Voters",
+      "url": "https://www.schneier.com/blog/archives/2026/03/as-the-us-midterms-approach-ai-is-going-to-emerge-as-a-key-issue-concerning-voters.html",
+      "date": "2026-03-26",
+      "summary": "In December, the Trump administration signed an executive order that neutered states&#8217; ability to regulate AI by ordering his administration to both sue and withhold funds from states that try to do so. This action pointedly supported industry lobbyists keen to avoid any constraints and consequences on their deployment of AI, while undermining the efforts of consumers, advocates, and industry associations concerned about AI&#8217;s harms who have spent years pushing for state regulation. Trump&#8217;s actions have clarified the ideological alignments around AI within America&#8217;s electoral factions. They set down lines on a new playing field for the midterm elections, prompting members of his party, the opposition, and all of us to consider where we stand in the debate over how and whe"
+    },
+    {
+      "title": "Sen. Wyden Warns of Another Section 702 Abuse",
+      "url": "https://www.schneier.com/blog/archives/2026/03/sen-wyden-warns-of-another-section-702-abuse.html",
+      "date": "2026-03-25",
+      "summary": "Sen. Ron Wyden is warning us of an abuse of Section 702: Wyden took to the Senate floor to deliver a lengthy speech, ostensibly about the since approved (with support of many Democrats) nomination of Joshua Rudd to lead the NSA. Wyden was protesting that nomination, but in the context of Rudd being unwilling to agree to basic constitutional limitations on NSA surveillance. But that&#8217;s just a jumping off point ahead of Section 702&#8217;s upcoming reauthorization deadline. Buried in the speech is a passage that should set off every alarm bell: There&#8217;s another example of secret law related to Section 702, one that directly affects the privacy rights of Americans. For years, I have asked various administrations to declassify this matter. Thus far they have all refused, although I am still waiting fo"
+    },
+    {
+      "title": "Team Mirai and Democracy",
+      "url": "https://www.schneier.com/blog/archives/2026/03/team-mirai-and-democracy.html",
+      "date": "2026-03-24",
+      "summary": "Japan\u2019s election last month and the rise of the country\u2019s newest and most innovative political party, Team Mirai , illustrates the viability of a different way to do politics. In this model, technology is used to make democratic processes stronger, instead of undermining them. It is harnessed to root out corruption, instead of serving as a cash cow for campaign donations. Imagine an election where every voter has the opportunity to opine directly to politicians on precisely the issues they care about. They\u2019re not expected to spend hours becoming policy experts. Instead, an ..."
+    },
+    {
+      "title": "Microsoft Xbox One Hacked",
+      "url": "https://www.schneier.com/blog/archives/2026/03/microsoft-xbox-hacked.html",
+      "date": "2026-03-23",
+      "summary": "It&#8217;s an impressive feat , over a decade after the box was released: Since reset glitching wasn&#8217;t possible, Gaasedelen thought some voltage glitching could do the trick. So, instead of tinkering with the system rest pin(s) the hacker targeted the momentary collapse of the CPU voltage rail. This was quite a feat, as Gaasedelen couldn&#8217;t &#8216;see&#8217; into the Xbox One, so had to develop new hardware introspection tools. Eventually, the Bliss exploit was formulated, where two precise voltage glitches were made to land in succession. One skipped the loop where the ... </blo"
+    },
+    {
+      "title": "Friday Squid Blogging: Jumbo Flying Squid in the South Pacific",
+      "url": "https://www.schneier.com/blog/archives/2026/03/friday-squid-blogging-jumbo-flying-squid-in-the-south-pacific.html",
+      "date": "2026-03-20",
+      "summary": "The population needs better conservation. As usual, you can also use this squid post to talk about the security stories in the news that I haven&#8217;t covered. Blog moderation policy."
+    }
+  ]
+}

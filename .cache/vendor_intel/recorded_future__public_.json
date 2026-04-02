@@ -1,6 +1,18 @@
 {
-  "cached_at": "2026-04-01T05:37:58.013935+00:00",
+  "cached_at": "2026-04-01T23:18:43.379834+00:00",
   "entries": [
+    {
+      "title": "Industrialization of the Fraud Ecosystem Blog",
+      "url": "https://www.recordedfuture.com/blog/industrialization-of-the-fraud-ecosystem-blog",
+      "date": "2026-04-01",
+      "summary": "Payment fraud has industrialized, and that's a defensive advantage. Learn how standardized attack infrastructure creates detectable patterns that financial institutions can act on before losses occur."
+    },
+    {
+      "title": "The Shift: An Era of Quantum Geopolitics",
+      "url": "https://www.recordedfuture.com/blog/the-shift-an-era-of-quantum-geopolitics",
+      "date": "2026-04-01",
+      "summary": "The expanding conflict around Iran signals a deeper shift. We have entered an era of quantum geopolitics, where the old rules of the international order no longer apply"
+    },
     {
       "title": "ClickFix Campaigns Targeting Windows and macOS",
       "url": "https://www.recordedfuture.com/research/clickfix-campaigns-targeting-windows-and-macos",
@@ -288,18 +300,6 @@
       "url": "https://www.recordedfuture.com/blog/threat-intelligence-automation",
       "date": "2025-11-20",
       "summary": "Discover how threat intelligence automation from Recorded Future empowers security teams with real-time insights, faster response, and greater efficiency."
-    },
-    {
-      "title": "The Future of Humanoid Robotics",
-      "url": "https://www.recordedfuture.com/research/future-humanoid-robotics",
-      "date": "2025-11-20",
-      "summary": "Humanoid robots are arriving faster than anyone expected. Discover the hidden risks, global power shifts, and breakthroughs shaping the future \u2014 before your competitors do."
-    },
-    {
-      "title": "Operational Cyber Threat Intelligence",
-      "url": "https://www.recordedfuture.com/blog/operational-cyber-threat-intelligence",
-      "date": "2025-11-19",
-      "summary": "Move beyond noise. Learn how to build effective threat intelligence operations that turn raw data into actionable insights and proactive cyber defense."
     }
   ]
 }

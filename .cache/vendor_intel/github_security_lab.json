@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-04-01T23:20:00.409630+00:00",
+  "entries": [
+    {
+      "title": "Securing the open source supply chain across GitHub",
+      "url": "https://github.blog/security/supply-chain-security/securing-the-open-source-supply-chain-across-github/",
+      "date": "2026-04-01",
+      "summary": "Recent attacks on open source focus on exfiltrating secrets; here are the prevention steps you can take today, plus a look at the security capabilities GitHub is working on. The post Securing the open source supply chain across GitHub appeared first on The GitHub Blog ."
+    },
+    {
+      "title": "A year of open source vulnerability trends: CVEs, advisories, and malware",
+      "url": "https://github.blog/security/supply-chain-security/a-year-of-open-source-vulnerability-trends-cves-advisories-and-malware/",
+      "date": "2026-03-26",
+      "summary": "Reviewed advisories hit a four-year low, malware advisories surged, and CNA publishing grew\u2014here\u2019s what changed and what it means for your triage and response. The post A year of open source vulnerability trends: CVEs, advisories, and malware appeared first on The GitHub Blog ."
+    },
+    {
+      "title": "Investing in the people shaping open source and securing the future together",
+      "url": "https://github.blog/security/supply-chain-security/investing-in-the-people-shaping-open-source-and-securing-the-future-together/",
+      "date": "2026-03-17",
+      "summary": "See how GitHub is investing in open source security funding maintainers, partnering with Alpha-Omega, and expanding access to help reduce burden and strengthen software supply chains. The post Investing in the people shaping open source and securing the future together appeared first on The GitHub Blog ."
+    },
+    {
+      "title": "How to scan for vulnerabilities with GitHub Security Lab\u2019s open source AI-powered framework",
+      "url": "https://github.blog/security/how-to-scan-for-vulnerabilities-with-github-security-labs-open-source-ai-powered-framework/",
+      "date": "2026-03-06",
+      "summary": "GitHub Security Lab Taskflow Agent is very effective at finding Auth Bypasses, IDORs, Token Leaks, and other high-impact vulnerabilities. The post How to scan for vulnerabilities with GitHub Security Lab\u2019s open source AI-powered framework appeared first on The GitHub Blog ."
+    },
+    {
+      "title": "AI-supported vulnerability triage with the GitHub Security Lab Taskflow Agent",
+      "url": "https://github.blog/security/ai-supported-vulnerability-triage-with-the-github-security-lab-taskflow-agent/",
+      "date": "2026-01-20",
+      "summary": "Learn how we are using the newly released GitHub Security Lab Taskflow Agent to triage categories of vulnerabilities in GitHub Actions and JavaScript projects. The post AI-supported vulnerability triage with the GitHub Security Lab Taskflow Agent appeared first on The GitHub Blog ."
+    },
+    {
+      "title": "Community-powered security with AI: an open source framework for security research",
+      "url": "https://github.blog/security/community-powered-security-with-ai-an-open-source-framework-for-security-research/",
+      "date": "2026-01-14",
+      "summary": "Announcing GitHub Security Lab Taskflow Agent, an open source and collaborative framework for security research with AI. The post Community-powered security with AI: an open source framework for security research appeared first on The GitHub Blog ."
+    },
+    {
+      "title": "Bugs that survive the heat of continuous fuzzing",
+      "url": "https://github.blog/security/vulnerability-research/bugs-that-survive-the-heat-of-continuous-fuzzing/",
+      "date": "2025-12-29",
+      "summary": "Learn why some long-enrolled OSS-Fuzz projects still contain vulnerabilities and how you can find them. The post Bugs that survive the heat of continuous fuzzing appeared first on The GitHub Blog ."
+    },
+    {
+      "title": "Strengthening supply chain security: Preparing for the next malware campaign",
+      "url": "https://github.blog/security/supply-chain-security/strengthening-supply-chain-security-preparing-for-the-next-malware-campaign/",
+      "date": "2025-12-23",
+      "summary": "Security advice for users and maintainers to help reduce the impact of the next supply chain malware attack. The post Strengthening supply chain security: Preparing for the next malware campaign appeared first on The GitHub Blog ."
+    },
+    {
+      "title": "CodeQL zero to hero part 5: Debugging queries",
+      "url": "https://github.blog/security/vulnerability-research/codeql-zero-to-hero-part-5-debugging-queries/",
+      "date": "2025-09-29",
+      "summary": "Learn to debug and fix your CodeQL queries. The post CodeQL zero to hero part 5: Debugging queries appeared first on The GitHub Blog ."
+    },
+    {
+      "title": "Our plan for a more secure npm supply chain",
+      "url": "https://github.blog/security/supply-chain-security/our-plan-for-a-more-secure-npm-supply-chain/",
+      "date": "2025-09-23",
+      "summary": "Addressing a surge in package registry attacks, GitHub is strengthening npm's security with stricter authentication, granular tokens, and enhanced trusted publishing to restore trust in the open source ecosystem. The post Our plan for a more secure npm supply chain appeared first on The GitHub Blog ."
+    }
+  ]
+}

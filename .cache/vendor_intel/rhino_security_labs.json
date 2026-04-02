@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-04-01T23:19:59.526289+00:00",
+  "entries": [
+    {
+      "title": "Referral Beware, Your Rewards are Mine (Part 1)",
+      "url": "https://rhinosecuritylabs.com/research/referral-beware-your-rewards-are-mine-part-1/",
+      "date": "2025-08-27",
+      "summary": "The post Referral Beware, Your Rewards are Mine (Part 1) appeared first on Rhino Security Labs ."
+    },
+    {
+      "title": "Multiple CVEs in Infoblox NetMRI: RCE, Auth Bypass, SQLi, and File Read Vulnerabilities",
+      "url": "https://rhinosecuritylabs.com/research/infoblox-multiple-cves/",
+      "date": "2025-06-04",
+      "summary": "The post Multiple CVEs in Infoblox NetMRI: RCE, Auth Bypass, SQLi, and File Read Vulnerabilities appeared first on Rhino Security Labs ."
+    },
+    {
+      "title": "CVE-2025-26147: Authenticated RCE In Denodo Scheduler",
+      "url": "https://rhinosecuritylabs.com/research/cve-2025-26147-authenticated-rce-in-denodo/",
+      "date": "2025-05-21",
+      "summary": "The post CVE-2025-26147: Authenticated RCE In Denodo Scheduler appeared first on Rhino Security Labs ."
+    },
+    {
+      "title": "New Pacu Module: Secret Enumeration in Elastic Beanstalk",
+      "url": "https://rhinosecuritylabs.com/tools/new-pacu-module-enumerating-elastic-beanstalk/",
+      "date": "2025-04-22",
+      "summary": "The post New Pacu Module: &lt;br&gt;Secret Enumeration in Elastic Beanstalk appeared first on Rhino Security Labs ."
+    },
+    {
+      "title": "CVE-2024-55963: Unauthenticated RCE in Default-Install of Appsmith",
+      "url": "https://rhinosecuritylabs.com/research/cve-2024-55963-unauthenticated-rce-in-appsmith/",
+      "date": "2025-03-25",
+      "summary": "The post CVE-2024-55963: Unauthenticated RCE in Default-Install of Appsmith appeared first on Rhino Security Labs ."
+    },
+    {
+      "title": "CVE-2025-0693: AWS IAM User Enumeration",
+      "url": "https://rhinosecuritylabs.com/research/unauthenticated-username-enumeration-in-aws/",
+      "date": "2025-02-11",
+      "summary": "The post CVE-2025-0693: AWS IAM User Enumeration appeared first on Rhino Security Labs ."
+    },
+    {
+      "title": "CVE-2024-46506: Unauthenticated RCE in NetAlertx",
+      "url": "https://rhinosecuritylabs.com/research/cve-2024-46506-rce-in-netalertx/",
+      "date": "2025-01-30",
+      "summary": "The post CVE-2024-46506: Unauthenticated RCE in NetAlertx appeared first on Rhino Security Labs ."
+    },
+    {
+      "title": "CVE-2024-46507: Yeti Platform Server-Side Template Injection (SSTI)",
+      "url": "https://rhinosecuritylabs.com/research/cve-2024-46507-yeti-server-side-template-injection-ssti/",
+      "date": "2025-01-29",
+      "summary": "The post CVE-2024-46507: Yeti Platform &lt;br&gt; Server-Side Template Injection (SSTI) appeared first on Rhino Security Labs ."
+    },
+    {
+      "title": "CloudGoat Official Walkthrough Series: \u2018sqs_flag_shop\u2019",
+      "url": "https://rhinosecuritylabs.com/research/cloudgoat-walkthrough-sqs_flag_shop/",
+      "date": "2024-12-03",
+      "summary": "The post CloudGoat Official Walkthrough Series: \u2018sqs_flag_shop\u2019 appeared first on Rhino Security Labs ."
+    },
+    {
+      "title": "CloudGoat: New Scenario and Walkthrough (sns_secrets)",
+      "url": "https://rhinosecuritylabs.com/research/cloudgoat-sns_secrets/",
+      "date": "2024-10-15",
+      "summary": "The post CloudGoat: New Scenario and Walkthrough (sns_secrets) appeared first on Rhino Security Labs ."
+    }
+  ]
+}

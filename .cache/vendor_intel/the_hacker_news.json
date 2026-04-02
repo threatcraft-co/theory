@@ -1,0 +1,305 @@
+{
+  "cached_at": "2026-04-01T23:19:57.949778+00:00",
+  "entries": [
+    {
+      "title": "CERT-UA Impersonation Campaign Spread AGEWHEEZE Malware to 1 Million Emails",
+      "url": "https://thehackernews.com/2026/04/cert-ua-impersonation-campaign-spread.html",
+      "date": "2026-04-01",
+      "summary": "The Computer Emergency Response Team of Ukraine (CERT-UA) has disclosed details of a new phishing campaign in which the cybersecurity agency itself was impersonated to distribute a remote administration tool known as AGEWHEEZE. As part of the attacks, the threat actors, tracked as UAC-0255, sent emails on March 26 and 27, 2026, posing as CERT-UA to distribute a password-protected ZIP archive"
+    },
+    {
+      "title": "Microsoft Warns of WhatsApp-Delivered VBS Malware Hijacking Windows via UAC Bypass",
+      "url": "https://thehackernews.com/2026/04/microsoft-warns-of-whatsapp-delivered.html",
+      "date": "2026-04-01",
+      "summary": "Microsoft is calling attention to a new campaign that has leveraged WhatsApp messages to distribute malicious Visual Basic Script (VBS) files. The activity, beginning in late February 2026, leverages these scripts to initiate a multi-stage infection chain for establishing persistence and enabling remote access. It's currently not known what lures the threat actors use to trick users into"
+    },
+    {
+      "title": "Block the Prompt, Not the Work: The End of \"Doctor No\"",
+      "url": "https://thehackernews.com/2026/04/block-prompt-not-work-end-of-doctor-no.html",
+      "date": "2026-04-01",
+      "summary": "There is a character that keeps appearing in enterprise security departments, and most CISOs know exactly who that is. It doesn&rsquo;t build. It doesn&rsquo;t enable. Its entire function is to say \"No.\" No to ChatGPT. No to DeepSeek. No to the file-sharing tool the product team swears by. For years, this looked like security. But in 2026, \"Doctor No\" is no longer just a management headache &"
+    },
+    {
+      "title": "Casbaneiro Phishing Targets Latin America and Europe Using Dynamic PDF Lures",
+      "url": "https://thehackernews.com/2026/04/casbaneiro-phishing-targets-latin.html",
+      "date": "2026-04-01",
+      "summary": "A multi-pronged phishing campaign is targeting Spanish-speaking users in organizations across Latin America and Europe to deliver Windows banking trojans like Casbaneiro (aka Metamorfo) via another malware called Horabot. The activity has been attributed to a Brazilian cybercrime threat actor tracked as Augmented Marauder and Water Saci. The e-crime group was first documented by Trend Micro in"
+    },
+    {
+      "title": "New Chrome Zero-Day CVE-2026-5281 Under Active Exploitation \u2014 Patch Released",
+      "url": "https://thehackernews.com/2026/04/new-chrome-zero-day-cve-2026-5281-under.html",
+      "date": "2026-04-01",
+      "summary": "Google on Thursday released security updates for its Chrome web browser to address 21 vulnerabilities, including a zero-day flaw that it said has been exploited in the wild. The high-severity vulnerability, CVE-2026-5281 (CVSS score: N/A), concerns a use-after-free bug in Dawn, an open-source and cross-platform implementation of the WebGPU standard. \"Use-after-free in Dawn in Google Chrome prior"
+    },
+    {
+      "title": "3 Reasons Attackers Are Using Your Trusted Tools Against You (And Why You Don\u2019t See It Coming)",
+      "url": "https://thehackernews.com/2026/04/3-reasons-attackers-are-using-your.html",
+      "date": "2026-04-01",
+      "summary": "For years, cybersecurity has followed a familiar model: block malware, stop the attack. Now, attackers are moving on to what\u2019s next. Threat actors now use malware less frequently in favor of what\u2019s already inside your environment, including abusing trusted tools, native binaries, and legitimate admin utilities to move laterally, escalate privileges, and persist without raising alarms. Most"
+    },
+    {
+      "title": "Google Attributes Axios npm Supply Chain Attack to North Korean Group UNC1069",
+      "url": "https://thehackernews.com/2026/04/google-attributes-axios-npm-supply.html",
+      "date": "2026-04-01",
+      "summary": "Google has formally attributed the supply chain compromise of the popular Axios npm package to a financially motivated North Korean threat activity cluster tracked as UNC1069. \"We have attributed the attack to a suspected North Korean threat actor we track as UNC1069,\" John Hultquist, chief analyst at Google Threat Intelligence Group (GTIG), told The Hacker News in a statement. \"North Korean"
+    },
+    {
+      "title": "Claude Code Source Leaked via npm Packaging Error, Anthropic Confirms",
+      "url": "https://thehackernews.com/2026/04/claude-code-tleaked-via-npm-packaging.html",
+      "date": "2026-04-01",
+      "summary": "Anthropic on Tuesday confirmed that internal code for its popular artificial intelligence (AI) coding assistant, Claude Code, had been inadvertently released due to a human error. \"No sensitive customer data or credentials were involved or exposed,\" an Anthropic spokesperson said in a statement shared with CNBC News. \"This was a release packaging issue caused by human error, not a security"
+    },
+    {
+      "title": "Android Developer Verification Rollout Begins Ahead of September Enforcement",
+      "url": "https://thehackernews.com/2026/03/android-developer-verification-rollout.html",
+      "date": "2026-03-31",
+      "summary": "Google on Monday said it's officially rolling out Android developer verification to all developers to combat the problem of bad actors distributing harmful apps while \"hiding behind anonymity.\" The development comes ahead of a planned verification mandate that goes into effect in Brazil, Indonesia, Singapore, and Thailand this September, before it expands globally next year. As part of this"
+    },
+    {
+      "title": "TrueConf Zero-Day Exploited in Attacks on Southeast Asian Government Networks",
+      "url": "https://thehackernews.com/2026/03/trueconf-zero-day-exploited-in-attacks.html",
+      "date": "2026-03-31",
+      "summary": "A high-severity security flaw in the TrueConf client video conferencing software has been exploited in the wild as a zero-day as part of a campaign targeting government entities in Southeast Asia dubbed TrueChaos. The vulnerability in question is CVE-2026-3502 (CVSS score: 7.8), a lack of integrity check when fetching application update code, allowing an attacker to distribute a tampered update,"
+    },
+    {
+      "title": "Vertex AI Vulnerability Exposes Google Cloud Data and Private Artifacts",
+      "url": "https://thehackernews.com/2026/03/vertex-ai-vulnerability-exposes-google.html",
+      "date": "2026-03-31",
+      "summary": "Cybersecurity researchers have disclosed a security \"blind spot\" in Google Cloud's Vertex AI platform that could allow artificial intelligence (AI) agents to be weaponized by an attacker to gain unauthorized access to sensitive data and compromise an organization's cloud environment. According to Palo Alto Networks Unit 42, the issue relates to how the Vertex AI permission model can be misused"
+    },
+    {
+      "title": "The AI Arms Race \u2013 Why Unified Exposure Management Is Becoming a Boardroom Priority",
+      "url": "https://thehackernews.com/2026/03/the-ai-arms-race-why-unified-exposure.html",
+      "date": "2026-03-31",
+      "summary": "The cybersecurity landscape is accelerating at an unprecedented rate. What is emerging is not simply a rise in the number of vulnerabilities or tools, but a dramatic increase in speed. Speed of attack, speed of exploitation, and speed of change across modern environments. This is the defining challenge of the new era of digital warfare: the weaponization of Artificial Intelligence. Threat actors"
+    },
+    {
+      "title": "Silver Fox Expands Asia Cyber Campaign with AtlasCross RAT and Fake Domains",
+      "url": "https://thehackernews.com/2026/03/silver-fox-expands-asia-cyber-campaign.html",
+      "date": "2026-03-31",
+      "summary": "Chinese-speaking users are the target of an active campaign that uses typosquatted domains impersonating trusted software brands to deliver a previously undocumented remote access trojan named AtlasCross RAT. \"The operation covers VPN clients, encrypted messengers, video conferencing tools, cryptocurrency trackers, and e-commerce applications, with eleven confirmed delivery domains impersonating"
+    },
+    {
+      "title": "Axios Supply Chain Attack Pushes Cross-Platform RAT via Compromised npm Account",
+      "url": "https://thehackernews.com/2026/03/axios-supply-chain-attack-pushes-cross.html",
+      "date": "2026-03-31",
+      "summary": "The popular HTTP client known as Axios has suffered a supply chain attack after two newly published versions of the npm package introduced a malicious dependency that delivers a trojan capable of targeting Windows, macOS, and Linux systems. Versions 1.14.1 and 0.30.4 of Axios have been found to inject \"plain-crypto-js\" version 4.2.1 as a fake dependency. According to StepSecurity, the two"
+    },
+    {
+      "title": "OpenAI Patches ChatGPT Data Exfiltration Flaw and Codex GitHub Token Vulnerability",
+      "url": "https://thehackernews.com/2026/03/openai-patches-chatgpt-data.html",
+      "date": "2026-03-30",
+      "summary": "A previously unknown vulnerability in OpenAI ChatGPT allowed sensitive conversation data to be exfiltrated without user knowledge or consent, according to new findings from Check Point. \"A single malicious prompt could turn an otherwise ordinary conversation into a covert exfiltration channel, leaking user messages, uploaded files, and other sensitive content,\" the cybersecurity company said in"
+    },
+    {
+      "title": "DeepLoad Malware Uses ClickFix and WMI Persistence to Steal Browser Credentials",
+      "url": "https://thehackernews.com/2026/03/deepload-malware-uses-clickfix-and-wmi.html",
+      "date": "2026-03-30",
+      "summary": "A new campaign has leveraged the ClickFix social engineering tactic as a way to distribute a previously undocumented malware loader referred to as DeepLoad. \"It likely uses AI-assisted obfuscation and process injection to evade static scanning, while credential theft starts immediately and captures passwords and sessions even if the primary loader is blocked,\" ReliaQuest researchers Thassanai"
+    },
+    {
+      "title": "\u26a1 Weekly Recap: Telecom Sleeper Cells, LLM Jailbreaks, Apple Forces U.K. Age Checks and More",
+      "url": "https://thehackernews.com/2026/03/weekly-recap-telecom-sleeper-cells-llm.html",
+      "date": "2026-03-30",
+      "summary": "Some weeks are loud. This one was quieter but not in a good way. Long-running operations are finally hitting courtrooms, old attack methods are showing up in new places, and research that stopped being theoretical right around the time defenders stopped paying attention. There's a bit of everything this week. Persistence plays, legal wins, influence ops, and at least one thing that looks boring"
+    },
+    {
+      "title": "3 SOC Process Fixes That Unlock Tier 1 Productivity",
+      "url": "https://thehackernews.com/2026/03/3-soc-process-fixes-that-unlock-tier-1.html",
+      "date": "2026-03-30",
+      "summary": "What is really slowing Tier 1 down: the threat itself or the process around it? In many SOCs, the biggest delays do not come from the threat alone. They come from fragmented workflows, manual triage steps, and limited visibility early in the investigation. Fixing those process gaps can help Tier 1 move faster, reduce unnecessary escalations, and improve how the entire SOC responds under pressure"
+    },
+    {
+      "title": "Russian CTRL Toolkit Delivered via Malicious LNK Files Hijacks RDP via FRP Tunnels",
+      "url": "https://thehackernews.com/2026/03/russian-ctrl-toolkit-delivered-via.html",
+      "date": "2026-03-30",
+      "summary": "Cybersecurity researchers have discovered a remote access toolkit of Russian-origin that's distributed via malicious Windows shortcut (LNK) files that are disguised as private key folders. The CTRL toolkit, according to Censys, is custom-built using .NET and includes various executables\" to facilitate credential phishing, keylogging, Remote Desktop Protocol (RDP) hijacking, and reverse tunneling"
+    },
+    {
+      "title": "The State of Secrets Sprawl 2026: 9 Takeaways for CISOs",
+      "url": "https://thehackernews.com/2026/03/the-state-of-secrets-sprawl-2026-9.html",
+      "date": "2026-03-30",
+      "summary": "Secrets sprawl isn't slowing down: in 2025, it accelerated faster than most security teams anticipated. GitGuardian's State of Secrets Sprawl 2026 report analyzed billions of commits across public GitHub and uncovered 29 million new hardcoded secrets in 2025 alone, a 34% increase year over year and the largest single-year jump ever recorded. This year's findings reveal three core trends: AI has"
+    },
+    {
+      "title": "Three China-Linked Clusters Target Southeast Asian Government in 2025 Cyber Campaign",
+      "url": "https://thehackernews.com/2026/03/three-china-linked-clusters-target.html",
+      "date": "2026-03-30",
+      "summary": "Three threat activity clusters aligned with China have targeted a government organization in Southeast Asia as part of what has been described as a \"complex and well-resourced operation.\" The campaigns have led to the deployment of various malware families, including HIUPAN (aka USBFect, MISTCLOAK, or U2DiskWatch), PUBLOAD, EggStremeFuel (aka RawCookie), EggStremeLoader (aka Gorem RAT), MASOL"
+    },
+    {
+      "title": "Iran-Linked Hackers Breach FBI Director\u2019s Personal Email, Hit Stryker With Wiper Attack",
+      "url": "https://thehackernews.com/2026/03/iran-linked-hackers-breach-fbi.html",
+      "date": "2026-03-28",
+      "summary": "Threat actors with ties to Iran successfully broke into the personal email account of Kash Patel, the director of the U.S. Federal Bureau of Investigation (FBI), and leaked a cache of photos and other documents to the internet. Handala Hack Team, which carried out the breach, said on its website that Patel \"will now find his name among the list of successfully hacked victims.\" In a statement"
+    },
+    {
+      "title": "Citrix NetScaler Under Active Recon for CVE-2026-3055 (CVSS 9.3) Memory Overread Bug",
+      "url": "https://thehackernews.com/2026/03/citrix-netscaler-under-active-recon-for.html",
+      "date": "2026-03-28",
+      "summary": "A recently disclosed critical security flaw impacting Citrix NetScaler ADC and NetScaler Gateway is witnessing active reconnaissance activity, according to Defused Cyber and watchTowr. The vulnerability, CVE-2026-3055 (CVSS score: 9.3), refers to a case of insufficient input validation leading to memory overread, which an attacker could exploit to leak potentially sensitive information. Per"
+    },
+    {
+      "title": "TA446 Deploys DarkSword iOS Exploit Kit in Targeted Spear-Phishing Campaign",
+      "url": "https://thehackernews.com/2026/03/ta446-deploys-leaked-darksword-ios.html",
+      "date": "2026-03-28",
+      "summary": "Proofpoint has disclosed details of a targeted email campaign in which threat actors with ties to Russia are leveraging the recently disclosed DarkSword exploit kit to target iOS devices. The activity has been attributed with high confidence to the Russian state-sponsored threat group known as TA446, which is also tracked by the broader cybersecurity community under the monikers Callisto,"
+    },
+    {
+      "title": "CISA Adds CVE-2025-53521 to KEV After Active F5 BIG-IP APM Exploitation",
+      "url": "https://thehackernews.com/2026/03/cisa-adds-cve-2025-53521-to-kev-after.html",
+      "date": "2026-03-28",
+      "summary": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Friday added a critical security flaw impacting F5 BIG-IP Access Policy Manager (APM) to its Known Exploited Vulnerabilities (KEV) catalog, citing evidence of active exploitation. The vulnerability in question is CVE-2025-53521 (CVSS v4 score: 9.3), which could allow a threat actor to achieve remote code execution. \"When a"
+    },
+    {
+      "title": "Apple Sends Lock Screen Alerts to Outdated iPhones Over Active Web-Based Exploits",
+      "url": "https://thehackernews.com/2026/03/apple-sends-lock-screen-alerts-to.html",
+      "date": "2026-03-27",
+      "summary": "Apple is now sending Lock Screen notifications to iPhones and iPads running older versions of iOS and iPadOS to alert users of web-based attacks and urge them to install the update. The development was first reported by MacRumors. \"Apple is aware of attacks targeting out-of-date iOS software, including the version on your iPhone. Install this critical update to protect your iPhone,\" the"
+    },
+    {
+      "title": "TeamPCP Pushes Malicious Telnyx Versions to PyPI, Hides Stealer in WAV Files",
+      "url": "https://thehackernews.com/2026/03/teampcp-pushes-malicious-telnyx.html",
+      "date": "2026-03-27",
+      "summary": "TeamPCP, the threat actor behind the supply chain attack targeting Trivy, KICS, and litellm, has now compromised the telnyx Python package by pushing two malicious versions to steal sensitive data. The two versions, 4.87.1 and 4.87.2, published to the Python Package Index (PyPI) repository on March 27, 2026, concealed their credential harvesting capabilities within a .WAV file. Users are"
+    },
+    {
+      "title": "Open VSX Bug Let Malicious VS Code Extensions Bypass Pre-Publish Security Checks",
+      "url": "https://thehackernews.com/2026/03/open-vsx-bug-let-malicious-vs-code.html",
+      "date": "2026-03-27",
+      "summary": "Cybersecurity researchers have disclosed details of a now-patched bug impacting Open VSX's pre-publish scanning pipeline to cause the tool to allow a malicious Microsoft Visual Studio Code (VS Code) extension to pass the vetting process and go live in the registry. \"The pipeline had a single boolean return value that meant both 'no scanners are configured' and 'all scanners failed to run,'\" Koi"
+    },
+    {
+      "title": "AitM Phishing Targets TikTok Business Accounts Using Cloudflare Turnstile Evasion",
+      "url": "https://thehackernews.com/2026/03/aitm-phishing-targets-tiktok-business.html",
+      "date": "2026-03-27",
+      "summary": "Threat actors are using adversary-in-the-middle (AitM) phishing pages to seize control of TikTok for Business accounts in a new campaign, according to a report from Push Security. Business accounts associated with social media platforms are a lucrative target, as they can be weaponized by bad actors for malvertising and distributing malware. \"TikTok has been historically abused to distribute"
+    },
+    {
+      "title": "We Are At War",
+      "url": "https://thehackernews.com/2026/03/we-are-at-war.html",
+      "date": "2026-03-27",
+      "summary": "Rising geopolitical tensions are reflected (or in some cases preceded) by cyber operations, while technology itself has become politicized. Let\u2019s admit it: we are in the middle of it.&nbsp; Introduction: One tech power to rule them all is a thing of the past&nbsp; The relative safety, peace and prosperity that much of the world has enjoyed since 1945 was not accidental. It emerged from the ashes"
+    },
+    {
+      "title": "Bearlyfy Hits Russian Firms with Custom GenieLocker Ransomware",
+      "url": "https://thehackernews.com/2026/03/bearlyfy-hits-70-russian-firms-with.html",
+      "date": "2026-03-27",
+      "summary": "A pro-Ukrainian group called Bearlyfy has been attributed to more than 70 cyber attacks targeting Russian companies since it first surfaced in the threat landscape in January 2025, with recent attacks leveraging a custom Windows ransomware strain codenamed GenieLocker. \"Bearlyfy (also known as Labubu) operates as a dual-purpose group aimed at inflicting maximum damage upon Russian businesses;"
+    },
+    {
+      "title": "LangChain, LangGraph Flaws Expose Files, Secrets, Databases in Widely Used AI Frameworks",
+      "url": "https://thehackernews.com/2026/03/langchain-langgraph-flaws-expose-files.html",
+      "date": "2026-03-27",
+      "summary": "Cybersecurity researchers have disclosed three security vulnerabilities impacting LangChain and LangGraph that, if successfully exploited, could expose filesystem data, environment secrets, and conversation history. Both LangChain and LangGraph are open-source frameworks that are used to build applications powered by Large Language Models (LLMs). LangGraph is built on the foundations of"
+    },
+    {
+      "title": "China-Linked Red Menshen Uses Stealthy BPFDoor Implants to Spy via Telecom Networks",
+      "url": "https://thehackernews.com/2026/03/china-linked-red-menshen-uses-stealthy.html",
+      "date": "2026-03-26",
+      "summary": "A long-term and ongoing campaign attributed to a China-nexus threat actor has embedded itself in telecom networks to conduct espionage against government networks. The strategic positioning activity, which involves implanting and maintaining stealthy access mechanisms within critical environments, has been attributed to Red Menshen, a threat cluster that's also tracked as Earth Bluecrow,"
+    },
+    {
+      "title": "[Webinar] Stop Guessing. Learn to Validate Your Defenses Against Real Attacks",
+      "url": "https://thehackernews.com/2026/03/webinar-stop-guessing-learn-to-validate.html",
+      "date": "2026-03-26",
+      "summary": "Most teams have security tools in place. Alerts are firing, dashboards look clean, threat intel is flowing in. On the surface, everything feels under control. But one question usually stays unanswered: Would your defenses actually stop a real attack? That\u2019s where things get shaky. A control exists, so it\u2019s assumed to work. A detection rule is active, so it\u2019s expected to catch something. But very"
+    },
+    {
+      "title": "Claude Extension Flaw Enabled Zero-Click XSS Prompt Injection via Any Website",
+      "url": "https://thehackernews.com/2026/03/claude-extension-flaw-enabled-zero.html",
+      "date": "2026-03-26",
+      "summary": "Cybersecurity researchers have disclosed a vulnerability in Anthropic's Claude Google Chrome Extension that could have been exploited to trigger malicious prompts simply by visiting a web page. The flaw \"allowed any website to silently inject prompts into that assistant as if the user wrote them,\" Koi Security researcher Oren Yomtov said in a report shared with The Hacker News. \"No clicks, no"
+    },
+    {
+      "title": "Masters of Imitation: How Hackers and Art Forgers Perfect the Art of Deception",
+      "url": "https://thehackernews.com/2026/03/masters-of-imitation-how-hackers-and.html",
+      "date": "2026-03-26",
+      "summary": "Unmasking impostors is something the art world has faced for decades, and there are valuable lessons from the works of Elmyr de Hory that can apply to the world of defensive cybersecurity. During the 1960s, de Hory gained infamy as a premier forger, passing off counterfeit masterworks of Picasso, Matisse, and Renoir to unsuspecting collectors and renowned museums. Over the next several decades,"
+    },
+    {
+      "title": "ThreatsDay Bulletin: PQC Push, AI Vuln Hunting, Pirated Traps, Phishing Kits & 20 More Stories",
+      "url": "https://thehackernews.com/2026/03/threatsday-bulletin-pqc-push-ai-vuln.html",
+      "date": "2026-03-26",
+      "summary": "Some weeks in security feel loud. This one feels sneaky. Less big dramatic fireworks, more of that slow creeping sense that too many people are getting way too comfortable abusing things they probably shouldn&rsquo;t even be touching. There&rsquo;s a little bit of everything in this one, too. Weird delivery tricks, old problems coming back in slightly worse forms, shady infrastructure doing"
+    },
+    {
+      "title": "Coruna iOS Kit Reuses 2023 Triangulation Exploit Code in Recent Mass Attacks",
+      "url": "https://thehackernews.com/2026/03/coruna-ios-kit-reuses-2023.html",
+      "date": "2026-03-26",
+      "summary": "The kernel exploit for two security vulnerabilities used in the recently uncovered Apple iOS exploit kit known as Coruna is an updated version of the same exploit that was used in the Operation Triangulation campaign back in 2023, according to new findings from Kaspersky. \"When Coruna was first reported, the public evidence wasn't sufficient to link its code to Triangulation \u2014 shared"
+    },
+    {
+      "title": "WebRTC Skimmer Bypasses CSP to Steal Payment Data from E-Commerce Sites",
+      "url": "https://thehackernews.com/2026/03/webrtc-skimmer-bypasses-csp-to-steal.html",
+      "date": "2026-03-26",
+      "summary": "Cybersecurity researchers have discovered a new payment skimmer that uses WebRTC data channels as a means to receive payloads and exfiltrate data, effectively bypassing security controls. \"Instead of the usual HTTP requests or image beacons, this malware uses WebRTC data channels to load its payload and exfiltrate stolen payment data,\" Sansec said in a report published this week. The attack,"
+    },
+    {
+      "title": "LeakBase Admin Arrested in Russia Over Massive Stolen Credential Marketplace",
+      "url": "https://thehackernews.com/2026/03/leakbase-admin-arrested-in-russia-over.html",
+      "date": "2026-03-25",
+      "summary": "The alleged administrator of the LeakBase cybercrime forum has been arrested by Russian law enforcement authorities, state media reported Thursday. According to TASS and MVD Media, a news website linked to the Russian Interior Ministry, the suspect is a resident of the city of Taganrog. The suspect is said to have been detained for creating and managing a criminal site that allowed stolen"
+    },
+    {
+      "title": "GlassWorm Malware Uses Solana Dead Drops to Deliver RAT and Steal Browser, Crypto Data",
+      "url": "https://thehackernews.com/2026/03/glassworm-malware-uses-solana-dead.html",
+      "date": "2026-03-25",
+      "summary": "Cybersecurity researchers have flagged a new evolution of the GlassWorm campaign that delivers a multi-stage framework capable of comprehensive data theft and installing a remote access trojan (RAT), which deploys an information-stealing Google Chrome extension masquerading as an offline version of Google Docs. \"It logs keystrokes, dumps cookies and session tokens, captures screenshots, and"
+    },
+    {
+      "title": "The Kill Chain Is Obsolete When Your AI Agent Is the Threat",
+      "url": "https://thehackernews.com/2026/03/the-kill-chain-is-obsolete-when-your-ai.html",
+      "date": "2026-03-25",
+      "summary": "In September 2025, Anthropic disclosed that a state-sponsored threat actor used an AI coding agent to execute an autonomous cyber espionage campaign against 30 global targets. The AI handled 80-90% of tactical operations on its own, performing reconnaissance, writing exploit code, and attempting lateral movement at machine speed. This incident is worrying, but there's a scenario that should"
+    },
+    {
+      "title": "Russian Hacker Sentenced to 2 Years for TA551 Botnet-Driven Ransomware Attacks",
+      "url": "https://thehackernews.com/2026/03/russian-hacker-sentenced-to-2-years-for.html",
+      "date": "2026-03-25",
+      "summary": "The U.S. Department of Justice (DoJ) said a Russian national has been sentenced to two years in prison for managing a botnet that was used to launch ransomware attacks against U.S. companies. Ilya Angelov, 40, of Tolyatti, Russia, was also fined $100,000. Angelov, who went by the online aliases \"milan\" and \"okart,\" is said to have co-managed a Russia-based cybercriminal group known as TA551 (aka"
+    },
+    {
+      "title": "Device Code Phishing Hits 340+ Microsoft 365 Orgs Across Five Countries via OAuth Abuse",
+      "url": "https://thehackernews.com/2026/03/device-code-phishing-hits-340-microsoft.html",
+      "date": "2026-03-25",
+      "summary": "Cybersecurity researchers are calling attention to an active device code phishing campaign that's targeting Microsoft 365 identities across more than 340 organizations in the U.S., Canada, Australia, New Zealand, and Germany. The activity, per Huntress, was first spotted on February 19, 2026, with subsequent cases appearing at an accelerated pace since then. Notably, the campaign leverages"
+    },
+    {
+      "title": "FCC Bans New Foreign-Made Routers Over Supply Chain and Cyber Risk Concerns",
+      "url": "https://thehackernews.com/2026/03/fcc-bans-new-foreign-made-routers-over.html",
+      "date": "2026-03-25",
+      "summary": "The U.S. Federal Communications Commission (FCC) said on Monday that it was banning the import of new, foreign-made consumer routers, citing \"unacceptable\" risks to cyber and national security. The action was designed to safeguard Americans and the underlying communications networks the country relies on, FCC Chairman Brendan Carr said in a post on X. The development means that new models of"
+    },
+    {
+      "title": "TeamPCP Backdoors LiteLLM Versions 1.82.7\u20131.82.8 via Trivy CI/CD Compromise",
+      "url": "https://thehackernews.com/2026/03/teampcp-backdoors-litellm-versions.html",
+      "date": "2026-03-24",
+      "summary": "TeamPCP, the threat actor behind the recent compromises of Trivy and KICS, has now compromised a popular Python package named litellm, pushing two malicious versions containing a credential harvester, a Kubernetes lateral movement toolkit, and a persistent backdoor. Multiple security vendors, including Endor Labs and JFrog, revealed that litellm versions 1.82.7 and 1.82.8 were published on March"
+    },
+    {
+      "title": "Tax Search Ads Deliver ScreenConnect Malware Using Huawei Driver to Disable EDR",
+      "url": "https://thehackernews.com/2026/03/tax-search-ads-deliver-screenconnect.html",
+      "date": "2026-03-24",
+      "summary": "A large-scale malvertising campaign active since January 2026 has been observed targeting U.S.-based individuals searching for tax-related documents to serve rogue installers for ConnectWise ScreenConnect that drop a tool named HwAudKiller to blind security programs using the bring your own vulnerable driver (BYOVD) technique. \"The campaign abuses Google Ads to serve rogue ScreenConnect ("
+    },
+    {
+      "title": "5 Learnings from the First-Ever Gartner Market Guide for Guardian Agents",
+      "url": "https://thehackernews.com/2026/03/5-learnings-from-first-ever-gartner.html",
+      "date": "2026-03-24",
+      "summary": "On February 25, 2026, Gartner published its inaugural Market Guide for Guardian Agents, marking an important milestone for this emerging category. For those unfamiliar with the various Gartner report types, \u201ca Market Guide defines a market and explains what clients can expect it to do in the short term. With the focus on early, more chaotic markets, a Market Guide does not rate or position"
+    },
+    {
+      "title": "Hackers Use Fake Resumes to Steal Enterprise Credentials and Deploy Crypto Miner",
+      "url": "https://thehackernews.com/2026/03/hackers-use-fake-resumes-to-steal.html",
+      "date": "2026-03-24",
+      "summary": "An ongoing phishing campaign is targeting French-speaking corporate environments with fake resumes that lead to the deployment of cryptocurrency miners and information stealers. \"The campaign uses highly obfuscated VBScript files disguised as resume/CV documents, delivered through phishing emails,\" Securonix researchers Shikha Sangwan, Akshay Gaikwad, and Aaron Beardslee said in a report shared"
+    },
+    {
+      "title": "The Hidden Cost of Cybersecurity Specialization: Losing Foundational Skills",
+      "url": "https://thehackernews.com/2026/03/the-hidden-cost-of-cybersecurity.html",
+      "date": "2026-03-24",
+      "summary": "Cybersecurity has changed fast. Roles are more&nbsp;specialized, and tooling is more advanced. On paper, this should make organizations more secure. But in practice, many teams struggle with the same basic problems they faced years ago: unclear risk priorities, misaligned tooling decisions, and difficulty explaining security issues in terms the business understands. These challenges do not"
+    }
+  ]
+}

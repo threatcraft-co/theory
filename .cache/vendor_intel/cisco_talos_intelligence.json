@@ -1,0 +1,95 @@
+{
+  "cached_at": "2026-04-01T23:18:22.776519+00:00",
+  "entries": [
+    {
+      "title": "Ransomware in 2025: Blending in is the strategy",
+      "url": "https://blog.talosintelligence.com/ransomware-in-2025-blending-in-is-the-strategy/",
+      "date": "2026-03-31",
+      "summary": "A summary of the top ransomware trends from the Talos 2025 Year in Review, with a focus on identity, attacker tactics, and practical defenses."
+    },
+    {
+      "title": "TP-Link, Canva, HikVision vulnerabilities",
+      "url": "https://blog.talosintelligence.com/tp-link-canva-hikvision-vulnerabilities/",
+      "date": "2026-03-26",
+      "summary": "Cisco Talos&#x2019; Vulnerability Discovery &amp; Research team recently disclosed a vulnerability in HikVision, as well as 10 in TP-Link, and 19 in Canva. The vulnerabilities mentioned in this blog post have been patched by their respective vendors, all in adherence to Cisco&#x2019;s third-party vulnerability disclosure policy . For"
+    },
+    {
+      "title": "A puppet made me cry and all I got was this t-shirt",
+      "url": "https://blog.talosintelligence.com/a-puppet-made-me-cry-and-all-i-got-was-this-t-shirt/",
+      "date": "2026-03-26",
+      "summary": "In this week's newsletter, Amy draws parallels between the collaborative themes of \"Project Hail Mary\" and the massive team effort behind the newly released Talos Year in Review report."
+    },
+    {
+      "title": "Talos Takes: 2025 insights from Talos and Splunk",
+      "url": "https://blog.talosintelligence.com/cybersecuritys-double-header-2025-insights-from-talos-and-splunk/",
+      "date": "2026-03-26",
+      "summary": "This episode of Talos Takes breaks down the 2025 Year in Review as well as Splunk's Top 50 Cybersecurity Threats report."
+    },
+    {
+      "title": "Beers with Talos breaks down the 2025 Talos Year in Review",
+      "url": "https://blog.talosintelligence.com/beers-with-talos-breaks-down-the-2025-talos-year-in-review/",
+      "date": "2026-03-23",
+      "summary": "The Beers with Talos team unpack the biggest cybersecurity threats of 2025, from React2Shell to ransomware and identity abuse, and what it all means for defenders going forward."
+    },
+    {
+      "title": "2025 Talos Year in Review: Speed, scale, and staying power",
+      "url": "https://blog.talosintelligence.com/2025-talos-year-in-review-speed-scale-and-staying-power/",
+      "date": "2026-03-23",
+      "summary": "The 2025 Talos Year in Review is available now. Understand evolving adversary playbooks and how to strengthen your organization\u2019s defenses."
+    },
+    {
+      "title": "You have to invite them in",
+      "url": "https://blog.talosintelligence.com/you-have-to-invite-them-in/",
+      "date": "2026-03-19",
+      "summary": "While a garlic and wooden stakes keep the vampires at bay in movies, they won\u2019t save your network once an attacker has been \"invited in.\" Discover why identity is the new frontier of cyber horror in this week\u2019s edition."
+    },
+    {
+      "title": "Everyday tools, extraordinary crimes: the ransomware exfiltration playbook",
+      "url": "https://blog.talosintelligence.com/everyday-tools-extraordinary-crimes-the-ransomware-exfiltration-playbook/",
+      "date": "2026-03-19",
+      "summary": "Attackers use trusted tools for data theft, making traditional detection unreliable. The Exfiltration Framework enables defenders to spot exfiltration by focusing on behavioral signals across endpoints, networks, and cloud environments rather than static tool indicators."
+    },
+    {
+      "title": "Transparent COM instrumentation for malware analysis",
+      "url": "https://blog.talosintelligence.com/transparent-com-instrumentation-for-malware-analysis/",
+      "date": "2026-03-18",
+      "summary": "In this article, Cisco Talos presents DispatchLogger, a new open-source tool that delivers high visibility into late-bound IDispatch COM object interactions via transparent proxy interception."
+    },
+    {
+      "title": "This one\u2019s for you, Mom",
+      "url": "https://blog.talosintelligence.com/this-ones-for-you-mom/",
+      "date": "2026-03-12",
+      "summary": "This week, Joe talks about allyship and how being aware of an issue is the first step in helping to fix it."
+    },
+    {
+      "title": "DirectX, OpenFOAM, Libbiosig vulnerabilities",
+      "url": "https://blog.talosintelligence.com/directx-openfoam-libbiosig-vulnerabilities/",
+      "date": "2026-03-11",
+      "summary": "Cisco Talos&#x2019; Vulnerability Discovery &amp; Research team recently disclosed vulnerabilities in the BioSig Project Libbiosig library and OpenCFD OpenFOAM, as well as an unpatched vulnerability in Microsoft DirectX. The vulnerabilities mentioned in this blog post have been patched by their respective vendors, all in adherence to Cisco&#x2019;s"
+    },
+    {
+      "title": "Agentic AI security: Why you need to know about autonomous agents now",
+      "url": "https://blog.talosintelligence.com/agentic-ai-security-why-you-need-to-know-about-autonomous-agents-now/",
+      "date": "2026-03-11",
+      "summary": "There are many benefits and security risks of deploying agentic AI within organizations. This blog emphasizes the importance of robust risk management and threat modeling to defend against both internal operational errors and potential malicious exploitation."
+    },
+    {
+      "title": "Spinning complex ideas into clear docs with Kri Dontje",
+      "url": "https://blog.talosintelligence.com/spinning-complex-ideas-into-clear-docs-with-kri-dontje/",
+      "date": "2026-03-11",
+      "summary": "The episode features Kri Dontje discussing her role in translating complex technical cybersecurity topics into clear, accessible documentation, emphasizing the importance of consistency, accuracy, and collaboration with subject matter experts."
+    },
+    {
+      "title": "Microsoft Patch Tuesday for March 2026 \u2014 Snort rules and prominent vulnerabilities",
+      "url": "https://blog.talosintelligence.com/microsoft-patch-tuesday-march-2026/",
+      "date": "2026-03-10",
+      "summary": "Microsoft has released its monthly security update for March 2026 which includes 79 vulnerabilities, including three that Microsoft marked as \u201ccritical.\u201d"
+    },
+    {
+      "title": "Patch, track, repeat: The 2025 CVE retrospective",
+      "url": "https://blog.talosintelligence.com/patch-track-repeat-the-2025-cve-retrospective/",
+      "date": "2026-03-05",
+      "summary": "Thor analyzes CVE data from 2025 and provides recommendations for where and how organizations should strengthen their defenses."
+    }
+  ]
+}

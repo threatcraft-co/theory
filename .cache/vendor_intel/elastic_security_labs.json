@@ -1,6 +1,12 @@
 {
-  "cached_at": "2026-04-01T05:38:00.451853+00:00",
+  "cached_at": "2026-04-01T23:19:46.473802+00:00",
   "entries": [
+    {
+      "title": "Prioritizing Alerts Triage with Higher-Order Detection Rules",
+      "url": "https://www.elastic.co/security-labs/higher-order-detection-rules",
+      "date": "2026-04-02",
+      "summary": "Scaling SOC efficiency through multi-signal correlation and higher-order detection patterns."
+    },
     {
       "title": "Inside the Axios supply chain compromise - one RAT to rule them all",
       "url": "https://www.elastic.co/security-labs/axios-one-rat-to-rule-them-all",
@@ -114,12 +120,6 @@
       "url": "https://www.elastic.co/security-labs/make-the-most-of-network-firewall-logs-with-elastic",
       "date": "2026-02-25",
       "summary": "Make the most of your firewall logs. In Part 1 of our series, learn how to ingest and parse logs from any firewall with Elastic Agent and use the Network Page to visually explore your network traffic for instant insights."
-    },
-    {
-      "title": "Beyond Behaviors: AI-Augmented Detection Engineering with ES|QL COMPLETION",
-      "url": "https://www.elastic.co/security-labs/beyond-behaviors-ai-augmented-detection-engineering-with-esql-completion",
-      "date": "2026-02-24",
-      "summary": "Learn how Elastic's ES|QL COMPLETION command brings LLM reasoning directly into detection rules, enabling detection engineers to build intelligent alert triage without external orchestration."
     }
   ]
 }

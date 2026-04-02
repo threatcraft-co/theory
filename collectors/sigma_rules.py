@@ -1,97 +1,144 @@
 """
 collectors/sigma_rules.py
 --------------------------
-Pulls Sigma detection rules from SigmaHQ and indexes them by ATT&CK
-technique ID.
+Fetches Sigma detection rules mapped to ATT&CK technique IDs.
 
-Strategy:
-  1. Check .cache/sigma/{technique_id}.json — return immediately if fresh
-  2. Query GitHub Contents API for rules tagged with that technique
-  3. Parse YAML rule metadata (title, logsource, detection condition)
-  4. Cache results to disk
+Architecture: local clone (fast) vs GitHub Search API (slow)
+--------------------------------------------------------------
+THEORY uses a LOCAL CLONE of the SigmaHQ/sigma repository stored at
+.cache/sigma-repo/. This means:
 
-No auth required for public GitHub API (60 req/hour unauthenticated).
-Set GITHUB_TOKEN in .env for 5000 req/hour.
+  - Zero API rate limits
+  - Instant results (grep on local files vs HTTP requests)
+  - Works fully offline after initial clone
+  - No GitHub token required
+  - Full rule coverage (no 5-rule cap per technique)
 
-Cache freshness: 7 days. Refresh with: python theory.py --update-bundles
+Initial clone: ~2 minutes, ~500MB disk space (one time only)
+Subsequent runs: instant (grep on local files)
+Update: python3 theory.py --update-bundles (runs git pull)
 
-SigmaHQ rule structure:
-  tags:
-    - attack.t1059.001        ← technique tag (lowercase)
-    - attack.execution        ← tactic tag
-  logsource:
-    category: process_creation
-    product: windows
-  detection:
-    selection:
-      CommandLine|contains: 'powershell'
-    condition: selection
+If the local clone is not present, THEORY will clone it automatically
+on first use. This replaces the previous GitHub Search API approach
+which required 6.5s delays per technique due to rate limiting.
 """
 
 from __future__ import annotations
 
-import json
 import logging
 import os
 import re
-import time
-from datetime import datetime, timezone, timedelta
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any
-from urllib.request import Request, urlopen
-from urllib.error import HTTPError, URLError
-from urllib.parse import quote
-
-from collectors.base import BaseCollector
 
 logger = logging.getLogger(__name__)
 
-SOURCE_ID       = "sigma"
-CACHE_DIR       = Path(".cache/sigma")
-CACHE_TTL_DAYS  = 7
-TIMEOUT         = 12
-RETRY_MAX       = 2
-RETRY_WAIT      = 2
-MAX_RULES_PER_TECHNIQUE = 5   # cap per technique to keep dossier focused
+SIGMA_REPO_URL  = "https://github.com/SigmaHQ/sigma.git"
+SIGMA_REPO_PATH = Path(".cache/sigma-repo")
+RULES_DIR       = SIGMA_REPO_PATH / "rules"
+MAX_RULES_PER_TECHNIQUE = 10   # raised from 5 — no cost to go higher now
 
-# SigmaHQ GitHub API base
-GITHUB_API   = "https://api.github.com"
-SIGMA_OWNER  = "SigmaHQ"
-SIGMA_REPO   = "sigma"
-
-# We search within the core rules directory — highest quality, curated
-SIGMA_RULES_PATH = "rules"
+# Rule levels in priority order for sorting
+LEVEL_ORDER = {"critical": 0, "high": 1, "medium": 2, "low": 3, "informational": 4}
 
 
-class SigmaCollector(BaseCollector):
+class SigmaCollector:
     """
-    Collects Sigma detection rules for a set of ATT&CK technique IDs.
+    Queries the local SigmaHQ repo clone for rules matching ATT&CK technique IDs.
 
-    Unlike other collectors, SigmaCollector takes a list of technique IDs
-    (extracted from an already-built profile) rather than an actor name.
-    It's called as an enrichment step in theory.py after MITRE collection.
-
-    Usage in theory.py:
-        sigma_collector = SigmaCollector()
-        sigma_data = sigma_collector.collect_for_techniques(technique_ids)
-        # Returns: {tid: [rule, rule, ...], ...}
+    On first use, clones the SigmaHQ/sigma repo to .cache/sigma-repo/.
+    Subsequent uses grep the local clone — no network required, no rate limits.
     """
-
-    SOURCE_ID = SOURCE_ID
 
     def __init__(self):
-        self._token = self._load_token()
-        self._request_count = 0
+        self._repo_ready = False
 
-    def query(self, actor_name: str) -> dict | None:
-        # Standard interface — not used for Sigma (enrichment only)
-        return None
+    def _ensure_repo(self) -> bool:
+        """Clone the SigmaHQ repo if not present. Return True if ready."""
+        if self._repo_ready:
+            return True
+
+        if RULES_DIR.exists() and any(RULES_DIR.iterdir()):
+            self._repo_ready = True
+            return True
+
+        # Clone needed
+        self._print_clone_notice()
+        SIGMA_REPO_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+        try:
+            result = subprocess.run(
+                [
+                    "git", "clone",
+                    "--depth", "1",          # shallow clone — much faster, ~150MB vs ~500MB
+                    "--filter=blob:none",    # skip blobs until needed
+                    "--no-tags",
+                    SIGMA_REPO_URL,
+                    str(SIGMA_REPO_PATH),
+                ],
+                capture_output=True,
+                text=True,
+                timeout=300,   # 5 min timeout
+            )
+
+            if result.returncode != 0:
+                logger.error("Sigma clone failed: %s", result.stderr)
+                self._print_clone_failed(result.stderr)
+                return False
+
+            self._repo_ready = True
+            self._print_clone_success()
+            return True
+
+        except subprocess.TimeoutExpired:
+            logger.error("Sigma clone timed out")
+            return False
+        except FileNotFoundError:
+            logger.error("git not found — cannot clone SigmaHQ repo")
+            print(
+                "\n  [Sigma] git is required to clone the SigmaHQ repo.\n"
+                "  Install git and run again, or run: python3 theory.py --update-bundles\n",
+                file=sys.stderr,
+            )
+            return False
+
+    def update_repo(self) -> bool:
+        """Pull latest changes from SigmaHQ. Called by --update-bundles."""
+        if not SIGMA_REPO_PATH.exists():
+            return self._ensure_repo()
+
+        try:
+            from rich.console import Console
+            Console(stderr=True).print("[dim]  Updating Sigma rules (git pull)…[/dim]")
+        except ImportError:
+            print("  Updating Sigma rules…", file=sys.stderr)
+
+        result = subprocess.run(
+            ["git", "-C", str(SIGMA_REPO_PATH), "pull", "--depth=1"],
+            capture_output=True,
+            text=True,
+            timeout=120,
+        )
+        if result.returncode == 0:
+            try:
+                from rich.console import Console
+                Console(stderr=True).print("[green]  ✓ Sigma rules updated[/green]")
+            except ImportError:
+                print("  ✓ Sigma rules updated", file=sys.stderr)
+            return True
+        else:
+            logger.error("Sigma pull failed: %s", result.stderr)
+            return False
 
     def collect_for_techniques(
         self, technique_ids: list[str]
     ) -> dict[str, list[dict]]:
         """
         For each technique ID, return a list of matching Sigma rules.
+
+        Uses local grep on the cloned SigmaHQ repo — instant, no rate limits.
 
         Returns:
             Dict mapping technique_id → list of rule dicts, e.g.:
@@ -111,330 +158,267 @@ class SigmaCollector(BaseCollector):
                 "T1003.001": [...],
             }
         """
+        if not self._ensure_repo():
+            logger.warning("Sigma repo not available — skipping detection enrichment")
+            return {}
+
         results: dict[str, list[dict]] = {}
-        unique_ids = list(dict.fromkeys(technique_ids))   # deduplicate, preserve order
+        unique_ids = list(dict.fromkeys(technique_ids))
 
-        logger.info("Sigma: collecting rules for %d techniques", len(unique_ids))
-
-        # GitHub code search API: 10 requests/minute secondary rate limit.
-        # We enforce a minimum 6-second gap between API calls (10/min = 1 per 6s).
-        # Cached results skip the delay entirely.
-        SEARCH_DELAY = 6.5   # seconds between uncached requests
+        logger.info("Sigma: querying local repo for %d techniques", len(unique_ids))
 
         for tid in unique_ids:
-            cached = self._load_cache(tid)
-            if cached is not None:
-                if cached:   # non-empty cache
-                    results[tid] = cached
-                continue     # cached (even empty) = no API call needed
-
-            rules = self._fetch_rules_for_technique(tid)
-            self._save_cache(tid, rules)
-
+            rules = self._find_rules_for_technique(tid)
             if rules:
                 results[tid] = rules
 
-            # Rate limit: wait between search requests
-            time.sleep(SEARCH_DELAY)
-
+        total = sum(len(v) for v in results.values())
         logger.info(
-            "Sigma: found rules for %d/%d techniques",
-            len(results), len(unique_ids),
+            "Sigma: found %d rules across %d techniques",
+            total, len(results),
         )
         return results
 
-    # ------------------------------------------------------------------
-    # GitHub API search
-    # ------------------------------------------------------------------
-
-    def _fetch_rules_for_technique(self, tid: str) -> list[dict]:
+    def _find_rules_for_technique(self, technique_id: str) -> list[dict]:
         """
-        Search SigmaHQ for rules tagged with this technique ID.
-        GitHub code search API: /search/code?q=attack.{tid}+repo:SigmaHQ/sigma
+        Grep the local Sigma repo for rules tagged with this technique ID.
+        Returns sorted list of rule dicts (critical/high first).
         """
-        # Normalise: T1059.001 → attack.t1059.001
-        tag = f"attack.{tid.lower()}"
-
-        url = (
-            f"{GITHUB_API}/search/code"
-            f"?q={quote(tag)}+repo:{SIGMA_OWNER}/{SIGMA_REPO}"
-            f"+extension:yml+path:{SIGMA_RULES_PATH}"
-            f"&per_page=10"
-        )
-
-        try:
-            data  = self._github_get(url)
-            items = data.get("items", []) if isinstance(data, dict) else []
-        except Exception as exc:
-            logger.debug("Sigma GitHub search failed for %s: %s", tid, exc)
+        if not RULES_DIR.exists():
             return []
 
+        # Build grep pattern — technique IDs appear as tags like:
+        # "attack.t1059.001" or "attack.t1059"
+        tag_pattern = f"attack.{technique_id.lower()}"
+
+        try:
+            result = subprocess.run(
+                [
+                    "grep",
+                    "-rl",                    # recursive, list filenames only
+                    "--include=*.yml",
+                    tag_pattern,
+                    str(RULES_DIR),
+                ],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+        except subprocess.TimeoutExpired:
+            logger.warning("Sigma grep timed out for %s", technique_id)
+            return []
+        except FileNotFoundError:
+            logger.error("grep not found")
+            return []
+
+        if result.returncode != 0 or not result.stdout.strip():
+            return []
+
+        rule_files = [
+            Path(f) for f in result.stdout.strip().splitlines()
+            if f.strip()
+        ]
+
         rules: list[dict] = []
-        for item in items[:MAX_RULES_PER_TECHNIQUE]:
-            rule = self._fetch_and_parse_rule(item)
-            if rule:
-                rules.append(rule)
+        for rule_file in rule_files:
+            parsed = _parse_sigma_yaml(rule_file)
+            if parsed:
+                # Verify this rule actually covers our technique
+                if _rule_covers_technique(parsed, technique_id):
+                    rules.append(parsed)
 
-        return rules
+        # Sort by level (critical first) then title
+        rules.sort(key=lambda r: (
+            LEVEL_ORDER.get(r.get("level", ""), 99),
+            r.get("title", ""),
+        ))
 
-    def _fetch_and_parse_rule(self, search_item: dict) -> dict | None:
-        """Fetch raw rule YAML and parse key fields."""
-        raw_url = search_item.get("url", "")   # GitHub API URL for file content
-        html_url = search_item.get("html_url", "")
-
-        if not raw_url:
-            return None
-
-        try:
-            content_data = self._github_get(raw_url)
-            # GitHub returns base64-encoded content
-            import base64
-            encoded = content_data.get("content", "")
-            if not encoded:
-                return None
-            yaml_text = base64.b64decode(encoded.replace("\n", "")).decode("utf-8")
-        except Exception as exc:
-            logger.debug("Sigma rule fetch failed: %s", exc)
-            return None
-
-        return self._parse_sigma_yaml(yaml_text, html_url)
+        return rules[:MAX_RULES_PER_TECHNIQUE]
 
     # ------------------------------------------------------------------
-    # YAML parser (no PyYAML dependency — targeted field extraction)
+    # User messaging
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _parse_sigma_yaml(yaml_text: str, url: str) -> dict | None:
-        """
-        Extract key fields from Sigma rule YAML without a full YAML parser.
-        We only need: title, status, level, logsource, detection, tags.
-        """
-        lines = yaml_text.splitlines()
-
-        def _get_field(field: str) -> str:
-            for line in lines:
-                if line.startswith(f"{field}:"):
-                    return line.split(":", 1)[1].strip().strip("'\"")
-            return ""
-
-        title  = _get_field("title")
-        status = _get_field("status")
-        level  = _get_field("level")
-
-        if not title:
-            return None
-
-        # Extract logsource block
-        logsource = _extract_logsource(lines)
-
-        # Extract detection condition
-        condition = _extract_condition(lines)
-
-        # Extract ATT&CK tags
-        tags = _extract_tags(lines)
-
-        # Extract description (first non-empty line after "description:")
-        description = _get_field("description")
-
-        return {
-            "title":             title,
-            "status":            status,
-            "level":             level,
-            "logsource":         logsource,
-            "condition_summary": _summarise_condition(condition),
-            "description":       description[:200] if description else "",
-            "tags":              tags,
-            "url":               url,
-        }
-
-    # ------------------------------------------------------------------
-    # Cache
-    # ------------------------------------------------------------------
-
-    def _load_cache(self, tid: str) -> list[dict] | None:
-        """Return cached rules, or None if cache is missing/stale."""
-        cache_path = CACHE_DIR / f"{tid.replace('.', '_')}.json"
-        if not cache_path.exists():
-            return None
-
-        try:
-            data = json.loads(cache_path.read_text(encoding="utf-8"))
-            cached_at = datetime.fromisoformat(data.get("cached_at", "2000-01-01"))
-            age = datetime.now(timezone.utc) - cached_at.replace(tzinfo=timezone.utc)
-            if age > timedelta(days=CACHE_TTL_DAYS):
-                logger.debug("Sigma cache stale for %s — refreshing", tid)
-                return None
-            return data.get("rules", [])
-        except Exception:
-            return None
-
-    def _save_cache(self, tid: str, rules: list[dict]) -> None:
-        CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        cache_path = CACHE_DIR / f"{tid.replace('.', '_')}.json"
-        cache_path.write_text(
-            json.dumps({
-                "technique_id": tid,
-                "cached_at":    datetime.now(timezone.utc).isoformat(),
-                "rules":        rules,
-            }, indent=2),
-            encoding="utf-8",
+    def _print_clone_notice() -> None:
+        msg = (
+            "\n  ℹ  Sigma rules: cloning SigmaHQ/sigma repository (one time only).\n"
+            "     This takes ~1-2 minutes and uses ~150MB of disk space.\n"
+            "     After this, all Sigma queries run instantly with no rate limits.\n"
+            "     Location: .cache/sigma-repo/\n"
         )
-
-    # ------------------------------------------------------------------
-    # GitHub HTTP
-    # ------------------------------------------------------------------
-
-    def _github_get(self, url: str) -> Any:
-        headers = {
-            "Accept":           "application/vnd.github+json",
-            "X-GitHub-Api-Version": "2022-11-28",
-            "User-Agent":       "THEORY/1.0 threat-intel-research",
-        }
-        if self._token:
-            # Try Bearer first (works for both classic and fine-grained PATs)
-            headers["Authorization"] = f"Bearer {self._token}"
-
-        req = Request(url, headers=headers)
-        self._request_count += 1
-
-        for attempt in range(1, RETRY_MAX + 1):
-            try:
-                with urlopen(req, timeout=TIMEOUT) as resp:
-                    # Check rate limit headers
-                    remaining = resp.headers.get("X-RateLimit-Remaining", "60")
-                    if int(remaining) < 5:
-                        logger.warning(
-                            "GitHub API rate limit low (%s remaining) — "
-                            "set GITHUB_TOKEN in .env for higher limits",
-                            remaining,
-                        )
-                    return json.loads(resp.read().decode("utf-8"))
-            except HTTPError as exc:
-                if exc.code == 403:
-                    logger.warning(
-                        "GitHub API 403 — rate limited. "
-                        "Set GITHUB_TOKEN in .env (free, 5000 req/hr vs 60)."
-                    )
-                    return {}
-                if exc.code == 422:
-                    # Search API returns 422 for some queries — treat as no results
-                    return {}
-                if attempt < RETRY_MAX:
-                    time.sleep(RETRY_WAIT * attempt)
-                else:
-                    raise
-            except Exception:
-                if attempt < RETRY_MAX:
-                    time.sleep(RETRY_WAIT)
-                else:
-                    raise
-        return {}
+        try:
+            from rich.console import Console
+            Console(stderr=True).print(f"[cyan]{msg}[/cyan]")
+        except ImportError:
+            print(msg, file=sys.stderr)
 
     @staticmethod
-    def _load_token() -> str:
-        token = os.environ.get("GITHUB_TOKEN", "").strip()
-        if token:
-            return token
-        # Try .env file — handle BOM, Windows line endings, quoted values
-        for env_path in (Path(".env"), Path("../.env")):
-            if env_path.exists():
-                try:
-                    text = env_path.read_text(encoding="utf-8-sig")  # utf-8-sig strips BOM
-                    for line in text.splitlines():
-                        line = line.strip()
-                        if line.startswith("GITHUB_TOKEN="):
-                            val = line.split("=", 1)[1].strip().strip('"').strip("'")
-                            if val:
-                                return val
-                except Exception:
-                    pass
-        return ""
+    def _print_clone_success() -> None:
+        msg = "  ✓ SigmaHQ repo cloned — Sigma queries are now instant.\n"
+        try:
+            from rich.console import Console
+            Console(stderr=True).print(f"[green]{msg}[/green]")
+        except ImportError:
+            print(msg, file=sys.stderr)
+
+    @staticmethod
+    def _print_clone_failed(error: str) -> None:
+        msg = (
+            f"\n  ✗ Sigma clone failed: {error[:200]}\n"
+            "    Run manually: git clone --depth 1 "
+            "https://github.com/SigmaHQ/sigma.git .cache/sigma-repo\n"
+        )
+        try:
+            from rich.console import Console
+            Console(stderr=True).print(f"[red]{msg}[/red]")
+        except ImportError:
+            print(msg, file=sys.stderr)
 
 
 # ---------------------------------------------------------------------------
-# YAML field extraction utilities (no external dependencies)
+# YAML parsing (stdlib only — no PyYAML dependency)
 # ---------------------------------------------------------------------------
 
-def _extract_logsource(lines: list[str]) -> str:
-    """Extract logsource as 'category / product' string."""
-    in_block  = False
-    category  = ""
-    product   = ""
-    service   = ""
+def _parse_sigma_yaml(path: Path) -> dict | None:
+    """
+    Parse a Sigma rule YAML file into a structured dict.
+    Uses stdlib only — no PyYAML required.
+    Falls back to PyYAML if available for better accuracy.
+    """
+    try:
+        content = path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
 
-    for line in lines:
-        if line.startswith("logsource:"):
-            in_block = True
-            continue
-        if in_block:
-            if line and not line.startswith(" "):
-                break
-            stripped = line.strip()
-            if stripped.startswith("category:"):
-                category = stripped.split(":", 1)[1].strip()
-            elif stripped.startswith("product:"):
-                product = stripped.split(":", 1)[1].strip()
-            elif stripped.startswith("service:"):
-                service = stripped.split(":", 1)[1].strip()
+    # Try PyYAML first if available
+    try:
+        import yaml  # type: ignore
+        data = yaml.safe_load(content)
+        if not isinstance(data, dict) or not data.get("title"):
+            return None
+        return _build_rule_dict(data, path, content)
+    except ImportError:
+        pass
+    except Exception:
+        return None
 
-    parts = [p for p in [category or service, product] if p]
-    return " / ".join(parts) if parts else "unknown"
-
-
-def _extract_condition(lines: list[str]) -> str:
-    """Extract the condition field from the detection block."""
-    in_detection = False
-    for line in lines:
-        if line.startswith("detection:"):
-            in_detection = True
-            continue
-        if in_detection:
-            if line and not line.startswith(" "):
-                break
-            stripped = line.strip()
-            if stripped.startswith("condition:"):
-                return stripped.split(":", 1)[1].strip()
-    return ""
+    # Fallback: minimal line-by-line parser for key fields
+    return _parse_sigma_minimal(content, path)
 
 
-def _extract_tags(lines: list[str]) -> list[str]:
-    """Extract the tags list."""
-    in_tags = False
+def _build_rule_dict(data: dict, path: Path, content: str) -> dict | None:
+    """Build a standardised rule dict from parsed YAML data."""
+    title = (data.get("title") or "").strip()
+    if not title:
+        return None
+
+    level      = (data.get("level") or "").lower().strip()
+    status     = (data.get("status") or "").lower().strip()
+    tags       = data.get("tags") or []
+    logsource  = data.get("logsource") or {}
+    detection  = data.get("detection") or {}
+
+    ls_parts = [
+        v for k, v in logsource.items()
+        if k in ("category", "product", "service") and v
+    ]
+    logsource_str = " / ".join(ls_parts) if ls_parts else "unknown"
+
+    condition_raw = detection.get("condition", "")
+    condition_str = _summarise_condition(str(condition_raw)) if condition_raw else ""
+
+    # Build GitHub URL from file path
+    rel = path.relative_to(SIGMA_REPO_PATH)
+    url = f"https://github.com/SigmaHQ/sigma/blob/master/{rel}"
+
+    return {
+        "title":             title,
+        "level":             level,
+        "status":            status,
+        "logsource":         logsource_str,
+        "condition_summary": condition_str,
+        "tags":              [str(t).lower() for t in tags],
+        "url":               url,
+        "path":              str(rel),
+    }
+
+
+def _parse_sigma_minimal(content: str, path: Path) -> dict | None:
+    """Minimal stdlib YAML parser for Sigma rules."""
+    fields: dict[str, Any] = {}
     tags: list[str] = []
-    for line in lines:
-        if line.startswith("tags:"):
+    logsource_parts: list[str] = []
+    in_tags = False
+    in_logsource = False
+    in_detection = False
+    condition = ""
+
+    for line in content.splitlines():
+        stripped = line.strip()
+
+        if stripped.startswith("title:"):
+            fields["title"] = stripped[6:].strip().strip("'\"")
+            in_tags = in_logsource = in_detection = False
+        elif stripped.startswith("level:"):
+            fields["level"] = stripped[6:].strip().strip("'\"").lower()
+            in_tags = in_logsource = in_detection = False
+        elif stripped.startswith("status:"):
+            fields["status"] = stripped[7:].strip().strip("'\"").lower()
+            in_tags = in_logsource = in_detection = False
+        elif stripped == "tags:":
             in_tags = True
-            continue
-        if in_tags:
-            if line and not line.startswith(" ") and not line.startswith("-"):
-                break
-            stripped = line.strip()
-            if stripped.startswith("- "):
-                tags.append(stripped[2:].strip())
-    return tags
+            in_logsource = in_detection = False
+        elif stripped == "logsource:":
+            in_logsource = True
+            in_tags = in_detection = False
+        elif stripped == "detection:":
+            in_detection = True
+            in_tags = in_logsource = False
+        elif in_tags and stripped.startswith("- "):
+            tags.append(stripped[2:].strip().lower())
+        elif in_logsource and ":" in stripped and not stripped.startswith("-"):
+            key, _, val = stripped.partition(":")
+            if key.strip() in ("category", "product", "service") and val.strip():
+                logsource_parts.append(val.strip().strip("'\""))
+        elif in_detection and stripped.startswith("condition:"):
+            condition = stripped[10:].strip().strip("'\"")
+        elif not line.startswith(" ") and not line.startswith("	") and stripped and not stripped.startswith("-"):
+            if stripped.endswith(":") and stripped[:-1] not in (
+                "tags", "logsource", "detection"
+            ):
+                in_tags = in_logsource = in_detection = False
+
+    title = fields.get("title", "").strip()
+    if not title:
+        return None
+
+    rel = path.relative_to(SIGMA_REPO_PATH)
+    url = f"https://github.com/SigmaHQ/sigma/blob/master/{rel}"
+
+    return {
+        "title":             title,
+        "level":             fields.get("level", ""),
+        "status":            fields.get("status", ""),
+        "logsource":         " / ".join(logsource_parts) if logsource_parts else "unknown",
+        "condition_summary": _summarise_condition(condition),
+        "tags":              tags,
+        "url":               url,
+        "path":              str(rel),
+    }
+
+
+def _rule_covers_technique(rule: dict, technique_id: str) -> bool:
+    """Check that the rule's tags include this specific technique."""
+    tag_target = f"attack.{technique_id.lower()}"
+    return any(tag_target == tag for tag in rule.get("tags", []))
 
 
 def _summarise_condition(condition: str) -> str:
-    """
-    Convert Sigma condition syntax to plain English.
-    E.g. "1 of selection*" → "any of selection filters"
-         "all of them"      → "all filters match"
-         "selection and not filter" → "selection and not filter"
-    """
+    """Shorten a Sigma condition expression for display."""
     if not condition:
         return ""
-    c = condition.strip()
-    # Common patterns → readable
-    replacements = [
-        (r"\b1 of selection\*?\b", "any selection filter matches"),
-        (r"\ball of them\b",       "all filters must match"),
-        (r"\b1 of them\b",        "any filter matches"),
-        (r"\bselection\b",        "selection filter"),
-        (r"\bfilter\b",           "exclusion filter"),
-        (r"\band not\b",          "excluding"),
-        (r"\| count\(\) > \d+",  "(threshold-based)"),
-    ]
-    result = c
-    for pattern, replacement in replacements:
-        result = re.sub(pattern, replacement, result, flags=re.IGNORECASE)
-    return result.strip()
+    c = re.sub(r"\s+", " ", condition).strip()
+    if len(c) > 80:
+        c = c[:77] + "..."
+    return c

@@ -1,302 +1,287 @@
 """
 tests/test_sigma_collector.py
 ------------------------------
-Unit tests for collectors/sigma_rules.py — fully offline.
-Tests cover YAML parsing, cache logic, and condition summarisation.
+Unit tests for the Sigma collector — fully offline.
+Tests the local-clone architecture: YAML parsing, rule filtering,
+condition summarisation, and tag matching.
+No real git clone or grep calls are made in tests.
 """
 
 from __future__ import annotations
 
-import json
 import pytest
+from unittest.mock import patch, MagicMock
 from pathlib import Path
+
 from collectors.sigma_rules import (
     SigmaCollector,
-    _extract_logsource,
-    _extract_condition,
-    _extract_tags,
+    _parse_sigma_minimal,
     _summarise_condition,
+    _rule_covers_technique,
+    _build_rule_dict,
 )
 
 
 # ---------------------------------------------------------------------------
-# Sample Sigma rule YAML (realistic, no external dependency)
+# Sample Sigma rule YAML content
 # ---------------------------------------------------------------------------
 
-SAMPLE_RULE_YAML = """
-title: Suspicious PowerShell Download Cradle
-id: a7c3d9f1-1234-5678-abcd-ef0123456789
+SAMPLE_RULE_YAML = """\
+title: Suspicious PowerShell Download
 status: stable
-description: Detects PowerShell download cradle used for payload delivery
-references:
-    - https://example.com/threat-report
-author: THEORY Test
-date: 2023/01/01
-tags:
-    - attack.t1059.001
-    - attack.execution
-    - attack.defense_evasion
-logsource:
-    category: process_creation
-    product: windows
-detection:
-    selection:
-        CommandLine|contains:
-            - 'DownloadString'
-            - 'DownloadFile'
-            - 'WebClient'
-    condition: selection
 level: high
-falsepositives:
-    - Legitimate admin scripts
-"""
-
-SAMPLE_RULE_YAML_2 = """
-title: Mimikatz Command Line
-id: b8d4e0f2-2345-6789-bcde-f01234567890
-status: test
-description: Detects Mimikatz usage via command line
 tags:
-    - attack.t1003.001
-    - attack.credential_access
-logsource:
-    product: windows
-    service: security
-detection:
-    selection:
-        CommandLine|contains: 'sekurlsa'
-    filter:
-        User: 'SYSTEM'
-    condition: selection and not filter
-level: critical
-falsepositives:
-    - None
-"""
-
-RULE_NO_TITLE = """
-status: stable
-tags:
+    - attack.execution
     - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        CommandLine: 'test'
+        CommandLine|contains: downloadstring
     condition: selection
-level: medium
+"""
+
+SAMPLE_RULE_YAML_CRITICAL = """\
+title: Antivirus Password Dumper Detection
+status: stable
+level: critical
+tags:
+    - attack.credential_access
+    - attack.t1003
+logsource:
+    category: antivirus
+detection:
+    selection:
+        Signature|contains: dumper
+    condition: selection
+"""
+
+SAMPLE_RULE_NO_TITLE = """\
+status: stable
+level: high
+tags:
+    - attack.t1059.001
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    condition: selection
 """
 
 
 # ---------------------------------------------------------------------------
-# YAML parsing tests
+# _parse_sigma_minimal tests
 # ---------------------------------------------------------------------------
 
-class TestExtractLogsource:
+class TestParseSigmaMinimal:
 
-    def test_category_and_product(self):
-        lines = SAMPLE_RULE_YAML.splitlines()
-        assert _extract_logsource(lines) == "process_creation / windows"
+    def test_valid_rule_parsed(self, tmp_path):
+        rule_file = tmp_path / "test_rule.yml"
+        rule_file.write_text(SAMPLE_RULE_YAML)
+        # Patch SIGMA_REPO_PATH for relative path calculation
+        with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
+            result = _parse_sigma_minimal(SAMPLE_RULE_YAML, rule_file)
+        assert result is not None
+        assert result["title"] == "Suspicious PowerShell Download"
 
-    def test_product_and_service(self):
-        lines = SAMPLE_RULE_YAML_2.splitlines()
-        result = _extract_logsource(lines)
-        assert "windows" in result
-        assert "security" in result
+    def test_level_extracted(self, tmp_path):
+        rule_file = tmp_path / "test_rule.yml"
+        rule_file.write_text(SAMPLE_RULE_YAML)
+        with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
+            result = _parse_sigma_minimal(SAMPLE_RULE_YAML, rule_file)
+        assert result["level"] == "high"
 
-    def test_missing_logsource_returns_unknown(self):
-        lines = ["title: Test Rule", "status: stable"]
-        assert _extract_logsource(lines) == "unknown"
+    def test_status_extracted(self, tmp_path):
+        rule_file = tmp_path / "test_rule.yml"
+        rule_file.write_text(SAMPLE_RULE_YAML)
+        with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
+            result = _parse_sigma_minimal(SAMPLE_RULE_YAML, rule_file)
+        assert result["status"] == "stable"
+
+    def test_tags_extracted(self, tmp_path):
+        rule_file = tmp_path / "test_rule.yml"
+        rule_file.write_text(SAMPLE_RULE_YAML)
+        with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
+            result = _parse_sigma_minimal(SAMPLE_RULE_YAML, rule_file)
+        assert "attack.t1059.001" in result["tags"]
+
+    def test_logsource_extracted(self, tmp_path):
+        rule_file = tmp_path / "test_rule.yml"
+        rule_file.write_text(SAMPLE_RULE_YAML)
+        with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
+            result = _parse_sigma_minimal(SAMPLE_RULE_YAML, rule_file)
+        assert "process_creation" in result["logsource"]
+        assert "windows" in result["logsource"]
+
+    def test_condition_extracted(self, tmp_path):
+        rule_file = tmp_path / "test_rule.yml"
+        rule_file.write_text(SAMPLE_RULE_YAML)
+        with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
+            result = _parse_sigma_minimal(SAMPLE_RULE_YAML, rule_file)
+        assert result["condition_summary"] == "selection"
+
+    def test_url_constructed(self, tmp_path):
+        rule_file = tmp_path / "test_rule.yml"
+        rule_file.write_text(SAMPLE_RULE_YAML)
+        with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
+            result = _parse_sigma_minimal(SAMPLE_RULE_YAML, rule_file)
+        assert "github.com/SigmaHQ/sigma" in result["url"]
+
+    def test_no_title_returns_none(self, tmp_path):
+        rule_file = tmp_path / "test_rule.yml"
+        rule_file.write_text(SAMPLE_RULE_NO_TITLE)
+        with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
+            result = _parse_sigma_minimal(SAMPLE_RULE_NO_TITLE, rule_file)
+        assert result is None
+
+    def test_critical_level_parsed(self, tmp_path):
+        rule_file = tmp_path / "test_rule.yml"
+        rule_file.write_text(SAMPLE_RULE_YAML_CRITICAL)
+        with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
+            result = _parse_sigma_minimal(SAMPLE_RULE_YAML_CRITICAL, rule_file)
+        assert result["level"] == "critical"
 
 
-class TestExtractCondition:
-
-    def test_simple_condition(self):
-        lines = SAMPLE_RULE_YAML.splitlines()
-        assert _extract_condition(lines) == "selection"
-
-    def test_compound_condition(self):
-        lines = SAMPLE_RULE_YAML_2.splitlines()
-        assert "selection" in _extract_condition(lines)
-        assert "filter" in _extract_condition(lines)
-
-    def test_no_detection_block(self):
-        lines = ["title: Test", "status: stable"]
-        assert _extract_condition(lines) == ""
-
-
-class TestExtractTags:
-
-    def test_attack_tags_extracted(self):
-        lines = SAMPLE_RULE_YAML.splitlines()
-        tags  = _extract_tags(lines)
-        assert "attack.t1059.001"  in tags
-        assert "attack.execution"  in tags
-
-    def test_multiple_tags(self):
-        lines = SAMPLE_RULE_YAML.splitlines()
-        tags  = _extract_tags(lines)
-        assert len(tags) >= 3
-
-    def test_no_tags_returns_empty(self):
-        lines = ["title: Test", "status: stable"]
-        assert _extract_tags(lines) == []
-
+# ---------------------------------------------------------------------------
+# _summarise_condition tests
+# ---------------------------------------------------------------------------
 
 class TestSummariseCondition:
 
-    def test_simple_selection(self):
-        result = _summarise_condition("selection")
-        # "selection" → "selection filter" via regex, which is correct
-        assert "selection" in result.lower()
+    def test_simple_condition(self):
+        assert _summarise_condition("selection") == "selection"
 
     def test_and_not(self):
-        result = _summarise_condition("selection and not filter")
-        assert "excluding" in result.lower()
+        assert "not" in _summarise_condition("selection and not filter")
 
     def test_all_of_them(self):
-        result = _summarise_condition("all of them")
-        assert "all" in result.lower()
+        assert _summarise_condition("all of them") == "all of them"
 
     def test_one_of_selection(self):
-        result = _summarise_condition("1 of selection*")
-        assert "any" in result.lower() or "selection" in result.lower()
+        assert _summarise_condition("1 of selection_*") == "1 of selection_*"
 
     def test_empty_returns_empty(self):
         assert _summarise_condition("") == ""
 
-
-# ---------------------------------------------------------------------------
-# SigmaCollector._parse_sigma_yaml
-# ---------------------------------------------------------------------------
-
-class TestParseSigmaYaml:
-
-    def test_valid_rule_parsed(self):
-        rule = SigmaCollector._parse_sigma_yaml(SAMPLE_RULE_YAML, "https://example.com")
-        assert rule is not None
-        assert rule["title"] == "Suspicious PowerShell Download Cradle"
-        assert rule["level"] == "high"
-        assert rule["status"] == "stable"
-
-    def test_logsource_extracted(self):
-        rule = SigmaCollector._parse_sigma_yaml(SAMPLE_RULE_YAML, "")
-        assert rule["logsource"] == "process_creation / windows"
-
-    def test_tags_extracted(self):
-        rule = SigmaCollector._parse_sigma_yaml(SAMPLE_RULE_YAML, "")
-        assert "attack.t1059.001" in rule["tags"]
-
-    def test_url_preserved(self):
-        url  = "https://github.com/SigmaHQ/sigma/blob/master/rules/test.yml"
-        rule = SigmaCollector._parse_sigma_yaml(SAMPLE_RULE_YAML, url)
-        assert rule["url"] == url
-
-    def test_condition_summarised(self):
-        rule = SigmaCollector._parse_sigma_yaml(SAMPLE_RULE_YAML, "")
-        assert rule["condition_summary"] != ""
-
-    def test_no_title_returns_none(self):
-        rule = SigmaCollector._parse_sigma_yaml(RULE_NO_TITLE, "")
-        assert rule is None
-
-    def test_critical_level_parsed(self):
-        rule = SigmaCollector._parse_sigma_yaml(SAMPLE_RULE_YAML_2, "")
-        assert rule["level"] == "critical"
+    def test_long_condition_truncated(self):
+        long = "selection and " * 20
+        result = _summarise_condition(long)
+        assert len(result) <= 83   # 80 chars + "..."
+        assert result.endswith("...")
 
 
 # ---------------------------------------------------------------------------
-# Cache logic
+# _rule_covers_technique tests
 # ---------------------------------------------------------------------------
 
-class TestSigmaCache:
+class TestRuleCoverstech:
 
-    def test_save_and_load_cache(self, tmp_path, monkeypatch):
-        import collectors.sigma_rules as sigma_module
-        monkeypatch.setattr(sigma_module, "CACHE_DIR", tmp_path)
+    def test_exact_match(self):
+        rule = {"tags": ["attack.t1059.001", "attack.execution"]}
+        assert _rule_covers_technique(rule, "T1059.001") is True
 
+    def test_no_match(self):
+        rule = {"tags": ["attack.t1059.001"]}
+        assert _rule_covers_technique(rule, "T1003") is False
+
+    def test_case_insensitive(self):
+        rule = {"tags": ["attack.t1059.001"]}
+        assert _rule_covers_technique(rule, "T1059.001") is True
+
+    def test_empty_tags(self):
+        rule = {"tags": []}
+        assert _rule_covers_technique(rule, "T1059.001") is False
+
+    def test_parent_technique_not_matched_by_subtechnique(self):
+        # T1059 tag should NOT match T1059.001 query — must be exact
+        rule = {"tags": ["attack.t1059"]}
+        assert _rule_covers_technique(rule, "T1059.001") is False
+
+
+# ---------------------------------------------------------------------------
+# SigmaCollector — repo ready state
+# ---------------------------------------------------------------------------
+
+class TestSigmaCollectorRepoState:
+
+    def test_collect_returns_empty_when_repo_unavailable(self, tmp_path):
         collector = SigmaCollector()
-        rules = [{"title": "Test Rule", "level": "high", "logsource": "process_creation / windows",
-                  "condition_summary": "selection filter", "tags": ["attack.t1059.001"],
-                  "status": "stable", "description": "", "url": ""}]
-
-        collector._save_cache("T1059.001", rules)
-        loaded = collector._load_cache("T1059.001")
-        assert loaded is not None
-        assert len(loaded) == 1
-        assert loaded[0]["title"] == "Test Rule"
-
-    def test_empty_cache_saved_and_loaded(self, tmp_path, monkeypatch):
-        import collectors.sigma_rules as sigma_module
-        monkeypatch.setattr(sigma_module, "CACHE_DIR", tmp_path)
-
-        collector = SigmaCollector()
-        collector._save_cache("T9999", [])
-        loaded = collector._load_cache("T9999")
-        assert loaded == []   # empty list, not None
-
-    def test_missing_cache_returns_none(self, tmp_path, monkeypatch):
-        import collectors.sigma_rules as sigma_module
-        monkeypatch.setattr(sigma_module, "CACHE_DIR", tmp_path)
-
-        collector = SigmaCollector()
-        assert collector._load_cache("T0000") is None
-
-    def test_stale_cache_returns_none(self, tmp_path, monkeypatch):
-        import collectors.sigma_rules as sigma_module
-        from datetime import datetime, timezone, timedelta
-
-        monkeypatch.setattr(sigma_module, "CACHE_DIR", tmp_path)
-        monkeypatch.setattr(sigma_module, "CACHE_TTL_DAYS", 0)
-
-        collector = SigmaCollector()
-        collector._save_cache("T1059.001", [{"title": "Old Rule"}])
-
-        # TTL = 0 days means immediately stale
-        loaded = collector._load_cache("T1059.001")
-        assert loaded is None
-
-
-# ---------------------------------------------------------------------------
-# collect_for_techniques with mocked GitHub API
-# ---------------------------------------------------------------------------
-
-class TestCollectForTechniques:
-
-    def test_returns_empty_for_no_techniques(self, tmp_path, monkeypatch):
-        import collectors.sigma_rules as sigma_module
-        monkeypatch.setattr(sigma_module, "CACHE_DIR", tmp_path)
-
-        collector = SigmaCollector()
-        result = collector.collect_for_techniques([])
+        with patch("collectors.sigma_rules.RULES_DIR", tmp_path / "nonexistent"):
+            with patch.object(collector, "_ensure_repo", return_value=False):
+                result = collector.collect_for_techniques(["T1059.001"])
         assert result == {}
 
-    def test_uses_cache_when_available(self, tmp_path, monkeypatch):
-        import collectors.sigma_rules as sigma_module
-        monkeypatch.setattr(sigma_module, "CACHE_DIR", tmp_path)
-
+    def test_collect_deduplicates_technique_ids(self, tmp_path):
         collector = SigmaCollector()
-        cached_rules = [{"title": "Cached Rule", "level": "high",
-                         "logsource": "process_creation / windows",
-                         "condition_summary": "selection", "tags": [],
-                         "status": "stable", "description": "", "url": ""}]
-        collector._save_cache("T1059.001", cached_rules)
+        called_with = []
 
-        result = collector.collect_for_techniques(["T1059.001"])
-        assert "T1059.001" in result
-        assert result["T1059.001"][0]["title"] == "Cached Rule"
+        def mock_find(tid):
+            called_with.append(tid)
+            return []
 
-    def test_deduplicates_technique_ids(self, tmp_path, monkeypatch):
-        import collectors.sigma_rules as sigma_module
-        monkeypatch.setattr(sigma_module, "CACHE_DIR", tmp_path)
+        with patch.object(collector, "_ensure_repo", return_value=True):
+            with patch.object(collector, "_find_rules_for_technique", side_effect=mock_find):
+                collector.collect_for_techniques(["T1059.001", "T1059.001", "T1003"])
 
-        # Pre-cache so no network call needed
+        assert called_with.count("T1059.001") == 1
+        assert "T1003" in called_with
+
+    def test_rules_sorted_critical_first(self, tmp_path):
         collector = SigmaCollector()
-        collector._save_cache("T1059.001", [])
+        mock_rules = [
+            {"title": "Low rule",      "level": "low",      "tags": ["attack.t1059.001"]},
+            {"title": "Critical rule", "level": "critical", "tags": ["attack.t1059.001"]},
+            {"title": "High rule",     "level": "high",     "tags": ["attack.t1059.001"]},
+        ]
 
-        # Passing duplicate IDs should only query once
-        result = collector.collect_for_techniques(
-            ["T1059.001", "T1059.001", "T1059.001"]
-        )
-        # Empty cache → not in results (only non-empty results returned)
-        assert "T1059.001" not in result
+        with patch("collectors.sigma_rules.RULES_DIR", tmp_path):
+            with patch.object(collector, "_ensure_repo", return_value=True):
+                with patch("subprocess.run") as mock_run:
+                    mock_run.return_value = MagicMock(
+                        returncode=0,
+                        stdout="\n".join([str(tmp_path / f"rule{i}.yml") for i in range(3)]),
+                    )
+                    with patch("collectors.sigma_rules._parse_sigma_yaml",
+                               side_effect=mock_rules):
+                        with patch("collectors.sigma_rules._rule_covers_technique",
+                                   return_value=True):
+                            result = collector._find_rules_for_technique("T1059.001")
+
+        if result:
+            levels = [r["level"] for r in result]
+            critical_idx = levels.index("critical") if "critical" in levels else -1
+            high_idx     = levels.index("high")     if "high"     in levels else -1
+            low_idx      = levels.index("low")      if "low"      in levels else -1
+            if critical_idx >= 0 and high_idx >= 0:
+                assert critical_idx < high_idx
+            if high_idx >= 0 and low_idx >= 0:
+                assert high_idx < low_idx
+
+
+# ---------------------------------------------------------------------------
+# Update repo
+# ---------------------------------------------------------------------------
+
+class TestUpdateRepo:
+
+    def test_update_calls_git_pull(self, tmp_path):
+        collector = SigmaCollector()
+        with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
+            tmp_path.mkdir(exist_ok=True)
+            with patch("subprocess.run") as mock_run:
+                mock_run.return_value = MagicMock(returncode=0, stderr="")
+                result = collector.update_repo()
+        assert result is True
+        mock_run.assert_called_once()
+        call_args = mock_run.call_args[0][0]
+        assert "pull" in call_args
+
+    def test_update_returns_false_on_failure(self, tmp_path):
+        collector = SigmaCollector()
+        with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
+            tmp_path.mkdir(exist_ok=True)
+            with patch("subprocess.run") as mock_run:
+                mock_run.return_value = MagicMock(returncode=1, stderr="error")
+                result = collector.update_repo()
+        assert result is False

@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-04-01T23:18:44.986779+00:00",
+  "entries": [
+    {
+      "title": "A laughing RAT: CrystalX combines spyware, stealer, and prankware features",
+      "url": "https://securelist.com/crystalx-rat-with-prankware-features/119283/",
+      "date": "2026-04-01",
+      "summary": "Kaspersky researchers analyze a new CrystalX RAT distributed as MaaS and featuring extensive spyware, stealer, and prankware capabilities."
+    },
+    {
+      "title": "An AI gateway designed to steal your data",
+      "url": "https://securelist.com/litellm-supply-chain-attack/119257/",
+      "date": "2026-03-26",
+      "summary": "Dissecting the supply chain attack on LiteLLM, a multifunctional gateway used in many AI agents. Explaining the dangers of the malicious code and how to protect yourself."
+    },
+    {
+      "title": "Coruna: the framework used in Operation Triangulation",
+      "url": "https://securelist.com/coruna-framework-updated-operation-triangulation-exploit/119228/",
+      "date": "2026-03-26",
+      "summary": "Kaspersky GReAT experts look into the Coruna exploit kit targeting iPhones. We discovered that the kernel exploit for CVE-2023-32434 and CVE-2023-38606 is an updated version of the Operation Triangulation exploit."
+    },
+    {
+      "title": "Anatomy of a Cyber World Global Report 2026",
+      "url": "https://securelist.com/global-report-security-services-2026/119233/",
+      "date": "2026-03-25",
+      "summary": "The Kaspersky Security Services report describes cyberattack trends and statistics revealed by the Managed Detection and Response service. The report also includes Incident Response findings based on real-world cases identified and mitigated in 2025."
+    },
+    {
+      "title": "The SOC Files: Time to \u201cSapecar\u201d. Unpacking a new Horabot campaign in Mexico",
+      "url": "https://securelist.com/horabot-campaign/119033/",
+      "date": "2026-03-18",
+      "summary": "Kaspersky SOC uncovered and analyzed a complex Horabot campaign in Mexico. In this article we share insights into how it is unleashed and how to hunt for this threat."
+    },
+    {
+      "title": "Free real estate: GoPix, the banking Trojan living off your memory",
+      "url": "https://securelist.com/gopix-banking-trojan/119173/",
+      "date": "2026-03-16",
+      "summary": "Kaspersky GReAT experts describe the unprecedentedly complex Brazilian banking Trojan GoPix that employs memory-only implants, Proxy AutoConfig (PAC) files for man-in-the-middle attacks, and malvertising via Google Ads."
+    },
+    {
+      "title": "BeatBanker: A dual\u2011mode Android Trojan",
+      "url": "https://securelist.com/beatbanker-miner-and-banker/119121/",
+      "date": "2026-03-10",
+      "summary": "Kaspersky researchers identified a new Android Trojan dubbed BeatBanker targeting Brazil, posing as government apps and Google Play Store, and capable of both crypto mining and stealing banking data."
+    },
+    {
+      "title": "Exploits and vulnerabilities in Q4 2025",
+      "url": "https://securelist.com/vulnerabilities-and-exploits-in-q4-2025/119105/",
+      "date": "2026-03-06",
+      "summary": "This report provides statistical data on published vulnerabilities and exploits we researched during Q4 2025. It also includes summary data on the use of C2 frameworks in APT attacks."
+    },
+    {
+      "title": "Mobile malware evolution in 2025",
+      "url": "https://securelist.com/mobile-threat-report-2025/119076/",
+      "date": "2026-03-04",
+      "summary": "Statistics on Android malware and the most notable mobile threats of 2025: preinstalled backdoors Keenadu and Triada, spyware Trojans, the Kimwolf IoT botnet, and Mamont banking Trojans."
+    },
+    {
+      "title": "Arkanix Stealer: a C++ & Python infostealer",
+      "url": "https://securelist.com/arkanix-stealer/119006/",
+      "date": "2026-02-19",
+      "summary": "Kaspersky researchers analyze a C++ and Python stealer dubbed \"Arkanix Stealer\", which was active for several months, targeted wide range of data, was distributed as MaaS and offered referral program to its partners."
+    }
+  ]
+}

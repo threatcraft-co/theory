@@ -1,0 +1,95 @@
+{
+  "cached_at": "2026-04-01T23:20:00.231634+00:00",
+  "entries": [
+    {
+      "title": "Please, We Beg, Just One Weekend Free Of Appliances (Citrix NetScaler CVE-2026-3055 Memory Overread Part 2)",
+      "url": "https://labs.watchtowr.com/please-we-beg-just-one-weekend-free-of-appliances-citrix-netscaler-cve-2026-3055-memory-overread-part-2/",
+      "date": "2026-03-29",
+      "summary": "Today, we woke up with a nagging feeling: what if Citrix had, in fact, patched multiple Memory Overread vulnerabilities as part of CVE-2026-3055? While we&apos;ve been using our analysis from Part 1 (please read it first, as this post will be brief) to accurately identify exploitable Citrix NetScaler"
+    },
+    {
+      "title": "The Sequels Are Never As Good, But We're Still In Pain (Citrix NetScaler CVE-2026-3055 Memory Overread)",
+      "url": "https://labs.watchtowr.com/the-sequels-are-never-as-good-but-were-still-in-pain-citrix-netscaler-cve-2026-3055-memory-overread/",
+      "date": "2026-03-28",
+      "summary": "Sequels? Pain? We&apos;re obviously talking about Citrix NetScalers, yet again. Welcome back to another watchTowr Labs blog post - pull up a chair, we always welcome new members to our group therapy sessions. If you asked a C programmer what they most dislike doing in life, their answer"
+    },
+    {
+      "title": "A 32-Year-Old Bug Walks Into A Telnet Server (GNU inetutils Telnetd CVE-2026-32746 Pre-Auth RCE)",
+      "url": "https://labs.watchtowr.com/a-32-year-old-bug-walks-into-a-telnet-server-gnu-inetutils-telnetd-cve-2026-32746/",
+      "date": "2026-03-19",
+      "summary": "A long, long time ago, in a land free of binary exploit mitigations, when Unix still roamed the Earth, there lived a pre-authentication Telnetd vulnerability. In fact, this vulnerability was born so long ago (way back in 1994) that it may even be older than you. To put the timespan"
+    },
+    {
+      "title": "The Most Organized Threat Actors Use Your ITSM (BMC FootPrints Pre-Auth Remote Code Execution Chains)",
+      "url": "https://labs.watchtowr.com/thanks-itsms-threat-actors-have-never-been-so-organized-bmc-footprints-pre-auth-remote-code-execution-chains/",
+      "date": "2026-03-18",
+      "summary": "SolarWinds. Ivanti. SysAid. ManageEngine. Giants of the KEV world, all of whom have ITSM side-projects. ITSMs, as a group of solutions, have played pivotal roles in numerous ransomware gang campaigns - not only do they represent code running on a system, but they hold a significant amount of sensitive information."
+    },
+    {
+      "title": "Sometimes, You Can Just Feel The Security In The Design (Juniper Junos Evolved CVE-2026-21902 Pre-Auth RCE)",
+      "url": "https://labs.watchtowr.com/sometimes-you-can-just-feel-the-security-in-the-design-junos-os-evolved-cve-2026-21902-rce/",
+      "date": "2026-03-03",
+      "summary": "On today&#x2019;s &#x2018;good news disguised as other things&#x2019; segment, we&#x2019;re turning our gaze to CVE-2026-21902 - a recently disclosed &#x201C;Incorrect Permission Assignment for Critical Resource&#x201D; vulnerability affecting Juniper&#x2019;s Junos OS Evolved platform. This vulnerability affects only Juniper&#x2019;s PTX"
+    },
+    {
+      "title": "Buy A Help Desk, Bundle A Remote Access Solution? (SolarWinds Web Help Desk Pre-Auth RCE Chain(s))",
+      "url": "https://labs.watchtowr.com/buy-a-help-desk-bundle-a-remote-access-solution-solarwinds-web-help-desk-pre-auth-rce-chain-s/",
+      "date": "2026-02-25",
+      "summary": "It&#x2019;s been a while, but we&#x2019;re back - in time for story time. Gather round, strap in, and prepare for another depressing journey of &#x201C;all we wanted to do was reproduce an N-day, and here we are with 0-days&#x201D;. Today, friends, we&#x2019;re"
+    },
+    {
+      "title": "Someone Knows Bash Far Too Well, And We Love It (Ivanti EPMM Pre-Auth RCEs CVE-2026-1281 & CVE-2026-1340)",
+      "url": "https://labs.watchtowr.com/someone-knows-bash-far-too-well-and-we-love-it-ivanti-epmm-pre-auth-rces-cve-2026-1281-cve-2026-1340/",
+      "date": "2026-01-30",
+      "summary": "When Ivanti removed the embargoes from CVE-2026-1281 and CVE-2026-1340 - actively exploited pre-auth Remote Command Execution vulnerabilities in Ivanti&#x2019;s Endpoint Manager Mobile (EPMM) solution - we sighed with relief. Clearly, the universe had decided to continue mocking Secure-By-Design signers right on schedule - every January. Welcome back to"
+    },
+    {
+      "title": "Attackers With Decompilers Strike Again (SmarterTools SmarterMail WT-2026-0001 Auth Bypass)",
+      "url": "https://labs.watchtowr.com/attackers-with-decompilers-strike-again-smartertools-smartermail-wt-2026-0001-auth-bypass/",
+      "date": "2026-01-22",
+      "summary": "Well, well, well - look what we&#x2019;re back with. You may recall that merely two weeks ago, we analyzed CVE-2025-52691 - a pre-auth RCE vulnerability in the SmarterTools SmarterMail email solution with a timeline that is typically reserved for KEV hall-of-famers. The plot of that story had everything;"
+    },
+    {
+      "title": "Do Smart People Ever Say They\u2019re Smart? (SmarterTools SmarterMail Pre-Auth RCE CVE-2025-52691)",
+      "url": "https://labs.watchtowr.com/do-smart-people-ever-say-theyre-smart-smartertools-smartermail-pre-auth-rce-cve-2025-52691/",
+      "date": "2026-01-08",
+      "summary": "Welcome to 2026! While we are all waiting for the scheduled SSLVPN ITW exploitation programming that occurs every January, we&#x2019;re back from Christmas and idle hands, idle minds, yada yada. In December, we were alerted to a vulnerability in SmarterTools&#x2019; SmarterMail solution, accompanied by an advisory from"
+    },
+    {
+      "title": "SOAPwn: Pwning .NET Framework Applications Through HTTP Client Proxies And WSDL",
+      "url": "https://labs.watchtowr.com/soapwn-pwning-net-framework-applications-through-http-client-proxies-and-wsdl/",
+      "date": "2025-12-10",
+      "summary": "Welcome back! As we near the end of 2025, we are, of course, waiting for the next round of SSLVPN exploitation to occur in January (as it did in 2024 and 2025). Weeeeeeeee. Before then, we want to clear the decks and see how much research we can publish. This"
+    },
+    {
+      "title": "Stop Putting Your Passwords Into Random Websites (Yes, Seriously, You Are The Problem)",
+      "url": "https://labs.watchtowr.com/stop-putting-your-passwords-into-random-websites-yes-seriously-you-are-the-problem/",
+      "date": "2025-11-25",
+      "summary": "Welcome to watchTowr vs the Internet, part 68. That feeling you&#x2019;re experiencing? Dread. You should be used to it by now. As is fast becoming an unofficial and, apparently, frowned upon tradition - we identified incredible amounts of publicly exposed passwords, secrets, keys and more for very sensitive"
+    },
+    {
+      "title": "When The Impersonation Function Gets Used To Impersonate Users (Fortinet FortiWeb Auth. Bypass CVE-2025-64446)",
+      "url": "https://labs.watchtowr.com/when-the-impersonation-function-gets-used-to-impersonate-users-fortinet-fortiweb-auth-bypass/",
+      "date": "2025-11-14",
+      "summary": "The Internet is ablaze, and once again we all have a front-row seat - a bad person, if you can believe it, is doing a bad thing! The first warning of such behaviour came from the great team at Defused : As many are now aware, an unnamed (and potentially silently"
+    },
+    {
+      "title": "Is It CitrixBleed4? Well, No. Is It Good? Also, No. (Citrix NetScaler Memory Leak & RXSS CVE-2025-12101)",
+      "url": "https://labs.watchtowr.com/is-it-citrixbleed4-well-no-is-it-good-also-no-citrix-netscalers-memory-leak-rxss-cve-2025-12101/",
+      "date": "2025-11-12",
+      "summary": "There&#x2019;s an elegance to vulnerability research that feels almost poetic - the quiet dance between chaos and control. It&#x2019;s the art of peeling back the layers of complexity, not to destroy but to understand; to trace the fragile threads that hold systems together and see where"
+    },
+    {
+      "title": "What\u2019s That Coming Over The Hill? (Monsta FTP Remote Code Execution CVE-2025-34299)",
+      "url": "https://labs.watchtowr.com/whats-that-coming-over-the-hill-monsta-ftp-remote-code-execution-cve-2025-34299/",
+      "date": "2025-11-07",
+      "summary": "Happy Friday, friends and.. others. We&#x2019;re glad/sorry to hear that your week has been good/bad, and it&#x2019;s the weekend/but at least it&#x2019;s almost the weekend! What&#x2019;re We Doing Today, Mr Fox? Today, in a tale that seems all too"
+    },
+    {
+      "title": "yIKEs (WatchGuard Fireware OS IKEv2 Out-of-Bounds Write CVE-2025-9242)",
+      "url": "https://labs.watchtowr.com/yikes-watchguard-fireware-os-ikev2-out-of-bounds-write-cve-2025-9242/",
+      "date": "2025-10-16",
+      "summary": "Note from editor: Before we begin, a big welcome to McCaulay Hudson, the newest member of the watchTowr Labs team with his inaugural blog post! Welcome to the mayhem, McCaulay! Today is the 8th of November 1996 , and we&#x2019;re thrilled to be exploring this new primitive we call"
+    }
+  ]
+}

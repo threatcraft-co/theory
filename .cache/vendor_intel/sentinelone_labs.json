@@ -1,65 +1,65 @@
 {
-  "cached_at": "2026-04-01T05:38:00.118838+00:00",
+  "cached_at": "2026-04-01T23:19:46.138234+00:00",
   "entries": [
     {
-      "title": "How SentinelOne\u2019s AI EDR Autonomously Discovered and Stopped Anthropic\u2019s Claude from Executing a Zero Day Supply Chain Attack, Globally",
-      "url": "https://www.sentinelone.com/blog/how-sentinelones-ai-edr-autonomously-discovered-and-stopped-anthropics-claude-from-executing-a-zero-day-supply-chain-attack-globally/",
-      "date": "2026-03-31",
-      "summary": "Read our blog post to learn how SentinelOne\u2019s AI EDR autonomously stopped a global LiteLLM supply chain attack before execution."
+      "title": "Building an Adversarial Consensus Engine | Multi-Agent LLMs for Automated Malware Analysis",
+      "url": "https://www.sentinelone.com/labs/building-an-adversarial-consensus-engine-multi-agent-llms-for-automated-malware-analysis/",
+      "date": "2026-03-19",
+      "summary": "Single-tool LLM analysis produces reports that look authoritative but aren't. A serial consensus pipeline catches artifacts and hallucinations at source."
     },
     {
-      "title": "FortiGate Edge Intrusions | Stolen Service Accounts Lead to Rogue Workstations and Deep AD Compromise",
-      "url": "https://www.sentinelone.com/blog/fortigate-edge-intrusions/",
-      "date": "2026-03-10",
-      "summary": "FortiGate SSO flaws allows attackers to steal configs, abuse AD creds, deploy RMM tools, and exfiltrate NTDS files."
+      "title": "LABScon25 Replay | Your Apps May Be Gone, But the Hackers Made $9 Billion and They\u2019re Still Here",
+      "url": "https://www.sentinelone.com/labs/labscon25-replay-your-apps-may-be-gone-but-the-hackers-made-9-billion-and-theyre-still-here/",
+      "date": "2026-03-17",
+      "summary": "Andrew MacPherson exposes how crypto thieves exploit DeFi architecture, from the $1.5 billion Bybit heist to drainers-as-a-service and fund laundering."
     },
     {
-      "title": "SentinelOne Intelligence Brief: Iranian Cyber Activity Outlook",
-      "url": "https://www.sentinelone.com/blog/sentinelone-intelligence-brief-iranian-cyber-activity-outlook/",
-      "date": "2026-02-28",
-      "summary": "Iran-linked cyber activity may surge after strikes, targeting US and Israeli sectors; SentinelOne provides intel and urges vigilance."
+      "title": "From Narrative to Knowledge Graph | LLM-Driven Information Extraction in Cyber Threat Intelligence",
+      "url": "https://www.sentinelone.com/labs/from-narrative-to-knowledge-graph-llm-driven-information-extraction-in-cyber-threat-intelligence/",
+      "date": "2026-03-09",
+      "summary": "LLMs can turn CTI narratives into structured intelligence at scale, but speed-accuracy trade-offs demand careful design for operational defense workflows."
     },
     {
-      "title": "From Access to Execution: Securing Identity in the Age of Autonomous Agents",
-      "url": "https://www.sentinelone.com/blog/securing-identity-in-the-age-of-autonomous-agents/",
-      "date": "2026-02-25",
-      "summary": "SentinelOne secures human and non-human identities with continuous behavioral validation across AI, browsers, and endpoints."
+      "title": "Silent Brothers | Ollama Hosts Form Anonymous AI Network Beyond Platform Guardrails",
+      "url": "https://www.sentinelone.com/labs/silent-brothers-ollama-hosts-form-anonymous-ai-network-beyond-platform-guardrails/",
+      "date": "2026-01-29",
+      "summary": "Analysis of 175,000 open-source AI hosts across 130 countries reveals a vast compute layer susceptible to resource hijacking and code execution attacks."
     },
     {
-      "title": "OneClaw: Discovery and Observability for the Agentic Era",
-      "url": "https://www.sentinelone.com/blog/oneclaw-discovery-and-observability-for-the-agentic-era/",
-      "date": "2026-02-18",
-      "summary": "Prompt Security from SentinelOne turns hidden agent activity into clear, actionable governance intelligence with the release of OneClaw."
+      "title": "LABScon25 Replay | How to Bug Hotel Rooms v2.0",
+      "url": "https://www.sentinelone.com/labs/labscon25-replay-how-to-bug-hotel-rooms-v2-0/",
+      "date": "2026-01-21",
+      "summary": "Dan Tentler reveals how consumer hardware coupled with Home Assistant can monitor hotel rooms, detect occupants through walls, and trigger automated alerts."
     },
     {
-      "title": "Shadow Agents: How SentinelOne Secures the AI Tools That Act Like Users",
-      "url": "https://www.sentinelone.com/blog/how-sentinelone-secures-the-ai-tools-that-act-like-users/",
-      "date": "2026-02-17",
-      "summary": "SentinelOne secures AI from infrastructure to agents, delivering visibility, governance, and control at scale."
+      "title": "LLMs in the SOC (Part 1) | Why Benchmarks Fail Security Operations Teams",
+      "url": "https://www.sentinelone.com/labs/llms-in-the-soc-part-1-why-benchmarks-fail-security-operations-teams/",
+      "date": "2026-01-20",
+      "summary": "LLM cybersecurity benchmarks fail to measure what defenders need: faster detection, reduced containment time, and better decisions under pressure."
     },
     {
-      "title": "ClawSec: Hardening OpenClaw Agents from the Inside Out",
-      "url": "https://www.sentinelone.com/blog/clawsec-hardening-openclaw-agents-from-the-inside-out/",
-      "date": "2026-02-09",
-      "summary": "Learn about how ClawSec, by Prompt Security, secures OpenClaw agents, stopping malicious skills with zero-trust defenses."
+      "title": "LABScon25 Replay | Hacktivism and War: A Clarifying Discussion",
+      "url": "https://www.sentinelone.com/labs/labscon25-replay-hacktivism-and-war-a-clarifying-discussion/",
+      "date": "2026-01-14",
+      "summary": "Jim Walter unpacks the hacktivist landscape and reveals how to distinguish different levels of threat based on persona characteristics."
     },
     {
-      "title": "AI Security, From Data to Runtime: A Holistic Defense Approach",
-      "url": "https://www.sentinelone.com/blog/ai-security-from-data-to-runtime-a-holistic-defense-approach/",
-      "date": "2026-02-06",
-      "summary": "SentinelOne secures AI end-to-end, protecting data, infrastructure, and runtime with Data Security Posture Management (DSPM) capabilities."
+      "title": "Inside the LLM | Understanding AI & the Mechanics of Modern Attacks",
+      "url": "https://www.sentinelone.com/labs/inside-the-llm-understanding-ai-the-mechanics-of-modern-attacks/",
+      "date": "2026-01-13",
+      "summary": "Learn how attackers exploit tokenization, embeddings and LLM attention mechanisms to bypass LLM security filters and hijack model behavior."
     },
     {
-      "title": "12 Months of Fighting Cybercrime & Defending Enterprises | The SentinelLABS 2025 Review",
-      "url": "https://www.sentinelone.com/blog/12-months-of-fighting-cybercrime-defending-enterprises-the-sentinellabs-2025-review/",
-      "date": "2026-01-06",
-      "summary": "From ransomware repurposed for espionage to increased exploitation of cloud platforms, learn about the key trends from SentinelLABS research in 2025."
+      "title": "LLMs & Ransomware | An Operational Accelerator, Not a Revolution",
+      "url": "https://www.sentinelone.com/labs/llms-ransomware-an-operational-accelerator-not-a-revolution/",
+      "date": "2025-12-15",
+      "summary": "LLMs make competent ransomware crews faster and novices more dangerous. The risk is not superintelligent malware, but rather industrialized extortion."
     },
     {
-      "title": "When Your AI Coding Plugin Starts Picking Your Dependencies: Marketplace Skills and Dependency Hijack in Claude Code",
-      "url": "https://www.sentinelone.com/blog/marketplace-skills-and-dependency-hijack-in-claude-code/",
-      "date": "2026-01-06",
-      "summary": "Learn how AI coding assistants managing dependencies via plugins are now creating a new supply-chain risk when automation is compromised."
+      "title": "Malicious Apprentice | How Two Hackers Went From Cisco Academy to Cisco CVEs",
+      "url": "https://www.sentinelone.com/labs/malicious-apprentice-how-two-hackers-went-from-cisco-academy-to-cisco-cves/",
+      "date": "2025-12-10",
+      "summary": "Read how two Cisco Network Academy Cup winners went from students to operators behind Salt Typhoon, a global cyber espionage campaign targeting telecoms."
     }
   ]
 }

@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-04-01T23:18:21.128935+00:00",
+  "entries": [
+    {
+      "title": "On the Effectiveness of Mutational Grammar Fuzzing",
+      "url": "https://projectzero.google/2026/03/mutational-grammar-fuzzing.html",
+      "date": "2026-03-05",
+      "summary": "Mutational grammar fuzzing is a fuzzing technique in which the fuzzer uses a predefined grammar that describes the structure of the samples. When a sample gets mutated, the mutations happen in such a way that any resulting samples still adhere to the grammar rules, thus the structure of the samples gets maintained by the mutation process. In case of coverage-guided grammar fuzzing, if the resulting sample (after the mutation) triggers previously unseen code coverage, this sample is saved to the sample corpus and used as a basis for future mutations. This technique has proven capable of finding complex issues and I have used it successfully in the past, including to find issues in XSLT implementations in web browsers and even JIT engine bugs. However, despite the approach being effective, it is not without its flaws which, for a casual fuzzer user, might not be obvious. In this blogpost I will introduce what I perceive to be the flaws of the mutational coverage-guided grammar fuzzing ap"
+    },
+    {
+      "title": "A Deep Dive into the GetProcessHandleFromHwnd API",
+      "url": "https://projectzero.google/2026/02/gphfh-deep-dive.html",
+      "date": "2026-02-26",
+      "summary": "In my previous blog post I mentioned the GetProcessHandleFromHwnd API. This was an API I didn\u2019t know existed until I found a publicly disclosed UAC bypass using the Quick Assist UI Access application. This API looked interesting so I thought I should take a closer look. I typically start by reading the documentation for an API I don\u2019t know about, assuming it\u2019s documented at all. It can give you an idea of how long the API has existed as well as its security properties. The documentation\u2019s remarks contain the following three statements that I thought were interesting: If the caller has UIAccess, however, they can use a windows hook to inject code into the target process, and from within the target process, send a handle back to the caller. GetProcessHandleFromHwnd is a convenience function that uses this technique to obtain the handle of the process that owns the specified HWND. Note that it only succeeds in cases where the caller and target process are running as the same user."
+    },
+    {
+      "title": "Bypassing Administrator Protection by Abusing UI Access",
+      "url": "https://projectzero.google/2026/02/windows-administrator-protection.html",
+      "date": "2026-02-12",
+      "summary": "In my last blog post I introduced the new Windows feature, Administrator Protection and how it aimed to create a secure boundary for UAC where one didn\u2019t exist. I described one of the ways I was able to bypass the feature before it was released. In total I found 9 bypasses during my research that have now all been fixed. In this blog post I wanted to describe the root cause of 5 of those 9 issues, specifically the implementation of UI Access, how this has been a long standing problem with UAC that\u2019s been under-appreciated, and how it\u2019s being fixed now. A Question of Accessibility Prior to Windows Vista any process running on a user\u2019s desktop could control any window created by another, such as by sending window messages. This behavior could be abused if a privileged user, such as SYSTEM, displayed a user interface on the desktop. A limited user could control the UI and potentially elevate privileges. This was referred to as a Shatter Attack, and was usually fixed by removing user inter"
+    },
+    {
+      "title": "Breaking the Sound Barrier, Part II: Exploiting CVE-2024-54529",
+      "url": "https://projectzero.google/2026/01/sound-barrier-2.html",
+      "date": "2026-01-30",
+      "summary": "In the first part of this series, I detailed my journey into macOS security research, which led to the discovery of a type confusion vulnerability (CVE-2024-54529) and a double-free vulnerability (CVE-2025-31235) in the coreaudiod system daemon through a process I call knowledge-driven fuzzing. While the first post focused on the process of finding the vulnerabilities, this post dives into the intricate process of exploiting the type confusion vulnerability. I\u2019ll explain the technical details of turning a potentially exploitable crash into a working exploit: a journey filled with dead ends, creative problem solving, and ultimately, success. The Vulnerability: A Quick Recap If you haven\u2019t already, I highly recommend reading my detailed writeup on this vulnerability before proceeding. As a refresher, CVE-2024-54529 is a type confusion vulnerability within the com.apple.audio.audiohald Mach service in the CoreAudio framework used by the coreaudiod process. Several Mach message handlers, s"
+    },
+    {
+      "title": "Bypassing Windows Administrator Protection",
+      "url": "https://projectzero.google/2026/26/windows-administrator-protection.html",
+      "date": "2026-01-26",
+      "summary": "A headline feature introduced in the latest release of Windows 11, 25H2 is Administrator Protection. The goal of this feature is to replace User Account Control (UAC) with a more robust and importantly, securable system to allow a local user to access administrator privileges only when necessary. This blog post will give a brief overview of the new feature, how it works and how it\u2019s different from UAC. I\u2019ll then describe some of the security research I undertook while it was in the insider preview builds on Windows 11. Finally I\u2019ll detail one of the nine separate vulnerabilities that I found to bypass the feature to silently gain full administrator privileges. All the issues that I reported to Microsoft have been fixed, either prior to the feature being officially released (in optional update KB5067036) or as subsequent security bulletins. Note: As of 1st December 2025 the Administrator Protection feature has been disabled by Microsoft while an application compatibility issue is dealt"
+    },
+    {
+      "title": "A 0-click exploit chain for the Pixel 9 Part 3: Where do we go from here?",
+      "url": "https://projectzero.google/2026/01/pixel-0-click-part-3.html",
+      "date": "2026-01-14",
+      "summary": "While our previous two blog posts provided technical recommendations for increasing the effort required by attackers to develop 0-click exploit chains, our experience finding, reporting and exploiting these vulnerabilities highlighted some broader issues in the Android ecosystem. This post describes the problems we encountered and recommendations for improvement. Audio Attack Surface The Dolby UDC is part of the 0-click attack surface of most Android devices because of audio transcription in the Google Messages application. Incoming audio messages are transcribed before a user interacts with the message. On Pixel 9, a second process com.google.android.tts also decodes incoming audio. Its purpose is not completely clear, but it seems to be related to making incoming messages searchable."
+    },
+    {
+      "title": "A 0-click exploit chain for the Pixel 9 Part 2: Cracking the Sandbox with a Big Wave",
+      "url": "https://projectzero.google/2026/01/pixel-0-click-part-2.html",
+      "date": "2026-01-14",
+      "summary": "With the advent of a potential Dolby Unified Decoder RCE exploit, it seemed prudent to see what kind of Linux kernel drivers might be accessible from the resulting userland context, the mediacodec context. As per the AOSP documentation, the mediacodec SELinux context is intended to be a constrained (a.k.a sandboxed) context where non-secure software decoders are utilized. Nevertheless, using my DriverCartographer tool, I discovered an interesting device driver, /dev/bigwave that was accessible from the mediacodec SELinux context. BigWave is hardware present on the Pixel SOC that accelerates AV1 decoding tasks, which explains why it is accessible from the mediacodec context. As previous research has copiously affirmed, Android drivers for hardware devices are prime places to find powerful local privilege escalation bugs. The BigWave driver was no exception - across a couple hours of auditing the code, I discovered three separate bugs, including one that was powerful enough to escape the"
+    },
+    {
+      "title": "A 0-click exploit chain for the Pixel 9 Part 1: Decoding Dolby",
+      "url": "https://projectzero.google/2026/01/pixel-0-click-part-1.html",
+      "date": "2026-01-14",
+      "summary": "Over the past few years, several AI-powered features have been added to mobile phones that allow users to better search and understand their messages. One effect of this change is increased 0-click attack surface, as efficient analysis often requires message media to be decoded before the message is opened by the user. One such feature is audio transcription. Incoming SMS and RCS audio attachments received by Google Messages are now automatically decoded with no user interaction. As a result, audio decoders are now in the 0-click attack surface of most Android phones. I\u2019ve spent a fair bit of time investigating these decoders, first reporting CVE-2025-49415 in the Monkey\u2019s Audio codec on Samsung devices. Based on this research, the team reviewed the Dolby Unified Decoder, and Ivan Fratric and I reported CVE-2025-54957. This vulnerability is likely in the 0-click attack surface of most Android devices in use today. In parallel, Seth Jenkins investigated a driver accessible from the sand"
+    },
+    {
+      "title": "Welcome to the new Project Zero Blog",
+      "url": "https://projectzero.google/2025/12/welcome.html",
+      "date": "2025-12-16",
+      "summary": "While on Project Zero, we aim for our research to be leading-edge, our blog design was \u2026 not so much. We welcome readers to our shiny new blog! For the occasion, we asked members of Project Zero to dust off old blog posts that never quite saw the light of day. And while we wish we could say the techniques they cover are no longer relevant, there is still a lot of work that needs to be done to protect users against zero days. Our new blog will continue to shine a light on the capabilities of attackers and the many opportunities that exist to protect against them. From 2016: Windows Exploitation Techniques: Race conditions with path lookups by James Forshaw From 2017: Thinking Outside The Box by Jann Horn"
+    },
+    {
+      "title": "Thinking Outside The Box [dusted off draft from 2017]",
+      "url": "https://projectzero.google/2025/12/thinking-outside-the-box.html",
+      "date": "2025-12-16",
+      "summary": "Preface Hello from the future! This is a blogpost I originally drafted in early 2017. I wrote what I intended to be the first half of this post (about escaping from the VM to the VirtualBox host userspace process with CVE-2017-3558), but I never got around to writing the second half (going from the VirtualBox host userspace process to the host kernel), and eventually sorta forgot about this old post draft\u2026 But it seems a bit sad to just leave this old draft rotting around forever, so I decided to put it in our blogpost queue now, 8 years after I originally drafted it. I\u2019ve very lightly edited it now (added some links, fixed some grammar), but it\u2019s still almost as I drafted it back then. When you read this post, keep in mind that unless otherwise noted, it is describing the situation as of 2017. Though a lot of the described code seems to not have changed much since then\u2026"
+    }
+  ]
+}

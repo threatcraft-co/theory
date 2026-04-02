@@ -1,6 +1,12 @@
 {
-  "cached_at": "2026-04-01T05:38:12.172707+00:00",
+  "cached_at": "2026-04-01T23:19:56.601581+00:00",
   "entries": [
+    {
+      "title": "Red Canary CFP tracker: April 2026",
+      "url": "https://redcanary.com/blog/news-events/red-canary-cfp-tracker-april-2026/",
+      "date": "2026-04-01",
+      "summary": "Red Canary's monthly roundup of upcoming security conferences and call for papers (CFP) submission deadlines"
+    },
     {
       "title": "Scarlet Goldfinch\u2019s year in ClickFix",
       "url": "https://redcanary.com/blog/threat-intelligence/scarlet-goldfinch-clickfix/",
@@ -54,12 +60,6 @@
       "url": "https://redcanary.com/blog/security-operations/saas-session-integrity/",
       "date": "2026-02-25",
       "summary": "The protocol gap is real. Authentication proves identity once but remember that session protection must be continuous."
-    },
-    {
-      "title": "ChatGPT in your inbox? Investigating Entra apps that request unexpected permissions",
-      "url": "https://redcanary.com/blog/threat-detection/entra-id-oauth-attacks/",
-      "date": "2026-02-24",
-      "summary": "How to observe, detect, investigate and mitigate against overly permissive Entra app consent"
     }
   ]
 }

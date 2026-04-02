@@ -1,6 +1,60 @@
 {
-  "cached_at": "2026-04-01T05:38:11.500640+00:00",
+  "cached_at": "2026-04-01T23:19:56.072929+00:00",
   "entries": [
+    {
+      "title": "New CrystalRAT malware adds RAT, stealer and prankware features",
+      "url": "https://www.bleepingcomputer.com/news/security/new-crystalrat-malware-adds-rat-stealer-and-prankware-features/",
+      "date": "2026-04-01",
+      "summary": "A new malware-as-a-service called CrystalRAT is being promoted on Telegram, offering remote access, data theft, keylogging, and clipboard hijacking capabilities. [...]"
+    },
+    {
+      "title": "Apple expands iOS 18 updates to more iPhones to block DarkSword attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/apple-expands-ios-18-updates-to-more-iphones-to-block-darksword-attacks/",
+      "date": "2026-04-01",
+      "summary": "Apple has now made it possible for more iPhones still running iOS 18 to receive security updates that protect against the actively exploited DarkSword exploit kit. [...]"
+    },
+    {
+      "title": "Hackers exploit TrueConf zero-day to push malicious software updates",
+      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-trueconf-zero-day-to-push-malicious-software-updates/",
+      "date": "2026-04-01",
+      "summary": "Hackers have targeted TrueConf conference servers in attacks that exploit a zero-day vulnerability, allowing them to execute arbitrary files on all connected endpoints. [...]"
+    },
+    {
+      "title": "New EvilTokens service fuels Microsoft device code phishing attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/new-eviltokens-service-fuels-microsoft-device-code-phishing-attacks/",
+      "date": "2026-04-01",
+      "summary": "A new malicious kit called EvilTokens integrates device code phishing capabilities, allowing attackers to hijack Microsoft accounts and provide advanced features for business email compromise attacks. [...]"
+    },
+    {
+      "title": "'NoVoice' Android malware on Google Play infected 2.3 million devices",
+      "url": "https://www.bleepingcomputer.com/news/security/novoice-android-malware-on-google-play-infected-23-million-devices/",
+      "date": "2026-04-01",
+      "summary": "A new Android malware named NoVoice was found on Google Play, hidden in more than 50 apps that were downloaded at least 2.3 million times. [...]"
+    },
+    {
+      "title": "Routine Access Is Powering Modern Intrusions, a New Threat Report Finds",
+      "url": "https://www.bleepingcomputer.com/news/security/routine-access-is-powering-modern-intrusions-a-new-threat-report-finds/",
+      "date": "2026-04-01",
+      "summary": "Modern intrusions increasingly start with valid credentials and routine access, not exploits. Blackpoint Cyber's upcoming threat report shows how VPN abuse, RMM tools, and social engineering drive most incidents. [...]"
+    },
+    {
+      "title": "FBI warns against using Chinese mobile apps due to privacy risks",
+      "url": "https://www.bleepingcomputer.com/news/security/fbi-warns-against-using-chinese-mobile-apps-over-to-data-security-risks/",
+      "date": "2026-04-01",
+      "summary": "The U.S. Federal Bureau of Investigation (FBI) warned Americans against using foreign-developed mobile applications, particularly those created by Chinese developers. [...]"
+    },
+    {
+      "title": "Google fixes fourth Chrome zero-day exploited in attacks in 2026",
+      "url": "https://www.bleepingcomputer.com/news/security/google-fixes-fourth-chrome-zero-day-exploited-in-attacks-in-2026/",
+      "date": "2026-04-01",
+      "summary": "Google has fixed the fourth Chrome vulnerability exploited in zero-day attacks since the start of the year. [...]"
+    },
+    {
+      "title": "Google Drive ransomware detection now on by default for paying users",
+      "url": "https://www.bleepingcomputer.com/news/security/google-drive-ransomware-detection-now-on-by-default-for-paying-users/",
+      "date": "2026-04-01",
+      "summary": "Google announced that the AI-powered Google Drive ransomware detection feature has reached general availability and is now enabled by default for all paying users. [...]"
+    },
     {
       "title": "New Windows 11 emergency update fixes preview update install issues",
       "url": "https://www.bleepingcomputer.com/news/microsoft/new-windows-11-kb5086672-emergency-update-fixes-install-issues/",
@@ -36,60 +90,6 @@
       "url": "https://www.bleepingcomputer.com/news/security/claude-ai-finds-vim-emacs-rce-bugs-that-trigger-on-file-open/",
       "date": "2026-03-31",
       "summary": "Vulnerabilities in the Vim and GNU Emacs text editors, discovered using simple prompts with the Claude assistant, allow remote code execution simply by opening a file. [...]"
-    },
-    {
-      "title": "Cisco source code stolen in Trivy-linked dev environment breach",
-      "url": "https://www.bleepingcomputer.com/news/security/cisco-source-code-stolen-in-trivy-linked-dev-environment-breach/",
-      "date": "2026-03-31",
-      "summary": "Cisco has suffered a cyberattack after threat actors used stolen credentials from the recent Trivy supply chain attack to breach its internal development environment and steal source code belonging to the company and its customers. [...]"
-    },
-    {
-      "title": "How to Categorize AI Agents and Prioritize Risk",
-      "url": "https://www.bleepingcomputer.com/news/security/how-to-categorize-ai-agents-and-prioritize-risk/",
-      "date": "2026-03-31",
-      "summary": "AI agent risk isn't equal, it scales with access to systems and level of autonomy. Token Security explains how CISOs should categorize agents and prioritize what to secure first. [...]"
-    },
-    {
-      "title": "Hackers compromise Axios npm package to drop cross-platform malware",
-      "url": "https://www.bleepingcomputer.com/news/security/hackers-compromise-axios-npm-package-to-drop-cross-platform-malware/",
-      "date": "2026-03-31",
-      "summary": "Hackers hijacked the npm account of the Axios package, a JavaScript HTTP client with 100M+ weekly downloads, to deliver remote access trojans to Linux, Windows, and macOS systems. [...]"
-    },
-    {
-      "title": "Microsoft fixes Outlook Classic crashes caused by Teams Meeting add-in",
-      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-outlook-classic-crashes-caused-by-teams-meeting-add-in/",
-      "date": "2026-03-31",
-      "summary": "\u200bMicrosoft has resolved a known issue that rendered the classic Outlook email client unusable for users who enabled the Microsoft Teams Meeting Add-in. [...]"
-    },
-    {
-      "title": "Hacker charged with stealing $53 million from Uranium crypto exchange",
-      "url": "https://www.bleepingcomputer.com/news/security/hacker-charged-with-stealing-53-million-from-uranium-crypto-exchange/",
-      "date": "2026-03-31",
-      "summary": "U.S. prosecutors have charged a Maryland man with stealing more than $53 million after hacking the Uranium Finance crypto exchange twice and laundering the proceeds through a cryptocurrency mixer. [...]"
-    },
-    {
-      "title": "Dutch Finance Ministry takes treasury banking portal offline after breach",
-      "url": "https://www.bleepingcomputer.com/news/security/dutch-finance-ministry-takes-treasury-banking-portal-offline-after-breach/",
-      "date": "2026-03-31",
-      "summary": "The Dutch Ministry of Finance took some of its systems offline, including the digital portal for treasury banking, while investigating a cyberattack detected two weeks ago. [...]"
-    },
-    {
-      "title": "CISA orders feds to patch actively exploited Citrix flaw by Thursday",
-      "url": "https://www.bleepingcomputer.com/news/security/cisa-orders-feds-to-patch-actively-exploited-citrix-flaw-by-thursday/",
-      "date": "2026-03-31",
-      "summary": "The U.S. Cybersecurity and Infrastructure Security Agency (CISA) ordered government agencies to patch their Citrix NetScaler appliances against an actively exploited vulnerability by Thursday. [...]"
-    },
-    {
-      "title": "Healthcare tech firm CareCloud says hackers stole patient data",
-      "url": "https://www.bleepingcomputer.com/news/security/healthcare-tech-firm-carecloud-says-hackers-stole-patient-data/",
-      "date": "2026-03-30",
-      "summary": "Healthcare IT firm CareCloud has disclosed a data breach incident that exposed sensitive data and caused a network disruption lasting approximately eight hours. [...]"
-    },
-    {
-      "title": "New RoadK1ll WebSocket implant used to pivot on breached networks",
-      "url": "https://www.bleepingcomputer.com/news/security/new-roadk1ll-websocket-implant-used-to-pivot-on-breached-networks/",
-      "date": "2026-03-30",
-      "summary": "A newly identified malicious implant named RoadK1ll is enabling threat actors to quietly move from a compromised host to other systems on the network. [...]"
     }
   ]
 }

@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-04-01T23:19:51.306668+00:00",
+  "entries": [
+    {
+      "title": "Business, logic, and chains: unauthenticated RCE in Dell Wyse Management Suite",
+      "url": "https://swarm.ptsecurity.com/business-logic-and-chains-unauthenticated-rce-in-dell-wyse-management-suite/",
+      "date": "2026-03-23",
+      "summary": "A high impact bug sometimes needs just one small additional detail before it turns into a practical attack vector. For that reason, when doing vulnerability research, I flag even errors or odd behaviors that look irrelevant at first. In some cases, those findings become the missing puzzle piece of a high-impact vulnerability. In this article, [&#8230;]"
+    },
+    {
+      "title": "Attack arithmetic: how an integer overflow in PostgreSQL libpq leads to denial of service",
+      "url": "https://swarm.ptsecurity.com/attack-arithmetic-how-an-integer-overflow-in-postgresql-libpq-leads-to-denial-of-service/",
+      "date": "2026-03-10",
+      "summary": "Databases serve as the foundation of the digital world, organizing and storing critical information: from financial transactions and medical records to website content. However, like any complex software product, they are not immune to flaws, and discovered vulnerabilities can turn this repository into a prime target for attacks. This applies in full to&#160;PostgreSQL&#160;as well\u2014a system [&#8230;]"
+    },
+    {
+      "title": "Who\u2019s on the Line? Exploiting RCE in Windows Telephony Service",
+      "url": "https://swarm.ptsecurity.com/whos-on-the-line-exploiting-rce-in-windows-telephony-service/",
+      "date": "2026-01-19",
+      "summary": "Windows has supported computer telephony integration for decades, providing applications with the ability to manage phone devices, lines, and calls. While modern deployments increasingly rely on cloud-based telephony solutions, classic telephony services remain available out of the box in Windows and continue to be used in specialized environments. As a result, legacy telephony components still [&#8230;]"
+    },
+    {
+      "title": "Blind trust: what is hidden behind the process of creating your PDF file?",
+      "url": "https://swarm.ptsecurity.com/blind-trust-what-is-hidden-behind-the-process-of-creating-your-pdf-file/",
+      "date": "2025-12-29",
+      "summary": "Every day, thousands of web services generate PDF (Portable Document Format) files\u2014bills, contracts, reports. This step is often treated as a technical routine, &#8220;just convert the HTML,&#8221; but in practice it&#8217;s exactly where a trust boundary is crossed. The renderer parses HTML, downloads external resources, processes fonts, SVGs, and images, and sometimes has access to [&#8230;]"
+    },
+    {
+      "title": "Injection for an athlete",
+      "url": "https://swarm.ptsecurity.com/injection-for-an-athlete/",
+      "date": "2025-11-14",
+      "summary": "After yet another workout where my sports watch completely lost GPS, I&#8217;d had enough. I decided to dig into its firmware and pinpoint the problem. I couldn&#8217;t find it published anywhere. No download section, no public archive, nothing. So, I changed tactics and went in through the Android app instead, hoping I could pull the [&#8230;]"
+    },
+    {
+      "title": "Kernel-hack-drill and a new approach to exploiting CVE-2024-50264 in the Linux kernel",
+      "url": "https://swarm.ptsecurity.com/kernel-hack-drill-and-a-new-approach-to-exploiting-cve-2024-50264-in-the-linux-kernel/",
+      "date": "2025-09-02",
+      "summary": "Some memory corruption bugs are much harder to exploit than others. They can involve race conditions, crash the system, and impose limitations that make a researcher&#8217;s life difficult. Working with such fragile vulnerabilities demands significant time and effort. CVE-2024-50264 in the Linux kernel is one such hard bug, which received the Pwnie Award 2025 as [&#8230;]"
+    },
+    {
+      "title": "The Guest Who Could: Exploiting LPE in VMWare Tools",
+      "url": "https://swarm.ptsecurity.com/the-guest-who-could-exploiting-lpe-in-vmware-tools/",
+      "date": "2025-07-22",
+      "summary": "VMWare Tools provides a rich set of drivers and services that enhance manageability of virtual machines and enable guest-host communication. While the host-to-guest RPC mechanisms have long been attractive targets for vulnerability research due to their potential for VM escapes, the other components &#8211; especially guest-only services &#8211; are often overlooked. One such component is [&#8230;]"
+    },
+    {
+      "title": "Daemon Ex Plist: LPE via MacOS Daemons",
+      "url": "https://swarm.ptsecurity.com/daemon-ex-plist-lpe-via-macos-daemons/",
+      "date": "2025-07-17",
+      "summary": "Introduction Today, we will try to figure out one mechanism for which there is not much information available on the internet and attempt to use the defect of this mechanism to exploit an LPE vulnerability. The mechanism we are going to look into is Mac-specific startup process for specialized services, which also known as Agents [&#8230;]"
+    },
+    {
+      "title": "Buried in the Log. Exploiting a 20 years old NTFS Vulnerability",
+      "url": "https://swarm.ptsecurity.com/buried-in-the-log-exploiting-a-20-years-old-ntfs-vulnerability/",
+      "date": "2025-07-09",
+      "summary": "Intro Filesystems implementation is old complex and not very well audited by independent researchers. In this article I would like to share beautiful exploitation showcase of vulnerability that I found in Windows NTFS implementation. This vulnerabilty, CVE-2025-49689, is reachable through specific crafted virtual disk (VHD). Adversaries use Virtual Disks in their phishing companies as containers [&#8230;]"
+    },
+    {
+      "title": "Last barrier destroyed, or compromise of Fuse Encryption Key for Intel Security Fuses",
+      "url": "https://swarm.ptsecurity.com/last-barrier-destroyed-or-compromise-of-fuse-encryption-key-for-intel-security-fuses/",
+      "date": "2025-03-20",
+      "summary": "Introduction As experts who have spent years researching the security of hardware platforms developed by Intel, we acknowledge that Intel&#8217;s Converged Security and Management Engine security architecture is highly reliable and was designed by top-notch professionals. From an architectural perspective, if all its individual components function as intended, it is challenging to find a vulnerability, [&#8230;]"
+    }
+  ]
+}
