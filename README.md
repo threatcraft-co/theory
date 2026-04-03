@@ -152,6 +152,18 @@ python theory.py --list-actors               # see all actors and their aliases
 ```
 
 ---
+## Keeping Outputs Private
+
+This project can generate Dossier outputs and cached files when executed locally.
+To prevent those outputs from being committed to the public repository,
+the following directories are ignored by Git:
+
+Dossier/
+.cache/
+
+
+If you want, you can also configure the tool to write outputs to a folder
+outside of the repository for extra privacy.
 
 ## Vendor Intelligence Synthesis
 
