@@ -6,9 +6,6 @@ THEORY is an open-source alternative to enterprise threat intelligence platforms
 
 Built for threat intelligence analysts, detection engineers, security researchers, and students who believe good intelligence shouldn't require a six-figure subscription.
 
-```
-python theory.py --actor APT28 --sources mitre,malpedia,otx,sigma,threatfox,vendor
-```
 
 ---
 
