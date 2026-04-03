@@ -12,8 +12,8 @@ sources:
   # ── Tier 1: Government & Nonprofit ──────────────────────────────────
 
   - name: CISA Cybersecurity Advisories
-    url: https://www.cisa.gov/uscert/ncas/alerts
-    rss: https://www.cisa.gov/feeds/alerts.xml
+    url: https://www.cisa.gov/news-events/cybersecurity-advisories
+    rss: https://www.cisa.gov/cybersecurity-advisories/all.xml
     type: rss
     tier: 1
     apt_focus: true
@@ -105,7 +105,7 @@ sources:
 
   - name: Secureworks CTU
     url: https://www.secureworks.com/blog
-    rss: https://www.secureworks.com/blog/feed
+    rss: https://www.secureworks.com/rss/blog
     type: rss
     tier: 2
     apt_focus: true
@@ -130,27 +130,18 @@ sources:
     tags: [apt, nation-state, malware, campaigns]
     enabled: true
 
-  - name: Sophos Threat Research
-    url: https://news.sophos.com/en-us/category/security-operations/
-    rss: https://news.sophos.com/en-us/category/security-operations/feed/
+  - name: Sophos News
+    url: https://news.sophos.com/en-us/
+    rss: https://news.sophos.com/en-us/feed/
     type: rss
     tier: 2
     apt_focus: true
     tags: [apt, malware, ransomware, campaigns, nation-state]
     enabled: true
 
-  - name: Sophos Threat Profiles
-    url: https://www.sophos.com/en-us/threat-profiles
-    rss: https://www.sophos.com/en-us/threat-profiles/feed
-    type: rss
-    tier: 2
-    apt_focus: true
-    tags: [apt, nation-state, threat-profiles, actor-intel]
-    enabled: true
-
-  - name: Sophos Threat Research Blog
-    url: https://www.sophos.com/en-us/category/threat-research
-    rss: https://www.sophos.com/en-us/category/threat-research/feed
+  - name: Sophos X-Ops
+    url: https://news.sophos.com/en-us/category/threat-research/
+    rss: https://news.sophos.com/en-us/category/threat-research/feed/
     type: rss
     tier: 2
     apt_focus: true
@@ -186,7 +177,7 @@ sources:
 
   - name: Splunk Threat Research
     url: https://www.splunk.com/en_us/blog/security.html
-    rss: https://www.splunk.com/blog/feed/
+    rss: https://www.splunk.com/en_us/blog/security/rss.xml
     type: rss
     tier: 2
     apt_focus: false
@@ -195,7 +186,7 @@ sources:
 
   - name: Datadog Security Labs
     url: https://securitylabs.datadoghq.com
-    rss: https://securitylabs.datadoghq.com/feed.xml
+    rss: https://securitylabs.datadoghq.com/rss/feed.xml
     type: rss
     tier: 2
     apt_focus: false
@@ -220,9 +211,9 @@ sources:
     tags: [apt, ta-naming, phishing, email, campaigns]
     enabled: true
 
-  - name: Okta Threat Intelligence
+  - name: Okta Security Blog
     url: https://www.okta.com/blog/threat-intelligence/
-    rss: https://www.okta.com/blog/feed/
+    rss: https://www.okta.com/blog/threat-intelligence.rss
     type: rss
     tier: 2
     apt_focus: false
@@ -231,7 +222,7 @@ sources:
 
   - name: Wiz Research
     url: https://www.wiz.io/blog/tag/research
-    rss: https://www.wiz.io/blog/rss.xml
+    rss: https://www.wiz.io/feed/rss.xml
     type: rss
     tier: 2
     apt_focus: false
@@ -276,7 +267,7 @@ sources:
 
   - name: Sysdig Threat Research
     url: https://sysdig.com/blog/category/threat-research/
-    rss: https://sysdig.com/blog/feed/
+    rss: https://sysdig.com/feed/
     type: rss
     tier: 2
     apt_focus: false
@@ -326,7 +317,7 @@ sources:
     tier: 2
     apt_focus: true
     tags: [threat-hunting, detection, agentic]
-    enabled: true
+    enabled: false  # feed returning 404 — re-enable when RSS is confirmed live
 
   # ── Tier 3: Community & Independent ─────────────────────────────────
 
