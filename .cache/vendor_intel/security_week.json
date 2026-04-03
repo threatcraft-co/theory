@@ -1,65 +1,65 @@
 {
-  "cached_at": "2026-04-01T23:19:58.417037+00:00",
+  "cached_at": "2026-04-03T04:22:56.589140+00:00",
   "entries": [
+    {
+      "title": "Critical Vulnerability in Claude Code Emerges Days After Source Leak",
+      "url": "https://www.securityweek.com/critical-vulnerability-in-claude-code-emerges-days-after-source-leak/",
+      "date": "2026-04-02",
+      "summary": "Within days of each other, Anthropic first leaked the source code to Claude Code, and then a critical vulnerability was found by Adversa AI. The post Critical Vulnerability in Claude Code Emerges Days After Source Leak appeared first on SecurityWeek ."
+    },
+    {
+      "title": "Apple Rolls Out DarkSword Exploit Protection to More Devices",
+      "url": "https://www.securityweek.com/apple-rolls-out-darksword-exploit-protection-to-more-devices/",
+      "date": "2026-04-02",
+      "summary": "The DarkSword exploit kit has been used by both state-sponsored hackers and commercial spyware vendors. The post Apple Rolls Out DarkSword Exploit Protection to More Devices appeared first on SecurityWeek ."
+    },
+    {
+      "title": "Cybersecurity M&A Roundup: 38 Deals Announced in March 2026",
+      "url": "https://www.securityweek.com/cybersecurity-ma-roundup-38-deals-announced-in-march-2026/",
+      "date": "2026-04-02",
+      "summary": "Significant cybersecurity M&#038;A deals announced by Airbus, Cellebrite, Databricks, Quantum eMotion, Rapid7, and OpenAI. The post Cybersecurity M&#038;A Roundup: 38 Deals Announced in March 2026 appeared first on SecurityWeek ."
+    },
+    {
+      "title": "Cisco Patches Critical and High-Severity Vulnerabilities",
+      "url": "https://www.securityweek.com/cisco-patches-critical-and-high-severity-vulnerabilities/",
+      "date": "2026-04-02",
+      "summary": "The bugs could lead to authentication bypass, remote code execution, information disclosure, and privilege escalation. The post Cisco Patches Critical and High-Severity Vulnerabilities appeared first on SecurityWeek ."
+    },
+    {
+      "title": "250,000 Affected by Data Breach at Nacogdoches Memorial Hospital",
+      "url": "https://www.securityweek.com/250000-affected-by-data-breach-at-nacogdoches-memorial-hospital/",
+      "date": "2026-04-02",
+      "summary": "In January 2026, a threat actor hacked the hospital\u2019s internal network and stole personal and health information. The post 250,000 Affected by Data Breach at Nacogdoches Memorial Hospital appeared first on SecurityWeek ."
+    },
+    {
+      "title": "Mercor Hit by LiteLLM Supply Chain Attack",
+      "url": "https://www.securityweek.com/mercor-hit-by-litellm-supply-chain-attack/",
+      "date": "2026-04-02",
+      "summary": "The AI recruiting firm is investigating the incident as Lapsus$ claimed the theft of 4TB of Mercor data. The post Mercor Hit by LiteLLM Supply Chain Attack appeared first on SecurityWeek ."
+    },
+    {
+      "title": "Sophisticated CrystalX RAT Emerges",
+      "url": "https://www.securityweek.com/sophisticated-crystalx-rat-emerges/",
+      "date": "2026-04-02",
+      "summary": "The malware can spy on victims, steal their information, and make configuration changes on devices. The post Sophisticated CrystalX RAT Emerges appeared first on SecurityWeek ."
+    },
+    {
+      "title": "Variance Raises $21.5M for Compliance Investigation Platform Powered by AI Agents",
+      "url": "https://www.securityweek.com/variance-raises-21-5m-for-compliance-investigation-platform-powered-by-ai-agents/",
+      "date": "2026-04-02",
+      "summary": "Variance has raised a total of $26 million in funding and the latest investment will fuel platform growth. The post Variance Raises $21.5M for Compliance Investigation Platform Powered by AI Agents appeared first on SecurityWeek ."
+    },
+    {
+      "title": "Linx Security Raises $50 Million for Identity Security and Governance",
+      "url": "https://www.securityweek.com/linx-security-raises-50-million-for-identity-security-and-governance/",
+      "date": "2026-04-02",
+      "summary": "The company will accelerate product development, scale go-to-market efforts, and expand its global footprint. The post Linx Security Raises $50 Million for Identity Security and Governance appeared first on SecurityWeek ."
+    },
     {
       "title": "Depthfirst Raises $80 Million in Series B Funding",
       "url": "https://www.securityweek.com/depthfirst-raises-80-million-in-series-b-funding/",
       "date": "2026-04-01",
       "summary": "The startup will expand its AI research team, train additional security models, and scale enterprise adoption. The post Depthfirst Raises $80 Million in Series B Funding appeared first on SecurityWeek ."
-    },
-    {
-      "title": "Toy Giant Hasbro Hit by Cyberattack",
-      "url": "https://www.securityweek.com/toy-giant-hasbro-hit-by-cyberattack/",
-      "date": "2026-04-01",
-      "summary": "The company is investigating the full scope of the incident, including whether any files have been compromised. The post Toy Giant Hasbro Hit by Cyberattack appeared first on SecurityWeek ."
-    },
-    {
-      "title": "New DeepLoad Malware Dropped in ClickFix Attacks",
-      "url": "https://www.securityweek.com/new-deepload-malware-dropped-in-clickfix-attacks/",
-      "date": "2026-04-01",
-      "summary": "The malware steals credentials, installs a malicious browser extension, and can spread via USB drives. The post New DeepLoad Malware Dropped in ClickFix Attacks appeared first on SecurityWeek ."
-    },
-    {
-      "title": "Exploited Zero-Day Among 21 Vulnerabilities Patched in Chrome",
-      "url": "https://www.securityweek.com/exploited-zero-day-among-21-vulnerabilities-patched-in-chrome/",
-      "date": "2026-04-01",
-      "summary": "Google has announced fixes for CVE-2026-5281, a zero-day affecting Chrome\u2019s Dawn component. The post Exploited Zero-Day Among 21 Vulnerabilities Patched in Chrome appeared first on SecurityWeek ."
-    },
-    {
-      "title": "FBI Warns of Data Security Risks From China-Made Mobile Apps",
-      "url": "https://www.securityweek.com/fbi-warns-of-data-security-risks-from-china-made-mobile-apps/",
-      "date": "2026-04-01",
-      "summary": "The agency has not named the problematic foreign-made applications, but TikTok and Temu come to mind. The post FBI Warns of Data Security Risks From China-Made Mobile Apps appeared first on SecurityWeek ."
-    },
-    {
-      "title": "US Charges Uranium Crypto Exchange Hacker",
-      "url": "https://www.securityweek.com/us-charges-uranium-crypto-exchange-hacker/",
-      "date": "2026-04-01",
-      "summary": "Jonathan Spalletta exploited smart contract vulnerabilities to steal approximately $55 million in cryptocurrency and cause Uranium to shut down. The post US Charges Uranium Crypto Exchange Hacker appeared first on SecurityWeek ."
-    },
-    {
-      "title": "Webinar Today: Agentic AI vs. Identity\u2019s Last Mile Problem",
-      "url": "https://www.securityweek.com/webinar-today-agentic-ai-vs-identitys-last-mile-problem/",
-      "date": "2026-04-01",
-      "summary": "Join the webcast as we explore what Agentic AI can and cannot solve today, and real world breach scenarios linked to disconnected applications. The post Webinar Today: Agentic AI vs. Identity\u2019s Last Mile Problem appeared first on SecurityWeek ."
-    },
-    {
-      "title": "Axios NPM Package Breached in North Korean Supply Chain Attack",
-      "url": "https://www.securityweek.com/axios-npm-package-breached-in-north-korean-supply-chain-attack/",
-      "date": "2026-04-01",
-      "summary": "A long-lived NPM access token was used to bypass the GitHub Actions OIDC-based CI/CD publishing workflow and push backdoored package versions. The post Axios NPM Package Breached in North Korean Supply Chain Attack appeared first on SecurityWeek ."
-    },
-    {
-      "title": "Google Addresses Vertex Security Issues After Researchers Weaponize AI Agents",
-      "url": "https://www.securityweek.com/google-addresses-vertex-security-issues-after-researchers-weaponize-ai-agent/",
-      "date": "2026-04-01",
-      "summary": "Palo Alto Networks has disclosed the details of its analysis of Google Cloud Platform\u2019s Vertex AI. The post Google Addresses Vertex Security Issues After Researchers Weaponize AI Agents appeared first on SecurityWeek ."
-    },
-    {
-      "title": "Censys Raises $70 Million for Internet Intelligence Platform",
-      "url": "https://www.securityweek.com/censys-raises-70-million-for-internet-intelligence-platform/",
-      "date": "2026-03-31",
-      "summary": "The latest funding round brings the total venture capital investment in Censys to $149 million. The post Censys Raises $70 Million for Internet Intelligence Platform appeared first on SecurityWeek ."
     }
   ]
 }

@@ -1,0 +1,605 @@
+{
+  "cached_at": "2026-04-03T04:22:56.158432+00:00",
+  "entries": [
+    {
+      "title": "The Sysdig MCP server is now available in AWS Marketplace",
+      "url": "https://webflow.sysdig.com/blog/the-sysdig-mcp-server-is-now-available-in-aws-marketplace",
+      "date": "2026-04-02",
+      "summary": "Correlating security signals from cloud services, container registries, and runtime environments is an important component of maintaining secure cloud deployments. But making this a seamless process, without the need for complex, manual integrations, is often challenging."
+    },
+    {
+      "title": "Risk isn\u2019t reduced until you take action: How teams resolve issues in the cloud",
+      "url": "https://webflow.sysdig.com/blog/risk-isnt-reduced-until-you-take-action-how-teams-resolve-issues-in-the-cloud",
+      "date": "2026-04-02",
+      "summary": "Effective remediation depends on real-time insight that allows security teams to quickly investigate, understand, and respond to threats with precision. By taking targeted actions like stopping compromised workloads, teams can contain risks without causing unnecessary disruption. Ultimately, security delivers value when issues are actively resolved, reducing risk in measurable ways."
+    },
+    {
+      "title": "AI infrastructure security: Why it deserves its own category",
+      "url": "https://webflow.sysdig.com/blog/ai-infrastructure-security-why-it-deserves-its-own-category",
+      "date": "2026-03-26",
+      "summary": "Attacks on artificial intelligence infrastructure are rising, but not in the way most people expect. While AI security headlines focus on prompt manipulation, attackers are going after the infrastructure behind these systems. This article takes a broader view of AI security, unpacking this shift and outlining practical strategies to respond."
+    },
+    {
+      "title": "Three pillars for building effective runtime-powered cloud defense, the right way",
+      "url": "https://webflow.sysdig.com/blog/three-pillars-for-building-effective-runtime-powered-cloud-defense-the-right-way",
+      "date": "2026-03-26",
+      "summary": "To secure your cloud, you have to secure it at runtime. Here\u2019s how to build a runtime-powered cloud defense that secures your infrastructure in real time."
+    },
+    {
+      "title": "Closing the cloud security gap with runtime security",
+      "url": "https://webflow.sysdig.com/blog/closing-the-cloud-security-gap-with-runtime-security",
+      "date": "2026-03-26",
+      "summary": "Imagine your cloud environment as a commercial plane. Before flight, planes undergo strict maintenance schedules, tests, and preflight checks to\u2026"
+    },
+    {
+      "title": "Seeing risk isn\u2019t stopping it: Why visibility alone isn\u2019t enough",
+      "url": "https://webflow.sysdig.com/blog/seeing-risk-isnt-stopping-it-why-visibility-alone-isnt-enough",
+      "date": "2026-03-25",
+      "summary": "Cloud security has evolved beyond basic visibility.For years, security teams have focused on understanding what exists in their environment, often playing catch-up to development teams that had already embraced the speed of the cloud. That approach made sense when the biggest challenge was just gaining control over rapidly expanding infrastructure. If you could see everything, you could reduce risk."
+    },
+    {
+      "title": "TeamPCP expands: Supply chain compromise spreads from Trivy to Checkmarx GitHub Actions",
+      "url": "https://webflow.sysdig.com/blog/teampcp-expands-supply-chain-compromise-spreads-from-trivy-to-checkmarx-github-actions",
+      "date": "2026-03-23",
+      "summary": ""
+    },
+    {
+      "title": "AI coding agents are running on your machines \u2014 Do you know what they're doing?",
+      "url": "https://webflow.sysdig.com/blog/ai-coding-agents-are-running-on-your-machines-do-you-know-what-theyre-doing",
+      "date": "2026-03-23",
+      "summary": "AI coding agents are now running on developer laptops and inside CI/CD pipelines across every sector. They write code, execute commands, read files, and make network connections, often without the developer watching. Unlike almost every other piece of software on those same machines, there is no established detection layer that understands what normal agent behavior looks like, let alone what an attack looks like at that level."
+    },
+    {
+      "title": "Runtime security for AI coding agents: Protecting AI-assisted development",
+      "url": "https://webflow.sysdig.com/blog/runtime-security-for-ai-coding-agents-protecting-ai-assisted-development",
+      "date": "2026-03-23",
+      "summary": "Use of AI coding agents is skyrocketing as organizations look to innovate and solve business problems faster. At the same time, coding agents like Claude Code, OpenAI\u2019s Codex, and Gemini CLI, raise new questions about risks that security teams are not prepared to handle."
+    },
+    {
+      "title": "How runtime insights power every cloud security use case",
+      "url": "https://webflow.sysdig.com/blog/how-runtime-insights-power-every-cloud-security-use-case",
+      "date": "2026-03-23",
+      "summary": "Runtime insights give security teams live visibility into what\u2019s risky and what\u2019s being exploited in the moment. That\u2019s why they\u2019re critical to every use case."
+    },
+    {
+      "title": "CVE-2026-33017: How attackers compromised Langflow AI pipelines in 20 hours",
+      "url": "https://webflow.sysdig.com/blog/cve-2026-33017-how-attackers-compromised-langflow-ai-pipelines-in-20-hours",
+      "date": "2026-03-19",
+      "summary": "On March 17, 2026, a critical vulnerability was disclosed in Langflow, the open-source visual framework for building AI agents and Retrieval-Augmented Generation (RAG) pipelines. The vulnerability, CVE-2026-33017, is an unauthenticated remote code execution (RCE) in the public flow build endpoint that allows attackers to execute arbitrary Python code on any exposed Langflow instance, with no credentials required and only a single HTTP request to get moving."
+    },
+    {
+      "title": "Inline Cloud Response: Accelerating AWS threat containment for SOC teams",
+      "url": "https://webflow.sysdig.com/blog/inline-cloud-response-accelerating-aws-threat-containment-for-soc-teams",
+      "date": "2026-03-19",
+      "summary": "In the cloud, visibility alone is not enough. Security teams need the ability to move from detection to investigation to containment without friction, delay, or tool switching. Sysdig Cloud Response transforms the traditional observe-and-escalate model into an active, inline workflow where the analysts closest to the threat can act immediately."
+    },
+    {
+      "title": "Runtime malware detection for AWS Fargate",
+      "url": "https://webflow.sysdig.com/blog/runtime-malware-detection-for-aws-fargate",
+      "date": "2026-03-17",
+      "summary": "Application platform modernization is pushing cloud security teams to increasingly support infrastructure teams in new ways as they adopt new cloud architectures. One avenue that is gaining steam is the use of serverless container environments, often described as serverless containers or container-as-a-service (CaaS)."
+    },
+    {
+      "title": "Detecting CVE-2026-3288 & CVE-2026-24512: Ingress-nginx configuration injection vulnerabilities for Kubernetes",
+      "url": "https://webflow.sysdig.com/blog/detecting-cve-2026-3288-cve-2026-24512-ingress-nginx-configuration-injection-vulnerabilities-for-kubernetes",
+      "date": "2026-03-17",
+      "summary": "On March 9, 2026, the Kubernetes ingress-nginx project merged a fix for CVE-2026-3288 (CVSS 8.8 HIGH), a configuration injection vulnerability in the NGINX Ingress Controller. The vulnerability allows any user with permission to create or modify Ingress resources by inserting a double-quote character (\u201c) into the Ingress path field. Because the field does not properly sanatize input, an attacker can break the expected syntax with a quotation mark and inject arbitrary nginx configuration directives into the generated configuration. The official advisory states that the vulnerability can lead to remote code execution (RCE) and the disclosure of secrets accessible to the controller."
+    },
+    {
+      "title": "Malware detection with Sysdig",
+      "url": "https://webflow.sysdig.com/blog/malware-detection-with-sysdig",
+      "date": "2026-03-09",
+      "summary": "When we talk about cloud security, we spend a lot of time discussing things like configuration and identity risk. But we shouldn't lose sight of other types of risk, simply because they don't lead to the lion's share of incidents. One of those risks is malware. And as attackers increasingly automate exploitation of exposed services and vulnerable workloads, it\u2019s no longer safe to assume you can ignore malware risk in cloud environments."
+    },
+    {
+      "title": "Masterclass: AI is more than ChatGPT and LLMs",
+      "url": "https://webflow.sysdig.com/blog/masterclass-ai-is-more-than-chatgpt-and-llms",
+      "date": "2026-03-05",
+      "summary": "Artificial intelligence is trendy, and it seems like it\u2019s everything tech companies talk about.It also seems like it\u2019s something completely new."
+    },
+    {
+      "title": "Security briefing: February 2026",
+      "url": "https://webflow.sysdig.com/blog/security-briefing-february-2026",
+      "date": "2026-03-04",
+      "summary": "AI didn\u2019t just make the headlines in February; it swallowed them whole. From viral agentic platforms to breached agents and AI-powered attacks, artificial intelligence dominated the global conversation. Furthermore, agentic AI \u201ccommunities,\u201d through the likes of Moltbook and Moltroad, have taken hold \u2014 kind of like Myspace and Facebook did in their glory days, but with much less HTML."
+    },
+    {
+      "title": "Leveling up Kubernetes Posture: From baselines to risk-aware admission",
+      "url": "https://webflow.sysdig.com/blog/leveling-up-kubernetes-posture-from-baselines-to-risk-aware-admission",
+      "date": "2026-02-26",
+      "summary": "For many organizations, Kubernetes posture management tends to start with a small set of common guardrails rather than a deeply opinionated security model."
+    },
+    {
+      "title": "Eliminating runtime blind spots: How CleanStart and Sysdig build continuous trust across the container lifecycle",
+      "url": "https://webflow.sysdig.com/blog/eliminating-runtime-blind-spots-how-cleanstart-and-sysdig-build-continuous-trust-across-the-container-lifecycle",
+      "date": "2026-02-25",
+      "summary": "A technical deep dive into building verifiable, secure software supply chains through build-time hardening and runtime intelligence."
+    },
+    {
+      "title": "LLMjacking: From Emerging Threat to Black Market Reality",
+      "url": "https://webflow.sysdig.com/blog/llmjacking-from-emerging-threat-to-black-market-reality",
+      "date": "2026-02-24",
+      "summary": "Since its emergence in May 2024, LLMjacking has evolved from a novel security concern into an industrialized cybercrime marketplace. When this new class of cloud-focused AI attack was reported, researchers predicted that motivated actors would commercialize the practice. Now, additional investigations confirm those predictions: an underground marketplace is now actively monetizing unauthorized AI access at scale. LLMjacking is the new cryptomining."
+    },
+    {
+      "title": "Real risks live at runtime: Why CISOs must care about deep telemetry in 2026",
+      "url": "https://webflow.sysdig.com/blog/real-risks-live-at-runtime-why-cisos-must-care-about-deep-telemetry-in-2026",
+      "date": "2026-02-18",
+      "summary": "At the heart of runtime is visibility on what matters: what's being executed and what's running in production. Runtime is where enterprises generate value. Runtime telemetry can help shed light on the risk factors noted above, be they directly related to AI tools and services or the cloud and microservices that power them."
+    },
+    {
+      "title": "Sysdig named a Leader in the Forrester Wave\u2122: Cloud Native Application Protection Solutions, Q1 2026",
+      "url": "https://webflow.sysdig.com/blog/sysdig-named-a-leader-in-the-forrester-wave-tm-cloud-native-application-protection-solutions-q1-2026",
+      "date": "2026-02-17",
+      "summary": "Sysdig has been named a Leader in The Forrester Wave\u2122: Cloud Native Application Protection Solutions, Q1 2026, the highest designation in Forrester\u2019s assessment."
+    },
+    {
+      "title": "How to run rootless containers",
+      "url": "https://webflow.sysdig.com/blog/how-to-run-rootless-containers",
+      "date": "2026-02-10",
+      "summary": "Using rootless containers, or unprivileged containers, is one of the most effective container security best practices."
+    },
+    {
+      "title": "AI-assisted cloud intrusion achieves admin access in 8 minutes",
+      "url": "https://webflow.sysdig.com/blog/ai-assisted-cloud-intrusion-achieves-admin-access-in-8-minutes",
+      "date": "2026-02-03",
+      "summary": "On November 28, 2025, the Sysdig Threat Research Team (TRT) observed an offensive cloud operation targeting an AWS environment in which the threat actor went from initial access to administrative privileges in less than 10 minutes. The attack stood out not only for its speed, but also for multiple indicators that suggest the threat actor leveraged large language models (LLMs) throughout the operation to automate reconnaissance, generate malicious code, and make real-time decisions."
+    },
+    {
+      "title": "Security briefing: January 2026",
+      "url": "https://webflow.sysdig.com/blog/security-briefing-january-2026",
+      "date": "2026-02-02",
+      "summary": "January usually begins with a fresh start for many. Unfortunately, that\u2019s not the case for cybersecurity. The new year brought continued pressure from maximum-severity vulnerabilities, sophisticated malware, and the continued abuse of AI and CI/CD infrastructure."
+    },
+    {
+      "title": "Securing GPU-accelerated AI workloads in Oracle Kubernetes Engine",
+      "url": "https://webflow.sysdig.com/blog/securing-gpu-accelerated-ai-workloads-in-oracle-kubernetes-engine",
+      "date": "2026-02-02",
+      "summary": "Artificial Intelligence and Machine Learning workloads are grounded in established software engineering and infrastructure principles. While AI and ML lifecycles introduce new operational constraints, they still execute as workloads on compute, storage, and networking platforms, fitting naturally within familiar IaaS, PaaS, and SaaS delivery models (AI is still a workload somewhere)."
+    },
+    {
+      "title": "Bringing OSS runtime security to AWS: Falco integration with AWS Security Hub CSPM",
+      "url": "https://webflow.sysdig.com/blog/bringing-oss-runtime-security-to-aws-falco-integration-with-aws-security-hub-cspm",
+      "date": "2026-01-29",
+      "summary": "Security in cloud-native environments starts with knowing what is happening at runtime. With containers, usually orchestrated by Kubernetes, powering modern applications, from AI-driven workloads to traditional services, teams must maintain visibility into ephemeral containers that may exist for seconds or run for hours. This is where runtime security becomes essential, and where Falco fills a critical gap."
+    },
+    {
+      "title": "Our customers have spoken: Sysdig rated a Strong Performer in Gartner\u00ae Voice of the Customer for Cloud-Native Application Protection Platforms",
+      "url": "https://webflow.sysdig.com/blog/sysdig-rated-a-strong-performer-in-gartner-voice-of-the-customer-for-cloud-native-application-protection-platforms",
+      "date": "2026-01-22",
+      "summary": "We\u2019re proud to announce that Sysdig\u2019s customers continue to love our work, which we believe has led to us being recognized as a Strong Performer in the Gartner\u00ae Voice of the Customer for Cloud-Native Application Protection Platforms."
+    },
+    {
+      "title": "Protecting sensitive business data in preparation for the organization's Gen AI",
+      "url": "https://webflow.sysdig.com/blog/protecting-sensitive-business-data-in-preparation-for-the-organizations-gen-ai",
+      "date": "2026-01-21",
+      "summary": "As organizations prepare to deploy generative AI tools like Microsoft Copilot and Google Gemini, those responsible for safeguarding sensitive data face the near-impossible task of inventorying risks and presenting actionable recommendations."
+    },
+    {
+      "title": "VoidLink threat analysis: Sysdig discovers C2-compiled kernel rootkits",
+      "url": "https://webflow.sysdig.com/blog/voidlink-threat-analysis-sysdig-discovers-c2-compiled-kernel-rootkits",
+      "date": "2026-01-16",
+      "summary": ""
+    },
+    {
+      "title": "AI is still a workload: A practical guide to securing AI workloads",
+      "url": "https://webflow.sysdig.com/blog/ai-is-still-a-workload-a-practical-guide-to-securing-ai-workloads",
+      "date": "2026-01-14",
+      "summary": "AI may look like magic, but behind the scenes, it is still code running on servers. As such, it needs to be secured like any other workload.In this article, we'll evaluate the security risks associated with three different approaches to using AI: an employee utilizing an LLM like ChatGPT, a company that offers a chatbot as part of its product, and a company that trains its own model from scratch."
+    },
+    {
+      "title": "How threat actors are using self-hosted GitHub Actions runners as backdoors",
+      "url": "https://webflow.sysdig.com/blog/how-threat-actors-are-using-self-hosted-github-actions-runners-as-backdoors",
+      "date": "2026-01-13",
+      "summary": "Using Shai-Hulud as a case study, explore how attackers can abuse GitHub's self-hosted runner infrastructure to establish persistent remote access."
+    },
+    {
+      "title": "How Sysdig Sage delivers AI-powered, real-world vulnerability management",
+      "url": "https://webflow.sysdig.com/blog/how-sysdig-sage-delivers-ai-powered-real-world-vulnerability-management",
+      "date": "2026-01-07",
+      "summary": "Sysdig Sage transforms vulnerability management with AI-powered prioritization, real runtime context, and step-by-step remediation guidance\u2014so teams can focus on real risk and fix what matters faster."
+    },
+    {
+      "title": "Security briefing: December 2025",
+      "url": "https://webflow.sysdig.com/blog/security-briefing-december-2025",
+      "date": "2026-01-06",
+      "summary": "December is often a time of slowdown, but for security teams it\u2019s prime time for attackers. As 2025 closed, defenders faced maximum-severity vulnerabilities, resurging state-sponsored malware, and active exploitation across cloud and application stacks. This month\u2019s briefing covers React2Shell, BRICKSTORM, MongoBleed, and emerging nation-state tradecraft that reinforced a familiar lesson: attackers don\u2019t take holidays, and resilience can\u2019t either."
+    },
+    {
+      "title": "Top 10 ways to get breached in 2026",
+      "url": "https://webflow.sysdig.com/blog/top-10-ways-to-get-breached-in-2026",
+      "date": "2025-12-18",
+      "summary": "This is not the movies. Your typical breach doesn\u2019t begin with a Hollywood-esque hacking plot. It\u2019s a bit more dull than that: a bad config, a link that looked legit enough, or an overpermissioned account."
+    },
+    {
+      "title": "EtherRAT dissected: How a React2Shell implant delivers 5 payloads through blockchain C2",
+      "url": "https://webflow.sysdig.com/blog/etherrat-dissected-how-a-react2shell-implant-delivers-5-payloads-through-blockchain-c2",
+      "date": "2025-12-16",
+      "summary": "On December 8, the Sysdig Threat Research Team (TRT) reported that a possible North Korean-linked actor had deployed EtherRAT, a novel Ethereum-based implant, in React2Shell attacks. The malware goes beyond other React2Shell cryptomining attacks, blending command and control (C2) traffic into blockchain activity and aggressively harvesting credentials. Additionally, this blog marks the first time the React2Shell exploit has been publicly documented in active malware."
+    },
+    {
+      "title": "Introducing runtime file integrity monitoring and response with Sysdig FIM",
+      "url": "https://webflow.sysdig.com/blog/introducing-runtime-file-integrity-monitoring-and-response-with-sysdig-fim",
+      "date": "2025-12-16",
+      "summary": "Traditional file integrity monitoring (FIM) tools were not built for Kubernetes, containers, or cloud-scale environments. They rely on resource-heavy scans and alert on routine activity, often overwhelming security teams with noise and limited context. Agentless snapshot methods often fail to detect short-lived runtime changes or provide process-level forensic context."
+    },
+    {
+      "title": "How to detect multi-stage attacks with runtime behavioral analytics",
+      "url": "https://webflow.sysdig.com/blog/how-to-detect-multi-stage-attacks-with-runtime-behavioral-analytics",
+      "date": "2025-12-09",
+      "summary": "Detecting malicious behavior in cloud-native environments can be a tedious, error-prone process, especially without tooling purpose-built for the cloud. Because of this, teams often face a flood of alerts, many of which turn out to be frustrating false positives. Existing tools struggle to track attacker behavior across ephemeral infrastructure, leading to fragmented detections that miss the bigger picture. The result? Teams risk overlooking complex, multi-step attacks, and when they do respond, it\u2019s often too late or an incomplete response."
+    },
+    {
+      "title": "EtherRAT: DPRK uses novel Ethereum implant in React2Shell attacks",
+      "url": "https://webflow.sysdig.com/blog/etherrat-dprk-uses-novel-ethereum-implant-in-react2shell-attacks",
+      "date": "2025-12-08",
+      "summary": "Sysdig Threat Research analyzes EtherRAT, a DPRK-linked Ethereum C2 implant exploiting React2Shell with multi-vector Linux persistence and evasion techniques."
+    },
+    {
+      "title": "Detecting React2Shell: The maximum-severity RCE vulnerability affecting React Server Components and Next.js",
+      "url": "https://webflow.sysdig.com/blog/detecting-react2shell",
+      "date": "2025-12-05",
+      "summary": "On December 3, 025, the React Team disclosed CVE-2025-55182, a critical unauthenticated remote code execution (RCE) vulnerability in React Server Components (RSCs). Dubbed \"React2Shell\", this maximum-severity flaw (CVSS 10.0) allows for potentially malicious code execution with a single crafted HTTP request. Next.js, which can be impacted downstream by React2Shell, has assigned CVE-2025-66478 to track its exposure."
+    },
+    {
+      "title": "5 steps to securing AI workloads",
+      "url": "https://webflow.sysdig.com/blog/5-steps-to-securing-ai-workloads",
+      "date": "2025-12-05",
+      "summary": "In the past year alone, the number of artificial intelligence (AI) packages running in workloads grew by almost 500%. Which\u2026"
+    },
+    {
+      "title": "The rise of AI agents: How autonomous AI Is transforming cloud security",
+      "url": "https://webflow.sysdig.com/blog/the-rise-of-ai-agents-how-autonomous-ai-is-transforming-cloud-security",
+      "date": "2025-12-04",
+      "summary": "Artificial intelligence (AI) has dominated conversations across the tech industry \u2014 from writing code and content to generating chart-topping music. Much of the early excitement centered around Generative AI, the technology behind large language models (LLMs) like ChatGPT and Claude that produce human-like text, images, and even code."
+    },
+    {
+      "title": "Kubernetes 1.35 - New security features",
+      "url": "https://webflow.sysdig.com/blog/kubernetes-1-35-whats-new",
+      "date": "2025-12-02",
+      "summary": "Kubernetes 1.35 will be released soon, bringing 17 changes to its security features."
+    },
+    {
+      "title": "The Urgency of Securing AI Workloads for CISOs",
+      "url": "https://webflow.sysdig.com/blog/urgency-of-securing-ai-workloads-for-cisos",
+      "date": "2025-12-02",
+      "summary": "As generative AI rapidly transforms business operations, CISOs and security leaders must adapt their strategies to keep pace with emerging risks. The constant pressures of speed, automation, and algorithmic decision-making now define the modern threat landscape. To remain resilient, organizations must adopt a structured approach to evaluating new technologies\u2014engaging business stakeholders, conducting baseline threat modeling, scrutinizing telemetry gaps, and documenting risks rigorously. By pairing critical thinking with proactive security practices, leaders can ensure their enterprises harness the benefits of GenAI while mitigating its expanding attack surface."
+    },
+    {
+      "title": "Security briefing: November 2025",
+      "url": "https://webflow.sysdig.com/blog/security-briefing-november-2025",
+      "date": "2025-12-01",
+      "summary": "November is a month for reminiscing \u2014 looking back over the last 11 months to take stock of what\u2019s been done in anticipation of what\u2019s to come. This month, we\u2019re reminded that \u201cnew\u201d threats are not always novel; sometimes they emerge from the past, repurposed by threat actors who never stop innovating."
+    },
+    {
+      "title": "Quantum and the cloud: Science fiction turned security strategy",
+      "url": "https://webflow.sysdig.com/blog/quantum-and-the-cloud-science-fiction-turned-security-strategy",
+      "date": "2025-11-25",
+      "summary": "Someone walks into a room and says, \u2018quantum computing\u2019 and everyone else says, \u2018huh?\u2019 It\u2019s simply a difficult concept to understand; however, the internet, containers, and cloud computing were once difficult to comprehend too. Quantum computing is a different way to process information\u2026but it works exponentially faster than \u201cnormal\u201d or classical computers."
+    },
+    {
+      "title": "Cloud security, the right way: What the industry should demand (and why \"good enough\" isn't)",
+      "url": "https://webflow.sysdig.com/blog/cloud-security-the-right-way-what-the-industry-should-demand-and-why-good-enough-isnt",
+      "date": "2025-11-24",
+      "summary": "Cloud security has a \u201cgood enough\u201d problem. As threats accelerate and teams struggle with fragmented tools, it\u2019s clear the industry needs a new standard\u2014one built on agentic AI, open innovation, and real-time runtime insights. This is what cloud security, done the right way, truly looks like."
+    },
+    {
+      "title": "Return of the Shai-Hulud worm affects over 25,000 GitHub repositories",
+      "url": "https://webflow.sysdig.com/blog/return-of-the-shai-hulud-worm-affects-over-25-000-github-repositories",
+      "date": "2025-11-24",
+      "summary": "A newly evolved variant of the Shai-Hulud supply-chain worm is rapidly spreading through backdoored NPM packages, compromising nearly 1,000 packages and leaking credentials from more than 25,000 GitHub repositories since November 24, 2025. This version executes during NPM\u2019s pre-install phase, using a lightweight dropper to install the Bun runtime and launch a 10-MB obfuscated payload that hunts for cloud secrets, GitHub tokens, and NPM credentials. When GitHub access is available, the worm creates a covert public repository with a randomly generated name and the description \u201cSha1-Hulud: The Second Coming,\u201d then installs a hidden self-hosted GitHub Actions runner on the victim\u2019s machine to maintain persistence and enable remote code execution. It also injects malicious workflows into accessible GitHub projects to extract repository secrets, exfiltrates all findings to the attacker-controlled repository, and removes evidence of its activity. If no NPM token is found, the malware becomes destructive, securely wiping all writable files in the user\u2019s home directory."
+    },
+    {
+      "title": "Detecting CVE-2024-1086: The decade-old Linux kernel vulnerability that\u2019s being actively exploited in ransomware campaigns",
+      "url": "https://webflow.sysdig.com/blog/detecting-cve-2024-1086-the-decade-old-linux-kernel-vulnerability-thats-being-actively-exploited-in-ransomware-campaigns",
+      "date": "2025-11-20",
+      "summary": "CVE-2024-1086, a decade-old Linux kernel vulnerability, is now being actively exploited in ransomware campaigns. This blog breaks down how attackers are weaponizing the flaw to gain root privileges, why so many systems remain exposed, and how Sysdig can help you detect exploitation before damage is done."
+    },
+    {
+      "title": "What\u2019s old is new again: How to demystify AI security with AIBOMs",
+      "url": "https://webflow.sysdig.com/blog/whats-old-is-new-again-how-to-demystify-ai-security-with-aiboms",
+      "date": "2025-11-20",
+      "summary": "Just as a software bill of materials (SBOM) helps expose hidden risks in traditional applications, an AI bill of materials (AIBOM) brings clarity to AI systems. An AIBOM documents the full AI infrastructure of an organization, from GPUs and containers to datasets and APIs, giving security leaders and their teams a roadmap to find and assess risks and enforce accountability."
+    },
+    {
+      "title": "Securing Kubernetes with agentic cloud security",
+      "url": "https://webflow.sysdig.com/blog/securing-kubernetes-with-agentic-cloud-security",
+      "date": "2025-11-19",
+      "summary": "Kubernetes is the foundation for modern cloud-native applications \u2014 but it also introduces scale and complexity that shift security requirements. Infrastructure and containers spin up and down in seconds. Workloads move dynamically across clusters. Misconfigurations and zero-days can emerge faster than teams can react."
+    },
+    {
+      "title": "How agentic cloud security reduces real risks",
+      "url": "https://webflow.sysdig.com/blog/how-agentic-cloud-security-reduces-real-risks",
+      "date": "2025-11-17",
+      "summary": ""
+    },
+    {
+      "title": "Hunting reverse shells: How the Sysdig Threat Research Team builds smarter detection rules",
+      "url": "https://webflow.sysdig.com/blog/hunting-reverse-shells-how-the-sysdig-threat-research-team-builds-smarter-detection-rules",
+      "date": "2025-11-13",
+      "summary": "The Sysdig Threat Research Team (TRT) continuously analyzes attacker tactics and techniques, transforming those insights into effective detection rules for Sysdig customers and open source Falco users."
+    },
+    {
+      "title": "Shifting left with AI and MCP: Sysdig + Amazon Q Developer",
+      "url": "https://webflow.sysdig.com/blog/shifting-left-with-ai-and-mcp-sysdig-amazon-q-developer",
+      "date": "2025-11-12",
+      "summary": "Nowadays, with the growth of AI usage, companies are seeing an increase of Model Context Protocol (MCP) servers due to the requirements for integration with LLMs. With the recent launch of the Sysdig MCP server, we have been working with different use cases, and as expected, the possibilities are endless."
+    },
+    {
+      "title": "How Falco and Stratoshark close the gap between open source runtime detection and deep forensic analysis",
+      "url": "https://webflow.sysdig.com/blog/how-falco-and-stratoshark-close-the-gap-between-open-source-runtime-detection-and-deep-forensic-analysis",
+      "date": "2025-11-10",
+      "summary": "Modern security teams often face a tough choice: act fast or act with confidence. With the new integration between Falco and Stratoshark, that tradeoff disappears. Falco\u2019s real-time detections now trigger automatic forensic captures, while Stratoshark provides deep, byte-level visibility into system activity. Together, they deliver an open source workflow that connects alerts to evidence in seconds\u2014helping teams detect, investigate, and respond with unmatched clarity and speed."
+    },
+    {
+      "title": "Investigating security issues with ChatGPT and the GitHub MCP server",
+      "url": "https://webflow.sysdig.com/blog/investigating-security-issues-with-chatgpt-and-the-github-mcp-server",
+      "date": "2025-11-07",
+      "summary": "Model Context Protocol (MCP) is a revolution in the AI landscape, providing a de facto standard for integrating tools and services with AI large language models (LLMs) like ChatGPT."
+    },
+    {
+      "title": "New runc vulnerabilities allow container escape: CVE-2025-31133, CVE-2025-52565, CVE-2025-52881",
+      "url": "https://webflow.sysdig.com/blog/runc-container-escape-vulnerabilities",
+      "date": "2025-11-06",
+      "summary": "Three new runc vulnerabilities could let attackers escape containers and gain host access. Sysdig TRT explains the risks, affected versions, and how to detect and mitigate them with Sysdig Secure and Falco."
+    },
+    {
+      "title": "Harden your LLM security with OWASP",
+      "url": "https://webflow.sysdig.com/blog/owasp-top-10-for-llms",
+      "date": "2025-11-05",
+      "summary": "Foundationally, the OWASP Top 10 for Large Language Model (LLMs) applications was designed to educate software developers, security architects, and\u2026"
+    },
+    {
+      "title": "Security briefing: October 2025",
+      "url": "https://webflow.sysdig.com/blog/security-briefing-october-2025",
+      "date": "2025-11-03",
+      "summary": "October, also known in our community as Cybersecurity Awareness Month, was marked with a chilling reminder: pay attention to resilience and response speed."
+    },
+    {
+      "title": "How agentic AI is changing cloud security",
+      "url": "https://webflow.sysdig.com/blog/how-agentic-ai-is-changing-cloud-security",
+      "date": "2025-10-30",
+      "summary": "Keeping up with cloud security has never been harder. That\u2019s why organizations are now looking to modern, agentic AI solutions to relieve the pressure on teams that are stretched thin."
+    },
+    {
+      "title": "Kubernetes Incident Response: Detect, investigate, and contain in under 10 minutes",
+      "url": "https://webflow.sysdig.com/blog/kubernetes-incident-response-detect-investigate-and-contain-in-under-10-minutes",
+      "date": "2025-10-23",
+      "summary": "In modern Kubernetes environments, detecting threats is only half the battle. What truly matters is how quickly and effectively you can respond, should a threat be detected. With workloads spinning up and down in seconds, and containers often leaving behind little trace, the window for meaningful action is narrow."
+    },
+    {
+      "title": "Sysdig recognized as a Cloud Security Leader in Latio Tech Cloud Security Market Report",
+      "url": "https://webflow.sysdig.com/blog/sysdig-recognized-as-a-cloud-security-leader-in-latio-tech-cloud-security-market-report",
+      "date": "2025-10-16",
+      "summary": "Sysdig has been recognized as a Cloud Security Leader in the 2025 Latio Tech Cloud Security Market Report for pioneering a new standard in cloud defense. As threats accelerate with automation and AI, Sysdig stands out with a runtime-first, AI-guided approach that focuses on real risk, not noise. Built on open innovation and deep runtime visibility, Sysdig empowers teams to act in real time, strengthen collaboration, and protect hybrid environments with clarity and confidence."
+    },
+    {
+      "title": "AI echolocation of cloud risks using Sysdig & Snyk MCP servers",
+      "url": "https://webflow.sysdig.com/blog/ai-echolocation-of-cloud-risks-using-sysdig-and-snyk-mcp-servers",
+      "date": "2025-10-15",
+      "summary": "Modern security teams face a constant race against evolving threats, but context is the key to staying ahead. By combining the analytical depth of Snyk\u2019s static code insights with Sysdig\u2019s real-time cloud intelligence through Model Context Protocol (MCP) and AI, defenders can move from reactive patching to proactive understanding. This \u201cAI echolocation\u201d approach bridges the gap between code and cloud, allowing vulnerabilities to be viewed in their true runtime context. The result is a powerful shift in focus\u2014from managing endless lists of theoretical risks to identifying and mitigating the threats that truly matter."
+    },
+    {
+      "title": "Sysdig MCP Server: Bridging AI and cloud security insights",
+      "url": "https://webflow.sysdig.com/blog/sysdig-mcp-server-bridging-ai-and-cloud-security-insights",
+      "date": "2025-10-15",
+      "summary": "Discover how the Sysdig MCP Server bridges AI and cloud security, empowering large language models like ChatGPT to interact with Sysdig APIs. Explore real-world examples of intelligent automation, dynamic reporting, and autonomous threat response powered by the Model Context Protocol (MCP)."
+    },
+    {
+      "title": "Understanding CVE-2025-49844: \u201cRediShell\u201d Critical Remote Code Execution in Redis",
+      "url": "https://webflow.sysdig.com/blog/cve-2025-49844-redishell",
+      "date": "2025-10-07",
+      "summary": "On October 3, 2025, CVE-2025-49844 was released, describing a critical remote code execution vulnerability in the widely used open-source in-memory data store, Redis. With a CVSS score of 10.0, this issue is very severe and should be addressed quickly."
+    },
+    {
+      "title": "How Sysdig secures your containers and Kubernetes",
+      "url": "https://webflow.sysdig.com/blog/how-sysdig-secures-your-containers-and-kubernetes",
+      "date": "2025-10-07",
+      "summary": "Most security tools weren\u2019t designed for cloud-native environments. They miss container-specific risks, overwhelm teams with alerts, or force organizations to stitch together multiple tools. Sysdig takes a different approach."
+    },
+    {
+      "title": "Sysdig Security Briefing: September 2025",
+      "url": "https://webflow.sysdig.com/blog/sysdig-security-briefing-september-2025",
+      "date": "2025-10-06",
+      "summary": "Last month, the NPM ecosystem was ablaze with hundreds of NPM packages compromised. After the first half of the month, every security researcher seemed to be hunting for issues in the NPM ecosystem, trying to find the next viral story."
+    },
+    {
+      "title": "Cloud security, the right way: The 3 pillars of real-time defense",
+      "url": "https://webflow.sysdig.com/blog/cloud-security-the-right-way-the-3-pillars-of-real-time-defense",
+      "date": "2025-10-06",
+      "summary": "At Sysdig, cloud security, the right way, is built on three pillars: agentic AI, open innovation, and runtime insights. Together, these pillars deliver real-time defense that accelerates the innovation in the cloud."
+    },
+    {
+      "title": "Open source spotlight: Bringing web application security to Falco with Falcoya's Nginx plugin",
+      "url": "https://webflow.sysdig.com/blog/bringing-web-application-security-to-falco-with-falcoyas-nginx-plugin",
+      "date": "2025-10-02",
+      "summary": "Many organizations rely on Falco as their primary solution for runtime cloud security across Linux hosts, containers, and Kubernetes environments. However, these same teams have historically been unable to use Falco for their web application security."
+    },
+    {
+      "title": "Malicious NPM packages: Are you exposed?",
+      "url": "https://webflow.sysdig.com/blog/malicious-npm-packages-are-you-exposed",
+      "date": "2025-09-25",
+      "summary": "Earlier this week, a widespread NPM supply chain attack was discovered, leveraging a novel worm known as Shai-Hulud that rapidly infected hundreds of packages. The Sysdig Threat Research Team (TRT) has been monitoring the worm\u2019s progress to ensure customers can quickly understand their exposure and respond with confidence."
+    },
+    {
+      "title": "AI for SOC teams: 5 cloud security prompts to start your day with Sysdig Sage\u2122",
+      "url": "https://webflow.sysdig.com/blog/ai-for-soc-teams-5-cloud-security-prompts-to-start-your-day-with-sysdig-sage",
+      "date": "2025-09-19",
+      "summary": "Discover 5 AI prompts to cut through cloud security noise with Sysdig Sage. Prioritize alerts, find risks fast, and boost team efficiency every day."
+    },
+    {
+      "title": "Shai-Hulud: The novel self-replicating worm infecting hundreds of NPM packages",
+      "url": "https://webflow.sysdig.com/blog/shai-hulud-the-novel-self-replicating-worm-infecting-hundreds-of-npm-packages",
+      "date": "2025-09-16",
+      "summary": "A new supply chain attack against the NPM repository is using novel, self-propagating malware (also known as a worm) to continue spreading itself."
+    },
+    {
+      "title": "ZynorRAT technical analysis: Reverse engineering a novel, Turkish Go-based RAT",
+      "url": "https://webflow.sysdig.com/blog/zynorrat-technical-analysis-reverse-engineering-a-novel-turkish-go-based-rat",
+      "date": "2025-09-09",
+      "summary": "During a recent threat hunting exercise, the Sysdig Threat Research Team (TRT) identified a new sample we have dubbed ZynorRAT. It is a Go-based Remote Access Trojan (RAT) that provides a full suite of custom command and control (C2) capabilities for both Linux and Windows."
+    },
+    {
+      "title": "Modern vulnerability management, built for the cloud",
+      "url": "https://webflow.sysdig.com/blog/modern-vulnerability-management-built-for-the-cloud",
+      "date": "2025-09-05",
+      "summary": "Sysdig combines runtime insights, cloud context, and AI-powered remediation so teams can cut through the noise and manage vulnerabilities with confidence."
+    },
+    {
+      "title": "Build your AWS incident response playbook with open source tools",
+      "url": "https://webflow.sysdig.com/blog/build-your-aws-incident-response-playbook-with-open-source-tools",
+      "date": "2025-08-22",
+      "summary": ""
+    },
+    {
+      "title": "2025 Gartner\u00ae CNAPP Market Guide: Runtime visibility is no longer optional",
+      "url": "https://webflow.sysdig.com/blog/2025-gartner-cnapp-market-guide",
+      "date": "2025-08-07",
+      "summary": ""
+    },
+    {
+      "title": "Threat hunting with Sysdig: Uncovering \u201cIngressNightmare\u201d",
+      "url": "https://webflow.sysdig.com/blog/threat-hunting-with-sysdig-uncovering-ingressnightmare",
+      "date": "2025-08-06",
+      "summary": "We recently shared a high-level look at our new Sysdig Secure data security findings feature, highlighting how it helps security leaders reveal data exposure and contextualize threats. That post covered the \u201cwhat\u201d and \u201cwhy\u201d of the feature. In this post, we\u2019ll take a closer look at the \u201chow.\u201d"
+    },
+    {
+      "title": "Open source spotlight: From alerts to action with AI-powered Falco Vanguard",
+      "url": "https://webflow.sysdig.com/blog/open-source-spotlight-from-alerts-to-action-with-ai-powered-falco-vanguard",
+      "date": "2025-08-06",
+      "summary": "We recently shared a high-level look at our new Sysdig Secure data security findings feature, highlighting how it helps security leaders reveal data exposure and contextualize threats. That post covered the \u201cwhat\u201d and \u201cwhy\u201d of the feature. In this post, we\u2019ll take a closer look at the \u201chow.\u201d"
+    },
+    {
+      "title": "From triage to action: How Sysdig\u2019s agentic cloud security platform slashes noise and accelerates remediation",
+      "url": "https://webflow.sysdig.com/blog/from-triage-to-action-agentic-cloud-security",
+      "date": "2025-08-05",
+      "summary": "We recently shared a high-level look at our new Sysdig Secure data security findings feature, highlighting how it helps security leaders reveal data exposure and contextualize threats. That post covered the \u201cwhat\u201d and \u201cwhy\u201d of the feature. In this post, we\u2019ll take a closer look at the \u201chow.\u201d"
+    },
+    {
+      "title": "The vision comes to life: Agentic cloud security with Sysdig Sage\u2122",
+      "url": "https://webflow.sysdig.com/blog/agentic-cloud-security-with-sysdig-sage",
+      "date": "2025-08-05",
+      "summary": ""
+    },
+    {
+      "title": "Data security findings: A technical deep dive",
+      "url": "https://webflow.sysdig.com/blog/data-security-findings-a-technical-deep-dive",
+      "date": "2025-07-31",
+      "summary": "We recently shared a high-level look at our new Sysdig Secure data security findings feature, highlighting how it helps security leaders reveal data exposure and contextualize threats. That post covered the \u201cwhat\u201d and \u201cwhy\u201d of the feature. In this post, we\u2019ll take a closer look at the \u201chow.\u201d"
+    },
+    {
+      "title": "Connecting runtime to source: Sysdig and Semgrep integration",
+      "url": "https://webflow.sysdig.com/blog/connecting-runtime-to-source-sysdig-and-semgrep-integration",
+      "date": "2025-07-29",
+      "summary": ""
+    },
+    {
+      "title": "Fix what matters, faster: How Sysdig and Semgrep are unifying security without silos \u2013 from code to runtime",
+      "url": "https://webflow.sysdig.com/blog/fix-what-matters-faster-how-sysdig-and-semgrep-are-unifying-security-without-silos-from-code-to-runtime",
+      "date": "2025-07-29",
+      "summary": ""
+    },
+    {
+      "title": "Defending sensitive data with Sysdig Secure",
+      "url": "https://webflow.sysdig.com/blog/defending-sensitive-data-with-sysdig-secure",
+      "date": "2025-07-28",
+      "summary": ""
+    },
+    {
+      "title": "Redefining cloud security, the right way",
+      "url": "https://webflow.sysdig.com/blog/redefining-cloud-security-the-right-way",
+      "date": "2025-07-28",
+      "summary": ""
+    },
+    {
+      "title": "Join the movement: The Sysdig Open Source Community is live",
+      "url": "https://webflow.sysdig.com/blog/join-the-movement-open-source-community-is-live",
+      "date": "2025-07-28",
+      "summary": ""
+    },
+    {
+      "title": "A smarter, safer cloud in the age of AI",
+      "url": "https://webflow.sysdig.com/blog/a-smarter-safer-cloud-in-the-age-of-ai",
+      "date": "2025-07-28",
+      "summary": ""
+    },
+    {
+      "title": "Unifying detection and response: Sysdig + Cortex XSOAR for security at cloud speed",
+      "url": "https://webflow.sysdig.com/blog/unifying-detection-and-response-sysdig-cortex-xsoar-for-security-at-cloud-speed",
+      "date": "2025-07-25",
+      "summary": "Security teams waste precious time jumping between tools and stitching alerts together by hand. In fast-moving cloud environments, where workloads are ephemeral and scale shifts constantly, these delays drive up MTTR and create dangerous blind spots. Delays during an active threat amplify risk with every passing minute."
+    },
+    {
+      "title": "The future of security is open, and it needs a unified hub: The Sysdig Open Source Community is here",
+      "url": "https://webflow.sysdig.com/blog/the-sysdig-open-source-community-is-here",
+      "date": "2025-07-09",
+      "summary": "The cloud evolution has shown no signs of slowing down, and the last few years have been no exception. AI\u2026"
+    },
+    {
+      "title": "CVE-2025-53104: Command injection via GitHub Actions workflow in gluestack-ui",
+      "url": "https://webflow.sysdig.com/blog/cve-2025-53104-command-injection-via-github-actions-workflow-in-gluestack-ui",
+      "date": "2025-07-07",
+      "summary": "The Sysdig Threat Research Team (TRT) has discovered a critical vulnerability in the GitHub repository gluestack/gluestack-ui, designated as CVE-2025-53104, which\u2026"
+    },
+    {
+      "title": "Why MCP server security is critical for AI-driven enterprises",
+      "url": "https://webflow.sysdig.com/blog/why-mcp-server-security-is-critical-for-ai-driven-enterprises",
+      "date": "2025-07-02",
+      "summary": "Model Context Protocol (MCP) server security A new, largely invisible backdoor has opened in the enterprise. It doesn\u2019t look like\u2026"
+    },
+    {
+      "title": "What\u2019s new in Sysdig \u2014 June 2025",
+      "url": "https://webflow.sysdig.com/blog/whats-new-in-sysdig-june-2025",
+      "date": "2025-06-26",
+      "summary": "Sysdig continues to evolve this June with major advancements in AI-driven security insights, threat management, incident response, and securing cutting-edge\u2026"
+    },
+    {
+      "title": "AI-powered CNAPP with Sysdig Sage\u2122",
+      "url": "https://webflow.sysdig.com/blog/ai-powered-cnapp-with-sysdig-sage",
+      "date": "2025-06-25",
+      "summary": "Securing large and complex cloud environments takes a lot of know-how and effort. Much has been written about the shortage\u2026"
+    },
+    {
+      "title": "Revolutionizing Cybersecurity Search with Sysdig Sage\u2122",
+      "url": "https://webflow.sysdig.com/blog/introducing-sysdig-sage-for-search",
+      "date": "2025-06-24",
+      "summary": "We are excited to introduce Sysdig Sage for Search, our AI-based graph search assistant, which enriches Sysdig\u2019s AI capabilities after\u2026"
+    },
+    {
+      "title": "Sysdig Threat Bulletin: Iranian Cyber Threats",
+      "url": "https://webflow.sysdig.com/blog/sysdig-threat-bulletin-iranian-cyber-threats",
+      "date": "2025-06-23",
+      "summary": "Following the June 22, 2025 United States strikes on Iranian nuclear infrastructure, the Sysdig Threat Research Team (TRT) anticipates a\u2026"
+    },
+    {
+      "title": "The end of the prioritization-only era: Vulnerability management needs action",
+      "url": "https://webflow.sysdig.com/blog/end-of-priorization-only-era-vulnerability-management-needs-action",
+      "date": "2025-06-23",
+      "summary": "Security teams are drowning in vulnerability alerts. Every day seemingly brings another wave of CVEs, each demanding attention or flagged\u2026"
+    },
+    {
+      "title": "Dangerous by default: Insecure GitHub Actions found in MITRE, Splunk, and other open source repositories",
+      "url": "https://webflow.sysdig.com/blog/insecure-github-actions-found-in-mitre-splunk-and-other-open-source-repositories",
+      "date": "2025-06-17",
+      "summary": "Since its founding, the Sysdig Threat Research Team (TRT) has been committed to making the world a safer, more informed\u2026"
+    },
+    {
+      "title": "Falco is now available as an Amazon EKS add-on",
+      "url": "https://webflow.sysdig.com/blog/falco-amazon-eks-add-on",
+      "date": "2025-06-17",
+      "summary": "We&#8217;re excited to announce that Falco, the CNCF graduated runtime security project, is now officially available as an AWS-validated Amazon\u2026"
+    },
+    {
+      "title": "Introducing intelligent vulnerability remediation, powered by Sysdig Sage\u2122",
+      "url": "https://webflow.sysdig.com/blog/introducing-intelligent-vulnerability-remediation-powered-by-sysdig-sage",
+      "date": "2025-06-16",
+      "summary": "Vulnerability management has come a long way, but many teams are still stuck guessing. Even if you\u2019re able to sort\u2026"
+    },
+    {
+      "title": "Beyond prioritization: Accelerating vulnerability remediation at the source with AI and runtime context",
+      "url": "https://webflow.sysdig.com/blog/beyond-prioritization-accelerating-vulnerability-remediation-at-the-source-with-ai-and-runtime-context",
+      "date": "2025-06-16",
+      "summary": "We\u2019ve said it many times before, and for good reason: Cloud attacks happen in 10 minutes or less. It\u2019s a\u2026"
+    }
+  ]
+}

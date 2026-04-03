@@ -1,6 +1,42 @@
 {
-  "cached_at": "2026-04-01T23:19:58.881667+00:00",
+  "cached_at": "2026-04-03T04:22:56.781294+00:00",
   "entries": [
+    {
+      "title": "Geopolitics, AI, and Cybersecurity: Insights From RSAC 2026",
+      "url": "https://www.darkreading.com/cybersecurity-operations/geopolitics-ai-cybersecurity-insights-rsac-2026",
+      "date": "2026-04-02",
+      "summary": "AI-driven threats, global leadership shifts, and the future of cybersecurity in a rapidly evolving landscape were among the discussions at RSAC 2026 Conference."
+    },
+    {
+      "title": "Not Toying Around: Hasbro Attack May Take 'Weeks' to Remediate",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/toying-around-hasbro-attack-remediate",
+      "date": "2026-04-02",
+      "summary": "The company's 8-K filing notes &quot;unauthorized access&quot; and that it's activated business continuity plans and taken some systems offline."
+    },
+    {
+      "title": "Security Bosses Are All-In on AI. Here's Why",
+      "url": "https://www.darkreading.com/cybersecurity-operations/security-bosses-all-in-ai",
+      "date": "2026-04-02",
+      "summary": "CISOs are bullish on AI and have big plans to roll out future tools. We talk to Reddit CISO Frederick Lee and leading analyst Dave Gruber about how AI is working out in the real world, as well as its future promise."
+    },
+    {
+      "title": "RSAC 2026: AI Dominates, But Community Remains Key to Security",
+      "url": "https://www.darkreading.com/cybersecurity-operations/rsac-2026-ai-dominates-community",
+      "date": "2026-04-02",
+      "summary": "As AI took center stage at this year's conference, experts debated automation, oversight and the evolving role of human intelligence in cybersecurity \u2014 despite the US government's notable absence."
+    },
+    {
+      "title": "Bank Trojan 'Casbaneiro' Worms Through Latin America",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/bank-trojan-casbaneiro-worms-latin-america",
+      "date": "2026-04-02",
+      "summary": "Augmented Marauder's multipronged banking-Trojan cyber campaigns are targeting Spanish speakers, evading detection, and replicating rapidly."
+    },
+    {
+      "title": "Ransomware Will Hit Hospitals. Rehearsals Are Key to Defense",
+      "url": "https://www.darkreading.com/cybersecurity-operations/ransomware-hospitals-preparation-key-defense",
+      "date": "2026-04-01",
+      "summary": "A chief medical information officer describes what hospitals face when they inevitably suffer a ransomware attack\u2014whether it leads to short- or long-term outages."
+    },
     {
       "title": "LatAm's Self-Taught Cyber Talent Overlooked Amid Cyberattack Glut",
       "url": "https://www.darkreading.com/remote-workforce/latam-cyber-talent-overlooked-cyberattack-glut",
@@ -264,42 +300,6 @@
       "url": "https://www.darkreading.com/application-security/trivy-supply-chain-attack-targets-ci-cd-secrets",
       "date": "2026-03-23",
       "summary": "A threat actor used the open source security tool to deploy an infostealer into CI/CD workflows and steal cloud credentials, SSH keys, tokens, and other sensitive secrets."
-    },
-    {
-      "title": "Ransomware's New Era: Moving at AI Speed",
-      "url": "https://www.darkreading.com/endpoint-security/ransomware-new-era-moving-ai-speed",
-      "date": "2026-03-23",
-      "summary": "Threat actors bypass security tools and use AI to launch faster ransomware attacks that exploit valid credentials and target data."
-    },
-    {
-      "title": "CISOs Debate Human Role in AI-Powered Security",
-      "url": "https://www.darkreading.com/application-security/cisos-debate-human-role-ai-powered-security",
-      "date": "2026-03-23",
-      "summary": "The idea of a &quot;human in the loop&quot; in AI deployment was challenged during a security executive panel at the RSAC 2026 Conference this week."
-    },
-    {
-      "title": "Attackers Hide Infostealer in Copyright Infringement Notices",
-      "url": "https://www.darkreading.com/cyberattacks-data-breaches/attackers-hide-infostealer-copyright-infringement-notices",
-      "date": "2026-03-23",
-      "summary": "A phishing campaign targeting healthcare, government, hospitality, and education sectors in various countries uses several evasion techniques to avoid detection."
-    },
-    {
-      "title": "Patch Now: Oracle's Fusion Middleware Has Critical RCE Flaw",
-      "url": "https://www.darkreading.com/vulnerabilities-threats/patch-oracle-fusion-middleware-rce-flaw",
-      "date": "2026-03-20",
-      "summary": "Attackers can execute arbitrary code without authentication if Oracle's Identity or Web Services Managers are exposed to the Web."
-    },
-    {
-      "title": "Cyber OpSec Fail: Beast Gang Exposes Ransomware Server",
-      "url": "https://www.darkreading.com/threat-intelligence/opsec-beast-gang-exposes-ransomware-server",
-      "date": "2026-03-20",
-      "summary": "Files on a central cloud server used by the ransomware group highlight a systematic, aggressive attack on network backups as a key TTP."
-    },
-    {
-      "title": "Interlock Ransomware Targets Cisco Enterprise Firewalls",
-      "url": "https://www.darkreading.com/threat-intelligence/interlock-ransomware-targets-cisco-enterprise-firewalls",
-      "date": "2026-03-20",
-      "summary": "The ransomware gang, known for double-extortion attacks, had access to a critical Cisco firewall vulnerability weeks before it was publicly disclosed."
     }
   ]
 }

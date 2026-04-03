@@ -1,17 +1,17 @@
 {
-  "cached_at": "2026-04-01T23:19:56.601581+00:00",
+  "cached_at": "2026-04-03T04:22:56.369185+00:00",
   "entries": [
     {
       "title": "Red Canary CFP tracker: April 2026",
       "url": "https://redcanary.com/blog/news-events/red-canary-cfp-tracker-april-2026/",
       "date": "2026-04-01",
-      "summary": "Red Canary's monthly roundup of upcoming security conferences and call for papers (CFP) submission deadlines"
+      "summary": "A monthly roundup of upcoming security conferences and call for papers (CFP) submission deadlines"
     },
     {
       "title": "Scarlet Goldfinch\u2019s year in ClickFix",
       "url": "https://redcanary.com/blog/threat-intelligence/scarlet-goldfinch-clickfix/",
       "date": "2026-03-26",
-      "summary": "How Scarlet Goldfinch ditched its fake updates lure and adopted ClickFix, or \"paste and run,\" in 2025 and beyond."
+      "summary": "Or how Scarlet Goldfinch learned to stop worrying and love paste and run"
     },
     {
       "title": "Intelligence Insights: March 2026",
@@ -23,7 +23,7 @@
       "title": "AI and browser threats stand out in the 2026 Threat Detection Report",
       "url": "https://redcanary.com/blog/threat-detection/2026-threat-detection-report/",
       "date": "2026-03-18",
-      "summary": "Our annual analysis brings you a year\u2019s worth of security operations insights, including how adversaries are both leveraging and targeting AI"
+      "summary": "Our annual analysis brings you a year\u2019s worth of security operations and intelligence insights, including how adversaries are both leveraging and targeting AI"
     },
     {
       "title": "Moving up the Assemblyline: Exposing malicious code in browser extensions",
@@ -35,13 +35,13 @@
       "title": "The RSAC 2026 Conference talks worth catching",
       "url": "https://redcanary.com/blog/news-events/rsac-2026/",
       "date": "2026-03-10",
-      "summary": "Threat modeling for AI supply chain risks, disrupting infostealers, and dumb ways to die: We combed through 600+ RSAC 2026 talks."
+      "summary": "Threat modeling for AI supply chain risks, disrupting infostealers, and dumb ways to die: We combed through 600+ RSAC talks to find a dozen we think are worth watching."
     },
     {
       "title": "Hunting for malicious OpenClaw AI in the modern enterprise",
       "url": "https://redcanary.com/blog/threat-detection/openclaw-ai/",
       "date": "2026-03-05",
-      "summary": "We deconstruct a threat hunt for malicious OpenClaw AI agents, outlining how we identify and migitate risks posed by unauthorized AI skills."
+      "summary": "We deconstruct a multi-step threat hunt for malicious OpenClaw AI agents, outlining our approach to identifying and mitigating risks posed by unauthorized AI skills."
     },
     {
       "title": "Breaking down a supply chain attack leveraging a malicious Google Workspace OAuth app",
@@ -53,13 +53,13 @@
       "title": "Red Canary CFP tracker: March 2026",
       "url": "https://redcanary.com/blog/news-events/red-canary-cfp-tracker-march-2026/",
       "date": "2026-03-02",
-      "summary": "Red Canary's monthly roundup of upcoming security conferences and calls for papers (CFP) submission deadlines"
+      "summary": "A monthly roundup of upcoming security conferences and calls for papers (CFP) submission deadlines"
     },
     {
       "title": "The million-dollar front door and the tailgater: Why strong auth could fail at SaaS session integrity",
       "url": "https://redcanary.com/blog/security-operations/saas-session-integrity/",
       "date": "2026-02-25",
-      "summary": "The protocol gap is real. Authentication proves identity once but remember that session protection must be continuous."
+      "summary": "Modern attackers are no longer trying to batter down your front door to your SaaS applications; they are simply waiting for you to unlock it, and then walking right in behind you"
     }
   ]
 }

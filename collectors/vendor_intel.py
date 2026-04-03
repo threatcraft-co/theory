@@ -6,6 +6,7 @@ Fetches and filters vendor threat intelligence articles for a specific actor.
 Pipeline:
   1. Load feed registry from config/feeds.yaml
   2. Fetch RSS/blog entries newer than THEORY_INTEL_LOOKBACK days
+     — feeds are fetched concurrently via ThreadPoolExecutor (no new deps)
   3. Filter articles that mention the actor or any of its aliases
   4. Score relevance (0-100): primary subject vs. brief mention
   5. Return ranked list of articles for the synthesis engine
@@ -16,7 +17,7 @@ Relevance scoring:
   30-59   Actor is mentioned in context (1-2 body mentions)
   0-29    Tangential mention
 
-Cache: .cache/vendor_intel/{feed_slug}/{date}.json, TTL 6 hours
+Cache: .cache/vendor_intel/{feed_slug}.json, TTL 24 hours per feed
 """
 
 from __future__ import annotations
@@ -26,6 +27,7 @@ import logging
 import os
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from pathlib import Path
@@ -36,14 +38,20 @@ from xml.etree import ElementTree as ET
 
 logger = logging.getLogger(__name__)
 
-CACHE_DIR     = Path(".cache/vendor_intel")
-CACHE_TTL_HRS = 6
-TIMEOUT       = 20   # raised from 12 — some vendor servers (Sophos, Secureworks) are slow
-MAX_ARTICLES  = 8    # max articles per feed per actor
-DEFAULT_LOOKBACK_DAYS = 365   # 12 months default
+CACHE_DIR          = Path(".cache/vendor_intel")
+CACHE_TTL_HRS      = 24    # raised from 6 — feeds don't change that fast
+TIMEOUT            = 15    # per-feed connect+read timeout (seconds)
+MAX_ARTICLES       = 8     # max articles returned per feed per actor
+MAX_WORKERS        = 12    # concurrent feed fetches
+DEFAULT_LOOKBACK_DAYS = 365
 
 # Minimum relevance score to include in dossier
-MIN_RELEVANCE = 15  # lowered from 30 — let LLM filter, not pre-filter
+MIN_RELEVANCE = 15
+
+# Max summary chars stored in cache and scored against
+# (was 1000 in parse → 500 at score — both fixed to 2000)
+SUMMARY_CACHE_CHARS = 2000
+SUMMARY_SCORE_CHARS = 2000   # score against same full content
 
 # Path to the CyberMonitor APT campaign collection (cloned by --update-bundles)
 APT_CAMPAIGNS_PATH = Path(".cache/apt-campaigns")
@@ -53,103 +61,91 @@ class VendorIntelCollector:
     """
     Fetches threat intelligence articles from curated vendor feeds
     and scores their relevance to a specific actor.
+
+    All feeds are fetched concurrently (ThreadPoolExecutor) so wall time
+    is bounded by the slowest responding feed rather than sum of all timeouts.
     """
 
     def __init__(self, feeds_path: Path | None = None):
         self._feeds_path = feeds_path or Path("config/feeds.yaml")
-        self._feeds:      list[dict] = []
+        self._feeds: list[dict] = []
         self._load_feeds()
 
-    def _load_apt_campaign_context(self, actor_name: str, aliases: list[str]) -> list[dict]:
-        """
-        Search the local CyberMonitor APT Campaign Collection for reports
-        matching this actor. Returns article-like dicts compatible with the
-        vendor intel pipeline.
-
-        The collection lives at .cache/apt-campaigns/ (cloned by --update-bundles).
-        It contains thousands of curated APT reports from 2014-2024 organized
-        in folders named after actor groups.
-        """
-        if not APT_CAMPAIGNS_PATH.exists():
-            logger.debug("APT campaign collection not present — run --update-bundles to clone")
-            return []
-
-        results = []
-        search_terms = [actor_name.lower()] + [a.lower() for a in aliases if len(a) > 4]
-
-        try:
-            for entry in APT_CAMPAIGNS_PATH.iterdir():
-                if not entry.is_dir():
-                    continue
-                folder_lower = entry.name.lower()
-                if not any(term in folder_lower for term in search_terms):
-                    continue
-
-                # Found a matching actor folder — collect report files
-                for report_file in sorted(entry.rglob("*.md"))[:10]:
-                    try:
-                        text = report_file.read_text(encoding="utf-8", errors="replace")
-                        title = report_file.stem.replace("_", " ").replace("-", " ")
-                        for line in text.splitlines()[:5]:
-                            if line.startswith("#"):
-                                title = line.lstrip("#").strip()
-                                break
-                        summary = text[:800].strip()
-                        results.append({
-                            "title":   title,
-                            "url":     (
-                                "https://github.com/CyberMonitor/"
-                                "APT_CyberCriminal_Campagin_Collections"
-                                f"/blob/master/{entry.name}/{report_file.name}"
-                            ),
-                            "source":  "CyberMonitor APT Collection",
-                            "content": summary,
-                            "date":    "",
-                        })
-                    except OSError:
-                        continue
-
-        except Exception as exc:
-            logger.debug("APT campaign collection search error: %s", exc)
-
-        if results:
-            logger.info(
-                "APT campaign collection: %d historical reports for '%s'",
-                len(results), actor_name,
-            )
-        return results
+    # ------------------------------------------------------------------
+    # Public API
+    # ------------------------------------------------------------------
 
     def collect(
         self,
-        actor_name:  str,
-        aliases:     list[str],
+        actor_name:    str,
+        aliases:       list[str],
         lookback_days: int = DEFAULT_LOOKBACK_DAYS,
     ) -> list[dict]:
         """
         Fetch and score articles relevant to this actor.
 
+        Feeds are fetched in parallel (up to MAX_WORKERS concurrent).
+
         Returns:
             List of article dicts sorted by relevance desc, each containing:
-            {title, url, source, date, relevance, summary, body_snippet}
+            {title, url, source, date, relevance, summary, tags}
         """
         if not self._feeds:
             logger.warning("No feeds loaded — check config/feeds.yaml")
             return []
 
-        # Build search terms: canonical name + clean aliases
         search_terms = self._build_search_terms(actor_name, aliases)
         cutoff       = datetime.now(timezone.utc) - timedelta(days=lookback_days)
 
+        enabled_feeds = [f for f in self._feeds if f.get("enabled", True)]
+
+        logger.info(
+            "VendorIntel: fetching %d feeds concurrently (max_workers=%d) for %r",
+            len(enabled_feeds), MAX_WORKERS, actor_name,
+        )
+
+        # --- Concurrent fetch ---
+        feed_results: dict[str, list[dict]] = {}   # feed_name → raw entries
+        feed_errors:  dict[str, str]        = {}   # feed_name → error msg
+        feed_hit_counts: dict[str, int]     = {}   # feed_name → matched articles
+
+        # Use a wrapper so the method is resolved at call time (not submit time).
+        # This allows monkeypatch to replace _fetch_feed_cached in tests.
+        def _fetch(feed: dict) -> list[dict]:
+            return self._fetch_feed_cached(feed)
+
+        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+            future_to_feed = {
+                executor.submit(_fetch, feed): feed
+                for feed in enabled_feeds
+            }
+            for future in as_completed(future_to_feed):
+                feed = future_to_feed[future]
+                name = feed.get("name", feed.get("rss", "?"))
+                try:
+                    entries = future.result()
+                    feed_results[name] = entries
+                except Exception as exc:
+                    feed_errors[name] = str(exc)
+                    logger.debug("Feed %r failed: %s", name, exc)
+
+        # --- Filter and score ---
         all_articles: list[dict] = []
 
-        for feed in self._feeds:
-            if not feed.get("enabled", True):
+        for feed in enabled_feeds:
+            name    = feed.get("name", feed.get("rss", "?"))
+            entries = feed_results.get(name)
+            if entries is None:
+                # failed — already logged at debug
+                feed_hit_counts[name] = -1   # sentinel for "error"
                 continue
-            try:
-                articles = self._fetch_feed(feed, search_terms, cutoff)
-                all_articles.extend(articles)
-            except Exception as exc:
-                logger.debug("Feed %r failed: %s", feed.get("name"), exc)
+
+            articles = self._filter_and_score(feed, entries, search_terms, cutoff)
+            feed_hit_counts[name] = len(articles)
+            all_articles.extend(articles)
+
+        # --- Feed health summary (visible at INFO / --verbose) ---
+        self._log_feed_health(feed_hit_counts, feed_errors)
 
         # Deduplicate by URL
         seen_urls: set[str] = set()
@@ -160,18 +156,18 @@ class VendorIntelCollector:
                 unique.append(a)
 
         # Sort by relevance desc, then date desc
-        unique.sort(key=lambda a: (-a["relevance"], a["date"]), reverse=False)
+        unique.sort(key=lambda a: (-a["relevance"], a.get("date", "") or ""), reverse=False)
         unique.sort(key=lambda a: -a["relevance"])
 
         logger.info(
-            "VendorIntel: %d articles found across %d feeds for %r",
-            len(unique), len(self._feeds), actor_name,
+            "VendorIntel: %d relevant articles from %d feeds for %r",
+            len(unique), len(enabled_feeds), actor_name,
         )
 
         # Augment with historical APT campaign context (local, no rate limits)
         apt_articles = self._load_apt_campaign_context(actor_name, aliases)
         for art in apt_articles:
-            art.setdefault("relevance", 50)  # historical reports are always relevant
+            art.setdefault("relevance", 50)
         unique = unique + apt_articles
 
         return unique
@@ -185,10 +181,7 @@ class VendorIntelCollector:
             logger.warning("feeds.yaml not found at %s", self._feeds_path)
             return
         try:
-            # Pure stdlib YAML parsing for simple key:value structure
-            # We avoid PyYAML dependency — feeds.yaml uses simple format
             self._feeds = _parse_simple_yaml_feeds(self._feeds_path)
-            # Add user custom feeds
             custom = _parse_custom_feeds(self._feeds_path)
             self._feeds.extend(custom)
             logger.info("VendorIntel: loaded %d feeds", len(self._feeds))
@@ -196,35 +189,33 @@ class VendorIntelCollector:
             logger.error("Failed to load feeds.yaml: %s", exc)
 
     # ------------------------------------------------------------------
-    # Per-feed fetching
+    # Per-feed fetch (cache-aware, called from thread pool)
     # ------------------------------------------------------------------
 
-    def _fetch_feed(
+    def _fetch_feed_cached(self, feed: dict) -> list[dict]:
+        """
+        Return cached entries if fresh, otherwise fetch and cache.
+        Raises on network/parse errors (caller catches and records as error).
+        """
+        cache_key = _slugify(feed.get("name", feed.get("rss", "")))
+        cached    = self._load_cache(cache_key)
+        if cached is not None:
+            return cached
+
+        entries = self._fetch_rss(feed.get("rss") or feed.get("url", ""), feed)
+        self._save_cache(cache_key, entries)
+        return entries
+
+    def _filter_and_score(
         self,
         feed:         dict,
+        entries:      list[dict],
         search_terms: set[str],
         cutoff:       datetime,
     ) -> list[dict]:
-        """Fetch RSS feed and return articles matching search terms."""
-        rss_url = feed.get("rss") or feed.get("url", "")
-        if not rss_url:
-            return []
-
-        cache_key = _slugify(feed.get("name", rss_url))
-        cached    = self._load_cache(cache_key)
-
-        if cached is None:
-            try:
-                raw = self._fetch_rss(rss_url, feed)
-                self._save_cache(cache_key, raw)
-            except Exception as exc:
-                logger.debug("RSS fetch failed for %r: %s", feed.get("name"), exc)
-                return []
-        else:
-            raw = cached
-
+        """Filter entries by date and relevance, return top MAX_ARTICLES."""
         articles: list[dict] = []
-        for entry in (raw or []):
+        for entry in (entries or []):
             pub_date = _parse_date(entry.get("date", ""))
             if pub_date and pub_date < cutoff:
                 continue
@@ -239,33 +230,34 @@ class VendorIntelCollector:
 
             if relevance >= MIN_RELEVANCE:
                 articles.append({
-                    "title":        title,
-                    "url":          url,
-                    "source":       feed.get("name", ""),
-                    "source_tier":  feed.get("tier", 3),
-                    "date":         entry.get("date", ""),
-                    "relevance":    relevance,
-                    "summary":      summary[:500] if summary else "",
-                    "tags":         feed.get("tags", []),
+                    "title":       title,
+                    "url":         url,
+                    "source":      feed.get("name", ""),
+                    "source_tier": feed.get("tier", 3),
+                    "date":        entry.get("date", ""),
+                    "relevance":   relevance,
+                    "summary":     summary[:SUMMARY_SCORE_CHARS] if summary else "",
+                    "tags":        feed.get("tags", []),
                 })
 
-        # Return top N articles from this feed
         articles.sort(key=lambda a: -a["relevance"])
         return articles[:MAX_ARTICLES]
 
     def _fetch_rss(self, url: str, feed: dict) -> list[dict]:
-        """Fetch and parse an RSS/Atom feed. Returns list of entry dicts."""
+        """Fetch and parse an RSS/Atom feed. Raises on error."""
+        if not url:
+            return []
+
         headers = {
             "User-Agent": "THEORY/1.0 threat-intel-research",
             "Accept":     "application/rss+xml, application/atom+xml, text/xml, */*",
         }
 
         # Load session cookie if configured
-        feed_slug   = _slugify(feed.get("name", url)).upper()
-        cookie_key  = f"FEED_COOKIE_{feed_slug}"
-        cookie_val  = os.environ.get(cookie_key, "")
+        feed_slug  = _slugify(feed.get("name", url)).upper()
+        cookie_key = f"FEED_COOKIE_{feed_slug}"
+        cookie_val = os.environ.get(cookie_key, "")
         if not cookie_val:
-            # Try .env file
             env_path = Path(".env")
             if env_path.exists():
                 for line in env_path.read_text().splitlines():
@@ -297,37 +289,136 @@ class VendorIntelCollector:
         Factors:
           - Actor name/alias in title (high weight)
           - Frequency of mentions in body (medium weight)
-          - Source is APT-focused (small bonus)
+          - APT-focused source (small bonus when there is any hit)
+
+        Body is scored against full SUMMARY_SCORE_CHARS, not a 500-char
+        truncation — this was a primary cause of low/zero scores.
         """
         title_lower = title.lower()
-        body_lower  = body.lower()
+        body_lower  = body.lower()[:SUMMARY_SCORE_CHARS]
 
         title_hits = sum(1 for t in search_terms if t in title_lower)
-        body_hits  = sum(
-            body_lower.count(t) for t in search_terms
-        )
+        body_hits  = sum(body_lower.count(t) for t in search_terms)
 
         score = 0
 
-        # Title match is strong signal
+        # Title match is the strongest signal
         if title_hits >= 2:
-            score += 50
+            score += 55
         elif title_hits == 1:
-            score += 35
+            score += 40
 
         # Body frequency
         if body_hits >= 5:
             score += 35
         elif body_hits >= 3:
             score += 25
+        elif body_hits >= 2:
+            score += 18
         elif body_hits >= 1:
-            score += 15
+            score += 10
 
-        # APT-focused source bonus
+        # APT-focused source bonus (only when there's a real hit)
         if apt_focus and (title_hits > 0 or body_hits > 0):
             score += 10
 
         return min(score, 100)
+
+    # ------------------------------------------------------------------
+    # Feed health reporting
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _log_feed_health(
+        hit_counts: dict[str, int],
+        errors:     dict[str, str],
+    ) -> None:
+        """
+        Log a feed health summary. Visible at INFO level (--verbose).
+        Groups feeds into: returned hits / returned 0 hits / errored.
+        """
+        hits    = {n: c for n, c in hit_counts.items() if c > 0}
+        zeroes  = {n: c for n, c in hit_counts.items() if c == 0}
+        errored = {n: c for n, c in hit_counts.items() if c < 0}
+
+        total_feeds   = len(hit_counts)
+        total_errors  = len(errors)
+        total_hits    = sum(hits.values())
+
+        logger.info(
+            "Feed health: %d/%d feeds returned data, %d produced hits (%d articles total), "
+            "%d failed",
+            total_feeds - total_errors, total_feeds,
+            len(hits), total_hits,
+            total_errors,
+        )
+
+        # Per-feed breakdown at DEBUG
+        for name, count in sorted(hits.items(), key=lambda x: -x[1]):
+            logger.debug("  ✓ %-45s  %d relevant article(s)", name, count)
+        for name in sorted(zeroes):
+            logger.debug("  · %-45s  0 relevant articles", name)
+        for name, err in sorted(errors.items()):
+            logger.debug("  ✗ %-45s  ERROR: %s", name, err[:80])
+
+    # ------------------------------------------------------------------
+    # APT Campaign Collection (local, offline)
+    # ------------------------------------------------------------------
+
+    def _load_apt_campaign_context(
+        self, actor_name: str, aliases: list[str]
+    ) -> list[dict]:
+        """
+        Search the local CyberMonitor APT Campaign Collection for reports
+        matching this actor. Returns article-like dicts compatible with the
+        vendor intel pipeline.
+        """
+        if not APT_CAMPAIGNS_PATH.exists():
+            logger.debug("APT campaign collection not present — run --update-bundles to clone")
+            return []
+
+        results: list[dict] = []
+        search_terms = [actor_name.lower()] + [a.lower() for a in aliases if len(a) > 4]
+
+        try:
+            for entry in APT_CAMPAIGNS_PATH.iterdir():
+                if not entry.is_dir():
+                    continue
+                folder_lower = entry.name.lower()
+                if not any(term in folder_lower for term in search_terms):
+                    continue
+
+                for report_file in sorted(entry.rglob("*.md"))[:10]:
+                    try:
+                        text  = report_file.read_text(encoding="utf-8", errors="replace")
+                        title = report_file.stem.replace("_", " ").replace("-", " ")
+                        for line in text.splitlines()[:5]:
+                            if line.startswith("#"):
+                                title = line.lstrip("#").strip()
+                                break
+                        summary = text[:800].strip()
+                        results.append({
+                            "title":   title,
+                            "url": (
+                                "https://github.com/CyberMonitor/"
+                                "APT_CyberCriminal_Campagin_Collections"
+                                f"/blob/master/{entry.name}/{report_file.name}"
+                            ),
+                            "source":  "CyberMonitor APT Collection",
+                            "content": summary,
+                            "date":    "",
+                        })
+                    except OSError:
+                        continue
+        except Exception as exc:
+            logger.debug("APT campaign collection search error: %s", exc)
+
+        if results:
+            logger.info(
+                "APT campaign collection: %d historical reports for %r",
+                len(results), actor_name,
+            )
+        return results
 
     # ------------------------------------------------------------------
     # Cache
@@ -368,16 +459,20 @@ class VendorIntelCollector:
         terms: set[str] = {actor_name.lower()}
         for alias in aliases:
             clean = alias.strip().lower()
-            # Skip very short or generic aliases (G0007, TA422, etc.)
+            # Skip very short or ID-style aliases (G0007, TA422, etc.)
             if len(clean) > 4 and not re.match(r"^[gtu][a-z]?\d+$", clean):
                 terms.add(clean)
         return terms
 
 
+# ---------------------------------------------------------------------------
+# Helpers (module-level, used by VendorIntelCollector)
+# ---------------------------------------------------------------------------
 
 def _is_id_alias(alias: str) -> bool:
     """Return True for short ID-style aliases like g0007, ta422, unc123."""
     return bool(re.match(r'^[a-z]{1,3}[0-9]+$', alias.lower()))
+
 
 # ---------------------------------------------------------------------------
 # RSS/Atom parser (no external dependencies)
@@ -403,16 +498,18 @@ def _parse_rss_xml(content: str) -> list[dict]:
         title   = _xml_text(item, "title")
         url     = _xml_text(item, "link") or _xml_text(item, "guid")
         date    = _xml_text(item, "pubDate") or _xml_text(item, "dc:date", ns)
+        # Prefer content:encoded (fuller body) over description (snippet)
         summary = (
-            _xml_text(item, "description") or
-            _xml_text(item, "content:encoded", ns) or ""
+            _xml_text(item, "content:encoded", ns) or
+            _xml_text(item, "description") or ""
         )
         if title or url:
             entries.append({
                 "title":   _strip_html(title),
                 "url":     url or "",
                 "date":    _normalise_date(date),
-                "summary": _strip_html(summary[:1000]),
+                # Store up to SUMMARY_CACHE_CHARS — don't truncate early
+                "summary": _strip_html(summary[:SUMMARY_CACHE_CHARS]),
             })
 
     # Atom
@@ -420,14 +517,20 @@ def _parse_rss_xml(content: str) -> list[dict]:
         title   = _xml_text(entry, "atom:title", ns)
         link    = entry.find("atom:link", ns)
         url     = link.get("href", "") if link is not None else ""
-        date    = _xml_text(entry, "atom:published", ns) or _xml_text(entry, "atom:updated", ns)
-        summary = _xml_text(entry, "atom:summary", ns) or _xml_text(entry, "atom:content", ns) or ""
+        date    = (
+            _xml_text(entry, "atom:published", ns) or
+            _xml_text(entry, "atom:updated", ns)
+        )
+        summary = (
+            _xml_text(entry, "atom:content", ns) or
+            _xml_text(entry, "atom:summary", ns) or ""
+        )
         if title or url:
             entries.append({
                 "title":   _strip_html(title),
                 "url":     url,
                 "date":    _normalise_date(date),
-                "summary": _strip_html(summary[:1000]),
+                "summary": _strip_html(summary[:SUMMARY_CACHE_CHARS]),
             })
 
     return entries
@@ -454,18 +557,15 @@ def _normalise_date(date_str: str) -> str:
     if not date_str:
         return ""
     try:
-        # RFC 2822 (RSS pubDate)
         dt = parsedate_to_datetime(date_str)
         return dt.strftime("%Y-%m-%d")
     except Exception:
         pass
     try:
-        # ISO 8601
         dt = datetime.fromisoformat(date_str.replace("Z", "+00:00"))
         return dt.strftime("%Y-%m-%d")
     except Exception:
         pass
-    # Try extracting YYYY-MM-DD
     m = re.search(r"(\d{4}-\d{2}-\d{2})", date_str)
     return m.group(1) if m else date_str[:10]
 
@@ -495,7 +595,6 @@ def _parse_date(date_str: str) -> datetime | None:
 def _parse_simple_yaml_feeds(path: Path) -> list[dict]:
     """
     Parse feeds.yaml sources list without PyYAML.
-    Handles the specific structure of our feeds.yaml.
     Falls back to PyYAML if available.
     """
     try:
@@ -526,7 +625,6 @@ def _parse_simple_yaml_feeds(path: Path) -> list[dict]:
             if not in_sources:
                 continue
 
-            # New feed entry
             if stripped.startswith("  - name:"):
                 if current:
                     feeds.append(current)
@@ -543,7 +641,6 @@ def _parse_simple_yaml_feeds(path: Path) -> list[dict]:
                     elif val.lower() == "false":
                         current[key] = False
                     elif val.startswith("[") and val.endswith("]"):
-                        # Inline list
                         items = [
                             i.strip().strip("'\"")
                             for i in val[1:-1].split(",")

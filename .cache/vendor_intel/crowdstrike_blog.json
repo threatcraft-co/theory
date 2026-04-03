@@ -1,6 +1,18 @@
 {
-  "cached_at": "2026-04-01T23:18:22.354829+00:00",
+  "cached_at": "2026-04-03T04:22:54.184874+00:00",
   "entries": [
+    {
+      "title": "STARDUST CHOLLIMA Likely Compromises Axios npm Package",
+      "url": "https://www.crowdstrike.com/en-us/blog/stardust-chollima-likely-compromises-axios-npm-package/",
+      "date": "2026-04-01",
+      "summary": ""
+    },
+    {
+      "title": "Falcon for IT Supports Windows Secure Boot Certificate Lifecycle Management",
+      "url": "https://www.crowdstrike.com/en-us/blog/falcon-for-it-supports-windows-secure-boot-certificate-lifecycle-management/",
+      "date": "2026-04-01",
+      "summary": ""
+    },
     {
       "title": "Detecting CVE-2026-20929: Kerberos Authentication Relay via CNAME Abuse",
       "url": "https://www.crowdstrike.com/en-us/blog/detecting-kerberos-relay-attack-via-dns-cname-abuse/",
@@ -47,18 +59,6 @@
       "title": "New CrowdStrike Innovations Secure AI Agents and Govern Shadow AI Across Endpoints, SaaS, and Cloud",
       "url": "https://www.crowdstrike.com/en-us/blog/new-crowdstrike-innovations-secure-ai-agents-govern-shadow-ai/",
       "date": "2026-03-23",
-      "summary": ""
-    },
-    {
-      "title": "Tycoon2FA Phishing-as-a-Service Platform Persists Following Takedown",
-      "url": "https://www.crowdstrike.com/en-us/blog/tycoon2fa-phishing-as-a-service-platform-persists-following-takedown/",
-      "date": "2026-03-20",
-      "summary": ""
-    },
-    {
-      "title": "From Scanner to Stealer: Inside the trivy-action Supply Chain Compromise",
-      "url": "https://www.crowdstrike.com/en-us/blog/from-scanner-to-stealer-inside-the-trivy-action-supply-chain-compromise/",
-      "date": "2026-03-20",
       "summary": ""
     }
   ]

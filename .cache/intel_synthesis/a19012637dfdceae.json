@@ -1,0 +1,14 @@
+{
+  "cached_at": "2026-04-03T04:08:55.994848+00:00",
+  "result": {
+    "actor_summary": "APT28 exploited CVE-2026-21513, an MSHTML flaw, in February 2026 by delivering malicious Windows Shortcut files to enable multi-stage payload delivery. This represents continued Russian state-sponsored interest in client-side exploitation vectors targeting Microsoft technologies for initial access and lateral movement.",
+    "landscape_summary": "The article demonstrates a continued pattern of Russian state-sponsored actors like APT28 leveraging publicly disclosed or easily accessible vulnerability information to conduct targeted operations, as evidenced by their exploitation of CVE-2026-21513 via commonplace file formats like Windows Shortcuts. This reflects a broader shift where nation-state threat actors are prioritizing rapid weaponization of known flaws over zero-day development, likely driven by the shortened time-to-exploitation windows created by coordinated disclosure practices and public PoC availability.",
+    "relevance": 20,
+    "source": "Recorded Future (Public)",
+    "source_tier": 2,
+    "date": "2026-03-12",
+    "title": "February 2026 CVE Landscape: 13 Critical Vulnerabilities Mark 43% Drop from January",
+    "url": "https://www.recordedfuture.com/blog/february-2026-cve-landscape",
+    "provider": "claude"
+  }
+}

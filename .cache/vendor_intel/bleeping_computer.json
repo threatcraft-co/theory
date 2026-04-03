@@ -1,6 +1,60 @@
 {
-  "cached_at": "2026-04-01T23:19:56.072929+00:00",
+  "cached_at": "2026-04-03T04:22:56.081035+00:00",
   "entries": [
+    {
+      "title": "Claude Code leak used to push infostealer malware on GitHub",
+      "url": "https://www.bleepingcomputer.com/news/security/claude-code-leak-used-to-push-infostealer-malware-on-github/",
+      "date": "2026-04-02",
+      "summary": "Threat actors are exploiting the recent Claude Code source code leak by using fake GitHub repositories to deliver Vidar information-stealing malware. [...]"
+    },
+    {
+      "title": "Drift loses $280 million as hackers seize Security Council powers",
+      "url": "https://www.bleepingcomputer.com/news/security/drift-loses-280-million-as-hackers-seize-security-council-powers/",
+      "date": "2026-04-02",
+      "summary": "The Drift Protocol lost at least $280 million after a threat actor took control of its Security Council administrative powers in a planned, sophisticated operation. [...]"
+    },
+    {
+      "title": "Residential proxies evaded IP reputation checks in 78% of 4B sessions",
+      "url": "https://www.bleepingcomputer.com/news/security/residential-proxies-evaded-ip-reputation-checks-in-78-percent-of-4b-sessions/",
+      "date": "2026-04-02",
+      "summary": "Researchers warn that residential proxies used to route malicious traffic are a big problem for IP reputation systems, as there is no clear distinction between attackers and legitimate users. [...]"
+    },
+    {
+      "title": "Adversaries Exploit Vacant Homes to Intercept Mail in Hybrid Cybercrime",
+      "url": "https://www.bleepingcomputer.com/news/security/adversaries-exploit-vacant-homes-to-intercept-mail-in-hybrid-cybercrime/",
+      "date": "2026-04-02",
+      "summary": "Threat actors are exploiting vacant homes as \"drop addresses\" to intercept mail and enable fraud. Flare shows how postal services and fake identities are abused to turn mail into a fraud vector. [...]"
+    },
+    {
+      "title": "New Progress ShareFile flaws can be chained in pre-auth RCE attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/new-progress-sharefile-flaws-can-be-chained-in-pre-auth-rce-attacks/",
+      "date": "2026-04-02",
+      "summary": "Two vulnerabilities in Progress ShareFile, an enterprise-grade secure file transfer solution, can be chained to enable unauthenticated file exfiltration from affected environments. [...]"
+    },
+    {
+      "title": "Medtech giant Stryker fully operational after data-wiping attack",
+      "url": "https://www.bleepingcomputer.com/news/security/medtech-giant-stryker-fully-operational-after-data-wiping-attack/",
+      "date": "2026-04-02",
+      "summary": "Stryker Corporation, one of the world's leading medical technology companies, says it's fully operational three weeks after many of its systems were wiped out in a cyberattack claimed by the Iranian-linked Handala hacktivist group. [...]"
+    },
+    {
+      "title": "Critical Cisco IMC auth bypass gives attackers Admin access",
+      "url": "https://www.bleepingcomputer.com/news/security/critical-cisco-imc-auth-bypass-gives-attackers-admin-access/",
+      "date": "2026-04-02",
+      "summary": "Cisco has patched several critical and high-severity vulnerabilities, including an Integrated Management Controller (IMC) authentication bypass that enables attackers to gain Admin access. [...]"
+    },
+    {
+      "title": "Microsoft links Classic Outlook issue to email delivery problems",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-links-classic-outlook-bug-to-email-delivery-issues/",
+      "date": "2026-04-02",
+      "summary": "Microsoft is investigating a known issue that prevents some Classic Outlook users from sending emails via Outlook.com. [...]"
+    },
+    {
+      "title": "Over 14,000 F5 BIG-IP APM instances still exposed to RCE attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/over-14-000-f5-big-ip-apm-instances-still-exposed-to-rce-attacks/",
+      "date": "2026-04-02",
+      "summary": "Internet security watchdog Shadowserver has found over 14,000 BIG-IP APM instances exposed online amid ongoing attacks exploiting a critical-severity remote code execution (RCE) vulnerability. [...]"
+    },
     {
       "title": "New CrystalRAT malware adds RAT, stealer and prankware features",
       "url": "https://www.bleepingcomputer.com/news/security/new-crystalrat-malware-adds-rat-stealer-and-prankware-features/",
@@ -29,67 +83,13 @@
       "title": "'NoVoice' Android malware on Google Play infected 2.3 million devices",
       "url": "https://www.bleepingcomputer.com/news/security/novoice-android-malware-on-google-play-infected-23-million-devices/",
       "date": "2026-04-01",
-      "summary": "A new Android malware named NoVoice was found on Google Play, hidden in more than 50 apps that were downloaded at least 2.3 million times. [...]"
+      "summary": "A new Android malware dubbed NoVoice exploited known vulnerabilities to gain root access and has been distributed through more than 50 apps on Google Play Store, with at least 2.3 million downloads. [...]"
     },
     {
       "title": "Routine Access Is Powering Modern Intrusions, a New Threat Report Finds",
       "url": "https://www.bleepingcomputer.com/news/security/routine-access-is-powering-modern-intrusions-a-new-threat-report-finds/",
       "date": "2026-04-01",
       "summary": "Modern intrusions increasingly start with valid credentials and routine access, not exploits. Blackpoint Cyber's upcoming threat report shows how VPN abuse, RMM tools, and social engineering drive most incidents. [...]"
-    },
-    {
-      "title": "FBI warns against using Chinese mobile apps due to privacy risks",
-      "url": "https://www.bleepingcomputer.com/news/security/fbi-warns-against-using-chinese-mobile-apps-over-to-data-security-risks/",
-      "date": "2026-04-01",
-      "summary": "The U.S. Federal Bureau of Investigation (FBI) warned Americans against using foreign-developed mobile applications, particularly those created by Chinese developers. [...]"
-    },
-    {
-      "title": "Google fixes fourth Chrome zero-day exploited in attacks in 2026",
-      "url": "https://www.bleepingcomputer.com/news/security/google-fixes-fourth-chrome-zero-day-exploited-in-attacks-in-2026/",
-      "date": "2026-04-01",
-      "summary": "Google has fixed the fourth Chrome vulnerability exploited in zero-day attacks since the start of the year. [...]"
-    },
-    {
-      "title": "Google Drive ransomware detection now on by default for paying users",
-      "url": "https://www.bleepingcomputer.com/news/security/google-drive-ransomware-detection-now-on-by-default-for-paying-users/",
-      "date": "2026-04-01",
-      "summary": "Google announced that the AI-powered Google Drive ransomware detection feature has reached general availability and is now enabled by default for all paying users. [...]"
-    },
-    {
-      "title": "New Windows 11 emergency update fixes preview update install issues",
-      "url": "https://www.bleepingcomputer.com/news/microsoft/new-windows-11-kb5086672-emergency-update-fixes-install-issues/",
-      "date": "2026-04-01",
-      "summary": "Microsoft released an emergency update to fix the March 2026 KB5079391 non-security preview update, which was pulled over the weekend due to installation issues. [...]"
-    },
-    {
-      "title": "Claude Code source code accidentally leaked in NPM package",
-      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/claude-code-source-code-accidentally-leaked-in-npm-package/",
-      "date": "2026-03-31",
-      "summary": "Anthropic says it accidentally leaked the source code for Claude Code, which is closed source, but the company says no customer data or credentials were exposed. [...]"
-    },
-    {
-      "title": "Google now allows you to change your @gmail.com address",
-      "url": "https://www.bleepingcomputer.com/news/google/google-now-allows-you-to-change-your-gmailcom-address/",
-      "date": "2026-03-31",
-      "summary": "Google is rolling out a new feature in the U.S. that allows users to change their @gmail address or create a new alias. [...]"
-    },
-    {
-      "title": "Proton launches new \"Meet\" privacy-focused conferencing platform",
-      "url": "https://www.bleepingcomputer.com/news/security/proton-launches-new-meet-privacy-focused-conferencing-platform/",
-      "date": "2026-03-31",
-      "summary": "Proton has announced a new video conferencing service named Meet and positioned it as a privacy-focused alternative to mainstream services like Google Meet, Zoom, and Microsoft Teams. [...]"
-    },
-    {
-      "title": "GIGABYTE Control Center vulnerable to arbitrary file write flaw",
-      "url": "https://www.bleepingcomputer.com/news/security/gigabyte-control-center-vulnerable-to-arbitrary-file-write-flaw/",
-      "date": "2026-03-31",
-      "summary": "The GIGABYTE Control Center is vulnerable to an arbitrary file-write flaw that could allow a remote, unauthenticated attacker to access files on vulnerable hosts. [...]"
-    },
-    {
-      "title": "Claude AI finds Vim, Emacs RCE bugs that trigger on file open",
-      "url": "https://www.bleepingcomputer.com/news/security/claude-ai-finds-vim-emacs-rce-bugs-that-trigger-on-file-open/",
-      "date": "2026-03-31",
-      "summary": "Vulnerabilities in the Vim and GNU Emacs text editors, discovered using simple prompts with the Claude assistant, allow remote code execution simply by opening a file. [...]"
     }
   ]
 }

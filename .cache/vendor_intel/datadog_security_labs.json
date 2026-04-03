@@ -1,0 +1,185 @@
+{
+  "cached_at": "2026-04-03T04:22:54.550634+00:00",
+  "entries": [
+    {
+      "title": "Compromised axios npm package delivers cross-platform RAT",
+      "url": "https://securitylabs.datadoghq.com/articles/axios-npm-supply-chain-compromise/",
+      "date": "2026-03-31",
+      "summary": "An attacker hijacked an axios maintainer's npm account to publish malicious releases that deliver a cross-platform RAT."
+    },
+    {
+      "title": "Unpatchable Vulnerabilities of Kubernetes: CVE-2020-8561",
+      "url": "https://securitylabs.datadoghq.com/articles/unpatchable-kubernetes-vulnerabilities-cve-2020-8561/",
+      "date": "2026-03-27",
+      "summary": "A look at how Kubernetes CVE-2020-8561 works"
+    },
+    {
+      "title": "LiteLLM and Telnyx compromised on PyPI: Tracing the TeamPCP supply chain campaign",
+      "url": "https://securitylabs.datadoghq.com/articles/litellm-compromised-pypi-teampcp-supply-chain-campaign/",
+      "date": "2026-03-24",
+      "summary": "On March 24 and 27, 2026, malicious PyPI releases of LiteLLM and Telnyx were published as part of the TeamPCP supply chain campaign. We trace the full campaign from Trivy through npm, Checkmarx, and into PyPI."
+    },
+    {
+      "title": "Uncovering agent logging gaps in Copilot Studio",
+      "url": "https://securitylabs.datadoghq.com/articles/copilot-studio-logging-gaps/",
+      "date": "2026-03-10",
+      "summary": "During research, we sometimes encounter scenarios that remind us that it's a good idea to trust but verify. In September 2025, we noticed that certain Microsoft Copilot Studio agent settings did not log certain administrative actions related to sharing, authentication, logging, and publication of Copilot Studio agents."
+    },
+    {
+      "title": "Behind the console: Active phishing campaign targeting AWS console credentials",
+      "url": "https://securitylabs.datadoghq.com/articles/behind-the-console-aws-aitm-phishing-campaign/",
+      "date": "2026-03-09",
+      "summary": "Datadog Security Research identified an active adversary-in-the-middle (AiTM) phishing campaign targeting AWS Console credentials via typosquatted domains that mimic AWS infrastructure."
+    },
+    {
+      "title": "Hook, line, and vault: A technical deep dive into the 1Phish kit",
+      "url": "https://securitylabs.datadoghq.com/articles/hook-line-vault-a-deep-dive-into-1phish/",
+      "date": "2026-02-27",
+      "summary": "We analyze the evolution of the 1Phish phishing kit from a basic credential harvester into an MFA-aware, multi-stage phishing kit targeting 1Password users."
+    },
+    {
+      "title": "Kubernetes project issues warning on Ingress NGINX retirement",
+      "url": "https://securitylabs.datadoghq.com/articles/kubernetes-ingress-nginx-retirement-warning/",
+      "date": "2026-02-19",
+      "summary": "The Kubernetes project is urging organizations to migrate away from Ingress NGINX before its retirement in March 2026, with new high-severity CVEs underscoring the urgency."
+    },
+    {
+      "title": "Tech impersonators: ClickFix and MacOS infostealers",
+      "url": "https://securitylabs.datadoghq.com/articles/tech-impersonators-clickfix-and-macos-infostealers/",
+      "date": "2026-02-10",
+      "summary": "Datadog identified an active campaign employing fake GitHub repositories impersonating software companies and leveraging the ClickFix initial access technique to deliver macOS infostealers."
+    },
+    {
+      "title": "Web Traffic Hijacking: When Your Nginx Configuration Turns Malicious",
+      "url": "https://securitylabs.datadoghq.com/articles/web-traffic-hijacking-nginx-configuration-malicious/",
+      "date": "2026-02-04",
+      "summary": "Datadog Security Research has identified an active web traffic hijacking campaign that targets NGINX installations and management panels like Baota (BT). In this post, we provide our analysis of the techniques this campaign uses and share indicators of compromise you can check for in your NGINX configurations."
+    },
+    {
+      "title": "OpenSSL January 2026 Security Update: CMS and PKCS#12 Buffer Overflows",
+      "url": "https://securitylabs.datadoghq.com/articles/openssl-january-2026-security-update-cms-and-pkcs12-buffer-overflows/",
+      "date": "2026-01-27",
+      "summary": "A deep dive into OpenSSL\u2019s January 2026 CMS and PKCS#12 vulnerabilities, including a pre-auth stack overflow and a PKCS#12 parsing bug."
+    },
+    {
+      "title": "Introducing IDE-SHEPHERD: Your shield against threat actors lurking in your IDE",
+      "url": "https://securitylabs.datadoghq.com/articles/ide-shepherd-release-article/",
+      "date": "2026-01-26",
+      "summary": "IDE-SHEPHERD is an open-source IDE security extension that provides real-time monitoring and protection for VS Code and Cursor. It intercepts malicious process executions, monitors network activity, and blocks dangerous workspace tasks before they can compromise your development environment."
+    },
+    {
+      "title": "Unpatchable Vulnerabilities of Kubernetes: CVE-2020-8554",
+      "url": "https://securitylabs.datadoghq.com/articles/unpatchable-kubernetes-vulnerabilities-cve-2020-8554/",
+      "date": "2026-01-14",
+      "summary": "A look at how Kubernetes CVE-2020-8554 works"
+    },
+    {
+      "title": "Decoding the GitHub recommendations for npm maintainers",
+      "url": "https://securitylabs.datadoghq.com/articles/decoding-the-recommendations-for-npm-maintainers/",
+      "date": "2026-01-07",
+      "summary": "This blog post explores the rationale and implementation behind GitHub's security recommendations for npm maintainers following numerous high-profile supply-chain incidents. It details how hardening publishing infrastructure through trusted publishing, enforced two-factor authentication, and WebAuthn-based protocols can meaningfully increase the resilience of the ecosystem."
+    },
+    {
+      "title": "Introducing Pathfinding.cloud",
+      "url": "https://securitylabs.datadoghq.com/articles/introducing-pathfinding.cloud/",
+      "date": "2025-12-17",
+      "summary": "Introducing Pathfinding.cloud, a library of AWS IAM privilege escalation paths"
+    },
+    {
+      "title": "Investigating an adversary-in-the-middle phishing campaign targeting Microsoft 365 and Okta users",
+      "url": "https://securitylabs.datadoghq.com/articles/investigating-an-aitm-phishing-campaign-m365-okta/",
+      "date": "2025-12-10",
+      "summary": "In this post, we investigate a recent phishing campaign that targets Microsoft 365 users."
+    },
+    {
+      "title": "CVE-2025-55182 (React2Shell): Remote code execution in React Server Components and Next.js",
+      "url": "https://securitylabs.datadoghq.com/articles/cve-2025-55182-react2shell-remote-code-execution-react-server-components/",
+      "date": "2025-12-04",
+      "summary": "Learn more about the CVE-2025-55182 vulnerability affecting React Server Components and affecting Next.js."
+    },
+    {
+      "title": "The Shai-Hulud 2.0 npm worm: analysis, and what you need to know",
+      "url": "https://securitylabs.datadoghq.com/articles/shai-hulud-2.0-npm-worm/",
+      "date": "2025-11-25",
+      "summary": "Learn more about the Shai-Hulud 2.0 npm worm."
+    },
+    {
+      "title": "Why Datadog is a 2025 Cloud Security Leader",
+      "url": "https://securitylabs.datadoghq.com/articles/why-datadog-is-a-cloud-security-leader/",
+      "date": "2025-11-20",
+      "summary": "A recap of Datadog's awards from the 2025 Latio Cloud Security Market Report"
+    },
+    {
+      "title": "A 2025 look at real-world Kubernetes version adoption",
+      "url": "https://securitylabs.datadoghq.com/articles/a-2025-look-at-real-world-kubernetes-adoption/",
+      "date": "2025-11-10",
+      "summary": "A 2025 look at real-world Kubernetes version adoption"
+    },
+    {
+      "title": "MUT-4831: Trojanized npm packages deliver Vidar infostealer malware",
+      "url": "https://securitylabs.datadoghq.com/articles/mut-4831-trojanized-npm-packages-vidar/",
+      "date": "2025-11-06",
+      "summary": "Analysis of a threat actor campaign targeting Windows users with Vidar infostealer malware via malicious npm packages"
+    },
+    {
+      "title": "A runtime security approach to detecting supply chain attacks",
+      "url": "https://securitylabs.datadoghq.com/articles/supply-chain-attacks-runtime-security-detection/",
+      "date": "2025-11-05",
+      "summary": "Detecting software supply chain attacks through runtime security."
+    },
+    {
+      "title": "Datadog threat roundup: Top insights for Q3 2025",
+      "url": "https://securitylabs.datadoghq.com/articles/2025-q3-threat-roundup/",
+      "date": "2025-10-31",
+      "summary": "Threat insights from Datadog Security Labs for Q3 2025."
+    },
+    {
+      "title": "Learnings from recent npm supply chain compromises",
+      "url": "https://securitylabs.datadoghq.com/articles/learnings-from-recent-npm-compromises/",
+      "date": "2025-10-30",
+      "summary": "A look at recent npm supply chain compromises and how we can learn from them to better prepare for future incidents."
+    },
+    {
+      "title": "CoPhish: Using Microsoft Copilot Studio as a wrapper for OAuth phishing",
+      "url": "https://securitylabs.datadoghq.com/articles/cophish-using-microsoft-copilot-studio-as-a-wrapper/",
+      "date": "2025-10-20",
+      "summary": "Copilot Studio links look benign, but they can host content to redirect users to arbitrary URLs. In this post, we document a method by which a Copilot Studio agent's login settings can redirect a user to any URL, including an OAuth consent attack."
+    },
+    {
+      "title": "CVE-2025-52882: WebSocket authentication bypass in Claude Code extensions",
+      "url": "https://securitylabs.datadoghq.com/articles/claude-mcp-cve-2025-52882/",
+      "date": "2025-08-26",
+      "summary": "A critical vulnerability in older versions of the Claude Code for Visual Studio Code (VS Code) and other IDE extensions allowed malicious websites to connect to unauthenticated local WebSocket servers, potentially enabling remote command execution"
+    },
+    {
+      "title": "MCP vulnerability case study: SQL injection in the Postgres MCP server",
+      "url": "https://securitylabs.datadoghq.com/articles/mcp-vulnerability-case-study-SQL-injection-in-the-postgresql-mcp-server/",
+      "date": "2025-08-21",
+      "summary": "Learn how vulnerability in Anthropic's reference Postgres MCP server allowed us to bypass the read-only restriction and execute arbitrary SQL statements."
+    },
+    {
+      "title": "Enumerating AWS the quiet way: CloudTrail-free discovery with Resource Explorer",
+      "url": "https://securitylabs.datadoghq.com/articles/enumerating-aws-the-quiet-way-cloudtrail-free-discovery-with-resource-explorer/",
+      "date": "2025-08-19",
+      "summary": "Discover how attackers could quietly enumerate AWS resources via Resource Explorer, and how Datadog and AWS worked together to close the visibility gap."
+    },
+    {
+      "title": "Datadog threat roundup: Top insights for Q2 2025",
+      "url": "https://securitylabs.datadoghq.com/articles/2025-q2-threat-roundup/",
+      "date": "2025-08-14",
+      "summary": "Threat insights from Datadog Security Labs for Q2 2025."
+    },
+    {
+      "title": "Backdoors & Breaches gameplay guide",
+      "url": "https://securitylabs.datadoghq.com/articles/backdoors-and-breaches-gameplay-guide/",
+      "date": "2025-07-30",
+      "summary": "A gameplay guide to share the new Datadog expansion pack of Backdoors & Breaches, including how to play and starter scenarios."
+    },
+    {
+      "title": "Datadog guide to Hacker Summer Camp 2025",
+      "url": "https://securitylabs.datadoghq.com/articles/hacker-summer-camp-guide-2025/",
+      "date": "2025-07-28",
+      "summary": "Get ready to take on Hacker Summer Camp with our guide on planning, prepping, and schedules for Datadog events."
+    }
+  ]
+}

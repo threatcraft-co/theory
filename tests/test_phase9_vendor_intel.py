@@ -3,7 +3,7 @@ tests/test_phase9_vendor_intel.py
 ----------------------------------
 Unit tests for Phase 9 vendor intelligence layer — fully offline.
 Tests cover RSS parsing, relevance scoring, provider loading,
-cache logic, and synthesis prompt construction.
+cache logic, concurrent fetching, and synthesis prompt construction.
 """
 
 from __future__ import annotations
@@ -17,6 +17,10 @@ from collectors.vendor_intel import (
     _strip_html,
     _normalise_date,
     _slugify,
+    CACHE_TTL_HRS,
+    MAX_WORKERS,
+    SUMMARY_CACHE_CHARS,
+    SUMMARY_SCORE_CHARS,
 )
 from collectors.intelligence_synthesizer import (
     IntelligenceSynthesizer,
@@ -62,6 +66,19 @@ SAMPLE_ATOM = """<?xml version="1.0" encoding="UTF-8"?>
     <summary>The Fancy Bear group, also known as APT28, has deployed a new implant targeting NATO allies.</summary>
   </entry>
 </feed>"""
+
+SAMPLE_RSS_CONTENT_ENCODED = """<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <item>
+      <title>APT28 Deep Dive</title>
+      <link>https://example.com/apt28-deep</link>
+      <pubDate>Mon, 15 Jan 2024 10:00:00 +0000</pubDate>
+      <description>Short snippet only.</description>
+      <content:encoded>APT28, also known as Fancy Bear, has conducted extensive campaigns. APT28 leverages spearphishing. APT28 targets government entities. APT28 uses custom implants. The Fancy Bear group continues to evolve.</content:encoded>
+    </item>
+  </channel>
+</rss>"""
 
 
 class TestRssParser:
@@ -114,6 +131,27 @@ class TestRssParser:
         entries = _parse_rss_xml(rss)
         assert "<b>" not in entries[0]["summary"]
         assert "Russian" in entries[0]["summary"]
+
+    def test_content_encoded_preferred_over_description(self):
+        """content:encoded has more body text and should be used when present."""
+        entries = _parse_rss_xml(SAMPLE_RSS_CONTENT_ENCODED)
+        assert len(entries) == 1
+        # content:encoded has "Fancy Bear" — description doesn't
+        assert "Fancy Bear" in entries[0]["summary"]
+
+    def test_summary_not_double_truncated(self):
+        """Summary stored in cache should be SUMMARY_CACHE_CHARS, not 500."""
+        long_body = "APT28 " * 400   # ~2400 chars
+        rss = f"""<?xml version="1.0"?>
+<rss version="2.0"><channel><item>
+  <title>Test</title>
+  <link>https://example.com/test</link>
+  <pubDate>Mon, 15 Jan 2024 10:00:00 +0000</pubDate>
+  <description>{long_body}</description>
+</item></channel></rss>"""
+        entries = _parse_rss_xml(rss)
+        # Should store up to SUMMARY_CACHE_CHARS, not 500
+        assert len(entries[0]["summary"]) >= 500
 
 
 # ---------------------------------------------------------------------------
@@ -188,6 +226,31 @@ class TestRelevanceScoring:
         )
         assert score >= 30
 
+    def test_alias_in_title_scores_well(self):
+        """Articles mentioning 'Forest Blizzard' (not 'APT28') should score high."""
+        score = VendorIntelCollector._score_relevance(
+            title        = "Forest Blizzard Targets Ukrainian Infrastructure",
+            body         = "Forest Blizzard, a GRU-linked threat actor, has been observed...",
+            search_terms = {"apt28", "fancy bear", "forest blizzard", "sofacy"},
+            apt_focus    = True,
+        )
+        assert score >= 50
+
+    def test_body_scored_against_full_content(self):
+        """Body scoring should use full SUMMARY_SCORE_CHARS, not 500-char slice."""
+        # Put all mentions after the 500-char mark
+        padding = "x" * 600
+        body = padding + " APT28 APT28 APT28 APT28 APT28"
+        score = VendorIntelCollector._score_relevance(
+            title        = "Security Report",
+            body         = body,
+            search_terms = {"apt28"},
+            apt_focus    = False,
+        )
+        # If scoring only 500 chars, all mentions are missed → score 0
+        # With full scoring, body_hits ≥ 5 → score += 35
+        assert score >= 30
+
 
 # ---------------------------------------------------------------------------
 # Search term building
@@ -210,7 +273,6 @@ class TestSearchTerms:
         terms = VendorIntelCollector._build_search_terms(
             "APT28", ["G0007", "TA422", "Fancy Bear"]
         )
-        # G0007 and TA422 match ^[gt]\d+$ pattern — should be excluded
         assert "g0007" not in terms
         assert "ta422" not in terms
         assert "fancy bear" in terms
@@ -253,6 +315,226 @@ class TestUtilities:
 
 
 # ---------------------------------------------------------------------------
+# Cache TTL and configuration tests
+# ---------------------------------------------------------------------------
+
+class TestCacheConfig:
+
+    def test_cache_ttl_is_24_hours(self):
+        """Cache TTL should be 24h — feeds don't change faster than this."""
+        assert CACHE_TTL_HRS == 24
+
+    def test_summary_cache_chars_at_least_1000(self):
+        """Summary stored in cache must be significantly larger than old 500-char limit."""
+        assert SUMMARY_CACHE_CHARS >= 1000
+
+    def test_summary_score_chars_matches_cache(self):
+        """Score chars should match cache chars — no point storing more than we score."""
+        assert SUMMARY_SCORE_CHARS >= SUMMARY_CACHE_CHARS
+
+    def test_max_workers_reasonable(self):
+        """ThreadPoolExecutor worker count should be positive and bounded."""
+        assert 1 <= MAX_WORKERS <= 32
+
+    def test_cache_stale_after_ttl(self, tmp_path, monkeypatch):
+        """Entries older than CACHE_TTL_HRS should not be returned."""
+        import collectors.vendor_intel as vi_module
+        monkeypatch.setattr(vi_module, "CACHE_DIR", tmp_path)
+
+        from datetime import datetime, timezone, timedelta
+        collector = VendorIntelCollector.__new__(VendorIntelCollector)
+        collector._feeds = []
+
+        stale_time = (
+            datetime.now(timezone.utc) - timedelta(hours=CACHE_TTL_HRS + 1)
+        ).isoformat()
+
+        cache_file = tmp_path / "test_key.json"
+        cache_file.write_text(json.dumps({
+            "cached_at": stale_time,
+            "entries":   [{"title": "old article", "url": "x", "date": "2024-01-01", "summary": ""}],
+        }))
+
+        result = collector._load_cache("test_key")
+        assert result is None   # expired
+
+    def test_cache_fresh_returned(self, tmp_path, monkeypatch):
+        """Entries younger than CACHE_TTL_HRS should be returned."""
+        import collectors.vendor_intel as vi_module
+        monkeypatch.setattr(vi_module, "CACHE_DIR", tmp_path)
+
+        from datetime import datetime, timezone, timedelta
+        collector = VendorIntelCollector.__new__(VendorIntelCollector)
+
+        fresh_time = datetime.now(timezone.utc).isoformat()
+
+        cache_file = tmp_path / "test_key.json"
+        cache_file.write_text(json.dumps({
+            "cached_at": fresh_time,
+            "entries":   [{"title": "fresh article", "url": "x", "date": "2024-01-01", "summary": ""}],
+        }))
+
+        result = collector._load_cache("test_key")
+        assert result is not None
+        assert result[0]["title"] == "fresh article"
+
+
+# ---------------------------------------------------------------------------
+# Concurrent fetch tests
+# ---------------------------------------------------------------------------
+
+class TestConcurrentFetch:
+
+    def test_collect_uses_all_feeds(self, tmp_path, monkeypatch):
+        """collect() should attempt all enabled feeds."""
+        import collectors.vendor_intel as vi_module
+        monkeypatch.setattr(vi_module, "CACHE_DIR", tmp_path)
+
+        fetch_calls = []
+
+        def mock_fetch_cached(feed):
+            fetch_calls.append(feed["name"])
+            return []
+
+        collector = VendorIntelCollector.__new__(VendorIntelCollector)
+        collector._feeds_path = tmp_path / "feeds.yaml"
+        collector._feeds = [
+            {"name": "Feed A", "rss": "https://a.example.com/rss", "enabled": True, "tier": 2, "apt_focus": True, "tags": []},
+            {"name": "Feed B", "rss": "https://b.example.com/rss", "enabled": True, "tier": 2, "apt_focus": False, "tags": []},
+            {"name": "Feed C", "rss": "https://c.example.com/rss", "enabled": False, "tier": 3, "apt_focus": False, "tags": []},
+        ]
+
+        monkeypatch.setattr(collector, "_fetch_feed_cached", mock_fetch_cached)
+        monkeypatch.setattr(collector, "_load_apt_campaign_context", lambda *a, **k: [])
+
+        results = collector.collect("APT28", ["Fancy Bear"])
+
+        # Only enabled feeds should be fetched
+        assert "Feed A" in fetch_calls
+        assert "Feed B" in fetch_calls
+        assert "Feed C" not in fetch_calls
+
+    def test_failed_feed_does_not_abort_others(self, tmp_path, monkeypatch):
+        """A timeout on one feed should not prevent results from others."""
+        import collectors.vendor_intel as vi_module
+        from datetime import datetime, timezone, timedelta
+        monkeypatch.setattr(vi_module, "CACHE_DIR", tmp_path)
+
+        # Use a recent date so articles pass the lookback cutoff filter
+        recent_date = (datetime.now(timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%d")
+
+        def mock_fetch_cached(feed):
+            if feed["name"] == "Slow Feed":
+                raise TimeoutError("connection timed out")
+            return [{
+                "title":   "APT28 New Campaign",
+                "url":     "https://good.example.com/apt28",
+                "date":    recent_date,
+                "summary": "APT28 targets European governments using spearphishing.",
+            }]
+
+        collector = VendorIntelCollector.__new__(VendorIntelCollector)
+        collector._feeds = [
+            {"name": "Slow Feed",  "rss": "https://slow.example.com/rss",
+             "enabled": True, "tier": 2, "apt_focus": True, "tags": []},
+            {"name": "Good Feed",  "rss": "https://good.example.com/rss",
+             "enabled": True, "tier": 2, "apt_focus": True, "tags": []},
+        ]
+
+        monkeypatch.setattr(collector, "_fetch_feed_cached", mock_fetch_cached)
+        monkeypatch.setattr(collector, "_load_apt_campaign_context", lambda *a, **k: [])
+
+        results = collector.collect("APT28", ["Fancy Bear"])
+        assert len(results) >= 1
+        assert any("APT28" in r["title"] for r in results)
+
+    def test_deduplication_by_url(self, tmp_path, monkeypatch):
+        """Same URL from two feeds should appear only once."""
+        import collectors.vendor_intel as vi_module
+        from datetime import datetime, timezone, timedelta
+        monkeypatch.setattr(vi_module, "CACHE_DIR", tmp_path)
+
+        recent_date = (datetime.now(timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%d")
+
+        shared_entry = {
+            "title":   "APT28 Analysis",
+            "url":     "https://shared.example.com/article",
+            "date":    recent_date,
+            "summary": "APT28 has been conducting campaigns against NATO allies.",
+        }
+
+        def mock_fetch_cached(feed):
+            return [shared_entry]
+
+        collector = VendorIntelCollector.__new__(VendorIntelCollector)
+        collector._feeds = [
+            {"name": "Feed X", "rss": "x", "enabled": True, "tier": 2, "apt_focus": True, "tags": []},
+            {"name": "Feed Y", "rss": "y", "enabled": True, "tier": 2, "apt_focus": True, "tags": []},
+        ]
+
+        monkeypatch.setattr(collector, "_fetch_feed_cached", mock_fetch_cached)
+        monkeypatch.setattr(collector, "_load_apt_campaign_context", lambda *a, **k: [])
+
+        results = collector.collect("APT28", [])
+        urls = [r["url"] for r in results]
+        assert urls.count("https://shared.example.com/article") == 1
+
+    def test_results_sorted_by_relevance(self, tmp_path, monkeypatch):
+        """Results should be sorted highest relevance first."""
+        import collectors.vendor_intel as vi_module
+        from datetime import datetime, timezone, timedelta
+        monkeypatch.setattr(vi_module, "CACHE_DIR", tmp_path)
+
+        recent_date = (datetime.now(timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%d")
+
+        def mock_fetch_cached(feed):
+            return [
+                {
+                    "title":   "APT28 Primary Subject Article",
+                    "url":     "https://example.com/high",
+                    "date":    recent_date,
+                    "summary": "APT28 APT28 APT28 APT28 APT28 APT28 deployed backdoors.",
+                },
+                {
+                    "title":   "Brief Mention of APT28",
+                    "url":     "https://example.com/low",
+                    "date":    recent_date,
+                    "summary": "APT28 was mentioned briefly in context of nation-state threats.",
+                },
+            ]
+
+        collector = VendorIntelCollector.__new__(VendorIntelCollector)
+        collector._feeds = [
+            {"name": "Feed", "rss": "x", "enabled": True, "tier": 2, "apt_focus": True, "tags": []},
+        ]
+
+        monkeypatch.setattr(collector, "_fetch_feed_cached", mock_fetch_cached)
+        monkeypatch.setattr(collector, "_load_apt_campaign_context", lambda *a, **k: [])
+
+        results = collector.collect("APT28", [])
+        assert len(results) >= 2
+        assert results[0]["relevance"] >= results[-1]["relevance"]
+
+
+# ---------------------------------------------------------------------------
+# Feed health logging
+# ---------------------------------------------------------------------------
+
+class TestFeedHealth:
+
+    def test_log_feed_health_does_not_raise(self):
+        """_log_feed_health should handle all sentinel values without error."""
+        VendorIntelCollector._log_feed_health(
+            hit_counts={"Feed A": 3, "Feed B": 0, "Feed C": -1},
+            errors={"Feed C": "timeout"},
+        )
+
+    def test_log_feed_health_empty(self):
+        """Empty inputs should not raise."""
+        VendorIntelCollector._log_feed_health(hit_counts={}, errors={})
+
+
+# ---------------------------------------------------------------------------
 # LLM provider tests (offline — no real API calls)
 # ---------------------------------------------------------------------------
 
@@ -261,7 +543,6 @@ class TestLLMProviders:
     def test_claude_unavailable_without_key(self, monkeypatch):
         monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
         p = ClaudeProvider()
-        # Mock _load_key to return empty
         p._api_key = ""
         assert not p.available
 
@@ -306,7 +587,6 @@ class TestArticleHash:
         assert isinstance(_article_hash({"url": "x", "title": "y"}), str)
 
     def test_hash_length(self):
-        # 16 hex chars
         assert len(_article_hash({"url": "x", "title": "y"})) == 16
 
 

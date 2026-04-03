@@ -1,65 +1,65 @@
 {
-  "cached_at": "2026-04-01T23:18:21.996558+00:00",
+  "cached_at": "2026-04-03T04:22:54.250567+00:00",
   "entries": [
+    {
+      "title": "Threat actor abuse of AI accelerates from tool to cyberattack surface",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/04/02/threat-actor-abuse-of-ai-accelerates-from-tool-to-cyberattack-surface/",
+      "date": "2026-04-02",
+      "summary": "For the last year, one word has represented the conversation living at the intersection of AI and cybersecurity: speed. Speed matters, but it\u2019s not the most important shift we are observing across the threat landscape today. Now, threat actors from nation states to cybercrime groups are embedding AI into how they plan, refine, and sustain cyberattacks. The objectives haven\u2019t changed, but the tempo, iteration, and scale of generative AI enabled attacks are certainly upgrading them. Explore integrated security solutions with Microsoft Defender However, like defenders, there is typically a human-in-the-loop still powering these attacks, and not fully autonomous or agentic AI running campaigns. AI is reducing friction across the attack lifecycle; helping threat actors research faster, write better lures, vibe code malware, and triage stolen data. The security leaders I spoke with at RSAC\u2122 2026 Conference this week are prioritizing resources and strategy shifts to get ahead of this critical progression across the threat landscape. The operational reality: Embedded, not emerging The scale of what we are tracking makes the scope impossible to dismiss. Threat activity spans every region. The United States alone represents nearly 25%"
+    },
+    {
+      "title": "Cookie-controlled PHP webshells: A stealthy tradecraft in Linux hosting environments",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/04/02/cookie-controlled-php-webshells-tradecraft-linux-hosting-environments/",
+      "date": "2026-04-02",
+      "summary": "In this article Cookie-controlled execution behavior Observed variants of cookie-controlled PHP web shells Mitigation and protection guidance Microsoft Defender XDR detections Microsoft Security Copilot prompts <"
+    },
     {
       "title": "Mitigating the Axios npm supply chain compromise",
       "url": "https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/",
       "date": "2026-04-01",
-      "summary": "On March 31, 2026, the popular HTTP client Axios experienced a supply chain attack, causing two newly published npm packages for version updates (1.14.1 and 0.30.4) to download from command and control (C2) that Microsoft Threat Intelligence has attributed to the North Korean state actor Sapphire Sleet. Although the malicious versions are no longer available for download, since Axios is one of the most widely used HTTP clients in the JavaScript ecosystem, this compromise exposed hundreds to potentially millions of users. The post Mitigating the Axios npm supply chain compromise appeared first on Microsoft Security Blog ."
+      "summary": "In this article Analysis of the attack Mitigation and protection guidance Microsoft Defender detections Indicators of compromise Hunting queries On M"
     },
     {
       "title": "The threat to critical infrastructure has changed. Has your readiness?",
       "url": "https://www.microsoft.com/en-us/security/security-insider/threat-landscape/threat-to-critical-infrastructure-has-changed",
       "date": "2026-03-31",
-      "summary": "Five facts critical infrastructure (CI) leaders need to act on in 2026, grounded in what Microsoft Threat Intelligence is observing across sectors right now. The post The threat to critical infrastructure has changed. Has your readiness? appeared first on Microsoft Security Blog ."
+      "summary": "Critical infrastructure (CI) organizations underpin national security, public safety, and the economy. In 2026, the&nbsp; cyber threat landscape facing these sectors &nbsp;is structurally different than it was&nbsp;even two years ago. What Microsoft Threat Intelligence is observing across critical infrastructure environments right now is not a forecast. It is already happening. Threat actors are no longer focused solely on data theft or opportunistic disruption. They are establishing persistent access, footholds they can&nbsp;sit in&nbsp;quietly, undetected, and activate&nbsp;at the moment&nbsp;of maximum disruption. That is the threat CI leaders need to be preparing for today. Not someday. Now. Given these rising threats, governments worldwide are advancing policies and regulations to require critical infrastructure organizations to prioritize continuous readiness and proactive defense. The regulatory trajectory is clear. The&nbsp; U.S. National Cybersecurity Strategy published in March&nbsp;2023 &nbsp;explicitly frames cybersecurity of critical infrastructure as a national security imperative. Japan issued&nbsp;a&nbsp;basic policy to implement&nbsp; the Active Cyber Defense legislation in 2025 . Europe&nbsp; continues to implement the NIS2 Directive &nbsp;across the essential sectors. And Canada is advancing a more prescriptive approach to&nbsp; critical infrastructure security through Bill C8 .</p"
     },
     {
       "title": "Applying security fundamentals to AI: Practical advice for CISOs",
       "url": "https://www.microsoft.com/en-us/security/blog/2026/03/31/applying-security-fundamentals-to-ai-practical-advice-for-cisos/",
       "date": "2026-03-31",
-      "summary": "Read actionable advice for CISOs on securing AI, managing risk, and applying core security principles in today\u2019s AI\u2011powered environment. The post Applying security fundamentals to AI: Practical advice for CISOs appeared first on Microsoft Security Blog ."
+      "summary": "What to know about the era of AI The first thing to know is that AI isn\u2019t magic The best way to think about how to effectively use and secure a modern AI system is to imagine it like a very new, very junior person. It\u2019s very smart and eager to help but can also be extremely unintelligent. Like a junior person, it works at its best when it\u2019s given clear, fairly specific goals, and the vaguer its instructions, the more likely it is to misinterpret them. If you\u2019re giving it the ability to do anything consequential, think about how you would give that responsibility to someone very new: at what point would you want them to stop and check with you before continuing, and what information would you want them to show you so that you could tell they were on track? Apply that same kind of human reasoning to AI and you will get best results. Microsoft Deputy CISOs To hear more from Microsoft Deputy CISOs, check out the&nbsp; OCISO blog series . <p class=\"wp-block-paragr"
     },
     {
       "title": "WhatsApp malware campaign delivers VBScript and MSI backdoors",
       "url": "https://www.microsoft.com/en-us/security/blog/2026/03/31/whatsapp-malware-campaign-delivers-vbs-payloads-msi-backdoors/",
       "date": "2026-03-31",
-      "summary": "A malware campaign uses WhatsApp messages to deliver VBS scripts that initiate a multi-stage infection chain. The attack leverages renamed Windows tools and cloud-hosted payloads to install MSI backdoors and maintain persistent access to compromised systems. The post WhatsApp malware campaign delivers VBScript and MSI backdoors appeared first on Microsoft Security Blog ."
+      "summary": "In this article Attack chain overview Mitigation and protection guidance Hunting queries Indicators of compromise Microsoft Defender Experts observed a campaign beginning in late February 2026 that uses WhatsApp messages to deliver malicious Visual Basic Script (VBS) files. Once executed, thes"
     },
     {
       "title": "Addressing the OWASP Top 10 Risks in Agentic AI with Microsoft Copilot Studio",
       "url": "https://www.microsoft.com/en-us/security/blog/2026/03/30/addressing-the-owasp-top-10-risks-in-agentic-ai-with-microsoft-copilot-studio/",
       "date": "2026-03-30",
-      "summary": "Agentic AI introduces new security risks. Learn how the OWASP Top 10 Risks for Agentic Applications maps to real mitigations in Microsoft Copilot Studio. The post Addressing the OWASP Top 10 Risks in Agentic AI with Microsoft Copilot Studio appeared first on Microsoft Security Blog ."
+      "summary": "Agentic AI is moving fast from pilots to production. That shift changes the security conversation. These systems do not just generate content. They can retrieve sensitive data, invoke tools, and take action using real identities and permissions. When something goes wrong, the failure is not limited to a single response. It can become an automated sequence of access, execution, and downstream impact. Security teams are already familiar with application risk, identity risk, and data risk. Agentic systems collapse those domains into one operating model. Autonomy introduces a new problem: a system can be \u201cworking as designed\u201d while still taking steps that a human would be unlikely to approve, because the boundaries were unclear, permissions were too broad, or tool use was not tightly governed. The OWASP Top 10 for Agentic Applications (2026) outlines the top ten risks associated with autonomous systems that can act across workflows using real identities, data access, and tools. This blog is designed to do two things: First, it explores the key findings of the OWASP Top 10 for Agentic Applications. Second, it highlights examples of practical mitigations for risks surfaced in the paper, grounded in Agent 365 and foundational capabilities in Microsoft Copilot Studio . <a class=\"wp-block-button__link has-text-align-center wp-element-button\" href=\"https:"
     },
     {
       "title": "How Microsoft Defender protects high-value assets in real-world attack scenarios",
       "url": "https://www.microsoft.com/en-us/security/blog/2026/03/27/microsoft-defender-protects-high-value-assets/",
       "date": "2026-03-27",
-      "summary": "High-value assets including domain controllers, web servers, and identity infrastructure are frequent targets in sophisticated attacks. Microsoft Defender applies asset-aware protection using Microsoft Security Exposure Management to detect and block threats against these critical systems. This article explores real-world attack scenarios and defense techniques. The post How Microsoft Defender protects high-value assets in real-world attack scenarios appeared first on Microsoft Security Blog ."
+      "summary": "In this article Using asset context to strengthen detection How high-value asset protection works Real-world high-value asset protection scenarios Protecting your HVAs Learn more <span class=\"table-of-contents-block_"
     },
     {
       "title": "Identity security is the new pressure point for modern cyberattacks",
       "url": "https://www.microsoft.com/en-us/security/blog/2026/03/25/identity-security-is-the-new-pressure-point-for-modern-cyberattacks/",
       "date": "2026-03-25",
-      "summary": "Read the latest Microsoft Secure Access report for insights into why a unified identity and access strategy offers strong modern protection. The post Identity security is the new pressure point for modern cyberattacks appeared first on Microsoft Security Blog ."
+      "summary": "Identity attacks no longer hinge on who a cyberattacker compromises, but on what that identity can access. As organizations manage growing numbers of human, non-human, and agentic identities, their access fabric multiplies across apps, resources, and environments, which increases both operational complexity for identity teams and risk exposure for security teams. Redefining identity security for the modern enterprise Read the blog \u2197 The challenge isn\u2019t just scale, it\u2019s fragmentation. From our latest Secure Access report , research shows that 32% of organizations say their access management solutions are duplicative, and 40% say they have too many different vendors. That fragmentation for security vendors makes it harder to maintain consistent access controls and correlate risk across identities. When risk is distributed across dozens of disconnected accounts and permissions, visibility fragments and blind spots emerge\u2014creating ideal conditions for cyberattackers to move laterally without detection. Securing identity in this reality requires more than incremental improvements. It calls for a shift from fragmented controls to an integrated, end-to-end approach that treats identity as a shared control plane that is informed by a continuous, foundational security signal. Why fra"
     },
     {
       "title": "Guidance for detecting, investigating, and defending against the Trivy supply chain compromise",
       "url": "https://www.microsoft.com/en-us/security/blog/2026/03/24/detecting-investigating-defending-against-trivy-supply-chain-compromise/",
       "date": "2026-03-25",
-      "summary": "Threat actors abused trusted Trivy distribution channels to inject credential\u2011stealing malware into CI/CD pipelines worldwide. This analysis walks through the Trivy supply\u2011chain compromise, attacker techniques, and concrete steps security teams can take to detect and defend against similar attacks. The post Guidance for detecting, investigating, and defending against the Trivy supply chain compromise appeared first on Microsoft Security Blog ."
-    },
-    {
-      "title": "Governing AI agent behavior: Aligning user, developer, role, and organizational intent",
-      "url": "https://techcommunity.microsoft.com/blog/microsoft-security-blog/governing-ai-agent-behavior-aligning-user-developer-role-and-organizational-inte/4503551",
-      "date": "2026-03-24",
-      "summary": "This research report explores the layers of agent intent and how to align them for secure enterprise AI adoption. The post Governing AI agent behavior: Aligning user, developer, role, and organizational intent appeared first on Microsoft Security Blog ."
-    },
-    {
-      "title": "Case study: How predictive shielding in Defender stopped GPO-based ransomware before it started",
-      "url": "https://www.microsoft.com/en-us/security/blog/2026/03/23/case-study-predictive-shielding-defender-stopped-gpo-based-ransomware-before-started/",
-      "date": "2026-03-23",
-      "summary": "Microsoft Defender stopped a human-operated ransomware attack that abused Group Policy Objects (GPOs) to disable defenses and push encryption at scale. This case study breaks down the attacker\u2019s playbook and shows how predictive shielding hardened 700 devices in time, resulting in zero GPO-based encryptions and blocking most of the attempted impact. The post Case study: How predictive shielding in Defender stopped GPO-based ransomware before it started appeared first on Microsoft Security Blog ."
+      "summary": "In this article Analyzing the Trivy supply chain compromise Detection and investigation Mitigation and protection guidance Advanced hunting queries References <a class=\"table-of-contents-block__list-item-link\" h"
     }
   ]
 }
