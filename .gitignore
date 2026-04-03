@@ -16,3 +16,7 @@ config/sources.yaml
 
 # Output files (optional - remove this if you want dossiers committed)
 # output/dossiers/
+
+# Ignore Dossier outputs and cache
+Dossier/
+.cache/
