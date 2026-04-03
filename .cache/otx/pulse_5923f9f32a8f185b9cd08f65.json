@@ -1,0 +1,57 @@
+{
+  "id": "5923f9f32a8f185b9cd08f65",
+  "name": "WannaCry: Ransomware attacks show strong links to Lazarus group",
+  "description": "May 22 2017 - Updated bulletin with traits and artifacts supporting attribution  to the Lazarus group.",
+  "author_name": "corq",
+  "modified": "2017-05-23T10:15:06.496000",
+  "created": "2017-05-23T08:59:31.544000",
+  "tags": [
+    "wcry",
+    "wanacry",
+    "smb",
+    "wannacry",
+    "lazarus",
+    "MS17-010",
+    "ETERNALBLUE",
+    "DOUBLEPULSAR"
+  ],
+  "references": [
+    "https://www.symantec.com/connect/blogs/wannacry-ransomware-attacks-show-strong-links-lazarus-group"
+  ],
+  "public": 1,
+  "adversary": "Lazarus Group",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [],
+  "revision": 4,
+  "groups": [
+    {
+      "name": "APT",
+      "id": 51
+    },
+    {
+      "name": "Malware",
+      "id": 77
+    },
+    {
+      "name": "MISP FEED",
+      "id": 76
+    },
+    {
+      "name": "Ransomware",
+      "id": 66
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "corq",
+    "id": "3282",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/corq/resized/80/Screenshot_2015-09-05_14-39-54.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

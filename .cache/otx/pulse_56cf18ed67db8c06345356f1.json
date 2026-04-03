@@ -1,0 +1,37 @@
+{
+  "id": "56cf18ed67db8c06345356f1",
+  "name": "Lazarus group: Operation Blockbuster",
+  "description": "The Lazarus Group\u2019s activity spans multiple years, going back as far as 2009. However, their activity spikes starting with 2011. The group deployed multiple malware families throughout the years, including malware associated with Operation Troy and DarkSeoul, the Hangman malware (2014-2015) and Wild Positron / Duuzer (2015). The group is known for spearphishing attacks, which include CVE-2015-6585, which was a zero-day vulnerability at the time of discovery.\n\nDuring our analysis of the malware from the SPE attack as well as the connected malware families mentioned above, we observed certain specific traits shared between samples used in separate attacks. In general, such similarities are instances of code sharing and indicate the existence of a relationship between the malware families, which can be used to paint a more complete picture of a threat actor. We describe some of these overlapping features below.\n\nSource: https://securelist.com/blog/incidents/73914/operation-blockbuster-revealed/",
+  "author_name": "alienvault@indiciatech.nl",
+  "modified": "2016-02-25T15:08:29.112000",
+  "created": "2016-02-25T15:08:29.112000",
+  "tags": [
+    "Blockbuster",
+    "Lazarus",
+    "CVE-2015-6585"
+  ],
+  "references": [
+    "https://securelist.com/blog/incidents/73914/operation-blockbuster-revealed/",
+    "https://www.operationblockbuster.com/resources/index.html",
+    "http://www.kaspersky.com/about/news/virus/2016/Kaspersky-Lab-helps-to-disrupt-activity-of-Lazarus-Group-responsible-for-multiple-devastating-cyber-attacks"
+  ],
+  "public": 1,
+  "adversary": null,
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [],
+  "revision": 1,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "alienvault@indiciatech.nl",
+    "id": "10536",
+    "avatar_url": "https://otx.alienvault.com/assets/images/default-avatar.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

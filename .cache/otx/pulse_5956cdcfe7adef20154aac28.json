@@ -1,0 +1,53 @@
+{
+  "id": "5956cdcfe7adef20154aac28",
+  "name": "From BlackEnergy to ExPetr - Securelist",
+  "description": "Much has been written about the recent ExPetr/NotPetya/Nyetya/Petya outbreak \u2013 you can read our findings here:Schroedinger\u2019s Pet(ya) and ExPetr is a wiper, not ransomware.\n\nAs in the case of Wannacry, attribution is very difficult and finding links with previously known malware is challenging. In the case of Wannacry, Google\u2019s Neel Mehta was able to identify a code fragment which became the most important clue in the story, and was later confirmed by further evidence, showing Wannacry as a pet project of the Lazarus group.",
+  "author_name": "bartblaze",
+  "modified": "2017-06-30T22:16:47.353000",
+  "created": "2017-06-30T22:16:47.353000",
+  "tags": [
+    "expetr",
+    "blackenergy",
+    "d2",
+    "wannacry",
+    "expetr/petya",
+    "yara",
+    "uint16",
+    "ukraine",
+    ".accdb",
+    "be2",
+    "lazarus",
+    ".docx",
+    ".doc",
+    "eset",
+    ".cs",
+    ".js",
+    ".csv",
+    "word",
+    "killdisk",
+    "palo alto",
+    "ics"
+  ],
+  "references": [
+    "https://securelist.com/from-blackenergy-to-expetr/78937/"
+  ],
+  "public": 1,
+  "adversary": "",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "white",
+  "indicators": [],
+  "revision": 1,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "bartblaze",
+    "id": "1009",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/bartblaze/resized/80/av-22617.jpeg",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

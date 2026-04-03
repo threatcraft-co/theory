@@ -1,0 +1,36 @@
+{
+  "id": "59368b04bd98e7261c94e01b",
+  "name": "Lazarus Arisen",
+  "description": "IOCs from Group-IB Lazarus Arisen Report",
+  "author_name": "inigo",
+  "modified": "2017-06-06T10:59:16.699000",
+  "created": "2017-06-06T10:59:16.699000",
+  "tags": [
+    "lazarus",
+    "SWIFT"
+  ],
+  "references": [
+    "http://blog.group-ib.com/lazarus"
+  ],
+  "public": 1,
+  "adversary": "Lazarus Group",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [
+    "banking"
+  ],
+  "TLP": "white",
+  "indicators": [],
+  "revision": 1,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "inigo",
+    "id": "772",
+    "avatar_url": "https://otx.alienvault.com/assets/images/default-avatar.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}
