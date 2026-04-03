@@ -45,10 +45,24 @@ from typing import Any
 # Logging — clean format, WARNING by default
 # ---------------------------------------------------------------------------
 
-logging.basicConfig(
-    level=logging.WARNING,
-    format="%(levelname)s  %(name)s  %(message)s",
-)
+try:
+    from rich.logging import RichHandler
+    from rich.console import Console as _RichConsole
+    logging.basicConfig(
+        level=logging.WARNING,
+        format="%(message)s",
+        datefmt="[%X]",
+        handlers=[RichHandler(
+            console=_RichConsole(stderr=True),
+            show_path=False,
+            rich_tracebacks=False,
+        )],
+    )
+except ImportError:
+    logging.basicConfig(
+        level=logging.WARNING,
+        format="%(levelname)s  %(name)s  %(message)s",
+    )
 logger = logging.getLogger("theory")
 
 
@@ -303,6 +317,7 @@ def _make_progress():
             Progress, SpinnerColumn, TextColumn,
             BarColumn, TaskProgressColumn, TimeElapsedColumn,
         )
+        from rich.console import Console
         return Progress(
             SpinnerColumn(),
             TextColumn("[bold cyan]{task.description}"),
@@ -310,6 +325,7 @@ def _make_progress():
             TaskProgressColumn(),
             TimeElapsedColumn(),
             transient=True,
+            console=Console(stderr=True),
         )
     except ImportError:
         return None
@@ -531,7 +547,9 @@ def run(
     if verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    progress = _make_progress()
+    # Disable progress bar in verbose mode — log output and Rich live display
+    # conflict and produce garbled multi-line output when both run together.
+    progress = None if verbose else _make_progress()
 
     # ── 1. Collect & map ──────────────────────────────────────────────
     collect_sources  = [s for s in sources if s not in ENRICHMENT_SOURCES]

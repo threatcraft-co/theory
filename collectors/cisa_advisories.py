@@ -36,14 +36,14 @@ KEV_URL = (
     "known_exploited_vulnerabilities.json"
 )
 
-# CISA advisory index — JSON feed (undocumented but stable since 2022)
+# CISA advisory index — XML/RSS feed (official, stable)
 ADVISORY_INDEX_URL = (
     "https://www.cisa.gov/api/glossary/all-items"  # tags endpoint
 )
 
-# Fallback: CISA publishes a structured advisory list here
+# CISA publishes all cybersecurity advisories as an XML feed
 ADVISORY_LIST_URL = (
-    "https://www.cisa.gov/sites/default/files/feeds/cybersecurity-advisories.json"
+    "https://www.cisa.gov/cybersecurity-advisories/cybersecurity-advisories.xml"
 )
 
 _TIMEOUT    = 15   # seconds
@@ -378,11 +378,10 @@ class CisaAdvisoriesCollector(BaseCollector):
         """
         advisories: list[dict] = []
 
-        # Try the JSON feed
+        # Try the XML feed
         for url in (ADVISORY_LIST_URL,):
             try:
-                data  = _fetch_json(url)
-                items = data if isinstance(data, list) else data.get("items", [])
+                items = _fetch_advisory_xml(url)
                 for item in items:
                     if self._advisory_matches(item, search_set):
                         advisories.append(self._normalise_advisory(item))
@@ -492,6 +491,57 @@ def _extract_sectors(text: str) -> list[str]:
 
 def _extract_technique_ids(text: str) -> list[str]:
     return list(dict.fromkeys(re.findall(r"\bT\d{4}(?:\.\d{3})?\b", text)))
+
+
+def _fetch_advisory_xml(url: str, timeout: int = _TIMEOUT) -> list[dict]:
+    """
+    Fetch the CISA cybersecurity advisories XML feed and parse into item dicts.
+    Returns a list of dicts with title, url, date, summary fields.
+    """
+    import xml.etree.ElementTree as ET
+    req = Request(url, headers={"User-Agent": "THEORY/1.0 threat-intel-research"})
+    with urlopen(req, timeout=timeout) as resp:
+        raw = resp.read().decode("utf-8", errors="replace")
+
+    root = ET.fromstring(raw)
+    # Handle both RSS (<channel><item>) and Atom (<entry>) formats
+    ns   = {"atom": "http://www.w3.org/2005/Atom"}
+    items: list[dict] = []
+
+    # RSS format
+    for item in root.findall(".//item"):
+        def _t(tag: str) -> str:
+            el = item.find(tag)
+            return (el.text or "") if el is not None else ""
+        items.append({
+            "title":       _t("title"),
+            "url":         _t("link"),
+            "date":        _t("pubDate"),
+            "summary":     _t("description"),
+            "description": _t("description"),
+            "body":        _t("description"),
+            "tags":        _t("category"),
+        })
+
+    # Atom format fallback
+    if not items:
+        for entry in root.findall("atom:entry", ns):
+            def _at(tag: str) -> str:
+                el = entry.find(f"atom:{tag}", ns)
+                return (el.text or "") if el is not None else ""
+            link_el = entry.find("atom:link", ns)
+            link = link_el.get("href", "") if link_el is not None else ""
+            items.append({
+                "title":       _at("title"),
+                "url":         link,
+                "date":        _at("updated"),
+                "summary":     _at("summary"),
+                "description": _at("summary"),
+                "body":        _at("content"),
+                "tags":        "",
+            })
+
+    return items
 
 
 def _fetch_json(url: str, timeout: int = _TIMEOUT) -> Any:
