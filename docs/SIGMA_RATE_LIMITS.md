@@ -29,7 +29,7 @@ the local clone with no network calls.
 ## Keeping rules up to date
 
 ```bash
-python3 theory.py --update-bundles
+theory --update-bundles
 ```
 
 This runs `git pull` on the Sigma repo alongside refreshing the ATT&CK bundle.
@@ -49,6 +49,6 @@ git clone --depth 1 https://github.com/SigmaHQ/sigma.git .cache/sigma-repo
 | Clone method | Shallow (`--depth 1`) — ~150MB |
 | Query method | Local `grep` on `.yml` files |
 | Query time | < 1 second per technique |
-| Update method | `git pull` via `--update-bundles` |
+| Update method | `git pull` via `theory --update-bundles` |
 | GitHub token | Not required |
 | Rate limits | None |

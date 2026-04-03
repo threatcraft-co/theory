@@ -28,8 +28,7 @@ Create a plist file at `~/Library/LaunchAgents/co.threatcraft.theory.update.plis
 
     <key>ProgramArguments</key>
     <array>
-        <string>/path/to/your/venv/bin/python3</string>
-        <string>/path/to/theory/theory.py</string>
+        <string>/path/to/your/venv/bin/theory</string>
         <string>--update-bundles</string>
     </array>
 
@@ -58,7 +57,17 @@ Create a plist file at `~/Library/LaunchAgents/co.threatcraft.theory.update.plis
 </plist>
 ```
 
-Replace `/path/to/your/venv` and `/path/to/theory` with your actual paths. Then load it:
+Replace `/path/to/your/venv` and `/path/to/theory` with your actual paths:
+
+```bash
+# Find your venv theory path
+which theory
+
+# Find your theory directory
+pwd  # run from inside the theory folder
+```
+
+Then load it:
 
 ```bash
 launchctl load ~/Library/LaunchAgents/co.threatcraft.theory.update.plist
@@ -86,34 +95,15 @@ and `Hour` to your preference.
 crontab -e
 
 # Add this line (runs every Monday at 6:00 AM)
-0 6 * * 1 cd /path/to/theory && /path/to/venv/bin/python3 theory.py --update-bundles >> /tmp/theory-update.log 2>&1
-```
-
-Or use a dedicated cron file:
-
-```bash
-# Create /etc/cron.d/theory-update (requires sudo)
-sudo tee /etc/cron.d/theory-update << 'CRON'
-0 6 * * 1 youruser cd /path/to/theory && /path/to/venv/bin/python3 theory.py --update-bundles >> /tmp/theory-update.log 2>&1
-CRON
+0 6 * * 1 cd /path/to/theory && /path/to/venv/bin/theory --update-bundles >> /tmp/theory-update.log 2>&1
 ```
 
 ## How often should I update?
 
-| Source | Update frequency | Notes |
+| Source | Recommended frequency | Notes |
 |---|---|---|
 | ATT&CK bundle | Monthly | MITRE releases ~4x/year |
 | Sigma rules | Weekly | SigmaHQ community is very active |
 | APT campaigns | Monthly | CyberMonitor collection is archival |
 
 Weekly (every Monday) is a good default that covers all three without being excessive.
-
-## Finding your paths
-
-```bash
-# Find your Python venv path
-which python3
-
-# Find your theory directory
-pwd  # run from inside the theory folder
-```

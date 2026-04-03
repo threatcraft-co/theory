@@ -16,13 +16,34 @@ by the security community, for the security community.
 
 ---
 
+## Development setup
+
+```bash
+git clone https://github.com/threatcraft-co/theory
+cd theory
+python -m venv venv
+source venv/bin/activate
+pip install -e ".[dev]"
+
+# Download the ATT&CK bundle
+theory --update-bundles
+
+# Run tests before making changes (all should pass)
+pytest tests/ -v
+
+# Run linter
+ruff check . --select E,F,W --ignore E501,E402,W291,W292,W293,E701,E702,F401,F541,F841
+```
+
+---
+
 ## Adding a new actor (easiest contribution)
 
 Edit `collectors/cisa_advisories.py` and add an entry to `ALIAS_TABLE`.
 
-The alias table is a dict mapping a canonical actor name to a frozenset of
-all known aliases in lowercase. The canonical name is the name THEORY uses
-in dossier output and file names.
+The alias table maps a canonical actor name to a frozenset of all known aliases
+in lowercase. The canonical name is the name THEORY uses in dossier output and
+file names.
 
 ```python
 # In collectors/cisa_advisories.py, inside ALIAS_TABLE:
@@ -40,9 +61,10 @@ in dossier output and file names.
 
 **Rules:**
 - All aliases must be lowercase
-- Include MITRE Group ID (G####) as an alias
+- Include the MITRE Group ID (G####) as an alias
 - Include all major vendor naming conventions you know of
-- The canonical name uses title case as it will appear in output
+- The canonical name uses title case — it appears in dossier output and filenames
+- No duplicate aliases across different actors
 - Open a PR with a link to at least one source confirming the actor exists
 
 ---
@@ -53,55 +75,44 @@ A source in THEORY consists of three components:
 
 ### 1. Collector (`collectors/<source_name>.py`)
 
-The collector fetches raw data from the source and returns it in a
-consistent dict structure. Follow this interface:
-
 ```python
 class MySourceCollector:
     def query(self, actor_name: str) -> dict | None:
         """
         Query the source for this actor.
-
-        Args:
-            actor_name: Canonical actor name (e.g. "APT28")
-
-        Returns:
-            Raw data dict with source_id set, or None if not found.
+        Returns a raw data dict with source_id set, or None if not found.
+        Must handle network errors gracefully — never raise unhandled exceptions.
         """
-        # ... fetch data ...
         return {
-            "source_id":    "my_source",
-            "actor_name":   actor_name,
-            "techniques":   [...],
-            "malware":      [...],
-            "indicators":   [...],
-            # ... other fields ...
+            "source_id":  "my_source",
+            "actor_name": actor_name,
+            "techniques": [...],
+            "malware":    [...],
+            "indicators": [...],
         }
 ```
 
 ### 2. Mapper (`mappers/<source_name>.py` or inline in collector)
 
-The mapper transforms the raw collector output into the THEORY CommonSchema:
-
 ```python
 class MySourceMapper:
     def map(self, raw: dict) -> dict:
-        """Transform raw collector output to CommonSchema."""
+        """Transform raw collector output to THEORY CommonSchema."""
         return {
-            "source_id":    raw["source_id"],
-            "actor_name":   raw["actor_name"],
+            "source_id":  raw["source_id"],
+            "actor_name": raw["actor_name"],
             "techniques": [
                 {
                     "technique_id":   t["id"],
                     "technique_name": t["name"],
                     "tactic":         t["tactic"],
-                    "confidence":     "medium",
+                    "description":    t.get("description", ""),
                     "detection":      "",
                 }
                 for t in raw.get("techniques", [])
             ],
-            "malware":      raw.get("malware", []),
-            "indicators":   raw.get("indicators", []),
+            "malware":    raw.get("malware", []),
+            "indicators": raw.get("indicators", []),
         }
 ```
 
@@ -116,9 +127,9 @@ in the test suite. See `tests/test_threatfox_collector.py` for a good example.
 - Mapper produces correctly structured output
 - Cache save and load works correctly
 
-### 4. Register in theory.py
+### 4. Register in `theory/_cli.py`
 
-Add your source to `SUPPORTED_SOURCES` and `SOURCE_DESCRIPTIONS` in `theory.py`:
+Add your source to `SUPPORTED_SOURCES` and `SOURCE_DESCRIPTIONS`:
 
 ```python
 SUPPORTED_SOURCES = {
@@ -149,7 +160,7 @@ Edit `config/feeds.yaml` and add to the `sources` list:
   enabled: true
 ```
 
-To verify the RSS feed works:
+To verify the RSS feed works before submitting:
 
 ```bash
 python -c "
@@ -164,32 +175,13 @@ print(entries[0] if entries else 'No entries')
 
 ---
 
-## Development setup
-
-```bash
-git clone https://github.com/threatcraft-co/theory
-cd theory
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-pip install ruff pytest pytest-cov
-
-# Run tests before making changes (all should pass)
-pytest tests/ -v
-
-# Run linter
-ruff check . --select E,F,W --ignore E501,E402
-```
-
----
-
 ## Pull request checklist
 
 - [ ] All existing tests still pass (`pytest tests/ -v`)
 - [ ] New code has tests (fully offline, no real API calls)
 - [ ] New actor entries include MITRE Group ID and 3+ aliases
+- [ ] No duplicate aliases with existing entries
 - [ ] New sources include collector, mapper, and test file
-- [ ] `DISCLAIMER.md` updated if new data sources introduce new data types
 - [ ] No API keys or secrets in the PR
 
 ---
@@ -199,7 +191,7 @@ ruff check . --select E,F,W --ignore E501,E402
 - Python 3.11+ compatible
 - Type hints on all public functions
 - Docstrings on all classes and public methods
-- No external dependencies beyond `requirements.txt`
+- No external dependencies beyond those in `pyproject.toml`
 - All collectors must handle network errors gracefully (try/except, return None)
 - All collectors must implement caching with a documented TTL
 
