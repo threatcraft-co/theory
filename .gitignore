@@ -1,5 +1,6 @@
 # Python
 __pycache__/
+output/dossiers
 *.py[cod]
 *.egg-info/
 .eggs/
@@ -13,6 +14,3 @@ config/sources.yaml
 
 # macOS
 .DS_Store
-
-# Output files (optional - remove this if you want dossiers committed)
-# output/dossiers/
