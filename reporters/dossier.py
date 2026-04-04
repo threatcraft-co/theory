@@ -38,6 +38,57 @@ except ImportError:
     _RICH = False
 
 
+
+# ---------------------------------------------------------------------------
+# IOC defanging — industry standard for safe sharing of malicious indicators
+# ---------------------------------------------------------------------------
+
+_DEFANG_TYPES = {"url", "domain", "ip"}
+
+def _defang(ioc_type: str, value: str) -> str:
+    """
+    Defang a potentially dangerous IOC value for safe display in reports.
+
+    Applies industry-standard defanging so that URLs, domains, and IPs
+    cannot be accidentally clicked or resolved:
+      - http:// → hxxp://
+      - https:// → hxxps://
+      - Dots in domain/IP positions → [.]
+      - Colon in ip:port → [:]
+
+    Hashes and other types are returned unchanged.
+    """
+    if ioc_type not in _DEFANG_TYPES:
+        return value
+    if not value:
+        return value
+
+    # Defang scheme
+    v = value.replace("https://", "hxxps://").replace("http://", "hxxp://")
+
+    # Defang dots in domain/IP — but not in path after the domain
+    # Strategy: split on scheme separator, defang the host portion only
+    if "hxxp" in v or "://" in v:
+        # Has a scheme — split into scheme + rest
+        sep = v.find("://")
+        scheme = v[:sep + 3]           # "hxxps://"
+        rest   = v[sep + 3:]           # "142.0.68.2/path/to/file.php"
+        # Defang dots only in the host (before first /)
+        slash  = rest.find("/")
+        if slash == -1:
+            host = rest
+            path = ""
+        else:
+            host = rest[:slash]
+            path = rest[slash:]
+        host = host.replace(".", "[.]")
+        v = scheme + host + path
+    else:
+        # No scheme — plain domain or IP, defang all dots
+        v = v.replace(".", "[.]")
+
+    return v
+
 class DossierReporter:
 
     def render(self, profile: dict[str, Any]) -> None:
@@ -212,7 +263,7 @@ class DossierReporter:
                             conf_str = "[red]LOW[/]"
                     ioc_table.add_row(
                         ioc_type,
-                        ioc.get("value", ""),
+                        _defang(ioc_type, ioc.get("value", "")),
                         conf_str,
                         ioc.get("threat_label", ioc.get("description", "")),
                         ioc.get("malware_family", ""),
@@ -439,7 +490,7 @@ class DossierReporter:
                         conf_str = ""
                     a(
                         f"| {ioc_type} "
-                        f"| {ioc.get('value','')} "
+                        f"| {_defang(ioc_type, ioc.get('value',''))} "
                         f"| {conf_str} "
                         f"| {ioc.get('threat_label', ioc.get('description',''))} "
                         f"| {ioc.get('malware_family','')} "
