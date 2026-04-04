@@ -16,7 +16,7 @@ For any supported threat actor, THEORY generates:
 - **TTP table** — every known technique with tactic, confidence score, and detection guidance
 - **Detection opportunities** — Sigma rules mapped directly to actor TTPs
 - **Malware inventory** — all associated families with full descriptions
-- **IOC table** — deduplicated indicators from OTX and ThreatFox with confidence scores and malware family attribution
+- **IOC table** — deduplicated, defanged indicators from OTX and ThreatFox with confidence scores and malware family attribution
 - **Recent intelligence** — LLM-synthesized summaries of recent vendor research articles, with source attribution and links
 - **Campaigns** — full campaign descriptions with dates and ATT&CK links
 - **Targeted sectors** and CISA advisories
@@ -65,6 +65,15 @@ That's it. Your first dossier renders in the terminal and saves to `output/dossi
 | `sigma` | SigmaHQ detection rules (local clone) | None | Permanent |
 | `threatfox` | ThreatFox IOCs | None | 24 hours |
 | `vendor` | Vendor intel synthesis (LLM) | LLM API key | 7 days |
+
+**Coming in v1.2 — IOC Enrichment Sources:**
+
+| Key | Source | Auth Required | Free Tier |
+|---|---|---|---|
+| `shodan` | Shodan host data + C2 detection | `SHODAN_API_KEY` | 100 queries/month |
+| `censys` | Censys certificate + host data | `CENSYS_API_ID` + `CENSYS_API_SECRET` | Community tier |
+| `criminalip` | Criminal IP threat scoring | `CRIMINALIP_API_KEY` | Free tier |
+| `virustotal` | VirusTotal hash + domain reputation | `VIRUSTOTAL_API_KEY` | 500 requests/day |
 
 ```bash
 # Live status of all sources
@@ -155,7 +164,7 @@ theory --list-actors    # see all 35 actors and their aliases
 
 ## LLM Actor Synopsis
 
-Every dossier now opens with an **Intelligence Overview** — a 4-6 sentence executive synopsis written by Claude (or your configured LLM) using the full aggregated profile as context.
+Every dossier opens with an **Intelligence Overview** — a 4-6 sentence executive synopsis written by Claude (or your configured LLM) using the full aggregated profile as context.
 
 The synopsis:
 - Uses the name you queried, not aliases
@@ -195,6 +204,14 @@ theory --actor APT28 --sources mitre,sigma --no-save
 ```
 
 Detection rules are linked directly to actor TTPs in the dossier. See `docs/SIGMA_RATE_LIMITS.md` for full details.
+
+---
+
+## IOC Safety
+
+All URLs, domains, and IPs in THEORY dossiers are automatically defanged using industry-standard notation — `hxxp://`, `[.]` — so they cannot be accidentally clicked or resolved in any markdown renderer, browser, or IDE preview.
+
+The IOC CSV export (`--output csv`) retains raw values for SIEM ingestion, where your platform handles the defanging.
 
 ---
 
@@ -296,7 +313,7 @@ All tests run fully offline — no API keys required.
 - Python 3.11+
 - Dependencies installed via `pip install -e .`
 - ATT&CK bundle downloaded via `theory --update-bundles`
-- API keys: `OTX_API_KEY` for OTX source, LLM key for synopsis and vendor synthesis
+- API keys: see `.env.example` for the full list with registration links
 
 ---
 
