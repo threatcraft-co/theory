@@ -71,7 +71,7 @@ That's it. Your first dossier renders in the terminal and saves to `output/dossi
 | Key | Source | Auth Required | Free Tier |
 |---|---|---|---|
 | `shodan` | Shodan host data + C2 detection | `SHODAN_API_KEY` | 100 queries/month |
-| `censys` | Censys certificate + host data | `CENSYS_API_ID` + `CENSYS_API_SECRET` | Community tier |
+| `censys` | Censys certificate + host data | `CENSYS_API_KEY` | Community tier |
 | `criminalip` | Criminal IP threat scoring | `CRIMINALIP_API_KEY` | Free tier |
 | `virustotal` | VirusTotal hash + domain reputation | `VIRUSTOTAL_API_KEY` | 500 requests/day |
 
