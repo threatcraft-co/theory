@@ -558,6 +558,119 @@ Write the synopsis now:"""
             logger.warning("Overview synthesis failed: %s", exc)
             return None
 
+
+    def synthesize_executive_summary(
+        self,
+        profile:      dict,
+        queried_name: str,
+        sector:       str = "",
+    ) -> str | None:
+        """
+        Generate a non-technical executive summary (BLUF — Bottom Line Up Front)
+        suitable for sharing with management, a CISO, or a non-technical audience.
+
+        Two paragraphs:
+          1. Who this actor is and what they do in plain language
+          2. What the risk is to the reader's sector specifically (if provided),
+             or to the most commonly targeted sectors
+
+        Triggered by: theory --actor APT28 --output exec
+        Optional:     theory --actor APT28 --output exec --sector energy
+        """
+        if not self.available:
+            return None
+
+        techniques  = profile.get("techniques", [])
+        malware     = profile.get("malware", [])
+        campaigns   = profile.get("campaigns", [])
+        origin      = profile.get("origin") or profile.get("suspected_origin") or "unknown"
+        first_seen  = profile.get("first_seen", "unknown")
+        motivations = ", ".join(profile.get("motivations", [])) or "unknown"
+        sectors     = profile.get("sectors", [])
+        sectors_str = ", ".join(sectors[:8]) or "multiple sectors"
+        aliases     = ", ".join(profile.get("aliases", [])[:6]) or "none"
+        description = profile.get("description", "")
+
+        top_malware = ", ".join(
+            m.get("name", "") for m in malware[:6] if m.get("name")
+        ) or "none identified"
+
+        campaign_names = ", ".join(
+            c.get("name", "") for c in campaigns[:4] if c.get("name")
+        ) or "none documented"
+
+        # High-confidence techniques only — most credible for exec reporting
+        high_conf_ttps = [
+            t.get("technique_name") or t.get("name", "")
+            for t in techniques
+            if t.get("confidence") == "HIGH" and (t.get("technique_name") or t.get("name"))
+        ][:8]
+        high_conf_str = ", ".join(high_conf_ttps) or "various techniques"
+
+        vendor_intel = profile.get("vendor_intel", []) or []
+        recent_intel = "\n".join(
+            f"- [{v.get('source','')}] {v.get('actor_summary','')}"
+            for v in vendor_intel[:4]
+            if v.get("actor_summary")
+        ) or "No recent vendor reporting available."
+
+        sector_context = (
+            f"The reader's organization operates in the {sector} sector. "
+            f"Focus the risk paragraph specifically on what this means for {sector} organizations."
+            if sector else
+            f"Focus the risk paragraph on the sectors most commonly targeted by this actor: {sectors_str}."
+        )
+
+        prompt = f"""You are a senior threat intelligence analyst briefing a non-technical executive audience.
+
+Write a two-paragraph executive summary (BLUF — Bottom Line Up Front) about the threat actor known as {queried_name}.
+
+PARAGRAPH 1 — Who they are (3-4 sentences, plain language):
+Explain who this actor is, where they come from, what their goals are, and how long they have been active.
+Avoid jargon. Write as if explaining to a CEO with no security background.
+Do not use bullet points. Do not use technical acronyms without explanation.
+
+PARAGRAPH 2 — Risk and relevance (3-4 sentences, plain language):
+{sector_context}
+Explain what this actor could do to an organization in that sector, what the consequences might be,
+and what the most important defensive priority is. Keep it actionable and concise.
+
+Use ONLY the data below. Do not invent facts. Always refer to the actor as "{queried_name}".
+Do not use bullet points or headers. Output only the two paragraphs separated by a blank line.
+
+--- ACTOR DATA ---
+Name: {queried_name}
+Also known as: {aliases}
+Origin: {origin}
+Active since: {first_seen}
+Motivation: {motivations}
+Commonly targeted sectors: {sectors_str}
+Known tools / malware: {top_malware}
+Documented campaigns: {campaign_names}
+Highest-confidence techniques: {high_conf_str}
+Total documented ATT&CK techniques: {len(techniques)}
+
+MITRE description:
+{description[:500] if description else "Not available."}
+
+Recent intelligence:
+{recent_intel}
+---
+
+Write the executive summary now:"""
+
+        try:
+            summary = self._provider.complete(
+                "You are a senior threat intelligence analyst writing clear, "
+                "concise executive briefings for non-technical leadership. "
+                "Use plain language. Be direct and actionable.",
+                prompt,
+            )
+            return summary.strip() if summary else None
+        except Exception as exc:
+            logger.warning("Executive summary synthesis failed: %s", exc)
+            return None
+
     def synthesize_batch(
 
         self,
