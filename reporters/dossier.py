@@ -89,6 +89,61 @@ def _defang(ioc_type: str, value: str) -> str:
 
     return v
 
+
+
+# ---------------------------------------------------------------------------
+# IOC freshness scoring — how recent is this indicator?
+# ---------------------------------------------------------------------------
+
+def _freshness(ioc: dict) -> str:
+    """
+    Score an IOC's recency based on its last_seen or first_seen date.
+
+    Returns one of:
+      FRESH  — seen within the last 30 days  (high operational relevance)
+      AGING  — seen 31–90 days ago           (monitor, may still be active)
+      STALE  — seen 90+ days ago             (low priority for blocklisting)
+      UNKNOWN — no date data available
+    """
+    raw = (ioc.get("last_seen") or ioc.get("first_seen") or "").strip()
+    if not raw:
+        return "UNKNOWN"
+    try:
+        # Handle YYYY-MM-DD and ISO formats
+        date_str = raw[:10]  # take just YYYY-MM-DD
+        seen = datetime.strptime(date_str, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+        age_days = (datetime.now(timezone.utc) - seen).days
+        if age_days <= 30:
+            return "FRESH"
+        elif age_days <= 90:
+            return "AGING"
+        else:
+            return "STALE"
+    except (ValueError, TypeError):
+        return "UNKNOWN"
+
+
+def _freshness_rich(ioc: dict) -> str:
+    """Return Rich-formatted freshness string with color coding."""
+    f = _freshness(ioc)
+    return {
+        "FRESH":   "[bold green]FRESH[/]",
+        "AGING":   "[yellow]AGING[/]",
+        "STALE":   "[dim]STALE[/]",
+        "UNKNOWN": "[dim]—[/]",
+    }.get(f, "[dim]—[/]")
+
+
+def _freshness_md(ioc: dict) -> str:
+    """Return plain markdown freshness string."""
+    f = _freshness(ioc)
+    return {
+        "FRESH":   "🟢 FRESH",
+        "AGING":   "🟡 AGING",
+        "STALE":   "🔴 STALE",
+        "UNKNOWN": "—",
+    }.get(f, "—")
+
 class DossierReporter:
 
     def render(self, profile: dict[str, Any]) -> None:
@@ -244,7 +299,7 @@ class DossierReporter:
             console.print(ioc_title)
 
             ioc_table = Table(
-                "Type", "Value", "Confidence", "Threat Type", "Malware Family", "First Seen",
+                "Type", "Value", "Confidence", "Freshness", "Threat Type", "Malware Family", "Last Seen",
                 box=rich_box.SIMPLE_HEAD, header_style="bold magenta"
             )
             by_type: dict[str, list] = {}
@@ -265,9 +320,10 @@ class DossierReporter:
                         ioc_type,
                         _defang(ioc_type, ioc.get("value", "")),
                         conf_str,
+                        _freshness_rich(ioc),
                         ioc.get("threat_label", ioc.get("description", "")),
                         ioc.get("malware_family", ""),
-                        ioc.get("first_seen", ""),
+                        (ioc.get("last_seen") or ioc.get("first_seen") or ""),
                     )
             console.print(ioc_table)
 
@@ -472,8 +528,8 @@ class DossierReporter:
                 src_note.append(f"ThreatFox: {tf_count}")
             a(f"## Indicators of Compromise ({', '.join(src_note)})")
             a("")
-            a("| Type | Value | Confidence | Threat Type | Malware Family | First Seen |")
-            a("|---|---|---|---|---|---|")
+            a("| Type | Value | Confidence | Freshness | Threat Type | Malware Family | Last Seen |")
+            a("|---|---|---|---|---|---|---|")
             by_type: dict[str, list] = {}
             for ioc in indicators:
                 by_type.setdefault(ioc.get("type", "unknown"), []).append(ioc)
@@ -492,9 +548,10 @@ class DossierReporter:
                         f"| {ioc_type} "
                         f"| {_defang(ioc_type, ioc.get('value',''))} "
                         f"| {conf_str} "
+                        f"| {_freshness_md(ioc)} "
                         f"| {ioc.get('threat_label', ioc.get('description',''))} "
                         f"| {ioc.get('malware_family','')} "
-                        f"| {ioc.get('first_seen','')} |"
+                        f"| {ioc.get('last_seen') or ioc.get('first_seen') or ''} |"
                     )
             family_hits = profile.get("threatfox_family_hits", {})
             if family_hits:
