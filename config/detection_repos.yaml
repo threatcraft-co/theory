@@ -1,0 +1,179 @@
+# config/detection_repos.yaml
+# ─────────────────────────────────────────────────────────────────────────────
+# Curated map of security platforms and vendors to their public detection
+# repositories. Used by THEORY to surface relevant detection resources in
+# dossier output based on an actor's targeted platforms and sectors.
+#
+# Fields:
+#   name        — display name shown in the dossier
+#   url         — link to the public detection repo or resource
+#   platform    — the technology/platform this covers
+#   tags        — used to match against actor target sectors and techniques
+#   tier        — 1=vendor-official, 2=community-maintained, 3=reference
+# ─────────────────────────────────────────────────────────────────────────────
+
+detection_repos:
+
+  # ── SIEM / Detection Platforms ───────────────────────────────────────────
+
+  - name: "Elastic Detection Rules"
+    url: "https://github.com/elastic/detection-rules"
+    platform: "elastic"
+    tags: [siem, endpoint, cloud, linux, windows, network]
+    tier: 1
+
+  - name: "Splunk Security Content"
+    url: "https://github.com/splunk/security_content"
+    platform: "splunk"
+    tags: [siem, endpoint, cloud, windows, network, threat-hunting]
+    tier: 1
+
+  - name: "Microsoft Sentinel Detection Templates"
+    url: "https://github.com/Azure/Azure-Sentinel"
+    platform: "sentinel"
+    tags: [siem, cloud, azure, windows, identity, office365]
+    tier: 1
+
+  - name: "Google SecOps / Chronicle Rules"
+    url: "https://github.com/chronicle/detection-rules"
+    platform: "chronicle"
+    tags: [siem, cloud, gcp, network, endpoint]
+    tier: 1
+
+  - name: "Panther Detection Library"
+    url: "https://github.com/panther-labs/panther-analysis"
+    platform: "panther"
+    tags: [siem, cloud, aws, saas, identity]
+    tier: 1
+
+  - name: "SigmaHQ Community Rules"
+    url: "https://github.com/SigmaHQ/sigma"
+    platform: "sigma"
+    tags: [siem, endpoint, windows, linux, cloud, network, universal]
+    tier: 2
+
+  # ── Endpoint / EDR ───────────────────────────────────────────────────────
+
+  - name: "CrowdStrike Adversary Intelligence"
+    url: "https://www.crowdstrike.com/adversaries/"
+    platform: "crowdstrike"
+    tags: [edr, endpoint, windows, linux, macos, threat-intelligence]
+    tier: 1
+
+  - name: "Velociraptor Artifact Exchange"
+    url: "https://docs.velociraptor.app/exchange/"
+    platform: "velociraptor"
+    tags: [edr, endpoint, threat-hunting, dfir, windows, linux, macos]
+    tier: 2
+
+  - name: "YARA Rules (VirusTotal Community)"
+    url: "https://github.com/Yara-Rules/rules"
+    platform: "yara"
+    tags: [endpoint, malware, file-detection, universal]
+    tier: 2
+
+  # ── Cloud ────────────────────────────────────────────────────────────────
+
+  - name: "AWS Security Hub Controls"
+    url: "https://github.com/aws-samples/aws-security-hub-analytic-pipeline"
+    platform: "aws"
+    tags: [cloud, aws, iam, s3, cloudtrail]
+    tier: 1
+
+  - name: "AWS Threat Detection with GuardDuty"
+    url: "https://github.com/aws-samples/amazon-guardduty-tester"
+    platform: "aws"
+    tags: [cloud, aws, guardduty, threat-detection]
+    tier: 1
+
+  - name: "GCP Security Command Center Detections"
+    url: "https://cloud.google.com/security-command-center/docs/concepts-vulnerabilities-findings"
+    platform: "gcp"
+    tags: [cloud, gcp, iam, storage, network]
+    tier: 1
+
+  - name: "Azure Defender / Defender for Cloud"
+    url: "https://github.com/Azure/Microsoft-Defender-for-Cloud"
+    platform: "azure"
+    tags: [cloud, azure, iam, storage, network, office365]
+    tier: 1
+
+  # ── Identity / IdP ───────────────────────────────────────────────────────
+
+  - name: "Okta Public Detection Rules"
+    url: "https://github.com/okta/customer-detections"
+    platform: "okta"
+    tags: [identity, idp, saas, mfa, credential-access, okta]
+    tier: 1
+
+  - name: "Microsoft Entra ID (Azure AD) Detections"
+    url: "https://github.com/Azure/Azure-Sentinel/tree/master/Detections/AuditLogs"
+    platform: "entra"
+    tags: [identity, idp, azure, office365, mfa, credential-access]
+    tier: 1
+
+  - name: "Duo Security Threat Detection Guidance"
+    url: "https://duo.com/labs"
+    platform: "duo"
+    tags: [identity, mfa, saas, credential-access]
+    tier: 1
+
+  # ── Network ──────────────────────────────────────────────────────────────
+
+  - name: "Zeek Network Security Scripts"
+    url: "https://github.com/zeek/zeek"
+    platform: "zeek"
+    tags: [network, dns, c2, lateral-movement, exfiltration]
+    tier: 2
+
+  - name: "Suricata Emerging Threats Rules"
+    url: "https://rules.emergingthreats.net/"
+    platform: "suricata"
+    tags: [network, ids, c2, malware, dns, lateral-movement]
+    tier: 2
+
+  - name: "Snort Community Rules"
+    url: "https://www.snort.org/downloads/#rule-downloads"
+    platform: "snort"
+    tags: [network, ids, c2, malware]
+    tier: 2
+
+  # ── Threat Intelligence ──────────────────────────────────────────────────
+
+  - name: "MITRE ATT&CK Navigator"
+    url: "https://mitre-attack.github.io/attack-navigator/"
+    platform: "mitre"
+    tags: [threat-intelligence, ttp-mapping, detection-planning, universal]
+    tier: 1
+
+  - name: "CISA Known Exploited Vulnerabilities"
+    url: "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
+    platform: "cisa"
+    tags: [vulnerability, patch-management, universal]
+    tier: 1
+
+  - name: "D3FEND — MITRE Defensive Framework"
+    url: "https://d3fend.mitre.org/"
+    platform: "d3fend"
+    tags: [defensive-techniques, detection-planning, universal]
+    tier: 1
+
+  # ── DFIR / Threat Hunting ────────────────────────────────────────────────
+
+  - name: "DFIR Report Detection Rules"
+    url: "https://github.com/The-DFIR-Report/Sigma-Rules"
+    platform: "dfir"
+    tags: [dfir, threat-hunting, ransomware, windows, endpoint]
+    tier: 2
+
+  - name: "Red Canary Threat Detection Report"
+    url: "https://redcanary.com/threat-detection-report/"
+    platform: "redcanary"
+    tags: [threat-hunting, endpoint, windows, macos]
+    tier: 1
+
+  - name: "Florian Roth's Signature Base"
+    url: "https://github.com/Neo23x0/signature-base"
+    platform: "yara"
+    tags: [yara, endpoint, malware, threat-hunting]
+    tier: 2
