@@ -16,6 +16,7 @@ import logging
 import os
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
@@ -187,12 +188,15 @@ class AlienVaultOTXCollector(BaseCollector):
 
         logger.info("OTX search: %d unique pulse stubs", len(stub_ids))
 
-        # Fetch full pulse detail (includes indicators) for each stub
+        # Fetch full pulse detail in parallel — much faster than serial
+        pids = list(stub_ids.keys())[:_MAX_PULSES]
         full_pulses: list[dict] = []
-        for pid in list(stub_ids.keys())[:_MAX_PULSES]:
-            full = self._fetch_pulse(pid)
-            if full:
-                full_pulses.append(full)
+        with ThreadPoolExecutor(max_workers=5) as pool:
+            futures = {pool.submit(self._fetch_pulse, pid): pid for pid in pids}
+            for future in as_completed(futures):
+                result = future.result()
+                if result:
+                    full_pulses.append(result)
 
         return full_pulses
 

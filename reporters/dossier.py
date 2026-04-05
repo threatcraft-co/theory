@@ -90,59 +90,78 @@ def _defang(ioc_type: str, value: str) -> str:
     return v
 
 
-
 # ---------------------------------------------------------------------------
-# IOC freshness scoring — how recent is this indicator?
+# Detection repository suggestions — surfaces relevant detection resources
+# based on actor targeted sectors, platforms, and techniques
 # ---------------------------------------------------------------------------
 
-def _freshness(ioc: dict) -> str:
-    """
-    Score an IOC's recency based on its last_seen or first_seen date.
+_DETECTION_REPOS_CACHE: list[dict] | None = None
 
-    Returns one of:
-      FRESH  — seen within the last 30 days  (high operational relevance)
-      AGING  — seen 31–90 days ago           (monitor, may still be active)
-      STALE  — seen 90+ days ago             (low priority for blocklisting)
-      UNKNOWN — no date data available
-    """
-    raw = (ioc.get("last_seen") or ioc.get("first_seen") or "").strip()
-    if not raw:
-        return "UNKNOWN"
+def _load_detection_repos() -> list[dict]:
+    """Load detection repos from config/detection_repos.yaml."""
+    global _DETECTION_REPOS_CACHE
+    if _DETECTION_REPOS_CACHE is not None:
+        return _DETECTION_REPOS_CACHE
     try:
-        # Handle YYYY-MM-DD and ISO formats
-        date_str = raw[:10]  # take just YYYY-MM-DD
-        seen = datetime.strptime(date_str, "%Y-%m-%d").replace(tzinfo=timezone.utc)
-        age_days = (datetime.now(timezone.utc) - seen).days
-        if age_days <= 30:
-            return "FRESH"
-        elif age_days <= 90:
-            return "AGING"
-        else:
-            return "STALE"
-    except (ValueError, TypeError):
-        return "UNKNOWN"
+        import yaml
+        config_path = Path("config/detection_repos.yaml")
+        if not config_path.exists():
+            return []
+        data = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+        _DETECTION_REPOS_CACHE = data.get("detection_repos", [])
+        return _DETECTION_REPOS_CACHE
+    except Exception:
+        return []
 
 
-def _freshness_rich(ioc: dict) -> str:
-    """Return Rich-formatted freshness string with color coding."""
-    f = _freshness(ioc)
-    return {
-        "FRESH":   "[bold green]FRESH[/]",
-        "AGING":   "[yellow]AGING[/]",
-        "STALE":   "[dim]STALE[/]",
-        "UNKNOWN": "[dim]—[/]",
-    }.get(f, "[dim]—[/]")
+def _match_detection_repos(profile: dict, max_results: int = 6) -> list[dict]:
+    """
+    Match detection repos to this actor profile based on:
+    - Actor targeted sectors → sector tags
+    - Actor techniques (tactics) → platform tags
+    - Actor malware types → platform tags
 
+    Returns a ranked list of the most relevant repos.
+    """
+    repos = _load_detection_repos()
+    if not repos:
+        return []
 
-def _freshness_md(ioc: dict) -> str:
-    """Return plain markdown freshness string."""
-    f = _freshness(ioc)
-    return {
-        "FRESH":   "🟢 FRESH",
-        "AGING":   "🟡 AGING",
-        "STALE":   "🔴 STALE",
-        "UNKNOWN": "—",
-    }.get(f, "—")
+    # Build a tag set from the profile
+    profile_tags: set[str] = set()
+
+    # From sectors
+    for s in (profile.get("sectors") or []):
+        profile_tags.add(s.lower().replace(" ", "-"))
+
+    # From technique tactics
+    for t in (profile.get("techniques") or []):
+        tac = (t.get("tactic") or "").lower().replace(" ", "-")
+        if tac:
+            profile_tags.add(tac)
+
+    # From malware types
+    for m in (profile.get("malware") or []):
+        mtype = (m.get("type") or "").lower()
+        if mtype:
+            profile_tags.add(mtype)
+
+    # Always include universal tags
+    profile_tags.add("universal")
+
+    # Score each repo by tag overlap
+    scored: list[tuple[int, dict]] = []
+    for repo in repos:
+        repo_tags = set(repo.get("tags", []))
+        overlap   = len(profile_tags & repo_tags)
+        # Tier 1 repos get a bonus
+        tier_bonus = 2 if repo.get("tier") == 1 else 0
+        score = overlap + tier_bonus
+        if score > 0:
+            scored.append((score, repo))
+
+    scored.sort(key=lambda x: -x[0])
+    return [r for _, r in scored[:max_results]]
 
 class DossierReporter:
 
@@ -233,33 +252,42 @@ class DossierReporter:
             if detections:
                 console.print()
                 console.print("[bold]Detection Opportunities[/]")
+                console.print(
+                    "[dim]Full Sigma rules are in the saved markdown dossier. "
+                    "Showing summary view here.[/dim]"
+                )
+                console.print()
                 for d in detections:
-                    console.print(f"  [cyan]{d['technique_id']}[/] {d.get('technique_name','')}")
                     sigma_rules = d.get("sigma_rules", [])
                     if sigma_rules:
-                        for rule in sigma_rules:
-                            level     = rule.get("level", "").upper()
-                            level_fmt = {
-                                "HIGH":     "[red]HIGH[/]",
-                                "MEDIUM":   "[yellow]MED[/]",
-                                "LOW":      "[dim]LOW[/]",
-                                "CRITICAL": "[bold red]CRIT[/]",
-                            }.get(level, f"[dim]{level}[/]")
-                            console.print(
-                                f"    [dim]▸[/] {rule['title']}  "
-                                f"{level_fmt}  "
-                                f"[dim]{rule.get('logsource','')}"
-                                f"{'  ' + rule['url'] if rule.get('url') else ''}[/]"
-                            )
-                            cond = rule.get("condition_summary", "")
-                            if cond:
-                                console.print(f"      [dim italic]Condition: {cond}[/]")
+                        # Show one condensed summary line per technique
+                        top_rule  = sigma_rules[0]
+                        count     = len(sigma_rules)
+                        top_level = top_rule.get("level", "").upper()
+                        level_fmt = {
+                            "HIGH":     "[red]HIGH[/]",
+                            "MEDIUM":   "[yellow]MED[/]",
+                            "LOW":      "[dim]LOW[/]",
+                            "CRITICAL": "[bold red]CRIT[/]",
+                        }.get(top_level, f"[dim]{top_level}[/]")
+                        logsrc = top_rule.get("logsource", "")
+                        more   = f" [dim]+{count - 1} more[/dim]" if count > 1 else ""
+                        console.print(
+                            f"  [cyan]{d['technique_id']}[/] "
+                            f"[dim]{d.get('technique_name','')}[/]  "
+                            f"[dim]▸[/] {top_rule['title']} "
+                            f"{level_fmt}"
+                            f"  [dim]{logsrc}[/dim]"
+                            f"{more}"
+                        )
                     else:
                         det = d.get("detection", "")
                         if det:
-                            for line in textwrap.wrap(det, 80):
-                                console.print(f"    [dim]{line}[/]")
-                    console.print()
+                            console.print(
+                                f"  [cyan]{d['technique_id']}[/] "
+                                f"[dim]{textwrap.shorten(det, 80, placeholder='…')}[/]"
+                            )
+                console.print()
 
         # Malware
         malware = profile.get("malware", [])
@@ -299,7 +327,7 @@ class DossierReporter:
             console.print(ioc_title)
 
             ioc_table = Table(
-                "Type", "Value", "Confidence", "Freshness", "Threat Type", "Malware Family", "Last Seen",
+                "Type", "Value", "Confidence", "Threat Type", "Malware Family", "First Seen",
                 box=rich_box.SIMPLE_HEAD, header_style="bold magenta"
             )
             by_type: dict[str, list] = {}
@@ -320,10 +348,9 @@ class DossierReporter:
                         ioc_type,
                         _defang(ioc_type, ioc.get("value", "")),
                         conf_str,
-                        _freshness_rich(ioc),
                         ioc.get("threat_label", ioc.get("description", "")),
                         ioc.get("malware_family", ""),
-                        (ioc.get("last_seen") or ioc.get("first_seen") or ""),
+                        ioc.get("first_seen", ""),
                     )
             console.print(ioc_table)
 
@@ -336,6 +363,23 @@ class DossierReporter:
                     + ", ".join(f"{k} ({v})" for k, v in top)
                     + "[/]"
                 )
+
+        # Detection Resources
+        det_repos = _match_detection_repos(profile)
+        if det_repos:
+            console.print()
+            console.print("[bold]Detection Resources[/]")
+            console.print(
+                "[dim]Curated repos relevant to this actor's techniques and targeted platforms:[/dim]"
+            )
+            console.print()
+            for repo in det_repos:
+                tier_badge = "[green]OFFICIAL[/]" if repo.get("tier") == 1 else "[dim]COMMUNITY[/]"
+                console.print(
+                    f"  [cyan]{repo['name']}[/]  {tier_badge}"
+                )
+                console.print(f"  [dim]{repo['url']}[/]")
+                console.print()
 
         # Sectors
         sectors = profile.get("sectors", [])
@@ -528,8 +572,8 @@ class DossierReporter:
                 src_note.append(f"ThreatFox: {tf_count}")
             a(f"## Indicators of Compromise ({', '.join(src_note)})")
             a("")
-            a("| Type | Value | Confidence | Freshness | Threat Type | Malware Family | Last Seen |")
-            a("|---|---|---|---|---|---|---|")
+            a("| Type | Value | Confidence | Threat Type | Malware Family | First Seen |")
+            a("|---|---|---|---|---|---|")
             by_type: dict[str, list] = {}
             for ioc in indicators:
                 by_type.setdefault(ioc.get("type", "unknown"), []).append(ioc)
@@ -548,16 +592,38 @@ class DossierReporter:
                         f"| {ioc_type} "
                         f"| {_defang(ioc_type, ioc.get('value',''))} "
                         f"| {conf_str} "
-                        f"| {_freshness_md(ioc)} "
                         f"| {ioc.get('threat_label', ioc.get('description',''))} "
                         f"| {ioc.get('malware_family','')} "
-                        f"| {ioc.get('last_seen') or ioc.get('first_seen') or ''} |"
+                        f"| {ioc.get('first_seen','')} |"
                     )
             family_hits = profile.get("threatfox_family_hits", {})
             if family_hits:
                 a("")
                 top = sorted(family_hits.items(), key=lambda x: -x[1])[:8]
                 a(f"> **ThreatFox family hits:** {', '.join(f'{k} ({v})' for k,v in top)}")
+            a("")
+
+        # Detection Resources
+        det_repos = _match_detection_repos(profile)
+        if det_repos:
+            a("## Detection Resources")
+            a("")
+            a(
+                "> Curated detection repositories relevant to this actor's "
+                "techniques and targeted platforms. "
+                "Full Sigma rule coverage is in the Detection Opportunities section above."
+            )
+            a("")
+            a("| Resource | Platform | Type | Link |")
+            a("|---|---|---|---|")
+            for repo in det_repos:
+                tier_label = "Official" if repo.get("tier") == 1 else "Community"
+                a(
+                    f"| {repo['name']} "
+                    f"| {repo.get('platform','').title()} "
+                    f"| {tier_label} "
+                    f"| [{repo['url']}]({repo['url']}) |"
+                )
             a("")
 
         if sectors:
