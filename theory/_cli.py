@@ -39,6 +39,7 @@ import json
 import logging
 import os
 import sys
+from datetime import datetime, timezone
 from typing import Any
 
 # ---------------------------------------------------------------------------
@@ -537,11 +538,14 @@ def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 def run(
-    actor:   str,
-    sources: list[str],
-    output:  str  = "dossier",
-    save:    bool = True,
-    verbose: bool = False,
+    actor:          str,
+    sources:        list[str],
+    output:         str  = "dossier",
+    save:           bool = True,
+    verbose:        bool = False,
+    sector:         str  = "",
+    detection_path: str  = "",
+    **kwargs: Any,
 ) -> dict[str, Any] | None:
 
     if verbose:
@@ -742,13 +746,22 @@ def run(
         _output_stix(profile, save)
     elif output == "csv":
         _output_csv(profile, save)
+    elif output == "exec":
+        _output_exec(profile, save, sector=sector)
+    elif output == "navigator":
+        _output_navigator(profile, save)
     elif output == "all":
         _output_dossier(profile, save)
         _output_json(profile, save)
         _output_stix(profile, save)
         _output_csv(profile, save)
+        _output_navigator(profile, save)
     else:
         _output_dossier(profile, save)
+
+    # Coverage gap — runs after any output if --detection-path set
+    if detection_path:
+        _output_coverage_gap(profile, detection_path, save)
 
     return profile
 
@@ -809,6 +822,216 @@ def _output_json(profile: dict[str, Any], save: bool) -> None:
         print(f"\n[theory] JSON saved → {path}", file=sys.stderr)
 
 
+
+def _output_navigator(profile: dict[str, Any], save: bool) -> None:
+    """
+    Export an ATT&CK Navigator layer (v4.5) from the actor profile.
+    Color-coded by confidence: HIGH=red, MEDIUM=amber, LOW=yellow.
+    Importable directly into https://mitre-attack.github.io/attack-navigator/
+    """
+    from reporters.navigator_reporter import NavigatorReporter
+    reporter = NavigatorReporter()
+    clean    = _sanitize_profile(profile)
+    try:
+        print(reporter.to_string(clean))
+    except BrokenPipeError:
+        pass
+    if save:
+        path = reporter.save(clean)
+        try:
+            from rich.console import Console
+            Console(stderr=True).print(
+                f"[dim][theory] Navigator layer saved → {path}[/dim]\n"
+                f"[dim]  Import at: https://mitre-attack.github.io/attack-navigator/[/dim]"
+            )
+        except ImportError:
+            print(f"\n[theory] Navigator layer saved → {path}", file=sys.stderr)
+
+
+def _output_coverage_gap(
+    profile: dict[str, Any],
+    detection_path: str,
+    save: bool,
+) -> None:
+    """
+    Compare actor TTPs against a local detection repo and report gaps.
+    Pass --detection-path /path/to/your/sigma/rules to use.
+
+    Reports:
+      - Coverage %  (how many of the actor's TTPs have a local rule)
+      - Covered     (techniques you can already detect)
+      - Gap         (techniques with no local detection — sorted by confidence)
+    """
+    import subprocess
+    from pathlib import Path as _Path
+
+    try:
+        from rich.console import Console
+        from rich.table   import Table
+        from rich         import box as rich_box
+        console = Console()
+        _rich   = True
+    except ImportError:
+        console = None
+        _rich   = False
+
+    det_path = _Path(detection_path)
+    if not det_path.exists():
+        msg = f"[theory] Detection path not found: {detection_path}"
+        print(msg, file=sys.stderr)
+        return
+
+    actor_name = profile.get("actor_name", "Unknown Actor")
+    techniques = profile.get("techniques", [])
+
+    if not techniques:
+        print("[theory] No techniques in profile — run with mitre source.", file=sys.stderr)
+        return
+
+    # For each technique, grep the detection path for the technique ID
+    covered:  list[dict] = []
+    gaps:     list[dict] = []
+
+    for t in sorted(techniques, key=lambda x: x.get("technique_id", "")):
+        tid  = (t.get("technique_id") or "").strip().upper()
+        if not tid:
+            continue
+        try:
+            result = subprocess.run(
+                ["grep", "-rl", "--include=*.yml", "--include=*.yaml",
+                 tid.lower(), str(det_path)],
+                capture_output=True, text=True, timeout=10,
+            )
+            has_rule = bool(result.stdout.strip())
+        except Exception:
+            has_rule = False
+
+        entry = {
+            "technique_id":   tid,
+            "technique_name": t.get("technique_name") or t.get("name", ""),
+            "tactic":         t.get("tactic", ""),
+            "confidence":     (t.get("confidence") or "LOW").upper(),
+        }
+
+        if has_rule:
+            covered.append(entry)
+        else:
+            gaps.append(entry)
+
+    total    = len(covered) + len(gaps)
+    pct      = round((len(covered) / total) * 100) if total else 0
+
+    # Sort gaps: HIGH confidence first (most important to fix)
+    conf_order = {"HIGH": 0, "MEDIUM": 1, "LOW": 2}
+    gaps.sort(key=lambda x: (conf_order.get(x["confidence"], 3), x["technique_id"]))
+
+    if _rich and console:
+        console.print()
+        console.print(f"[bold cyan]Detection Coverage Gap Analysis — {actor_name}[/]")
+        console.print(f"[dim]Detection path: {detection_path}[/dim]")
+        console.print()
+
+        # Summary bar
+        bar_filled  = int(pct / 5)
+        bar_empty   = 20 - bar_filled
+        color       = "green" if pct >= 70 else "yellow" if pct >= 40 else "red"
+        bar         = f"[{color}]{'█' * bar_filled}[/][dim]{'░' * bar_empty}[/]"
+        console.print(
+            f"  Coverage: {bar} [{color}]{pct}%[/]  "
+            f"({len(covered)}/{total} techniques)"
+        )
+        console.print()
+
+        if gaps:
+            console.print(f"[bold red]Coverage Gaps ({len(gaps)} techniques)[/]")
+            gap_table = Table(
+                "Technique ID", "Name", "Tactic", "Confidence",
+                box=rich_box.SIMPLE_HEAD, header_style="bold magenta",
+            )
+            for g in gaps:
+                conf     = g["confidence"]
+                conf_fmt = {
+                    "HIGH":   "[red]HIGH[/]",
+                    "MEDIUM": "[yellow]MED[/]",
+                    "LOW":    "[dim]LOW[/]",
+                }.get(conf, conf)
+                gap_table.add_row(
+                    g["technique_id"],
+                    g["technique_name"],
+                    g["tactic"],
+                    conf_fmt,
+                )
+            console.print(gap_table)
+            console.print()
+
+        if covered:
+            console.print(f"[bold green]Covered ({len(covered)} techniques)[/]")
+            cov_table = Table(
+                "Technique ID", "Name", "Tactic",
+                box=rich_box.SIMPLE_HEAD, header_style="bold magenta",
+            )
+            for c in covered:
+                cov_table.add_row(
+                    c["technique_id"],
+                    c["technique_name"],
+                    c["tactic"],
+                )
+            console.print(cov_table)
+            console.print()
+    else:
+        print(f"\nDetection Coverage — {actor_name}: {pct}% ({len(covered)}/{total})")
+        print(f"Gaps ({len(gaps)}):")
+        for g in gaps:
+            print(f"  {g['technique_id']} [{g['confidence']}] {g['technique_name']}")
+
+    if save:
+        import re as _re
+        OUTPUT_DIR = _Path("output/dossiers")
+        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        slug = _re.sub(r"[^a-z0-9]", "_", actor_name.lower())
+        path = OUTPUT_DIR / f"{slug}_coverage_gap.md"
+
+        lines = [
+            f"# Detection Coverage Gap Analysis — {actor_name}",
+            f"> Coverage: **{pct}%** ({len(covered)}/{total} techniques covered)",
+            f"> Detection path: `{detection_path}`",
+            f"> Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}",
+            "",
+        ]
+
+        if gaps:
+            lines += [
+                f"## Coverage Gaps ({len(gaps)} techniques)",
+                "",
+                "| Technique ID | Name | Tactic | Confidence |",
+                "|---|---|---|---|",
+            ]
+            for g in gaps:
+                lines.append(
+                    f"| {g['technique_id']} | {g['technique_name']} "
+                    f"| {g['tactic']} | {g['confidence']} |"
+                )
+            lines.append("")
+
+        if covered:
+            lines += [
+                f"## Covered ({len(covered)} techniques)",
+                "",
+                "| Technique ID | Name | Tactic |",
+                "|---|---|---|",
+            ]
+            for c in covered:
+                lines.append(
+                    f"| {c['technique_id']} | {c['technique_name']} | {c['tactic']} |"
+                )
+            lines.append("")
+
+        path.write_text("\n".join(lines), encoding="utf-8")
+        if _rich and console:
+            console.print(f"[dim][theory] Coverage gap report saved → {path}[/dim]")
+        else:
+            print(f"[theory] Coverage gap report saved → {path}")
+
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
@@ -822,6 +1045,10 @@ examples:
   theory --actor APT28 --sources mitre,otx,threatfox --output csv
   theory --actor Turla --sources mitre,malpedia --output all
   theory --actor APT29 --sources mitre --no-save
+  theory --actor APT28 --output exec
+  theory --actor "Lazarus Group" --output exec --sector finance
+  theory --actor APT28 --output navigator
+  theory --actor APT28 --sources mitre,sigma --detection-path ~/my-sigma-rules
   theory --list-sources
   theory --list-actors
   theory --update-bundles
@@ -892,7 +1119,7 @@ def _build_parser() -> argparse.ArgumentParser:
     # ── Output format ──────────────────────────────────────────────────
     p.add_argument(
         "--output", "-o",
-        choices=["dossier", "json", "stix", "csv", "all"],
+        choices=["dossier", "json", "stix", "csv", "all", "exec", "navigator"],
         default="dossier",
         metavar="FORMAT",
         help=(
@@ -901,7 +1128,33 @@ def _build_parser() -> argparse.ArgumentParser:
             "json = raw profile JSON. "
             "stix = STIX 2.1 bundle for MISP/OpenCTI/Sentinel import. "
             "csv = IOC-only CSV table (for SIEM ingestion). "
-            "all = write all formats."
+            "all = write all formats. "
+            "exec = non-technical executive summary (BLUF, requires LLM key). "
+            "navigator = ATT&CK Navigator layer JSON."
+        ),
+    )
+
+    # ── Sector context (for exec output) ──────────────────────────────
+    p.add_argument(
+        "--sector",
+        metavar="SECTOR",
+        default="",
+        help=(
+            "Optional sector context for --output exec. "
+            "Focuses the executive summary on your industry. "
+            "Examples: energy, healthcare, finance, government, defence"
+        ),
+    )
+
+    # ── Detection gap analysis ─────────────────────────────────────────
+    p.add_argument(
+        "--detection-path",
+        metavar="PATH",
+        default="",
+        help=(
+            "Path to your local Sigma detection rule directory. "
+            "Enables coverage gap analysis — THEORY compares actor TTPs "
+            "against your deployed rules and reports which techniques lack coverage."
         ),
     )
 
@@ -1001,11 +1254,13 @@ def main(argv: list[str] | None = None) -> None:
             pass  # skip hint if Rich not available
 
     profile = run(
-        actor   = args.actor,
-        sources = sources,
-        output  = args.output,
-        save    = not args.no_save,
-        verbose = args.verbose,
+        actor          = args.actor,
+        sources        = sources,
+        output         = args.output,
+        save           = not args.no_save,
+        verbose        = args.verbose,
+        sector         = args.sector,
+        detection_path = args.detection_path,
     )
 
     sys.exit(0 if profile else 1)
