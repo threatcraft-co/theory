@@ -118,12 +118,6 @@ def _get_alias_to_canonical() -> dict[str, str]:
     return index
 
 
-# Public API — identical interface as before, now backed by YAML
-@property  # type: ignore[misc]
-def ALIAS_TABLE() -> dict[str, frozenset[str]]:  # noqa: N802
-    return _get_alias_table()
-
-
 # Module-level attribute for direct import compatibility
 # (e.g. `from collectors.cisa_advisories import ALIAS_TABLE`)
 class _AliasTableProxy:
