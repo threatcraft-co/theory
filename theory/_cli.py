@@ -750,6 +750,10 @@ def run(
         _output_exec(profile, save, sector=sector)
     elif output == "navigator":
         _output_navigator(profile, save)
+    elif output == "playbook":
+        _output_playbook(profile, save,
+                         sector=sector,
+                         playbook_format=kwargs.get("playbook_format", "markdown"))
     elif output == "all":
         _output_dossier(profile, save)
         _output_json(profile, save)
@@ -1032,6 +1036,47 @@ def _output_coverage_gap(
         else:
             print(f"[theory] Coverage gap report saved → {path}")
 
+
+def _output_playbook(
+    profile:         dict[str, Any],
+    save:            bool,
+    sector:          str = "",
+    playbook_format: str = "markdown",
+) -> None:
+    """
+    Generate and save an IR playbook from the actor profile.
+    Prints a compact summary to terminal; saves the full playbook to file.
+    """
+    from reporters.playbook_reporter import PlaybookReporter
+
+    # Try to load LLM provider for hunt/containment sections
+    llm_provider = None
+    try:
+        from collectors.intelligence_synthesizer import load_provider
+        llm_provider = load_provider()
+        if llm_provider and not llm_provider.available:
+            llm_provider = None
+    except Exception:
+        pass
+
+    reporter = PlaybookReporter()
+    clean    = _sanitize_profile(profile)
+
+    if save:
+        path = reporter.save(clean, sector=sector,
+                             playbook_format=playbook_format,
+                             llm_provider=llm_provider)
+        reporter.summary(clean, path)
+    else:
+        # --no-save: print to stdout
+        content = reporter.build(clean, sector=sector,
+                                 playbook_format=playbook_format,
+                                 llm_provider=llm_provider)
+        try:
+            print(content)
+        except BrokenPipeError:
+            pass
+
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
@@ -1048,6 +1093,8 @@ examples:
   theory --actor APT28 --output exec
   theory --actor "Lazarus Group" --output exec --sector finance
   theory --actor APT28 --output navigator
+  theory --actor APT28 --sources mitre,sigma --output playbook
+  theory --actor APT28 --sources mitre,sigma --output playbook --playbook-format jira
   theory --actor APT28 --sources mitre,sigma --detection-path ~/my-sigma-rules
   theory --list-sources
   theory --list-actors
@@ -1119,7 +1166,7 @@ def _build_parser() -> argparse.ArgumentParser:
     # ── Output format ──────────────────────────────────────────────────
     p.add_argument(
         "--output", "-o",
-        choices=["dossier", "json", "stix", "csv", "all", "exec", "navigator"],
+        choices=["dossier", "json", "stix", "csv", "all", "exec", "navigator", "playbook"],
         default="dossier",
         metavar="FORMAT",
         help=(
@@ -1130,7 +1177,8 @@ def _build_parser() -> argparse.ArgumentParser:
             "csv = IOC-only CSV table (for SIEM ingestion). "
             "all = write all formats. "
             "exec = non-technical executive summary (BLUF, requires LLM key). "
-            "navigator = ATT&CK Navigator layer JSON."
+            "navigator = ATT&CK Navigator layer JSON. "
+            "playbook = IR playbook checklist (markdown or Jira format)."
         ),
     )
 
@@ -1143,6 +1191,19 @@ def _build_parser() -> argparse.ArgumentParser:
             "Optional sector context for --output exec. "
             "Focuses the executive summary on your industry. "
             "Examples: energy, healthcare, finance, government, defence"
+        ),
+    )
+
+    # ── Playbook format ───────────────────────────────────────────────
+    p.add_argument(
+        "--playbook-format",
+        choices=["markdown", "jira"],
+        default="markdown",
+        metavar="FORMAT",
+        help=(
+            "Output format for --output playbook. "
+            "markdown = GitHub/Confluence/Notion/ServiceNow compatible (default). "
+            "jira = Jira wiki markup for direct paste into issue descriptions."
         ),
     )
 
@@ -1254,13 +1315,14 @@ def main(argv: list[str] | None = None) -> None:
             pass  # skip hint if Rich not available
 
     profile = run(
-        actor          = args.actor,
-        sources        = sources,
-        output         = args.output,
-        save           = not args.no_save,
-        verbose        = args.verbose,
-        sector         = args.sector,
-        detection_path = args.detection_path,
+        actor            = args.actor,
+        sources          = sources,
+        output           = args.output,
+        save             = not args.no_save,
+        verbose          = args.verbose,
+        sector           = args.sector,
+        detection_path   = args.detection_path,
+        playbook_format  = args.playbook_format,
     )
 
     sys.exit(0 if profile else 1)
