@@ -1,6 +1,12 @@
 {
-  "cached_at": "2026-04-03T04:22:57.389322+00:00",
+  "cached_at": "2026-04-16T03:47:50.404944+00:00",
   "entries": [
+    {
+      "title": "Hack the AI agent: Build agentic AI security skills with the GitHub Secure Code Game",
+      "url": "https://github.blog/security/hack-the-ai-agent-build-agentic-ai-security-skills-with-the-github-secure-code-game/",
+      "date": "2026-04-14",
+      "summary": "I was scrolling through my feed one evening when I came across OpenClaw , an open source personal AI assistant that people were calling everything from &ldquo;Jarvis&rdquo; to &ldquo;a portal to a new reality.&rdquo; The idea is beautiful: an AI that lives on your machine or in the cloud, talks to you over WhatsApp or Telegram, clears your inbox, manages your calendar, browses the web, runs shell commands, and even writes its own plugins. Users were having it check them in for flights, build entire websites from their phones, and automate things they never thought possible. My first reaction was the same as everyone else&rsquo;s: this is incredible. My second reaction was&hellip;different. I started thinking about what happens when that kind of power meets a malicious prompt. What if someone tricks the agent into reading files it should not access? What if a poisoned web page rewrites the agent&rsquo;s instructions? What if one agent in a multi-agent chain passes bad data to another that blindly trusts it? Those questions became Season 4 of the Secure Code Game . The Secure Code Game: Learn secure coding and have fun doing it The Secure Code Game is a free, open source in-editor course where players exploit and fix intentionally vulnerable code. When I created the <a href=\"https://github.blog/dev"
+    },
     {
       "title": "Securing the open source supply chain across GitHub",
       "url": "https://github.blog/security/supply-chain-security/securing-the-open-source-supply-chain-across-github/",
@@ -54,12 +60,6 @@
       "url": "https://github.blog/security/vulnerability-research/codeql-zero-to-hero-part-5-debugging-queries/",
       "date": "2025-09-29",
       "summary": "When you&rsquo;re first getting started with CodeQL, you may find yourself in a situation where a query doesn&rsquo;t return the results you expect. Debugging these queries can be tricky, because CodeQL is a Prolog-like language with an evaluation model that&rsquo;s quite different from mainstream languages like Python. This means you can&rsquo;t &ldquo;step through&rdquo; the code, and techniques such as attaching gdb or adding print statements don&rsquo;t apply. Fortunately, CodeQL offers a variety of built-in features to help you diagnose and resolve issues in your queries. Below, we&rsquo;ll dig into these features &mdash; from an abstract syntax tree (AST) to partial path graphs &mdash; using questions from CodeQL users as examples. And if you ever have questions of your own, you can visit and ask in GitHub Security Lab&rsquo;s public Slack instance , which is monitored by CodeQL engineers. This blog is written to be read standalone; however, if you are new to CodeQL or would like to dig deeper into static analysis and CodeQL, you may want to check out the other parts of my CodeQL zero to hero blog series. Each deals with a different topic: status analysis fundamentals, writing CodeQL, using CodeQL for security research, and modeling a new framework in CodeQL&mdash;Gradio. CodeQL zero to hero part 1: The fundame"
-    },
-    {
-      "title": "Our plan for a more secure npm supply chain",
-      "url": "https://github.blog/security/supply-chain-security/our-plan-for-a-more-secure-npm-supply-chain/",
-      "date": "2025-09-23",
-      "summary": "Open source software is the bedrock of the modern software industry. Its collaborative nature and vast ecosystem empower developers worldwide, driving efficiency and progress at an unprecedented scale. This scale also presents unique vulnerabilities that are continually tested and under attack by malicious actors, making the security of open source a critical concern for all.&nbsp; Transparency is central to maintaining community trust. Today, we&rsquo;re sharing details of recent npm registry incidents, the actions we took towards remediation, and how we&rsquo;re continuing to invest in npm security. Recent attacks on the open source ecosystem The software industry has faced a recent surge in damaging account takeovers on package registries, including npm. These ongoing attacks have allowed malicious actors to gain unauthorized access to maintainer accounts and subsequently distribute malicious software through well-known, trusted packages.&nbsp; On September 14, 2025, we were notified of the Shai-Hulud attack , a self-replicating worm that infiltrated the npm ecosystem via compromised maintainer accounts by injecting malicious post-install scripts into popular JavaScript packages. By combining self-replication with the capability to steal multiple types of secrets (and not just npm tokens), this worm could have enabled an endless stream of attacks had it not been for timely action from GitHub and open source maintainers.&nbsp; In direct response to this incident, GitHub has taken swift and decisive action including:&nbsp; Immediate removal of 500+ compromised packages from the npm regi"
     }
   ]
 }

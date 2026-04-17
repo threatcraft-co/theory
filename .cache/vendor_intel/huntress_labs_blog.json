@@ -1,6 +1,36 @@
 {
-  "cached_at": "2026-04-03T04:22:57.143780+00:00",
+  "cached_at": "2026-04-16T03:47:49.727207+00:00",
   "entries": [
+    {
+      "title": "Decoding NightSpire: Ransomware IOCs Aren't Set in Stone",
+      "url": "https://www.huntress.com/blog/nightspire-ransomware",
+      "date": "2026-04-07",
+      "summary": "A recent incident linked to the NightSpire ransomware workflow gives insight into why the RaaS structure and model, or lack thereof, are important \u2013 especially when it comes to scoping and recovering from the incident."
+    },
+    {
+      "title": "OpenClaw, Rogue Agents, and Application Hygiene",
+      "url": "https://www.huntress.com/blog/openclaw-ai-agent-permissions-risk",
+      "date": "2026-04-01",
+      "summary": "OpenClaw AI agents pose identity and data risks if deployed with broad cloud permissions. Learn how to find and secure these apps before an attacker does."
+    },
+    {
+      "title": "The Three-Finger Test",
+      "url": "https://www.huntress.com/blog/deepfake-three-finger-test",
+      "date": "2026-04-01",
+      "summary": "See why the viral \"three-finger test\" is almost outdated, and how to build resilient security processes that protect your organization from identity-based attacks and social engineering, no matter how advanced the AI gets."
+    },
+    {
+      "title": "Supply Chain Compromise of axios npm Package",
+      "url": "https://www.huntress.com/blog/supply-chain-compromise-axios-npm-package",
+      "date": "2026-03-31",
+      "summary": "An NPM supply chain attack struck the ubiquitous open-source axios library and Huntress has observed over a hundred affected devices."
+    },
+    {
+      "title": "That \u201cFriendly\u201d Prompt is ClickFix",
+      "url": "https://www.huntress.com/blog/friendly-prompt-is-clickfix-scam",
+      "date": "2026-03-25",
+      "summary": "That \"friendly\" prompt is a ClickFix scam. Learn about this advanced social engineering tactic that tricks users into running malicious code on their own systems, and why security resilience is your winning bet."
+    },
     {
       "title": "ITDR for Google Workspace | Huntress Managed ITDR",
       "url": "https://www.huntress.com/blog/managed-itdr-google-workspace",
@@ -50,7 +80,7 @@
       "summary": "Huntress \"shifts left\" with Managed ESPM and Managed ISPM. We proactively harden your endpoints and identities to close the security gaps that attackers love to exploit."
     },
     {
-      "title": "Five Shady Phishing Email Techniques We Spotted",
+      "title": "Phishing Techniques Spotted: Email Examples & Red Flags",
       "url": "https://www.huntress.com/blog/five-shady-phishing-email-techniques-we-spotted-in-2025",
       "date": "2026-03-16",
       "summary": "From fake UPS shipping notifications to PayPal-themed callback phishing, here are the five top phishing techniques we\u2019re seeing this year."
@@ -74,7 +104,7 @@
       "summary": "Threat actors are people, too, and like everyone else, make mistakes. These mistakes can reveal insights into the threat actor, or even expose access to their infrastructure."
     },
     {
-      "title": "How Threat Actors Abuse Remote Management Software for Initial Access",
+      "title": "How Threat Actors Abuse Remote Management Tools | Huntress",
       "url": "https://www.huntress.com/blog/daisy-chaining-rogue-rmm-tools",
       "date": "2026-03-11",
       "summary": "The abuse of remote monitoring and management (RMM) tools is surging. See how threat actors daisy chain RMM software for initial access, persistence, and detection evasion."
@@ -110,7 +140,7 @@
       "summary": "SSO vs. MFA: Why choose between the two? Learn how both single sign-on and multi-factor authentication can improve your cybersecurity posture."
     },
     {
-      "title": "How a Pharmacy Cyberattack is a Warning Sign for Healthcare\u2019s Cybersecurity Vulnerabilities | Huntress",
+      "title": "How a Pharmacy Cyberattack is a Warning Sign for | Huntress",
       "url": "https://www.huntress.com/blog/how-a-pharmacy-cyberattack-is-a-warning-sign-for-healthcares-cybersecurity-vulnerabilities",
       "date": "2026-03-05",
       "summary": "Learn how a single cyberattack on a pharmacy tech provider disabled access for millions of patients and what it means for the healthcare industry moving forward."
@@ -185,10 +215,10 @@
       "title": "The Identity Breach You Didn\u2019t Know You Had: Google Workspace",
       "url": "https://www.huntress.com/blog/identity-breach-google-workspace",
       "date": "2026-02-12",
-      "summary": ""
+      "summary": "Most Google Workspace breaches go undetected for weeks. See how attackers exploit misconfigured permissions and what to look for before it is too late."
     },
     {
-      "title": "Employee Monitoring and SimpleHelp Software Abused in Ransomware Operations",
+      "title": "Employee Monitoring and SimpleHelp Software Abused in | Huntress",
       "url": "https://www.huntress.com/blog/employee-monitoring-simplehelp-abused-in-ransomware-operations",
       "date": "2026-02-11",
       "summary": "Huntress uncovers ransomware operations abusing employee monitoring software and SimpleHelp RMM for persistence, and ransomware deployment."
@@ -206,13 +236,13 @@
       "summary": "Huntress has observed active exploitation of a deserialization and remote code execution against the SolarWinds Web Help Desk software (CVE-2025-26399)."
     },
     {
-      "title": "Windows Projected File System (ProjFS) Internals: A Technical Deep Dive",
+      "title": "Windows ProjFS Internals: A Technical Deep Dive | Huntress",
       "url": "https://www.huntress.com/blog/windows-projected-file-system-mechanics",
       "date": "2026-02-05",
       "summary": "Huntress uncovers the mechanics of the Windows Projected File System. Explore the ProjFS driver, virtualization roots, and the PowerShell commands."
     },
     {
-      "title": "They Got In Through SonicWall. Then They Tried to Kill Every Security Tool",
+      "title": "They Got In Through SonicWall. Then They Tried to Kill | Huntress",
       "url": "https://www.huntress.com/blog/encase-byovd-edr-killer",
       "date": "2026-02-04",
       "summary": "Huntress responded to a 2026 intrusion using compromised SonicWall VPN credentials and a revoked EnCase forensic driver to terminate EDR processes via BYOVD."
@@ -224,13 +254,13 @@
       "summary": "Deal with alert fatigue like a pro. Learn practical tips from Huntress' SOC on managing overwhelming alerts, preventing burnout, and focusing on real threats."
     },
     {
-      "title": "The (!FALSE) Pattern: How SOAPHound Queries Disappear Before They Hit Your Logs",
+      "title": "The (!FALSE) Pattern | Huntress",
       "url": "https://www.huntress.com/blog/ldap-active-directory-detection-part-four",
       "date": "2026-01-29",
       "summary": "SOAPHound's LDAP query (!soaphound=*) never appears in Event 1644 logs, but it transforms into (! (FALSE)) through LDAP optimization. Understanding this transformation reveals a unique detection signature that most defenders have never seen."
     },
     {
-      "title": "How Huntress Managed ITDR's New Incident Report Timeline Changes Response",
+      "title": "How Huntress Managed ITDR's New Incident Report Timeline | Huntress",
       "url": "https://www.huntress.com/blog/huntress-managed-itdr-incident-report-timeline-response",
       "date": "2026-01-26",
       "summary": "Learn how the Incident Report Timeline within Huntress Managed ITDR offers clear, chronological insights, enabling a decisive response to incidents."
@@ -254,7 +284,7 @@
       "summary": "Fake ad blocker crashes your browser, then offers a \"fix.\" Go inside KongTuke's CrashFix campaign, from malicious extension to ModeloRAT for VIP targets."
     },
     {
-      "title": "SDFlags: The Log Field I Wasn't Looking at That Revealed How BloodHound Really Works",
+      "title": "SDFlags | Huntress",
       "url": "https://www.huntress.com/blog/ldap-active-directory-detection-part-three",
       "date": "2026-01-15",
       "summary": "While investigating LDAP filters and attributes, I completely missed \"SDFlags\" in my Event 1644 logs. When I finally noticed it, the investigation led to nTSecurityDescriptor, attack path discovery, and a high-confidence detection signature."
@@ -284,13 +314,13 @@
       "summary": "From lures involving Social Security statements to top domains and hashes used in attacks, here's an in-depth look at incidents involving ScreenConnect in 2025."
     },
     {
-      "title": "The LDAP Whitespace Problem: Making Sigma Rules Work in Production",
+      "title": "The LDAP Whitespace Problem | Huntress",
       "url": "https://www.huntress.com/blog/ldap-active-directory-detection-part-two",
       "date": "2025-12-30",
       "summary": "Your LDAP detection rules work in the lab but fail in production. Here's why Event 1644 whitespace variations break your Sigma rules and how to fix them."
     },
     {
-      "title": "Tradecraft Tuesday Recap: React2Shell, ClickFix, and the Rise of AI Scams",
+      "title": "Tradecraft Tuesday Recap | Huntress",
       "url": "https://www.huntress.com/blog/holiday-security-tips-for-family-friends",
       "date": "2025-12-23",
       "summary": "From \"React2Shell\" exploitation to sophisticated \"Living off Trusted Sites\" phishing, Huntress experts break down the threats targeting both enterprises and families today."
@@ -302,7 +332,7 @@
       "summary": "Learn how supply chain attacks and shifting trust are reshaping the software supply chain, and what enterprises must do to strengthen resilience."
     },
     {
-      "title": "Trial, Error, and Typos: Why Some Malware Attacks Aren't as 'Sophisticated' as You Think",
+      "title": "Trial, Error & Typos: Malware Isn't Always 'Sophisticated' | Huntress",
       "url": "https://www.huntress.com/blog/trial-error-typos-malware-attacks-sophisticated",
       "date": "2025-12-22",
       "summary": "Think all threat actors are pros? This post reveals how 'unsophisticated' malware and attacker errors help defenders stop attacks before damage is done."
@@ -314,7 +344,7 @@
       "summary": "Understand the critical role of cyber insurance in safeguarding your business from cyber threats. Learn how this coverage can protect your assets."
     },
     {
-      "title": "Active Exploitation of Gladinet CentreStack/Triofox Insecure Cryptography Vulnerability",
+      "title": "Gladinet CentreStack/Triofox: Cryptography Vulnerability | Huntress",
       "url": "https://www.huntress.com/blog/active-exploitation-gladinet-centrestack-triofox-insecure-cryptography-vulnerability",
       "date": "2025-12-18",
       "summary": "Threat actors are exploiting a vulnerability in Gladinet\u2019s CentreStack and Triofox products that stems from hardcoded cryptographic keys in the AES implementation."
@@ -338,13 +368,13 @@
       "summary": "CMMC is coming. Learn how to turn this challenge into a major revenue opportunity for your business."
     },
     {
-      "title": "AI-Poisoning & AMOS Stealer: How Trust Became the Biggest Mac Threat",
+      "title": "AI-Poisoning & AMOS Stealer: The Biggest Mac Threat | Huntress",
       "url": "https://www.huntress.com/blog/amos-stealer-chatgpt-grok-ai-trust",
       "date": "2025-12-09",
       "summary": "Attackers are exploiting user trust in AI and aggressive SEO to deliver an evolved Atomic macOS Stealer. Learn why this social engineering tradecraft bypasses traditional network controls and the future of macOS infostealer defense."
     },
     {
-      "title": "Announcing the Latest Report on Huntress Managed SAT: Key Findings and Insights",
+      "title": "Announcing the Latest Report on Huntress Managed SAT | Huntress",
       "url": "https://www.huntress.com/blog/huntress-managed-security-awareness-training-expert-review",
       "date": "2025-12-09",
       "summary": "A new independent report explores how Huntress\u2019 approach to SAT supports real behavior change. Learn what works best in building security culture."
@@ -356,7 +386,7 @@
       "summary": "Huntress is seeing threat actors exploit React2Shell (CVE-2025-55182) to deploy a Linux backdoor, a reverse proxy tunnel, and a Go-based post-exploitation implant."
     },
     {
-      "title": "Hardening the Hypervisor: Practical Defenses Against Ransomware Targeting ESXi",
+      "title": "Hardening the Hypervisor | Huntress",
       "url": "https://www.huntress.com/blog/hypervisor-defenses-against-ransomware-targeting-esxi",
       "date": "2025-12-08",
       "summary": "Hypervisors are a major target for ransomware attacks. Get expert guidance from Huntress on how to protect your virtualized infrastructure. Learn how to secure access, put runtime controls in place, simplify patching, and improve your recovery plans."
@@ -398,7 +428,7 @@
       "summary": "Huntress CEO Kyle Hanslovan's live hack demo: modern hacker playbook, with stolen credentials, MFA bypass, and M365 token hijacking. Get defense tips, stay protected."
     },
     {
-      "title": "7 Benefits of Outsourcing Cybersecurity Services for Your Business | Huntress",
+      "title": "7 Benefits of Outsourcing Cybersecurity Services | Huntress",
       "url": "https://www.huntress.com/blog/7-benefits-of-outsourcing-cybersecurity-services",
       "date": "2025-11-24",
       "summary": "Explore the top benefits of cybersecurity outsourcing and learn how it can bolster defenses while freeing up time, energy, and resources for your team."
@@ -476,7 +506,7 @@
       "summary": "Learn the fundamentals of Zero Trust Security and how it protects organizations by ensuring constant verification and reducing cyber risks. Stay secure with Zero Trust."
     },
     {
-      "title": "Exploitation of Windows Server Update Services Remote Code Execution Vulnerability (CVE-2025-59287)",
+      "title": "Exploitation of Windows Server Update Services Remote Code | Huntress",
       "url": "https://www.huntress.com/blog/exploitation-of-windows-server-update-services-remote-code-execution-vulnerability",
       "date": "2025-10-24",
       "summary": "Huntress has observed threat actors exploiting a Microsoft Windows Server Update Services (WSUS) vulnerability (CVE-2025-59287)."
@@ -488,7 +518,7 @@
       "summary": "Incident analysis is critical, but for newcomers, it can be daunting. Learn how to confirm commands, validate findings, and spot real impact during a Qilin ransomware event."
     },
     {
-      "title": "Dealing with Imperfect Telemetry: Techniques for Effective Incident Response",
+      "title": "Dealing with Imperfect Telemetry | Huntress",
       "url": "https://www.huntress.com/blog/imperfect-telemetry-techniques-effective-incident-response",
       "date": "2025-10-21",
       "summary": "See how the Huntress Tactical Response team tackles security telemetry gaps. We share real-world techniques for working with missing logs, degraded telemetry, and cloud logging challenges to uncover critical insights and improve investigations."
@@ -506,13 +536,13 @@
       "summary": "The DoD's CMMC final rule is here. Learn what it means for subcontractors, the new timeline, and how to prepare for your Level 2 audit to stay competitive."
     },
     {
-      "title": "Active Exploitation of Gladinet CentreStack and Triofox Local File Inclusion Flaw",
+      "title": "Active Exploitation of Gladinet CentreStack and Triofox | Huntress",
       "url": "https://www.huntress.com/blog/gladinet-centrestack-triofox-local-file-inclusion-flaw",
       "date": "2025-10-15",
       "summary": "Huntress has observed in-the-wild exploitation of a Local File Inclusion vulnerability in Gladinet CentreStack and Triofox products."
     },
     {
-      "title": "The Crown Prince, Nezha: A New Tool Favored by China-Nexus Threat Actors",
+      "title": "The Crown Prince, Nezha | Huntress",
       "url": "https://www.huntress.com/blog/nezha-china-nexus-threat-actor-tool",
       "date": "2025-10-15",
       "summary": "Beginning in mid-2025, Huntress discovered a new tool being used to facilitate webserver intrusions known as Nezha, which up until now hasn\u2019t been publicly reported on. This was used in tandem with other families of malware and web shell management tools such as Ghost RAT and AntSword."
@@ -530,7 +560,7 @@
       "summary": "Huntress has observed a spike in compromises of SonicWall SSLVPN devices across multiple customer environments."
     },
     {
-      "title": "Ditch Lame Cybersecurity Tips: These Best Practices Actually Work",
+      "title": "Ditch Lame Cybersecurity Tips | Huntress",
       "url": "https://www.huntress.com/blog/lamest-cybersecurity-tips-what-to-do-instead",
       "date": "2025-10-07",
       "summary": "Tired of hearing the same old cybersecurity tips? Learn actionable, modern strategies to protect yourself and your organization from bad threat actors."
@@ -548,7 +578,7 @@
       "summary": "Learn about the biggest data breaches of the past 20 years, how they happened, and how you can better protect your organization from major threats."
     },
     {
-      "title": "Top Cyber Threat Trends of 2025 from Deepfakes, ClickFix, and ViewState Exploits",
+      "title": "Top Cyber Threat Trends of 2025: Deepfakes, ClickFix & More | Huntress",
       "url": "https://www.huntress.com/blog/craftiest-trends-scams-tradecraft-2025",
       "date": "2025-10-02",
       "summary": "John Hammond and Greg Linares with Huntress discuss the top tradecraft we\u2019ve seen this year so far, from ClickFix attacks to deepfake social engineering"
@@ -560,7 +590,7 @@
       "summary": "Over 20 years of Cybersecurity Awareness Month, and we\u2019ve had enough. This October, Huntress is taking a new attitude with an offensive-minded approach to defense."
     },
     {
-      "title": "Don\u2019t Sweat the ClickFix Techniques: Variants & Detection Evolution",
+      "title": "Don't Sweat ClickFix: Variants & Detection Evolution | Huntress",
       "url": "https://www.huntress.com/blog/dont-sweat-clickfix-techniques",
       "date": "2025-09-29",
       "summary": "Learn how ClickFix techniques like FileFix, TerminalFix, and DownloadFix trick users into compromising. Then, learn proven detection methods using chokepoint strategies and behavioral analytics."
@@ -572,7 +602,7 @@
       "summary": "Trace a threat actor's journey from custom Python stealers to a sophisticated commodity RAT. Learn how their tactics evolved and why this shift to .NET matters."
     },
     {
-      "title": "SAT effectiveness: Are security awareness training programs reducing human risk?",
+      "title": "SAT effectiveness | Huntress",
       "url": "https://www.huntress.com/blog/sat-programs-reduce-human-risk",
       "date": "2025-09-23",
       "summary": "Learn the truth about SAT effectiveness. Our latest report reveals why increased spending on training isn\u2019t reducing human risk\u2014and how to fix it."
@@ -638,13 +668,13 @@
       "summary": "Learn how a fake AnyDesk installer led to a unique MetaStealer attack, highlighting how threat actors evolve ClickFix techniques beyond the classic playbook to steal credentials and files."
     },
     {
-      "title": "Join Huntress' John Hammond & Dave Kleinatland on a Journey of the Dark Web",
+      "title": "Join Huntress' John Hammond & Dave Kleinatland on a | Huntress",
       "url": "https://www.huntress.com/blog/journey-to-center-of-dark-web-tradecraft-tuesday-recap",
       "date": "2025-08-27",
       "summary": "Huntress researchers take a tour through the dark web, from innovative threat actor marketing techniques to cybercrime drama on BreachForums."
     },
     {
-      "title": "Should MSPs Turn Off Google Gemini? Gemini Flaw Hijacks Email Summaries",
+      "title": "Should MSPs Turn Off Google Gemini? | Huntress",
       "url": "https://www.huntress.com/blog/google-gemini-phishing-risks",
       "date": "2025-08-26",
       "summary": "Hackers are using Google Gemini's email summaries to sneak in phishing attacks without links or attachments."
@@ -662,7 +692,7 @@
       "summary": "In mid-August, Huntress saw two incidents that linked back to a ransomware variant called Cephalus, which included DLL sideloading via a legitimate SentinelOne executable."
     },
     {
-      "title": "Exposing Data Exfiltration: Detecting LOLBins, TTPs, and Ransomware Tactics",
+      "title": "Exposing Data Exfiltration | Huntress",
       "url": "https://www.huntress.com/blog/exposing-data-exfiltration-lolbin-ttp-binaries",
       "date": "2025-08-19",
       "summary": "Threat actors often steal data during the course of their attacks. This is particularly true for ransomware threat actors, who do it before deploying file encryption in order to engage in \u201cdouble extortion\u201d activities. This activity can be difficult to detect, particularly if it\u2019s not dissimilar to legitimate actions taken by system administrators."
@@ -678,12 +708,6 @@
       "url": "https://www.huntress.com/blog/kawalocker-ransomware-deployed",
       "date": "2025-08-14",
       "summary": "Thanks in large part to our customer base, Huntress sees a great deal of interesting activity, particularly from threat actors (but also from admins). Part of that activity includes not just ransomware variants that Huntress hasn\u2019t seen before, but also variants that may not have been documented via any public means. Further, when these incidents occur, Huntress very often gets a detailed look at the threat actor\u2019s activity, including commands and their timing."
-    },
-    {
-      "title": "Active Exploitation of SonicWall VPNs",
-      "url": "https://www.huntress.com/blog/exploitation-of-sonicwall-vpn",
-      "date": "2025-08-13",
-      "summary": "A likely zero-day vulnerability in SonicWall VPNs is being actively exploited to bypass MFA and deploy ransomware. Huntress advises disabling the VPN service immediately or severely restricting access via IP allow-listing. We're seeing threat actors pivot directly to domain controllers within hours of the initial breach."
     },
     {
       "title": "Active Exploitation of SonicWall VPNs",
@@ -740,7 +764,7 @@
       "summary": "Learn top cybercrime trends from Huntress\u2019 2025 survey of more than 500 American IT professionals. Plus, learn tips for improving your cybersecurity."
     },
     {
-      "title": "Remote Monitoring and Management Tools: A Gateway for Bulk Attacks on MSP Customers, Pt. 2",
+      "title": "Remote Monitoring and Management Tools | Huntress",
       "url": "https://www.huntress.com/blog/rmm-gateway-for-bulk-attacks-on-msp-customers-part-2",
       "date": "2025-07-17",
       "summary": "When a threat actor exploited an MSP's RMM tool to target businesses, Huntress investigated and uncovered another eerily similar incident with key differences that reveal evolving tactics"
@@ -752,7 +776,7 @@
       "summary": "Huntress is collaborating with Microsoft to help your business get the most out of your Microsoft security investments."
     },
     {
-      "title": "Wing FTP Server Remote Code Execution (CVE-2025-47812) Exploited in the Wild",
+      "title": "Wing FTP Server RCE (CVE-2025-47812) Exploited in the Wild | Huntress",
       "url": "https://www.huntress.com/blog/wing-ftp-server-remote-code-execution-cve-2025-47812-exploited-in-wild",
       "date": "2025-07-10",
       "summary": "Huntress discovered active exploitation of Wing FTP Server RCE (CVE-2025-47812). Learn more about the injection flaw, attack timeline, forensic artifacts, and how to protect your organization."
@@ -764,7 +788,7 @@
       "summary": "Secure your systems with these essential cyber hygiene tips, from using MFA to patching software and spotting phishing scams. Stay safe. Stay updated."
     },
     {
-      "title": "Remote Monitoring and Management Tools: A Gateway for Bulk Attacks on MSP Customers",
+      "title": "RMM Tools: A Gateway for Bulk Attacks | Huntress",
       "url": "https://www.huntress.com/blog/remote-monitoring-management-tools-gateway-for-attacks-on-msp-pt-1",
       "date": "2025-07-02",
       "summary": "Four years after the Kaseya supply chain attack, a recent incident shows how threat actors still successfully target MSPs\u2019 downstream customers through RMM software."
@@ -794,7 +818,7 @@
       "summary": "Huntress Managed ITDR closes the gap with AD-synchronized identity disablement. Secure identities on-prem and in the cloud with this powerful update."
     },
     {
-      "title": "Cybersecurity Leadership Insights for Building Unstoppable Security Teams",
+      "title": "Cybersecurity Leadership: Build Unstoppable Security Teams | Huntress",
       "url": "https://www.huntress.com/blog/cybersecurity-leadership-insights",
       "date": "2025-06-20",
       "summary": "Learn cybersecurity leadership insights on developing elite cybersecurity teams from a seasoned NSA, NASA, and Huntress leader. Learn to hire, retain, and prevent burnout with impactful team growth and success strategies."
@@ -806,7 +830,7 @@
       "summary": "Learn how DPRK's BlueNoroff group executed a Web3 macOS intrusion. Explore the attack chain, malware, and techniques in our detailed technical report."
     },
     {
-      "title": "Proactive Account Review Uncovers Unauthorized Surveillance Tools",
+      "title": "Proactive Account Review Uncovers Unauthorized | Huntress",
       "url": "https://www.huntress.com/blog/how-proactive-account-review-uncovered-unauthorized-surveillance-tools",
       "date": "2025-06-17",
       "summary": "A routine account review revealed the use of productivity monitoring tools in a medical clinic, highlighting the hidden risks associated with employee monitoring software. Learn the importance of proactive audits in protecting critical systems and sensitive data from potential threats."
@@ -830,19 +854,19 @@
       "summary": "Huntress Managed EDR tackles lateral movement, a common attack tactic, with a layered approach to telemetry collection and detection. Read on to learn how we identify malicious activity while minimizing false positives."
     },
     {
-      "title": "Extending Threat Coverage on Macs with XProtect and Microsoft Defender for Endpoint",
+      "title": "Extending Threat Coverage on Macs with XProtect and | Huntress",
       "url": "https://www.huntress.com/blog/threat-coverage-on-macs-with-xprotect-microsoft-defender-for-endpoint",
       "date": "2025-06-11",
       "summary": "Enhance Mac security with Huntress Managed EDR's new coverage for Apple XProtect and Microsoft Defender for Endpoint. Learn how we can protect your macOS."
     },
     {
-      "title": "Introducing Threat Simulator for Better Employee Security Awareness Training. Start Your Trial Today.",
+      "title": "Introducing Threat Simulator for Better Employee Security | Huntress",
       "url": "https://www.huntress.com/blog/introducing-threat-simulator-from-huntress-managed-sat",
       "date": "2025-06-10",
       "summary": "Boost employee security awareness with Threat Simulator from Huntress Managed SAT. It features hands-on training, game-like sessions, and real results. Start your free trial today."
     },
     {
-      "title": "Boring Isn\u2019t Harmless: The Risks Behind Common Cyberattack Tradecraft",
+      "title": "Boring Isn't Harmless: Common Cyberattack Tradecraft Risks | Huntress",
       "url": "https://www.huntress.com/blog/boring-isnt-harmless-risks-behind-common-cyberattack-tradecraft",
       "date": "2025-06-05",
       "summary": "Don\u2019t underestimate basic attacker tradecraft tactics. Learn how common cybersecurity tradecraft succeeds and get practical tips from the Huntress SOC to shut it down."
@@ -854,7 +878,7 @@
       "summary": "Cybercriminals are sitting on a pile of stolen credentials, financial information, and sensitive data, thanks to the success of infostealers. Read more to learn how infostealers have grown to become a scourge to defenders, and how businesses can protect themselves."
     },
     {
-      "title": "\u201cAdvanced\u201d Intrusion Targeting Critical Marketing Research Company",
+      "title": "'Advanced' Intrusion Targeting a Marketing Research Company | Huntress",
       "url": "https://www.huntress.com/blog/advanced-intrusion-targeting-executive-at-critical-marketing-research-company",
       "date": "2025-05-27",
       "summary": "An intrusion at a market research company used living-off-the-land techniques, but Huntress detected and mitigated the threat, uncovering tactics like service creation and registry manipulation. Learn more and get detection guidance and mitigation strategies."
@@ -872,7 +896,7 @@
       "summary": "Every business is unique, and your incident response plan should be too. Learn why having a tailored plan is crucial for staying prepared and minimizing risk."
     },
     {
-      "title": "2025 Managed ITDR Report: The Rise of Identity Threats in Cybersecurity",
+      "title": "2025 Managed ITDR Report: The Rise of Identity Threats | Huntress",
       "url": "https://www.huntress.com/blog/identity-threats-in-cybersecurity",
       "date": "2025-05-20",
       "summary": "Why Huntress\u2019 2025 Managed ITDR Report should be required reading for every security team."
@@ -896,7 +920,7 @@
       "summary": "During ransomware attacks, the average time-to-ransom for attackers is almost 17 hours. Learn more about what this means for businesses."
     },
     {
-      "title": "Post-Exploitation Activities Observed from the Samsung MagicINFO 9 Server Flaw",
+      "title": "Post-Exploitation Activities Observed from the Samsung | Huntress",
       "url": "https://www.huntress.com/blog/post-exploitation-activities-observed-from-samsung-magicinfo-9-server-flaw",
       "date": "2025-05-09",
       "summary": "Huntress has verified that attackers are exploiting flaws in Samsung MagicINFO 9 Server (version 21.1050.0). Understand why MagicINFO 9 Server shouldn\u2019t be internet-facing until a patch is available and applied."
@@ -938,7 +962,7 @@
       "summary": "A business email compromise (BEC) attack is a type of scam where bad actors impersonate a trusted source to obtain information from their targeted individual."
     },
     {
-      "title": "Minutes Matter: Huntress Managed SIEM Makes Them Count (Here\u2019s How)",
+      "title": "Minutes Matter | Huntress",
       "url": "https://www.huntress.com/blog/minutes-matter-huntress-managed-siem-makes-them-count",
       "date": "2025-04-29",
       "summary": "Huntress Managed SIEM makes threat detection and response faster and more accessible. Learn about new features, real-world success stories, and how it enhances cybersecurity and compliance."
@@ -974,13 +998,13 @@
       "summary": "In a highly interconnected world, remote monitoring and management (RMM) tools are critical to reducing cost and increasing efficiencies. However, these tools pose challenges and even significant risk if not properly managed."
     },
     {
-      "title": "Why App Allowlisting and Zero Trust Solutions Alone Won\u2019t Save You",
+      "title": "Why App Allowlisting & Zero Trust Alone Won't Save You | Huntress",
       "url": "https://www.huntress.com/blog/why-app-allowlisting-and-zero-trust-solutions-alone-wont-save-you",
       "date": "2025-04-16",
       "summary": "App Allowlisting is a good preventative software tool, but it's not enough. Learn why a layered security approach with detection and response is crucial to protect against today's cyber threats."
     },
     {
-      "title": "CVE-2025-30406 - Critical Gladinet CentreStack & Triofox Vulnerability Exploited In The Wild",
+      "title": "CVE-2025-30406: Gladinet CentreStack & Triofox Exploited | Huntress",
       "url": "https://www.huntress.com/blog/cve-2025-30406-critical-gladinet-centrestack-triofox-vulnerability-exploited-in-the-wild",
       "date": "2025-04-14",
       "summary": "Huntress has observed in the wild exploitation against CVE-2025-30406, a weakness due to hardcoded cryptographic keys."
@@ -998,7 +1022,7 @@
       "summary": "Threat actors are now exploiting both endpoints and identities in the latest cyberattacks. Learn about the rise of identity-based threats and why a combined EDR and ITDR approach is crucial for your cybersecurity."
     },
     {
-      "title": "Credential Theft Guide: Initial Access, Mimikatz & Post-Exploitation",
+      "title": "Credential Theft: Initial Access, Mimikatz & More | Huntress",
       "url": "https://www.huntress.com/blog/credential-theft-expanding-your-reach",
       "date": "2025-04-08",
       "summary": "What is credential theft? Learn how threat actors use phishing, brute force, and tools like Mimikatz or Registry hive dumps to gain initial access and move laterally."
@@ -1010,7 +1034,7 @@
       "summary": "Huntress observed in-the-wild exploitation of CVE-2025-31161, an authentication bypass vulnerability in versions of CrushFTP and further post-exploitation leveraging MeshCentral and other malware."
     },
     {
-      "title": "Cyber Hygiene Threats Lurking at Your Perimeter: RDP, VPNs, and Remote Tools",
+      "title": "Cyber Hygiene Threats: RDP, VPNs & Remote Tool Risks | Huntress",
       "url": "https://www.huntress.com/blog/cyber-hygiene-attacks-prevention",
       "date": "2025-04-04",
       "summary": "Poor credential hygiene and misconfigurations give hackers an easy way in. See real-world cyber hygiene failures, how attackers exploit them, and how Managed EDR stops them cold."
@@ -1094,7 +1118,7 @@
       "summary": "Discover how modernized security awareness training can transform your workforce into a cybersecurity-first culture. Learn Huntress' key strategies."
     },
     {
-      "title": "2025 Cybersecurity Threat Report: Proliferating RATs, Evolving Ransomware, and Other Findings | Huntress",
+      "title": "2025 Cybersecurity Threat Report | Huntress",
       "url": "https://www.huntress.com/blog/huntress-2025-cyber-threat-report-proliferating-rats-evolving-ransomware-and-other-findings",
       "date": "2025-02-11",
       "summary": "Huntress\u2019 2025 Cyber Threat Report is here! Explore the year's biggest threats\u2014RATs, phishing, ransomware\u2014and how evolving tactics demand smarter defense."
@@ -1136,7 +1160,7 @@
       "summary": "Learn what LOLBins are, threats malicious threat actors can pose, how to detect those threats, and how to prevent them."
     },
     {
-      "title": "Cleo Software Actively Being Exploited in the Wild CVE-2024-55956 | Huntress",
+      "title": "Cleo Software Actively Being Exploited in the Wild | Huntress",
       "url": "https://www.huntress.com/blog/threat-advisory-oh-no-cleo-cleo-software-actively-being-exploited-in-the-wild",
       "date": "2025-01-06",
       "summary": "Huntress identified an emerging threat involving Cleo\u2019s LexiCom, VLTransfer, and Harmony software, known as CVE-2024-55956, commonly used to manage file transfers. Read more about this emerging threat on the Huntress Blog."
@@ -1196,7 +1220,7 @@
       "summary": "How Huntress Managed SIEM turns signal recognition into defensive mastery."
     },
     {
-      "title": "Relevancy of Huntress Managed Security Awareness Training Episodes| Huntress",
+      "title": "Huntress Managed Security Awareness Training: Relevance | Huntress",
       "url": "https://www.huntress.com/blog/trumans-take-a-product-researchers-insights-on-managed-learning",
       "date": "2024-12-02",
       "summary": "In this new blog series, we\u2019ll explore the managed episodes from Huntress Managed SAT, dive into the topics, and gain insight into why these episodes are relevant right now."
@@ -1226,7 +1250,7 @@
       "summary": "Discover how adversaries are using tools like EDRSilencer to tamper with EDR communications and learn how you can fight back."
     },
     {
-      "title": "To MFA or Not To MFA: How Multi-factor Authentication Saves the SMB | Huntress",
+      "title": "To MFA or Not To MFA | Huntress",
       "url": "https://www.huntress.com/blog/to-mfa-or-not-to-mfa-how-multi-factor-authentication-saves-the-smb",
       "date": "2024-11-18",
       "summary": "MFA could be the thing that stops your payroll money from disappearing in a wire transaction. So why do we treat it as an optional inconvenience?"
@@ -1262,7 +1286,7 @@
       "summary": "Leaderboards and Manager Notifications are the new way to motivate learners and track progress in Huntress Managed SAT."
     },
     {
-      "title": "Cybersecurity standards raised by the Health Infrastructure Security and Accountability Act | Huntress",
+      "title": "HISAA: Raised Cybersecurity Standards for Healthcare | Huntress",
       "url": "https://www.huntress.com/blog/wake-up-call-for-healthcare-cybersecurity",
       "date": "2024-11-06",
       "summary": "Discover how the Health Infrastructure Security and Accountability Act aims to enforce stricter cybersecurity standards across the healthcare sector."
@@ -1286,7 +1310,7 @@
       "summary": "Learn about the importance of Full Disk Access for Mac, its role in macOS security, and how it affects app performance and functionality."
     },
     {
-      "title": "Thank You for Helping Us Earn Another Inc. Power Partner Award in Cybersecurity | Huntress",
+      "title": "Thank You for Helping Us Earn Another Inc. Power Partner | Huntress",
       "url": "https://www.huntress.com/blog/thank-you-for-helping-us-earn-another-inc-power-partner-award-in-cybersecurity",
       "date": "2024-10-22",
       "summary": "Huntress has earned an Inc. Power Partner Award for 2024. This is our second year receiving this honor, and it\u2019s all due to our partners."
@@ -1310,7 +1334,7 @@
       "summary": "Behavioral analysis is one of the most powerful ways to hunt down attackers. However, it\u2019s a somewhat misunderstood element\u2014it\u2019s the human element that catches what AI and systems miss. Let\u2019s uncover it and figure out where and how it fits in."
     },
     {
-      "title": "Prevent Business Email Compromise Attacks | Huntress",
+      "title": "How to Prevent Business Email Compromise: A Guide for 2026",
       "url": "https://www.huntress.com/blog/prevent-business-email-compromise-attacks",
       "date": "2024-10-08",
       "summary": "Learn how to prevent business email compromise attacks and learn how to communicate this emerging cyber threat to your employees."
@@ -1334,7 +1358,7 @@
       "summary": "Huntress explains the NERC CIP-014 standard, why it was created, and how it increases the physical security of electric utilities across North America."
     },
     {
-      "title": "What is the Trigger Event for Implementing Security Awareness Training? | Huntress",
+      "title": "What Triggers the Need for Security Awareness Training? | Huntress",
       "url": "https://www.huntress.com/blog/what-is-the-trigger-event-for-implementing-security-awareness-training",
       "date": "2024-10-07",
       "summary": "Discover the key triggers for implementing effective security awareness training in your organization. Learn how to enhance employee vigilance, reduce security risks, and foster a culture of cybersecurity awareness by visiting the Huntress Blog."
@@ -1346,7 +1370,7 @@
       "summary": "Join Huntress Threat Hunters as they unpack the password-spraying techniques of threat actors, exposing how they target everything from small businesses to giants like Microsoft."
     },
     {
-      "title": "One Order of Tips, Tricks & Hot Takes for Cybersecurity Awareness Month 2024 | Huntress",
+      "title": "One Order of Tips, Tricks & Hot Takes for Cybersecurity | Huntress",
       "url": "https://www.huntress.com/blog/one-order-of-tips-tricks-hot-takes-for-cybersecurity-awareness-month-2024",
       "date": "2024-10-01",
       "summary": "Our hottest security tips, tricks, and opinions to kick this Cybersecurity Awareness Month off right."
@@ -1388,7 +1412,7 @@
       "summary": "Grab some popcorn and hold onto your seats: we\u2019re headed back to the dark web."
     },
     {
-      "title": "Cracks in the Foundation: Intrusions of FOUNDATION Accounting Software | Huntress",
+      "title": "Cracks in the Foundation: FOUNDATION Accounting Intrusions | Huntress",
       "url": "https://www.huntress.com/blog/cracks-in-the-foundation-intrusions-of-foundation-accounting-software",
       "date": "2024-09-17",
       "summary": "Threat actors have been successful in gaining entry using accounting software commonly used by construction companies."
@@ -1400,7 +1424,7 @@
       "summary": "Uncover top cyber challenges for mid-sized businesses in 2023; from lack of time and skills, human vulnerabilities, and budget constraints."
     },
     {
-      "title": "Are Biometrics the Unsung Hero or the Ultimate Villain in Cybersecurity? | Huntress",
+      "title": "Are Biometrics the Hero or Villain in Cybersecurity? | Huntress",
       "url": "https://www.huntress.com/blog/are-biometrics-the-unsung-hero-or-the-ultimate-villain-in-cybersecurity",
       "date": "2024-09-15",
       "summary": "Biometrics: the hero and villain of cybersecurity. Discover how this cutting-edge tech boosts security while posing serious risks. Is it a game-changer or a ticking time bomb? Let\u2019s break it down."
@@ -1436,13 +1460,13 @@
       "summary": "Join Huntress team members as they walk through some of the most malicious phishing techniques, presented from the attacker's perspective."
     },
     {
-      "title": "Advanced Persistent Threat Targeting Vietnamese Human Rights Defenders | Huntress",
+      "title": "APT Targeting Vietnamese Human Rights Defenders | Huntress",
       "url": "https://www.huntress.com/blog/advanced-persistent-threat-targeting-vietnamese-human-rights-defenders",
       "date": "2024-08-28",
       "summary": "Huntress identified an intrusion against a non-profit supporting Vietnamese human rights that\u2019s likely spanned years. Jump in as we provide a thorough analysis of this malicious threat actor."
     },
     {
-      "title": "Which States Are Most at Risk for Cyberattacks on Government and Infrastructure? | Huntress",
+      "title": "Which States Are Most at Risk for Government Cyberattacks? | Huntress",
       "url": "https://www.huntress.com/blog/which-states-are-most-at-risk-for-cyberattacks-on-government-and-infrastructure",
       "date": "2024-08-26",
       "summary": "Cyberattacks on U.S. government and critical infrastructure surged in 2023, with over 420 million global attacks. Learn which states are most affected and discover how Huntress can help protect your organization"
@@ -1454,25 +1478,25 @@
       "summary": "Join Imani on her adventures as she learns how to remain secure in remote work environments with our latest Huntress SAT episode!"
     },
     {
-      "title": "Unwanted Access: Protecting Against the Growing Threat of Session Hijacking and Credential Theft | Huntress",
+      "title": "Protecting Against Session Hijacking & Credential Theft | Huntress",
       "url": "https://www.huntress.com/blog/unwanted-access-protecting-against-the-growing-threat-of-session-hijacking-and-credential-theft",
       "date": "2024-08-21",
       "summary": "Discover how our new Unwanted Access capability strengthens your defenses against session hijacking and credential theft. Dive in and learn how to minimize risks and protect your business-critical assets from evolving cyber threats."
     },
     {
-      "title": "Don't Get Your Security from Your RMM Provider: The Risks You Should Know | Huntress",
+      "title": "Don't Get Security from Your RMM Provider: Know the Risks | Huntress",
       "url": "https://www.huntress.com/blog/dont-get-your-security-from-your-rmm-provider-the-risks-you-should-know",
       "date": "2024-08-05",
       "summary": "Here\u2019s why purchasing your cybersecurity products and services through your RMM provider isn\u2019t always the best value. Learn how to avoid common pitfalls and choose more effective EDR and MDR solutions."
     },
     {
-      "title": "SlashAndGrab: The ConnectWise ScreenConnect Vulnerability Explained | Huntress",
+      "title": "SlashAndGrab ConnectWise ScreenConnect Vulnerability",
       "url": "https://www.huntress.com/blog/slashandgrab-the-connectwise-screenconnect-vulnerability-explained",
       "date": "2024-08-03",
       "summary": "Huntress gives you a non-technical breakdown of the SlashAndGab ConnectWise ScreenConnect Vulnerability; dig into the insights on how we discovered it and supported the community along the way."
     },
     {
-      "title": "Huntress Is Now a CVE Numbering Authority. But What Does That Mean? | Huntress",
+      "title": "Huntress Is Now a CVE Numbering Authority. But What Does | Huntress",
       "url": "https://www.huntress.com/blog/huntress-is-now-a-cve-numbering-authority-but-what-does-that-mean",
       "date": "2024-08-01",
       "summary": "Huntress is officially a CVE Numbering Authority. Stay tuned as we keep our eye out for new vulnerabilities in cyberspace."
@@ -1484,7 +1508,7 @@
       "summary": "Huntress Managed EDR was featured in 50 unique G2 reports, earning over 44 Leader badges. Learn why we\u2019re retaining our #1 rank for the 9th quarter in a row."
     },
     {
-      "title": "When Trust Becomes a Trap: How Huntress Foiled a Medical Software Update Hack | Huntress",
+      "title": "When Trust Becomes a Trap: Foiling a Medical Software Hack | Huntress",
       "url": "https://www.huntress.com/blog/when-trust-becomes-a-trap-how-huntress-foiled-a-medical-software-update-hack",
       "date": "2024-07-23",
       "summary": "Hackers cloned a legitimate medical image viewer site to distribute malware, but thanks to Huntress, the threat was detected in time. Dive into the incident and see how we uncovered the deception and averted disaster."
@@ -1496,7 +1520,7 @@
       "summary": "Huntress has observed new behaviors in conjunction with the malware SocGholish. Read on to understand the implications of this threat and how you can better protect yourself."
     },
     {
-      "title": "Understanding the Recent Surge in Cybersecurity Threats to Dental Practices | Huntress",
+      "title": "Cybersecurity Threats to Dental Practices: What's Happening | Huntress",
       "url": "https://www.huntress.com/blog/understanding-the-recent-surge-in-cybersecurity-threats-to-dental-practices",
       "date": "2024-07-16",
       "summary": "Learn why the FBI recently warned dental practices of potential cyberattacks and discover how Huntress Security Awareness Training can help prevent them."
@@ -1508,19 +1532,19 @@
       "summary": "Secure endpoints are critical to your cyber defenses. Here\u2019s a list of endpoint security tips every IT and security professional should know."
     },
     {
-      "title": "Is There an Effective Way to Defend Against Cyber Threats to Critical Infrastructure? | Huntress",
+      "title": "Defending Critical Infrastructure Against Cyber Threats | Huntress",
       "url": "https://www.huntress.com/blog/effective-ways-to-defend-against-cyber-threats-to-critical-infrastructure",
       "date": "2024-07-05",
       "summary": "Learn about the current state of cyber threats to critical infrastructure and find out how state and local governments can protect against devastating breaches."
     },
     {
-      "title": "Hackers Are Hiding in Plain Sight: Insights from Our 2024 Cyber Threat Report | Huntress",
+      "title": "Hackers Are Hiding in Plain Sight | Huntress",
       "url": "https://www.huntress.com/blog/hackers-are-hiding-in-plain-sight-insights-from-our-2024-cyber-threat-report",
       "date": "2024-07-02",
       "summary": "Cybercriminals are now blending into legitimate systems. Huntress\u2019 2024 Cyber Threat Report reveals the latest unsettling trends and tactics we observed, including the misuse of remote monitoring tools and cloud storage services."
     },
     {
-      "title": "How Accidental or Intentional Data Loss Can Be Equally Debilitating for Healthcare | Huntress",
+      "title": "Accidental vs. Intentional Data Loss in Healthcare | Huntress",
       "url": "https://www.huntress.com/blog/dont-lose-it-how-accidental-or-intentional-data-loss-can-be-equally-debilitating-for-healthcare",
       "date": "2024-06-26",
       "summary": "Healthcare must protect sensitive data from accidental equipment loss, data theft, and insider attacks. Learn practical steps and solutions to enhance your security and maintain patient trust."
@@ -1538,13 +1562,13 @@
       "summary": "Learn about Huntress' latest feature, Auto-Remediations for Low-severity Incidents, which can help save time by instantly remediating low-severity threats."
     },
     {
-      "title": "Tailored Cybersecurity Solutions vs. Cybersecurity Bundles like K365 | Huntress",
+      "title": "Tailored Cybersecurity vs. Bundles like K365 | Huntress",
       "url": "https://www.huntress.com/blog/dont-fall-for-the-ol-bundle-trick",
       "date": "2024-06-24",
       "summary": "Here\u2019s why bundling cybersecurity products and services like Kaseya K365 aren\u2019t always the best value for your organization. Learn how to avoid common pitfalls and choose more effective EDR and MDR solutions."
     },
     {
-      "title": "Here\u2019s to the Future: Our Latest Funding Will Fuel Big Innovations, Bold Acquisitions, and a More Secure Global Community | Huntress",
+      "title": "Here\u2019s to the Future | Huntress",
       "url": "https://www.huntress.com/blog/heres-to-the-future-our-latest-funding-will-fuel-big-innovations-bold-acquisitions-and-a-more-secure-global-community",
       "date": "2024-06-18",
       "summary": "Huntress CEO Kyle Hanslovan highlights the cybersecurity leader's Series D funding and how this investment will benefit partners moving forward."
@@ -1556,19 +1580,19 @@
       "summary": "Let Huntress debunk the biggest Mac security myths. macOS is now a popular target for hackers, so learn the truth about its vulnerabilities and discover practical steps to enhance protection against cyber threats."
     },
     {
-      "title": "Mistakes to Mastery: Get to Know Phishing Defense Coaching from Huntress SAT | Huntress",
+      "title": "Mistakes to Mastery | Huntress",
       "url": "https://www.huntress.com/blog/mistakes-to-mastery-get-to-know-phishing-defense-coaching-from-huntress-sat",
       "date": "2024-06-12",
       "summary": "Get to know Phishing Defense Coaching, the latest addition to Huntress SAT. This personalized feature helps teach learners how phishing simulations tricked them so they can better identify potential threats."
     },
     {
-      "title": "Examining the Impact of Ransomware on the Healthcare Sector and New HHS Guidelines | Huntress",
+      "title": "Examining the Impact of Ransomware on the Healthcare | Huntress",
       "url": "https://www.huntress.com/blog/examining-the-impact-of-ransomware-on-the-healthcare-sector-and-new-hhs-guidelines",
       "date": "2024-06-08",
       "summary": "Learn what\u2019s causing a surge in ransomware attacks on healthcare organizations and find out how new guidelines from HHS are addressing the problem."
     },
     {
-      "title": "Healthcare in the Crosshairs: Insights from Our 2024 Cyber Threat Report | Huntress",
+      "title": "Healthcare in the Crosshairs | Huntress",
       "url": "https://www.huntress.com/blog/healthcare-in-the-crosshairs-insights-from-our-2024-cyber-threat-report",
       "date": "2024-06-06",
       "summary": "Explore the latest ransomware and BEC threats targeting healthcare today. And learn how to navigate emerging threats with insights from our 2024 Cyber Threat Report."
@@ -1592,7 +1616,7 @@
       "summary": "Understand the impact of human error across healthcare, and discover how Huntress\u2019 managed solutions can better defend your organization from social engineering scams."
     },
     {
-      "title": "Smuggler\u2019s Gambit: Uncovering HTML Smuggling Adversary in the Middle Tradecraft | Huntress",
+      "title": "Smuggler\u2019s Gambit | Huntress",
       "url": "https://www.huntress.com/blog/smugglers-gambit-uncovering-html-smuggling-adversary-in-the-middle-tradecraft",
       "date": "2024-05-23",
       "summary": "Blowing the lid off of interesting adversary-in-the-middle tradecraft observed in the Huntress partner identities."
@@ -1604,7 +1628,7 @@
       "summary": "Explore the interesting changes in the world of ransomware and more key findings from Huntress' 2024 Cyber Threat Report."
     },
     {
-      "title": "Time to Act: Gaining the Edge with Huntress Response Capabilities | Huntress",
+      "title": "Time to Act | Huntress",
       "url": "https://www.huntress.com/blog/time-to-act-gaining-the-edge-with-huntress-response-capabilities",
       "date": "2024-05-14",
       "summary": "Discover how Huntress MDR can respond swiftly to cyber threats and give you the critical time advantage in your ongoing battle against attackers."
@@ -1616,7 +1640,7 @@
       "summary": "Learn how you can streamline incident response with Huntress Managed EDR's Active Remediation. Sleep soundly while we thwart threats on your behalf."
     },
     {
-      "title": "From South Park to Curriculaville: Meet Jeff Gill, Emmy Award Winner and Huntress SAT Animator | Huntress",
+      "title": "From South Park to Curriculaville | Huntress",
       "url": "https://www.huntress.com/blog/from-south-park-to-curriculaville-meet-jeff-gill-emmy-award-winner-and-huntress-sat-animator",
       "date": "2024-05-08",
       "summary": "Get to know Jeff Gill, Emmy award-winning storyteller and Huntress Security Awareness Training animator."
@@ -1634,7 +1658,7 @@
       "summary": "Huntress has observed INC ransomware deployed in the past but recent activity indicates a possible continued shift in/or improvement of tactics employed by these threat actors."
     },
     {
-      "title": "The Undeniable Benefits of Healthcare Security Awareness Training | Huntress",
+      "title": "The Undeniable Benefits of Healthcare Security Awareness | Huntress",
       "url": "https://www.huntress.com/blog/the-undeniable-benefits-of-healthcare-security-awareness-training",
       "date": "2024-04-30",
       "summary": "Discover the benefits of healthcare security awareness training and find out how Huntress can empower your organization with a culture of security."
@@ -1646,7 +1670,7 @@
       "summary": "There's a new variant of LightSpy malware targeting macOS. Here, Huntress' macOS researchers dive into the macOS variant of the LightSpy malware, after gaps in recent reports stating that the LightSpy malware strictly targets iOS."
     },
     {
-      "title": "It Costs How Much?!? The Financial Pitfalls of Cyberattacks on SMBs | Huntress",
+      "title": "It Costs How Much? | Huntress",
       "url": "https://www.huntress.com/blog/it-costs-how-much-the-financial-pitfalls-of-cyberattacks-on-smbs",
       "date": "2024-04-19",
       "summary": "Learn how managed EDRs can help SMBs offset limited cybersecurity budgets, thwart cyberattacks, and save money for the long term."
@@ -1712,7 +1736,7 @@
       "summary": "Impossible Travel is one of the earliest indicators of user compromise, and it works against any user-centric event that can be tied back to a location. Huntress goes in-depth on this problem, explaining how it works, revealing challenges surrounding it, and offering real-world examples occurring within Microsoft 365."
     },
     {
-      "title": "Please Allow Me to (Re)introduce Myself: Huntress Security Awareness Training | Huntress",
+      "title": "Please Allow Me to (Re)introduce Myself | Huntress",
       "url": "https://www.huntress.com/blog/please-allow-me-to-re-introduce-myself-huntress-security-awareness-training",
       "date": "2024-03-05",
       "summary": "Huntress has launched Huntress Security Awareness Training (SAT), a new and improved SAT solution tailored to the needs of underserved and resource-strapped organizations. It features memorable, story-driven episodes, making it easier for users to retain knowledge. And since it\u2019s fully managed by Huntress, admins will enjoy it too. Most importantly, Huntress SAT was developed with one overall goal\u2014elevate the security of your small- and medium-sized business (SMB)."
@@ -1742,7 +1766,7 @@
       "summary": "This blog post provides a detailed look at the TTPs of a ransomware affiliate operator. In this case, the endpoint had been moved to another infrastructure (as illustrated by various command lines, and confirmed by the partner), so while Huntress SOC analysts reported the activity to the partner, no Huntress customer was impacted by the ransomware deployment."
     },
     {
-      "title": "SlashAndGrab: ScreenConnect Post-Exploitation in the Wild (CVE-2024-1709 & CVE-2024-1708) | Huntress",
+      "title": "SlashAndGrab | Huntress",
       "url": "https://www.huntress.com/blog/slashandgrab-screen-connect-post-exploitation-in-the-wild-cve-2024-1709-cve-2024-1708",
       "date": "2024-02-23",
       "summary": "Adversaries have been VERY busy in the wake of the ScreenConnect vulnerabilities (CVE-2024-1709 & CVE-2024-1708). Here\u2019s all the post-exploitation details, tradecraft, and tactics we\u2019ve observed so far!"
@@ -1754,7 +1778,7 @@
       "summary": "Huntress Guide: Review this guide on how to tell which ScreenConnect Server autoruns are found on your endpoint so you can quickly find and remove them."
     },
     {
-      "title": "Understanding the ConnectWise ScreenConnect CVE-2024-1709 & CVE-2024-1708 | Huntress",
+      "title": "ConnectWise ScreenConnect CVE-2024-1709 & CVE-2024-1708 | Huntress",
       "url": "https://www.huntress.com/blog/a-catastrophe-for-control-understanding-the-screenconnect-authentication-bypass",
       "date": "2024-02-21",
       "summary": "This blog discusses the Huntress Team's analysis efforts of the two vulnerabilities and software weaknesses in ConnectWise ScreenConnect (CVE-2024-1708 and CVE-2024-1709) and the technical details behind this attack."
@@ -1802,7 +1826,7 @@
       "summary": "Tips and tricks to hunt down RMM abuse. Remote access tools for persistence. Are RMMs really just command and control? January\u2019s Tradecraft Tuesday was wild. Here\u2019s the recap."
     },
     {
-      "title": "Threat Advisory: Possible AnyDesk Stolen Code Signing Certificate | Huntress",
+      "title": "Threat Advisory | Huntress",
       "url": "https://www.huntress.com/blog/threat-advisory-possible-anydesk-stolen-code-signing-certificate",
       "date": "2024-02-02",
       "summary": "Huntress is tracking concerns regarding the AnyDesk remote control software and provider."
@@ -1850,13 +1874,13 @@
       "summary": "From budget constraints to the rise of AI - discover how CISOs and cybersecurity leaders navigated challenges in 2023 and gain insights for success in 2024."
     },
     {
-      "title": "Effortless Phishing Simulations Now Part of Huntress Managed Security Awareness Training | Huntress",
+      "title": "Effortless Phishing Simulations Now Part of Huntress | Huntress",
       "url": "https://www.huntress.com/blog/effortless-phishing-simulations-now-part-of-huntress-security-awareness-training",
       "date": "2023-12-23",
       "summary": "Read about our newest addition to Huntress Managed SAT, Managed Phishing, offering you expert-backed, hassle-free simulated phishing campaigns."
     },
     {
-      "title": "Teach Yourself to Phish: The Strategy Behind Phishing Simulations | Huntress",
+      "title": "Teach Yourself to Phish | Huntress",
       "url": "https://www.huntress.com/blog/teach-yourself-to-phish-the-strategy-behind-phishing-simulations",
       "date": "2023-12-19",
       "summary": "Get ready for a phishing trip! Learn about the strategy behind phishing simulations and how it can help your organization build resilience against real phishing threats."
@@ -1922,7 +1946,7 @@
       "summary": "Huntress has analyzed the emerging SysAid CVE-2023-47246 vulnerability and recreated the attack chain with a proof-of-concept exploit."
     },
     {
-      "title": "Bitter Pill: Pharmaceutical Vendor Linked to Pharmacy and Health Clinic Cyberattack | Huntress",
+      "title": "Bitter Pill | Huntress",
       "url": "https://www.huntress.com/blog/third-party-pharmaceutical-vendor-linked-to-pharmacy-and-health-clinic-cyberattack",
       "date": "2023-11-09",
       "summary": "Huntress has uncovered a series of unauthorized access, revealing a threat actor using ScreenConnect to infiltrate multiple healthcare organizations."
@@ -1934,7 +1958,7 @@
       "summary": "CVE-2023-22518 is being exploited in Confluence for Cerber ransomware deployment. Read up on Huntress\u2019 observations and mitigation guidance."
     },
     {
-      "title": "Critical Vulnerability: Exploitation of Apache ActiveMQ CVE-2023-46604 | Huntress",
+      "title": "Critical Vuln: Apache ActiveMQ CVE-2023-46604 Exploited | Huntress",
       "url": "https://www.huntress.com/blog/critical-vulnerability-exploitation-of-apache-activemq-cve-2023-46604",
       "date": "2023-11-02",
       "summary": "CVE-2023-46604 is a critical remote code execution vulnerability in Apache ActiveMQ. Patch now to avoid any potential adversary exploitation."
@@ -1958,7 +1982,7 @@
       "summary": "Explore the art of phishing, learn how to spot common phishing scams and red flags, and understand the importance of security awareness training."
     },
     {
-      "title": "Huntress Managed ITDR (formerly MDR for Microsoft 365): The Full Story | Huntress",
+      "title": "Huntress Managed ITDR (formerly MDR for Microsoft 365) | Huntress",
       "url": "https://www.huntress.com/blog/huntress-mdr-for-microsoft-365-the-full-story",
       "date": "2023-10-16",
       "summary": "Read up on how and why Huntress built its Managed ITDR (formerly MDR for Microsoft 365) solution to help combat the growing threat of business email compromise (BEC)."
@@ -1976,13 +2000,7 @@
       "summary": "In the spirit of Cybersecurity Awareness Month, use these cybersecurity tips to take your security hygiene and cyber knowledge up a notch."
     },
     {
-      "title": "3 Hot Takes and Tips for Cybersecurity Awareness Month 2023 | Huntress",
-      "url": "https://www.huntress.com/blog/3-hot-takes-and-tips-for-cybersecurity-awareness-month-2023",
-      "date": "2023-10-10",
-      "summary": "In the spirit of Cybersecurity Awareness Month, use these cybersecurity tips to take your security hygiene and cyber knowledge up a notch."
-    },
-    {
-      "title": "Pairing SOCs with Automation: You Won\u2019t Be Replaced by a Robot Yet | Huntress",
+      "title": "Pairing SOCs with Automation | Huntress",
       "url": "https://www.huntress.com/blog/pairing-socs-with-automation-you-wont-be-replaced-by-a-robot-yet",
       "date": "2023-10-05",
       "summary": "We can use automation, detection and response, and open-source software to solve common SOC challenges. Read about simple approaches for SOC automation."
@@ -2000,25 +2018,25 @@
       "summary": "Huntress is actively investigating numerous vulnerabilities affecting the WS_FTP Server Ad Hoc Transfer Module observed in the wild."
     },
     {
-      "title": "Critical Vulnerability: WebP Heap Buffer Overflow (CVE-2023-4863) | Huntress",
+      "title": "Critical Vuln: WebP Heap Buffer Overflow CVE-2023-4863 | Huntress",
       "url": "https://www.huntress.com/blog/critical-vulnerability-webp-heap-buffer-overflow-cve-2023-4863",
       "date": "2023-09-28",
       "summary": "Huntress is tracking a new critical vulnerability seen in the wild that affects anything using the libwebp WebP image library. Here\u2019s what we know so far."
     },
     {
-      "title": "Humans vs. AI: The Critical Role of Human Expertise in Cybersecurity",
+      "title": "Humans vs. AI: The Critical Role of Human Expertise | Huntress",
       "url": "https://www.huntress.com/blog/humans-vs-ai-the-critical-role-of-human-expertise-in-cybersecurity",
       "date": "2023-09-28",
       "summary": "Can AI ever fully replace humans in cybersecurity? We argue that human-powered security is the key to staying one step ahead of today\u2019s threats."
     },
     {
-      "title": "Netscaler Exploitation to Social Engineering: Mapping Convergence of Adversary Tradecraft Across Victims | Huntress",
+      "title": "Netscaler Exploitation to Social Engineering | Huntress",
       "url": "https://www.huntress.com/blog/netscaler-exploitation-to-social-engineering-mapping-convergence-of-adversary-tradecraft-across-victims",
       "date": "2023-09-26",
       "summary": "The following is an analysis by the Huntress team of several recent intrusions connected to the Netscaler exploitation."
     },
     {
-      "title": "Introducing Incident Notification: A Game Changer for Critical Incident Response | Huntress",
+      "title": "Introducing Incident Notification | Huntress",
       "url": "https://www.huntress.com/blog/introducing-incident-notification-a-game-changer-for-critical-incident-response",
       "date": "2023-09-22",
       "summary": "Read about Huntress' newest feature, Incident Notification, which allows us to instantly alert partners to critical incidents via SMS text or phone call."
@@ -2108,7 +2126,7 @@
       "summary": "We\u2019ve entered the era of identity security. Are you ready? Explore how to counter evolving threats and protect identities with confidence."
     },
     {
-      "title": "How Security-Centric Procedures and Training Helped Huntress Catch a $100,000 BEC Scam | Huntress",
+      "title": "How Security-Centric Procedures and Training Helped | Huntress",
       "url": "https://www.huntress.com/blog/how-security-centric-procedures-and-training-helped-huntress-catch-a-100000-bec-scam",
       "date": "2023-08-09",
       "summary": "Discover how Huntress caught an attempted business email compromise (BEC) scam that would have cost the company more than $100,000 had it gone undetected."
@@ -2126,7 +2144,7 @@
       "summary": "Huntress is tracking a new PaperCut vulnerability, CVE-2023-39143, which allows full remote code execution on unpatched servers."
     },
     {
-      "title": "Legitimate Apps as Traitorware for Persistent Microsoft 365 Compromise",
+      "title": "Legitimate Apps as Traitorware for Persistent Microsoft | Huntress",
       "url": "https://www.huntress.com/blog/legitimate-apps-as-traitorware-for-persistent-microsoft-365-compromise",
       "date": "2023-08-03",
       "summary": "Dive into how Huntress caught a threat actor adding several legitimate email apps to maintain persistent access to a compromised Microsoft 365 environment."
@@ -2138,7 +2156,7 @@
       "summary": "Discover the key phases of the threat hunting process and how threat hunters structure their hunts to proactively seek out threats."
     },
     {
-      "title": "Why Huntress Trusts Microsoft Defender Antivirus (And You Should Too) | Huntress",
+      "title": "Why Huntress Trusts Microsoft Defender Antivirus | Huntress",
       "url": "https://www.huntress.com/blog/why-huntress-trusts-microsoft-defender-antivirus-and-you-should-too",
       "date": "2023-08-01",
       "summary": "Is it worth switching to Microsoft Defender Antivirus? Spoiler alert: We think yes! Explore why Defender is a solid AV solution."
@@ -2162,7 +2180,7 @@
       "summary": "Dive into the improvements and progress we\u2019ve made with Huntress Security Awareness Training since acquiring Curricula one year ago."
     },
     {
-      "title": "Thwarting Financial Fraud: Shutting Down Hackers in Microsoft 365 | Huntress",
+      "title": "Thwarting Financial Fraud | Huntress",
       "url": "https://www.huntress.com/blog/thwarting-financial-fraud-shutting-down-hackers-in-microsoft-365",
       "date": "2023-07-13",
       "summary": "In this blog, explore how Huntress caught an attempt at financial fraud through business email compromise (BEC) in Microsoft 365."
@@ -2174,7 +2192,7 @@
       "summary": "In this blog, we explore the long-term impact of the MOVEit exploitation and how defenders can stay vigilant and learn from the past."
     },
     {
-      "title": "Threat Hunting for Business Email Compromise Through User Agents | Huntress",
+      "title": "BEC Threat Hunting: How to Detect Microsoft 365 Compromises",
       "url": "https://www.huntress.com/blog/threat-hunting-for-business-email-compromise-through-user-agents",
       "date": "2023-07-06",
       "summary": "Can we use anomalous user agents to detect potential business email compromise (BEC) in Microsoft 365? Explore what we found through threat hunting for BEC."
@@ -2198,7 +2216,7 @@
       "summary": "Need help approaching the security sales conversation? Use these tips to walk into your next client meeting armed with points for selling cybersecurity."
     },
     {
-      "title": "Understanding Granular Delegated Admin Privileges (GDAP) and Its Operational Impact | Huntress",
+      "title": "Understanding GDAP and Its Operational Impact | Huntress",
       "url": "https://www.huntress.com/blog/understanding-gdap-and-its-operational-impact",
       "date": "2023-06-13",
       "summary": "Everything you need to know about Microsoft's authentication control, Granular Delegated Admin Privileges (GDAP)."
@@ -2216,7 +2234,7 @@
       "summary": "This blog illustrates how the Splunk Universal Forwarder (UF) can be used as traitorware for persistence and remote code execution."
     },
     {
-      "title": "MOVEit Transfer Critical Vulnerability CVE-2023-34362 Rapid Response",
+      "title": "MOVEit Transfer Critical Vulnerability CVE-2023-34362 | Huntress",
       "url": "https://www.huntress.com/blog/moveit-transfer-critical-vulnerability-rapid-response",
       "date": "2023-06-01",
       "summary": "Our team is tracking in-the-wild exploitation of a zero-day vulnerability against Progress' MOVEit Transfer web application that allows for escalated privileges and unauthorized access."
@@ -2270,7 +2288,7 @@
       "summary": "Huntress is bringing the hunt to Australia and New Zealand! Hear from the Regional Director of Huntress ANZ what this expansion means."
     },
     {
-      "title": "Traitorware and Living Off the Land: Using Splunk to Exfiltrate Data | Huntress",
+      "title": "Traitorware and Living Off the Land | Huntress",
       "url": "https://www.huntress.com/blog/traitorware-and-living-off-the-land-using-splunk-to-exfiltrate-data",
       "date": "2023-04-11",
       "summary": "Your security tools are just as likely to be attacked as anything else. This blog dives into traitorware and how it's used to live off the land."
@@ -2336,7 +2354,7 @@
       "summary": "EDR is a baseline for security controls these days. Learn which questions to ask and answers to give when seeking buy-in to add or replace an EDR in your security stack."
     },
     {
-      "title": "What Endpoint Detection and Response (EDR) Looks Like Under the Hood | Huntress",
+      "title": "What Endpoint Detection and Response (EDR) Looks Like | Huntress",
       "url": "https://www.huntress.com/blog/endpoint-detection-and-response-edr-under-the-hood",
       "date": "2023-02-23",
       "summary": "We\u2019re going to try to cut through the noise and shed some light on EDR to understand the variance, capability, and efficacy of EDR solutions in the market."
@@ -2402,7 +2420,7 @@
       "summary": "Two of Huntress\u2019 heavy hitters John Hammond and Dray Agha lace up their gloves to join the good fight and add their predictions for 2023."
     },
     {
-      "title": "OWASSRF Explained: Analyzing the Microsoft Exchange RCE Vulnerability | Huntress",
+      "title": "OWASSRF Explained | Huntress",
       "url": "https://www.huntress.com/blog/owassrf-explained-analyzing-the-microsoft-exchange-rce-vulnerability",
       "date": "2022-12-29",
       "summary": "Huntress' analysis of a new exploit chain (called OWASSRF) that can lead to critical remote code execution on unpatched Exchange hosts."
@@ -2468,7 +2486,7 @@
       "summary": "We're excited to announce the general availability of the Huntress macOS agent! And don't worry \u2013 Persistent Footholds are just the beginning."
     },
     {
-      "title": "ConnectWise/R1Soft Server Backup Manager Remote Code Execution & Supply Chain Risks | Huntress",
+      "title": "ConnectWise/R1Soft RCE & Supply Chain Risks | Huntress",
       "url": "https://www.huntress.com/blog/critical-vulnerability-disclosure-connectwise-r1soft-server-backup-manager-remote-code-execution-supply-chain-risks",
       "date": "2022-10-31",
       "summary": "Huntress has validated an initial report for an authentication bypass and sensitive file leak present in the Java framework \u201cZK\u201d, used within the ConnectWise R1Soft software Server Backup Manager SE."
@@ -2552,6 +2570,12 @@
       "summary": "We founded Huntress with a commitment to elevating the cybersecurity community as a guiding principle. Here are some of the ways we strive to make a difference."
     },
     {
+      "title": "Threat Advisory: Hackers Are Selling Access to MSPs | Huntress",
+      "url": "https://www.huntress.com/blog/threat-advisory-hackers-are-selling-access-to-msps",
+      "date": "2022-07-28",
+      "summary": "We\u2019re currently monitoring a situation that entails a hacker selling access to an MSP with access to 50+ customers, totaling 1,000+ servers."
+    },
+    {
       "title": "Practical Tips for Conducting Digital Forensics Investigations | Huntress",
       "url": "https://www.huntress.com/blog/practical-tips-for-conducting-digital-forensics-investigations",
       "date": "2022-07-26",
@@ -2618,7 +2642,7 @@
       "summary": "If you follow the NIST cybersecurity framework, you'll ensure that your money is spent on the right areas to build an effective defense strategy."
     },
     {
-      "title": "Out of Sight, Top of Mind: Showing the Hidden Value of Cybersecurity | Huntress",
+      "title": "Out of Sight, Top of Mind | Huntress",
       "url": "https://www.huntress.com/blog/out-of-sight-top-of-mind-showing-the-hidden-value-of-cybersecurity",
       "date": "2022-05-31",
       "summary": "It can be difficult to demonstrate the value of cybersecurity when your stack is doing its job. Here is how you can show the hidden value of cybersecurity."
@@ -2654,7 +2678,7 @@
       "summary": "This blog shows how to catch an adversary moving from machine to machine, how to terminate this movement and how to evict the adversary from your network."
     },
     {
-      "title": "One Year Later: Lessons Learned from the Colonial Pipeline Cyberattack | Huntress",
+      "title": "One Year Later | Huntress",
       "url": "https://www.huntress.com/blog/one-year-later-lessons-learned-from-the-colonial-pipeline-cyberattack",
       "date": "2022-05-05",
       "summary": "We recap some of the lessons we have learned over the past year thanks to the Colonial Pipeline attack."
@@ -2738,7 +2762,7 @@
       "summary": "CIP-004 R1 requires a NERC CIP Cyber Security Awareness Program for NERC entities. Low Impact Security Awareness Program requirement will also be discussed."
     },
     {
-      "title": "Hackers No Hashing: Randomizing API Hashes to Evade Cobalt Strike Shellcode Detection",
+      "title": "Hackers No Hashing | Huntress",
       "url": "https://www.huntress.com/blog/hackers-no-hashing-randomizing-api-hashes-to-evade-cobalt-strike-shellcode-detection",
       "date": "2022-02-16",
       "summary": "Hackers could be outsmarting preventive tools by making trivial changes to default settings. We dive into our research in this blog."
@@ -2858,7 +2882,7 @@
       "summary": "In this blog, we aim to answer the question: how easy is it for hackers to circumvent two-factor authentication? We look at their tricks to learn the best way to set up 2FA."
     },
     {
-      "title": "Investigating Unauthorized Access: Huntress QA Environment Incident",
+      "title": "Investigating Unauthorized Access | Huntress",
       "url": "https://www.huntress.com/blog/investigating-unauthorized-access-huntress-qa-environment-incident",
       "date": "2021-11-17",
       "summary": "Learn about our investigation regarding unauthorized access to our QA and product testing environment."
@@ -2876,7 +2900,7 @@
       "summary": "It\u2019s amazing what you can learn by thinking like a hacker! We share our top tips and takeaways from our third hack_it security training event."
     },
     {
-      "title": "Vulnerabilities and Information Disclosure in MSP Survey Software | Huntress",
+      "title": "Vulnerabilities & Info Disclosure in MSP Survey Software | Huntress",
       "url": "https://www.huntress.com/blog/vulnerabilities-and-information-disclosure-in-msp-survey-software",
       "date": "2021-10-28",
       "summary": "We discovered an information disclosure vulnerability in survey software designed for MSPs. We detail how we worked with the Crewhu team to responsibly disclose and remedy the vulnerability."
@@ -2888,7 +2912,7 @@
       "summary": "Learn about Host Isolation, a new feature that's just been added to The Huntress Security Platform."
     },
     {
-      "title": "Hackers Are Exploiting a Vulnerability in Billing Software to Deploy Ransomware | Huntress",
+      "title": "Hackers Are Exploiting a Vulnerability in Billing Software | Huntress",
       "url": "https://www.huntress.com/blog/threat-advisory-hackers-are-exploiting-a-vulnerability-in-popular-billing-software-to-deploy-ransomware",
       "date": "2021-10-22",
       "summary": "Huntress discovered threat actors abusing a blind SQL injection vulnerability in BillQuick Web Suite. Follow our analysis and latest findings in this blog."
@@ -2942,7 +2966,7 @@
       "summary": "Huntress is monitoring a new threat against Windows OS and Microsoft Office products (CVE-2021-40444). The MSHTML engine is vulnerable to arbitrary code execution."
     },
     {
-      "title": "Malware Deep Dive: Investigating a Foothold and Uncovering the Payload",
+      "title": "Malware Deep Dive | Huntress",
       "url": "https://www.huntress.com/blog/malware-deep-dive-investigating-a-foothold-and-uncovering-the-payload",
       "date": "2021-09-07",
       "summary": "In this blog, read along as we investigate a malicious foothold and decode the payload step by step."
@@ -2960,7 +2984,7 @@
       "summary": "Dive into a cyber threat analysis that details a sneaky enabler of a targeted cyberattack: persistence."
     },
     {
-      "title": "Microsoft Exchange Servers Still Vulnerable to ProxyShell Exploit | Huntress",
+      "title": "Microsoft Exchange Servers Still Vulnerable to ProxyShell | Huntress",
       "url": "https://www.huntress.com/blog/rapid-response-microsoft-exchange-servers-still-vulnerable-to-proxyshell-exploit",
       "date": "2021-08-19",
       "summary": "Attackers are scanning for vulnerable Microsoft Exchange servers and abusing the latest line of Exchange vulnerabilities that were patched in early 2021."
@@ -3002,7 +3026,7 @@
       "summary": "Learn how hackers use persistence to gain\u2014and keep\u2014access to your virtual environments."
     },
     {
-      "title": "The Hunt to Find Origins of Kaseya's VSA Mass Ransomware Incident | Huntress",
+      "title": "The Hunt to Find Origins of Kaseya's VSA Mass Ransomware | Huntress",
       "url": "https://www.huntress.com/blog/security-researchers-hunt-to-discover-origins-of-the-kaseya-vsa-mass-ransomware-incident",
       "date": "2021-07-20",
       "summary": "Our Security Researchers discuss how hackers executed the Kaseya VSA supply chain attack\u2014and why the blast radius of the incident was relatively limited."
@@ -3014,7 +3038,7 @@
       "summary": "Cybersecurity experts John Hammond and S\u00e9bastien Goutal provide insider insight on the current state of phishing, ransomware and email-based attacks."
     },
     {
-      "title": "Huntress VSA Vaccine: Acting Like Hackers To Protect Our Partners | Huntress",
+      "title": "Huntress VSA Vaccine | Huntress",
       "url": "https://www.huntress.com/blog/the-huntress-vsa-vaccine-acting-like-hackers-to-protect-our-partners",
       "date": "2021-07-13",
       "summary": "In this blog, we share details on the vaccine Huntress deployed to our partners to protect them from being infected by the Kaseya VSA ransomware attack."
@@ -3062,7 +3086,7 @@
       "summary": "Our ThreatOps team details stumbling across Raccine, a ransomware remedy that works by hooking onto IFEO debuggers, for the first time."
     },
     {
-      "title": "How a College Student Lost $10,000 to \"The IRS\" in an Apple Gift Card Scam | Huntress",
+      "title": "How a College Student Lost $10,000 to &quot;The IRS&quot; | Huntress",
       "url": "https://www.huntress.com/blog/how-a-college-student-lost-10-000-to-the-irs",
       "date": "2021-06-03",
       "summary": "In this testimonial, learn firsthand from one of our Security Awareness Consultants at Curricula about how a fake IRS phishing scam worked on one student."
@@ -3284,7 +3308,7 @@
       "summary": "Read about the value of Huntress' Ransomware Canaries service, a mechanism to deliver faster detection of a ransomware incident."
     },
     {
-      "title": "Evolving the Hunt",
+      "title": "Evolving the Hunt: Removing Obstacles to Innovation",
       "url": "https://www.huntress.com/blog/evolving-the-hunt",
       "date": "2020-06-22",
       "summary": "At Huntress, our goal is not only to chase after changing threats but to remove obstacles that get in the way of new security innovation."
@@ -3308,7 +3332,7 @@
       "summary": "In a rare encounter, we found ourselves directly interacting with a cybercriminal that took us down a dark web rabbit hole."
     },
     {
-      "title": "Validating the SolarWinds N-central \u201cDumpster Diver\u201d Vulnerability",
+      "title": "Validating the SolarWinds N-central 'Dumpster Diver' Vuln | Huntress",
       "url": "https://www.huntress.com/blog/validating-the-solarwinds-n-central-dumpster-diver-vulnerability-5e3a045982e5",
       "date": "2020-01-24",
       "summary": "Read more about Huntress validating the SolarWinds N-central \u201cDumpster Diver\u201d Vulnerability."
@@ -3356,7 +3380,7 @@
       "summary": "Periodically, a large scale cybersecurity issue requires \u201call hands on deck\u201d from the Huntress Team (see WannaCry, Kaseya Cryptominer, GANDGRAB outbreak). The unfolding ASUS Live Update fiasco also happens to be one of those moments. We\u2019ve created this blog is to provide simple answers to a complex supply chain attack affecting global IT Departments."
     },
     {
-      "title": "CVE-2017-18362: Arbitrary SQL Execution in ManagedITSync Integration",
+      "title": "CVE-2017-18362: SQL Injection in ManagedITSync Integration | Huntress",
       "url": "https://www.huntress.com/blog/cve-2017-18362-arbitrary-sql-injection-in-mangeditsync-integration-ba142ff24f4d",
       "date": "2019-02-08",
       "summary": "A vulnerability was discovered and disclosed in late 2017 that affected the ConnectWise ManagedITSync integration, designed to sync data between the ConnectWise Manage PSA and the Kaseya VSA RMM."
@@ -3386,7 +3410,7 @@
       "summary": "Explore this phishing campaign used the age-old \u201cPlease remit payment\u201d spiel to lure potential victims into opening the attached file."
     },
     {
-      "title": "Understanding Potentially Unwanted Programs Part I \u2014 It\u2019s Not Always Malware",
+      "title": "Potentially Unwanted Programs: It's Not Always Malware | Huntress",
       "url": "https://www.huntress.com/blog/understanding-potentially-unwanted-programs-part-i-its-not-always-malware-6383d625265e",
       "date": "2018-05-29",
       "summary": "Regardless of your daily duties, we\u2019ve all encountered annoying ads, unwanted pop-ups, or generically named rogue applications. These nuisances, commonly called Potentially Unwanted Programs (PUP), are often unknowingly installed when downloading free software."
@@ -3398,7 +3422,7 @@
       "summary": "For many of us in the Managed Services Provider market, we were rocked with news of a vulnerability in Kaseya\u2019s VSA product. The purpose of this blog is to shine technical light on what the Huntress ThreatOps team observed and analyzed thus far."
     },
     {
-      "title": "Huntress Labs to Host Hands-On \u201cHacking Windows\u201d Training for MSPs at IT Nation",
+      "title": "Huntress Labs to Host Hands-On \u201cHacking Windows\u201d Training | Huntress",
       "url": "https://www.huntress.com/blog/huntress-labs-to-host-hands-on-hacking-windows-training-for-msps-at-it-nation-afe8681c1192",
       "date": "2017-11-07",
       "summary": "IT Nation 2016 ended on a high note for Huntress Labs as we were named the \u201cBest Newcomer\u201d in the Partner Choice Awards. Now, as this year\u2019s event quickly approaches, we are excited to continue our momentum."
@@ -3410,7 +3434,7 @@
       "summary": "Recently, my co-founders gave a talk at DerbyCon 7.0 on evading common persistence enumeration tools. Evasion using trusted applications has been a hot topic of discussion within the infosec community and is one of the techniques they covered in their presentation. However, very little discussion exists on why these matter or the steps researchers take to find \u201chosting\u201d applications."
     },
     {
-      "title": "MSP Moment: Worming Malware Brings New Complexities to the Threat Landscape",
+      "title": "MSP Moment | Huntress",
       "url": "https://www.huntress.com/blog/msp-moment-worming-malware-brings-new-complexities-to-the-threat-landscape-442f3d147acb",
       "date": "2017-08-25",
       "summary": "Over the past month, the Emotet family of malware has re-emerged as a formidable piece of crimeware, thanks to its new self-propagation techniques (undoubtedly inspired by the success of WannaCry and Petya)."
@@ -3452,7 +3476,7 @@
       "summary": "Huntress wins prestigious award at this year\u2019s largest MSP industry conference, ConnectWise IT Nation, for industry-leading Managed Detection & Response service."
     },
     {
-      "title": "How do you protect computers from attackers if you\u2019re not familiar with hacking techniques?",
+      "title": "How do you protect computers from attackers if you\u2019re not | Huntress",
       "url": "https://www.huntress.com/blog/how-do-you-protect-computers-from-attackers-if-youre-not-familiar-with-hacking-techniques-cb1c836f92ce",
       "date": "2016-11-14",
       "summary": "How do you protect computers from attackers if you\u2019re not familiar with hacking techniques? The historical answer to this question has been antivirus and firewalls. However, the last several years have demonstrated hackers can slip past these preventative technologies and cause devastating results to the victims."

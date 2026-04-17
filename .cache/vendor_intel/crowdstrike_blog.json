@@ -1,6 +1,24 @@
 {
-  "cached_at": "2026-04-03T04:22:54.184874+00:00",
+  "cached_at": "2026-04-16T03:47:47.454883+00:00",
   "entries": [
+    {
+      "title": "April 2026 Patch Tuesday: Two Zero-Days and Eight Critical Vulnerabilities Among 164 CVEs",
+      "url": "https://www.crowdstrike.com/en-us/blog/patch-tuesday-analysis-april-2026/",
+      "date": "2026-04-14",
+      "summary": ""
+    },
+    {
+      "title": "Anthropic Claude Mythos Preview: The More Capable AI Becomes, the More Security It Needs",
+      "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-founding-member-anthropic-mythos-frontier-model-to-secure-ai/",
+      "date": "2026-04-06",
+      "summary": ""
+    },
+    {
+      "title": "How CrowdStrike Is Accelerating Exposure Evaluation as Adversaries Gain Speed",
+      "url": "https://www.crowdstrike.com/en-us/blog/how-crowdstrike-accelerates-exposure-evaluation-against-threats/",
+      "date": "2026-04-05",
+      "summary": ""
+    },
     {
       "title": "STARDUST CHOLLIMA Likely Compromises Axios npm Package",
       "url": "https://www.crowdstrike.com/en-us/blog/stardust-chollima-likely-compromises-axios-npm-package/",
@@ -41,24 +59,6 @@
       "title": "CrowdStrike Advances CNAPP with Industry-First Adversary-Informed Risk Prioritization",
       "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-advances-cnapp-with-industry-first-adversary-informed-risk-prioritization/",
       "date": "2026-03-24",
-      "summary": ""
-    },
-    {
-      "title": "CrowdStrike Services and Agentic MDR Put the Agentic SOC in Reach",
-      "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-services-and-agentic-mdr-put-the-agentic-soc-in-reach/",
-      "date": "2026-03-24",
-      "summary": ""
-    },
-    {
-      "title": "Falcon Next-Gen SIEM Supports Third-Party EDR Tools, Starting with Microsoft Defender",
-      "url": "https://www.crowdstrike.com/en-us/blog/falcon-next-gen-siem-supports-third-party-edr-tools-starting-with-microsoft-defender/",
-      "date": "2026-03-23",
-      "summary": ""
-    },
-    {
-      "title": "New CrowdStrike Innovations Secure AI Agents and Govern Shadow AI Across Endpoints, SaaS, and Cloud",
-      "url": "https://www.crowdstrike.com/en-us/blog/new-crowdstrike-innovations-secure-ai-agents-govern-shadow-ai/",
-      "date": "2026-03-23",
       "summary": ""
     }
   ]

@@ -1,9 +1,9 @@
 {
-  "cached_at": "2026-03-31T18:52:46.883538+00:00",
+  "cached_at": "2026-04-16T03:48:07.338708+00:00",
   "result": {
-    "actor_summary": "APT28 (operating as BlueDelta) conducted a persistent credential-harvesting campaign targeting UKR.NET users, employing advanced phishing techniques across multiple stages. The campaign demonstrates evolved tradecraft in the actor's ongoing operations against Ukrainian infrastructure and users.",
-    "landscape_summary": "**Threat Landscape Context:**\n\nThis campaign reflects an intensifying focus by Russian state-sponsored actors on compromising Ukrainian critical infrastructure and government communications through identity-layer attacks, exploiting the accessibility and scale advantages of phishing over direct network intrusion during sustained conflict. The evolution of BlueDelta's credential-harvesting tradecraft against UKR.NET specifically indicates Russian operators are refining targeting precision and social engineering sophistication against high-value organizational email systems as traditional perimeter defenses improve.",
-    "relevance": 60,
+    "actor_summary": "Between June 2024 and April 2025, APT28 conducted a sustained credential-harvesting campaign against UKR.NET, a Ukrainian webmail and news service, deploying fake login portals via free hosting services including Mocky, DNS EXIT, ngrok, and Serveo to collect usernames, passwords, and two-factor authentication codes distributed through PDF lures. The group's infrastructure choices and custom JavaScript payloads reflect adaptive tradecraft in response to Western-led takedowns of Russian infrastructure, demonstrating continued focus on credential theft to support broader GRU intelligence collection requirements against Ukrainian users. This campaign represents a continuation of APT28's established pattern of targeting Ukrainian entities for espionage purposes documented as far back as May 2024.",
+    "landscape_summary": "APT28's sustained reliance on disposable free hosting and tunneling infrastructure reflects a tactical adaptation to the degradation of persistent C2 and hosting assets through coordinated Western takedowns, forcing the group toward more ephemeral and distributed hosting models. This shift indicates that infrastructure attrition remains a meaningful defensive countermeasure against state-sponsored actors, even as they compensate through operational agility rather than fundamental tradecraft redesign.",
+    "relevance": 85,
     "source": "Recorded Future (Public)",
     "source_tier": 2,
     "date": "2025-12-17",

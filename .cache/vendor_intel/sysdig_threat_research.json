@@ -1,6 +1,72 @@
 {
-  "cached_at": "2026-04-03T04:22:56.158432+00:00",
+  "cached_at": "2026-04-16T03:47:49.170748+00:00",
   "entries": [
+    {
+      "title": "CVE-2026-39987 update: How attackers weaponized marimo to deploy a blockchain botnet via HuggingFace",
+      "url": "https://webflow.sysdig.com/blog/cve-2026-39987-update-how-attackers-weaponized-marimo-to-deploy-a-blockchain-botnet-via-huggingface",
+      "date": "2026-04-15",
+      "summary": ""
+    },
+    {
+      "title": "Kubernetes 1.36 - New security features",
+      "url": "https://webflow.sysdig.com/blog/kubernetes-1-36-new-security-features",
+      "date": "2026-04-15",
+      "summary": "Kubernetes 1.36 will be released soon, bringing 60 enhancements. Of particular note is the effort made to improve dynamic resource allocation (DRA).In terms of security, there are 22 changes spanning admission control configurations, certificate handling, and more.Let\u2019s dig in!"
+    },
+    {
+      "title": "Masterclass: AI is more than ChatGPT and LLMs",
+      "url": "https://webflow.sysdig.com/blog/masterclass-ai-is-more-than-chatgpt-and-llms",
+      "date": "2026-04-15",
+      "summary": "Artificial intelligence is trendy, and it seems like it\u2019s everything tech companies talk about.It also seems like it\u2019s something completely new."
+    },
+    {
+      "title": "How Financial Services Organizations Can Stay Compliant Without Sacrificing Security",
+      "url": "https://webflow.sysdig.com/blog/financial-services-organizations-secure-compliance",
+      "date": "2026-04-15",
+      "summary": "The stakes couldn\u2019t be higher for financial services organizations. They have to protect customers\u2019 money and privacy, while complying with\u2026"
+    },
+    {
+      "title": "Use in-use vulnerability prioritization to focus on critical risks",
+      "url": "https://webflow.sysdig.com/blog/smarter-vulnerability-management-with-in-use-prioritization",
+      "date": "2026-04-14",
+      "summary": "Vulnerability management has always been a challenge, but today\u2019s security teams are feeling the pressure more than ever. In-use prioritization helps identify and remediate vulnerabilities that impact your production environment."
+    },
+    {
+      "title": "Next-gen container security: Why cloud context matters",
+      "url": "https://webflow.sysdig.com/blog/next-gen-container-security-why-cloud-context-matters",
+      "date": "2026-04-14",
+      "summary": "Container security has experienced significant transformation over the past decade. From the emergence of foundational tools like Docker to the\u2026"
+    },
+    {
+      "title": "Guidance for compliance with NIS2, DORA, & other regulations",
+      "url": "https://webflow.sysdig.com/blog/cloud-security-and-compliance-nis2-dora",
+      "date": "2026-04-14",
+      "summary": "When it comes to cloud security and compliance, it\u2019s easy to feel like you\u2019re drowning in a sea of regulations\u2026"
+    },
+    {
+      "title": "5 steps to securing AI workloads",
+      "url": "https://webflow.sysdig.com/blog/5-steps-to-securing-ai-workloads",
+      "date": "2026-04-13",
+      "summary": "In the past year alone, the number of artificial intelligence (AI) packages running in workloads grew by almost 500%. Which\u2026"
+    },
+    {
+      "title": "Marimo OSS Python Notebook RCE: From Disclosure to Exploitation in Under 10 Hours",
+      "url": "https://webflow.sysdig.com/blog/marimo-oss-python-notebook-rce-from-disclosure-to-exploitation-in-under-10-hours",
+      "date": "2026-04-09",
+      "summary": "On April 8, 2026, a critical vulnerability was disclosed in marimo, an open-source reactive Python notebook platform. Currently being tracked as GHSA-2679-6mx9-h9xc, it is a pre-authentication remote code execution (RCE) vulnerability in the terminal WebSocket endpoint that allows attackers to obtain a full interactive shell on any exposed marimo instance through a single WebSocket connection \u2013 no credentials required. At the time of this writing, a CVE number has yet to be assigned."
+    },
+    {
+      "title": "How to use AI to manage cloud security threats",
+      "url": "https://webflow.sysdig.com/blog/how-to-use-ai-to-manage-cloud-security-threats",
+      "date": "2026-04-08",
+      "summary": "Cloud defenders constantly face fast-moving security threats."
+    },
+    {
+      "title": "Security briefing: March 2026",
+      "url": "https://webflow.sysdig.com/blog/security-briefing-march-2026",
+      "date": "2026-04-06",
+      "summary": ""
+    },
     {
       "title": "The Sysdig MCP server is now available in AWS Marketplace",
       "url": "https://webflow.sysdig.com/blog/the-sysdig-mcp-server-is-now-available-in-aws-marketplace",
@@ -90,12 +156,6 @@
       "url": "https://webflow.sysdig.com/blog/malware-detection-with-sysdig",
       "date": "2026-03-09",
       "summary": "When we talk about cloud security, we spend a lot of time discussing things like configuration and identity risk. But we shouldn't lose sight of other types of risk, simply because they don't lead to the lion's share of incidents. One of those risks is malware. And as attackers increasingly automate exploitation of exposed services and vulnerable workloads, it\u2019s no longer safe to assume you can ignore malware risk in cloud environments."
-    },
-    {
-      "title": "Masterclass: AI is more than ChatGPT and LLMs",
-      "url": "https://webflow.sysdig.com/blog/masterclass-ai-is-more-than-chatgpt-and-llms",
-      "date": "2026-03-05",
-      "summary": "Artificial intelligence is trendy, and it seems like it\u2019s everything tech companies talk about.It also seems like it\u2019s something completely new."
     },
     {
       "title": "Security briefing: February 2026",
@@ -240,12 +300,6 @@
       "url": "https://webflow.sysdig.com/blog/detecting-react2shell",
       "date": "2025-12-05",
       "summary": "On December 3, 025, the React Team disclosed CVE-2025-55182, a critical unauthenticated remote code execution (RCE) vulnerability in React Server Components (RSCs). Dubbed \"React2Shell\", this maximum-severity flaw (CVSS 10.0) allows for potentially malicious code execution with a single crafted HTTP request. Next.js, which can be impacted downstream by React2Shell, has assigned CVE-2025-66478 to track its exposure."
-    },
-    {
-      "title": "5 steps to securing AI workloads",
-      "url": "https://webflow.sysdig.com/blog/5-steps-to-securing-ai-workloads",
-      "date": "2025-12-05",
-      "summary": "In the past year alone, the number of artificial intelligence (AI) packages running in workloads grew by almost 500%. Which\u2026"
     },
     {
       "title": "The rise of AI agents: How autonomous AI Is transforming cloud security",
@@ -546,60 +600,6 @@
       "url": "https://webflow.sysdig.com/blog/why-mcp-server-security-is-critical-for-ai-driven-enterprises",
       "date": "2025-07-02",
       "summary": "Model Context Protocol (MCP) server security A new, largely invisible backdoor has opened in the enterprise. It doesn\u2019t look like\u2026"
-    },
-    {
-      "title": "What\u2019s new in Sysdig \u2014 June 2025",
-      "url": "https://webflow.sysdig.com/blog/whats-new-in-sysdig-june-2025",
-      "date": "2025-06-26",
-      "summary": "Sysdig continues to evolve this June with major advancements in AI-driven security insights, threat management, incident response, and securing cutting-edge\u2026"
-    },
-    {
-      "title": "AI-powered CNAPP with Sysdig Sage\u2122",
-      "url": "https://webflow.sysdig.com/blog/ai-powered-cnapp-with-sysdig-sage",
-      "date": "2025-06-25",
-      "summary": "Securing large and complex cloud environments takes a lot of know-how and effort. Much has been written about the shortage\u2026"
-    },
-    {
-      "title": "Revolutionizing Cybersecurity Search with Sysdig Sage\u2122",
-      "url": "https://webflow.sysdig.com/blog/introducing-sysdig-sage-for-search",
-      "date": "2025-06-24",
-      "summary": "We are excited to introduce Sysdig Sage for Search, our AI-based graph search assistant, which enriches Sysdig\u2019s AI capabilities after\u2026"
-    },
-    {
-      "title": "Sysdig Threat Bulletin: Iranian Cyber Threats",
-      "url": "https://webflow.sysdig.com/blog/sysdig-threat-bulletin-iranian-cyber-threats",
-      "date": "2025-06-23",
-      "summary": "Following the June 22, 2025 United States strikes on Iranian nuclear infrastructure, the Sysdig Threat Research Team (TRT) anticipates a\u2026"
-    },
-    {
-      "title": "The end of the prioritization-only era: Vulnerability management needs action",
-      "url": "https://webflow.sysdig.com/blog/end-of-priorization-only-era-vulnerability-management-needs-action",
-      "date": "2025-06-23",
-      "summary": "Security teams are drowning in vulnerability alerts. Every day seemingly brings another wave of CVEs, each demanding attention or flagged\u2026"
-    },
-    {
-      "title": "Dangerous by default: Insecure GitHub Actions found in MITRE, Splunk, and other open source repositories",
-      "url": "https://webflow.sysdig.com/blog/insecure-github-actions-found-in-mitre-splunk-and-other-open-source-repositories",
-      "date": "2025-06-17",
-      "summary": "Since its founding, the Sysdig Threat Research Team (TRT) has been committed to making the world a safer, more informed\u2026"
-    },
-    {
-      "title": "Falco is now available as an Amazon EKS add-on",
-      "url": "https://webflow.sysdig.com/blog/falco-amazon-eks-add-on",
-      "date": "2025-06-17",
-      "summary": "We&#8217;re excited to announce that Falco, the CNCF graduated runtime security project, is now officially available as an AWS-validated Amazon\u2026"
-    },
-    {
-      "title": "Introducing intelligent vulnerability remediation, powered by Sysdig Sage\u2122",
-      "url": "https://webflow.sysdig.com/blog/introducing-intelligent-vulnerability-remediation-powered-by-sysdig-sage",
-      "date": "2025-06-16",
-      "summary": "Vulnerability management has come a long way, but many teams are still stuck guessing. Even if you\u2019re able to sort\u2026"
-    },
-    {
-      "title": "Beyond prioritization: Accelerating vulnerability remediation at the source with AI and runtime context",
-      "url": "https://webflow.sysdig.com/blog/beyond-prioritization-accelerating-vulnerability-remediation-at-the-source-with-ai-and-runtime-context",
-      "date": "2025-06-16",
-      "summary": "We\u2019ve said it many times before, and for good reason: Cloud attacks happen in 10 minutes or less. It\u2019s a\u2026"
     }
   ]
 }

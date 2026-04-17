@@ -1,0 +1,14 @@
+{
+  "cached_at": "2026-04-16T03:48:27.103876+00:00",
+  "result": {
+    "actor_summary": "APT28 conducted a large-scale DNS hijacking campaign targeting insecure MikroTik and TP-Link SOHO routers since at least May 2025, modifying router settings to establish malicious infrastructure for cyber espionage purposes. This operation demonstrates a shift toward compromising consumer-grade networking equipment as a persistence and reconnaissance mechanism, leveraging weak security configurations in widely deployed devices to maintain access and control over victim network traffic.",
+    "landscape_summary": "This campaign reflects an accelerating trend of state-sponsored actors targeting consumer-grade network appliances as persistent infrastructure for large-scale DNS hijacking operations, exploiting the minimal security posture and long uptimes of SOHO devices relative to hardened enterprise targets. The shift toward router compromise as a platform for espionage infrastructure demonstrates APT28's adaptation to defend against endpoint-focused detection strategies by establishing foothold persistence at the network perimeter where visibility and attribution are typically lower.",
+    "relevance": 58,
+    "source": "The Hacker News",
+    "source_tier": 3,
+    "date": "2026-04-07",
+    "title": "Russian State-Linked APT28 Exploits SOHO Routers in Global DNS Hijacking Campaign",
+    "url": "https://thehackernews.com/2026/04/russian-state-linked-apt28-exploits.html",
+    "provider": "claude"
+  }
+}

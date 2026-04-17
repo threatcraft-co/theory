@@ -1,6 +1,36 @@
 {
-  "cached_at": "2026-04-03T04:22:55.795001+00:00",
+  "cached_at": "2026-04-16T03:47:48.608096+00:00",
   "entries": [
+    {
+      "title": "Axios CVE-2026-40175: a critical bug that\u2019s\u2026 not exploitable",
+      "url": "https://www.aikido.dev/blog/axios-cve-2026-40175-a-critical-bug-thats-not-exploitable",
+      "date": "2026-04-14",
+      "summary": "Axios CVE-2026-40175 is rated critical, but in real Node.js environments it\u2019s not practically exploitable. Here\u2019s why. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Bug bounty isn\u2019t dead, but the old model is breaking",
+      "url": "https://www.aikido.dev/blog/bug-bounty-isnt-dead",
+      "date": "2026-04-13",
+      "summary": "Bug bounty is hitting a breaking point as AI overwhelms programs, pushing a shift toward more sustainable, quality-focused security models. Category: Technical"
+    },
+    {
+      "title": "GlassWorm goes native: New Zig dropper infects every IDE on your machine",
+      "url": "https://www.aikido.dev/blog/glassworm-zig-dropper-infects-every-ide-on-your-machine",
+      "date": "2026-04-08",
+      "summary": "GlassWorm deploys a Zig-based native dropper hidden within a fake extension, silently compromising VS Code, Cursor, VSCodium, and other IDEs. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "Aikido Attack finds multiple 0-days in Hoppscotch",
+      "url": "https://www.aikido.dev/blog/ai-pentest-hoppscotch-vulnerabilities",
+      "date": "2026-04-08",
+      "summary": "Aikido\u2019s AI pentesting agents discovered multiple high-severity vulnerabilities in Hoppscotch, including account takeover, stored XSS, and access control flaws. All issues are now patched. Category: Vulnerabilities & Threats"
+    },
+    {
+      "title": "The cybersecurity doomerism around Mythos doesn't match what we see on the ground",
+      "url": "https://www.aikido.dev/blog/anthropic-mythos-cybersecurity-risks-overblown",
+      "date": "2026-04-06",
+      "summary": "Anthropic's leaked Mythos model has triggered panic about AI-powered cyberattacks. We ran 1,000 AI penetration tests. The results suggest the threat is more nuanced than the headlines claim. Category: News"
+    },
     {
       "title": "axios compromised on npm: maintainer account hijacked, RAT deployed",
       "url": "https://www.aikido.dev/blog/axios-npm-compromised-maintainer-hijacked-rat",
@@ -125,7 +155,7 @@
       "title": "Introducing Aikido Infinite: A new model of self-securing software",
       "url": "https://www.aikido.dev/blog/introducing-aikido-infinite",
       "date": "2026-02-26",
-      "summary": "Aikido Infinite runs AI penetration testing on every code change, validates exploitability, generates patches, and retests fixes before code hits production, making self-securing software a reality. Category: Aikido"
+      "summary": "Aikido Infinite runs AI penetration testing on every code change, validates exploitability, generates patches, and retests fixes before code hits production, making self-securing software a reality. Category: Product & Company Updates"
     },
     {
       "title": "How Aikido secures AI pentesting agents by design",
@@ -570,36 +600,6 @@
       "url": "https://www.aikido.dev/blog/top-kubernetes-security-tools",
       "date": "2025-10-22",
       "summary": "Explore 7 top Kubernetes security tools, open source to AI-powered. Learn how Aikido helps teams secure clusters from code to runtime Category: DevSec Tools & Comparisons"
-    },
-    {
-      "title": "Top 10 Web Application Security Vulnerabilities Every Team Should Know",
-      "url": "https://www.aikido.dev/blog/top-web-application-security-vulnerabilities",
-      "date": "2025-10-20",
-      "summary": "Discover the most common web application security vulnerabilities, real-world examples, and how modern teams can reduce risk early. Category: Guides & Best Practices"
-    },
-    {
-      "title": "What Is CSPM (and CNAPP)? Cloud Security Posture Management Explained",
-      "url": "https://www.aikido.dev/blog/what-is-cspm-cnapp-cloud-security-posture-management",
-      "date": "2025-10-20",
-      "summary": "A clear breakdown of CSPM and CNAPP: what they cover, how they reduce cloud risk, key features to look for, and how teams actually adopt them. Category: Guides & Best Practices"
-    },
-    {
-      "title": "Top 9 Kubernetes Security Vulnerabilities and Misconfigurations",
-      "url": "https://www.aikido.dev/blog/kubernetes-security-vulnerabilities",
-      "date": "2025-10-14",
-      "summary": "Learn the most critical Kubernetes security vulnerabilities, common misconfigurations, and why clusters are often exposed by default. Category: Guides & Best Practices"
-    },
-    {
-      "title": "Security Masterclass: Supabase and Lovable CISOs on Building Fast and Staying Secure",
-      "url": "https://www.aikido.dev/blog/security-masterclass-supabase-and-lovable",
-      "date": "2025-10-13",
-      "summary": "Supabase and Lovable CISOs share what every builder needs to keep speed without losing control. Real lessons from the Aikido Security Masterclass. Category: Guides & Best Practices"
-    },
-    {
-      "title": "Aikido + Secureframe: Keeping compliance data fresh",
-      "url": "https://www.aikido.dev/blog/aikido-secureframe",
-      "date": "2025-10-13",
-      "summary": "Keep SOC 2 and ISO 27001 compliance accurate with live vulnerability data. Aikido syncs with Secureframe so audits stay fresh and devs keep building. Category: Compliance"
     }
   ]
 }

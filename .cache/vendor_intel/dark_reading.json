@@ -1,305 +1,305 @@
 {
-  "cached_at": "2026-04-03T04:22:56.781294+00:00",
+  "cached_at": "2026-04-16T03:47:49.655651+00:00",
   "entries": [
     {
-      "title": "Geopolitics, AI, and Cybersecurity: Insights From RSAC 2026",
-      "url": "https://www.darkreading.com/cybersecurity-operations/geopolitics-ai-cybersecurity-insights-rsac-2026",
-      "date": "2026-04-02",
-      "summary": "AI-driven threats, global leadership shifts, and the future of cybersecurity in a rapidly evolving landscape were among the discussions at RSAC 2026 Conference."
+      "title": "Critical MCP Integration Flaw Puts NGINX at Risk",
+      "url": "https://www.darkreading.com/application-security/critical-mcp-integration-flaw-nginx-risk",
+      "date": "2026-04-15",
+      "summary": "Attackers can abuse the near-maximum severity flaw in nginx-ui to restart, create, modify, and delete NGINX configuration files."
     },
     {
-      "title": "Not Toying Around: Hasbro Attack May Take 'Weeks' to Remediate",
-      "url": "https://www.darkreading.com/cyberattacks-data-breaches/toying-around-hasbro-attack-remediate",
-      "date": "2026-04-02",
-      "summary": "The company's 8-K filing notes &quot;unauthorized access&quot; and that it's activated business continuity plans and taken some systems offline."
+      "title": "Navigating the Unique Security Risks of Asia's Digital Supply Chain",
+      "url": "https://www.darkreading.com/cloud-security/navigating-unique-security-risks-asias-digital-supply-chain",
+      "date": "2026-04-15",
+      "summary": "Regulatory differences, interconnected digital ecosystems, and the rise of AI have created a complex supply chain Asian organizations must wrangle."
     },
     {
-      "title": "Security Bosses Are All-In on AI. Here's Why",
-      "url": "https://www.darkreading.com/cybersecurity-operations/security-bosses-all-in-ai",
-      "date": "2026-04-02",
-      "summary": "CISOs are bullish on AI and have big plans to roll out future tools. We talk to Reddit CISO Frederick Lee and leading analyst Dave Gruber about how AI is working out in the real world, as well as its future promise."
+      "title": "Prepping for 'Q-Day': Why Quantum Risk Management Should Start Now",
+      "url": "https://www.darkreading.com/cyber-risk/preparing-q-day-quantum-risk-management",
+      "date": "2026-04-15",
+      "summary": "Quantum computers are coming and may impact systems in unexpected ways, and it will &quot;take years to be fully quantum-safe, if ever,&quot; cryptography expert warns."
     },
     {
-      "title": "RSAC 2026: AI Dominates, But Community Remains Key to Security",
-      "url": "https://www.darkreading.com/cybersecurity-operations/rsac-2026-ai-dominates-community",
-      "date": "2026-04-02",
-      "summary": "As AI took center stage at this year's conference, experts debated automation, oversight and the evolving role of human intelligence in cybersecurity \u2014 despite the US government's notable absence."
+      "title": "Audit: Big Tech Often Ignores CA Privacy Law Opt-Out Requests",
+      "url": "https://www.darkreading.com/cyber-risk/audit-big-tech-ignores-data-collection-requests",
+      "date": "2026-04-15",
+      "summary": "Google, Meta, and Microsoft about half the time don't comply with requests to opt out of online tracking per a California law mandate, privacy watchdog finds."
     },
     {
-      "title": "Bank Trojan 'Casbaneiro' Worms Through Latin America",
-      "url": "https://www.darkreading.com/cyberattacks-data-breaches/bank-trojan-casbaneiro-worms-latin-america",
-      "date": "2026-04-02",
-      "summary": "Augmented Marauder's multipronged banking-Trojan cyber campaigns are targeting Spanish speakers, evading detection, and replicating rapidly."
+      "title": "Microsoft, Salesforce Patch AI Agent Data Leak Flaws",
+      "url": "https://www.darkreading.com/cloud-security/microsoft-salesforce-patch-ai-agent-data-leak-flaws",
+      "date": "2026-04-15",
+      "summary": "Two recently fixed prompt injections in Salesforce Agentforce and Microsoft Copilot would have enabled an external attacker to leak sensitive data."
     },
     {
-      "title": "Ransomware Will Hit Hospitals. Rehearsals Are Key to Defense",
-      "url": "https://www.darkreading.com/cybersecurity-operations/ransomware-hospitals-preparation-key-defense",
-      "date": "2026-04-01",
-      "summary": "A chief medical information officer describes what hospitals face when they inevitably suffer a ransomware attack\u2014whether it leads to short- or long-term outages."
+      "title": "Microsoft Bets $10B to Boost Japan's AI, Cybersecurity",
+      "url": "https://www.darkreading.com/cloud-security/microsoft-bets-10-billion-to-boost-japan-s-ai-cybersecurity",
+      "date": "2026-04-15",
+      "summary": "The deal aims to accelerate AI adoption, train workers, and develop cybersecurity partnerships \u2014 the latest move by a hyperscaler to compete for sovereign AI and data centers."
     },
     {
-      "title": "LatAm's Self-Taught Cyber Talent Overlooked Amid Cyberattack Glut",
-      "url": "https://www.darkreading.com/remote-workforce/latam-cyber-talent-overlooked-cyberattack-glut",
-      "date": "2026-04-01",
-      "summary": "A newly released study exclusively shared with Dark Reading details the unique circumstances that make up Latin America's labor pool, and why organizations may want to expand their talent search."
+      "title": "Privilege Elevation Dominates Massive Microsoft Patch Update",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/privilege-elevation-dominates-microsoft-patch-update",
+      "date": "2026-04-14",
+      "summary": "Elevation-of-privilege bugs accounted for more than half of the 165 vulnerabilities patched, with two zero-days in that mix."
     },
     {
-      "title": "Cyberattacks Intensify Pressure on Latin American Governments",
-      "url": "https://www.darkreading.com/cyber-risk/cyberattacks-latin-american-governments",
-      "date": "2026-04-01",
-      "summary": "Cyber threats across Latin America are increasingly targeting government systems, from disruptive attacks in Puerto Rico to a surge of probes against Colombia\u2019s health sector."
+      "title": "EDR-Killer Ecosystem Expansion Requires Stronger BYOVD Defenses",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/edr-killer-ecosystem-expansion-requires-stronger-byovd-defenses",
+      "date": "2026-04-14",
+      "summary": "Stopping EDR killers, which employ bring-your-own-vulnerable-driver (BYOVD) attack techniques, is difficult, but not impossible."
     },
     {
-      "title": "Venom Stealer MaaS Platform Commoditizes ClickFix Attacks",
-      "url": "https://www.darkreading.com/endpoint-security/venom-stealer-maas-commoditizes-clickfix-attacks",
-      "date": "2026-04-01",
-      "summary": "A new service on the cybercrime market provides automated capabilities to create persistent information-stealing social engineering attacks."
+      "title": "War Game Exercise Demonstrates How Social Media Manipulation Works",
+      "url": "https://www.darkreading.com/cyber-risk/wargame-demonstrates-social-media-manipulation",
+      "date": "2026-04-14",
+      "summary": "In an educational game called &quot;Capture the Narrative,&quot; students created bots to sway a fictional election, simulating influence in real-world political scenarios."
     },
     {
-      "title": "Are We Training AI Too Late?",
-      "url": "https://www.darkreading.com/cybersecurity-analytics/are-we-training-ai-too-late",
-      "date": "2026-04-01",
-      "summary": "Ask the Expert: Cybersecurity teams need to expand their field of view to include new, unique threat sources, rather than relying on past, proven threat actors."
+      "title": "Why Orgs Need to Test Networks to Withstand DDoS Attacks During Peak Loads",
+      "url": "https://www.darkreading.com/cloud-security/test-networks-withstand-ddos-attacks-peak-loads",
+      "date": "2026-04-13",
+      "summary": "Security teams can't test distributed denial-of-service defenses in a vacuum. They need to test during periods of high demand, such as tax filing deadlines."
     },
     {
-      "title": "The Forgotten Endpoint: Security Risks of Dormant Devices",
-      "url": "https://www.darkreading.com/endpoint-security/forgotten-endpoint-security-risks-dormant-devices",
-      "date": "2026-03-31",
-      "summary": "Technology Talk: That forgotten notebook holds plenty of secrets to enterprise access."
+      "title": "CSA: CISOs Should Prepare for Post-Mythos Exploit Storm",
+      "url": "https://www.darkreading.com/cloud-security/csa-cisos-prepare-post-mythos-exploit-storm",
+      "date": "2026-04-13",
+      "summary": "In a new report from the Cloud Security Alliance (CSA), experts warn of an &quot;AI vulnerability storm&quot; triggered by the introduction of Anthropic's Claude Mythos."
     },
     {
-      "title": "Axios NPM Package Compromised in Precision Attack",
-      "url": "https://www.darkreading.com/application-security/axios-npm-package-compromised-precision-attack",
-      "date": "2026-03-31",
-      "summary": "The NPM package for Axios, a popular JavaScript HTTP client library, was briefly compromised this week, possibly by North Korean threat actors."
+      "title": "Adobe Patches Actively Exploited Zero-Day That Lingered for Months",
+      "url": "https://www.darkreading.com/application-security/adobe-patches-actively-exploited-zero-day",
+      "date": "2026-04-13",
+      "summary": "An attacker has been using maliciously crafted PDF files to exploit a zero-day in Adobe Acrobat and Reader for at least four months."
     },
     {
-      "title": "Google's Vertex AI Is Over-Privileged. That's a Problem",
-      "url": "https://www.darkreading.com/cyber-risk/googles-vertex-ai-over-privilege-problem",
-      "date": "2026-03-31",
-      "summary": "Palo Alto Networks researchers show how attackers could exploit AI agents on Google's Vertex AI to steal data and break into restricted cloud infrastructure."
+      "title": "Empty Attestations: OT Lacks the Tools for Cryptographic Readiness",
+      "url": "https://www.darkreading.com/ics-ot-security/ot-lacks-tools-cryptographic-readiness",
+      "date": "2026-04-13",
+      "summary": "OT asset owners are being asked by regulators to attest to their post-quantum cryptographic readiness without the appropriate tooling, resulting in paperwork dressed up to look like genuine security."
     },
     {
-      "title": "TeamPCP Breaches Cloud, SaaS Instances With Stolen Credentials",
-      "url": "https://www.darkreading.com/cloud-security/teampcp-breaches-cloud-saas-instances-stolen-credentials",
-      "date": "2026-03-31",
-      "summary": "The threat group's shift to speedy attacks on AWS, Azure, and SaaS instances shows organizations need to respond quickly to compromised credentials."
+      "title": "APT41 Delivers 'Zero-Detection' Backdoor to Harvest Cloud Credentials",
+      "url": "https://www.darkreading.com/cloud-security/apt41-zero-detection-backdoor-harvest-cloud-credentials",
+      "date": "2026-04-13",
+      "summary": "The prolific China-backed threat group is targeting AWS, Google, Azure, and Alibaba cloud environments and using typosquatting to obscure C2 communication."
     },
     {
-      "title": "AI and Quantum Are Forcing a Rethink of Digital Trust",
-      "url": "https://www.darkreading.com/cybersecurity-operations/ai-and-quantum-are-forcing-a-rethink-of-digital-trust",
-      "date": "2026-03-31",
-      "summary": "In a conversation with Dark Reading\u2019s Terry Sweeney, DigiCert CEO Amit Sinha explains how AI-driven identities and quantum threats are reshaping the foundations of digital trust."
+      "title": "Hims Breach Exposes the Most Sensitive Kinds of PHI",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/hims-breach-exposes-sensitive-phi",
+      "date": "2026-04-10",
+      "summary": "Threat actors breached the telehealth brand, and now they may know patients' personal health details. What could they do with that information?"
     },
     {
-      "title": "Black Hat USA",
-      "url": "https://www.darkreading.com/events/black-hat-usa",
-      "date": "2026-08-01",
+      "title": "Your Next Breach Will Look Like Business as Usual",
+      "url": "https://www.darkreading.com/identity-access-management-security/your-next-breach-business-as-usual",
+      "date": "2026-04-10",
+      "summary": "These are the fundamental detection model shifts cybersecurity teams need to make to keep up with the rising number of credential-based attacks."
+    },
+    {
+      "title": "FINRA Launches Financial Intelligence Fusion Center to Combat Cybersecurity and Fraud Threats",
+      "url": "https://www.darkreading.com/threat-intelligence/finra-launches-financial-intelligence-fusion-center",
+      "date": "2026-04-10",
       "summary": ""
     },
     {
-      "title": "Iran Deploys 'Pseudo-Ransomware,' Revives Pay2Key Operations",
-      "url": "https://www.darkreading.com/threat-intelligence/iran-pseudo-ransomware-pay2key-operations",
-      "date": "2026-03-31",
-      "summary": "Iranian APTs are blurring the lines between state-sponsored and cybercriminal activities to target high-impact US organizations."
+      "title": "Orange Business Reimagines Enterprise Voice Communications With Trust and AI",
+      "url": "https://www.darkreading.com/endpoint-security/orange-business-enterprise-voice-comms",
+      "date": "2026-04-10",
+      "summary": ""
     },
     {
-      "title": "AI-Powered 'DeepLoad' Malware Steals Credentials, Evades Detection",
-      "url": "https://www.darkreading.com/cyberattacks-data-breaches/ai-powered-deepload-steals-credentials-evades-detection",
-      "date": "2026-03-30",
-      "summary": "The massive amount of junk code that hides the malware's logic from security scans was almost certainly generated by AI, researchers say."
+      "title": "Industrial Controllers Still Vulnerable As Conflicts Move to Cyber",
+      "url": "https://www.darkreading.com/ics-ot-security/industrial-controllers-vulnerable-conflicts-cyber",
+      "date": "2026-04-10",
+      "summary": "The US government warns programmable logic controllers are being targeted, and research turns up 179 vulnerable operational technology (OT) devices."
     },
     {
-      "title": "AI-Driven Code Surge Is Forcing a Rethink of AppSec",
-      "url": "https://www.darkreading.com/application-security/ai-driven-code-surge-is-forcing-a-rethink-of-appsec",
-      "date": "2026-03-30",
-      "summary": "In a conversation with Dark Reading\u2019s Terry Sweeney, Black Duck CEO Jason Schmitt explains how AI is reshaping application security and why it must evolve to keep pace."
+      "title": "Can Anthropic Keep Its Exploit-Writing AI Out of the Wrong Hands?",
+      "url": "https://www.darkreading.com/application-security/anthropic-exploit-writing-mythos-ai-safe",
+      "date": "2026-04-10",
+      "summary": "Its Mythos Preview model, which can allegedly find and exploit critical zero-days, also comes with certain controls, the vendor said."
     },
     {
-      "title": "F5 BIG-IP Vulnerability Reclassified as RCE, Under Exploitation",
-      "url": "https://www.darkreading.com/application-security/f5-big-ip-vulnerability-reclassified-rce-exploitation",
-      "date": "2026-03-30",
-      "summary": "CVE-2025-53521 was initially disclosed in October as a high-severity denial-of-service (DoS) flaw, but new information has revealed the bug is actually much more dangerous."
+      "title": "Russia's 'Fancy Bear' APT Continues Its Global Onslaught",
+      "url": "https://www.darkreading.com/threat-intelligence/russias-fancy-bear-apt-continues-global-onslaught",
+      "date": "2026-04-09",
+      "summary": "Victims don't need to match the cyber espionage group's technical sophistication, experts say. But patching and some form of zero trust are now non-negotiable."
     },
     {
-      "title": "Manufacturing &amp; Healthcare Share Struggles with Passwords",
-      "url": "https://www.darkreading.com/cyber-risk/manufacturing-and-healthcare-share-struggles-with-passwords",
-      "date": "2026-03-30",
-      "summary": "The two key economic sectors struggle with security for a reason: Many insiders view access management as a roadblock, while attackers see it as a way in."
+      "title": "'BlueHammer' Windows Zero-Day Exploit Signals Microsoft Bug Disclosure Issues",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/bluehammer-windows-exploit-microsoft-bug-disclosure-issues",
+      "date": "2026-04-09",
+      "summary": "Under the alias 'Chaotic Eclipse,' a researcher released a PoC exploit for a zero-day flaw that allows for system takeover by a local user, citing an undisclosed beef with Microsoft."
     },
     {
-      "title": "Storm Brews Over Critical, No-Click Telegram Flaw",
-      "url": "https://www.darkreading.com/application-security/storm-brews-critical-no-click-telegram-flaw",
-      "date": "2026-03-30",
-      "summary": "The vulnerability, which is allegedly triggered by a corrupted sticker in the messaging app, received a 9.8 CVSS score, but Telegram denies it exists."
+      "title": "Do Ceasefires Slow Cyberattacks? History Suggests Not",
+      "url": "https://www.darkreading.com/cybersecurity-analytics/ceasefires-slow-cyberattacks-history",
+      "date": "2026-04-09",
+      "summary": "The cybersecurity community is waiting with bated breath to see if Iranian hackers will honor a ceasefire that doesn't actually name or directly involve them."
     },
     {
-      "title": "China Upgrades the Backdoor It Uses to Spy on Telcos Globally",
-      "url": "https://www.darkreading.com/threat-intelligence/china-upgrades-backdoor-spy-telcos",
-      "date": "2026-03-27",
-      "summary": "Chinese APT Red Menshen's super-advanced BPFdoor malware defeats traditional cybersecurity protections. All telcos can do, really, is try hunting it down."
+      "title": "Russia's Forest Blizzard Nabs Rafts of Logins via SOHO Routers",
+      "url": "https://www.darkreading.com/threat-intelligence/russia-forest-blizzard-logins-soho-routers",
+      "date": "2026-04-09",
+      "summary": "Heard of fileless malware? How about malwareless cyber espionage? Russia's APT28 is spying on global organizations by modifying just one DNS setting in vulnerable routers."
     },
     {
-      "title": "Wartime Usage of Compromised IP Cameras Highlight Their Danger",
-      "url": "https://www.darkreading.com/cyber-risk/wartime-usage-of-compromised-ip-cameras-highlight-their-danger",
-      "date": "2026-03-27",
-      "summary": "The list of countries exploiting Internet-connected cameras to give them eyes inside their adversaries' borders continues to expand. What should companies look out for?"
+      "title": "Threat Actors Get Crafty With Emojis to Escape Detection",
+      "url": "https://www.darkreading.com/cyber-risk/emojis-power-covert-threat-actor-communications",
+      "date": "2026-04-08",
+      "summary": "When \ud83e\udd16 means &quot;bot available,&quot; \ud83e\uddf0 signifies &quot;toolkit,&quot; or \ud83d\udcb0\ud83d\udcb0\ud83d\udcb0 translates to &quot;big ransom,&quot; bad actors can evade filters and keep it all on the down-low."
     },
     {
-      "title": "Infrastructure Attacks With Physical Consequences Down 25%",
-      "url": "https://www.darkreading.com/threat-intelligence/infrastructure-attacks-physical-consequences-down",
-      "date": "2026-03-27",
-      "summary": "Operational technology (OT) at industrial and critical infrastructure sites seem to have been benefitting from a lull in ransomware, and hackers' relative ignorance of OT systems."
+      "title": "AI-Led Remediation Crisis Prompts HackerOne to Pause Bug Bounties",
+      "url": "https://www.darkreading.com/application-security/ai-led-remediation-crisis-prompts-hackerone-pause-bug-bounties",
+      "date": "2026-04-08",
+      "summary": "Discovery used to be the bottleneck for open source bugs, but with automated discovery, remediation's the bottleneck, which bounties don't fund."
     },
     {
-      "title": "Google Sets 2029 Deadline for Quantum-Safe Cryptography",
-      "url": "https://www.darkreading.com/application-security/google-2029-deadline-quantum-safe-cryptography",
-      "date": "2026-03-27",
-      "summary": "The post-quantum future may be coming sooner than you think, as Google plans to have PQC migration in place by 2029."
+      "title": "Fraud Rockets Higher in Mobile-First Latin America",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/fraud-mobile-first-latin-america",
+      "date": "2026-04-08",
+      "summary": "Cyber-fraudsters move quickly from compromised devices to account takeover to funds transfer, shifting money before many financial institutions can react."
     },
     {
-      "title": "Coruna, DarkSword &amp; Democratizing Nation-State Exploit Kits",
-      "url": "https://www.darkreading.com/endpoint-security/coruna-darksword-democratizing-nation-state-exploit-kits",
-      "date": "2026-03-26",
-      "summary": "Nation-state malware is being sold on the Dark Web and leaked to GitHub; and ordinary organizations might not stand much of a chance of defending themselves."
+      "title": "Full Sail University to Open IBM Cyber Defense Range Powered by AWS and Cloud Range on Campus",
+      "url": "https://www.darkreading.com/cybersecurity-operations/full-sail-university-ibm-cyber-defense-range-aws-cloud-range",
+      "date": "2026-04-08",
+      "summary": ""
     },
     {
-      "title": "Is the FCC's Router Ban the Wrong Fix?",
-      "url": "https://www.darkreading.com/endpoint-security/fcc-router-ban-wrong-fix",
-      "date": "2026-03-26",
-      "summary": "The agency put foreign-made consumer routers on its list of prohibited communications devices, but the ban could create more problems down the road."
+      "title": "Niobium Introduces The Fog",
+      "url": "https://www.darkreading.com/endpoint-security/niobium-introduces-the-fog",
+      "date": "2026-04-08",
+      "summary": ""
     },
     {
-      "title": "Automotive Cybersecurity Threats Grow in Era of Connected, Autonomous Vehicles",
-      "url": "https://www.darkreading.com/vulnerabilities-threats/automotive-cybersecurity-threats-grow-connected-autonomous-vehicles",
-      "date": "2026-03-26",
-      "summary": "More than a decade since the 2015 Jeep hack, the cybersecurity of vehicles remains of the utmost importance."
+      "title": "Pluralsight Launches SecureReady to Help Organizations Build Job-Ready Cybersecurity Teams",
+      "url": "https://www.darkreading.com/remote-workforce/pluralsight-launches-secureready-cybersecurity-teams",
+      "date": "2026-04-08",
+      "summary": ""
     },
     {
-      "title": "Critical Flaw in Langflow AI Platform Under Attack",
-      "url": "https://www.darkreading.com/vulnerabilities-threats/critical-flaw-langflow-ai-platform-under-attack",
-      "date": "2026-03-26",
-      "summary": "Threats actors pounced on the code injection vulnerability within hours of its disclosure, demonstrating that organizations have little time to address critical bugs."
+      "title": "Iranian Threat Actors Disrupt US Critical Infrastructure via Exposed PLCs",
+      "url": "https://www.darkreading.com/ics-ot-security/iranian-threat-actors-us-critical-infrastructure-exposed-plcs",
+      "date": "2026-04-08",
+      "summary": "Attackers compromised Internet-facing OT devices and caused file and display manipulation, operational disruption, and financial losses across sectors."
     },
     {
-      "title": "How Organizations Can Use Mistakes to Level Up Their Security Programs",
-      "url": "https://www.darkreading.com/cybersecurity-operations/blunders-level-up-security-programs",
-      "date": "2026-03-26",
-      "summary": "Organizations repeatedly expose ports, reuse passwords, and skip patches, creating security gaps that attackers exploit for breaches. An industry veteran outlines ways to fix these common mistakes."
+      "title": "Storm-1175 Deploys Medusa Ransomware at 'High Velocity'",
+      "url": "https://www.darkreading.com/threat-intelligence/storm-1175-medusa-ransomware-high-velocity",
+      "date": "2026-04-07",
+      "summary": "Microsoft says the financially motivated cybercrime group has exploited n-day and zero-day vulnerabilities in campaigns predicated on speed."
     },
     {
-      "title": "AI-Powered Dependency Decisions Introduce, Ignore Security Bugs",
-      "url": "https://www.darkreading.com/application-security/ai-powered-dependency-decisions-security-bugs",
-      "date": "2026-03-26",
-      "summary": "AI models often hallucinate or make costly mistakes when tasked with recommending software versions, upgrade paths, and security fixes \u2014 leading to significant technical debt."
+      "title": "Grafana Patches AI Bug That Could Have Leaked User Data",
+      "url": "https://www.darkreading.com/application-security/grafana-patches-ai-bug-leaked-user-data",
+      "date": "2026-04-07",
+      "summary": "By hiding malicious instructions on an attacker-controlled Web page, AI could ingest orders that appear benign but return sensitive data to the attacker's server."
     },
     {
-      "title": "Intermediaries Driving Global Spyware Market Expansion",
-      "url": "https://www.darkreading.com/cyber-risk/intermediaries-driving-global-spyware-market-expansion",
-      "date": "2026-03-26",
-      "summary": "Third-party resellers and brokers foil transparency efforts and allow spyware to spread despite government restrictions, a study finds."
+      "title": "RSAC 2026: How AI Is Reshaping Cybersecurity Faster Than Ever",
+      "url": "https://www.darkreading.com/cybersecurity-operations/rsac-2026-how-ai-is-reshaping-cybersecurity-faster-than-ever",
+      "date": "2026-04-07",
+      "summary": "Dark Reading's Kelly Jackson Higgins shares insights on the past, present, and future of cybersecurity after attending RSAC 2026 Conference."
     },
     {
-      "title": "At RSAC, the EU Leads While US Officials Are Sidelined",
-      "url": "https://www.darkreading.com/cyber-risk/rsac-eu-leads-us-officials-sidelined",
-      "date": "2026-03-25",
-      "summary": "While US government sits out this year, EU officials are on the ground in San Francisco leading the conversations on today's top cybersecurity challenges."
+      "title": "Human vs. AI: Debates Shape RSAC 2026 Cybersecurity Trends",
+      "url": "https://www.darkreading.com/cybersecurity-operations/human-vs-ai-debates-shape-rsac-2026-cybersecurity-trends",
+      "date": "2026-04-07",
+      "summary": "As AI dominated RSAC 2026, CISOs and industry leaders debated its role in security, from agentic applications to the challenges of scaling human involvement in decision-making."
     },
     {
-      "title": "Blame Game: Why Public Cyber Attribution Carries Risks",
-      "url": "https://www.darkreading.com/cyber-risk/blame-game-public-cyber-attribution-risks",
-      "date": "2026-03-25",
-      "summary": "Publicly accusing an entity of a cyberattack could have negative consequences that organizations should consider before taking the plunge."
+      "title": "Lies, Damned Lies, and Cybersecurity Metrics",
+      "url": "https://www.darkreading.com/cyber-risk/lies-damned-lies-cybersecurity-metrics",
+      "date": "2026-04-07",
+      "summary": "A panel of five C-suite leaders discuss how cybersecurity success is measured and why it isn't improving results."
     },
     {
-      "title": "Phishers Pose as Palo Alto Networks' Recruiters for Months in Job Scam",
-      "url": "https://www.darkreading.com/cyberattacks-data-breaches/phishers-pose-palo-alto-networks-recruiters-job-scam",
-      "date": "2026-03-25",
-      "summary": "A series of campaigns that began in August aim to defraud job candidates, using psychological tactics and data scraped from LinkedIn profiles."
+      "title": "Focusing on the People in Cybersecurity at RSAC 2026 Conference",
+      "url": "https://www.darkreading.com/cybersecurity-operations/focusing-people-cybersecurity-rsac2026",
+      "date": "2026-04-07",
+      "summary": "AI dominated RSAC 2026 Conference, but it's still the humans in cybersecurity who matter most."
     },
     {
-      "title": "AI Dominates RSAC Innovation Sandbox",
-      "url": "https://www.darkreading.com/cybersecurity-operations/ai-dominates-rsac-innovation-sandbox",
-      "date": "2026-03-25",
-      "summary": "Ten finalists had three minutes to make their case for being the most innovative, promising young security company of the year. Geordie AI wins the 2026 contest."
+      "title": "AI-Assisted Supply Chain Attack Targets GitHub",
+      "url": "https://www.darkreading.com/application-security/ai-assisted-supply-chain-attack-targets-github",
+      "date": "2026-04-06",
+      "summary": "PRT-scan is the second campaign in recent months where a threat actor appears to have leveraged AI for automated targeting of a widespread GitHub misconfiguration."
     },
     {
-      "title": "SANS: Top 5 Most Dangerous New Attack Techniques to Watch",
-      "url": "https://www.darkreading.com/threat-intelligence/sans-most-dangerous-attack-techniques",
-      "date": "2026-03-25",
-      "summary": "For the first time, SANS Institute's five top attack techniques all have one thing in common \u2014 AI."
+      "title": "Axios Attack Shows How Complex Social Engineering Is Industrialized",
+      "url": "https://www.darkreading.com/threat-intelligence/axios-attack-complex-social-engineering-industrialized",
+      "date": "2026-04-06",
+      "summary": "The attack on the popular NPM package Axios is just one of many targeting maintainers and has shone a light on how threat actors can scale sophisticated social engineering campaigns."
     },
     {
-      "title": "Why a 'Near-Miss' Database Is Key to Improving Information Sharing",
-      "url": "https://www.darkreading.com/cyber-risk/experts-near-miss-database-improve-information-sharing",
-      "date": "2026-03-25",
-      "summary": "Organizations disclose attack details, though information may be limited. What if they did the same with close calls?"
+      "title": "Fortinet Issues Emergency Patch for FortiClient Zero-Day",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/fortinet-emergency-patch-forticlient-zero-day",
+      "date": "2026-04-06",
+      "summary": "The authentication bypass flaw, tracked as CVE-2026-35616, is the latest in a series of Fortinet vulnerabilities that have been exploited in the wild."
     },
     {
-      "title": "AI-Native Security Is a Must to Counter AI-Based Attacks",
-      "url": "https://www.darkreading.com/cybersecurity-operations/ai-native-security-counter-attacks",
-      "date": "2026-03-25",
-      "summary": "Attacks by artificial intelligence agents are a reality. Experts at Nvidia's GTC conference say defenders need to use the same tools to fight them off."
+      "title": "Automated Credential Harvesting Campaign Exploits React2Shell Flaw",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/automated-credential-harvesting-campaign-react2shell",
+      "date": "2026-04-06",
+      "summary": "An emerging threat cluster tracked as UAT-10608 is exploiting vulnerable Web-exposed Next.js apps and using an automated tool to exfiltrate credentials, secrets, and other system data."
     },
     {
-      "title": "Ex-NSA Directors Discuss 'Red Line' for Offensive Cyberattacks",
-      "url": "https://www.darkreading.com/cyber-risk/ex-nsa-directors-red-line-offensive-cyberattacks",
-      "date": "2026-03-25",
-      "summary": "Four former NSA chiefs representing a near-complete history of US Cyber Command debate the role of offensive cyber in the government at RSAC."
+      "title": "Shadow AI in Healthcare Is Here to Stay",
+      "url": "https://www.darkreading.com/cyber-risk/shadow-ai-in-healthcare-is-here-to-stay",
+      "date": "2026-04-06",
+      "summary": "Medical professionals are not going to stop using AI tools to manage growing workloads. Organizations should prioritize bolstering security protocols to limit their blast radius."
     },
     {
-      "title": "Iran Hacktivists Make Noise but Have Little Impact on War",
-      "url": "https://www.darkreading.com/threat-intelligence/iran-hacktivists-impact-on-war",
-      "date": "2026-03-25",
-      "summary": "Iran-aligned groups are trying to make their mark in the Gulf, but the results have fallen short of remarkable."
+      "title": "OWASP GenAI Security Project Gets Update, New Tools Matrix",
+      "url": "https://www.darkreading.com/application-security/owasp-genai-security-project-update-matrix",
+      "date": "2026-04-06",
+      "summary": "In recognition of 21 generative AI risks, the standards group recommends that companies take separate but linked approaches to defending GenAI and agentic AI systems."
     },
     {
-      "title": "CSA Launches CSAI Foundation for AI Security",
-      "url": "https://www.darkreading.com/cloud-security/csa-launches-csai-ai-security",
-      "date": "2026-03-24",
-      "summary": "The Cloud Security Alliance creates a dedicated nonprofit to govern autonomous AI agent ecosystems through risk intelligence and certification."
+      "title": "Inconsistent Privacy Labels Don't Tell Users What They Are Getting",
+      "url": "https://www.darkreading.com/data-privacy/inconsistent-privacy-labels-not-enough",
+      "date": "2026-04-03",
+      "summary": "Data privacy labels are a great idea for mobile apps, but the current versions just aren't good enough."
     },
     {
-      "title": "Checkmarx KICS Code Scanner Targeted in Widening Supply Chain Hit",
-      "url": "https://www.darkreading.com/application-security/checkmarx-kics-code-scanner-widening-supply-chain",
-      "date": "2026-03-24",
-      "summary": "TeamPCP is the likely cyber threat actor behind attacks on Trivy, Checkmarx's KICS and VS Code plug-ins, and the LiteLLM AI library \u2014 and all signs point to more attacks to come."
+      "title": "Apple Breaks Precedent, Patches DarkSword for iOS 18",
+      "url": "https://www.darkreading.com/endpoint-security/apple-patches-darksword-ios-18",
+      "date": "2026-04-03",
+      "summary": "Even organizations with users unwilling or unable to adopt iOS 26 can now protect themselves from a severe mobile OS-cracking tool."
     },
     {
-      "title": "How AI Coding Tools Crushed the Endpoint Security Fortress",
-      "url": "https://www.darkreading.com/application-security/ai-coding-tools-endpoint-security",
-      "date": "2026-03-24",
-      "summary": "Security vendors have spent years building up defenses around the endpoint, but one researcher says AI coding tools have brought the walls down."
+      "title": "Blast Radius of TeamPCP Attacks Expands Amid Hacker Infighting",
+      "url": "https://www.darkreading.com/threat-intelligence/teampcp-attacks-hacker-infighting",
+      "date": "2026-04-03",
+      "summary": "As organizations disclose breaches tied to TeamPCP's supply chain attacks, ShinyHunters and Lapsus$ are getting involved, taking credit, and creating a murky situation for enterprises."
     },
     {
-      "title": "GitHub 'OpenClaw Deployer' Repo Delivers Trojan Instead",
-      "url": "https://www.darkreading.com/application-security/github-openclaw-deployer-repo-delivers-trojan",
-      "date": "2026-03-24",
-      "summary": "An AI-assisted campaign is spreading more than 300 poisoned packages for diverse assets ranging from developer tools to game cheats."
+      "title": "Picking Up 'Skull Vibrations'? Could Be XR Headset Authentication",
+      "url": "https://www.darkreading.com/remote-workforce/skull-vibrations-could-be-xr-headset-authentication",
+      "date": "2026-04-03",
+      "summary": "&quot;Skull vibration harmonics generated by vital signs&quot; can be used to sign in to VR, AR, and MR headsets, according to emerging research."
     },
     {
-      "title": "How a Large Bank Uses AI Digital Twins for Threat Hunting",
-      "url": "https://www.darkreading.com/threat-intelligence/how-large-bank-uses-ai-digital-twins-threat-hunting",
-      "date": "2026-03-24",
-      "summary": "JPMorganChase uses digital fingerprints and digital twins to spot online attackers and malicious behaviors while also reducing pesky false alerts."
+      "title": "Claude Source Code Leak Highlights Big Supply Chain Missteps",
+      "url": "https://www.darkreading.com/application-security/source-code-leaks-highlight-lack-supply-chain-oversight",
+      "date": "2026-04-03",
+      "summary": "Or, why the software supply chain should be treated as critical infrastructure with guardrails built in at every layer."
     },
     {
-      "title": "Microsoft Proposes Better Identity, Guardrails for AI Agents",
-      "url": "https://www.darkreading.com/identity-access-management-security/microsoft-proposes-better-identity-guardrails-ai-agents",
-      "date": "2026-03-24",
-      "summary": "Companies need better controls to manage key threats rising from the growth of agentic AI. These new features provide a starting point."
+      "title": "Chainguard Unveils Factory 2.0 to Automate Hardening the Software Supply Chain",
+      "url": "https://www.darkreading.com/application-security/chainguard-factory-automate-hardening-software-supply-chain",
+      "date": "2026-04-03",
+      "summary": "The rebuilt Chainguard platform adds deeper security designed to continuously reconcile open source artifacts across containers, libraries, agent skills, and GitHub Actions."
     },
     {
-      "title": "AI in the SOC: What Could Go Wrong?",
-      "url": "https://www.darkreading.com/cybersecurity-operations/ai-soc-go-wrong",
-      "date": "2026-03-23",
-      "summary": "Two cybersecurity leaders tested out AI in their respective SOCs for six months \u2014 and here's what they learned."
-    },
-    {
-      "title": "Trivy Supply Chain Attack Targets CI/CD Secrets",
-      "url": "https://www.darkreading.com/application-security/trivy-supply-chain-attack-targets-ci-cd-secrets",
-      "date": "2026-03-23",
-      "summary": "A threat actor used the open source security tool to deploy an infostealer into CI/CD workflows and steal cloud credentials, SSH keys, tokens, and other sensitive secrets."
+      "title": "CrowdStrike Next-Gen SIEM Can Now Ingest Microsoft Defender Telemetry",
+      "url": "https://www.darkreading.com/endpoint-security/crowdstrike-falcon-ingest-microsoft-defender-telemetry",
+      "date": "2026-04-03",
+      "summary": "Once CrowdStrike's nemesis, Microsoft is now a collaborator. A shared interest in Formula 1 helped thaw the years-long fierce rivalry."
     }
   ]
 }

@@ -1,95 +1,95 @@
 {
-  "cached_at": "2026-04-03T04:22:56.081035+00:00",
+  "cached_at": "2026-04-16T03:47:49.138467+00:00",
   "entries": [
     {
-      "title": "Claude Code leak used to push infostealer malware on GitHub",
-      "url": "https://www.bleepingcomputer.com/news/security/claude-code-leak-used-to-push-infostealer-malware-on-github/",
-      "date": "2026-04-02",
-      "summary": "Threat actors are exploiting the recent Claude Code source code leak by using fake GitHub repositories to deliver Vidar information-stealing malware. [...]"
+      "title": "Critical Nginx UI auth bypass flaw now actively exploited in the wild",
+      "url": "https://www.bleepingcomputer.com/news/security/critical-nginx-ui-auth-bypass-flaw-now-actively-exploited-in-the-wild/",
+      "date": "2026-04-15",
+      "summary": "A critical vulnerability in Nginx UI with Model Context Protocol (MCP) support is now being exploited in the wild for full server takeover without authentication. [...]"
     },
     {
-      "title": "Drift loses $280 million as hackers seize Security Council powers",
-      "url": "https://www.bleepingcomputer.com/news/security/drift-loses-280-million-as-hackers-seize-security-council-powers/",
-      "date": "2026-04-02",
-      "summary": "The Drift Protocol lost at least $280 million after a threat actor took control of its Security Council administrative powers in a planned, sophisticated operation. [...]"
+      "title": "New AgingFly malware used in attacks on Ukraine govt, hospitals",
+      "url": "https://www.bleepingcomputer.com/news/security/new-agingfly-malware-used-in-attacks-on-ukraine-govt-hospitals/",
+      "date": "2026-04-15",
+      "summary": "A new malware family named 'AgingFly' has been identified in attacks against local governments and hospitals that steal authentication data from Chromium-based browsers and WhatsApp messenger. [...]"
     },
     {
-      "title": "Residential proxies evaded IP reputation checks in 78% of 4B sessions",
-      "url": "https://www.bleepingcomputer.com/news/security/residential-proxies-evaded-ip-reputation-checks-in-78-percent-of-4b-sessions/",
-      "date": "2026-04-02",
-      "summary": "Researchers warn that residential proxies used to route malicious traffic are a big problem for IP reputation systems, as there is no clear distinction between attackers and legitimate users. [...]"
+      "title": "WordPress plugin suite hacked to push malware to thousands of sites",
+      "url": "https://www.bleepingcomputer.com/news/security/wordpress-plugin-suite-hacked-to-push-malware-to-thousands-of-sites/",
+      "date": "2026-04-15",
+      "summary": "More than 30 WordPress plugins in the EssentialPlugin package have been compromised with malicious code that allows unauthorized access to websites running them. [...]"
     },
     {
-      "title": "Adversaries Exploit Vacant Homes to Intercept Mail in Hybrid Cybercrime",
-      "url": "https://www.bleepingcomputer.com/news/security/adversaries-exploit-vacant-homes-to-intercept-mail-in-hybrid-cybercrime/",
-      "date": "2026-04-02",
-      "summary": "Threat actors are exploiting vacant homes as \"drop addresses\" to intercept mail and enable fraud. Flare shows how postal services and fake identities are abused to turn mail into a fraud vector. [...]"
+      "title": "Signed software abused to deploy antivirus-killing scripts",
+      "url": "https://www.bleepingcomputer.com/news/security/signed-software-abused-to-deploy-antivirus-killing-scripts/",
+      "date": "2026-04-15",
+      "summary": "A digitally signed adware tool has deployed payloads running with SYSTEM privileges that disabled antivirus protections on thousands of endpoints, some in the educational, utilities, government, and healthcare sectors. [...]"
     },
     {
-      "title": "New Progress ShareFile flaws can be chained in pre-auth RCE attacks",
-      "url": "https://www.bleepingcomputer.com/news/security/new-progress-sharefile-flaws-can-be-chained-in-pre-auth-rce-attacks/",
-      "date": "2026-04-02",
-      "summary": "Two vulnerabilities in Progress ShareFile, an enterprise-grade secure file transfer solution, can be chained to enable unauthenticated file exfiltration from affected environments. [...]"
+      "title": "Microsoft pays $2.3M for cloud and AI flaws at Zero Day Quest",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-pays-23-million-for-cloud-and-ai-flaws-at-zero-day-quest/",
+      "date": "2026-04-15",
+      "summary": "Microsoft has awarded $2.3 million to security researchers after receiving nearly 700 submissions during this year's Zero Day Quest hacking contest. [...]"
     },
     {
-      "title": "Medtech giant Stryker fully operational after data-wiping attack",
-      "url": "https://www.bleepingcomputer.com/news/security/medtech-giant-stryker-fully-operational-after-data-wiping-attack/",
-      "date": "2026-04-02",
-      "summary": "Stryker Corporation, one of the world's leading medical technology companies, says it's fully operational three weeks after many of its systems were wiped out in a cyberattack claimed by the Iranian-linked Handala hacktivist group. [...]"
+      "title": "CISA flags Windows Task Host vulnerability as exploited in attacks",
+      "url": "https://www.bleepingcomputer.com/news/security/cisa-flags-windows-task-host-vulnerability-as-exploited-in-attacks/",
+      "date": "2026-04-15",
+      "summary": "CISA warned U.S. government agencies to secure their systems against a Windows Task Host privilege escalation vulnerability that could allow attackers to gain SYSTEM privileges. [...]"
     },
     {
-      "title": "Critical Cisco IMC auth bypass gives attackers Admin access",
-      "url": "https://www.bleepingcomputer.com/news/security/critical-cisco-imc-auth-bypass-gives-attackers-admin-access/",
-      "date": "2026-04-02",
-      "summary": "Cisco has patched several critical and high-severity vulnerabilities, including an Integrated Management Controller (IMC) authentication bypass that enables attackers to gain Admin access. [...]"
+      "title": "Rolling Networks: Securing the Transportation Sector",
+      "url": "https://www.bleepingcomputer.com/news/security/rolling-networks-securing-the-transportation-sector/",
+      "date": "2026-04-15",
+      "summary": "Modern trucks are rolling networks packed with sensors, connectivity, and attack surfaces, creating new cyber risks. NMFTA's Cybersecurity Conference brings industry leaders together to tackle emerging threats in transportation. [...]"
     },
     {
-      "title": "Microsoft links Classic Outlook issue to email delivery problems",
-      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-links-classic-outlook-bug-to-email-delivery-issues/",
-      "date": "2026-04-02",
-      "summary": "Microsoft is investigating a known issue that prevents some Classic Outlook users from sending emails via Outlook.com. [...]"
+      "title": "Microsoft: April updates trigger BitLocker key prompts on some servers",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-some-windows-servers-ask-for-bitlocker-key-after-april-updates/",
+      "date": "2026-04-15",
+      "summary": "Microsoft confirmed on Tuesday that some Windows Server 2025 devices will boot into BitLocker recovery after installing the April 2026 KB5082063 Windows security update. [...]"
     },
     {
-      "title": "Over 14,000 F5 BIG-IP APM instances still exposed to RCE attacks",
-      "url": "https://www.bleepingcomputer.com/news/security/over-14-000-f5-big-ip-apm-instances-still-exposed-to-rce-attacks/",
-      "date": "2026-04-02",
-      "summary": "Internet security watchdog Shadowserver has found over 14,000 BIG-IP APM instances exposed online amid ongoing attacks exploiting a critical-severity remote code execution (RCE) vulnerability. [...]"
+      "title": "Microsoft fixes bug behind Windows Server 2025 automatic upgrades",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-fixes-bug-behind-windows-server-2025-automatic-upgrades/",
+      "date": "2026-04-15",
+      "summary": "Microsoft has finally fixed a known issue that was causing systems running Windows Server 2019 and 2022 to \"unexpectedly\" upgrade to Windows Server 2025. [...]"
     },
     {
-      "title": "New CrystalRAT malware adds RAT, stealer and prankware features",
-      "url": "https://www.bleepingcomputer.com/news/security/new-crystalrat-malware-adds-rat-stealer-and-prankware-features/",
-      "date": "2026-04-01",
-      "summary": "A new malware-as-a-service called CrystalRAT is being promoted on Telegram, offering remote access, data theft, keylogging, and clipboard hijacking capabilities. [...]"
+      "title": "Microsoft adds Windows protections for malicious Remote Desktop files",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-adds-windows-protections-for-malicious-remote-desktop-files/",
+      "date": "2026-04-14",
+      "summary": "Microsoft has introduced new Windows protections to defend against phishing attacks that abuse Remote Desktop connection (.rdp) files, adding warnings and disabling risky shared resources by default. [...]"
     },
     {
-      "title": "Apple expands iOS 18 updates to more iPhones to block DarkSword attacks",
-      "url": "https://www.bleepingcomputer.com/news/security/apple-expands-ios-18-updates-to-more-iphones-to-block-darksword-attacks/",
-      "date": "2026-04-01",
-      "summary": "Apple has now made it possible for more iPhones still running iOS 18 to receive security updates that protect against the actively exploited DarkSword exploit kit. [...]"
+      "title": "Crypto-exchange Kraken extorted by hackers after insider breach",
+      "url": "https://www.bleepingcomputer.com/news/security/crypto-exchange-kraken-extorted-by-hackers-after-insider-breach/",
+      "date": "2026-04-14",
+      "summary": "The Kraken cryptocurrency exchange announced that a cybercrime group is trying to extort the company by threatening to release videos showing internal systems that host client data. [...]"
     },
     {
-      "title": "Hackers exploit TrueConf zero-day to push malicious software updates",
-      "url": "https://www.bleepingcomputer.com/news/security/hackers-exploit-trueconf-zero-day-to-push-malicious-software-updates/",
-      "date": "2026-04-01",
-      "summary": "Hackers have targeted TrueConf conference servers in attacks that exploit a zero-day vulnerability, allowing them to execute arbitrary files on all connected endpoints. [...]"
+      "title": "Over 100 Chrome Web Store extensions steal user accounts, data",
+      "url": "https://www.bleepingcomputer.com/news/security/over-100-chrome-extensions-in-web-store-target-users-accounts-and-data/",
+      "date": "2026-04-14",
+      "summary": "More than 100 malicious extensions in the official Chrome Web Store are attempting to steal Google OAuth2 Bearer tokens, deploy backdoors, and carry out ad fraud. [...]"
     },
     {
-      "title": "New EvilTokens service fuels Microsoft device code phishing attacks",
-      "url": "https://www.bleepingcomputer.com/news/security/new-eviltokens-service-fuels-microsoft-device-code-phishing-attacks/",
-      "date": "2026-04-01",
-      "summary": "A new malicious kit called EvilTokens integrates device code phishing capabilities, allowing attackers to hijack Microsoft accounts and provide advanced features for business email compromise attacks. [...]"
+      "title": "Microsoft releases Windows 10 KB5082200 extended security update",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-releases-windows-10-kb5082200-extended-security-update/",
+      "date": "2026-04-14",
+      "summary": "Microsoft has released the Windows 10 KB5082200 extended security update to fix the April 2026 Patch Tuesday vulnerabilities, including 2 zero-days. [...]"
     },
     {
-      "title": "'NoVoice' Android malware on Google Play infected 2.3 million devices",
-      "url": "https://www.bleepingcomputer.com/news/security/novoice-android-malware-on-google-play-infected-23-million-devices/",
-      "date": "2026-04-01",
-      "summary": "A new Android malware dubbed NoVoice exploited known vulnerabilities to gain root access and has been distributed through more than 50 apps on Google Play Store, with at least 2.3 million downloads. [...]"
+      "title": "McGraw-Hill confirms data breach following extortion threat",
+      "url": "https://www.bleepingcomputer.com/news/security/mcgraw-hill-confirms-data-breach-following-extortion-threat/",
+      "date": "2026-04-14",
+      "summary": "Education company McGraw-Hill has confirmed in a statement to BleepingComputer that hackers exploited a Salesforce misconfiguration and accessed its internal data. [...]"
     },
     {
-      "title": "Routine Access Is Powering Modern Intrusions, a New Threat Report Finds",
-      "url": "https://www.bleepingcomputer.com/news/security/routine-access-is-powering-modern-intrusions-a-new-threat-report-finds/",
-      "date": "2026-04-01",
-      "summary": "Modern intrusions increasingly start with valid credentials and routine access, not exploits. Blackpoint Cyber's upcoming threat report shows how VPN abuse, RMM tools, and social engineering drive most incidents. [...]"
+      "title": "Windows 11 cumulative updates KB5083769 & KB5082052 released",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/windows-11-cumulative-updates-kb5083769-and-kb5082052-released/",
+      "date": "2026-04-14",
+      "summary": "Microsoft has released Windows 11 KB5083769 and KB5082052 cumulative updates for versions 25H2/24H2 and 23H2 to fix security vulnerabilities, bugs, and add new features. [...]"
     }
   ]
 }

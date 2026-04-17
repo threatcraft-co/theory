@@ -1,0 +1,14 @@
+{
+  "cached_at": "2026-04-16T03:48:18.192141+00:00",
+  "result": {
+    "actor_summary": "APT28 conducted a spear-phishing campaign as of April 2026 targeting Ukraine and NATO allies with a previously undocumented malware suite designated PRISMEX. The PRISMEX toolkit represents a tactical evolution, combining advanced steganography, COM hijacking, and legitimate cloud service abuse for command-and-control infrastructure. This campaign demonstrates continued Russian state-sponsored interest in signals intelligence collection and network access against Ukrainian and allied defense entities.",
+    "landscape_summary": "This campaign reflects an accelerating trend among state-sponsored actors toward polyglot malware architectures that integrate multiple evasion techniques\u2014steganography, COM hijacking, and cloud abuse\u2014into unified toolsets rather than deploying single-purpose implants. The targeting of Ukraine and NATO allies alongside the development of previously undocumented malware suggests APT28 is investing in operational security infrastructure specifically designed to complicate forensic analysis and detection in high-priority geopolitical theaters.",
+    "relevance": 65,
+    "source": "The Hacker News",
+    "source_tier": 3,
+    "date": "2026-04-08",
+    "title": "APT28 Deploys PRISMEX Malware in Campaign Targeting Ukraine and NATO Allies",
+    "url": "https://thehackernews.com/2026/04/apt28-deploys-prismex-malware-in.html",
+    "provider": "claude"
+  }
+}

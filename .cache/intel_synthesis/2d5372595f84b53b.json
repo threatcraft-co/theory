@@ -1,9 +1,9 @@
 {
-  "cached_at": "2026-03-31T18:52:53.377682+00:00",
+  "cached_at": "2026-04-16T03:48:14.304213+00:00",
   "result": {
-    "actor_summary": "APT28 exploited a Microsoft Office zero-day vulnerability during January 2026, demonstrating continued focus on widely-used productivity software as an attack vector. The article provides no additional details regarding targeting scope, geographic focus, or tactical evolution beyond this single exploit activity.",
-    "landscape_summary": "The January 2026 CVE landscape reflects an accelerating pattern of nation-state actors like APT28 moving away from custom exploit development and toward rapid weaponization of public zero-days, particularly targeting productivity suites that maintain privileged access within enterprise environments. This shift underscores a strategic pivot toward exploits with immediate operational impact over traditional persistence mechanisms, driven by the expanding public disclosure cycle and compressed patching windows in enterprise deployments.",
-    "relevance": 60,
+    "actor_summary": "In January 2026, APT28 conducted Operation Neusploit, exploiting CVE-2026-21509, a Microsoft Office zero-day vulnerability, via weaponized RTF files to deliver MiniDoor, PixyNetLoader, and Covenant Grunt implants. This campaign demonstrates continued focus on enterprise communication and management platforms as vectors for initial access and persistence. The actor's exploitation of an unpatched Microsoft Office vulnerability reflects sustained capability against widely-deployed productivity software.",
+    "landscape_summary": "Russian state-sponsored actors are increasingly weaponizing Microsoft Office zero-days as a primary vector for initial access and implant delivery, with APT28's exploitation of CVE-2026-21509 reflecting a sustained focus on enterprise communication platforms where authentication bypass flaws create downstream persistence opportunities. The concentration of critical vulnerabilities in Microsoft and SmarterTools products (30% of January's total) indicates adversaries are deliberately targeting the administrative and collaboration tools that dominate enterprise environments, amplifying the impact of each successful exploitation.",
+    "relevance": 68,
     "source": "Recorded Future (Public)",
     "source_tier": 2,
     "date": "2026-02-24",

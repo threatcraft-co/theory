@@ -1,6 +1,30 @@
 {
-  "cached_at": "2026-04-03T04:22:54.662910+00:00",
+  "cached_at": "2026-04-16T03:47:47.470333+00:00",
   "entries": [
+    {
+      "title": "Cracks in the Bedrock: Agent God Mode",
+      "url": "https://unit42.paloaltonetworks.com/exploit-of-aws-agentcore-iam-god-mode/",
+      "date": "2026-04-08",
+      "summary": "Unit 42 reveals \"Agent God Mode\" in Amazon Bedrock AgentCore. Broad IAM permissions lead to privilege escalation and data exfiltration risks. The post Cracks in the Bedrock: Agent God Mode appeared first on Unit 42 ."
+    },
+    {
+      "title": "Cracks in the Bedrock: Escaping the AWS AgentCore Sandbox",
+      "url": "https://unit42.paloaltonetworks.com/bypass-of-aws-sandbox-network-isolation-mode/",
+      "date": "2026-04-07",
+      "summary": "Unit 42 uncovers critical vulnerabilities in Amazon Bedrock AgentCore's sandbox, demonstrating DNS tunneling and credential exposure. The post Cracks in the Bedrock: Escaping the AWS AgentCore Sandbox appeared first on Unit 42 ."
+    },
+    {
+      "title": "Understanding Current Threats to Kubernetes Environments",
+      "url": "https://unit42.paloaltonetworks.com/modern-kubernetes-threats/",
+      "date": "2026-04-06",
+      "summary": "Unit 42 uncovers escalating Kubernetes attacks, detailing how threat actors exploit identities and critical vulnerabilities to compromise cloud environments. The post Understanding Current Threats to Kubernetes Environments appeared first on Unit 42 ."
+    },
+    {
+      "title": "When an Attacker Meets a Group of Agents: Navigating Amazon Bedrock's Multi-Agent Applications",
+      "url": "https://unit42.paloaltonetworks.com/amazon-bedrock-multiagent-applications/",
+      "date": "2026-04-03",
+      "summary": "Unit 42 research on multi-agent AI systems on Amazon Bedrock reveals new attack surfaces and prompt injection risks. Learn how to secure your AI applications. The post When an Attacker Meets a Group of Agents: Navigating Amazon Bedrock&#039;s Multi-Agent Applications appeared first on Unit 42 ."
+    },
     {
       "title": "Threat Brief: Widespread Impact of the Axios Supply Chain Attack",
       "url": "https://unit42.paloaltonetworks.com/axios-supply-chain-attack/",
@@ -66,30 +90,6 @@
       "url": "https://unit42.paloaltonetworks.com/genai-llm-prompt-fuzzing/",
       "date": "2026-03-17",
       "summary": "Unit 42 research unveils LLM guardrail fragility using genetic algorithm-inspired prompt fuzzing. Discover scalable evasion methods and critical GenAI security implications. The post Open, Closed and Broken: Prompt Fuzzing Finds LLMs Still Fragile Across Open and Closed Models appeared first on Unit 42 ."
-    },
-    {
-      "title": "Boggy Serpens Threat Assessment",
-      "url": "https://unit42.paloaltonetworks.com/boggy-serpens-threat-assessment/",
-      "date": "2026-03-16",
-      "summary": "Iranian threat group Boggy Serpens' cyberespionage evolves with AI-enhanced malware and refined social engineering. Unit 42 details their persistent targeting. The post Boggy Serpens Threat Assessment appeared first on Unit 42 ."
-    },
-    {
-      "title": "Iranian Cyber Threat Evolution: From MBR Wipers to Identity Weaponization",
-      "url": "https://unit42.paloaltonetworks.com/evolution-of-iran-cyber-threats/",
-      "date": "2026-03-16",
-      "summary": "The evolution of Iranian cyber operations in broad context: from custom wiper malware to misuse of legitimate admin tools and more. The post Iranian Cyber Threat Evolution: From MBR Wipers to Identity Weaponization appeared first on Unit 42 ."
-    },
-    {
-      "title": "Insights: Increased Risk of Wiper Attacks",
-      "url": "https://unit42.paloaltonetworks.com/handala-hack-wiper-attacks/",
-      "date": "2026-03-12",
-      "summary": "We are observing an increase of wiper attacks by the Iran-linked Handala Hack group (aka Void Manticore) through phishing and misuse of Microsoft Intune. The post Insights: Increased Risk of Wiper Attacks appeared first on Unit 42 ."
-    },
-    {
-      "title": "Suspected China-Based Espionage Operation Against Military Targets in Southeast Asia",
-      "url": "https://unit42.paloaltonetworks.com/espionage-campaign-against-military-targets/",
-      "date": "2026-03-12",
-      "summary": "An espionage operation demonstrated strategic operational patience against targets in Southeast Asia, deploying custom backdoors. The post Suspected China-Based Espionage Operation Against Military Targets in Southeast Asia appeared first on Unit 42 ."
     }
   ]
 }

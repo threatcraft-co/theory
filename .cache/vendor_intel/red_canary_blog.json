@@ -1,6 +1,24 @@
 {
-  "cached_at": "2026-04-03T04:22:56.369185+00:00",
+  "cached_at": "2026-04-16T03:47:49.567047+00:00",
   "entries": [
+    {
+      "title": "Identity, browsers, and node.js: Everything you missed in the Threat Detection Report miniseries",
+      "url": "https://redcanary.com/blog/security-operations/tdr-secops-recap/",
+      "date": "2026-04-15",
+      "summary": "Get cliff notes from our three-part deep dive into the 2026 Threat Detection Report and watch every episode, on demand now"
+    },
+    {
+      "title": "New: Use response actions to update Zscaler policies and block threats",
+      "url": "https://redcanary.com/blog/product-updates/zia-response-actions/",
+      "date": "2026-04-14",
+      "summary": "Take the quickest path from detection to protection"
+    },
+    {
+      "title": "AI in cybersecurity: The good, the bad, and the FUD",
+      "url": "https://redcanary.com/blog/security-operations/ai-in-cybersecurity/",
+      "date": "2026-04-08",
+      "summary": "The 2026 Threat Detection Report surveys the AI landscape for both defenders and adversaries. Here\u2019s how you can stay ahead."
+    },
     {
       "title": "Red Canary CFP tracker: April 2026",
       "url": "https://redcanary.com/blog/news-events/red-canary-cfp-tracker-april-2026/",
@@ -42,24 +60,6 @@
       "url": "https://redcanary.com/blog/threat-detection/openclaw-ai/",
       "date": "2026-03-05",
       "summary": "We deconstruct a multi-step threat hunt for malicious OpenClaw AI agents, outlining our approach to identifying and mitigating risks posed by unauthorized AI skills."
-    },
-    {
-      "title": "Breaking down a supply chain attack leveraging a malicious Google Workspace OAuth app",
-      "url": "https://redcanary.com/blog/threat-detection/google-workspace-oauth-attack/",
-      "date": "2026-03-04",
-      "summary": "How to detect and respond to OAuth consent attacks in Google Workspace"
-    },
-    {
-      "title": "Red Canary CFP tracker: March 2026",
-      "url": "https://redcanary.com/blog/news-events/red-canary-cfp-tracker-march-2026/",
-      "date": "2026-03-02",
-      "summary": "A monthly roundup of upcoming security conferences and calls for papers (CFP) submission deadlines"
-    },
-    {
-      "title": "The million-dollar front door and the tailgater: Why strong auth could fail at SaaS session integrity",
-      "url": "https://redcanary.com/blog/security-operations/saas-session-integrity/",
-      "date": "2026-02-25",
-      "summary": "Modern attackers are no longer trying to batter down your front door to your SaaS applications; they are simply waiting for you to unlock it, and then walking right in behind you"
     }
   ]
 }

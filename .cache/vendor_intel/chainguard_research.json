@@ -1,6 +1,60 @@
 {
-  "cached_at": "2026-04-03T04:22:55.899894+00:00",
+  "cached_at": "2026-04-16T03:47:49.113618+00:00",
   "entries": [
+    {
+      "title": "Docker Hodgepodge Images",
+      "url": "https://www.chainguard.dev/unchained/docker-hodgepodge-images",
+      "date": "2026-04-15",
+      "summary": "Docker ships their own Linux distro, they just pretend not to. Learn how misidentification and VEX usage can mislead scanners and impact supply chain security."
+    },
+    {
+      "title": "2026: The year of AI-assisted attacks",
+      "url": "https://www.chainguard.dev/unchained/2026-the-year-of-ai-assisted-attacks",
+      "date": "2026-04-14",
+      "summary": "AI is lowering the barrier to cybercrime. Learn why attacks are rising fast, and how eliminating entire classes of supply chain risk is the only path forward."
+    },
+    {
+      "title": "Is Grype a single point of failure for Chainguard\u2019s CVE detection?",
+      "url": "https://www.chainguard.dev/unchained/is-grype-a-single-point-of-failure-for-chainguards-cve-detection",
+      "date": "2026-04-10",
+      "summary": "Is Grype a single point of failure? Learn how Chainguard uses layered defenses, source builds, and multiple data sources to ensure trusted CVE detection."
+    },
+    {
+      "title": "AI is finding vulnerabilities faster than anyone can patch them. Now what?",
+      "url": "https://www.chainguard.dev/unchained/ai-is-finding-vulnerabilities-faster-than-anyone-can-patch-them-now-what",
+      "date": "2026-04-10",
+      "summary": "Project Glasswing and Claude Mythos Preview reveal a surge in zero-days. Learn why reactive patching fails and how secure-by-default supply chains keep you safe."
+    },
+    {
+      "title": "SecDB is the past, OSV is the future",
+      "url": "https://www.chainguard.dev/unchained/secdb-is-the-past-osv-is-the-future",
+      "date": "2026-04-09",
+      "summary": "Chainguard is deprecating SecDB in favor of OSV, delivering more accurate, granular vulnerability data and better visibility for modern software supply chains."
+    },
+    {
+      "title": "Open source died in March. It just doesn't know it yet.",
+      "url": "https://www.chainguard.dev/unchained/open-source-died-in-march-it-just-doesnt-know-it-yet",
+      "date": "2026-04-09",
+      "summary": "Five supply chain attacks in 12 days exposed a broken trust model. Learn why scanning and hardening fail, and why trusting the source is the only fix."
+    },
+    {
+      "title": "Chainguard Libraries is now free until June 30, 2026 \u2014 no commitment required",
+      "url": "https://www.chainguard.dev/unchained/chainguard-libraries-is-now-free-until-june-30-2026-no-commitment-required",
+      "date": "2026-04-09",
+      "summary": "Open source attacks are rising. Chainguard Libraries rebuilds packages from verified source to block malware\u2014now free until June 30, 2026."
+    },
+    {
+      "title": "Ship and patch doesn't cut it in the AI era",
+      "url": "https://www.chainguard.dev/unchained/ship-and-patch-doesnt-cut-it-in-the-ai-era",
+      "date": "2026-04-08",
+      "summary": "AI is accelerating code and attacks. Learn why patching alone can\u2019t keep up, and why securing the software supply chain starts with trusted inputs."
+    },
+    {
+      "title": "Attacks rewritten: Where malware enters the build",
+      "url": "https://www.chainguard.dev/unchained/attacks-rewritten-where-malware-enters-the-build",
+      "date": "2026-04-07",
+      "summary": "Modern supply chain attacks target CI, dev machines, and dependencies. Learn how building from source helps prevent malware and reduce risk."
+    },
     {
       "title": "Removing supply chain friction: How PeopleTec improved developer productivity with Chainguard",
       "url": "https://www.chainguard.dev/unchained/removing-supply-chain-friction-how-peopletec-improved-developer-productivity-with-chainguard",
@@ -56,6 +110,24 @@
       "summary": "At Chainguard Assemble 2026, Outsystems shared how it transformed its release process through platform engineering."
     },
     {
+      "title": "Introducing Chainguard Commercial Builds: Secure-by-default containers for commercial software",
+      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-commercial-builds",
+      "date": "2026-03-17",
+      "summary": "Chainguard Commercial Builds is a new partnership program with commercial and open source software providers to package software using the Chainguard Factory."
+    },
+    {
+      "title": "Introducing Chainguard OS Packages: Secure ingredients for custom container builds",
+      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-os-packages",
+      "date": "2026-03-17",
+      "summary": "Chainguard OS Packages are enterprise-grade, zero-CVE packages and base images built and continuously maintained in the Chainguard Factory."
+    },
+    {
+      "title": "Introducing Chainguard Repository: A unified experience for secure-by-default open source artifacts",
+      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-repository",
+      "date": "2026-03-17",
+      "summary": "Chainguard Repository is a single, Chainguard-managed experience for pulling secure-by-default artifacts with built-in, configurable policy enforcement."
+    },
+    {
       "title": "Everything we announced at Chainguard Assemble 2026",
       "url": "https://www.chainguard.dev/unchained/everything-we-announced-at-chainguard-assemble-2026",
       "date": "2026-03-17",
@@ -68,22 +140,10 @@
       "summary": "The Guardener is an AI-native agent that accelerates engineering teams\u2019 adoption of trusted open source artifacts across software development and deployment."
     },
     {
-      "title": "Introducing Chainguard Repository: A unified experience for secure-by-default open source artifacts",
-      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-repository",
+      "title": "Introducing Chainguard Catalog Starter: Your choice of five free trusted container images from the best catalog",
+      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-catalog-starter",
       "date": "2026-03-17",
-      "summary": "Chainguard Repository is a single, Chainguard-managed experience for pulling secure-by-default artifacts with built-in, configurable policy enforcement."
-    },
-    {
-      "title": "Introducing Chainguard Commercial Builds: Secure-by-default containers for commercial software",
-      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-commercial-builds",
-      "date": "2026-03-17",
-      "summary": "Chainguard Commercial Builds is a new partnership program with commercial and open source software providers to package software using the Chainguard Factory."
-    },
-    {
-      "title": "Introducing Chainguard Actions: CI/CD workflows you can trust",
-      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-actions",
-      "date": "2026-03-17",
-      "summary": "Chainguard Actions is a securely rebuilt catalog of GitHub Actions and similar CI/CD workflows built and continuously maintained in the Chainguard Factory."
+      "summary": "Chainguard Catalog Starter is a new free offering that gives developers instant access to trusted container images from the industry\u2019s most comprehensive catalog"
     },
     {
       "title": "Introducing Chainguard Agent Skills: Because your AI agent shouldn't trust strangers",
@@ -92,16 +152,10 @@
       "summary": "Chainguard Agent Skills is a continuously maintained catalog of hardened AI agent skills."
     },
     {
-      "title": "Introducing Chainguard OS Packages: Secure ingredients for custom container builds",
-      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-os-packages",
+      "title": "Introducing Chainguard Actions: CI/CD workflows you can trust",
+      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-actions",
       "date": "2026-03-17",
-      "summary": "Chainguard OS Packages are enterprise-grade, zero-CVE packages and base images built and continuously maintained in the Chainguard Factory."
-    },
-    {
-      "title": "Introducing Chainguard Catalog Starter: Your choice of five free trusted container images from the best catalog",
-      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-catalog-starter",
-      "date": "2026-03-17",
-      "summary": "Chainguard Catalog Starter is a new free offering that gives developers instant access to trusted container images from the industry\u2019s most comprehensive catalog"
+      "summary": "Chainguard Actions is a securely rebuilt catalog of GitHub Actions and similar CI/CD workflows built and continuously maintained in the Chainguard Factory."
     },
     {
       "title": "Owning the boundary: Introducing the Chainguard FIPS Provider for OpenSSL 3.4.0",
@@ -152,16 +206,16 @@
       "summary": "The Chainguard Factory and DriftlessAF automate CVE detection and patching, delivering fixes in hours and maintaining industry-leading remediation SLAs."
     },
     {
-      "title": "Be my base image: Introducing Linky\u2019s Matchmaker",
-      "url": "https://www.chainguard.dev/unchained/be-my-base-image-introducing-linkys-matchmaker",
-      "date": "2026-02-12",
-      "summary": "Linky\u2019s Matchmaker converts your Dockerfile to Chainguard Containers, recommending secure, minimal base images and generating an updated file in minutes"
-    },
-    {
       "title": "Introducing Fulfillment Dashboard: New artifact requests are now self-serve",
       "url": "https://www.chainguard.dev/unchained/introducing-fulfillment-dashboard-new-artifact-requests-are-now-self-serve",
       "date": "2026-02-12",
       "summary": "Fulfillment Dashboard gives Chainguard customers real-time visibility, tracking, and community voting for new secure container image requests."
+    },
+    {
+      "title": "Be my base image: Introducing Linky\u2019s Matchmaker",
+      "url": "https://www.chainguard.dev/unchained/be-my-base-image-introducing-linkys-matchmaker",
+      "date": "2026-02-12",
+      "summary": "Linky\u2019s Matchmaker converts your Dockerfile to Chainguard Containers, recommending secure, minimal base images and generating an updated file in minutes"
     },
     {
       "title": "How I learned to stop worrying and love the latest tag",
@@ -188,16 +242,16 @@
       "summary": "Chainguard secures AI adoption with minimal, zero-CVE containers and source-built libraries that prevent supply chain malware while keeping developers fast."
     },
     {
-      "title": "DriftlessAF: Introducing Chainguard Factory 2.0",
-      "url": "https://www.chainguard.dev/unchained/driftlessaf-introducing-chainguard-factory-2-0",
-      "date": "2026-01-29",
-      "summary": "Chainguard Factory 2.0, powered by DriftlessAF, brings AI-driven, self-healing reconciliation to build and maintain 2,000+ zero-CVE images \u2014 now open sourced."
-    },
-    {
       "title": "Super SBOMs: See exactly what's inside",
       "url": "https://www.chainguard.dev/unchained/super-sboms-see-exactly-whats-inside",
       "date": "2026-01-29",
       "summary": "Chainguard Containers ship richer SBOMs with binary-level library details plus new CycloneDX support, making CVE impact and compliance tracing fast and clear."
+    },
+    {
+      "title": "DriftlessAF: Introducing Chainguard Factory 2.0",
+      "url": "https://www.chainguard.dev/unchained/driftlessaf-introducing-chainguard-factory-2-0",
+      "date": "2026-01-29",
+      "summary": "Chainguard Factory 2.0, powered by DriftlessAF, brings AI-driven, self-healing reconciliation to build and maintain 2,000+ zero-CVE images \u2014 now open sourced."
     },
     {
       "title": "",
@@ -218,16 +272,16 @@
       "summary": "Chainguard and JFrog secure the software supply chain with secure-by-default container images, policy-based curation, and continuous compliance."
     },
     {
-      "title": "Guiding the future of Chainguard OS: Announcing the FUD Committee",
-      "url": "https://www.chainguard.dev/unchained/guiding-the-future-of-chainguard-os-announcing-the-fud-committee",
-      "date": "2026-01-22",
-      "summary": "The Chainguard OS Fully User Directed Committee is a customer-led steering committee for Chainguard OS. Learn how you can be a member."
-    },
-    {
       "title": "This Shit is Hard: Building hardened PyTorch wheels with upstream parity",
       "url": "https://www.chainguard.dev/unchained/this-shit-is-hard-building-hardened-pytorch-wheels-with-upstream-parity",
       "date": "2026-01-22",
       "summary": "Learn how Chainguard tackled dependency resolution, toolchain challenges, and manylinux compatibility to deliver hardened PyTorch wheels."
+    },
+    {
+      "title": "Guiding the future of Chainguard OS: Announcing the FUD Committee",
+      "url": "https://www.chainguard.dev/unchained/guiding-the-future-of-chainguard-os-announcing-the-fud-committee",
+      "date": "2026-01-22",
+      "summary": "The Chainguard OS Fully User Directed Committee is a customer-led steering committee for Chainguard OS. Learn how you can be a member."
     },
     {
       "title": "Introducing \u201cHow We Lead\u201d: Chainguard\u2019s approach to developing the best managers",
@@ -236,10 +290,10 @@
       "summary": "Chainguard\u2019s \u201cHow We Lead\u201d program builds strong, intentional managers through shared principles, practical practice, and early investment to drive growth."
     },
     {
-      "title": "Gastown, and where software is going",
-      "url": "https://www.chainguard.dev/unchained/gastown-and-where-software-is-going",
+      "title": "Applying SOC 2 with Chainguard: A practical guide for DevOps and engineering leaders",
+      "url": "https://www.chainguard.dev/unchained/applying-soc-2-with-chainguard-a-practical-guide-for-devops-and-engineering-leaders",
       "date": "2026-01-20",
-      "summary": "Gastown hints at the future of software: agent-driven workflows where CI, guardrails, and shared truth matter more than writing code faster."
+      "summary": "Learn how Chainguard helps DevOps teams meet SOC 2 requirements with secure-by-default containers, automated SBOMs, and continuous, audit-ready evidence."
     },
     {
       "title": "Understanding NYDFS and why it matters",
@@ -248,16 +302,22 @@
       "summary": "Learn how Chainguard helps financial institutions meet NYDFS 500 with zero-CVE open source, signed SBOMs, auditable evidence, and vulnerability remediation."
     },
     {
-      "title": "Applying SOC 2 with Chainguard: A practical guide for DevOps and engineering leaders",
-      "url": "https://www.chainguard.dev/unchained/applying-soc-2-with-chainguard-a-practical-guide-for-devops-and-engineering-leaders",
+      "title": "Gastown, and where software is going",
+      "url": "https://www.chainguard.dev/unchained/gastown-and-where-software-is-going",
       "date": "2026-01-20",
-      "summary": "Learn how Chainguard helps DevOps teams meet SOC 2 requirements with secure-by-default containers, automated SBOMs, and continuous, audit-ready evidence."
+      "summary": "Gastown hints at the future of software: agent-driven workflows where CI, guardrails, and shared truth matter more than writing code faster."
     },
     {
       "title": "Running Renovate as a GitHub Action (and NO PAT!)",
       "url": "https://www.chainguard.dev/unchained/running-renovate-as-a-github-action",
       "date": "2026-01-19",
       "summary": "Discover how you can run Renovate as a GitHub Action without needing a GitHub Personal Access Token by using Octo STS."
+    },
+    {
+      "title": "Fork yeah: We\u2019re adding ten new open source projects to EmeritOSS",
+      "url": "https://www.chainguard.dev/unchained/fork-yeah-were-adding-ten-new-open-source-projects-to-emeritoss",
+      "date": "2026-01-15",
+      "summary": "We added 10 open source projects to EmeritOSS\u2014including MinIO, Prometheus exporters, and PgCat\u2014to provide long-term, stability-focused maintenance and security."
     },
     {
       "title": "Well, that escalated quickly: Zero CVEs, lots of vendors",
@@ -270,12 +330,6 @@
       "url": "https://www.chainguard.dev/unchained/introducing-automatic-short-lived-credentials-for-chainguard-libraries-for-python",
       "date": "2026-01-15",
       "summary": "New integrated authentication for Python Libraries with a keyring: use short-lived credentials for pip installs to stay secure without slowing developers down."
-    },
-    {
-      "title": "Fork yeah: We\u2019re adding ten new open source projects to EmeritOSS",
-      "url": "https://www.chainguard.dev/unchained/fork-yeah-were-adding-ten-new-open-source-projects-to-emeritoss",
-      "date": "2026-01-15",
-      "summary": "We added 10 open source projects to EmeritOSS\u2014including MinIO, Prometheus exporters, and PgCat\u2014to provide long-term, stability-focused maintenance and security."
     },
     {
       "title": "Building digital products for the Cyber Resilience Act",
@@ -356,16 +410,16 @@
       "summary": ""
     },
     {
-      "title": "Meet Chainguard MCPs: Bringing supply chain security to the AI era",
-      "url": "https://www.chainguard.dev/unchained/meet-chainguard-mcps-bringing-supply-chain-security-to-the-ai-era",
-      "date": "2025-12-09",
-      "summary": "Chainguard now offers hardened, zero-CVE MCP container images, starting with mcp-grafana, with more on the way."
-    },
-    {
       "title": "What\u2019s new in December 2025: exploring new Chainguard product features",
       "url": "https://www.chainguard.dev/unchained/whats-new-in-december-2025",
       "date": "2025-12-09",
       "summary": "Explore all the latest features and releases for Chainguard Containers and Chainguard Libraries."
+    },
+    {
+      "title": "Meet Chainguard MCPs: Bringing supply chain security to the AI era",
+      "url": "https://www.chainguard.dev/unchained/meet-chainguard-mcps-bringing-supply-chain-security-to-the-ai-era",
+      "date": "2025-12-09",
+      "summary": "Chainguard now offers hardened, zero-CVE MCP container images, starting with mcp-grafana, with more on the way."
     },
     {
       "title": "Making time: Space to think, build, and create (or, This Shit is Fun!)",
@@ -381,15 +435,15 @@
     },
     {
       "title": "",
-      "url": "https://www.chainguard.dev/unchained/optimiser-sa-surface-dattaque-pourquoi-la-methode-compte",
-      "date": "2025-12-05",
-      "summary": "En cybers\u00e9curit\u00e9, l\u2019expression \u00ab r\u00e9duire sa surface d\u2019attaque \u00bb est r\u00e9p\u00e9t\u00e9e si souvent qu\u2019elle risque de perdre son sens."
-    },
-    {
-      "title": "",
       "url": "https://www.chainguard.dev/unchained/scanner-cest-bien-corriger-cest-mieux",
       "date": "2025-12-05",
       "summary": ""
+    },
+    {
+      "title": "",
+      "url": "https://www.chainguard.dev/unchained/optimiser-sa-surface-dattaque-pourquoi-la-methode-compte",
+      "date": "2025-12-05",
+      "summary": "En cybers\u00e9curit\u00e9, l\u2019expression \u00ab r\u00e9duire sa surface d\u2019attaque \u00bb est r\u00e9p\u00e9t\u00e9e si souvent qu\u2019elle risque de perdre son sens."
     },
     {
       "title": "Anchore Enterprise now validates Chainguard Libraries: prevent 98% of Python malware and eliminate high-severity CVE toil",
@@ -566,16 +620,16 @@
       "summary": "Chainguard has been recognized by the Forbes Cloud 100, Fortune Best Workplaces in Technology, and received a Great Place to Work certification."
     },
     {
-      "title": "Registries and the npm Breach: Securing the Weakest Link in the Software Supply Chain",
-      "url": "https://www.chainguard.dev/unchained/registries-and-the-npm-breach-securing-the-weakest-link-in-the-software-supply-chain",
-      "date": "2025-09-10",
-      "summary": "Chainguard Libraries provides a different and proven defense against supply chain attacks like the recent npm breach. See why preventing malware is important."
-    },
-    {
       "title": "The Chainguard Slack Community is Here!",
       "url": "https://www.chainguard.dev/unchained/the-chainguard-slack-community-is-here",
       "date": "2025-09-10",
       "summary": "Chainguard has created a Slack community to foster a direct connection with the team, engage with your peers, and get the latest updates on Chainguard news."
+    },
+    {
+      "title": "Registries and the npm Breach: Securing the Weakest Link in the Software Supply Chain",
+      "url": "https://www.chainguard.dev/unchained/registries-and-the-npm-breach-securing-the-weakest-link-in-the-software-supply-chain",
+      "date": "2025-09-10",
+      "summary": "Chainguard Libraries provides a different and proven defense against supply chain attacks like the recent npm breach. See why preventing malware is important."
     },
     {
       "title": "The Industry\u2019s Fastest-Growing Secure Container Catalog",
@@ -764,16 +818,16 @@
       "summary": "Chainguard's Trusted Container Images and Open Source Artifacts Buyer's Guide helps you improve supply chain security and reduce costly engineering toil."
     },
     {
-      "title": "Mitigating malware in the python ecosystem with Chainguard Libraries",
-      "url": "https://www.chainguard.dev/unchained/mitigating-malware-in-the-python-ecosystem-with-chainguard-libraries",
-      "date": "2025-06-10",
-      "summary": "Chainguard recently found that 98% of malicious Python libraries from the Backstabber's Knife Collection could be avoided by using Chainguard Libraries."
-    },
-    {
       "title": "One Year Later: Signing CISA\u2019s Secure by Design Pledge",
       "url": "https://www.chainguard.dev/unchained/one-year-update-to-signing-cisas-secure-by-design-pledge",
       "date": "2025-06-10",
       "summary": "Chainguard signed CISA's Secure by Design pledge in 2024. One year later, we look at progress we've made in key areas like CVE remediation and disclosures."
+    },
+    {
+      "title": "Mitigating malware in the python ecosystem with Chainguard Libraries",
+      "url": "https://www.chainguard.dev/unchained/mitigating-malware-in-the-python-ecosystem-with-chainguard-libraries",
+      "date": "2025-06-10",
+      "summary": "Chainguard recently found that 98% of malicious Python libraries from the Backstabber's Knife Collection could be avoided by using Chainguard Libraries."
     },
     {
       "title": "No CVEs, No Surprises: Chainguard and the UK Software Security Code of Practice",
@@ -896,16 +950,16 @@
       "summary": "Chainguard has announced Container Hardening Priorities (CHPs), a new framework to assess the security of container images. Learn how it works."
     },
     {
-      "title": "Ingress-nginx-controller: Nightmare on CVE Street",
-      "url": "https://www.chainguard.dev/unchained/ingress-nginx-controller-nightmare-on-cve-street",
-      "date": "2025-04-02",
-      "summary": "Chainguard was able to quickly respond to and handle the recent ingress-nginx-controller CVEs that were discovered by Wiz. See the actions we have taken."
-    },
-    {
       "title": "What FedRAMP 20x Means for You",
       "url": "https://www.chainguard.dev/unchained/what-fedramp-20x-means-for-you",
       "date": "2025-04-02",
       "summary": "FedRAMP 20x is a new initiative designed to automate and simplify the FedRAMP process. Get the rundown on what is changing, and how Chainguard can help."
+    },
+    {
+      "title": "Ingress-nginx-controller: Nightmare on CVE Street",
+      "url": "https://www.chainguard.dev/unchained/ingress-nginx-controller-nightmare-on-cve-street",
+      "date": "2025-04-02",
+      "summary": "Chainguard was able to quickly respond to and handle the recent ingress-nginx-controller CVEs that were discovered by Wiz. See the actions we have taken."
     },
     {
       "title": "Check out Chainguard at KubeCon EU in London on April 1-4",
@@ -920,10 +974,10 @@
       "summary": "Chainguard announced Chainguard Libraries, Chainguard VMs, and a new partnership with Datadog at Assemble, our inaugural event for security and developer pros."
     },
     {
-      "title": "Announcing Chainguard Libraries: Guarded Java Language Dependencies Built from Source",
-      "url": "https://www.chainguard.dev/unchained/announcing-chainguard-libraries-guarded-java-language-dependencies-built-from-source",
+      "title": "Chainguard and Datadog\u2019s New Partnership: Actionable Insights and Observability Come Together",
+      "url": "https://www.chainguard.dev/unchained/chainguard-and-datadogs-new-partnership-actionable-insights-and-observability-come-together",
       "date": "2025-03-25",
-      "summary": "Chainguard Libraries is a catalog of guarded Java dependencies built securely from source in Chainguard\u2019s SLSA-certified infrastructure."
+      "summary": "Chainguard and Datadog announced a new partnership at Chainguard Assemble 2025. Learn more about what this partnership enables for customers."
     },
     {
       "title": "Announcing Chainguard VMs: Minimal, Zero-CVE Container Host Images",
@@ -932,10 +986,10 @@
       "summary": "Chainguard VMs is a catalog of guarded, minimal, zero-CVE container host images that is now in Early Access."
     },
     {
-      "title": "Chainguard and Datadog\u2019s New Partnership: Actionable Insights and Observability Come Together",
-      "url": "https://www.chainguard.dev/unchained/chainguard-and-datadogs-new-partnership-actionable-insights-and-observability-come-together",
+      "title": "Announcing Chainguard Libraries: Guarded Java Language Dependencies Built from Source",
+      "url": "https://www.chainguard.dev/unchained/announcing-chainguard-libraries-guarded-java-language-dependencies-built-from-source",
       "date": "2025-03-25",
-      "summary": "Chainguard and Datadog announced a new partnership at Chainguard Assemble 2025. Learn more about what this partnership enables for customers."
+      "summary": "Chainguard Libraries is a catalog of guarded Java dependencies built securely from source in Chainguard\u2019s SLSA-certified infrastructure."
     },
     {
       "title": "The Distroless Revolution Will Be Chainguarded",
@@ -1430,16 +1484,16 @@
       "summary": "Dive into the world of STIG hardening for container images. Explore expert insights, practical tips, and Chainguard solutions to fortify your container security."
     },
     {
-      "title": "Celebrating 10 years of cloud native with 10 things Chainguardians love about Kubernetes",
-      "url": "https://www.chainguard.dev/unchained/celebrating-10-years-of-cloud-native-with-10-things-chainguardians-love-about-kubernetes",
-      "date": "2024-06-06",
-      "summary": "Join Chainguard in celebrating 10 years of Kubernetes! Discover 10 things we love about the transformative technology and how it shaped cloud-native development."
-    },
-    {
       "title": "Happy birthday Kubernetes, from K8s Co-Creator and Chainguard Co-Founder Ville Aikas",
       "url": "https://www.chainguard.dev/unchained/happy-birthday-kubernetes-from-k8s-co-creator-and-chainguard-co-founder-ville-aikas",
       "date": "2024-06-06",
       "summary": "Chainguard co-founder and Kubernetes co-creator Ville Aikas reflects on 10 years of innovation and shares his birthday wishes for the future of cloud-native."
+    },
+    {
+      "title": "Celebrating 10 years of cloud native with 10 things Chainguardians love about Kubernetes",
+      "url": "https://www.chainguard.dev/unchained/celebrating-10-years-of-cloud-native-with-10-things-chainguardians-love-about-kubernetes",
+      "date": "2024-06-06",
+      "summary": "Join Chainguard in celebrating 10 years of Kubernetes! Discover 10 things we love about the transformative technology and how it shaped cloud-native development."
     },
     {
       "title": "Migrating a Node.js application to Chainguard Images",
@@ -1508,16 +1562,16 @@
       "summary": "Strengthen your software supply chain security with audited least privilege. Learn how Chainguard's approach minimizes risk and enhances trust."
     },
     {
-      "title": "Chainguard Images April 2024: Secure, reliable, feature-rich",
-      "url": "https://www.chainguard.dev/unchained/chainguard-images-april-2024-secure-reliable-feature-rich",
-      "date": "2024-05-09",
-      "summary": "Explore the latest features and security enhancements in Chainguard Images (April 2024 release). Strengthen your software supply chain."
-    },
-    {
       "title": "Top 10 things devs want their CISO to know",
       "url": "https://www.chainguard.dev/unchained/top-10-things-devs-want-their-ciso-to-know",
       "date": "2024-05-09",
       "summary": "Bridge the dev-security gap! Learn essential insights for fostering a collaborative, secure development environment."
+    },
+    {
+      "title": "Chainguard Images April 2024: Secure, reliable, feature-rich",
+      "url": "https://www.chainguard.dev/unchained/chainguard-images-april-2024-secure-reliable-feature-rich",
+      "date": "2024-05-09",
+      "summary": "Explore the latest features and security enhancements in Chainguard Images (April 2024 release). Strengthen your software supply chain."
     },
     {
       "title": "Signing CISA\u2019s Secure by Design pledge",
@@ -1718,16 +1772,16 @@
       "summary": "Chainguard Labs surveyed nine companies to see how many hours they spent on vulnerability management each year. Check out this blog to see the results."
     },
     {
-      "title": "How Chainguard protects against \u201cLeaky Vessel\u201d container escape vulnerabilities",
-      "url": "https://www.chainguard.dev/unchained/how-chainguard-protects-against-leaky-vessel-container-escape-vulnerabilities",
-      "date": "2024-02-01",
-      "summary": "Chainguard's response to 'Leaky Vessel' vulnerabilities: safeguarding container images with innovative, secure-by-default build processes."
-    },
-    {
       "title": "Chainguard\u2019s response to CVE-2023-6246 in glibc",
       "url": "https://www.chainguard.dev/unchained/chainguards-response-to-cve-2023-6246-in-glibc",
       "date": "2024-02-01",
       "summary": "Chainguard swiftly addresses CVE-2023-6246 in glibc, reinforcing container image security with rapid patch deployment and updated advisories."
+    },
+    {
+      "title": "How Chainguard protects against \u201cLeaky Vessel\u201d container escape vulnerabilities",
+      "url": "https://www.chainguard.dev/unchained/how-chainguard-protects-against-leaky-vessel-container-escape-vulnerabilities",
+      "date": "2024-02-01",
+      "summary": "Chainguard's response to 'Leaky Vessel' vulnerabilities: safeguarding container images with innovative, secure-by-default build processes."
     },
     {
       "title": "Chainguard Terraform Provider is now available",
@@ -1928,16 +1982,22 @@
       "summary": "Unveil 'junk CVEs' with Chainguard Images, your ally against disguised vulnerabilities, ensuring a secure codebase this Halloween."
     },
     {
+      "title": "Introducing Chainguard Images for Node.js LTS 20, Python 3.12 and OpenJDK/JRE 21",
+      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-images-for-node-js-lts-20-python-3-12-and-openjdk-jre-21",
+      "date": "2023-10-11",
+      "summary": "Get the latest versions for Java 21 (OpenJDK and JRE), Python 3.12, and Node.js 20 complete with minimal CVEs, SBOMs, signatures, and hardened architecture."
+    },
+    {
       "title": "Chainguard\u2019s response to CVE-2023-38545 and CVE-2023-38546 in curl",
       "url": "https://www.chainguard.dev/unchained/chainguards-response-to-cve-2023-38545-and-cve-2023-38546-in-curl",
       "date": "2023-10-11",
       "summary": "Learn about Chainguard's proactive measures against CVE-2023-38545 and CVE-2023-38546 in curl for enhanced security."
     },
     {
-      "title": "Introducing Chainguard Images for Node.js LTS 20, Python 3.12 and OpenJDK/JRE 21",
-      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-images-for-node-js-lts-20-python-3-12-and-openjdk-jre-21",
-      "date": "2023-10-11",
-      "summary": "Get the latest versions for Java 21 (OpenJDK and JRE), Python 3.12, and Node.js 20 complete with minimal CVEs, SBOMs, signatures, and hardened architecture."
+      "title": "Conquering your Build Horizon",
+      "url": "https://www.chainguard.dev/unchained/conquering-your-build-horizon",
+      "date": "2023-10-10",
+      "summary": "\"Build Horizon\" is a practice that imposes a maximum age on build artifacts. Learn more about how it works and see an example in action!"
     },
     {
       "title": "VEXed? Then Grype about it: Chainguard and Anchore announce Grype supports OpenVEX",
@@ -1950,12 +2010,6 @@
       "url": "https://www.chainguard.dev/unchained/the-haunting-of-cve-2022-3474-a-ghostly-tale-of-package-detection-failure",
       "date": "2023-10-10",
       "summary": "Explore the risks of scanner false negatives, the pitfalls of missing the Bazel package, and how Chainguard Images ensure accurate vulnerability detection."
-    },
-    {
-      "title": "Conquering your Build Horizon",
-      "url": "https://www.chainguard.dev/unchained/conquering-your-build-horizon",
-      "date": "2023-10-10",
-      "summary": "\"Build Horizon\" is a practice that imposes a maximum age on build artifacts. Learn more about how it works and see an example in action!"
     },
     {
       "title": "Why Chainguard uses Grype as its first line of defense for CVEs",
@@ -2318,16 +2372,16 @@
       "summary": "npm launches Sigstore beta for end-to-end package signing, improving developer trust and security."
     },
     {
-      "title": "Chainguard open sources new policy catalog for Sigstore policy-controller",
-      "url": "https://www.chainguard.dev/unchained/chainguard-open-sources-new-policy-catalog-for-sigstore-policy-controller",
-      "date": "2023-04-18",
-      "summary": "To help unlock benefits of the Sigstore policy-controller, Chainguard open sources a policy catalog that can be adopted to improve your supply chain security."
-    },
-    {
       "title": "Chainguard Images now available to government agencies on U.S. Air Force Platform One",
       "url": "https://www.chainguard.dev/unchained/chainguard-images-now-available-to-government-agencies-on-u-s-air-force-platform-one",
       "date": "2023-04-18",
       "summary": "Wolfi has been accepted into Platform One, U.S. Air Force\u2019s DevSecOps platform. Chainguard Images are now available on Platform One via container repo Iron Bank"
+    },
+    {
+      "title": "Chainguard open sources new policy catalog for Sigstore policy-controller",
+      "url": "https://www.chainguard.dev/unchained/chainguard-open-sources-new-policy-catalog-for-sigstore-policy-controller",
+      "date": "2023-04-18",
+      "summary": "To help unlock benefits of the Sigstore policy-controller, Chainguard open sources a policy catalog that can be adopted to improve your supply chain security."
     },
     {
       "title": "Chainguard Image now available for prometheus",
@@ -2618,16 +2672,16 @@
       "summary": "Get Adrian Mouat's takeaways from his presentation at CloudNativeSecurityCon, including ideas for how the industry can build secure container images."
     },
     {
-      "title": "Introducing Chainguard Labs: An update on an open, living software supply chain compromises dataset and new SBOM research efforts",
-      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-labs-an-update-on-an-open-living-software-supply-chain-compromises-dataset-and-new-sbom-research-efforts",
-      "date": "2022-12-21",
-      "summary": "Learn about Chainguard Labs, Chainguard's research division, with a focus on software development and vulnerability research."
-    },
-    {
       "title": "Are SBOMs any good? Preliminary measurement of the quality of open source project SBOMs",
       "url": "https://www.chainguard.dev/unchained/are-sboms-any-good-preliminary-measurement-of-the-quality-of-open-source-project-sboms",
       "date": "2022-12-21",
       "summary": "Software bill of materials (SBOMs) are important tools to make software supply chain security easier? But are they effective? We did some research to find out."
+    },
+    {
+      "title": "Introducing Chainguard Labs: An update on an open, living software supply chain compromises dataset and new SBOM research efforts",
+      "url": "https://www.chainguard.dev/unchained/introducing-chainguard-labs-an-update-on-an-open-living-software-supply-chain-compromises-dataset-and-new-sbom-research-efforts",
+      "date": "2022-12-21",
+      "summary": "Learn about Chainguard Labs, Chainguard's research division, with a focus on software development and vulnerability research."
     },
     {
       "title": "Our 2023 technology trends & predictions for software security",
@@ -2690,16 +2744,16 @@
       "summary": "Discover how Chainguard mitigated OpenSSL vulnerabilities to protect itself and its customers' software supply chains."
     },
     {
-      "title": "Life of a Sigstore signature",
-      "url": "https://www.chainguard.dev/unchained/life-of-a-sigstore-signature",
-      "date": "2022-10-25",
-      "summary": "Curious about what Sigstore is, and what its components are? In this blog, we dive in to Fulcio, OIDC, Rekor, and more!"
-    },
-    {
       "title": "Sigstore is now generally available",
       "url": "https://www.chainguard.dev/unchained/sigstore-is-now-generally-available",
       "date": "2022-10-25",
       "summary": "Sigstore has announced its general availability! See how you can try it and what it can do for your software supply chain."
+    },
+    {
+      "title": "Life of a Sigstore signature",
+      "url": "https://www.chainguard.dev/unchained/life-of-a-sigstore-signature",
+      "date": "2022-10-25",
+      "summary": "Curious about what Sigstore is, and what its components are? In this blog, we dive in to Fulcio, OIDC, Rekor, and more!"
     },
     {
       "title": "Chainguard at KubeCon North America: October 24-28!",
@@ -2750,16 +2804,16 @@
       "summary": "SPDX 2.3 introduces new features and enhancements for improved software supply chain transparency and security. Stay ahead with the latest SBOM standard."
     },
     {
-      "title": "Learn to build software that is secure by default with Chainguard Academy",
-      "url": "https://www.chainguard.dev/unchained/learn-to-build-software-that-is-secure-by-default-with-chainguard-academy",
-      "date": "2022-09-22",
-      "summary": "Software serves as the foundation of the digital technology we all depend on, yet it\u2019s being exploited more than ever before. See how Chainguard Academy helps."
-    },
-    {
       "title": "Introducing Wolfi: The first Linux (un)distro designed for securing the software supply chain",
       "url": "https://www.chainguard.dev/unchained/introducing-wolfi-the-first-linux-un-distro-designed-for-securing-the-software-supply-chain",
       "date": "2022-09-22",
       "summary": "Discover Wolfi, Chainguard's Linux distro designed to make building secure, vulnerability-free software easier for all."
+    },
+    {
+      "title": "Learn to build software that is secure by default with Chainguard Academy",
+      "url": "https://www.chainguard.dev/unchained/learn-to-build-software-that-is-secure-by-default-with-chainguard-academy",
+      "date": "2022-09-22",
+      "summary": "Software serves as the foundation of the digital technology we all depend on, yet it\u2019s being exploited more than ever before. See how Chainguard Academy helps."
     },
     {
       "title": "Top 5 Takeaways on the NSA / CISA / ODNI Developer Guidelines for Securing the Software Supply Chain",
@@ -2894,16 +2948,16 @@
       "summary": "Comprehensive guide to software supply chain security with curated resources and insights, covering build systems, open-source dependencies, and more."
     },
     {
-      "title": "A call to standardize on digital signatures for software security with Sigstore",
-      "url": "https://www.chainguard.dev/unchained/a-call-to-standardize-on-digital-signatures-for-software-security-with-sigstore",
-      "date": "2022-05-12",
-      "summary": "Chainguard calls for software industry standardization on Sigstore and government support, pledging resources to the OpenSSF's public infrastructure."
-    },
-    {
       "title": "Image sizes miss the point",
       "url": "https://www.chainguard.dev/unchained/image-sizes-miss-the-point",
       "date": "2022-05-12",
       "summary": "Small container image size doesn't guarantee security. Focus on minimizing underlying components for a truly secure software supply chain."
+    },
+    {
+      "title": "A call to standardize on digital signatures for software security with Sigstore",
+      "url": "https://www.chainguard.dev/unchained/a-call-to-standardize-on-digital-signatures-for-software-security-with-sigstore",
+      "date": "2022-05-12",
+      "summary": "Chainguard calls for software industry standardization on Sigstore and government support, pledging resources to the OpenSSF's public infrastructure."
     },
     {
       "title": "Not All SBOMs Are Created Equal",

@@ -1,65 +1,65 @@
 {
-  "cached_at": "2026-04-03T04:22:56.589140+00:00",
+  "cached_at": "2026-04-16T03:47:49.819813+00:00",
   "entries": [
     {
-      "title": "Critical Vulnerability in Claude Code Emerges Days After Source Leak",
-      "url": "https://www.securityweek.com/critical-vulnerability-in-claude-code-emerges-days-after-source-leak/",
-      "date": "2026-04-02",
-      "summary": "Within days of each other, Anthropic first leaked the source code to Claude Code, and then a critical vulnerability was found by Adversa AI. The post Critical Vulnerability in Claude Code Emerges Days After Source Leak appeared first on SecurityWeek ."
+      "title": "Sweden Blames Pro-Russian Group for Cyberattack Last Year on Its Energy Infrastructure",
+      "url": "https://www.securityweek.com/sweden-blames-pro-russian-group-for-cyberattack-last-year-on-its-energy-infrastructure/",
+      "date": "2026-04-15",
+      "summary": "In what was Sweden\u2019s first public mention of the attack, the country\u2019s minister for civil defense said it targeted a heating plant in western Sweden. The post Sweden Blames Pro-Russian Group for Cyberattack Last Year on Its Energy Infrastructure appeared first on SecurityWeek ."
     },
     {
-      "title": "Apple Rolls Out DarkSword Exploit Protection to More Devices",
-      "url": "https://www.securityweek.com/apple-rolls-out-darksword-exploit-protection-to-more-devices/",
-      "date": "2026-04-02",
-      "summary": "The DarkSword exploit kit has been used by both state-sponsored hackers and commercial spyware vendors. The post Apple Rolls Out DarkSword Exploit Protection to More Devices appeared first on SecurityWeek ."
+      "title": "Exploited Vulnerability Exposes Nginx Servers to Hacking",
+      "url": "https://www.securityweek.com/exploited-vulnerability-exposes-nginx-servers-to-hacking/",
+      "date": "2026-04-15",
+      "summary": "Hackers are exploiting CVE-2026-33032, a critical remote takeover vulnerability in the Nginx UI management tool. The post Exploited Vulnerability Exposes Nginx Servers to Hacking appeared first on SecurityWeek ."
     },
     {
-      "title": "Cybersecurity M&A Roundup: 38 Deals Announced in March 2026",
-      "url": "https://www.securityweek.com/cybersecurity-ma-roundup-38-deals-announced-in-march-2026/",
-      "date": "2026-04-02",
-      "summary": "Significant cybersecurity M&#038;A deals announced by Airbus, Cellebrite, Databricks, Quantum eMotion, Rapid7, and OpenAI. The post Cybersecurity M&#038;A Roundup: 38 Deals Announced in March 2026 appeared first on SecurityWeek ."
+      "title": "Capsule Security Emerges From Stealth With $7 Million in Funding",
+      "url": "https://www.securityweek.com/capsule-security-emerges-from-stealth-with-7-million-in-funding/",
+      "date": "2026-04-15",
+      "summary": "The Israeli startup aims to secure AI agents at runtime, continuously monitoring their behavior to prevent unsafe actions. The post Capsule Security Emerges From Stealth With $7 Million in Funding appeared first on SecurityWeek ."
     },
     {
-      "title": "Cisco Patches Critical and High-Severity Vulnerabilities",
-      "url": "https://www.securityweek.com/cisco-patches-critical-and-high-severity-vulnerabilities/",
-      "date": "2026-04-02",
-      "summary": "The bugs could lead to authentication bypass, remote code execution, information disclosure, and privilege escalation. The post Cisco Patches Critical and High-Severity Vulnerabilities appeared first on SecurityWeek ."
+      "title": "\u2018By Design\u2019 Flaw in MCP Could Enable Widespread AI Supply Chain Attacks",
+      "url": "https://www.securityweek.com/by-design-flaw-in-mcp-could-enable-widespread-ai-supply-chain-attacks/",
+      "date": "2026-04-15",
+      "summary": "Researchers warn that a flaw in Anthropic\u2019s Model Context Protocol allows unsanitized commands to execute silently, enabling full system compromise across widely used AI environments. The post \u2018By Design\u2019 Flaw in MCP Could Enable Widespread AI Supply Chain Attacks appeared first on SecurityWeek ."
     },
     {
-      "title": "250,000 Affected by Data Breach at Nacogdoches Memorial Hospital",
-      "url": "https://www.securityweek.com/250000-affected-by-data-breach-at-nacogdoches-memorial-hospital/",
-      "date": "2026-04-02",
-      "summary": "In January 2026, a threat actor hacked the hospital\u2019s internal network and stole personal and health information. The post 250,000 Affected by Data Breach at Nacogdoches Memorial Hospital appeared first on SecurityWeek ."
+      "title": "100 Chrome Extensions Steal User Data, Create Backdoor",
+      "url": "https://www.securityweek.com/100-chrome-extensions-steal-user-data-open-backdoor/",
+      "date": "2026-04-15",
+      "summary": "Published through five accounts, the extensions appear part of a coordinated campaign based on shared C&#038;C infrastructure. The post 100 Chrome Extensions Steal User Data, Create Backdoor appeared first on SecurityWeek ."
     },
     {
-      "title": "Mercor Hit by LiteLLM Supply Chain Attack",
-      "url": "https://www.securityweek.com/mercor-hit-by-litellm-supply-chain-attack/",
-      "date": "2026-04-02",
-      "summary": "The AI recruiting firm is investigating the incident as Lapsus$ claimed the theft of 4TB of Mercor data. The post Mercor Hit by LiteLLM Supply Chain Attack appeared first on SecurityWeek ."
+      "title": "CISO Conversations: Ross McKerchar, CISO at Sophos",
+      "url": "https://www.securityweek.com/ciso-conversations-ross-mckerchar-ciso-at-sophos/",
+      "date": "2026-04-15",
+      "summary": "Sophos\u2019 Ross McKerchar discusses leadership at scale, retaining talent, defending against AI-enabled threats, and the industry\u2019s growing trust problem. The post CISO Conversations: Ross McKerchar, CISO at Sophos appeared first on SecurityWeek ."
     },
     {
-      "title": "Sophisticated CrystalX RAT Emerges",
-      "url": "https://www.securityweek.com/sophisticated-crystalx-rat-emerges/",
-      "date": "2026-04-02",
-      "summary": "The malware can spy on victims, steal their information, and make configuration changes on devices. The post Sophisticated CrystalX RAT Emerges appeared first on SecurityWeek ."
+      "title": "Mirax RAT Targeting Android Users in Europe",
+      "url": "https://www.securityweek.com/mirax-rat-targeting-android-users-in-europe/",
+      "date": "2026-04-15",
+      "summary": "Offered as a MaaS to a small number of affiliates, mainly Russian speakers, the RAT can turn devices into residential proxy nodes. The post Mirax RAT Targeting Android Users in Europe appeared first on SecurityWeek ."
     },
     {
-      "title": "Variance Raises $21.5M for Compliance Investigation Platform Powered by AI Agents",
-      "url": "https://www.securityweek.com/variance-raises-21-5m-for-compliance-investigation-platform-powered-by-ai-agents/",
-      "date": "2026-04-02",
-      "summary": "Variance has raised a total of $26 million in funding and the latest investment will fuel platform growth. The post Variance Raises $21.5M for Compliance Investigation Platform Powered by AI Agents appeared first on SecurityWeek ."
+      "title": "Two Vulnerabilities Patched in Ivanti Neurons for ITSM",
+      "url": "https://www.securityweek.com/two-vulnerabilities-patched-in-ivanti-neurons-for-itsm/",
+      "date": "2026-04-15",
+      "summary": "The flaws could allow a remote attacker to maintain access after their account has been disabled and to access information from other user sessions. The post Two Vulnerabilities Patched in Ivanti Neurons for ITSM appeared first on SecurityWeek ."
     },
     {
-      "title": "Linx Security Raises $50 Million for Identity Security and Governance",
-      "url": "https://www.securityweek.com/linx-security-raises-50-million-for-identity-security-and-governance/",
-      "date": "2026-04-02",
-      "summary": "The company will accelerate product development, scale go-to-market efforts, and expand its global footprint. The post Linx Security Raises $50 Million for Identity Security and Governance appeared first on SecurityWeek ."
+      "title": "$10 Domain Could Have Handed Hackers 25k Endpoints, Including in OT and Gov Networks",
+      "url": "https://www.securityweek.com/10-domain-could-have-handed-hackers-25k-endpoints-including-in-ot-and-gov-networks/",
+      "date": "2026-04-15",
+      "summary": "Researchers found adware capable of killing cybersecurity products and pushing more dangerous payloads to infected systems. The post $10 Domain Could Have Handed Hackers 25k Endpoints, Including in OT and Gov Networks appeared first on SecurityWeek ."
     },
     {
-      "title": "Depthfirst Raises $80 Million in Series B Funding",
-      "url": "https://www.securityweek.com/depthfirst-raises-80-million-in-series-b-funding/",
-      "date": "2026-04-01",
-      "summary": "The startup will expand its AI research team, train additional security models, and scale enterprise adoption. The post Depthfirst Raises $80 Million in Series B Funding appeared first on SecurityWeek ."
+      "title": "Trump Urges Extending Foreign Surveillance Program as Some Lawmakers Push for US Privacy Protections",
+      "url": "https://www.securityweek.com/trump-urges-extending-foreign-surveillance-program-as-some-lawmakers-push-for-us-privacy-protections/",
+      "date": "2026-04-15",
+      "summary": "Congress is set to take up the reauthorization of a divisive program that lets U.S. spy agencies pore over foreigners\u2019 calls, texts and emails. The post Trump Urges Extending Foreign Surveillance Program as Some Lawmakers Push for US Privacy Protections appeared first on SecurityWeek ."
     }
   ]
 }

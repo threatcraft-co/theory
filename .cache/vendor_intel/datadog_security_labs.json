@@ -1,6 +1,12 @@
 {
-  "cached_at": "2026-04-03T04:22:54.550634+00:00",
+  "cached_at": "2026-04-16T03:47:47.755265+00:00",
   "entries": [
+    {
+      "title": "Unpatchable Vulnerabilities of Kubernetes: CVE-2020-8562",
+      "url": "https://securitylabs.datadoghq.com/articles/unpatchable-kubernetes-vulnerabilities-cve-2020-8562/",
+      "date": "2026-04-09",
+      "summary": "A look at how Kubernetes CVE-2020-8562 allows attackers to bypass API server proxy protections using DNS rebinding"
+    },
     {
       "title": "Compromised axios npm package delivers cross-platform RAT",
       "url": "https://securitylabs.datadoghq.com/articles/axios-npm-supply-chain-compromise/",
@@ -174,12 +180,6 @@
       "url": "https://securitylabs.datadoghq.com/articles/backdoors-and-breaches-gameplay-guide/",
       "date": "2025-07-30",
       "summary": "A gameplay guide to share the new Datadog expansion pack of Backdoors & Breaches, including how to play and starter scenarios."
-    },
-    {
-      "title": "Datadog guide to Hacker Summer Camp 2025",
-      "url": "https://securitylabs.datadoghq.com/articles/hacker-summer-camp-guide-2025/",
-      "date": "2025-07-28",
-      "summary": "Get ready to take on Hacker Summer Camp with our guide on planning, prepping, and schedules for Datadog events."
     }
   ]
 }
