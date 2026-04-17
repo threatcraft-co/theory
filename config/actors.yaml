@@ -1,0 +1,484 @@
+# config/actors.yaml
+# ─────────────────────────────────────────────────────────────────────────────
+# THEORY Actor Alias Table
+#
+# This file defines the canonical actor names and all known aliases used
+# across intelligence sources. Any name or alias in this file will resolve
+# to the canonical name in dossier output and file naming.
+#
+# To add a new actor: add a new top-level key with aliases, origin, and
+# motivation. No Python knowledge required.
+#
+# Fields:
+#   aliases    — list of all known names in lowercase (include the canonical
+#                name itself in lowercase, MITRE Group ID, all vendor names)
+#   origin     — country or region of attribution (optional)
+#   motivation — primary motivation: espionage | financial | hacktivism |
+#                destruction | unknown
+#
+# Contributing: see CONTRIBUTING.md for alias guidelines.
+# ─────────────────────────────────────────────────────────────────────────────
+
+actors:
+
+  # ── Russia ──────────────────────────────────────────────────────────────────
+
+  APT28:
+    origin: Russia
+    motivation: espionage
+    aliases:
+      - apt28
+      - fancy bear
+      - sofacy
+      - sofacy group
+      - pawn storm
+      - sednit
+      - strontium
+      - iron twilight
+      - threat group-4127
+      - tg-4127
+      - forest blizzard
+      - frozenlake
+      - gruesomelarch
+      - sig40
+      - grizzly steppe
+      - atk5
+      - fighting ursa
+      - itg05
+      - blue athena
+      - ta422
+      - t-apt-12
+      - apt-c-20
+      - uac-0028
+      - uac-0001
+      - bluedelta
+      - apt 28
+      - tsarteam
+      - group-4127
+      - grey-cloud
+      - snakemackerel
+      - swallowtail
+      - g0007
+
+  APT29:
+    origin: Russia
+    motivation: espionage
+    aliases:
+      - apt29
+      - cozy bear
+      - cozyduke
+      - the dukes
+      - office monkeys
+      - midnight blizzard
+      - nobelium
+      - iron hemlock
+      - dark halo
+      - unc2452
+      - yttrium
+      - minidionis
+      - hammertoss
+      - g0016
+      - itg11
+      - npu
+      - cozy duke
+
+  Sandworm:
+    origin: Russia
+    motivation: destruction
+    aliases:
+      - sandworm
+      - sandworm team
+      - voodoo bear
+      - iridium
+      - seashell blizzard
+      - electrum
+      - quedagh
+      - iron viking
+      - telebots
+      - blackenergy
+      - g0034
+      - uac-0113
+      - uac-0082
+      - industroyer
+      - notpetya group
+
+  Turla:
+    origin: Russia
+    motivation: espionage
+    aliases:
+      - turla
+      - snake
+      - uroburos
+      - venomous bear
+      - krypton
+      - secret blizzard
+      - iron hunter
+      - waterbug
+      - g0010
+      - carbon spider
+      - penquin turla
+      - kazuar
+
+  Gamaredon:
+    origin: Russia
+    motivation: espionage
+    aliases:
+      - gamaredon
+      - primitive bear
+      - shuckworm
+      - actinium
+      - iron tilden
+      - uac-0010
+      - g0047
+      - armageddon
+      - callisto group
+
+  # ── China ────────────────────────────────────────────────────────────────────
+
+  APT10:
+    origin: China
+    motivation: espionage
+    aliases:
+      - apt10
+      - menupass
+      - stone panda
+      - bronze riverside
+      - potassium
+      - cvnx
+      - happyyongzi
+      - cloud hopper
+      - g0045
+      - red apollo
+      - hogfish
+
+  APT41:
+    origin: China
+    motivation: espionage
+    aliases:
+      - apt41
+      - double dragon
+      - barium
+      - winnti group
+      - bronze atlas
+      - wicked spider
+      - wicked panda
+      - lead
+      - g0096
+      - axiom
+      - blackfly
+
+  Volt Typhoon:
+    origin: China
+    motivation: espionage
+    aliases:
+      - volt typhoon
+      - bronze silhouette
+      - vanguard panda
+      - dev-0391
+      - unc3236
+      - insidious taurus
+      - g1017
+
+  Salt Typhoon:
+    origin: China
+    motivation: espionage
+    aliases:
+      - salt typhoon
+      - ghostemperor
+      - earth estries
+      - famsec
+      - unc2286
+      - g1045
+
+  APT40:
+    origin: China
+    motivation: espionage
+    aliases:
+      - apt40
+      - temp.periscope
+      - temp.jumper
+      - bronze mohawk
+      - leviathan
+      - gadolinium
+      - ta423
+      - g0065
+      - red ladon
+      - indrik spider
+
+  APT31:
+    origin: China
+    motivation: espionage
+    aliases:
+      - apt31
+      - zirconium
+      - judgment panda
+      - bronze vinewood
+      - g0128
+      - violet typhoon
+
+  APT34:
+    origin: Iran
+    motivation: espionage
+    aliases:
+      - apt34
+      - oilrig
+      - crambus
+      - cobalt gypsy
+      - chrysene
+      - g0049
+      - helix kitten
+      - hazel sandstorm
+
+  BlackTech:
+    origin: China
+    motivation: espionage
+    aliases:
+      - blacktech
+      - circuit panda
+      - radio panda
+      - palmerworm
+      - temp.overboard
+      - g0098
+
+  Earth Lusca:
+    origin: China
+    motivation: espionage
+    aliases:
+      - earth lusca
+      - charcoal typhoon
+      - fishmonger
+      - bronze university
+      - ta428
+      - g1006
+
+  # ── North Korea (DPRK) ───────────────────────────────────────────────────────
+
+  Lazarus Group:
+    origin: North Korea
+    motivation: financial
+    aliases:
+      - lazarus group
+      - lazarus
+      - hidden cobra
+      - zinc
+      - nickel academy
+      - diamond sleet
+      - apt38
+      - whois team
+      - g0032
+      - temp.hermit
+      - labyrinth chollima
+      - stardust chollima
+
+  Kimsuky:
+    origin: North Korea
+    motivation: espionage
+    aliases:
+      - kimsuky
+      - black banshee
+      - emerald sleet
+      - velvet chollima
+      - thallium
+      - g0094
+      - ta406
+      - spring dragon
+
+  Andariel:
+    origin: North Korea
+    motivation: financial
+    aliases:
+      - andariel
+      - silent chollima
+      - stonefly
+      - plutonium
+      - g0138
+      - dark seoul
+      - operation troy
+
+  Bluenoroff:
+    origin: North Korea
+    motivation: financial
+    aliases:
+      - bluenoroff
+      - sapphire sleet
+      - copernicium
+
+  # ── Iran ──────────────────────────────────────────────────────────────────────
+
+  APT33:
+    origin: Iran
+    motivation: espionage
+    aliases:
+      - apt33
+      - refined kitten
+      - magnallium
+      - holmium
+      - elfin
+      - g0064
+      - peach sandstorm
+      - raspite
+
+  Charming Kitten:
+    origin: Iran
+    motivation: espionage
+    aliases:
+      - charming kitten
+      - apt35
+      - phosphorus
+      - mint sandstorm
+      - ta453
+      - newscaster
+      - g0059
+      - cobalt illusion
+      - tortoiseshell
+      - iridescent ursa
+
+  MuddyWater:
+    origin: Iran
+    motivation: espionage
+    aliases:
+      - muddywater
+      - mercury
+      - static kitten
+      - seedworm
+      - temp.zagros
+      - mango sandstorm
+      - g0069
+      - ta450
+
+  Moses Staff:
+    origin: Iran
+    motivation: destruction
+    aliases:
+      - moses staff
+      - cobalt sapling
+      - g1009
+
+  Agrius:
+    origin: Iran
+    motivation: destruction
+    aliases:
+      - agrius
+      - pink sandstorm
+      - americium
+      - unc2322
+      - g1030
+      - blackshadow
+
+  # ── Financially Motivated ─────────────────────────────────────────────────────
+
+  FIN7:
+    origin: unknown
+    motivation: financial
+    aliases:
+      - fin7
+      - carbanak
+      - navigator group
+      - sangria tempest
+      - g0046
+
+  FIN8:
+    origin: unknown
+    motivation: financial
+    aliases:
+      - fin8
+      - syssphinx
+      - g0061
+
+  FIN6:
+    origin: unknown
+    motivation: financial
+    aliases:
+      - fin6
+      - itg08
+      - skeleton spider
+      - g0037
+      - magecart group 6
+
+  Lapsus$:
+    origin: unknown
+    motivation: financial
+    aliases:
+      - lapsus$
+      - lapsus
+      - scatter swine
+      - dev-0537
+      - unc3661
+      - g1004
+      - strawberry tempest
+
+  Scattered Spider:
+    origin: unknown
+    motivation: financial
+    aliases:
+      - scattered spider
+      - 0ktapus
+      - starfraud
+      - unc3944
+      - muddled libra
+      - octo tempest
+      - g1015
+      - dev-0671
+      - roasted 0ktapus
+
+  Wizard Spider:
+    origin: unknown
+    motivation: financial
+    aliases:
+      - wizard spider
+      - unc1878
+      - gold blackburn
+      - g0102
+      - ryuk group
+      - conti group
+
+  TA505:
+    origin: unknown
+    motivation: financial
+    aliases:
+      - ta505
+      - cl0p group
+      - gold tahoe
+      - g0092
+      - hive0065
+
+  Cl0p:
+    origin: unknown
+    motivation: financial
+    aliases:
+      - cl0p
+      - clop
+      - fin11
+      - g0158
+
+  # ── Hacktivism / Gray Zone ────────────────────────────────────────────────────
+
+  KillNet:
+    origin: Russia
+    motivation: hacktivism
+    aliases:
+      - killnet
+      - killmilk
+
+  Anonymous Sudan:
+    origin: unknown
+    motivation: hacktivism
+    aliases:
+      - anonymous sudan
+      - anonsud
+      - g1024
+
+  Predatory Sparrow:
+    origin: unknown
+    motivation: destruction
+    aliases:
+      - predatory sparrow
+      - gonjeshke darande
+
+  Equation Group:
+    origin: unknown
+    motivation: espionage
+    aliases:
+      - equation group
+      - equation
+      - g0020
