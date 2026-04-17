@@ -1,0 +1,14 @@
+{
+  "cached_at": "2026-04-16T03:48:34.220729+00:00",
+  "result": {
+    "actor_summary": "APT28 conducted a mass token harvesting campaign against Microsoft Office users by exploiting known vulnerabilities in older Internet routers across more than 18,000 networks, compromising over 200 organizations and 5,000 consumer devices without deploying malware. This technique represents a shift toward living-off-the-land exploitation of network infrastructure to intercept authentication tokens rather than traditional endpoint-focused attacks. The campaign was attributed to APT28's parent organization, Russia's GRU military intelligence directorate, and demonstrates the group's continued focus on credential theft for espionage purposes.",
+    "landscape_summary": "This campaign reflects APT28's continued evolution toward network infrastructure exploitation as a means of harvesting identity credentials at scale, bypassing the need for endpoint compromise and detection. The technique demonstrates a strategic shift among Russian military intelligence toward leveraging unpatched legacy network appliances as persistent interception points for authentication tokens, a lower-risk alternative to malware deployment in heavily monitored enterprise environments.",
+    "relevance": 35,
+    "source": "Krebs on Security",
+    "source_tier": 3,
+    "date": "2026-04-07",
+    "title": "Russia Hacked Routers to Steal Microsoft Office Tokens",
+    "url": "https://krebsonsecurity.com/2026/04/russia-hacked-routers-to-steal-microsoft-office-tokens/",
+    "provider": "claude"
+  }
+}

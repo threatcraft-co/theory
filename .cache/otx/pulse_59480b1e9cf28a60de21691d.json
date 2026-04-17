@@ -1,0 +1,59 @@
+{
+  "id": "59480b1e9cf28a60de21691d",
+  "name": "Hidden Cobra",
+  "description": "",
+  "author_name": "chirsf",
+  "modified": "2017-06-19T17:34:22.129000",
+  "created": "2017-06-19T17:34:22.129000",
+  "tags": [
+    "hidden cobra",
+    "deltacharlie",
+    "ddos",
+    "ips",
+    "adobe flash",
+    "powershell",
+    "threat",
+    "duuzer",
+    "http",
+    "get",
+    "smb",
+    "microsoft",
+    "privacy",
+    "privileges",
+    "trojan",
+    "c2",
+    "malware",
+    "destover",
+    "vpn",
+    "windows"
+  ],
+  "references": [
+    "https://www.us-cert.gov/ncas/alerts/TA17-164A",
+    "https://threatpost.com/dhs-fbi-warn-of-north-korea-hidden-cobra-strikes-against-us-assets/126263/",
+    "http://www.ibtimes.co.uk/what-hidden-cobra-us-warns-about-north-korean-hacker-groups-8-year-long-attack-spree-1626185"
+  ],
+  "public": 1,
+  "adversary": "Lazarus Group",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [
+    "Media",
+    "Aeorspace",
+    "Finance",
+    "Critical Infrastructure"
+  ],
+  "TLP": "white",
+  "indicators": [],
+  "revision": 1,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "chirsf",
+    "id": "19877",
+    "avatar_url": "https://otx.alienvault.com/assets/images/default-avatar.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

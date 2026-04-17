@@ -1,0 +1,38 @@
+{
+  "id": "56d09e59aef921516b81fba1",
+  "name": "Operation Blockbuster: The Lazarus Group",
+  "description": "Operation Blockbuster is a Novetta led coalition that analyzed the Advanced Persistent Threat adversary responsible for the devastating and destructive attack against Sony Pictures in 2014. The threat has been dubbed the Lazarus Group , and is tied to use of specific similar malicious code variants going back to 2009. The actor has been identified in attacks on government , Military , Media , Aerospace , Finance , and Critical Infrastructure victims, most of which are in the United States and South Korea . The scope of this group indicates that it is operated by a well-funded and resourced entity, not merely a hacktivist group.",
+  "author_name": "rpsanch",
+  "modified": "2016-02-26T18:50:01.589000",
+  "created": "2016-02-26T18:50:01.589000",
+  "tags": [
+    "threat connect",
+    "advanced persistent threat",
+    "apt",
+    "lazarus group",
+    "operation blockbuster",
+    "sony"
+  ],
+  "references": [
+    "https://app.threatconnect.com/auth/threat/threat.xhtml?threat=988382"
+  ],
+  "public": 1,
+  "adversary": null,
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [],
+  "revision": 1,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "rpsanch",
+    "id": "7584",
+    "avatar_url": "https://otx.alienvault.com/assets/images/default-avatar.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

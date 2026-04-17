@@ -1,0 +1,18 @@
+{
+  "urls": [
+    "https://www.proofpoint.com/sites/default/files/pfpt-us-wp-north-korea-bitten-by-bitcoin-bug.pdf"
+  ],
+  "uuid": "c07f6484-0669-44b7-90e6-f642e316d277",
+  "notes": [],
+  "sources": [],
+  "updated": "2019-01-23",
+  "alt_names": [],
+  "attribution": [
+    "Lazarus Group"
+  ],
+  "common_name": "PowerSpritz",
+  "description": "",
+  "library_entries": [
+    "huss:20171219:north:b2da03e"
+  ]
+}

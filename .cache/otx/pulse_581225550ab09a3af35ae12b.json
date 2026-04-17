@@ -1,0 +1,240 @@
+{
+  "id": "581225550ab09a3af35ae12b",
+  "name": "Sednit Downloader DOWNDELPH",
+  "description": "The Sednit group\u2014variously also known as APT28, Fancy Bear, Sofacy, Pawn Storm, STRONTIUM and Tsar Team\u2014is a group of attackers operating since 2004 if not earlier, whose main objective is to steal confidential information from specific targets. Over the past two years, this group\u2019s activity has increased significantly, with numerous attacks against government departments and embassies all over the world. Among their most notable presumed targets are the American Democratic National Committee, the German parliament and the French television network TV5Monde [3]. Moreover, the Sednit group has a special interest in Eastern Europe, where it regularly targets individuals and organizations involved in geopolitics",
+  "author_name": "AlienVault",
+  "modified": "2017-03-06T17:12:24.348000",
+  "created": "2016-10-27T16:03:33.284000",
+  "tags": [
+    "apt28",
+    "sofacy",
+    "sednit",
+    "DOWNDELPH",
+    "eset"
+  ],
+  "references": [
+    "https://github.com/eset/malware-ioc/blob/master/sednit/part3.adoc"
+  ],
+  "public": 1,
+  "adversary": "Sofacy",
+  "targeted_countries": [
+    "United States",
+    "Germany",
+    "Ukraine"
+  ],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [
+    "government"
+  ],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 1072751,
+      "indicator": "intelmeserver.com",
+      "type": "domain",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072752,
+      "indicator": "e8aca4b0cfe509783a34ff908287f98cab968d9e",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072753,
+      "indicator": "669a02e330f5afc55a3775c4c6959b3f9e9965cf",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072754,
+      "indicator": "5fc4d555ca7e0536d18043977602d421a6fd65f9",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072755,
+      "indicator": "4c9c7c4fd83edaf7ec80687a7a957826de038dd7",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072756,
+      "indicator": "49acba812894444c634b034962d46f986e0257cf",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072757,
+      "indicator": "9f3ab8779f2b81cae83f62245afb124266765939",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072758,
+      "indicator": "5c132ae63e3b41f7b2385740b9109b473856a6a5",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072759,
+      "indicator": "593d0eb95227e41d299659842395e76b55aa048d",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072760,
+      "indicator": "1cc2b6b208b7687763659aeb5dcb76c5c2fbbf26",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072761,
+      "indicator": "6caa48cd9532da4cabd6994f62b8211ab9672d9e",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072762,
+      "indicator": "ee788901cd804965f1cd00a0afc713c8623430c4",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072763,
+      "indicator": "516ec3584073a1c05c0d909b8b6c15ecb10933f1",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072764,
+      "indicator": "7394ea20c3d510c938ef83a2d0195b767cd99ed7",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072765,
+      "indicator": "4f92d364ce871c1aebbf3c5d2445c296ef535632",
+      "type": "FileHash-SHA1",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072766,
+      "indicator": "104.171.117.216",
+      "type": "IPv4",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1072767,
+      "indicator": "141.255.160.52",
+      "type": "IPv4",
+      "created": "2016-10-27T16:03:33",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 2,
+  "groups": [
+    {
+      "name": "APT",
+      "id": 51
+    },
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

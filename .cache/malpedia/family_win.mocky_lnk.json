@@ -1,0 +1,30 @@
+{
+  "urls": [
+    "https://cert.gov.ua/article/4492467",
+    "https://go.recordedfuture.com/hubfs/reports/CTA-RU-2024-0530.pdf",
+    "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2023-CTI-009.pdf",
+    "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2025-CTI-007.pdf",
+    "https://www.recordedfuture.com/research/grus-bluedelta-targets-key-networks-in-europe-with-multi-phase-espionage-camp",
+    "https://www.trendmicro.com/en_us/research/24/a/pawn-storm-uses-brute-force-and-stealth.html",
+    "https://www.zscaler.com/blogs/security-research/steal-it-campaign"
+  ],
+  "uuid": "0eb52072-a2db-4689-bc2d-ac0ae65bdd8c",
+  "notes": [],
+  "sources": [],
+  "updated": "2025-05-02",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "Mocky LNK",
+  "description": "LNK files used to lure and orchestrate execution of various scripts, interacting with the Mocky API service.",
+  "library_entries": [
+    "anssi:20231026:attack:c121d4d",
+    "certfr:20250429:targeting:a623e6c",
+    "certua:20230428:apt28:2246cc6",
+    "group:20240530:grus:103ceb8",
+    "group:20240530:grus:a238aff",
+    "hacquebord:20240131:pawn:876f2e6",
+    "shivtarkar:20230906:stealit:f5d0054"
+  ]
+}

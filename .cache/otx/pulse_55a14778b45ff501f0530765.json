@@ -1,0 +1,99 @@
+{
+  "id": "55a14778b45ff501f0530765",
+  "name": "Sednit APT Group Meets Hacking Team",
+  "description": "The infamous Sednit espionage group is currently using the Hacking Team exploits disclosed earlier this week to target eastern European institutions.",
+  "author_name": "AlienVault",
+  "modified": "2015-07-11T16:42:32.488000",
+  "created": "2015-07-11T16:42:32.488000",
+  "tags": [
+    "flash",
+    "sednit",
+    "fancy bear",
+    "apt28",
+    "adobe",
+    "apt"
+  ],
+  "references": [
+    "http://www.welivesecurity.com/2015/07/10/sednit-apt-group-meets-hacking-team/"
+  ],
+  "public": 1,
+  "adversary": null,
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 12704,
+      "indicator": "osce-press.org",
+      "type": "domain",
+      "created": "2015-07-11T16:42:32",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12705,
+      "indicator": "d43fd6579ab8b9c40524cc8e4b7bd05be6674f6c",
+      "type": "FileHash-SHA1",
+      "created": "2015-07-11T16:42:32",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12706,
+      "indicator": "51b0e3cd6360d50424bf776b3cd673dd45fd0f97",
+      "type": "FileHash-SHA1",
+      "created": "2015-07-11T16:42:32",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12707,
+      "indicator": "b8b3f53ca2cd64bd101cb59c6553f6289a72d9bb",
+      "type": "FileHash-SHA1",
+      "created": "2015-07-11T16:42:32",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12624,
+      "indicator": "CVE-2015-5119",
+      "type": "CVE",
+      "created": "2015-07-11T16:42:32",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 1,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

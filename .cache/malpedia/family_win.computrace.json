@@ -1,0 +1,25 @@
+{
+  "urls": [
+    "https://asert.arbornetworks.com/lojack-becomes-a-double-agent/",
+    "https://bartblaze.blogspot.de/2014/11/thoughts-on-absolute-computrace.html",
+    "https://www.lastline.com/labsblog/apt28-rollercoaster-the-lowdown-on-hijacked-lojack/",
+    "https://www.secureworks.com/research/threat-profiles/iron-twilight"
+  ],
+  "uuid": "d24882f9-8645-4f6a-8a86-2f85daaad685",
+  "notes": [],
+  "sources": [],
+  "updated": "2020-05-23",
+  "alt_names": [
+    "lojack"
+  ],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "Computrace",
+  "description": "",
+  "library_entries": [
+    "bartblaze:20141110:thoughts:d7d0d68",
+    "secureworks:2020:iron:48c68a0",
+    "team:20180501:lojack:244d59b"
+  ]
+}

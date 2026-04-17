@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-04-16T03:47:47.529573+00:00",
+  "entries": [
+    {
+      "title": "Incident response for AI: Same fire, different fuel",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/04/15/incident-response-for-ai-same-fire-different-fuel/",
+      "date": "2026-04-15",
+      "summary": "In this article The fundamentals still hold Where AI changes the equation Closing the gaps in telemetry, tooling, and response The human dimension Looking ahead <p c"
+    },
+    {
+      "title": "The agentic SOC\u2014Rethinking SecOps for the next decade",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/04/09/the-agentic-soc-rethinking-secops-for-the-next-decade/",
+      "date": "2026-04-09",
+      "summary": "Every major shift in cyberattacker behavior over the past decade has followed a meaningful shift in how defenders operate. When security operation centers (SOCs) deployed endpoint detection and response (EDR)\u2014and later extended detection and response (XDR)\u2014security teams raised the bar, pushing cyberattackers beyond phishing, commodity malware, and perimeter\u2011based attacks and into cloud infrastructure built for scale and speed. Read the new whitepaper\u2014The agentic SOC: Your teammate for tomorrow, today That pattern continued as defenders embraced automation and AI to manage expanding digital estates. SOCs were often early scale adopters\u2014using machine learning to reduce noise, improve visibility, and respond faster across growing environments. Cyberattackers became more targeted and multistage, moving deliberately across identities, endpoints, cloud resources, and email, where detection was hardest. Success increasingly depended on moving fast enough to act before analysts could connect the dots. Even with this progress, security operations (SecOps) still feel asymmetrical: threat actors only need to be right once, while defenders are judged by every miss. If defense depends on human intervention to begin, defense will always feel asymmetrical. To change the outcome, SOCs must change how defense itself works. This is the agentic SOC: where security delivers adaptive, autonomous defense, freeing defenders for strategic, high\u2011impact work. In this series, we\u2019ll break down what that shift requires, what early experimentation has taught us, and"
+    },
+    {
+      "title": "Investigating Storm-2755: \u201cPayroll pirate\u201d attacks targeting Canadian employees",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/04/09/investigating-storm-2755-payroll-pirate-attacks-targeting-canadian-employees/",
+      "date": "2026-04-09",
+      "summary": "In this article Storm-2755\u2019s attack chain Defending against Storm-2755 and AiTM campaigns Microsoft Defender detection and hunting guidance Indicators of compromise Microsoft Incident Response \u2013 Detection and Response Team (DART) researchers o"
+    },
+    {
+      "title": "Intent redirection vulnerability in third-party SDK exposed millions of Android wallets to potential risk",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/04/09/intent-redirection-vulnerability-third-party-sdk-android/",
+      "date": "2026-04-09",
+      "summary": "In this article Technical details Disclosure timeline Mitigation and protection guidance References Learn more During routine security research, we identified a severe intent redirect"
+    },
+    {
+      "title": "SOHO router compromise leads to DNS hijacking and adversary-in-the-middle attacks",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/04/07/soho-router-compromise-leads-to-dns-hijacking-and-adversary-in-the-middle-attacks/",
+      "date": "2026-04-07",
+      "summary": "In this article DNS hijacking attack chain: From compromised devices to AiTM and other follow-on activity Mitigation and protection guidance Microsoft Defender detection and hunting guidance Executive summary Forest Blizzard, a threat actor linked to the Russian military, has b"
+    },
+    {
+      "title": "Inside an AI\u2011enabled device code phishing campaign",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/04/06/ai-enabled-device-code-phishing-campaign-april-2026/",
+      "date": "2026-04-06",
+      "summary": "In this article Attack chain overview Mitigation and protection guidance Indicators of compromise (IOC) References Learn more Microsoft Defender Security Research has obs"
+    },
+    {
+      "title": "Storm-1175 focuses gaze on vulnerable web-facing assets in high-tempo Medusa ransomware operations",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/04/06/storm-1175-focuses-gaze-on-vulnerable-web-facing-assets-in-high-tempo-medusa-ransomware-operations/",
+      "date": "2026-04-06",
+      "summary": "In this article Storm-1175\u2019s rapid attack chain: From initial access to impact Mitigation and protection guidance Microsoft Defender detections Indicators of compromise The financially motivated cybercriminal actor tracked by Microsoft Thre"
+    },
+    {
+      "title": "Threat actor abuse of AI accelerates from tool to cyberattack surface",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/04/02/threat-actor-abuse-of-ai-accelerates-from-tool-to-cyberattack-surface/",
+      "date": "2026-04-02",
+      "summary": "For the last year, one word has represented the conversation living at the intersection of AI and cybersecurity: speed. Speed matters, but it\u2019s not the most important shift we are observing across the threat landscape today. Now, threat actors from nation states to cybercrime groups are embedding AI into how they plan, refine, and sustain cyberattacks. The objectives haven\u2019t changed, but the tempo, iteration, and scale of generative AI enabled attacks are certainly upgrading them. Explore integrated security solutions with Microsoft Defender However, like defenders, there is typically a human-in-the-loop still powering these attacks, and not fully autonomous or agentic AI running campaigns. AI is reducing friction across the attack lifecycle; helping threat actors research faster, write better lures, vibe code malware, and triage stolen data. The security leaders I spoke with at RSAC\u2122 2026 Conference this week are prioritizing resources and strategy shifts to get ahead of this critical progression across the threat landscape. The operational reality: Embedded, not emerging The scale of what we are tracking makes the scope impossible to dismiss. Threat activity spans every region. The United States alone represents nearly 25%"
+    },
+    {
+      "title": "Cookie-controlled PHP webshells: A stealthy tradecraft in Linux hosting environments",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/04/02/cookie-controlled-php-webshells-tradecraft-linux-hosting-environments/",
+      "date": "2026-04-02",
+      "summary": "In this article Cookie-controlled execution behavior Observed variants of cookie-controlled PHP web shells Mitigation and protection guidance Microsoft Defender XDR detections Microsoft Security Copilot prompts <"
+    },
+    {
+      "title": "Mitigating the Axios npm supply chain compromise",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/",
+      "date": "2026-04-01",
+      "summary": "In this article Analysis of the attack Mitigation and protection guidance Microsoft Defender detections Indicators of compromise Hunting queries On M"
+    }
+  ]
+}

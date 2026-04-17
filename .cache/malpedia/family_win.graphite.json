@@ -1,0 +1,22 @@
+{
+  "urls": [
+    "https://blog.cluster25.duskrise.com/2022/09/23/in-the-footsteps-of-the-fancy-bear-powerpoint-graphite/",
+    "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2023-CTI-009.pdf",
+    "https://www.trellix.com/en-gb/about/newsroom/stories/threat-labs/prime-ministers-office-compromised.html"
+  ],
+  "uuid": "8ecc6605-eed1-416c-bc8b-0dc1147d3c2b",
+  "notes": [],
+  "sources": [],
+  "updated": "2023-11-14",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "Graphite",
+  "description": "Trellix describes Graphite as a malware using the Microsoft Graph API and OneDrive for C&C. It was found being deployed in-memory only and served as a downloader for Empire.",
+  "library_entries": [
+    "anssi:20231026:attack:c121d4d",
+    "cluster25:20220923:in:ea96772",
+    "elias:20220125:prime:20a5b0c"
+  ]
+}

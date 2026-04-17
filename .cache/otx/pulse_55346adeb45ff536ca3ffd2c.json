@@ -1,0 +1,142 @@
+{
+  "id": "55346adeb45ff536ca3ffd2c",
+  "name": "Operation RussianDoll",
+  "description": "FireEye Labs recently detected a limited APT campaign exploiting zero-day vulnerabilities in Adobe Flash and a brand-new one in Microsoft Windows. Using the Dynamic Threat Intelligence Cloud (DTI), FireEye researchers detected a pattern of attacks beginning on April 13th, 2015. Adobe independently patched the vulnerability (CVE-2015-3043) in APSB15-06. Through correlation of technical indicators and command and control infrastructure, FireEye assess that APT28 is probably responsible for this activity.",
+  "author_name": "AlienVault",
+  "modified": "2017-08-24T10:45:07.905000",
+  "created": "2015-04-20T02:56:30.505000",
+  "tags": [
+    "flash",
+    "apt28",
+    "windows",
+    "apt",
+    "shellcode",
+    "zeroday",
+    "sofacy"
+  ],
+  "references": [],
+  "public": 1,
+  "adversary": "Sofacy",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 4278,
+      "indicator": "ssl-icloud.com",
+      "type": "domain",
+      "created": "2017-08-24T10:45:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4280,
+      "indicator": "CVE-2015-3043",
+      "type": "CVE",
+      "created": "2017-08-24T10:45:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4281,
+      "indicator": "CVE-2015-1701",
+      "type": "CVE",
+      "created": "2017-08-24T10:45:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4282,
+      "indicator": "CVE-2014-0515",
+      "type": "CVE",
+      "created": "2017-08-24T10:45:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4283,
+      "indicator": "updatecenter.name",
+      "type": "domain",
+      "created": "2017-08-24T10:45:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4284,
+      "indicator": "securitypractic.com",
+      "type": "domain",
+      "created": "2017-08-24T10:45:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4285,
+      "indicator": "pass-google.com",
+      "type": "domain",
+      "created": "2017-08-24T10:45:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4286,
+      "indicator": "drivers-update.info",
+      "type": "domain",
+      "created": "2017-08-24T10:45:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4287,
+      "indicator": "nato-press.com",
+      "type": "domain",
+      "created": "2017-08-24T10:45:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 3,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

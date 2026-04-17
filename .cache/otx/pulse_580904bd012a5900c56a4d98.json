@@ -1,0 +1,53 @@
+{
+  "id": "580904bd012a5900c56a4d98",
+  "name": "Fancy Bear, CyberBerkut targeting journalists",
+  "description": "ThreatConnect reviews activity targeting Bellingcat, a key contributor in the MH17 investigation.",
+  "author_name": "zer0daydan",
+  "modified": "2016-10-20T17:54:05.086000",
+  "created": "2016-10-20T17:54:05.086000",
+  "tags": [
+    "Guccifer",
+    "Russia",
+    "DNC",
+    "WADA",
+    "spearphishing",
+    "APT26",
+    "Sofacy",
+    "Pawn Storm"
+  ],
+  "references": [
+    "https://www.threatconnect.com/blog/russia-hacks-bellingcat-mh17-investigation/"
+  ],
+  "public": 1,
+  "adversary": "",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [],
+  "revision": 1,
+  "groups": [
+    {
+      "name": "APT",
+      "id": 51
+    },
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    },
+    {
+      "name": "MISP FEED",
+      "id": 76
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "zer0daydan",
+    "id": "10931",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_10931/resized/80/avatar_645faabb2e.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

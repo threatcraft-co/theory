@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-04-16T03:47:49.567047+00:00",
+  "entries": [
+    {
+      "title": "Identity, browsers, and node.js: Everything you missed in the Threat Detection Report miniseries",
+      "url": "https://redcanary.com/blog/security-operations/tdr-secops-recap/",
+      "date": "2026-04-15",
+      "summary": "Get cliff notes from our three-part deep dive into the 2026 Threat Detection Report and watch every episode, on demand now"
+    },
+    {
+      "title": "New: Use response actions to update Zscaler policies and block threats",
+      "url": "https://redcanary.com/blog/product-updates/zia-response-actions/",
+      "date": "2026-04-14",
+      "summary": "Take the quickest path from detection to protection"
+    },
+    {
+      "title": "AI in cybersecurity: The good, the bad, and the FUD",
+      "url": "https://redcanary.com/blog/security-operations/ai-in-cybersecurity/",
+      "date": "2026-04-08",
+      "summary": "The 2026 Threat Detection Report surveys the AI landscape for both defenders and adversaries. Here\u2019s how you can stay ahead."
+    },
+    {
+      "title": "Red Canary CFP tracker: April 2026",
+      "url": "https://redcanary.com/blog/news-events/red-canary-cfp-tracker-april-2026/",
+      "date": "2026-04-01",
+      "summary": "A monthly roundup of upcoming security conferences and call for papers (CFP) submission deadlines"
+    },
+    {
+      "title": "Scarlet Goldfinch\u2019s year in ClickFix",
+      "url": "https://redcanary.com/blog/threat-intelligence/scarlet-goldfinch-clickfix/",
+      "date": "2026-03-26",
+      "summary": "Or how Scarlet Goldfinch learned to stop worrying and love paste and run"
+    },
+    {
+      "title": "Intelligence Insights: March 2026",
+      "url": "https://redcanary.com/blog/threat-intelligence/intelligence-insights-march-2026/",
+      "date": "2026-03-19",
+      "summary": "ScreenConnect stays the course, Mac infostealers surge, and Vidar resurfaces in this month\u2019s edition of Intelligence Insights"
+    },
+    {
+      "title": "AI and browser threats stand out in the 2026 Threat Detection Report",
+      "url": "https://redcanary.com/blog/threat-detection/2026-threat-detection-report/",
+      "date": "2026-03-18",
+      "summary": "Our annual analysis brings you a year\u2019s worth of security operations and intelligence insights, including how adversaries are both leveraging and targeting AI"
+    },
+    {
+      "title": "Moving up the Assemblyline: Exposing malicious code in browser extensions",
+      "url": "https://redcanary.com/blog/threat-detection/assemblyline-browser-extensions/",
+      "date": "2026-03-12",
+      "summary": "How to use the open source Assemblyline tool to track browser extension updates and detect malicious code"
+    },
+    {
+      "title": "The RSAC 2026 Conference talks worth catching",
+      "url": "https://redcanary.com/blog/news-events/rsac-2026/",
+      "date": "2026-03-10",
+      "summary": "Threat modeling for AI supply chain risks, disrupting infostealers, and dumb ways to die: We combed through 600+ RSAC talks to find a dozen we think are worth watching."
+    },
+    {
+      "title": "Hunting for malicious OpenClaw AI in the modern enterprise",
+      "url": "https://redcanary.com/blog/threat-detection/openclaw-ai/",
+      "date": "2026-03-05",
+      "summary": "We deconstruct a multi-step threat hunt for malicious OpenClaw AI agents, outlining our approach to identifying and mitigating risks posed by unauthorized AI skills."
+    }
+  ]
+}

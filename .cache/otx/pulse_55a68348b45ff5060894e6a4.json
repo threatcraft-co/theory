@@ -1,0 +1,123 @@
+{
+  "id": "55a68348b45ff5060894e6a4",
+  "name": "Pawn Storm\u2019s using  Java Zero-Day",
+  "description": "Operation Pawn Storm is a campaign known to target military, embassy, and defense contractor personnel from the United States and its allies. The attackers behind Operation Pawn Storm have been active since at least 2007 and they continue to launch new campaigns.\n\nOver the past year or so, we have seen numerous techniques and tactics employed by this campaign, such as the use of an iOS espionage app, and the inclusion of new targets like the White House. Through our on-going investigation and monitoring of this targeted attack campaign, we found suspicious URLs that hosted a newly discovered zero-day exploit in Java now identified by Oracle as CVE-2015-2590. This is the first time in nearly two years that a new Java zero-day vulnerability was reported.",
+  "author_name": "AlienVault",
+  "modified": "2017-08-23T13:58:52.336000",
+  "created": "2015-07-15T15:59:04.860000",
+  "tags": [
+    "pawn storm",
+    "sednit",
+    "APT28",
+    "fancy bear",
+    "java",
+    "zeroday",
+    "0day",
+    "trendmicro"
+  ],
+  "references": [
+    "http://blog.trendmicro.com/trendlabs-security-intelligence/an-in-depth-look-at-how-pawn-storms-java-zero-day-was-used/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+Anti-MalwareBlog+%28Trendlabs+Security+Intelligence+Blog%29"
+  ],
+  "public": 1,
+  "adversary": null,
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 12905,
+      "indicator": "ausameetings.com",
+      "type": "domain",
+      "created": "2017-08-23T13:58:52",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12906,
+      "indicator": "acledit.com",
+      "type": "domain",
+      "created": "2017-08-23T13:58:52",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12907,
+      "indicator": "biocpl.org",
+      "type": "domain",
+      "created": "2017-08-23T13:58:52",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12908,
+      "indicator": "b4a515ef9de037f18d96b9b0e48271180f5725b7",
+      "type": "FileHash-SHA1",
+      "created": "2017-08-23T13:58:52",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12909,
+      "indicator": "95dc765700f5af406883d07f165011d2ff8dd0fb",
+      "type": "FileHash-SHA1",
+      "created": "2017-08-23T13:58:52",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12910,
+      "indicator": "21835aafe6d46840bb697e8b0d4aac06dec44f5b",
+      "type": "FileHash-SHA1",
+      "created": "2017-08-23T13:58:52",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12914,
+      "indicator": "CVE-2015-2590",
+      "type": "CVE",
+      "created": "2017-08-23T13:58:52",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 2,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

@@ -1,0 +1,30 @@
+{
+  "urls": [
+    "https://blog.bushidotoken.net/2022/06/overview-of-russian-gru-and-svr.html",
+    "https://cert.gov.ua/article/341128",
+    "https://github.com/blackorbird/APT_REPORT/blob/master/APT28/APT28%20the%20long%20hand%20of%20Russian%20interests.pdf",
+    "https://securityscorecard.com/research/apt28s-stealer-called-credomap",
+    "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2023-CTI-009.pdf",
+    "https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/overview-of-the-cyber-weapons-used-in-the-ukraine-russia-war",
+    "https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/overview-of-the-cyber-weapons-used-in-the-ukraine-russia-war/"
+  ],
+  "uuid": "37e6844c-4e45-4297-ac6e-afc98d37d994",
+  "notes": [],
+  "sources": [],
+  "updated": "2025-02-17",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "CredoMap",
+  "description": "",
+  "library_entries": [
+    "anssi:20231026:attack:c121d4d",
+    "bushidotoken:20220626:overview:97370ff",
+    "certua:20220620:apt28:2c02bf5",
+    "knapczyk:20220818:overview:a12950c",
+    "knapczyk:20220818:overview:bf3eca2",
+    "maverits:20241231:apt28:edb7884",
+    "pasca:20220927:deep:203b1f0"
+  ]
+}

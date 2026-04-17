@@ -1,0 +1,14 @@
+{
+  "cached_at": "2026-04-16T03:48:10.799042+00:00",
+  "result": {
+    "actor_summary": "Between February and September 2025, BlueDelta (GRU-linked) conducted credential-harvesting campaigns targeting individuals in Turkish energy and nuclear research agencies, European think tanks, and organizations in North Macedonia and Uzbekistan, using Turkish-language and regionally tailored lure material to increase credibility. The group's phishing infrastructure impersonated legitimate webmail and VPN services including Microsoft OWA, Google, and Sophos VPN portals, leveraging free hosting and tunneling services such as Webhook.site, InfinityFree, Byet Internet Services, and ngrok to host phishing content and capture credentials. This activity represents an expansion of BlueDelta's credential-theft operations and reflects continued interest in organizations connected to energy research, defense cooperation, and government communication networks aligned with Russian intelligence priorities.",
+    "landscape_summary": "Russian state-sponsored operators including GRU-affiliated groups are increasingly relying on low-cost, commodity hosting and tunneling services to operationalize credential harvesting at scale, reducing infrastructure costs and complexity while maintaining operational effectiveness. This pattern reflects a shift toward regionally customized social engineering paired with infrastructure abstraction, enabling persistent targeting of energy, defense, and government networks across multiple theaters with minimal attribution footprint.",
+    "relevance": 85,
+    "source": "Recorded Future (Public)",
+    "source_tier": 2,
+    "date": "2026-01-07",
+    "title": "GRU-Linked BlueDelta Evolves Credential Harvesting",
+    "url": "https://www.recordedfuture.com/research/gru-linked-bluedelta-evolves-credential-harvesting",
+    "provider": "claude"
+  }
+}

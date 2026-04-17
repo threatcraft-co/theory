@@ -1,0 +1,41 @@
+{
+  "id": "55f6a75f4637f26df7743d64",
+  "name": "Sofacy Recycles Carberp and Metasploit Code",
+  "description": "The Sofacy Group (also known as Pawn Storm or APT28) is well known for deploying zero-day exploits in their APT campaigns. For example, two recent zero-days used by the Sofacy Group were exploiting vulnerabilities in Microsoft Office CVE-2015-2424 and Java CVE-2015-2590.\n\nIf the exploit is successful, it installs a Sofacy downloader component, which is different from what we have seen before. This downloader was based on the notorious Carberp source code, which leaked out into the public domain in the summer of 2013.",
+  "author_name": "CyberAnarchist",
+  "modified": "2015-09-14T10:54:23.902000",
+  "created": "2015-09-14T10:54:23.902000",
+  "tags": [
+    "carberp",
+    "sofacy",
+    "apt",
+    "apt28"
+  ],
+  "references": [
+    "https://labsblog.f-secure.com/2015/09/08/sofacy-recycles-carberp-and-metasploit-code/"
+  ],
+  "public": 1,
+  "adversary": null,
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "white",
+  "indicators": [],
+  "revision": 1,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "CyberAnarchist",
+    "id": "2064",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/CyberAnarchist/resized/80/doom_tron_by_enymy-d34uztq.jpg",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

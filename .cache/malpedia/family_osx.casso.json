@@ -1,0 +1,18 @@
+{
+  "urls": [
+    "https://www.sentinelone.com/blog/four-distinct-families-of-lazarus-malware-target-apples-macos-platform/"
+  ],
+  "uuid": "387e1a19-458d-4961-a8e4-3f82463085e5",
+  "notes": [],
+  "sources": [],
+  "updated": "2020-07-30",
+  "alt_names": [],
+  "attribution": [
+    "Lazarus Group"
+  ],
+  "common_name": "Casso",
+  "description": "",
+  "library_entries": [
+    "stokes:20200727:four:9d80c60"
+  ]
+}

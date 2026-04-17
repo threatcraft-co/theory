@@ -1,0 +1,275 @@
+{
+  "id": "582358604dc3d27967784e20",
+  "name": "Pawn Storm Ramps Up Spear-phishing Before Zero-Days Get Patched",
+  "description": "The effectiveness of a zero-day quickly deteriorates as an attack tool after it gets discovered and patched by the affected software vendors. Within the time between the discovery of the vulnerability and the release of the fix, a bad actor might try to get the most out of his previously valuable attack assets. This is exactly what we saw in late October and early November 2016, when the espionage group Pawn Storm (also known as Fancy Bear, APT28, Sofacy, and STRONTIUM) ramped up its spear-phishing campaigns against various governments and embassies around the world.  In these campaigns, Pawn Storm used a previously unknown zero-day in Adobe\u2019s Flash (CVE-2016-7855, fixed on October 26, 2016 with an emergency update) in combination with a privilege escalation in Microsoft\u2019s Windows Operating System (CVE-2016-7255) that was fixed on November 8, 2016.",
+  "author_name": "AlienVault",
+  "modified": "2016-11-09T21:51:12.960000",
+  "created": "2016-11-09T17:09:52.265000",
+  "tags": [
+    "pawn storm",
+    "flash",
+    "sofacy",
+    "fancy bear",
+    "apt28",
+    "trendmicro"
+  ],
+  "references": [
+    "http://blog.trendmicro.com/trendlabs-security-intelligence/pawn-storm-ramps-up-spear-phishing-before-zero-days-get-patched/"
+  ],
+  "public": 1,
+  "adversary": "Sofacy",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [
+    "government",
+    "military"
+  ],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 1345897,
+      "indicator": "securityprotectingcorp.com",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 955305,
+      "indicator": "defenceglobalnews.com",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345898,
+      "indicator": "globaldefencetalk.com",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345899,
+      "indicator": "pressservices.net",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345900,
+      "indicator": "windowsdefltr.net",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345901,
+      "indicator": "worldpressjournal.com",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345902,
+      "indicator": "versiontask.com",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 54218,
+      "indicator": "appexsrv.net",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 955271,
+      "indicator": "worldpostjournal.com",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345903,
+      "indicator": "abc24news.com",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 955183,
+      "indicator": "microsoftstoreservice.com",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 924388,
+      "indicator": "washingtnpostnews.com",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345904,
+      "indicator": "uniquecorpind.com",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345905,
+      "indicator": "politlco.com",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345906,
+      "indicator": "servicetlnt.net",
+      "type": "domain",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345907,
+      "indicator": "cb1e30e6e583178f8d4bf6a487a399bd341c0cdc",
+      "type": "FileHash-SHA1",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345908,
+      "indicator": "c2f8ea43f0599444d0f6334fc6634082fdd4a69f",
+      "type": "FileHash-SHA1",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345909,
+      "indicator": "4173b29a251cd9c1cab135f67cb60acab4ace0c5",
+      "type": "FileHash-SHA1",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345910,
+      "indicator": "CVE-2016-7855",
+      "type": "CVE",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345911,
+      "indicator": "CVE-2016-7255",
+      "type": "CVE",
+      "created": "2016-11-09T17:09:53",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 3,
+  "groups": [
+    {
+      "name": "APT",
+      "id": 51
+    },
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    },
+    {
+      "name": "MISP FEED",
+      "id": 76
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

@@ -1,0 +1,32 @@
+{
+  "id": "5a96ef799f5c647b160b8fe1",
+  "name": "Sofacy Attacks Multiple Government Entities",
+  "description": "The Sofacy group (AKA APT28, Fancy Bear, STRONTIUM, Sednit, Tsar Team, Pawn Storm) is a well-known adversary that remains highly active in the new calendar year of 2018. Unit 42 actively monitors this group due to their persistent nature globally across all industry verticals. Recently, we discovered a campaign launched at various Ministries of Foreign Affairs around the world. Interestingly, there appear to be two parallel efforts within the campaign, with each effort using a completely different toolset for the attacks. In this blog, we will discuss one of the efforts which leveraged tools that have been known to be associated with the Sofacy group.",
+  "author_name": "mpeter05",
+  "modified": "2018-02-28T18:05:45.968000",
+  "created": "2018-02-28T18:05:45.968000",
+  "tags": [],
+  "references": [
+    "sources.txt",
+    "https://researchcenter.paloaltonetworks.com/2018/02/unit42-sofacy-attacks-multiple-government-entities/"
+  ],
+  "public": 1,
+  "adversary": "",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "white",
+  "indicators": [],
+  "revision": 1,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "mpeter05",
+    "id": "23174",
+    "avatar_url": "https://otx.alienvault.com/assets/images/default-avatar.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

@@ -1,0 +1,38 @@
+{
+  "urls": [
+    "http://researchcenter.paloaltonetworks.com/2016/02/a-look-into-fysbis-sofacys-linux-backdoor/",
+    "http://www.welivesecurity.com/wp-content/uploads/2016/10/eset-sednit-part-2.pdf",
+    "https://contagiodump.blogspot.de/2017/02/russian-apt-apt28-collection-of-samples.html",
+    "https://download.bitdefender.com/resources/media/materials/white-papers/en/Bitdefender_In-depth_analysis_of_APT28%E2%80%93The_Political_Cyber-Espionage.pdf",
+    "https://securelist.com/a-slice-of-2017-sofacy-activity/83930/",
+    "https://securelist.com/an-overview-of-targeted-attacks-and-apts-on-linux/98440/",
+    "https://unit42.paloaltonetworks.com/a-look-into-fysbis-sofacys-linux-backdoor/",
+    "https://www.crowdstrike.com/blog/bears-midst-intrusion-democratic-national-committee/",
+    "https://www.secureworks.com/research/threat-profiles/iron-twilight"
+  ],
+  "uuid": "a8404a31-968a-47e8-8434-533ceaf84c1f",
+  "notes": [],
+  "sources": [],
+  "updated": "2024-07-10",
+  "alt_names": [
+    "splm",
+    "chopstick",
+    "fysbis"
+  ],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "X-Agent",
+  "description": "",
+  "library_entries": [
+    "alperovitch:20160615:bears:604c1d9",
+    "bitdefender:20151217:apt28:fca586f",
+    "great:20180220:slice:0f910f7",
+    "great:20200910:overview:f751b73",
+    "lee:20160212:look:1483b5a",
+    "lee:20160212:look:4113ea1",
+    "parkour:20170220:part:c54b5de",
+    "research:20161020:en:e2e6603",
+    "secureworks:2020:iron:48c68a0"
+  ]
+}

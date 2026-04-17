@@ -1,0 +1,30 @@
+{
+  "urls": [
+    "http://malware.prevenity.com/2014/08/malware-info.html",
+    "http://www.malware-reversing.com/2012/12/3-disclosure-of-another-0day-malware.html",
+    "http://www2.fireeye.com/rs/fireye/images/rpt-apt28.pdf",
+    "https://contagiodump.blogspot.de/2017/02/russian-apt-apt28-collection-of-samples.html",
+    "https://securelist.com/sofacy-apt-hits-high-profile-targets-with-updated-toolset/72924/",
+    "https://www.mandiant.com/sites/default/files/2021-09/APT28-Center-of-Storm-2017.pdf"
+  ],
+  "uuid": "579cc23d-4ba4-419f-bf8a-f235ed33125e",
+  "notes": [],
+  "sources": [],
+  "updated": "2022-05-04",
+  "alt_names": [
+    "SOURFACE"
+  ],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "Coreshell",
+  "description": "",
+  "library_entries": [
+    "fireeye:2014:apt28:27799d1",
+    "great:20151204:sofacy:b437b35",
+    "intelligence:20170110:apt28:2f371ee",
+    "parkour:20170220:part:c54b5de",
+    "prevenity:20140811:mht:d828ead",
+    "r136a1:20121215:disclosure:c36a5a8"
+  ]
+}

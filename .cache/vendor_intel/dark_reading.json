@@ -1,0 +1,305 @@
+{
+  "cached_at": "2026-04-16T03:47:49.655651+00:00",
+  "entries": [
+    {
+      "title": "Critical MCP Integration Flaw Puts NGINX at Risk",
+      "url": "https://www.darkreading.com/application-security/critical-mcp-integration-flaw-nginx-risk",
+      "date": "2026-04-15",
+      "summary": "Attackers can abuse the near-maximum severity flaw in nginx-ui to restart, create, modify, and delete NGINX configuration files."
+    },
+    {
+      "title": "Navigating the Unique Security Risks of Asia's Digital Supply Chain",
+      "url": "https://www.darkreading.com/cloud-security/navigating-unique-security-risks-asias-digital-supply-chain",
+      "date": "2026-04-15",
+      "summary": "Regulatory differences, interconnected digital ecosystems, and the rise of AI have created a complex supply chain Asian organizations must wrangle."
+    },
+    {
+      "title": "Prepping for 'Q-Day': Why Quantum Risk Management Should Start Now",
+      "url": "https://www.darkreading.com/cyber-risk/preparing-q-day-quantum-risk-management",
+      "date": "2026-04-15",
+      "summary": "Quantum computers are coming and may impact systems in unexpected ways, and it will &quot;take years to be fully quantum-safe, if ever,&quot; cryptography expert warns."
+    },
+    {
+      "title": "Audit: Big Tech Often Ignores CA Privacy Law Opt-Out Requests",
+      "url": "https://www.darkreading.com/cyber-risk/audit-big-tech-ignores-data-collection-requests",
+      "date": "2026-04-15",
+      "summary": "Google, Meta, and Microsoft about half the time don't comply with requests to opt out of online tracking per a California law mandate, privacy watchdog finds."
+    },
+    {
+      "title": "Microsoft, Salesforce Patch AI Agent Data Leak Flaws",
+      "url": "https://www.darkreading.com/cloud-security/microsoft-salesforce-patch-ai-agent-data-leak-flaws",
+      "date": "2026-04-15",
+      "summary": "Two recently fixed prompt injections in Salesforce Agentforce and Microsoft Copilot would have enabled an external attacker to leak sensitive data."
+    },
+    {
+      "title": "Microsoft Bets $10B to Boost Japan's AI, Cybersecurity",
+      "url": "https://www.darkreading.com/cloud-security/microsoft-bets-10-billion-to-boost-japan-s-ai-cybersecurity",
+      "date": "2026-04-15",
+      "summary": "The deal aims to accelerate AI adoption, train workers, and develop cybersecurity partnerships \u2014 the latest move by a hyperscaler to compete for sovereign AI and data centers."
+    },
+    {
+      "title": "Privilege Elevation Dominates Massive Microsoft Patch Update",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/privilege-elevation-dominates-microsoft-patch-update",
+      "date": "2026-04-14",
+      "summary": "Elevation-of-privilege bugs accounted for more than half of the 165 vulnerabilities patched, with two zero-days in that mix."
+    },
+    {
+      "title": "EDR-Killer Ecosystem Expansion Requires Stronger BYOVD Defenses",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/edr-killer-ecosystem-expansion-requires-stronger-byovd-defenses",
+      "date": "2026-04-14",
+      "summary": "Stopping EDR killers, which employ bring-your-own-vulnerable-driver (BYOVD) attack techniques, is difficult, but not impossible."
+    },
+    {
+      "title": "War Game Exercise Demonstrates How Social Media Manipulation Works",
+      "url": "https://www.darkreading.com/cyber-risk/wargame-demonstrates-social-media-manipulation",
+      "date": "2026-04-14",
+      "summary": "In an educational game called &quot;Capture the Narrative,&quot; students created bots to sway a fictional election, simulating influence in real-world political scenarios."
+    },
+    {
+      "title": "Why Orgs Need to Test Networks to Withstand DDoS Attacks During Peak Loads",
+      "url": "https://www.darkreading.com/cloud-security/test-networks-withstand-ddos-attacks-peak-loads",
+      "date": "2026-04-13",
+      "summary": "Security teams can't test distributed denial-of-service defenses in a vacuum. They need to test during periods of high demand, such as tax filing deadlines."
+    },
+    {
+      "title": "CSA: CISOs Should Prepare for Post-Mythos Exploit Storm",
+      "url": "https://www.darkreading.com/cloud-security/csa-cisos-prepare-post-mythos-exploit-storm",
+      "date": "2026-04-13",
+      "summary": "In a new report from the Cloud Security Alliance (CSA), experts warn of an &quot;AI vulnerability storm&quot; triggered by the introduction of Anthropic's Claude Mythos."
+    },
+    {
+      "title": "Adobe Patches Actively Exploited Zero-Day That Lingered for Months",
+      "url": "https://www.darkreading.com/application-security/adobe-patches-actively-exploited-zero-day",
+      "date": "2026-04-13",
+      "summary": "An attacker has been using maliciously crafted PDF files to exploit a zero-day in Adobe Acrobat and Reader for at least four months."
+    },
+    {
+      "title": "Empty Attestations: OT Lacks the Tools for Cryptographic Readiness",
+      "url": "https://www.darkreading.com/ics-ot-security/ot-lacks-tools-cryptographic-readiness",
+      "date": "2026-04-13",
+      "summary": "OT asset owners are being asked by regulators to attest to their post-quantum cryptographic readiness without the appropriate tooling, resulting in paperwork dressed up to look like genuine security."
+    },
+    {
+      "title": "APT41 Delivers 'Zero-Detection' Backdoor to Harvest Cloud Credentials",
+      "url": "https://www.darkreading.com/cloud-security/apt41-zero-detection-backdoor-harvest-cloud-credentials",
+      "date": "2026-04-13",
+      "summary": "The prolific China-backed threat group is targeting AWS, Google, Azure, and Alibaba cloud environments and using typosquatting to obscure C2 communication."
+    },
+    {
+      "title": "Hims Breach Exposes the Most Sensitive Kinds of PHI",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/hims-breach-exposes-sensitive-phi",
+      "date": "2026-04-10",
+      "summary": "Threat actors breached the telehealth brand, and now they may know patients' personal health details. What could they do with that information?"
+    },
+    {
+      "title": "Your Next Breach Will Look Like Business as Usual",
+      "url": "https://www.darkreading.com/identity-access-management-security/your-next-breach-business-as-usual",
+      "date": "2026-04-10",
+      "summary": "These are the fundamental detection model shifts cybersecurity teams need to make to keep up with the rising number of credential-based attacks."
+    },
+    {
+      "title": "FINRA Launches Financial Intelligence Fusion Center to Combat Cybersecurity and Fraud Threats",
+      "url": "https://www.darkreading.com/threat-intelligence/finra-launches-financial-intelligence-fusion-center",
+      "date": "2026-04-10",
+      "summary": ""
+    },
+    {
+      "title": "Orange Business Reimagines Enterprise Voice Communications With Trust and AI",
+      "url": "https://www.darkreading.com/endpoint-security/orange-business-enterprise-voice-comms",
+      "date": "2026-04-10",
+      "summary": ""
+    },
+    {
+      "title": "Industrial Controllers Still Vulnerable As Conflicts Move to Cyber",
+      "url": "https://www.darkreading.com/ics-ot-security/industrial-controllers-vulnerable-conflicts-cyber",
+      "date": "2026-04-10",
+      "summary": "The US government warns programmable logic controllers are being targeted, and research turns up 179 vulnerable operational technology (OT) devices."
+    },
+    {
+      "title": "Can Anthropic Keep Its Exploit-Writing AI Out of the Wrong Hands?",
+      "url": "https://www.darkreading.com/application-security/anthropic-exploit-writing-mythos-ai-safe",
+      "date": "2026-04-10",
+      "summary": "Its Mythos Preview model, which can allegedly find and exploit critical zero-days, also comes with certain controls, the vendor said."
+    },
+    {
+      "title": "Russia's 'Fancy Bear' APT Continues Its Global Onslaught",
+      "url": "https://www.darkreading.com/threat-intelligence/russias-fancy-bear-apt-continues-global-onslaught",
+      "date": "2026-04-09",
+      "summary": "Victims don't need to match the cyber espionage group's technical sophistication, experts say. But patching and some form of zero trust are now non-negotiable."
+    },
+    {
+      "title": "'BlueHammer' Windows Zero-Day Exploit Signals Microsoft Bug Disclosure Issues",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/bluehammer-windows-exploit-microsoft-bug-disclosure-issues",
+      "date": "2026-04-09",
+      "summary": "Under the alias 'Chaotic Eclipse,' a researcher released a PoC exploit for a zero-day flaw that allows for system takeover by a local user, citing an undisclosed beef with Microsoft."
+    },
+    {
+      "title": "Do Ceasefires Slow Cyberattacks? History Suggests Not",
+      "url": "https://www.darkreading.com/cybersecurity-analytics/ceasefires-slow-cyberattacks-history",
+      "date": "2026-04-09",
+      "summary": "The cybersecurity community is waiting with bated breath to see if Iranian hackers will honor a ceasefire that doesn't actually name or directly involve them."
+    },
+    {
+      "title": "Russia's Forest Blizzard Nabs Rafts of Logins via SOHO Routers",
+      "url": "https://www.darkreading.com/threat-intelligence/russia-forest-blizzard-logins-soho-routers",
+      "date": "2026-04-09",
+      "summary": "Heard of fileless malware? How about malwareless cyber espionage? Russia's APT28 is spying on global organizations by modifying just one DNS setting in vulnerable routers."
+    },
+    {
+      "title": "Threat Actors Get Crafty With Emojis to Escape Detection",
+      "url": "https://www.darkreading.com/cyber-risk/emojis-power-covert-threat-actor-communications",
+      "date": "2026-04-08",
+      "summary": "When \ud83e\udd16 means &quot;bot available,&quot; \ud83e\uddf0 signifies &quot;toolkit,&quot; or \ud83d\udcb0\ud83d\udcb0\ud83d\udcb0 translates to &quot;big ransom,&quot; bad actors can evade filters and keep it all on the down-low."
+    },
+    {
+      "title": "AI-Led Remediation Crisis Prompts HackerOne to Pause Bug Bounties",
+      "url": "https://www.darkreading.com/application-security/ai-led-remediation-crisis-prompts-hackerone-pause-bug-bounties",
+      "date": "2026-04-08",
+      "summary": "Discovery used to be the bottleneck for open source bugs, but with automated discovery, remediation's the bottleneck, which bounties don't fund."
+    },
+    {
+      "title": "Fraud Rockets Higher in Mobile-First Latin America",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/fraud-mobile-first-latin-america",
+      "date": "2026-04-08",
+      "summary": "Cyber-fraudsters move quickly from compromised devices to account takeover to funds transfer, shifting money before many financial institutions can react."
+    },
+    {
+      "title": "Full Sail University to Open IBM Cyber Defense Range Powered by AWS and Cloud Range on Campus",
+      "url": "https://www.darkreading.com/cybersecurity-operations/full-sail-university-ibm-cyber-defense-range-aws-cloud-range",
+      "date": "2026-04-08",
+      "summary": ""
+    },
+    {
+      "title": "Niobium Introduces The Fog",
+      "url": "https://www.darkreading.com/endpoint-security/niobium-introduces-the-fog",
+      "date": "2026-04-08",
+      "summary": ""
+    },
+    {
+      "title": "Pluralsight Launches SecureReady to Help Organizations Build Job-Ready Cybersecurity Teams",
+      "url": "https://www.darkreading.com/remote-workforce/pluralsight-launches-secureready-cybersecurity-teams",
+      "date": "2026-04-08",
+      "summary": ""
+    },
+    {
+      "title": "Iranian Threat Actors Disrupt US Critical Infrastructure via Exposed PLCs",
+      "url": "https://www.darkreading.com/ics-ot-security/iranian-threat-actors-us-critical-infrastructure-exposed-plcs",
+      "date": "2026-04-08",
+      "summary": "Attackers compromised Internet-facing OT devices and caused file and display manipulation, operational disruption, and financial losses across sectors."
+    },
+    {
+      "title": "Storm-1175 Deploys Medusa Ransomware at 'High Velocity'",
+      "url": "https://www.darkreading.com/threat-intelligence/storm-1175-medusa-ransomware-high-velocity",
+      "date": "2026-04-07",
+      "summary": "Microsoft says the financially motivated cybercrime group has exploited n-day and zero-day vulnerabilities in campaigns predicated on speed."
+    },
+    {
+      "title": "Grafana Patches AI Bug That Could Have Leaked User Data",
+      "url": "https://www.darkreading.com/application-security/grafana-patches-ai-bug-leaked-user-data",
+      "date": "2026-04-07",
+      "summary": "By hiding malicious instructions on an attacker-controlled Web page, AI could ingest orders that appear benign but return sensitive data to the attacker's server."
+    },
+    {
+      "title": "RSAC 2026: How AI Is Reshaping Cybersecurity Faster Than Ever",
+      "url": "https://www.darkreading.com/cybersecurity-operations/rsac-2026-how-ai-is-reshaping-cybersecurity-faster-than-ever",
+      "date": "2026-04-07",
+      "summary": "Dark Reading's Kelly Jackson Higgins shares insights on the past, present, and future of cybersecurity after attending RSAC 2026 Conference."
+    },
+    {
+      "title": "Human vs. AI: Debates Shape RSAC 2026 Cybersecurity Trends",
+      "url": "https://www.darkreading.com/cybersecurity-operations/human-vs-ai-debates-shape-rsac-2026-cybersecurity-trends",
+      "date": "2026-04-07",
+      "summary": "As AI dominated RSAC 2026, CISOs and industry leaders debated its role in security, from agentic applications to the challenges of scaling human involvement in decision-making."
+    },
+    {
+      "title": "Lies, Damned Lies, and Cybersecurity Metrics",
+      "url": "https://www.darkreading.com/cyber-risk/lies-damned-lies-cybersecurity-metrics",
+      "date": "2026-04-07",
+      "summary": "A panel of five C-suite leaders discuss how cybersecurity success is measured and why it isn't improving results."
+    },
+    {
+      "title": "Focusing on the People in Cybersecurity at RSAC 2026 Conference",
+      "url": "https://www.darkreading.com/cybersecurity-operations/focusing-people-cybersecurity-rsac2026",
+      "date": "2026-04-07",
+      "summary": "AI dominated RSAC 2026 Conference, but it's still the humans in cybersecurity who matter most."
+    },
+    {
+      "title": "AI-Assisted Supply Chain Attack Targets GitHub",
+      "url": "https://www.darkreading.com/application-security/ai-assisted-supply-chain-attack-targets-github",
+      "date": "2026-04-06",
+      "summary": "PRT-scan is the second campaign in recent months where a threat actor appears to have leveraged AI for automated targeting of a widespread GitHub misconfiguration."
+    },
+    {
+      "title": "Axios Attack Shows How Complex Social Engineering Is Industrialized",
+      "url": "https://www.darkreading.com/threat-intelligence/axios-attack-complex-social-engineering-industrialized",
+      "date": "2026-04-06",
+      "summary": "The attack on the popular NPM package Axios is just one of many targeting maintainers and has shone a light on how threat actors can scale sophisticated social engineering campaigns."
+    },
+    {
+      "title": "Fortinet Issues Emergency Patch for FortiClient Zero-Day",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/fortinet-emergency-patch-forticlient-zero-day",
+      "date": "2026-04-06",
+      "summary": "The authentication bypass flaw, tracked as CVE-2026-35616, is the latest in a series of Fortinet vulnerabilities that have been exploited in the wild."
+    },
+    {
+      "title": "Automated Credential Harvesting Campaign Exploits React2Shell Flaw",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/automated-credential-harvesting-campaign-react2shell",
+      "date": "2026-04-06",
+      "summary": "An emerging threat cluster tracked as UAT-10608 is exploiting vulnerable Web-exposed Next.js apps and using an automated tool to exfiltrate credentials, secrets, and other system data."
+    },
+    {
+      "title": "Shadow AI in Healthcare Is Here to Stay",
+      "url": "https://www.darkreading.com/cyber-risk/shadow-ai-in-healthcare-is-here-to-stay",
+      "date": "2026-04-06",
+      "summary": "Medical professionals are not going to stop using AI tools to manage growing workloads. Organizations should prioritize bolstering security protocols to limit their blast radius."
+    },
+    {
+      "title": "OWASP GenAI Security Project Gets Update, New Tools Matrix",
+      "url": "https://www.darkreading.com/application-security/owasp-genai-security-project-update-matrix",
+      "date": "2026-04-06",
+      "summary": "In recognition of 21 generative AI risks, the standards group recommends that companies take separate but linked approaches to defending GenAI and agentic AI systems."
+    },
+    {
+      "title": "Inconsistent Privacy Labels Don't Tell Users What They Are Getting",
+      "url": "https://www.darkreading.com/data-privacy/inconsistent-privacy-labels-not-enough",
+      "date": "2026-04-03",
+      "summary": "Data privacy labels are a great idea for mobile apps, but the current versions just aren't good enough."
+    },
+    {
+      "title": "Apple Breaks Precedent, Patches DarkSword for iOS 18",
+      "url": "https://www.darkreading.com/endpoint-security/apple-patches-darksword-ios-18",
+      "date": "2026-04-03",
+      "summary": "Even organizations with users unwilling or unable to adopt iOS 26 can now protect themselves from a severe mobile OS-cracking tool."
+    },
+    {
+      "title": "Blast Radius of TeamPCP Attacks Expands Amid Hacker Infighting",
+      "url": "https://www.darkreading.com/threat-intelligence/teampcp-attacks-hacker-infighting",
+      "date": "2026-04-03",
+      "summary": "As organizations disclose breaches tied to TeamPCP's supply chain attacks, ShinyHunters and Lapsus$ are getting involved, taking credit, and creating a murky situation for enterprises."
+    },
+    {
+      "title": "Picking Up 'Skull Vibrations'? Could Be XR Headset Authentication",
+      "url": "https://www.darkreading.com/remote-workforce/skull-vibrations-could-be-xr-headset-authentication",
+      "date": "2026-04-03",
+      "summary": "&quot;Skull vibration harmonics generated by vital signs&quot; can be used to sign in to VR, AR, and MR headsets, according to emerging research."
+    },
+    {
+      "title": "Claude Source Code Leak Highlights Big Supply Chain Missteps",
+      "url": "https://www.darkreading.com/application-security/source-code-leaks-highlight-lack-supply-chain-oversight",
+      "date": "2026-04-03",
+      "summary": "Or, why the software supply chain should be treated as critical infrastructure with guardrails built in at every layer."
+    },
+    {
+      "title": "Chainguard Unveils Factory 2.0 to Automate Hardening the Software Supply Chain",
+      "url": "https://www.darkreading.com/application-security/chainguard-factory-automate-hardening-software-supply-chain",
+      "date": "2026-04-03",
+      "summary": "The rebuilt Chainguard platform adds deeper security designed to continuously reconcile open source artifacts across containers, libraries, agent skills, and GitHub Actions."
+    },
+    {
+      "title": "CrowdStrike Next-Gen SIEM Can Now Ingest Microsoft Defender Telemetry",
+      "url": "https://www.darkreading.com/endpoint-security/crowdstrike-falcon-ingest-microsoft-defender-telemetry",
+      "date": "2026-04-03",
+      "summary": "Once CrowdStrike's nemesis, Microsoft is now a collaborator. A shared interest in Formula 1 helped thaw the years-long fierce rivalry."
+    }
+  ]
+}

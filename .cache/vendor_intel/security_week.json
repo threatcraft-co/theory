@@ -1,0 +1,65 @@
+{
+  "cached_at": "2026-04-16T03:47:49.819813+00:00",
+  "entries": [
+    {
+      "title": "Sweden Blames Pro-Russian Group for Cyberattack Last Year on Its Energy Infrastructure",
+      "url": "https://www.securityweek.com/sweden-blames-pro-russian-group-for-cyberattack-last-year-on-its-energy-infrastructure/",
+      "date": "2026-04-15",
+      "summary": "In what was Sweden\u2019s first public mention of the attack, the country\u2019s minister for civil defense said it targeted a heating plant in western Sweden. The post Sweden Blames Pro-Russian Group for Cyberattack Last Year on Its Energy Infrastructure appeared first on SecurityWeek ."
+    },
+    {
+      "title": "Exploited Vulnerability Exposes Nginx Servers to Hacking",
+      "url": "https://www.securityweek.com/exploited-vulnerability-exposes-nginx-servers-to-hacking/",
+      "date": "2026-04-15",
+      "summary": "Hackers are exploiting CVE-2026-33032, a critical remote takeover vulnerability in the Nginx UI management tool. The post Exploited Vulnerability Exposes Nginx Servers to Hacking appeared first on SecurityWeek ."
+    },
+    {
+      "title": "Capsule Security Emerges From Stealth With $7 Million in Funding",
+      "url": "https://www.securityweek.com/capsule-security-emerges-from-stealth-with-7-million-in-funding/",
+      "date": "2026-04-15",
+      "summary": "The Israeli startup aims to secure AI agents at runtime, continuously monitoring their behavior to prevent unsafe actions. The post Capsule Security Emerges From Stealth With $7 Million in Funding appeared first on SecurityWeek ."
+    },
+    {
+      "title": "\u2018By Design\u2019 Flaw in MCP Could Enable Widespread AI Supply Chain Attacks",
+      "url": "https://www.securityweek.com/by-design-flaw-in-mcp-could-enable-widespread-ai-supply-chain-attacks/",
+      "date": "2026-04-15",
+      "summary": "Researchers warn that a flaw in Anthropic\u2019s Model Context Protocol allows unsanitized commands to execute silently, enabling full system compromise across widely used AI environments. The post \u2018By Design\u2019 Flaw in MCP Could Enable Widespread AI Supply Chain Attacks appeared first on SecurityWeek ."
+    },
+    {
+      "title": "100 Chrome Extensions Steal User Data, Create Backdoor",
+      "url": "https://www.securityweek.com/100-chrome-extensions-steal-user-data-open-backdoor/",
+      "date": "2026-04-15",
+      "summary": "Published through five accounts, the extensions appear part of a coordinated campaign based on shared C&#038;C infrastructure. The post 100 Chrome Extensions Steal User Data, Create Backdoor appeared first on SecurityWeek ."
+    },
+    {
+      "title": "CISO Conversations: Ross McKerchar, CISO at Sophos",
+      "url": "https://www.securityweek.com/ciso-conversations-ross-mckerchar-ciso-at-sophos/",
+      "date": "2026-04-15",
+      "summary": "Sophos\u2019 Ross McKerchar discusses leadership at scale, retaining talent, defending against AI-enabled threats, and the industry\u2019s growing trust problem. The post CISO Conversations: Ross McKerchar, CISO at Sophos appeared first on SecurityWeek ."
+    },
+    {
+      "title": "Mirax RAT Targeting Android Users in Europe",
+      "url": "https://www.securityweek.com/mirax-rat-targeting-android-users-in-europe/",
+      "date": "2026-04-15",
+      "summary": "Offered as a MaaS to a small number of affiliates, mainly Russian speakers, the RAT can turn devices into residential proxy nodes. The post Mirax RAT Targeting Android Users in Europe appeared first on SecurityWeek ."
+    },
+    {
+      "title": "Two Vulnerabilities Patched in Ivanti Neurons for ITSM",
+      "url": "https://www.securityweek.com/two-vulnerabilities-patched-in-ivanti-neurons-for-itsm/",
+      "date": "2026-04-15",
+      "summary": "The flaws could allow a remote attacker to maintain access after their account has been disabled and to access information from other user sessions. The post Two Vulnerabilities Patched in Ivanti Neurons for ITSM appeared first on SecurityWeek ."
+    },
+    {
+      "title": "$10 Domain Could Have Handed Hackers 25k Endpoints, Including in OT and Gov Networks",
+      "url": "https://www.securityweek.com/10-domain-could-have-handed-hackers-25k-endpoints-including-in-ot-and-gov-networks/",
+      "date": "2026-04-15",
+      "summary": "Researchers found adware capable of killing cybersecurity products and pushing more dangerous payloads to infected systems. The post $10 Domain Could Have Handed Hackers 25k Endpoints, Including in OT and Gov Networks appeared first on SecurityWeek ."
+    },
+    {
+      "title": "Trump Urges Extending Foreign Surveillance Program as Some Lawmakers Push for US Privacy Protections",
+      "url": "https://www.securityweek.com/trump-urges-extending-foreign-surveillance-program-as-some-lawmakers-push-for-us-privacy-protections/",
+      "date": "2026-04-15",
+      "summary": "Congress is set to take up the reauthorization of a divisive program that lets U.S. spy agencies pore over foreigners\u2019 calls, texts and emails. The post Trump Urges Extending Foreign Surveillance Program as Some Lawmakers Push for US Privacy Protections appeared first on SecurityWeek ."
+    }
+  ]
+}

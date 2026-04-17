@@ -1,0 +1,14 @@
+{
+  "cached_at": "2026-04-16T03:48:23.115429+00:00",
+  "result": {
+    "actor_summary": "APT28 has shifted toward malwareless cyber espionage operations, modifying DNS settings on vulnerable SOHO routers to conduct mass credential harvesting against global organizations rather than deploying traditional malware payloads. This technique eliminates file-based detection signatures while enabling the actor to intercept and capture login credentials at scale across networked environments. The operation demonstrates APT28's continued evolution toward stealthier, harder-to-detect methods that exploit common infrastructure weaknesses rather than relying on malware deployment.",
+    "landscape_summary": "APT28's exploitation of SOHO router DNS settings reflects a broader shift toward targeting network infrastructure as a persistent espionage vector, allowing state actors to harvest credentials at scale while remaining invisible to endpoint-focused defenses. This approach exemplifies how advanced persistent threats are increasingly prioritizing long-dwell, low-signature techniques that operate beneath traditional security monitoring by avoiding malware execution entirely.",
+    "relevance": 60,
+    "source": "Dark Reading",
+    "source_tier": 3,
+    "date": "2026-04-09",
+    "title": "Russia's Forest Blizzard Nabs Rafts of Logins via SOHO Routers",
+    "url": "https://www.darkreading.com/threat-intelligence/russia-forest-blizzard-logins-soho-routers",
+    "provider": "claude"
+  }
+}

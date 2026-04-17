@@ -1,0 +1,22 @@
+{
+  "urls": [
+    "https://researchcenter.paloaltonetworks.com/2018/11/unit42-sofacy-continues-global-attacks-wheels-new-cannon-trojan/",
+    "https://unit42.paloaltonetworks.com/atoms/fighting-ursa/",
+    "https://www.vkremez.com/2018/11/lets-learn-in-depth-on-sofacy-canon.html"
+  ],
+  "uuid": "3fada5b6-0b3d-4b83-97c9-2157c959704c",
+  "notes": [],
+  "sources": [],
+  "updated": "2022-07-29",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "Cannon",
+  "description": "",
+  "library_entries": [
+    "42:20220718:fighting:865c81e",
+    "falcone:20181120:sofacy:b1ef88a",
+    "kremez:20181127:lets:e9928d7"
+  ]
+}

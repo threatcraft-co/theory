@@ -1,0 +1,22 @@
+{
+  "urls": [
+    "https://securingtomorrow.mcafee.com/mcafee-labs/android-malware-appears-linked-to-lazarus-cybercrime-group/#sf174581990",
+    "https://unit42.paloaltonetworks.com/unit42-operation-blockbuster-goes-mobile/",
+    "https://www.us-cert.gov/sites/default/files/publications/MAR-10135536-F.pdf"
+  ],
+  "uuid": "0caf0292-b01a-4439-b56f-c75b71900bc0",
+  "notes": [],
+  "sources": [],
+  "updated": "2019-09-09",
+  "alt_names": [],
+  "attribution": [
+    "Lazarus Group"
+  ],
+  "common_name": "HARDRAIN",
+  "description": "",
+  "library_entries": [
+    "han:20171120:android:c3f825c",
+    "kasza:20171120:operation:0bc8efe",
+    "unknown:20180205:hidden:3e1e07e"
+  ]
+}

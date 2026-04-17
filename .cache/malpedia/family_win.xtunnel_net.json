@@ -1,0 +1,18 @@
+{
+  "urls": [
+    "https://www.ncsc.gov.uk/alerts/indicators-compromise-malware-used-apt28"
+  ],
+  "uuid": "000e25a4-4623-4afc-883d-ecc15be8f9d0",
+  "notes": [],
+  "sources": [],
+  "updated": "2018-10-24",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "X-Tunnel (.NET)",
+  "description": "This is a rewrite of win.xtunnel using the .NET framework that surfaced late 2017.",
+  "library_entries": [
+    "uk:20181004:indicators:65560f3"
+  ]
+}

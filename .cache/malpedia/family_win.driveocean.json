@@ -1,0 +1,22 @@
+{
+  "urls": [
+    "https://www.cert.ssi.gouv.fr/uploads/CERTFR-2023-CTI-009.pdf",
+    "https://www.trendmicro.com/en_us/research/20/l/pawn-storm-lack-of-sophistication-as-a-strategy.html"
+  ],
+  "uuid": "730a4e94-4f9b-4f34-a1f3-1c97d341332c",
+  "notes": [],
+  "sources": [],
+  "updated": "2023-11-14",
+  "alt_names": [
+    "Google Drive RAT"
+  ],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "DriveOcean",
+  "description": "Communicates via Google Drive.",
+  "library_entries": [
+    "anssi:20231026:attack:c121d4d",
+    "hacquebord:20201217:pawn:0e42861"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "urls": [
+    "http://www.welivesecurity.com/wp-content/uploads/2016/10/eset-sednit-part3.pdf",
+    "https://contagiodump.blogspot.de/2017/02/russian-apt-apt28-collection-of-samples.html",
+    "https://labs.sentinelone.com/a-deep-dive-into-zebrocys-dropper-docs/",
+    "https://www.picussecurity.com/blog/picus-10-critical-mitre-attck-techniques-t1055-process-injection"
+  ],
+  "uuid": "e6a077cb-42cc-4193-9006-9ceda8c0dff2",
+  "notes": [],
+  "sources": [],
+  "updated": "2021-04-20",
+  "alt_names": [
+    "DELPHACY"
+  ],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "Downdelph",
+  "description": "",
+  "library_entries": [
+    "figueroa:20210419:deep:f5cf649",
+    "parkour:20170220:part:c54b5de",
+    "research:20160911:en:28dbd06",
+    "zarslan:20200521:t1055:4400f98"
+  ]
+}

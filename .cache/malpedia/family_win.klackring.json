@@ -1,0 +1,18 @@
+{
+  "urls": [
+    "https://www.microsoft.com/security/blog/2021/01/28/zinc-attacks-against-security-researchers/"
+  ],
+  "uuid": "03a4eb90-8d88-49c7-a973-2201115ea5a8",
+  "notes": [],
+  "sources": [],
+  "updated": "2023-07-11",
+  "alt_names": [],
+  "attribution": [
+    "Lazarus Group"
+  ],
+  "common_name": "Klackring",
+  "description": "Microsoft describes that threat actor ZINC is using Klackring as a malware dropped by ComeBacker, both being used to target security researchers.",
+  "library_entries": [
+    "mstic:20210128:zinc:9c8aff4"
+  ]
+}

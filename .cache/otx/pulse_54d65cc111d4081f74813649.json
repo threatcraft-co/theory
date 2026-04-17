@@ -1,0 +1,76 @@
+{
+  "id": "54d65cc111d4081f74813649",
+  "name": "Pawn Storm IOS_XAGENT",
+  "description": "",
+  "author_name": "AlienVault",
+  "modified": "2017-08-24T10:52:39.470000",
+  "created": "2015-02-07T18:43:13.899000",
+  "tags": [],
+  "references": [
+    "http://blog.trendmicro.com/trendlabs-security-intelligence/pawn-storm-update-ios-espionage-app-found/"
+  ],
+  "public": 1,
+  "adversary": null,
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 1257,
+      "indicator": "30e4decd68808cb607c2aba4aa69fb5fdb598c64",
+      "type": "FileHash-SHA1",
+      "created": "2017-08-24T10:52:39",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1258,
+      "indicator": "05298a48e4ca6d9778b32259c8ae74527be33815",
+      "type": "FileHash-SHA1",
+      "created": "2017-08-24T10:52:39",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1259,
+      "indicator": "176e92e7cfc0e57be83e901c36ba17b255ba0b1b",
+      "type": "FileHash-SHA1",
+      "created": "2017-08-24T10:52:39",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1261,
+      "indicator": "http://www.adobeincorp.net/adhoc/XAgent.ipa",
+      "type": "URL",
+      "created": "2017-08-24T10:52:39",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 4,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

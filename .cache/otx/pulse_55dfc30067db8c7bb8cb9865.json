@@ -1,0 +1,94 @@
+{
+  "id": "55dfc30067db8c7bb8cb9865",
+  "name": "New Spear Phishing Campaign Pretends to be EFF",
+  "description": "Google's security team recently identified a new domain masquerading as an official EFF site as part of a targeted malware campaign. That domain, electronicfrontierfoundation.org, is designed to trick users into a false sense of trust and it appears to have been used in a spear phishing attack, though it is unclear who the intended targets were. The domain was registered on August 4, 2015, under a presumably false name, and we suspect that the attack started on the same day. At the time of this writing the domain is still serving malware.\n\nElectronicfrontierfoundation.org was not the only domain involved in this attack. It seems to be part of a larger campaign, known as \u201cPawn Storm\u201d. The current phase of the Pawn Storm attack campaign started a little over a month ago, and the overall campaign was first identified in an October 2014 report from Trend Micro (PDF). The group behind the attacks is possibly associated with the Russian government and has been active since at least 2007.",
+  "author_name": "AlienVault",
+  "modified": "2015-08-28T02:10:08.167000",
+  "created": "2015-08-28T02:10:08.167000",
+  "tags": [
+    "spearphishing",
+    "EFF",
+    "java",
+    "sednit",
+    "sofacy",
+    "pawn storm",
+    "apt",
+    "apt28"
+  ],
+  "references": [
+    "https://www.eff.org/deeplinks/2015/08/new-spear-phishing-campaign-pretends-be-eff"
+  ],
+  "public": 1,
+  "adversary": null,
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 32056,
+      "indicator": "electronicfrontierfoundation.org",
+      "type": "domain",
+      "created": "2015-08-28T02:10:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 32057,
+      "indicator": "25833224c2cb8050b90786d45f29160c",
+      "type": "FileHash-MD5",
+      "created": "2015-08-28T02:10:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 32058,
+      "indicator": "0c345969a5974e8b1ec6a5e23b2cf777",
+      "type": "FileHash-MD5",
+      "created": "2015-08-28T02:10:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12914,
+      "indicator": "CVE-2015-2590",
+      "type": "CVE",
+      "created": "2015-08-28T02:10:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 1,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    },
+    {
+      "name": "MISP FEED",
+      "id": 76
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

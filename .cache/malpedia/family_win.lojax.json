@@ -1,0 +1,30 @@
+{
+  "urls": [
+    "https://blogs.vmware.com/security/2021/06/detecting-uefi-bootkits-in-the-wild-part-1.html",
+    "https://habr.com/ru/amp/post/668154/",
+    "https://symantec-blogs.broadcom.com/blogs/election-security/apt28-espionage-military-government",
+    "https://ti.qianxin.com/uploads/2020/02/13/cb78386a082f465f259b37dae5df4884.pdf",
+    "https://www.welivesecurity.com/2022/01/11/signed-kernel-drivers-unguarded-gateway-windows-core/",
+    "https://www.welivesecurity.com/wp-content/uploads/2018/09/ESET-LoJax.pdf",
+    "https://www.youtube.com/watch?v=VeoXT0nEcFU"
+  ],
+  "uuid": "15228ae0-26f9-44d8-8d6e-87b0bd2d2aba",
+  "notes": [],
+  "sources": [],
+  "updated": "2024-11-25",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "LoJax",
+  "description": "",
+  "library_entries": [
+    "belousov:20220527:how:d00c942",
+    "boutin:20181105:bluehat:65f6d65",
+    "center:20200213:report:146d333",
+    "haruyama:20210615:detecting:63536a8",
+    "poslun:20220111:signed:1c59d41",
+    "research:201809:lojax:747e1e3",
+    "team:20181004:apt28:97a1356"
+  ]
+}

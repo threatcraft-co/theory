@@ -1,0 +1,270 @@
+{
+  "id": "564deefa67db8c7a156bdfa3",
+  "name": "STRONTIUM: A profile of a persistent and motivated adversary",
+  "description": "STRONTIUM has been active since at least 2007. Whereas most modern\nuntargeted malware is ultimately profit-oriented, STRONTIUM mainly seeks\nsensitive information. Its primary institutional targets have included government\nbodies, diplomatic institutions, and military forces and installations in NATO\nmember states and certain Eastern European countries. Additional targets have\nincluded journalists, political advisors, and organizations associated with political\nactivism in central Asia. STRONTIUM is Microsoft\u2019s code name for this group,\nfollowing its internal practice of assigning chemical element names to activity\ngroups; other researchers have used code names such as APT28, Sednit, Sofacy \nand Fancy Bear as labels for a group or groups .",
+  "author_name": "AlienVault",
+  "modified": "2017-03-06T17:14:13.151000",
+  "created": "2015-11-19T15:47:06.419000",
+  "tags": [
+    "STRONTIUM",
+    "sofacy",
+    "apt28",
+    "sednit",
+    "CORESHELL",
+    "XAPS OBJECTIVE",
+    "\u201cXTUNNEL",
+    "microsoft"
+  ],
+  "references": [
+    "http://download.microsoft.com/download/4/4/C/44CDEF0E-7924-4787-A56A-16261691ACE3/Microsoft_Security_Intelligence_Report_Volume_19_English.pdf"
+  ],
+  "public": 1,
+  "adversary": "Sofacy",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 208376,
+      "indicator": "nato-news.com",
+      "type": "domain",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 32056,
+      "indicator": "electronicfrontierfoundation.org",
+      "type": "domain",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4539,
+      "indicator": "privacy-live.com",
+      "type": "domain",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 208377,
+      "indicator": "bbc-press.org",
+      "type": "domain",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 208378,
+      "indicator": "mail-ukr.net",
+      "type": "domain",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 208379,
+      "indicator": "osce-press.com",
+      "type": "domain",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 208380,
+      "indicator": "accounts.g00gle.com",
+      "type": "hostname",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4281,
+      "indicator": "CVE-2015-1701",
+      "type": "CVE",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12624,
+      "indicator": "CVE-2015-5119",
+      "type": "CVE",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 54228,
+      "indicator": "CVE-2015-7645",
+      "type": "CVE",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 21751,
+      "indicator": "CVE-2015-1641",
+      "type": "CVE",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 8716,
+      "indicator": "CVE-2014-1776",
+      "type": "CVE",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 93772,
+      "indicator": "CVE-2015-4902",
+      "type": "CVE",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 208381,
+      "indicator": "CVE-2014-3897",
+      "type": "CVE",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 95,
+      "indicator": "CVE-2014-6332",
+      "type": "CVE",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12914,
+      "indicator": "CVE-2015-2590",
+      "type": "CVE",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 12925,
+      "indicator": "CVE-2015-2424",
+      "type": "CVE",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 99860,
+      "indicator": "CVE-2015-2387",
+      "type": "CVE",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4280,
+      "indicator": "CVE-2015-3043",
+      "type": "CVE",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 208382,
+      "indicator": "us-mg6mailyahoo.com",
+      "type": "domain",
+      "created": "2015-11-19T15:47:06",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 2,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    },
+    {
+      "name": "MISP FEED",
+      "id": 76
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

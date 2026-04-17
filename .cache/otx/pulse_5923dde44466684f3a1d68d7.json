@@ -1,0 +1,31 @@
+{
+  "id": "5923dde44466684f3a1d68d7",
+  "name": "WannaCry - Lazarus Group",
+  "description": "Similarities in code and infrastructure indicate close connection to group that was linked to Sony Pictures and Bangladesh Bank attacks",
+  "author_name": "inigo",
+  "modified": "2017-05-23T06:59:48.337000",
+  "created": "2017-05-23T06:59:48.337000",
+  "tags": [],
+  "references": [
+    "https://www.symantec.com/connect/blogs/wannacry-ransomware-attacks-show-strong-links-lazarus-group"
+  ],
+  "public": 1,
+  "adversary": "Lazarus Group",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "white",
+  "indicators": [],
+  "revision": 1,
+  "groups": [],
+  "in_group": false,
+  "author": {
+    "username": "inigo",
+    "id": "772",
+    "avatar_url": "https://otx.alienvault.com/assets/images/default-avatar.png",
+    "is_subscribed": false,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

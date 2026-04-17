@@ -1,0 +1,14 @@
+{
+  "cached_at": "2026-03-31T18:52:56.743833+00:00",
+  "result": {
+    "actor_summary": "APT28 has integrated large language models into its attack infrastructure, deploying the LameHug infostealer to generate attack commands dynamically. This represents an evolution in the group's operational approach, shifting from static command generation to AI-assisted attack execution. The article does not specify targeting sectors, countries, or provide additional tactical details beyond the LLM integration.",
+    "landscape_summary": "# Threat Landscape Context\n\nThis development reflects an emerging pattern of state-sponsored actors operationalizing large language models to automate command generation and reduce operational friction, potentially lowering the technical barriers for distributed attack execution. APT28's integration of LLM-assisted tooling suggests nation-state adoption of AI-driven attack orchestration is transitioning from experimental to operational deployment in live campaigns.",
+    "relevance": 50,
+    "source": "ThreatLocker Blog",
+    "source_tier": 2,
+    "date": "2026-03-11",
+    "title": "What Is LameHug? How APT28 is using LLMs to generate attack commands",
+    "url": "https://www.threatlocker.com/blog/what-is-lamehug-how-apt28-is-using-llms-to-generate-attack-commands",
+    "provider": "claude"
+  }
+}

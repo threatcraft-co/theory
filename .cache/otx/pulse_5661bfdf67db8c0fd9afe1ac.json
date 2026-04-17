@@ -1,0 +1,189 @@
+{
+  "id": "5661bfdf67db8c0fd9afe1ac",
+  "name": "Sofacy APT hits high profile targets",
+  "description": "Sofacy (also known as \u201cFancy Bear\u201d, \u201cSednit\u201d, \u201cSTRONTIUM\u201d and \u201cAPT28\u201d) is an advanced threat group that has been active since around 2008, targeting mostly military and government entities worldwide, with a focus on NATO countries. More recently, we have also seen an increase in activity targeting Ukraine.\n\nIn the months leading up to August, the Sofacy group launched several waves of attacks relying on zero-day exploits in Microsoft Office, Oracle Sun Java, Adobe Flash Player and Windows itself. For instance, its JHUHUGIT implant was delivered through a Flash zero-day and used a Windows EoP exploit to break out of the sandbox. The JHUHUGIT implant became a relatively popular first stage for the Sofacy attacks and was used again with a Java zero-day (CVE-2015-2590) in July 2015.",
+  "author_name": "AlienVault",
+  "modified": "2017-03-06T17:13:32.721000",
+  "created": "2015-12-04T16:31:27.441000",
+  "tags": [
+    "sofacy",
+    "apt28",
+    "STRONTIUM",
+    "sednit",
+    "JHUHUGIT",
+    "JKEYSKW",
+    "AZZY",
+    "kaspersky"
+  ],
+  "references": [
+    "https://securelist.com/blog/research/72924/sofacy-apt-hits-high-profile-targets-with-updated-toolset/"
+  ],
+  "public": 1,
+  "adversary": "Sofacy",
+  "targeted_countries": [],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 159082,
+      "indicator": "drivres-update.info",
+      "type": "domain",
+      "created": "2015-12-04T16:31:27",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4533,
+      "indicator": "softupdates.info",
+      "type": "domain",
+      "created": "2015-12-04T16:31:27",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 4530,
+      "indicator": "intelsupport.net",
+      "type": "domain",
+      "created": "2015-12-04T16:31:27",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 159087,
+      "indicator": "8b238931a7f64fddcad3057a96855f6c",
+      "type": "FileHash-MD5",
+      "created": "2015-12-04T16:31:27",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 159085,
+      "indicator": "ce151285e8f0e7b2b90162ba171a4b90",
+      "type": "FileHash-MD5",
+      "created": "2015-12-04T16:31:27",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 159084,
+      "indicator": "8c4d896957c36ec4abeb07b2802268b9",
+      "type": "FileHash-MD5",
+      "created": "2015-12-04T16:31:27",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 159083,
+      "indicator": "a96f4b8ac7aa9dbf4624424b7602d4f7",
+      "type": "FileHash-MD5",
+      "created": "2015-12-04T16:31:27",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 159088,
+      "indicator": "c3ae4a37094ecfe95c2badecf40bf5bb",
+      "type": "FileHash-MD5",
+      "created": "2015-12-04T16:31:27",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 159090,
+      "indicator": "ce8b99df8642c065b6af43fde1f786a3",
+      "type": "FileHash-MD5",
+      "created": "2015-12-04T16:31:27",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 159086,
+      "indicator": "9d2f9e19db8c20dc0d20d50869c7a373",
+      "type": "FileHash-MD5",
+      "created": "2015-12-04T16:31:27",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 159091,
+      "indicator": "f6f88caf49a3e32174387cacfa144a89",
+      "type": "FileHash-MD5",
+      "created": "2015-12-04T16:31:27",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 159092,
+      "indicator": "0369620eb139c3875a62e36bb7abdae8",
+      "type": "FileHash-MD5",
+      "created": "2015-12-04T16:31:27",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 159111,
+      "indicator": "intelnetservice.com",
+      "type": "domain",
+      "created": "2015-12-04T16:31:27",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 2,
+  "groups": [
+    {
+      "name": "APT28/Sofacy/Fancy Bear Working Group",
+      "id": 94
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

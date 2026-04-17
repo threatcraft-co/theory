@@ -1,0 +1,18 @@
+{
+  "urls": [],
+  "uuid": "565de3f5-7eb7-43ca-a9d9-b588dfd6a50a",
+  "notes": [],
+  "sources": [],
+  "updated": "2023-07-24",
+  "alt_names": [],
+  "attribution": [
+    "Lazarus Group"
+  ],
+  "common_name": "Unidentified 090 (Lazarus)",
+  "description": "Recon/Loader malware attributed to Lazarus, disguised as Notepad++ shell extension.",
+  "library_entries": [
+    "cocomelonc:20210906:av:215e5aa",
+    "pasca:20220131:detailed:262ea52",
+    "threatbook:202112:lazarus:63ddb59"
+  ]
+}

@@ -1,0 +1,350 @@
+{
+  "id": "58540a695fb0fc4c5df265c6",
+  "name": "Let It Ride: The Sofacy Group\u2019s DealersChoice Attacks Continue",
+  "description": "Recently, Palo Alto Networks Unit 42 reported on a new exploitation platform that we called \u201cDealersChoice\u201d in use by the Sofacy group (AKA APT28, Fancy Bear, STRONTIUM, Pawn Storm, Sednit).  As outlined in our original posting, the DealersChoice exploitation platform generates malicious RTF documents which in turn use embedded OLE Word documents. These embedded OLE Word documents then contain embedded Adobe Flash (.SWF) files that are designed to exploit Abode Flash vulnerabilities.",
+  "author_name": "AlienVault",
+  "modified": "2016-12-16T15:40:07.581000",
+  "created": "2016-12-16T15:38:17.492000",
+  "tags": [
+    "sofacy",
+    "apt28",
+    "STRONTIUM",
+    "fancy bear",
+    "DealersChoice",
+    "flash",
+    "Carberp",
+    "NATO"
+  ],
+  "references": [
+    "http://researchcenter.paloaltonetworks.com/2016/12/unit42-let-ride-sofacy-groups-dealerschoice-attacks-continue/"
+  ],
+  "public": 1,
+  "adversary": "Sofacy",
+  "targeted_countries": [
+    "Turkey",
+    "Lithuania",
+    "Armenia"
+  ],
+  "malware_families": [],
+  "attack_ids": [],
+  "industries": [
+    "government",
+    "defence"
+  ],
+  "TLP": "green",
+  "indicators": [
+    {
+      "id": 1617013,
+      "indicator": "1f81609d9bbdc7f1d2c8846dcfc4292b3e2642301d9c59130f58e21abb0001be",
+      "type": "FileHash-SHA256",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617014,
+      "indicator": "137185866649888b7b5b6554d6d5789f7b510acd7aff3070ac55e2250eb88dab",
+      "type": "FileHash-SHA256",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617015,
+      "indicator": "5dd3066a8ee3ab5b380eb7781c85e4253683cd7e3eee1c29013a7a62cd9bef8c",
+      "type": "FileHash-SHA256",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617016,
+      "indicator": "4cbb0e3601242732d3ea7c89b4c0fd1074fae4a6d20e5f3afc3bc153b6968d6e",
+      "type": "FileHash-SHA256",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617017,
+      "indicator": "1579c7a1e42f9e1857a4d1ac966a195a010e1f3d714d68c598a64d1c83aa36e4",
+      "type": "FileHash-SHA256",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1610762,
+      "indicator": "f5d3e827c3a312d018ef4fcbfc7cb5205c9e827391bfe6eab697cc96412d938e",
+      "type": "FileHash-SHA256",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617018,
+      "indicator": "c5a389fa702a4223aa2c2318f38d5fe6eba68c645bc0c41c3d8b6f935eab3f64",
+      "type": "FileHash-SHA256",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617019,
+      "indicator": "73ea2ccec2cbf22d524f55b101d324d89077e5718922c6734fef95787121ff22",
+      "type": "FileHash-SHA256",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617020,
+      "indicator": "82213713cf442716eac3f8c95da8d631aab2072ba44b17dda86873e462e10421",
+      "type": "FileHash-SHA256",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617021,
+      "indicator": "c993c1e10299162357196de33e4953ab9ab9e9359fa1aea00d92e97e7d8c5f2c",
+      "type": "FileHash-SHA256",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617022,
+      "indicator": "3bb47f37e16d09a7b9ba718d93cfe4d5ebbaecd254486d5192057c77c4a25363",
+      "type": "FileHash-SHA256",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1525883,
+      "indicator": "appservicegroup.com",
+      "type": "domain",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617023,
+      "indicator": "postlkwarn.com",
+      "type": "domain",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1525869,
+      "indicator": "adobeupgradeflash.com",
+      "type": "domain",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345902,
+      "indicator": "versiontask.com",
+      "type": "domain",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1525871,
+      "indicator": "globaltechresearch.org",
+      "type": "domain",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345897,
+      "indicator": "securityprotectingcorp.com",
+      "type": "domain",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1406137,
+      "indicator": "akamaisoftupdate.com",
+      "type": "domain",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617024,
+      "indicator": "apptaskserver.com",
+      "type": "domain",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617025,
+      "indicator": "joshel.com",
+      "type": "domain",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345904,
+      "indicator": "uniquecorpind.com",
+      "type": "domain",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617026,
+      "indicator": "researchcontinental.org",
+      "type": "domain",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345910,
+      "indicator": "CVE-2016-7855",
+      "type": "CVE",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1525880,
+      "indicator": "morata_al@mail.com",
+      "type": "email",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617027,
+      "indicator": "partanencomp@mail.com",
+      "type": "email",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1617028,
+      "indicator": "olivier_servgr@mail.com",
+      "type": "email",
+      "created": "2016-12-16T15:38:18",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    },
+    {
+      "id": 1345911,
+      "indicator": "CVE-2016-7255",
+      "type": "CVE",
+      "created": "2016-12-16T15:40:08",
+      "content": "",
+      "title": "",
+      "description": "",
+      "expiration": null,
+      "is_active": 1
+    }
+  ],
+  "revision": 2,
+  "groups": [
+    {
+      "name": "APT",
+      "id": 51
+    }
+  ],
+  "in_group": true,
+  "author": {
+    "username": "AlienVault",
+    "id": "2",
+    "avatar_url": "/otxapi/users/avatar_image/media/avatars/user_2/resized/80/avatar_dacfad0ca8.png",
+    "is_subscribed": true,
+    "is_following": false
+  },
+  "is_subscribing": null
+}

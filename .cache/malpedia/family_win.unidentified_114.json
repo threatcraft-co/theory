@@ -1,0 +1,18 @@
+{
+  "urls": [
+    "https://www.trendmicro.com/en_us/research/24/a/pawn-storm-uses-brute-force-and-stealth.html"
+  ],
+  "uuid": "1f59adb5-43e1-438b-b1c0-18af13ee3b12",
+  "notes": [],
+  "sources": [],
+  "updated": "2024-02-02",
+  "alt_names": [],
+  "attribution": [
+    "APT28"
+  ],
+  "common_name": "Unidentified 114 (APT28 InfoStealer)",
+  "description": "According to Trend Micro, this is a small information stealer written in .NET, that pushes its loot to a benign file sharing service and does not have a direct C&C callback.",
+  "library_entries": [
+    "hacquebord:20240131:pawn:876f2e6"
+  ]
+}
