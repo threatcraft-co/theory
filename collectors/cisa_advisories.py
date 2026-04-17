@@ -52,234 +52,108 @@ _RETRY_WAIT = 2
 
 
 # ---------------------------------------------------------------------------
-# Cross-naming alias table
+# Cross-naming alias table — loaded from config/actors.yaml
 # ---------------------------------------------------------------------------
-# Format: canonical_name → frozenset of all known aliases (lowercase)
-# Sources: MITRE ATT&CK, CrowdStrike, Mandiant, Microsoft, Recorded Future
+# The alias table is now maintained in config/actors.yaml.
+# Edit that file to add new actors or aliases — no Python required.
 #
-# This is intentionally kept in the collector (not a config file) so it
-# travels with the code and can be extended via PR.
+# This module exposes the same public API as before:
+#   ALIAS_TABLE            dict[str, frozenset[str]]
+#   resolve_canonical(name) → str
+#   all_aliases_for(name)   → frozenset[str]
 
-ALIAS_TABLE: dict[str, frozenset[str]] = {
+from pathlib import Path as _Path
+import yaml as _yaml
 
-    # ── Russia ────────────────────────────────────────────────────────
+_ACTORS_YAML = _Path("config/actors.yaml")
+_ALIAS_TABLE_CACHE: dict[str, frozenset[str]] | None = None
+_ALIAS_TO_CANONICAL_CACHE: dict[str, str] | None = None
 
-    "APT28": frozenset({
-        "apt28", "fancy bear", "sofacy", "sofacy group", "pawn storm",
-        "sednit", "strontium", "iron twilight", "threat group-4127",
-        "tg-4127", "forest blizzard", "frozenlake", "gruesomeLarch",
-        "sig40", "grizzly steppe", "atk5", "fighting ursa", "itg05",
-        "blue athena", "ta422", "t-apt-12", "apt-c-20", "uac-0028",
-        "uac-0001", "bluedelta", "apt 28", "tsarteam", "group-4127",
-        "grey-cloud", "snakemackerel", "swallowtail", "g0007",
-    }),
 
-    "APT29": frozenset({
-        "apt29", "cozy bear", "cozyduke", "the dukes", "office monkeys",
-        "midnight blizzard", "nobelium", "iron hemlock", "dark halo",
-        "unc2452", "yttrium", "minidionis", "hammertoss", "g0016",
-        "itg11", "npu", "cozy duke",
-    }),
+def _load_actors_yaml() -> tuple[dict[str, frozenset[str]], dict[str, str]]:
+    """
+    Load and cache the actor alias table from config/actors.yaml.
+    Returns (ALIAS_TABLE, _ALIAS_TO_CANONICAL).
+    Falls back to empty dicts if the file is missing or malformed.
+    """
+    global _ALIAS_TABLE_CACHE, _ALIAS_TO_CANONICAL_CACHE
+    if _ALIAS_TABLE_CACHE is not None:
+        return _ALIAS_TABLE_CACHE, _ALIAS_TO_CANONICAL_CACHE
 
-    "Sandworm": frozenset({
-        "sandworm", "sandworm team", "voodoo bear", "iridium",
-        "seashell blizzard", "electrum", "quedagh", "iron viking",
-        "telebots", "blackenergy", "g0034", "uac-0113", "uac-0082",
-        "industroyer", "notpetya group",
-    }),
+    alias_table: dict[str, frozenset[str]] = {}
+    alias_to_canonical: dict[str, str] = {}
 
-    "Turla": frozenset({
-        "turla", "snake", "uroburos", "venomous bear", "krypton",
-        "secret blizzard", "iron hunter", "waterbug", "g0010",
-        "carbon spider", "penquin turla", "kazuar",
-    }),
+    try:
+        data = _yaml.safe_load(_ACTORS_YAML.read_text(encoding="utf-8"))
+        actors = data.get("actors", {}) or {}
+        for canonical, meta in actors.items():
+            if not isinstance(meta, dict):
+                continue
+            raw_aliases = meta.get("aliases", []) or []
+            aliases = frozenset(str(a).lower().strip() for a in raw_aliases if a)
+            alias_table[canonical] = aliases
+            for alias in aliases:
+                alias_to_canonical[alias] = canonical
+            alias_to_canonical[canonical.lower()] = canonical
+    except FileNotFoundError:
+        logger.warning(
+            "config/actors.yaml not found — alias resolution disabled. "
+            "Run from the theory repo root or check your working directory."
+        )
+    except Exception as exc:
+        logger.error("Failed to load config/actors.yaml: %s", exc)
 
-    "Gamaredon": frozenset({
-        "gamaredon", "primitive bear", "shuckworm", "actinium",
-        "iron tilden", "uac-0010", "g0047", "armageddon",
-        "callisto group",
-    }),
+    _ALIAS_TABLE_CACHE = alias_table
+    _ALIAS_TO_CANONICAL_CACHE = alias_to_canonical
+    return alias_table, alias_to_canonical
 
-    # ── China ────────────────────────────────────────────────────────
 
-    "APT10": frozenset({
-        "apt10", "menupass", "stone panda", "bronze riverside",
-        "potassium", "cvnx", "happyyongzi", "cloud hopper",
-        "g0045", "red apollo", "hogfish",
-    }),
+def _get_alias_table() -> dict[str, frozenset[str]]:
+    table, _ = _load_actors_yaml()
+    return table
 
-    "APT41": frozenset({
-        "apt41", "double dragon", "barium", "winnti group",
-        "bronze atlas", "wicked spider", "wicked panda",
-        "lead", "g0096", "axiom", "blackfly",
-    }),
 
-    "Volt Typhoon": frozenset({
-        "volt typhoon", "bronze silhouette", "vanguard panda",
-        "dev-0391", "unc3236", "insidious taurus", "g1017",
-    }),
+def _get_alias_to_canonical() -> dict[str, str]:
+    _, index = _load_actors_yaml()
+    return index
 
-    "Salt Typhoon": frozenset({
-        "salt typhoon", "ghostemperor", "earth estries",
-        "famsec", "unc2286", "g1045",
-    }),
 
-    "APT40": frozenset({
-        "apt40", "temp.periscope", "temp.jumper", "bronze mohawk",
-        "leviathan", "gadolinium", "ta423", "g0065",
-        "red ladon", "indrik spider",
-    }),
+# Public API — identical interface as before, now backed by YAML
+@property  # type: ignore[misc]
+def ALIAS_TABLE() -> dict[str, frozenset[str]]:  # noqa: N802
+    return _get_alias_table()
 
-    "APT31": frozenset({
-        "apt31", "zirconium", "judgment panda", "bronze vinewood",
-        "g0128", "violet typhoon",
-    }),
 
-    "APT34": frozenset({
-        "apt34", "oilrig", "crambus", "cobalt gypsy",
-        "chrysene", "g0049", "helix kitten", "hazel sandstorm",
-    }),
+# Module-level attribute for direct import compatibility
+# (e.g. `from collectors.cisa_advisories import ALIAS_TABLE`)
+class _AliasTableProxy:
+    """Proxy that behaves like a dict but loads from YAML on first access."""
+    def __getitem__(self, key):   return _get_alias_table()[key]
+    def __contains__(self, key): return key in _get_alias_table()
+    def __iter__(self):          return iter(_get_alias_table())
+    def __len__(self):           return len(_get_alias_table())
+    def items(self):             return _get_alias_table().items()
+    def keys(self):              return _get_alias_table().keys()
+    def values(self):            return _get_alias_table().values()
+    def get(self, key, default=None): return _get_alias_table().get(key, default)
 
-    "BlackTech": frozenset({
-        "blacktech", "circuit panda", "radio panda",
-        "palmerworm", "temp.overboard", "g0098",
-    }),
 
-    "Earth Lusca": frozenset({
-        "earth lusca", "charcoal typhoon", "fishmonger",
-        "bronze university", "ta428", "g1006",
-    }),
-
-    # ── North Korea (DPRK) ───────────────────────────────────────────
-
-    "Lazarus Group": frozenset({
-        "lazarus group", "lazarus", "hidden cobra", "zinc",
-        "nickel academy", "diamond sleet", "apt38", "whois team",
-        "g0032", "temp.hermit",
-        "labyrinth chollima", "stardust chollima",
-    }),
-
-    "Kimsuky": frozenset({
-        "kimsuky", "black banshee", "emerald sleet", "velvet chollima",
-        "thallium", "g0094", "ta406", "spring dragon",
-    }),
-
-    "Andariel": frozenset({
-        "andariel", "silent chollima", "stonefly", "plutonium",
-        "g0138", "dark seoul", "operation troy",
-    }),
-
-    "Bluenoroff": frozenset({
-        "bluenoroff", "sapphire sleet", "copernicium",
-    }),
-
-    # ── Iran ────────────────────────────────────────────────────────
-
-    "APT33": frozenset({
-        "apt33", "refined kitten", "magnallium", "holmium",
-        "elfin", "g0064", "peach sandstorm", "raspite",
-    }),
-
-    "Charming Kitten": frozenset({
-        "charming kitten", "apt35", "phosphorus", "mint sandstorm",
-        "ta453", "newscaster", "g0059", "cobalt illusion",
-        "tortoiseshell", "iridescent ursa",
-    }),
-
-    "MuddyWater": frozenset({
-        "muddywater", "mercury", "static kitten", "seedworm",
-        "temp.zagros", "mango sandstorm", "g0069", "ta450",
-    }),
-
-    "Moses Staff": frozenset({
-        "moses staff", "cobalt sapling", "g1009",
-    }),
-
-    "Agrius": frozenset({
-        "agrius", "pink sandstorm", "americium", "unc2322",
-        "g1030", "BlackShadow",
-    }),
-
-    # ── Financially Motivated ────────────────────────────────────────
-
-    "FIN7": frozenset({
-        "fin7", "carbanak", "navigator group", "sangria tempest", "g0046",
-    }),
-
-    "FIN8": frozenset({
-        "fin8", "syssphinx", "g0061",
-    }),
-
-    "FIN6": frozenset({
-        "fin6", "itg08", "skeleton spider", "g0037",
-        "magecart group 6",
-    }),
-
-    "Lapsus$": frozenset({
-        "lapsus$", "lapsus", "scatter swine", "dev-0537",
-        "unc3661", "g1004", "strawberry tempest",
-    }),
-
-    "Scattered Spider": frozenset({
-        "scattered spider", "0ktapus", "starfraud", "unc3944",
-        "muddled libra", "octo tempest", "g1015", "dev-0671",
-        "roasted 0ktapus",
-    }),
-
-    "Wizard Spider": frozenset({
-        "wizard spider", "unc1878", "gold blackburn",
-        "g0102", "ryuk group", "conti group",
-    }),
-
-    "TA505": frozenset({
-        "ta505", "cl0p group", "gold tahoe",
-        "g0092", "hive0065",
-    }),
-
-    "Cl0p": frozenset({
-        "cl0p", "clop", "fin11", "g0158",
-    }),
-
-    # ── Hacktivism / Gray Zone ───────────────────────────────────────
-
-    "KillNet": frozenset({
-        "killnet", "killmilk",
-    }),
-
-    "Anonymous Sudan": frozenset({
-        "anonymous sudan", "anonsud", "g1024",
-    }),
-
-    "Predatory Sparrow": frozenset({
-        "predatory sparrow", "gonjeshke darande",
-    }),
-
-    "Equation Group": frozenset({
-        "equation group", "equation", "g0020",
-    }),
-
-}
-
-# Inverted index: alias_lower → canonical name
-_ALIAS_TO_CANONICAL: dict[str, str] = {}
-for _canonical, _aliases in ALIAS_TABLE.items():
-    for _alias in _aliases:
-        _ALIAS_TO_CANONICAL[_alias] = _canonical
-    _ALIAS_TO_CANONICAL[_canonical.lower()] = _canonical
+ALIAS_TABLE = _AliasTableProxy()  # type: ignore[assignment]
 
 
 def resolve_canonical(name: str) -> str:
     """
     Map any actor name/alias to its canonical name.
-    Falls back to the input itself (title-cased) if unknown.
+    Falls back to the input itself if unknown.
+    Reads from config/actors.yaml via _get_alias_to_canonical().
     """
-    return _ALIAS_TO_CANONICAL.get(name.strip().lower(), name.strip())
+    return _get_alias_to_canonical().get(name.strip().lower(), name.strip())
 
 
 def all_aliases_for(name: str) -> frozenset[str]:
     """Return all known aliases (lowercase) for a canonical or alias name."""
     canonical = resolve_canonical(name)
-    return ALIAS_TABLE.get(canonical, frozenset({name.lower()}))
+    return _get_alias_table().get(canonical, frozenset({name.lower()}))
 
 
 # ---------------------------------------------------------------------------
