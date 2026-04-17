@@ -754,12 +754,15 @@ def run(
         _output_playbook(profile, save,
                          sector=sector,
                          playbook_format=kwargs.get("playbook_format", "markdown"))
+    elif output == "html":
+        _output_html(profile, save)
     elif output == "all":
         _output_dossier(profile, save)
         _output_json(profile, save)
         _output_stix(profile, save)
         _output_csv(profile, save)
         _output_navigator(profile, save)
+        _output_html(profile, save)
     else:
         _output_dossier(profile, save)
 
@@ -1077,6 +1080,28 @@ def _output_playbook(
         except BrokenPipeError:
             pass
 
+
+def _output_html(profile: dict[str, Any], save: bool) -> None:
+    """Generate a self-contained HTML dossier."""
+    from reporters.html_reporter import HtmlReporter
+    reporter = HtmlReporter()
+    clean    = _sanitize_profile(profile)
+    if save:
+        path = reporter.save(clean)
+        try:
+            from rich.console import Console
+            Console(stderr=True).print(
+                f"[dim][theory] HTML dossier saved → {path}[/dim]\n"
+                f"[dim]  Open in any browser — no server required.[/dim]"
+            )
+        except ImportError:
+            print(f"\n[theory] HTML dossier saved → {path}", file=sys.stderr)
+    else:
+        try:
+            print(reporter.build(clean))
+        except BrokenPipeError:
+            pass
+
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
@@ -1095,6 +1120,7 @@ examples:
   theory --actor APT28 --output navigator
   theory --actor APT28 --sources mitre,sigma --output playbook
   theory --actor APT28 --sources mitre,sigma --output playbook --playbook-format jira
+  theory --actor APT28 --sources mitre,malpedia,otx --output html
   theory --actor APT28 --sources mitre,sigma --detection-path ~/my-sigma-rules
   theory --list-sources
   theory --list-actors
@@ -1166,7 +1192,7 @@ def _build_parser() -> argparse.ArgumentParser:
     # ── Output format ──────────────────────────────────────────────────
     p.add_argument(
         "--output", "-o",
-        choices=["dossier", "json", "stix", "csv", "all", "exec", "navigator", "playbook"],
+        choices=["dossier", "json", "stix", "csv", "all", "exec", "navigator", "playbook", "html"],
         default="dossier",
         metavar="FORMAT",
         help=(
@@ -1178,7 +1204,8 @@ def _build_parser() -> argparse.ArgumentParser:
             "all = write all formats. "
             "exec = non-technical executive summary (BLUF, requires LLM key). "
             "navigator = ATT&CK Navigator layer JSON. "
-            "playbook = IR playbook checklist (markdown or Jira format)."
+            "playbook = IR playbook checklist (markdown or Jira format). "
+            "html = self-contained HTML dossier (shareable, opens in any browser)."
         ),
     )
 
