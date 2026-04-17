@@ -13,4 +13,5 @@ venv/
 config/sources.yaml
 
 # macOS
-.DS_Store
+.DS_Store.cache/
+.coverage
