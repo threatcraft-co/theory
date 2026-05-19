@@ -15,3 +15,5 @@ config/sources.yaml
 # macOS
 .DS_Store.cache/
 .coverage
+.cache/
+.coverage
