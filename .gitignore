@@ -17,3 +17,5 @@ config/sources.yaml
 .coverage
 .cache/
 .coverage
+.DS_Store
+output/.DS_Store
