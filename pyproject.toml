@@ -9,7 +9,7 @@ description = "Multi-source threat actor intelligence framework"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
-    { name = "Threatcraft", email = "hello@threatcraft.co" }
+    { name = "Threatcraft", email = "threatcraft@proton.me" }
 ]
 keywords = [
     "threat-intelligence", "mitre-attack", "cybersecurity",
