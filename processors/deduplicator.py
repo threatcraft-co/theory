@@ -304,3 +304,4 @@ def _collect(results: list[dict], key: str) -> list:
         if isinstance(val, list):
             out.extend(val)
     return out
+

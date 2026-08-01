@@ -107,3 +107,4 @@ jobs:
         # F841 = local variable assigned but never used
         # F811 = redefinition of unused name (type: ignore comments + proxy pattern)
         # F821 = undefined name (dynamic function insertion pattern in _cli.py)
+

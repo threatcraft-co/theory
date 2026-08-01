@@ -737,3 +737,4 @@ def _article_hash(article: dict) -> str:
     """Stable cache key from article URL + title."""
     key = f"{article.get('url','')}{article.get('title','')}".encode("utf-8")
     return hashlib.sha256(key).hexdigest()[:16]
+

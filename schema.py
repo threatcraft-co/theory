@@ -126,3 +126,4 @@ SECTOR_NORMALIZATION: dict = {
     "ngo": "NGO / Non-profit", "nonprofit": "NGO / Non-profit",
     "non-profit": "NGO / Non-profit",
 }
+

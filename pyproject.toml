@@ -76,3 +76,4 @@ include = [
 [tool.ruff]
 line-length = 120
 ignore = ["E501", "E402", "W291", "W292", "W293", "E701", "E702", "F401", "F541", "F841"]
+

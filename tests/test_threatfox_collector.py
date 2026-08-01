@@ -310,3 +310,4 @@ class TestUtilities:
 
     def test_threat_priority_unknown(self):
         assert _threat_priority("unknown_type") == 99
+

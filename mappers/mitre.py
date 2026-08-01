@@ -173,3 +173,4 @@ class MitreMapper:
                 seen_lower.add(s.lower())
                 result.append(s)
         return result
+

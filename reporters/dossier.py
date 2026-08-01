@@ -737,3 +737,4 @@ def _canonical_slug(profile: dict) -> str:
 
 def _now_utc() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+

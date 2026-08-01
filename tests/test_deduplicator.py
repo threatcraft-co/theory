@@ -144,3 +144,4 @@ class TestSourceCitations:
         r = deduplicate([make_result("mitre_attack"), make_result("cisa_advisories")])
         ids = [s["source_id"] for s in r["_sources"]]
         assert "mitre_attack" in ids and "cisa_advisories" in ids
+

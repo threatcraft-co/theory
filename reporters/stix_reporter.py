@@ -547,3 +547,4 @@ def _slugify(name: str) -> str:
 
 
 import re  # noqa: E402 — needed for _year_to_stix/_date_to_stix
+

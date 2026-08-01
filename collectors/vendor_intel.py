@@ -669,3 +669,4 @@ def _parse_custom_feeds(path: Path) -> list[dict]:
 
 def _slugify(name: str) -> str:
     return re.sub(r"[^a-z0-9]", "_", name.lower())[:60]
+

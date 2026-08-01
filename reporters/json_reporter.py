@@ -24,3 +24,4 @@ class JsonReporter:
         path.write_text(json.dumps(profile, indent=2, default=str), encoding="utf-8")
         logger.info("JSON saved → %s", path)
         return path
+
