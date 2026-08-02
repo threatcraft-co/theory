@@ -52,4 +52,3 @@ git clone --depth 1 https://github.com/SigmaHQ/sigma.git .cache/sigma-repo
 | Update method | `git pull` via `theory --update-bundles` |
 | GitHub token | Not required |
 | Rate limits | None |
-

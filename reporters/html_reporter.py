@@ -794,4 +794,3 @@ def _canonical_slug(profile: dict) -> str:
     except Exception:
         pass
     return re.sub(r"[^a-z0-9]", "_", actor.lower())
-

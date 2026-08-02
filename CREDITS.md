@@ -80,4 +80,3 @@ THEORY was built in the spirit of the open-source security community — the ana
 ---
 
 *THEORY is not affiliated with, endorsed by, or sponsored by any of the organizations listed above.*
-

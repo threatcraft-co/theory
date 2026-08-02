@@ -117,4 +117,3 @@ class BaseCollector(ABC):
             "campaigns": [],
             "source_citation": self.SOURCE_ID,
         }
-

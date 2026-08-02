@@ -424,4 +424,3 @@ def _strip_markdown_links(text: str) -> str:
     # Leftover bare (url) at start of description (malformed STIX)
     text = re.sub(r"^\s*\(https?://[^)]+\)\s*", "", text)
     return text.strip()
-

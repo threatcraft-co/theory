@@ -428,4 +428,3 @@ def _fetch_json(url: str, timeout: int = _TIMEOUT) -> Any:
                 time.sleep(_RETRY_WAIT)
             else:
                 raise
-

@@ -1,0 +1,67 @@
+# Client-side hooks that run before every commit. Install once with:
+#   pre-commit install
+#
+# Bypass in emergencies with:
+#   git commit --no-verify
+#
+# Update hook versions with:
+#   pre-commit autoupdate
+
+repos:
+
+  # ---------------------------------------------------------------------
+  # Secret scanning — catches API keys, tokens, private keys before they
+  # leave the machine. Uses the default gitleaks ruleset which covers
+  # AWS, GCP, Anthropic, OpenAI, GitHub, Slack, Stripe, and ~150 others.
+  # ---------------------------------------------------------------------
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+
+  # ---------------------------------------------------------------------
+  # Prevent common accidents: committing .env files, large binaries,
+  # merge conflict markers, private keys, files with the wrong case.
+  # ---------------------------------------------------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+        exclude: '^(theory/_cli\.py|.*/banner\.py)$'
+
+  # ---------------------------------------------------------------------
+  # Block committing any file matching common secret-file patterns,
+  # regardless of content. Belt and suspenders alongside gitleaks —
+  # gitleaks scans content, this blocks by name.
+  #
+  # Explicitly allows *.example and *.sample template files so
+  # `.env.example` and similar committed placeholders don't trigger it.
+  # ---------------------------------------------------------------------
+  - repo: local
+    hooks:
+      - id: block-secret-files
+        name: Block secret files by name
+        entry: |
+          bash -c '
+          matches=$(git diff --cached --name-only --diff-filter=AM | grep -Ev "\.(example|sample|template)$" | grep -E "(^|/)(\.env|\.env\.[^/]+|.*\.pem|.*\.key|.*_rsa|.*_ed25519|.*_dsa|.*\.p12|.*\.pfx|credentials\.json|secrets\.ya?ml)$" || true)
+          if [ -n "$matches" ]; then
+            echo ""
+            echo "ERROR: Attempted to commit a file matching a secret-file pattern:"
+            echo "$matches" | sed "s/^/  - /"
+            echo ""
+            echo "If this is intentional (e.g. an example file), rename it (.env → .env.example)"
+            echo "or bypass with: git commit --no-verify"
+            exit 1
+          fi
+          '
+        language: system
+        stages: [pre-commit]

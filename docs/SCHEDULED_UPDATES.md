@@ -107,4 +107,3 @@ crontab -e
 | APT campaigns | Monthly | CyberMonitor collection is archival |
 
 Weekly (every Monday) is a good default that covers all three without being excessive.
-

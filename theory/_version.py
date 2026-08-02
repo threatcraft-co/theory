@@ -3,4 +3,3 @@ __author__  = "Threatcraft"
 __email__   = "threatcraft@proton.me"
 __url__     = "https://github.com/threatcraft-co/theory"
 __license__ = "MIT"
-

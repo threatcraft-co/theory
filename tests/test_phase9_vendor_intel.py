@@ -700,4 +700,3 @@ class TestSynthesisWithMock:
 
         result = synth.synthesize(article, "APT28", [])
         assert result is None
-

@@ -193,4 +193,3 @@ class TestMitreMapperUnknownTactic:
         }
         result = MitreMapper().map(raw)
         assert result["techniques"][0]["tactic"] == "Some New Tactic"
-

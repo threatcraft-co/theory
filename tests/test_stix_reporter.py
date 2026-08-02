@@ -477,4 +477,3 @@ class TestVocabMappers:
     def test_botnet_c2_indicator_type(self):
         types = _map_indicator_type("ip", "Botnet C2")
         assert "compromised" in types or "malicious-activity" in types
-

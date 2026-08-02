@@ -285,4 +285,3 @@ class TestUpdateRepo:
                 mock_run.return_value = MagicMock(returncode=1, stderr="error")
                 result = collector.update_repo()
         assert result is False
-

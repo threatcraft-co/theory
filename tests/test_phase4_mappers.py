@@ -288,4 +288,3 @@ class TestConfidenceCrossSource:
                   if t.get("technique_id") == "T1059"), None)
         assert t is not None
         assert t.get("confidence", "").lower() != "high"
-

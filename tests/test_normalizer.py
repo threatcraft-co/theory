@@ -135,4 +135,3 @@ class TestAliasNormalization:
     def test_empty_aliases_ignored(self):
         r = normalize(minimal({"aliases": ["", "  ", "APT28"]}))
         assert r["aliases"] == ["APT28"]
-

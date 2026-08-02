@@ -155,4 +155,3 @@ For general questions about THEORY's security posture that are not vulnerability
 ---
 
 *This security policy is maintained by [Threatcraft](https://github.com/threatcraft-co) and applies to all code in the `threatcraft-co/theory` repository.*
-

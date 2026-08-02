@@ -306,4 +306,3 @@ def _fetch_json(url: str, cache_key: str | None = None,
             else:
                 raise
     return None
-

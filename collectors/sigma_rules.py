@@ -422,4 +422,3 @@ def _summarise_condition(condition: str) -> str:
     if len(c) > 80:
         c = c[:77] + "..."
     return c
-

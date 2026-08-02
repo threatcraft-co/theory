@@ -203,4 +203,3 @@ class TestCisaMapperEnrichments:
         r = CisaMapper().map(FULL_RAW)
         assert len(r["advisories"]) == 1
         assert "aa22-110a" in r["advisories"][0]["url"]
-

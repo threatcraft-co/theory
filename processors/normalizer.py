@@ -246,4 +246,3 @@ def _normalize_campaigns(values: Any) -> list[dict[str, Any]]:
             "reference": reference,
         })
     return result
-

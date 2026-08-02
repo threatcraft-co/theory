@@ -331,4 +331,3 @@ def _slugify(name: str) -> str:
 
 def _threat_priority(threat_type: str) -> int:
     return _THREAT_PRIORITY.get((threat_type or "").lower(), 99)
-

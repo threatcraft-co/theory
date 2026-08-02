@@ -190,4 +190,3 @@ class TestSaveMarkdown:
         reporter = DossierReporter()
         path = reporter.save_markdown(profile)
         assert path.name == "unknown_threat_actor.md"
-

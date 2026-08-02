@@ -302,4 +302,3 @@ in any way, you've violated this agreement and that's on you, not us.
 *Threatcraft Co. is not a law firm. This document does not constitute legal
 advice. Consult a qualified attorney before relying on this disclaimer for
 any specific legal purpose or before using THEORY in any high-stakes context.*
-

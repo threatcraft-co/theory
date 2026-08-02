@@ -303,4 +303,3 @@ Open an issue at github.com/threatcraft-co/theory/issues or reach out at
 ---
 
 *Maintained by [Threatcraft](https://github.com/threatcraft-co).*
-

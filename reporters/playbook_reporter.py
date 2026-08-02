@@ -484,7 +484,7 @@ Highest-confidence techniques: {', '.join(high_ttps)}
 
 Write 4-6 concrete threat hunt hypotheses as a numbered list.
 Each hypothesis should:
-- Start with "Hypothesis:" 
+- Start with "Hypothesis:"
 - Be one sentence describing what to hunt for and where
 - Reference a specific log source or data type (e.g. Windows Event Log, EDR telemetry, DNS logs)
 - Be specific enough to act on immediately
@@ -604,4 +604,3 @@ def _canonical_slug(profile: dict) -> str:
     except Exception:
         pass
     return re.sub(r"[^a-z0-9]", "_", actor.lower())
-

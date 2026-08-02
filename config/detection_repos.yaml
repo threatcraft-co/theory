@@ -177,4 +177,3 @@ detection_repos:
     platform: "yara"
     tags: [yara, endpoint, malware, threat-hunting]
     tier: 2
-
