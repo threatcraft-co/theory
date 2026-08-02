@@ -265,23 +265,57 @@ class TestSigmaCollectorRepoState:
 
 class TestUpdateRepo:
 
-    def test_update_calls_git_pull(self, tmp_path):
+    def test_update_runs_fetch_then_reset(self, tmp_path):
+        """
+        Update should fetch, then hard-reset to origin/HEAD.
+        Force-push tolerance: `git pull` aborts on divergent history;
+        fetch + reset does not. SigmaHQ maintainers force-push master
+        semi-regularly, so this matters.
+        """
         collector = SigmaCollector()
         with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
             tmp_path.mkdir(exist_ok=True)
             with patch("subprocess.run") as mock_run:
                 mock_run.return_value = MagicMock(returncode=0, stderr="")
                 result = collector.update_repo()
-        assert result is True
-        mock_run.assert_called_once()
-        call_args = mock_run.call_args[0][0]
-        assert "pull" in call_args
 
-    def test_update_returns_false_on_failure(self, tmp_path):
+        assert result is True
+        assert mock_run.call_count == 2
+
+        # First call: git fetch
+        fetch_cmd = mock_run.call_args_list[0][0][0]
+        assert "fetch" in fetch_cmd
+        assert "pull" not in fetch_cmd
+
+        # Second call: git reset --hard origin/HEAD
+        reset_cmd = mock_run.call_args_list[1][0][0]
+        assert "reset"       in reset_cmd
+        assert "--hard"      in reset_cmd
+        assert "origin/HEAD" in reset_cmd
+
+    def test_update_returns_false_when_fetch_fails(self, tmp_path):
+        """Fetch failure aborts before the reset is even attempted."""
         collector = SigmaCollector()
         with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
             tmp_path.mkdir(exist_ok=True)
             with patch("subprocess.run") as mock_run:
-                mock_run.return_value = MagicMock(returncode=1, stderr="error")
+                mock_run.return_value = MagicMock(returncode=1, stderr="fetch error")
                 result = collector.update_repo()
         assert result is False
+        # Only fetch was attempted — reset never ran
+        assert mock_run.call_count == 1
+
+    def test_update_returns_false_when_reset_fails(self, tmp_path):
+        """Reset failure after a successful fetch also returns False."""
+        collector = SigmaCollector()
+        with patch("collectors.sigma_rules.SIGMA_REPO_PATH", tmp_path):
+            tmp_path.mkdir(exist_ok=True)
+            with patch("subprocess.run") as mock_run:
+                # First call (fetch) succeeds, second call (reset) fails.
+                mock_run.side_effect = [
+                    MagicMock(returncode=0, stderr=""),
+                    MagicMock(returncode=1, stderr="reset error"),
+                ]
+                result = collector.update_repo()
+        assert result is False
+        assert mock_run.call_count == 2
