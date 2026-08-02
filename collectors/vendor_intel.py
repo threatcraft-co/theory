@@ -18,6 +18,12 @@ Relevance scoring:
   0-29    Tangential mention
 
 Cache: .cache/vendor_intel/{feed_slug}.json, TTL 24 hours per feed
+
+Security (added 2026-06 audit):
+  XML parsing of attacker-influenceable RSS/Atom feeds uses defusedxml.
+  The stdlib xml.etree.ElementTree is not safe against entity expansion
+  (billion laughs) or external entity (XXE) attacks, both of which apply
+  here because feed URLs are configurable and vendor blogs are third-party.
 """
 
 from __future__ import annotations
@@ -34,7 +40,12 @@ from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
-from xml.etree import ElementTree as ET
+
+# Hardened XML parser. defusedxml.ElementTree mirrors the stdlib
+# xml.etree.ElementTree API but refuses entity expansion and external
+# references, defeating billion-laughs / quadratic-blowup / XXE attacks.
+from defusedxml import ElementTree as ET
+from defusedxml.common import DefusedXmlException
 
 logger = logging.getLogger(__name__)
 
@@ -475,16 +486,26 @@ def _is_id_alias(alias: str) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# RSS/Atom parser (no external dependencies)
+# RSS/Atom parser (hardened via defusedxml)
 # ---------------------------------------------------------------------------
 
 def _parse_rss_xml(content: str) -> list[dict]:
-    """Parse RSS 2.0 or Atom feed XML into list of entry dicts."""
+    """
+    Parse RSS 2.0 or Atom feed XML into list of entry dicts.
+
+    Uses defusedxml to refuse entity expansion (billion laughs / quadratic
+    blowup) and external entity references (XXE). Vendor RSS feeds are
+    third-party content and have to be treated as attacker-influenceable.
+    """
     entries: list[dict] = []
     try:
         root = ET.fromstring(content)
     except ET.ParseError as exc:
         logger.debug("RSS XML parse error: %s", exc)
+        return entries
+    except DefusedXmlException as exc:
+        # Entity expansion or external reference rejected.
+        logger.warning("RSS feed rejected by hardened parser: %s", exc)
         return entries
 
     ns = {
@@ -536,7 +557,7 @@ def _parse_rss_xml(content: str) -> list[dict]:
     return entries
 
 
-def _xml_text(elem: ET.Element, tag: str, ns: dict | None = None) -> str:
+def _xml_text(elem, tag: str, ns: dict | None = None) -> str:
     child = elem.find(tag, ns or {})
     if child is None:
         return ""
@@ -669,4 +690,3 @@ def _parse_custom_feeds(path: Path) -> list[dict]:
 
 def _slugify(name: str) -> str:
     return re.sub(r"[^a-z0-9]", "_", name.lower())[:60]
-

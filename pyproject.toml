@@ -43,6 +43,9 @@ dependencies = [
     "censys>=2.2",
     "watchdog>=3.0",
     "schedule>=1.2",
+    # Hardened XML parser — refuses entity expansion (billion laughs)
+    # and external entity references (XXE) on attacker-influenceable RSS.
+    "defusedxml>=0.7.1",
 ]
 
 [project.optional-dependencies]
@@ -50,6 +53,8 @@ dev = [
     "pytest>=8.0",
     "pytest-cov>=5.0",
     "ruff>=0.4",
+    # Supply-chain advisory scanning in CI
+    "pip-audit>=2.7",
 ]
 
 [project.scripts]
@@ -75,5 +80,19 @@ include = [
 
 [tool.ruff]
 line-length = 120
-ignore = ["E501", "E402", "W291", "W292", "W293", "E701", "E702", "F401", "F541", "F841"]
 
+[tool.ruff.lint]
+# Ignore list mirrors the one CI applies via --ignore so local `ruff check .`
+# matches CI exactly.
+ignore = [
+    "E501",                          # line too long
+    "E402",                          # module-level import not at top
+    "W291", "W292", "W293",          # trailing whitespace (ASCII banner lines)
+    "E701", "E702",                  # multiple statements on one line
+    "E731",                          # lambda assignment (sort-key idiom)
+    "F401",                          # imported but unused (conditional imports)
+    "F541",                          # f-string without placeholders
+    "F841",                          # local variable assigned but never used
+    "F811",                          # redefinition of unused name (proxy pattern)
+    "F821",                          # undefined name (dynamic function insertion in _cli.py)
+]

@@ -376,6 +376,29 @@ def _section_detection_repos(repos: list) -> str:
   </div>"""
 
 
+def _advisory_item_html(a: dict) -> str:
+    """
+    Render one CISA advisory as an HTML fragment. Extracted from an f-string
+    generator that used backslash escapes inside brace expressions — that
+    syntax is Python 3.12+ only and breaks the linter on 3.11.
+    """
+    date  = _esc(a.get("date", ""))
+    title = _esc(a.get("title", ""))
+    url   = a.get("url", "")
+    if url:
+        link_open  = f'<a href="{_esc(url)}" target="_blank">'
+        link_close = "</a>"
+    else:
+        link_open  = "<span>"
+        link_close = "</span>"
+    return (
+        f'<div class="advisory-item">'
+        f'<span class="advisory-date">{date}</span>'
+        f'{link_open}{title}{link_close}'
+        f'</div>'
+    )
+
+
 def _section_sectors_cves(sectors: list, cves: list, advisories: list) -> str:
     sector_html = ""
     if sectors:
@@ -398,13 +421,7 @@ def _section_sectors_cves(sectors: list, cves: list, advisories: list) -> str:
 
     adv_html = ""
     if advisories:
-        items = "".join(
-            f'<div class="advisory-item"><span class="advisory-date">{_esc(a.get("date",""))}</span>'
-            f'{"<a href=\"" + _esc(a["url"]) + "\" target=\"_blank\">" if a.get("url") else "<span>"}'
-            f'{_esc(a.get("title",""))}'
-            f'{"</a>" if a.get("url") else "</span>"}</div>'
-            for a in advisories
-        )
+        items = "".join(_advisory_item_html(a) for a in advisories)
         adv_html = f'<h3 class="subsection-title">CISA Advisories</h3><div class="advisories-list">{items}</div>'
 
     return f"""
