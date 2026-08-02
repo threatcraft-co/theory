@@ -37,36 +37,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
 
-      - name: Create required directories
+      - name: Create runtime directories
+        # .cache/ and output/dossiers/ are gitignored — tests create their
+        # own tmp dirs via pytest fixtures, but a few paths still expect
+        # these to exist.
         run: |
-          mkdir -p .cache output/dossiers config
-
-      - name: Create minimal actors.yaml for tests
-        run: |
-          cat > config/actors.yaml << 'EOF'
-          actors:
-            APT28:
-              origin: Russia
-              motivation: espionage
-              aliases:
-                - apt28
-                - fancy bear
-                - g0007
-            APT29:
-              origin: Russia
-              motivation: espionage
-              aliases:
-                - apt29
-                - cozy bear
-                - g0016
-            Lazarus Group:
-              origin: North Korea
-              motivation: financial
-              aliases:
-                - lazarus group
-                - lazarus
-                - g0032
-          EOF
+          mkdir -p .cache output/dossiers
 
       - name: Run all tests
         run: |
