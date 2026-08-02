@@ -105,32 +105,62 @@ class SigmaCollector:
             return False
 
     def update_repo(self) -> bool:
-        """Pull latest changes from SigmaHQ. Called by --update-bundles."""
+        """Pull latest changes from SigmaHQ. Called by --update-bundles.
+
+        Uses `git fetch` + `git reset --hard` rather than `git pull` because
+        the SigmaHQ maintainers force-push master semi-regularly, which causes
+        `git pull` to abort with a divergent-history error. Fetch + reset
+        tolerates force pushes cleanly — this is a cache, not a working repo,
+        so there is no local history to preserve.
+        """
         if not SIGMA_REPO_PATH.exists():
             return self._ensure_repo()
 
         try:
             from rich.console import Console
-            Console(stderr=True).print("[dim]  Updating Sigma rules (git pull)…[/dim]")
+            console = Console(stderr=True)
+            console.print("[dim]  Updating Sigma rules (git fetch + reset)…[/dim]")
         except ImportError:
+            console = None
             print("  Updating Sigma rules…", file=sys.stderr)
 
-        result = subprocess.run(
-            ["git", "-C", str(SIGMA_REPO_PATH), "pull", "--depth=1"],
+        # 1. Fetch upstream. Force-pushes don't affect `git fetch` — it
+        #    just updates the origin/* refs to whatever the remote has now.
+        fetch_result = subprocess.run(
+            [
+                "git", "-C", str(SIGMA_REPO_PATH),
+                "fetch", "--depth=1", "--no-tags", "origin",
+            ],
             capture_output=True,
             text=True,
             timeout=120,
         )
-        if result.returncode == 0:
-            try:
-                from rich.console import Console
-                Console(stderr=True).print("[green]  ✓ Sigma rules updated[/green]")
-            except ImportError:
-                print("  ✓ Sigma rules updated", file=sys.stderr)
-            return True
-        else:
-            logger.error("Sigma pull failed: %s", result.stderr)
+        if fetch_result.returncode != 0:
+            logger.error("Sigma fetch failed: %s", fetch_result.stderr)
             return False
+
+        # 2. Hard-reset the working tree to origin's default branch.
+        #    `origin/HEAD` is a symbolic ref set up at clone time that
+        #    points at the remote's default branch (master for SigmaHQ),
+        #    so we don't have to hardcode the branch name here.
+        reset_result = subprocess.run(
+            [
+                "git", "-C", str(SIGMA_REPO_PATH),
+                "reset", "--hard", "origin/HEAD",
+            ],
+            capture_output=True,
+            text=True,
+            timeout=60,
+        )
+        if reset_result.returncode != 0:
+            logger.error("Sigma reset failed: %s", reset_result.stderr)
+            return False
+
+        if console:
+            console.print("[green]  ✓ Sigma rules updated[/green]")
+        else:
+            print("  ✓ Sigma rules updated", file=sys.stderr)
+        return True
 
     def collect_for_techniques(
         self, technique_ids: list[str]
