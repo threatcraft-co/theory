@@ -20,8 +20,12 @@ For any supported threat actor, THEORY generates:
 - **Recent intelligence** — LLM-synthesized summaries of recent vendor research articles, with source attribution and links
 - **Campaigns** — full campaign descriptions with dates and ATT&CK links
 - **Targeted sectors** and CISA advisories
+- **IR playbooks** — analyst-ready checklists with IOC blocks, detection checklists, hunt hypotheses, and containment guidance
+- **ATT&CK Navigator layers** — confidence-colored heatmaps importable directly into MITRE Navigator
+- **HTML dossiers** — self-contained, shareable intelligence reports that open in any browser
+- **Detection coverage gap reports** — compare actor TTPs against your local detection rules
 
-Output formats: terminal dossier, markdown, JSON, STIX 2.1 (for MISP/OpenCTI/Sentinel), and IOC CSV.
+Output formats: terminal dossier, markdown, JSON, STIX 2.1 (for MISP/OpenCTI/Sentinel), IOC CSV, HTML, ATT&CK Navigator, and IR playbook (markdown or Jira).
 
 ---
 
@@ -62,7 +66,7 @@ That's it. Your first dossier renders in the terminal and saves to `output/dossi
 | `cisa` | CISA Advisories + KEV | None | Per request |
 | `malpedia` | Malpedia malware database | None | Per request |
 | `otx` | AlienVault OTX | `OTX_API_KEY` | Per request |
-| `sigma` | SigmaHQ detection rules (local clone) | None | Permanent |
+| `sigma` | SigmaHQ detection rules (local clone) | `GITHUB_TOKEN` (optional) | 7 days |
 | `threatfox` | ThreatFox IOCs | None | 24 hours |
 | `vendor` | Vendor intel synthesis (LLM) | LLM API key | 7 days |
 
@@ -93,14 +97,17 @@ theory --actor "Forest Blizzard"    # same actor, different name
 
 ### Choosing sources
 ```bash
-# Default (fast, no Sigma)
-theory --actor APT28 --sources mitre,malpedia,otx
+# Default (mitre + cisa + malpedia, no auth needed)
+theory --actor APT28
+
+# Add community IOCs
+theory --actor APT28 --sources mitre,cisa,malpedia,otx
 
 # Full enrichment including detection rules
-theory --actor APT28 --sources mitre,malpedia,otx,sigma,threatfox
+theory --actor APT28 --sources mitre,cisa,malpedia,otx,sigma,threatfox
 
 # With vendor intelligence synthesis (requires LLM key in .env)
-theory --actor APT28 --sources mitre,malpedia,otx,sigma,threatfox,vendor
+theory --actor APT28 --sources mitre,cisa,malpedia,otx,sigma,threatfox,vendor
 ```
 
 ### Output formats
@@ -117,11 +124,37 @@ theory --actor APT28 --output stix
 # IOC-only CSV (for SIEM lookup tables)
 theory --actor APT28 --sources mitre,otx,threatfox --output csv
 
-# All formats at once
+# Self-contained HTML dossier (shareable, opens in any browser)
+theory --actor APT28 --sources mitre,malpedia,otx --output html
+
+# ATT&CK Navigator layer (import at mitre-attack.github.io/attack-navigator)
+theory --actor APT28 --sources mitre,malpedia,otx --output navigator
+
+# IR playbook with detection checklist and IOC blocks
+theory --actor APT28 --sources mitre,sigma --output playbook
+
+# IR playbook in Jira wiki markup
+theory --actor APT28 --sources mitre,sigma --output playbook --playbook-format jira
+
+# Non-technical executive summary (BLUF format, requires LLM key)
+theory --actor APT28 --output exec
+
+# Executive summary with sector context
+theory --actor "Lazarus Group" --output exec --sector finance
+
+# All formats at once (dossier + JSON + STIX + CSV + Navigator + HTML)
 theory --actor APT28 --output all
 
 # Print only — don't write files
 theory --actor APT28 --no-save
+```
+
+### Detection coverage gap analysis
+```bash
+# Compare actor TTPs against your local detection rules
+theory --actor APT28 --sources mitre,sigma --detection-path ~/my-sigma-rules
+
+# Output: coverage %, covered techniques, and gaps sorted by confidence
 ```
 
 ### Browse what's available
@@ -172,6 +205,8 @@ The synopsis:
 - Works with or without `--sources vendor` — synthesizes from structured MITRE data alone if needed
 - Appears at the top of both the terminal output and the markdown file
 
+**LLM provider resolution order:** Claude → OpenAI → Ollama. Set `THEORY_LLM_PROVIDER` in `.env` to override, or leave blank to auto-detect. Ollama runs fully offline.
+
 ---
 
 ## Vendor Intelligence Synthesis
@@ -204,6 +239,74 @@ theory --actor APT28 --sources mitre,sigma --no-save
 ```
 
 Detection rules are linked directly to actor TTPs in the dossier. See `docs/SIGMA_RATE_LIMITS.md` for full details.
+
+---
+
+## HTML Dossier
+
+THEORY generates self-contained HTML dossiers with a dark intelligence-grade aesthetic. No server required — opens in any browser, works offline. All CSS and JS are embedded inline.
+
+```bash
+theory --actor APT28 --sources mitre,malpedia,otx --output html
+# writes: output/dossiers/apt28.html
+```
+
+Features: collapsible sections, sortable TTP table, tactic filter buttons, IOC freshness indicators (fresh/aging/stale), malware cards, vendor intel cards, and a confidence summary header. Shareable as a single file.
+
+---
+
+## ATT&CK Navigator Export
+
+THEORY exports ATT&CK Navigator v4.5 layers, color-coded by confidence level (HIGH=red, MEDIUM=amber, LOW=yellow). Techniques with Sigma coverage get a score boost.
+
+```bash
+theory --actor APT28 --sources mitre,malpedia,otx --output navigator
+# writes: output/dossiers/apt28.navigator.json
+```
+
+Import into Navigator:
+1. Go to https://mitre-attack.github.io/attack-navigator/
+2. Open Layer → Upload from Local
+3. Select the `.navigator.json` file
+
+---
+
+## IR Playbook
+
+THEORY generates incident response playbooks from actor profiles — structured, analyst-ready checklists that turn intelligence into action.
+
+```bash
+# Markdown format (renders in GitHub, Confluence, Notion, ServiceNow)
+theory --actor APT28 --sources mitre,sigma --output playbook
+
+# Jira wiki markup (paste directly into issue descriptions)
+theory --actor APT28 --sources mitre,sigma --output playbook --playbook-format jira
+```
+
+Playbook sections:
+- **Immediate IOC Blocks** — FRESH and AGING indicators formatted for firewall/SIEM
+- **Detection Checklist** — TTPs as checkboxes with Sigma rule links, grouped by tactic
+- **Hunt Hypotheses** — LLM-generated plain-language hunt queries per high-confidence TTP
+- **Malware Reference** — known families, types, and hashes
+- **Containment Guidance** — LLM-generated, sector-aware response steps (use `--sector` to tailor)
+- **References** — all source URLs cited in the profile
+
+---
+
+## Detection Coverage Gap Analysis
+
+Compare an actor's TTPs against your local detection rules to find where you lack coverage.
+
+```bash
+theory --actor APT28 --sources mitre,sigma --detection-path ~/my-sigma-rules
+```
+
+THEORY greps your detection directory for each technique ID and reports:
+- Coverage percentage with a visual bar
+- **Gaps** — techniques with no local rule, sorted by confidence (HIGH first)
+- **Covered** — techniques you can already detect
+
+Saves a markdown report to `output/dossiers/<actor>_coverage_gap.md`.
 
 ---
 
@@ -261,6 +364,7 @@ theory/                              ← Python package (CLI entry point)
 theory.py                            ← compatibility shim (points to package)
 
 collectors/
+  base.py                            ← base collector class
   mitre_attack.py                    ← MITRE ATT&CK (local STIX bundle)
   cisa_advisories.py                 ← CISA advisories + KEV + alias table
   malpedia.py                        ← Malpedia malware database
@@ -283,15 +387,21 @@ reporters/
   json_reporter.py                   ← JSON profile export
   stix_reporter.py                   ← STIX 2.1 bundle export
   csv_reporter.py                    ← IOC-only CSV export
+  html_reporter.py                   ← Self-contained HTML dossier
+  navigator_reporter.py              ← ATT&CK Navigator layer export
+  playbook_reporter.py               ← IR playbook (markdown + Jira)
 
 config/
-  feeds.yaml                         ← 40 verified vendor intelligence feeds
+  feeds.yaml                         ← 40+ verified vendor intelligence feeds
+  detection_repos.yaml               ← curated detection repo registry
+  actors.yaml                        ← actor configuration
 
 docs/
   SIGMA_RATE_LIMITS.md               ← Sigma architecture docs
   SCHEDULED_UPDATES.md               ← Cron/launchd automation setup
+  SECURITY_AUDIT_2026-06.md          ← Security audit documentation
 
-tests/                               ← 310 passing tests
+tests/                               ← ~310 offline tests
 ```
 
 ---
@@ -299,9 +409,10 @@ tests/                               ← 310 passing tests
 ## Running the tests
 
 ```bash
-pytest tests/ -v                              # all 310 tests
+pytest tests/ -v                              # all tests
 pytest tests/test_stix_reporter.py -v        # STIX only
 pytest tests/test_phase9_vendor_intel.py -v  # vendor intel only
+pytest tests/test_security_hardening.py -v   # security hardening
 ```
 
 All tests run fully offline — no API keys required.
