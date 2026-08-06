@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Any
 
 from collectors.base import BaseCollector
+from collectors.cisa_advisories import all_aliases_for
 
 logger = logging.getLogger(__name__)
 
@@ -130,7 +131,7 @@ class MitreAttackCollector(BaseCollector):
     # ------------------------------------------------------------------
 
     def _resolve_actor(self, client, name: str):
-        name_lower = name.strip().lower()
+        search_names = all_aliases_for(name) | {name.strip().lower()}
         try:
             groups = client.get_groups()
         except Exception as exc:
@@ -138,10 +139,10 @@ class MitreAttackCollector(BaseCollector):
             return None
 
         for group in groups:
-            if (getattr(group, "name", "") or "").lower() == name_lower:
-                return group
-            aliases = getattr(group, "aliases", []) or []
-            if any((a or "").lower() == name_lower for a in aliases):
+            group_name = (getattr(group, "name", "") or "").lower()
+            group_aliases = [(a or "").lower() for a in (getattr(group, "aliases", []) or [])]
+            all_group_names = {group_name} | set(group_aliases)
+            if search_names & all_group_names:
                 return group
         return None
 
