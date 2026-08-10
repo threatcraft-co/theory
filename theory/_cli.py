@@ -251,19 +251,26 @@ def cmd_update_bundles() -> None:
         _print(f"  ✗ ATT&CK bundle update failed: {exc}", "red")
         _print("  Run manually: curl -L {url} -o .cache/enterprise-attack.json", "dim")
 
-    # 2. Update Sigma repo (git pull)
+    # 2. Update Sigma repo (fetch + reset to handle force-pushes)
     sigma_repo = Path(".cache/sigma-repo")
     if sigma_repo.exists():
-        _print("  Updating Sigma rules (git pull)…", "dim")
+        _print("  Updating Sigma rules…", "dim")
         import subprocess as _sp
         result = _sp.run(
-            ["git", "-C", str(sigma_repo), "pull", "--depth=1"],
+            ["git", "-C", str(sigma_repo), "fetch", "origin", "--depth=1"],
             capture_output=True, text=True, timeout=120,
         )
         if result.returncode == 0:
-            _print("  ✓ Sigma rules updated", "green")
+            result = _sp.run(
+                ["git", "-C", str(sigma_repo), "reset", "--hard", "origin/master"],
+                capture_output=True, text=True, timeout=30,
+            )
+            if result.returncode == 0:
+                _print("  ✓ Sigma rules updated", "green")
+            else:
+                _print(f"  ✗ Sigma reset failed: {result.stderr[:100]}", "red")
         else:
-            _print(f"  ✗ Sigma pull failed: {result.stderr[:100]}", "red")
+            _print(f"  ✗ Sigma fetch failed: {result.stderr[:100]}", "red")
     else:
         _print("  ✓ Sigma repo not yet cloned — will clone on next --sources sigma run", "dim")
 
