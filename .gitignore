@@ -69,3 +69,4 @@ Desktop.ini
 *.orig
 *.rej
 .DS_Store
+.cache/
