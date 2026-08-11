@@ -401,7 +401,7 @@ docs/
   SCHEDULED_UPDATES.md               ← Cron/launchd automation setup
   SECURITY_AUDIT_2026-06.md          ← Security audit documentation
 
-tests/                               ← ~310 offline tests
+tests/                               ← 337 offline tests
 ```
 
 ---
@@ -432,13 +432,7 @@ All tests run fully offline — no API keys required.
 
 See `CONTRIBUTING.md` for the full guide. Quick reference:
 
-**Adding a new actor** — edit `collectors/cisa_advisories.py` and add to `ALIAS_TABLE`:
-
-```python
-"Actor Name": frozenset({
-    "actor name", "alias one", "alias two", "g0000",
-}),
-```
+**Adding a new actor** — edit `config/actors.yaml` and add a new entry with the canonical name, aliases, and metadata. See the existing entries in that file for the schema.
 
 **Adding a new source** — implement collector, mapper, and tests. See `CONTRIBUTING.md`.
 

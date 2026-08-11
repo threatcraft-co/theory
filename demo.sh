@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
-# THEORY Demo Script
-# Comprehensive walkthrough of THEORY v1.0.0 capabilities
+# THEORY Demo — Single Comprehensive Run
+# Demonstrates all THEORY v1.0.0 capabilities in one pass
 # Run from the theory/ repo root with your .env configured
 # =============================================================================
 
@@ -9,6 +9,15 @@ set -euo pipefail
 
 DEMO_DIR="output/demo"
 mkdir -p "$DEMO_DIR"
+
+PASS=0
+FAIL=0
+SKIP=0
+
+HAS_OTX=false
+HAS_LLM=false
+
+# ── Helpers ──────────────────────────────────────────────────────────────────
 
 divider() {
     echo ""
@@ -18,31 +27,44 @@ divider() {
     echo ""
 }
 
-pause() {
-    echo ""
-    read -rp "  [press enter to continue]" _
+run() {
+    local label="$1"
+    shift
+    echo "  ▸ $label"
+    echo "    \$ $*"
+    if "$@" > /dev/null 2>&1; then
+        echo "    ✓ pass"
+        ((PASS++))
+    else
+        echo "    ✗ fail"
+        ((FAIL++))
+    fi
     echo ""
 }
 
-# ─────────────────────────────────────────────────────────────────────────────
-# 0. SETUP CHECK
-# ─────────────────────────────────────────────────────────────────────────────
+skip() {
+    local label="$1"
+    local reason="$2"
+    echo "  ▸ $label"
+    echo "    ⚠ skipped — $reason"
+    ((SKIP++))
+    echo ""
+}
 
-divider "0 — SETUP CHECK"
+# ── Preflight ────────────────────────────────────────────────────────────────
 
-echo "Checking THEORY installation..."
+divider "PREFLIGHT"
+
 theory --help > /dev/null 2>&1 && echo "  ✓ theory CLI installed" || { echo "  ✗ theory not found. Run: pip install -e ."; exit 1; }
 
-echo "Checking .env..."
 if [ -f .env ]; then
     echo "  ✓ .env exists"
-    grep -q "OTX_API_KEY=." .env 2>/dev/null && echo "  ✓ OTX_API_KEY configured" || echo "  ⚠ OTX_API_KEY not set (otx source will be skipped)"
-    grep -q "ANTHROPIC_API_KEY=.\|OPENAI_API_KEY=." .env 2>/dev/null && echo "  ✓ LLM provider configured" || echo "  ⚠ No LLM key set (vendor source and overviews will be skipped)"
+    grep -q "OTX_API_KEY=." .env 2>/dev/null && { HAS_OTX=true; echo "  ✓ OTX_API_KEY configured"; } || echo "  ⚠ OTX_API_KEY not set (otx steps will be skipped)"
+    grep -q "ANTHROPIC_API_KEY=.\|OPENAI_API_KEY=." .env 2>/dev/null && { HAS_LLM=true; echo "  ✓ LLM provider configured"; } || echo "  ⚠ No LLM key set (vendor + exec steps will be skipped)"
 else
-    echo "  ⚠ No .env found. Proceeding with no-auth sources only."
+    echo "  ⚠ No .env found. Running no-auth sources only."
 fi
 
-echo "Checking ATT&CK bundle..."
 if [ -d ".cache" ] && find .cache -name "*.json" -size +1M 2>/dev/null | grep -q .; then
     echo "  ✓ ATT&CK bundle cached"
 else
@@ -50,229 +72,128 @@ else
     theory --update-bundles
 fi
 
-pause
+# ── Info Commands ────────────────────────────────────────────────────────────
 
-# ─────────────────────────────────────────────────────────────────────────────
-# 1. INFO COMMANDS
-# ─────────────────────────────────────────────────────────────────────────────
+divider "INFO COMMANDS"
 
-divider "1 — INFO COMMANDS"
+run "List available sources" \
+    theory --list-sources
 
-echo "$ theory --list-sources"
-echo ""
-theory --list-sources
+run "List tracked actors" \
+    theory --list-actors
 
-pause
+# ── Dossier Generation ───────────────────────────────────────────────────────
 
-echo "$ theory --list-actors"
-echo ""
-theory --list-actors
+divider "DOSSIER GENERATION"
 
-pause
+run "Basic dossier (default sources)" \
+    theory --actor APT28
 
-# ─────────────────────────────────────────────────────────────────────────────
-# 2. BASIC DOSSIER (default sources, terminal + markdown)
-# ─────────────────────────────────────────────────────────────────────────────
+run "Multi-source enrichment (mitre + cisa + malpedia + sigma)" \
+    theory --actor APT29 --sources mitre,cisa,malpedia,sigma
 
-divider "2 — BASIC DOSSIER: APT28 (default sources)"
-
-echo "$ theory --actor APT28"
-echo ""
-theory --actor APT28
-
-pause
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 3. ALIAS RESOLUTION
-# ─────────────────────────────────────────────────────────────────────────────
-
-divider "3 — ALIAS RESOLUTION"
-
-echo "All three of these resolve to the same actor and produce the same canonical output file:"
-echo ""
-echo "$ theory --actor 'Fancy Bear' --no-save"
-echo "$ theory --actor 'Forest Blizzard' --no-save"
-echo "$ theory --actor 'STRONTIUM' --no-save"
-echo ""
-echo "Running with 'Fancy Bear'..."
-echo ""
-theory --actor "Fancy Bear" --no-save
-
-pause
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 4. MULTI-SOURCE ENRICHMENT
-# ─────────────────────────────────────────────────────────────────────────────
-
-divider "4 — MULTI-SOURCE ENRICHMENT"
-
-echo "Adding community IOC sources to the base dossier:"
-echo ""
-echo "$ theory --actor APT29 --sources mitre,cisa,malpedia,otx,sigma,threatfox"
-echo ""
-theory --actor APT29 --sources mitre,cisa,malpedia,otx,sigma,threatfox
-
-pause
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 5. OUTPUT FORMATS
-# ─────────────────────────────────────────────────────────────────────────────
-
-divider "5a — JSON EXPORT"
-
-echo "$ theory --actor 'Lazarus Group' --output json"
-echo ""
-theory --actor "Lazarus Group" --output json
-echo ""
-echo "  → Saved to output/dossiers/lazarus_group.json"
-
-pause
-
-divider "5b — STIX 2.1 BUNDLE"
-
-echo "$ theory --actor Turla --sources mitre,malpedia --output stix"
-echo ""
-theory --actor Turla --sources mitre,malpedia --output stix
-echo ""
-echo "  → Saved to output/dossiers/turla.stix.json"
-echo "  → Importable into MISP, OpenCTI, Splunk ES, Microsoft Sentinel"
-
-pause
-
-divider "5c — IOC CSV"
-
-echo "$ theory --actor Sandworm --sources mitre,otx,threatfox --output csv"
-echo ""
-theory --actor Sandworm --sources mitre,otx,threatfox --output csv
-echo ""
-echo "  → Saved to output/dossiers/sandworm.csv"
-echo "  → Raw IOC values (not defanged) for SIEM lookup table ingestion"
-
-pause
-
-divider "5d — ATT&CK NAVIGATOR LAYER"
-
-echo "$ theory --actor APT41 --sources mitre,malpedia --output navigator"
-echo ""
-theory --actor APT41 --sources mitre,malpedia --output navigator
-echo ""
-echo "  → Saved to output/dossiers/apt41.navigator.json"
-echo "  → Import at https://mitre-attack.github.io/attack-navigator/"
-
-pause
-
-divider "5e — HTML DOSSIER"
-
-echo "$ theory --actor 'Volt Typhoon' --sources mitre,cisa,malpedia --output html"
-echo ""
-theory --actor "Volt Typhoon" --sources mitre,cisa,malpedia --output html
-echo ""
-echo "  → Saved to output/dossiers/volt_typhoon.html"
-echo "  → Self-contained, shareable, opens in any browser"
-
-pause
-
-divider "5f — IR PLAYBOOK (Markdown)"
-
-echo "$ theory --actor APT28 --sources mitre,sigma --output playbook"
-echo ""
-theory --actor APT28 --sources mitre,sigma --output playbook
-echo ""
-echo "  → Saved to output/dossiers/apt28_playbook.md"
-
-pause
-
-divider "5g — IR PLAYBOOK (Jira)"
-
-echo "$ theory --actor APT28 --sources mitre,sigma --output playbook --playbook-format jira"
-echo ""
-theory --actor APT28 --sources mitre,sigma --output playbook --playbook-format jira
-echo ""
-echo "  → Paste directly into Jira issue descriptions"
-
-pause
-
-divider "5h — ALL FORMATS AT ONCE"
-
-echo "$ theory --actor 'Kimsuky' --sources mitre,cisa,malpedia --output all"
-echo ""
-theory --actor "Kimsuky" --sources mitre,cisa,malpedia --output all
-echo ""
-echo "  → Generates dossier + JSON + STIX + CSV + Navigator + HTML simultaneously"
-
-pause
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 6. VENDOR INTELLIGENCE SYNTHESIS (requires LLM key)
-# ─────────────────────────────────────────────────────────────────────────────
-
-divider "6 — VENDOR INTELLIGENCE SYNTHESIS"
-
-if grep -q "ANTHROPIC_API_KEY=.\|OPENAI_API_KEY=." .env 2>/dev/null; then
-    echo "LLM provider detected. Running vendor intel synthesis..."
-    echo ""
-    echo "$ theory --actor 'Scattered Spider' --sources mitre,cisa,malpedia,vendor"
-    echo ""
-    theory --actor "Scattered Spider" --sources mitre,cisa,malpedia,vendor
+if $HAS_OTX; then
+    run "Multi-source enrichment with OTX + ThreatFox IOCs" \
+        theory --actor APT29 --sources mitre,cisa,malpedia,otx,sigma,threatfox
 else
-    echo "  ⚠ No LLM key configured. Skipping vendor intelligence demo."
-    echo "  To enable: add ANTHROPIC_API_KEY or OPENAI_API_KEY to .env"
+    skip "Multi-source enrichment with OTX + ThreatFox IOCs" "no OTX_API_KEY"
 fi
 
-pause
+# ── Alias Resolution ────────────────────────────────────────────────────────
 
-# ─────────────────────────────────────────────────────────────────────────────
-# 7. EXECUTIVE SUMMARY (requires LLM key)
-# ─────────────────────────────────────────────────────────────────────────────
+divider "ALIAS RESOLUTION"
 
-divider "7 — EXECUTIVE SUMMARY"
+echo "  All three resolve to the same canonical actor (APT28):"
+echo ""
 
-if grep -q "ANTHROPIC_API_KEY=.\|OPENAI_API_KEY=." .env 2>/dev/null; then
-    echo "$ theory --actor 'Salt Typhoon' --output exec --sector telecommunications"
-    echo ""
-    theory --actor "Salt Typhoon" --output exec --sector telecommunications
+run "Resolve alias: Fancy Bear" \
+    theory --actor "Fancy Bear" --no-save
+
+run "Resolve alias: Forest Blizzard" \
+    theory --actor "Forest Blizzard" --no-save
+
+run "Resolve alias: STRONTIUM" \
+    theory --actor "STRONTIUM" --no-save
+
+# ── Output Formats ───────────────────────────────────────────────────────────
+
+divider "OUTPUT FORMATS"
+
+run "JSON export" \
+    theory --actor "Lazarus Group" --output json
+
+run "STIX 2.1 bundle" \
+    theory --actor Turla --sources mitre,malpedia --output stix
+
+if $HAS_OTX; then
+    run "IOC CSV export" \
+        theory --actor Sandworm --sources mitre,otx,threatfox --output csv
 else
-    echo "  ⚠ No LLM key configured. Skipping executive summary demo."
+    run "IOC CSV export (no OTX, mitre only)" \
+        theory --actor Sandworm --sources mitre --output csv
 fi
 
-pause
+run "ATT&CK Navigator layer" \
+    theory --actor APT41 --sources mitre,malpedia --output navigator
 
-# ─────────────────────────────────────────────────────────────────────────────
-# 8. VERBOSE MODE
-# ─────────────────────────────────────────────────────────────────────────────
+run "HTML dossier" \
+    theory --actor "Volt Typhoon" --sources mitre,cisa,malpedia --output html
 
-divider "8 — VERBOSE MODE (debug output)"
+run "IR playbook (Markdown)" \
+    theory --actor APT28 --sources mitre,sigma --output playbook
 
-echo "$ theory --actor 'Charming Kitten' --sources mitre,cisa --verbose --no-save"
+run "IR playbook (Jira format)" \
+    theory --actor APT28 --sources mitre,sigma --output playbook --playbook-format jira
+
+run "All formats at once" \
+    theory --actor Kimsuky --sources mitre,cisa,malpedia --output all
+
+# ── LLM-Powered Features ────────────────────────────────────────────────────
+
+divider "LLM-POWERED FEATURES"
+
+if $HAS_LLM; then
+    run "Vendor intelligence synthesis" \
+        theory --actor "Scattered Spider" --sources mitre,cisa,malpedia,vendor
+
+    run "Executive summary (sector-scoped)" \
+        theory --actor "Salt Typhoon" --output exec --sector telecommunications
+else
+    skip "Vendor intelligence synthesis" "no LLM key"
+    skip "Executive summary (sector-scoped)" "no LLM key"
+fi
+
+# ── Debug Mode ───────────────────────────────────────────────────────────────
+
+divider "DEBUG MODE"
+
+run "Verbose output" \
+    theory --actor "Charming Kitten" --sources mitre,cisa --verbose --no-save
+
+# ── Results ──────────────────────────────────────────────────────────────────
+
+divider "RESULTS"
+
+echo "  Actors covered:"
+echo "    APT28 (Fancy Bear / Forest Blizzard / STRONTIUM)"
+echo "    APT29 (Cozy Bear)"
+echo "    APT41 (Wicked Panda)"
+echo "    Charming Kitten"
+echo "    Kimsuky"
+echo "    Lazarus Group"
+echo "    Salt Typhoon"
+echo "    Sandworm"
+echo "    Scattered Spider"
+echo "    Turla"
+echo "    Volt Typhoon"
 echo ""
-theory --actor "Charming Kitten" --sources mitre,cisa --verbose --no-save
-
-pause
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 9. SUMMARY
-# ─────────────────────────────────────────────────────────────────────────────
-
-divider "9 — DEMO COMPLETE"
-
-echo "Actors demonstrated:"
-echo "  APT28 (Fancy Bear)       — basic dossier, alias resolution, IR playbook"
-echo "  APT29 (Cozy Bear)        — multi-source enrichment"
-echo "  Lazarus Group             — JSON export"
-echo "  Turla                     — STIX 2.1 export"
-echo "  Sandworm                  — IOC CSV export"
-echo "  APT41                     — ATT&CK Navigator layer"
-echo "  Volt Typhoon              — HTML dossier"
-echo "  Kimsuky                   — all-format export"
-echo "  Scattered Spider          — vendor intel synthesis"
-echo "  Salt Typhoon              — executive summary"
-echo "  Charming Kitten           — verbose/debug mode"
+echo "  Output files:"
+ls -la output/dossiers/ 2>/dev/null || echo "    (none saved)"
 echo ""
-echo "Output files:"
-ls -la output/dossiers/ 2>/dev/null || echo "  (no files saved — all ran with --no-save or output dir not created)"
+echo "  Tests: pytest tests/ -v"
+echo "  Repo:  github.com/threatcraft-co/theory"
 echo ""
-echo "Tests:"
-echo "  $ pytest tests/ -v    # 337 offline tests, no API keys needed"
-echo ""
-echo "Repository: github.com/threatcraft-co/theory"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  PASS: $PASS  |  FAIL: $FAIL  |  SKIP: $SKIP"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
