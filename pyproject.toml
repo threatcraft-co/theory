@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "theory-ti"
 version = "1.0.0"
-description = "Multi-source threat actor intelligence framework"
+description = "Multi-source threat actor intelligence platform"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
