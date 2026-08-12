@@ -1,5 +1,7 @@
 ![Theory Logo](media/Theory%20Logo.png)
 
+[![CI](https://github.com/threatcraft-co/theory/actions/workflows/ci.yml/badge.svg)](https://github.com/threatcraft-co/theory/actions/workflows/ci.yml)
+
 **Multi-source threat actor intelligence for everyone.**
 
 THEORY is an open-source alternative to enterprise threat intelligence platforms. It generates analyst-grade dossiers on threat actors by aggregating data from MITRE ATT&CK, Malpedia, AlienVault OTX, SigmaHQ, ThreatFox, CISA, and vendor research blogs — then synthesizes everything using an LLM into a clean executive overview and actor-specific intelligence summaries.
