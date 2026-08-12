@@ -290,8 +290,9 @@ For security vulnerabilities in THEORY itself — code execution, path traversal
 injection, hardcoded credentials, dependency vulnerabilities, prompt injection,
 output integrity issues — do **not** open a public GitHub issue.
 
-See [SECURITY.md](SECURITY.md) for the private disclosure process. Reports go
-to `threatcraft@proton.me` with the subject prefix `SECURITY:`.
+Report privately through [GitHub's private vulnerability reporting](https://github.com/threatcraft-co/theory/security/advisories/new)
+or via email at `threatcraft@proton.me` with the subject prefix `SECURITY:`.
+See [SECURITY.md](SECURITY.md) for the full disclosure process.
 
 ---
 

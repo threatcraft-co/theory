@@ -71,11 +71,13 @@ The following are not security issues for THEORY:
 
 **Do not open a public GitHub issue for security reports.**
 
-Email the maintainers privately at:
+Two private reporting channels are available:
 
-**`threatcraft@proton.me`**
+1. **GitHub private vulnerability reporting** — go to the [Security tab](https://github.com/threatcraft-co/theory/security/advisories/new) on this repository and submit a report directly through GitHub. This is the fastest path to a tracked advisory.
 
-Use the subject line: `SECURITY: <brief description>`
+2. **Email** — send your report to **`threatcraft@proton.me`** with the subject line `SECURITY: <brief description>`. If the issue is sensitive enough that you want to encrypt the report, request a PGP key in your initial email and one will be provided.
+
+Either channel reaches the maintainers. Use whichever you prefer.
 
 In your report, please include:
 
