@@ -24,6 +24,7 @@ from schema import (
 logger = logging.getLogger("theory.processors.normalizer")
 
 _TECHNIQUE_RE = re.compile(r"^T\d{4}(\.\d{3})?$")
+_CVE_RE = re.compile(r"^CVE-\d{4}-\d{4,}$", re.IGNORECASE)
 
 
 class NormalizationError(Exception):
@@ -59,6 +60,7 @@ def normalize(data: dict[str, Any]) -> CommonSchema:
         "malware": _normalize_malware(data.get("malware", [])),
         "indicators": _normalize_indicators(data.get("indicators", [])),
         "campaigns": _normalize_campaigns(data.get("campaigns", [])),
+        "cves": _normalize_cves(data.get("cves", []), source_id),
         "source_citation": _coerce_str(data.get("source_citation")) or source_id,
     }
 
@@ -246,3 +248,99 @@ def _normalize_campaigns(values: Any) -> list[dict[str, Any]]:
             "reference": reference,
         })
     return result
+
+
+def _normalize_cves(values: Any, source_id: str) -> list[dict[str, Any]]:
+    """Normalize CVE entries.
+
+    Accepts entries from any collector (MITRE, CISA advisories, MISP Galaxy,
+    OTX, future VulnCheck) and standardizes them. Preserves KEV enrichment
+    fields when present, and normalizes both `cve_id` (new) and `cveID`
+    (legacy CISA field) input formats.
+
+    Invalid CVE IDs are dropped. Deduplicates by CVE identifier
+    (case-insensitive).
+    """
+    if not isinstance(values, list):
+        return []
+
+    seen: dict[str, dict[str, Any]] = {}
+
+    for entry in values:
+        if not isinstance(entry, dict):
+            continue
+
+        # Support both new (cve_id) and legacy (cveID) field names
+        raw_id = _coerce_str(entry.get("cve_id") or entry.get("cveID"))
+        if not raw_id:
+            continue
+
+        normalized_id = raw_id.upper()
+        if not _CVE_RE.match(normalized_id):
+            continue
+
+        # Merge if we've already seen this CVE from another collector's array
+        if normalized_id in seen:
+            existing = seen[normalized_id]
+            # Union sources
+            for src in (entry.get("sources") or [source_id]):
+                if src and src not in existing["sources"]:
+                    existing["sources"].append(src)
+            # Union MITRE contexts if present
+            for ctx in (entry.get("mitre_contexts") or []):
+                if ctx and ctx not in existing.get("mitre_contexts", []):
+                    existing.setdefault("mitre_contexts", []).append(ctx)
+            for ref in (entry.get("mitre_references") or []):
+                if ref and ref not in existing.get("mitre_references", []):
+                    existing.setdefault("mitre_references", []).append(ref)
+            # Prefer the longer description
+            new_desc = _coerce_str(entry.get("description"))
+            if new_desc and len(new_desc) > len(existing.get("description", "")):
+                existing["description"] = new_desc
+            # Preserve KEV enrichment fields from whichever entry carries them
+            for kev_field in (
+                "kev_confirmed", "kev_date_added", "kev_due_date",
+                "kev_ransomware", "kev_vendor", "kev_product",
+                "kev_vulnerability_name",
+            ):
+                if kev_field in entry and kev_field not in existing:
+                    existing[kev_field] = entry[kev_field]
+            # Preserve legacy CISA-specific fields similarly
+            for cisa_field in ("product", "vendor", "due_date", "date_added"):
+                if entry.get(cisa_field) and not existing.get(cisa_field):
+                    existing[cisa_field] = entry[cisa_field]
+            continue
+
+        # New CVE entry
+        normalized_entry: dict[str, Any] = {
+            "cve_id": normalized_id,
+            "sources": list(entry.get("sources") or [source_id]),
+        }
+
+        # Preserve optional descriptive/context fields when present
+        desc = _coerce_str(entry.get("description"))
+        if desc:
+            normalized_entry["description"] = desc
+
+        if entry.get("mitre_contexts"):
+            normalized_entry["mitre_contexts"] = list(entry["mitre_contexts"])
+        if entry.get("mitre_references"):
+            normalized_entry["mitre_references"] = list(entry["mitre_references"])
+
+        # Preserve KEV enrichment fields when present (added by cisa_kev)
+        for kev_field in (
+            "kev_confirmed", "kev_date_added", "kev_due_date",
+            "kev_ransomware", "kev_vendor", "kev_product",
+            "kev_vulnerability_name",
+        ):
+            if kev_field in entry:
+                normalized_entry[kev_field] = entry[kev_field]
+
+        # Preserve legacy CISA-specific fields when present
+        for cisa_field in ("product", "vendor", "due_date", "date_added"):
+            if entry.get(cisa_field):
+                normalized_entry[cisa_field] = entry[cisa_field]
+
+        seen[normalized_id] = normalized_entry
+
+    return list(seen.values())

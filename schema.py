@@ -50,6 +50,31 @@ class CampaignEntry(TypedDict, total=False):
     reference: str           # URL
 
 
+class CVEEntry(TypedDict, total=False):
+    # Core identity (required)
+    cve_id: str                    # e.g. "CVE-2023-23397"
+
+    # Provenance
+    sources: List[str]             # Collector IDs that reported this CVE
+
+    # MITRE ATT&CK context (from mitre_attack collector)
+    mitre_contexts: List[str]      # ["technique", "malware", "campaign", ...]
+    mitre_references: List[str]    # Technique IDs or malware/campaign names
+
+    # CISA KEV enrichment (populated by collectors.cisa_kev)
+    kev_confirmed: bool            # In the CISA KEV catalog?
+    kev_date_added: str            # ISO date CISA confirmed exploitation
+    kev_due_date: str              # Federal remediation deadline
+    kev_ransomware: bool           # Known use in ransomware campaigns
+    kev_vendor: str                # Affected vendor
+    kev_product: str               # Affected product
+    kev_vulnerability_name: str    # KEV's canonical vulnerability name
+
+    # Freeform metadata
+    description: str               # Short description of the CVE
+    cvss_score: Optional[float]    # CVSS base score if known
+
+
 class CommonSchema(TypedDict, total=False):
     # Identity (required)
     actor_name: str
@@ -81,6 +106,9 @@ class CommonSchema(TypedDict, total=False):
 
     # Recent activity
     campaigns: List[CampaignEntry]
+
+    # Exploited CVEs (extracted by collectors, enriched by CISA KEV)
+    cves: List[CVEEntry]
 
     # Source metadata
     source_citation: str

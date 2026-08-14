@@ -13,7 +13,7 @@ Usage examples
   python theory.py --actor APT28
 
   # Multi-source with all enrichments
-  python theory.py --actor APT28 --sources mitre,malpedia,otx,sigma,threatfox
+  python theory.py --actor APT28 --sources mitre,malpedia,misp_galaxy,cisa_kev,otx,sigma,threatfox
 
   # Export all formats
   python theory.py --actor "Lazarus Group" --sources mitre,malpedia --output all
@@ -72,24 +72,28 @@ logger = logging.getLogger("theory")
 # ---------------------------------------------------------------------------
 
 SUPPORTED_SOURCES: dict[str, str | None] = {
-    "mitre":     "collectors.mitre_attack.MitreAttackCollector",
-    "cisa":      "collectors.cisa_advisories.CisaAdvisoriesCollector",
-    "malpedia":  "collectors.malpedia.MalpediaCollector",
-    "otx":       "collectors.alienvault_otx.AlienVaultOTXCollector",
+    "mitre":       "collectors.mitre_attack.MitreAttackCollector",
+    "cisa":        "collectors.cisa_advisories.CisaAdvisoriesCollector",
+    "cisa_kev":    "collectors.cisa_kev.CisaKevCollector",
+    "malpedia":    "collectors.malpedia.MalpediaCollector",
+    "misp_galaxy": "collectors.misp_galaxy.MispGalaxyCollector",
+    "otx":         "collectors.alienvault_otx.AlienVaultOTXCollector",
     # Enrichment-only — accepted by CLI but handled separately
-    "sigma":     None,
-    "threatfox": None,
-    "vendor":    None,   # vendor intelligence synthesis (requires LLM provider)
+    "sigma":       None,
+    "threatfox":   None,
+    "vendor":      None,   # vendor intelligence synthesis (requires LLM provider)
 }
 
 SOURCE_DESCRIPTIONS: dict[str, str] = {
-    "mitre":     "MITRE ATT&CK — techniques, malware, campaigns (local bundle, offline)",
-    "cisa":      "CISA advisories + KEV catalog (free, no auth)",
-    "malpedia":  "Malpedia malware family database (free, no auth)",
-    "otx":       "AlienVault OTX pulses + IOCs (free, requires OTX_API_KEY in .env)",
-    "sigma":     "SigmaHQ detection rules mapped to ATT&CK (free, optional GITHUB_TOKEN)",
-    "threatfox": "ThreatFox IOCs by malware family (free, no auth)",
-    "vendor":    "Vendor intelligence synthesis — LLM-synthesized summaries from 35+ research blogs (requires LLM provider in .env)",
+    "mitre":       "MITRE ATT&CK — techniques, malware, campaigns (local bundle, offline)",
+    "cisa":        "CISA advisories + KEV catalog (free, no auth)",
+    "cisa_kev":    "CISA KEV — 1600+ confirmed-exploited CVEs, ransomware flags (free, no auth)",
+    "malpedia":    "Malpedia malware family database (free, no auth)",
+    "misp_galaxy": "MISP Galaxy — 1000+ actors, aliases, attribution, target sectors (free, no auth)",
+    "otx":         "AlienVault OTX pulses + IOCs (free, requires OTX_API_KEY in .env)",
+    "sigma":       "SigmaHQ detection rules mapped to ATT&CK (free, optional GITHUB_TOKEN)",
+    "threatfox":   "ThreatFox IOCs by malware family (free, no auth)",
+    "vendor":      "Vendor intelligence synthesis — LLM-synthesized summaries from 35+ research blogs (requires LLM provider in .env)",
 }
 
 SOURCE_REQUIRES: dict[str, str] = {
@@ -105,14 +109,22 @@ ENRICHMENT_SOURCES: dict[str, str] = {
 }
 
 MAPPER_REGISTRY: dict[str, str] = {
-    "mitre":    "mappers.mitre.MitreMapper",
-    "cisa":     "mappers.cisa.CisaMapper",
-    "malpedia": "collectors.malpedia.MalpediaMapper",
-    "otx":      "collectors.alienvault_otx.AlienVaultOTXMapper",
+    "mitre":       "mappers.mitre.MitreMapper",
+    "cisa":        "mappers.cisa.CisaMapper",
+    "cisa_kev":    "collectors.cisa_kev.CisaKevMapper",
+    "malpedia":    "collectors.malpedia.MalpediaMapper",
+    "misp_galaxy": "collectors.misp_galaxy.MispGalaxyMapper",
+    "otx":         "collectors.alienvault_otx.AlienVaultOTXMapper",
 }
 
 # Default source combination — good balance of coverage vs speed
-DEFAULT_SOURCES = "mitre,cisa,malpedia"
+# All keyless and free, providing complementary intelligence:
+#   mitre       → techniques, software, campaigns
+#   cisa        → advisories, KEV CVEs (actor-attributed)
+#   cisa_kev    → 1600+ confirmed-exploited CVEs, ransomware flags
+#   malpedia    → malware families, YARA counts
+#   misp_galaxy → 1000+ actors, deep alias lists, attribution, target sectors
+DEFAULT_SOURCES = "mitre,cisa,cisa_kev,malpedia,misp_galaxy"
 
 
 # ---------------------------------------------------------------------------
@@ -134,12 +146,14 @@ def cmd_list_sources() -> None:
                   box=rich_box.SIMPLE_HEAD, header_style="bold magenta")
 
         cache_ttls = {
-            "mitre":     "7 days (.cache/enterprise-attack.json)",
-            "cisa":      "per request",
-            "malpedia":  "per request (.cache/malpedia/)",
-            "otx":       "per request (.cache/otx/)",
-            "sigma":     "7 days (.cache/sigma/)",
-            "threatfox": "24 hours (.cache/threatfox/)",
+            "mitre":       "7 days (.cache/enterprise-attack.json)",
+            "cisa":        "per request",
+            "cisa_kev":    "24 hours (.cache/cisa_kev/)",
+            "malpedia":    "per request (.cache/malpedia/)",
+            "misp_galaxy": "7 days (.cache/misp_galaxy/)",
+            "otx":         "per request (.cache/otx/)",
+            "sigma":       "7 days (.cache/sigma/)",
+            "threatfox":   "24 hours (.cache/threatfox/)",
         }
 
         for key, desc in SOURCE_DESCRIPTIONS.items():
@@ -274,10 +288,63 @@ def cmd_update_bundles() -> None:
     else:
         _print("  ✓ Sigma repo not yet cloned — will clone on next --sources sigma run", "dim")
 
-    # 3. ThreatFox cache — let 24hr TTL handle expiry naturally
+    # 3. MISP Galaxy threat-actor cluster
+    misp_cache = Path(".cache/misp_galaxy/threat-actor.json")
+    misp_url = (
+        "https://raw.githubusercontent.com/MISP/misp-galaxy"
+        "/main/clusters/threat-actor.json"
+    )
+    _print("  Updating MISP Galaxy threat-actor cluster…", "dim")
+    try:
+        misp_cache.parent.mkdir(parents=True, exist_ok=True)
+        r = subprocess.run(
+            ["curl", "-sL", "-o", str(misp_cache), misp_url],
+            capture_output=True, text=True, timeout=60,
+        )
+        if r.returncode == 0 and misp_cache.exists():
+            import json as _json
+            count = len(_json.loads(misp_cache.read_text()).get("values", []))
+            size_kb = misp_cache.stat().st_size / 1024
+            _print(
+                f"  ✓ MISP Galaxy updated — {count} actors ({size_kb:.0f} KB)",
+                "green",
+            )
+        else:
+            _print(f"  ✗ MISP Galaxy update failed: {r.stderr[:80]}", "red")
+    except Exception as exc:
+        _print(f"  ✗ MISP Galaxy update error: {exc}", "red")
+
+    # 4. CISA KEV catalog
+    kev_cache = Path(".cache/cisa_kev/known_exploited_vulnerabilities.json")
+    kev_url = (
+        "https://raw.githubusercontent.com/cisagov/kev-data/develop/"
+        "known_exploited_vulnerabilities.json"
+    )
+    _print("  Updating CISA KEV catalog…", "dim")
+    try:
+        kev_cache.parent.mkdir(parents=True, exist_ok=True)
+        r = subprocess.run(
+            ["curl", "-sL", "-o", str(kev_cache), kev_url],
+            capture_output=True, text=True, timeout=60,
+        )
+        if r.returncode == 0 and kev_cache.exists():
+            import json as _json
+            kev_data = _json.loads(kev_cache.read_text())
+            count = kev_data.get("count", 0)
+            version = kev_data.get("catalogVersion", "unknown")
+            _print(
+                f"  ✓ CISA KEV updated — v{version}, {count} CVEs",
+                "green",
+            )
+        else:
+            _print(f"  ✗ CISA KEV update failed: {r.stderr[:80]}", "red")
+    except Exception as exc:
+        _print(f"  ✗ CISA KEV update error: {exc}", "red")
+
+    # 5. ThreatFox cache — let 24hr TTL handle expiry naturally
     _print("  ✓ ThreatFox cache preserved (24hr TTL handles expiry automatically)", "dim")
 
-    # 4. Clone/update CyberMonitor APT Campaign Collection (historical context)
+    # 6. Clone/update CyberMonitor APT Campaign Collection (historical context)
     apt_path = Path(".cache/apt-campaigns")
     apt_url  = "https://github.com/CyberMonitor/APT_CyberCriminal_Campagin_Collections.git"
     if apt_path.exists():
@@ -308,7 +375,7 @@ def cmd_update_bundles() -> None:
         except Exception as exc:
             _print(f"  ✗ APT campaign clone error: {exc}", "red")
 
-    # 5. Leave Malpedia + OTX caches — per-family/per-pulse, expensive to rebuild
+    # 7. Leave Malpedia + OTX caches — per-family/per-pulse, expensive to rebuild
     _print("\n  Malpedia + OTX caches preserved (clear manually if needed).", "dim")
     _print("  Run THEORY normally to rebuild Sigma + ThreatFox caches.\n", "dim")
     _print("Update complete.\n", "bold green")
@@ -666,6 +733,24 @@ def run(
     if all_advisories:  profile["advisories"]  = all_advisories
     if all_sectors and not profile.get("sectors"): profile["sectors"] = all_sectors
     if all_iocs:        profile["indicators"]  = all_iocs
+
+    # ── CISA KEV cross-reference ──────────────────────────────────────
+    # If cisa_kev was in the sources list, enrich all CVEs (regardless of
+    # which source reported them) with confirmed-exploited flags,
+    # ransomware attribution, vendor/product metadata, and remediation
+    # dates from the KEV catalog.
+    if "cisa_kev" in collect_sources and profile.get("cves"):
+        try:
+            from collectors.cisa_kev import enrich_profile_with_kev
+            profile = enrich_profile_with_kev(profile)
+            logger.info(
+                "KEV enrichment: %d/%d CVEs confirmed, %d ransomware-flagged",
+                profile.get("kev_confirmed_count", 0),
+                len(profile.get("cves", [])),
+                profile.get("kev_ransomware_count", 0),
+            )
+        except Exception as exc:
+            logger.warning("CISA KEV enrichment failed: %s", exc)
 
     # Malpedia malware enrichment
     malpedia_meta: dict[str, dict] = {}
@@ -1116,18 +1201,18 @@ def _output_html(profile: dict[str, Any], save: bool) -> None:
 EPILOG = """
 examples:
   theory --actor APT28
-  theory --actor "Fancy Bear" --sources mitre,malpedia,otx
-  theory --actor Lazarus --sources mitre,malpedia,otx,sigma,threatfox
+  theory --actor "Fancy Bear" --sources mitre,malpedia,misp_galaxy,otx
+  theory --actor Lazarus --sources mitre,malpedia,misp_galaxy,cisa_kev,otx,sigma,threatfox
   theory --actor APT41 --sources mitre,otx --output stix
   theory --actor APT28 --sources mitre,otx,threatfox --output csv
-  theory --actor Turla --sources mitre,malpedia --output all
+  theory --actor Turla --sources mitre,malpedia,misp_galaxy,cisa_kev --output all
   theory --actor APT29 --sources mitre --no-save
   theory --actor APT28 --output exec
   theory --actor "Lazarus Group" --output exec --sector finance
   theory --actor APT28 --output navigator
   theory --actor APT28 --sources mitre,sigma --output playbook
   theory --actor APT28 --sources mitre,sigma --output playbook --playbook-format jira
-  theory --actor APT28 --sources mitre,malpedia,otx --output html
+  theory --actor APT28 --sources mitre,malpedia,misp_galaxy,cisa_kev,otx --output html
   theory --actor APT28 --sources mitre,sigma --detection-path ~/my-sigma-rules
   theory --list-sources
   theory --list-actors
@@ -1135,10 +1220,12 @@ examples:
 
 notes:
   - --actor accepts any name or alias (e.g. "Cozy Bear" = APT29 = Midnight Blizzard)
-  - Run --update-bundles periodically to refresh ATT&CK data and Sigma rules
+  - Run --update-bundles periodically to refresh ATT&CK data, Sigma rules, MISP Galaxy, and CISA KEV
   - See docs/SCHEDULED_UPDATES.md to automate updates with cron or launchd
   - First run with --sources sigma takes ~10 min to build the cache (instant after)
-  - Default sources: mitre,cisa,malpedia (keyless). Add otx for IOCs (free API key)
+  - Default sources: mitre,cisa,cisa_kev,malpedia,misp_galaxy (all keyless, free)
+  - cisa_kev cross-references profile CVEs against 1600+ confirmed-exploited CVEs
+  - Add otx for IOCs (free API key) and sigma for detection rule mapping
   - Set OTX_API_KEY and GITHUB_TOKEN in .env for best results
   - Output files are saved to output/dossiers/
 """
@@ -1166,7 +1253,7 @@ def _build_parser() -> argparse.ArgumentParser:
         prog="theory",
         description=(
             "THEORY — open-source multi-source threat actor intelligence framework.\n"
-            "Generates analyst-grade dossiers from MITRE ATT&CK, Malpedia, OTX, Sigma, ThreatFox, and more."
+            "Generates analyst-grade dossiers from MITRE ATT&CK, MISP Galaxy, CISA KEV, Malpedia, OTX, Sigma, ThreatFox, and more."
         ),
         epilog=EPILOG,
         formatter_class=argparse.RawDescriptionHelpFormatter,

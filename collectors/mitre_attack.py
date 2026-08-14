@@ -38,6 +38,13 @@ BUNDLE_PATH = Path(".cache/enterprise-attack.json")
 MAX_RETRIES = 2
 RETRY_DELAY = 3
 
+# CVE identifier pattern for extraction from technique/software/campaign
+# descriptions. MITRE ATT&CK descriptions frequently reference CVEs when
+# discussing specific exploited vulnerabilities. Extracting these into a
+# structured cves array enables CISA KEV cross-referencing and future
+# CVE-based reverse lookups.
+_CVE_RE = re.compile(r"CVE-\d{4}-\d{4,}", re.IGNORECASE)
+
 # ---------------------------------------------------------------------------
 # Known first-seen dates and motivations per group (supplements STIX data)
 # STIX intrusion-set objects don't reliably carry these fields.
@@ -174,14 +181,18 @@ class MitreAttackCollector(BaseCollector):
                     detection = str(val)
                     break
 
+            full_description = getattr(t, "description", "") or ""
             results.append({
-                "technique_id":   tid,
-                "technique_name": getattr(t, "name", "") or "",
-                "tactic":         (MitreAttackCollector._extract_tactics(t) or [""])[0],
-                "tactics":        MitreAttackCollector._extract_tactics(t),
-                "description":    _truncate(getattr(t, "description", "") or "", 800),
-                "detection":      _truncate(detection, 600),
-                "sources":        [SOURCE_ID],
+                "technique_id":     tid,
+                "technique_name":   getattr(t, "name", "") or "",
+                "tactic":           (MitreAttackCollector._extract_tactics(t) or [""])[0],
+                "tactics":          MitreAttackCollector._extract_tactics(t),
+                "description":      _truncate(full_description, 800),
+                # Preserved for CVE extraction (stripped after _build_schema)
+                "_full_description": full_description,
+                "_full_detection":  detection,
+                "detection":        _truncate(detection, 600),
+                "sources":          [SOURCE_ID],
             })
         return results
 
@@ -196,9 +207,10 @@ class MitreAttackCollector(BaseCollector):
                 continue
             desc = getattr(sw, "description", "") or ""
             results.append({
-                "name":        name,
-                "type":        (getattr(sw, "labels", None) or ["malware"])[0],
-                "description": _strip_markdown_links(desc),
+                "name":              name,
+                "type":              (getattr(sw, "labels", None) or ["malware"])[0],
+                "description":       _strip_markdown_links(desc),
+                "_full_description": desc,
             })
         return results
 
@@ -214,12 +226,14 @@ class MitreAttackCollector(BaseCollector):
             name = getattr(c, "name", "") or ""
             if not name:
                 continue
+            desc = getattr(c, "description", "") or ""
             results.append({
-                "name":        name,
-                "description": _strip_markdown_links(getattr(c, "description", "") or ""),
-                "url":         _campaign_url(c),
-                "first_seen":  getattr(c, "first_seen", None),
-                "last_seen":   getattr(c, "last_seen", None),
+                "name":              name,
+                "description":       _strip_markdown_links(desc),
+                "_full_description": desc,
+                "url":               _campaign_url(c),
+                "first_seen":        getattr(c, "first_seen", None),
+                "last_seen":         getattr(c, "last_seen", None),
             })
         return results
 
@@ -236,6 +250,28 @@ class MitreAttackCollector(BaseCollector):
         # Pull enriched metadata from the supplement table if available
         meta       = _GROUP_METADATA.get(gid, {})
 
+        # Extract CVEs referenced across the actor's descriptions.
+        # Pulls from: actor description, technique descriptions/detection,
+        # malware descriptions, campaign descriptions. Populates the
+        # profile's cves array so CISA KEV enrichment has something to
+        # cross-reference.
+        cves = self._extract_cves(
+            actor_desc=getattr(actor_obj, "description", "") or "",
+            techniques=techniques,
+            malware=malware,
+            campaigns=campaigns,
+        )
+
+        # Strip internal full-text fields used only for CVE extraction.
+        # These would bloat the output profile and confuse reporters.
+        for t in techniques:
+            t.pop("_full_description", None)
+            t.pop("_full_detection", None)
+        for m in malware:
+            m.pop("_full_description", None)
+        for c in campaigns:
+            c.pop("_full_description", None)
+
         return {
             "actor_name":  actor_name,
             "source_id":   SOURCE_ID,
@@ -250,9 +286,66 @@ class MitreAttackCollector(BaseCollector):
             "malware":     malware,
             "campaigns":   campaigns,
             "sectors":     [],
+            "cves":        cves,
             "raw_source":  "MITRE ATT&CK Enterprise",
             "mitre_id":    gid,
         }
+
+    @staticmethod
+    def _extract_cves(
+        actor_desc: str,
+        techniques: list[dict],
+        malware: list[dict],
+        campaigns: list[dict],
+    ) -> list[dict]:
+        """Scan all descriptive text for CVE identifiers.
+
+        Returns a deduplicated list of CVE entries in the schema format
+        that CISA KEV enrichment expects. Each entry tracks which context
+        the CVE was mentioned in (technique/malware/campaign/actor) so
+        downstream reporters can show provenance.
+        """
+        found: dict[str, dict] = {}   # cve_id -> entry (dedupe by upper CVE)
+
+        def _scan(text: str, context: str, ref: str = "") -> None:
+            if not text:
+                return
+            for match in _CVE_RE.findall(text):
+                cve_upper = match.upper()
+                if cve_upper in found:
+                    # Append additional context to existing entry
+                    ctx_list = found[cve_upper].setdefault("mitre_contexts", [])
+                    if context and context not in ctx_list:
+                        ctx_list.append(context)
+                    if ref and ref not in found[cve_upper].get("mitre_references", []):
+                        found[cve_upper].setdefault("mitre_references", []).append(ref)
+                else:
+                    found[cve_upper] = {
+                        "cve_id": cve_upper,
+                        "sources": [SOURCE_ID],
+                        "mitre_contexts": [context] if context else [],
+                        "mitre_references": [ref] if ref else [],
+                    }
+
+        _scan(actor_desc, "actor_description")
+
+        for t in techniques or []:
+            ref = t.get("technique_id", "")
+            # Prefer full untruncated text if available
+            desc_text = t.get("_full_description") or t.get("description", "")
+            det_text  = t.get("_full_detection")   or t.get("detection", "")
+            _scan(desc_text, "technique", ref)
+            _scan(det_text, "technique_detection", ref)
+
+        for m in malware or []:
+            desc_text = m.get("_full_description") or m.get("description", "")
+            _scan(desc_text, "malware", m.get("name", ""))
+
+        for c in campaigns or []:
+            desc_text = c.get("_full_description") or c.get("description", "")
+            _scan(desc_text, "campaign", c.get("name", ""))
+
+        return list(found.values())
 
     # ------------------------------------------------------------------
     # Attribute utilities

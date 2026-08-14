@@ -84,6 +84,8 @@ class MitreMapper:
             "malware":     self._map_malware(raw.get("malware", [])),
             # ── Campaigns ─────────────────────────────────────────────
             "campaigns":   self._map_campaigns(raw.get("campaigns", [])),
+            # ── CVEs (extracted by collector from technique/malware/campaign descs) ──
+            "cves":        self._map_cves(raw.get("cves", [])),
             # ── Sectors ───────────────────────────────────────────────
             "sectors":     [],
             # ── Meta ──────────────────────────────────────────────────
@@ -153,6 +155,34 @@ class MitreMapper:
                 "first_seen":  str(c.get("first_seen") or ""),
                 "last_seen":   str(c.get("last_seen") or ""),
             })
+        return mapped
+
+    def _map_cves(self, cves: list[dict]) -> list[dict]:
+        """Pass-through with key guarantee.
+
+        The collector extracts CVEs from technique/malware/campaign descriptions
+        with mitre_contexts and mitre_references provenance. Preserve those so
+        the normalizer's deduplicator can merge across sources correctly.
+        """
+        mapped: list[dict] = []
+        for c in cves:
+            if not isinstance(c, dict):
+                continue
+            cve_id = (c.get("cve_id") or "").strip().upper()
+            if not cve_id:
+                continue
+            entry = {
+                "cve_id":  cve_id,
+                "sources": c.get("sources", ["mitre_attack"]),
+            }
+            # Preserve MITRE-specific provenance context
+            if c.get("mitre_contexts"):
+                entry["mitre_contexts"] = list(c["mitre_contexts"])
+            if c.get("mitre_references"):
+                entry["mitre_references"] = list(c["mitre_references"])
+            if c.get("description"):
+                entry["description"] = c["description"]
+            mapped.append(entry)
         return mapped
 
     # ------------------------------------------------------------------
