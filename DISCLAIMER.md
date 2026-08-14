@@ -1,6 +1,6 @@
 # THEORY — Disclaimer and Limitation of Liability
 
-**Threatcraft Holdings LLC dba Threatcraft Co.**
+**Threatcraft Holdings LLC dba Threatcraft**
 Last updated: March 2026
 Governing entity jurisdiction: State of Delaware, United States
 
@@ -14,8 +14,8 @@ third-party sources including but not limited to MITRE ATT&CK, Malpedia,
 AlienVault OTX, SigmaHQ, ThreatFox, CISA, and vendor research blogs.
 
 THEORY does not produce original threat intelligence research. All data
-surfaced by THEORY originates from external sources that Threatcraft Co. does
-not own, control, maintain, or independently verify. Threatcraft Co. makes no
+surfaced by THEORY originates from external sources that Threatcraft does
+not own, control, maintain, or independently verify. Threatcraft makes no
 claim of ownership over any data ingested, processed, or displayed by this
 tool.
 
@@ -44,7 +44,7 @@ The use of THEORY in the context of penetration testing, red team operations,
 and offensive security research occupies a nuanced legal and ethical space
 that this agreement does not explicitly govern in its entirety.
 
-Threatcraft Co. **does not oppose** the use of THEORY by security
+Threatcraft **does not oppose** the use of THEORY by security
 professionals engaged in:
 
 - Authorized penetration testing under a signed rules of engagement agreement
@@ -54,7 +54,7 @@ professionals engaged in:
   programs or responsible disclosure frameworks
 - Academic or laboratory research in controlled environments
 
-Threatcraft Co. **does not explicitly endorse or warrant** the suitability
+Threatcraft **does not explicitly endorse or warrant** the suitability
 of THEORY outputs for any specific offensive security engagement, and users
 operating in this context assume full responsibility for ensuring their
 activities comply with all applicable laws, regulations, and contractual
@@ -102,7 +102,7 @@ prohibited:
 
 Violation of these prohibitions constitutes a material breach of this
 agreement and may expose the user to civil and criminal liability independent
-of any action by Threatcraft Co.
+of any action by Threatcraft
 
 ---
 
@@ -110,7 +110,7 @@ of any action by Threatcraft Co.
 
 THEORY is provided **"as is"** and **"as available"** without warranty of
 any kind, express or implied, to the fullest extent permitted by applicable
-law. Threatcraft Co. expressly disclaims all warranties including but not
+law. Threatcraft expressly disclaims all warranties including but not
 limited to:
 
 - Accuracy, completeness, currency, or timeliness of any information
@@ -127,8 +127,8 @@ limited to:
 
 ## 6. Third-Party Data Sources
 
-THEORY aggregates data from external sources that Threatcraft Co. does not
-own or control. Threatcraft Co. makes no representations regarding:
+THEORY aggregates data from external sources that Threatcraft does not
+own or control. Threatcraft makes no representations regarding:
 
 - The accuracy, reliability, or completeness of any third-party data
 - Whether any third-party source has been compromised, manipulated, or
@@ -148,7 +148,7 @@ investigative, or offensive security context.**
 ## 7. Adversarial Data Injection and Intelligence Poisoning
 
 Threat intelligence ecosystems are themselves targets of adversarial
-manipulation. Threatcraft Co. explicitly disclaims all responsibility for:
+manipulation. Threatcraft explicitly disclaims all responsibility for:
 
 - False, fabricated, or adversarially injected data present in any
   third-party source ingested by THEORY
@@ -161,7 +161,7 @@ manipulation. Threatcraft Co. explicitly disclaims all responsibility for:
   THEORY ingested in good faith from a third-party source
 
 This disclaimer applies regardless of whether the manipulation was foreseeable
-and regardless of whether Threatcraft Co. was aware of the manipulation at
+and regardless of whether Threatcraft was aware of the manipulation at
 the time of ingestion.
 
 ---
@@ -183,7 +183,7 @@ AI-generated content:
   terms of service, which the user is responsible for complying with
 - May reflect the biases, limitations, or errors of the underlying model
 
-Threatcraft Co. is not responsible for the content, accuracy, implications,
+Threatcraft is not responsible for the content, accuracy, implications,
 or downstream consequences of any AI-generated synthesis produced by THEORY.
 AI summaries are research aids, not authoritative intelligence assessments.
 
@@ -192,7 +192,7 @@ AI summaries are research aids, not authoritative intelligence assessments.
 ## 9. Limitation of Liability
 
 To the maximum extent permitted by applicable law, in no event shall
-Threatcraft Co., its members, contributors, maintainers, or affiliates be
+Threatcraft, its members, contributors, maintainers, or affiliates be
 liable for any damages of any kind arising out of or related to the use,
 misuse, or inability to use THEORY, including but not limited to:
 
@@ -205,11 +205,11 @@ misuse, or inability to use THEORY, including but not limited to:
 
 This limitation applies regardless of the theory of liability — whether
 in contract, tort, negligence, strict liability, or otherwise — and even
-if Threatcraft Co. has been advised of the possibility of such damages.
+if Threatcraft has been advised of the possibility of such damages.
 
 Some jurisdictions do not allow the exclusion of certain warranties or
 limitation of liability for certain damages. In such jurisdictions, the
-liability of Threatcraft Co. shall be limited to the maximum extent
+liability of Threatcraft shall be limited to the maximum extent
 permitted by law.
 
 ---
@@ -274,7 +274,7 @@ provisions.
 
 ## 14. Changes to This Disclaimer
 
-Threatcraft Co. reserves the right to update this disclaimer at any time
+Threatcraft reserves the right to update this disclaimer at any time
 without prior notice. The most current version will be available at:
 `github.com/threatcraft-co/theory`
 
@@ -299,6 +299,6 @@ in any way, you've violated this agreement and that's on you, not us.
 
 ---
 
-*Threatcraft Co. is not a law firm. This document does not constitute legal
+*Threatcraft is not a law firm. This document does not constitute legal
 advice. Consult a qualified attorney before relying on this disclaimer for
 any specific legal purpose or before using THEORY in any high-stakes context.*

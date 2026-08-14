@@ -1,6 +1,6 @@
 # THEORY — Regional Legal Addenda
 
-**Threatcraft Holdings LLC dba Threatcraft Co.**
+**Threatcraft Holdings LLC dba Threatcraft**
 Last updated: March 2026
 
 This document contains jurisdiction-specific legal provisions that supplement
@@ -21,7 +21,7 @@ domains, and other technical data surfaced by THEORY are provided for
 
 Using THEORY outputs to access, damage, or obtain information from any
 computer system without authorization may constitute a federal criminal
-offense. Threatcraft Co. expressly disavows any use of this tool that
+offense. Threatcraft expressly disavows any use of this tool that
 violates the CFAA or any equivalent state computer crime statute.
 
 ## US.2 Economic Espionage Act
@@ -64,7 +64,7 @@ where THEORY is operated from.
 
 ## EU.2 Role of the Parties
 
-**Threatcraft Co. is not a data controller or data processor** in respect
+**Threatcraft is not a data controller or data processor** in respect
 of end users' use of THEORY. THEORY is a locally executed tool — Threatcraft
 Co. does not receive, store, or process any personal data entered by users
 or returned by third-party APIs in connection with any specific user's session.
@@ -97,7 +97,7 @@ authority.
 
 THEORY is designed with data minimization principles in mind:
 
-- No user query data is transmitted to or stored by Threatcraft Co.
+- No user query data is transmitted to or stored by Threatcraft
 - API keys and credentials remain local to the user's environment
 - Cached data is stored locally on the user's machine
 - No telemetry, usage tracking, or analytics data is collected by the tool
@@ -109,14 +109,14 @@ OpenAI, GitHub), data may be transmitted to those providers. Users are
 responsible for ensuring that any such transmission complies with their
 own GDPR obligations and the terms of service of those providers.
 
-Threatcraft Co. is not responsible for the data processing practices of
+Threatcraft is not responsible for the data processing practices of
 any third-party API provider.
 
 ## EU.6 Data Subject Rights
 
-As Threatcraft Co. does not process personal data of THEORY users,
+As Threatcraft does not process personal data of THEORY users,
 data subject rights requests (access, rectification, erasure, portability)
-under Articles 15–20 of the GDPR are not applicable to Threatcraft Co.
+under Articles 15–20 of the GDPR are not applicable to Threatcraft
 in respect of THEORY usage.
 
 Users who have concerns about personal data appearing in threat intelligence
@@ -178,7 +178,7 @@ their data protection rights have been violated.
 
 Users are responsible for determining whether their use of THEORY complies
 with the laws of their jurisdiction. THEORY is made available globally as
-open-source software — Threatcraft Co. makes no representation that use of
+open-source software — Threatcraft makes no representation that use of
 the tool is appropriate, lawful, or permitted in any specific jurisdiction.
 
 ## INT.2 Sanctions Compliance
@@ -199,7 +199,7 @@ incident reporting, risk management, and supply chain security requirements.
 
 ## INT.4 Researcher Safe Harbor
 
-Threatcraft Co. recognizes the importance of good-faith security research.
+Threatcraft recognizes the importance of good-faith security research.
 Nothing in this disclaimer is intended to prevent or discourage:
 
 - Responsible disclosure of vulnerabilities discovered in the course of
@@ -210,7 +210,7 @@ Nothing in this disclaimer is intended to prevent or discourage:
 Users engaged in good-faith security research who discover that a third-party
 source ingested by THEORY contains false, manipulated, or harmful data are
 encouraged to report their findings to the relevant source and, where
-appropriate, to Threatcraft Co. via the project's GitHub repository.
+appropriate, to Threatcraft via the project's GitHub repository.
 
 ---
 
@@ -218,7 +218,7 @@ appropriate, to Threatcraft Co. via the project's GitHub repository.
 
 For legal inquiries related to THEORY:
 
-**Threatcraft Holdings LLC dba Threatcraft Co.**
+**Threatcraft Holdings LLC dba Threatcraft**
 GitHub: github.com/threatcraft-co/theory
 Contact: threatcraft@proton.me
 
