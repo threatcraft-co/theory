@@ -65,3 +65,22 @@ repos:
           '
         language: system
         stages: [pre-commit]
+
+      - id: block-os-junk
+        name: Block OS junk files (.DS_Store, Thumbs.db, Desktop.ini)
+        entry: |
+          bash -c '
+          matches=$(git diff --cached --name-only --diff-filter=AM | grep -E "(^|/)(\.DS_Store|Thumbs\.db|Desktop\.ini)$" || true)
+          if [ -n "$matches" ]; then
+            echo ""
+            echo "ERROR: Attempted to commit OS-generated junk file(s):"
+            echo "$matches" | sed "s/^/  - /"
+            echo ""
+            echo "These are already in .gitignore but slipped past (probably staged with git add -f or git add .)."
+            echo "Remove them with: git rm --cached <file> && rm <file>"
+            echo ""
+            exit 1
+          fi
+          '
+        language: system
+        stages: [pre-commit]
