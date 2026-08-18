@@ -78,10 +78,16 @@ SUPPORTED_SOURCES: dict[str, str | None] = {
     "malpedia":    "collectors.malpedia.MalpediaCollector",
     "misp_galaxy": "collectors.misp_galaxy.MispGalaxyCollector",
     "otx":         "collectors.alienvault_otx.AlienVaultOTXCollector",
+    "vuldb":       "collectors.vuldb.VulDBCollector",
     # Enrichment-only — accepted by CLI but handled separately
-    "sigma":       None,
-    "threatfox":   None,
-    "vendor":      None,   # vendor intelligence synthesis (requires LLM provider)
+    "sigma":          None,
+    "yara":           None,
+    "threatfox":      None,
+    "malware_bazaar": None,
+    "urlhaus":        None,
+    "greynoise":      None,
+    "abuseipdb":      None,
+    "vendor":         None,   # vendor intelligence synthesis (requires LLM provider)
 }
 
 SOURCE_DESCRIPTIONS: dict[str, str] = {
@@ -91,21 +97,37 @@ SOURCE_DESCRIPTIONS: dict[str, str] = {
     "malpedia":    "Malpedia malware family database (free, no auth)",
     "misp_galaxy": "MISP Galaxy — 1000+ actors, aliases, attribution, target sectors (free, no auth)",
     "otx":         "AlienVault OTX pulses + IOCs (free, requires OTX_API_KEY in .env)",
-    "sigma":       "SigmaHQ detection rules mapped to ATT&CK (free, optional GITHUB_TOKEN)",
-    "threatfox":   "ThreatFox IOCs by malware family (free, no auth)",
-    "vendor":      "Vendor intelligence synthesis — LLM-synthesized summaries from 35+ research blogs (requires LLM provider in .env)",
+    "sigma":          "SigmaHQ detection rules mapped to ATT&CK (free, optional GITHUB_TOKEN)",
+    "yara":           "YARA file detection rules matched to malware families (free, local clone)",
+    "threatfox":      "ThreatFox IOCs by malware family (free, no auth)",
+    "malware_bazaar": "MalwareBazaar sample hashes by malware family (free, requires ABUSECH_API_KEY)",
+    "urlhaus":        "URLhaus malware distribution URLs by family (free, requires ABUSECH_API_KEY)",
+    "greynoise":      "GreyNoise IP noise/RIOT context — distinguishes targeted vs background activity (free, 50/week)",
+    "abuseipdb":      "AbuseIPDB IP reputation scores from community reports (free, 1000/day)",
+    "vuldb":          "VulDB actor-CVE correlation and exploit intelligence (free tier, 50 credits/day)",
+    "vendor":         "Vendor intelligence synthesis — LLM-synthesized summaries from 35+ research blogs (requires LLM provider in .env)",
 }
 
 SOURCE_REQUIRES: dict[str, str] = {
-    "otx":    "OTX_API_KEY",
-    "sigma":  "GITHUB_TOKEN (optional, recommended)",
-    "vendor": "ANTHROPIC_API_KEY or OPENAI_API_KEY or Ollama running locally",
+    "otx":            "OTX_API_KEY",
+    "sigma":          "GITHUB_TOKEN (optional, recommended)",
+    "malware_bazaar": "ABUSECH_API_KEY",
+    "urlhaus":        "ABUSECH_API_KEY",
+    "greynoise":      "GREYNOISE_API_KEY",
+    "abuseipdb":      "ABUSEIPDB_API_KEY",
+    "vuldb":          "VULDB_API_KEY",
+    "vendor":         "ANTHROPIC_API_KEY or OPENAI_API_KEY or Ollama running locally",
 }
 
 ENRICHMENT_SOURCES: dict[str, str] = {
-    "sigma":       "collectors.sigma_rules.SigmaCollector",
-    "threatfox":   "collectors.threatfox.ThreatFoxCollector",
-    "vendor":      "collectors.vendor_intel.VendorIntelCollector",
+    "sigma":          "collectors.sigma_rules.SigmaCollector",
+    "yara":           "collectors.yara_rules.YaraRulesCollector",
+    "threatfox":      "collectors.threatfox.ThreatFoxCollector",
+    "malware_bazaar": "collectors.malware_bazaar.MalwareBazaarCollector",
+    "urlhaus":        "collectors.urlhaus.URLhausCollector",
+    "greynoise":      "collectors.greynoise.GreyNoiseCollector",
+    "abuseipdb":      "collectors.abuseipdb.AbuseIPDBCollector",
+    "vendor":         "collectors.vendor_intel.VendorIntelCollector",
 }
 
 MAPPER_REGISTRY: dict[str, str] = {
@@ -146,14 +168,20 @@ def cmd_list_sources() -> None:
                   box=rich_box.SIMPLE_HEAD, header_style="bold magenta")
 
         cache_ttls = {
-            "mitre":       "7 days (.cache/enterprise-attack.json)",
-            "cisa":        "per request",
-            "cisa_kev":    "24 hours (.cache/cisa_kev/)",
-            "malpedia":    "per request (.cache/malpedia/)",
-            "misp_galaxy": "7 days (.cache/misp_galaxy/)",
-            "otx":         "per request (.cache/otx/)",
-            "sigma":       "7 days (.cache/sigma/)",
-            "threatfox":   "24 hours (.cache/threatfox/)",
+            "mitre":          "7 days (.cache/enterprise-attack.json)",
+            "cisa":           "per request",
+            "cisa_kev":       "24 hours (.cache/cisa_kev/)",
+            "malpedia":       "per request (.cache/malpedia/)",
+            "misp_galaxy":    "7 days (.cache/misp_galaxy/)",
+            "otx":            "per request (.cache/otx/)",
+            "sigma":          "7 days (.cache/sigma-repo/)",
+            "yara":           "7 days (.cache/yara-rules-repo/)",
+            "threatfox":      "24 hours (.cache/threatfox/)",
+            "malware_bazaar": "24 hours (.cache/malware_bazaar/)",
+            "urlhaus":        "24 hours (.cache/urlhaus/)",
+            "greynoise":      "7 days (.cache/greynoise/)",
+            "abuseipdb":      "3 days (.cache/abuseipdb/)",
+            "vuldb":          "7 days (.cache/vuldb/)",
         }
 
         for key, desc in SOURCE_DESCRIPTIONS.items():
@@ -375,7 +403,29 @@ def cmd_update_bundles() -> None:
         except Exception as exc:
             _print(f"  ✗ APT campaign clone error: {exc}", "red")
 
-    # 7. Leave Malpedia + OTX caches — per-family/per-pulse, expensive to rebuild
+    # 7. YARA Rules repo
+    yara_repo = Path(".cache/yara-rules-repo")
+    if yara_repo.exists():
+        _print("  Updating YARA rules…", "dim")
+        result = subprocess.run(
+            ["git", "-C", str(yara_repo), "fetch", "origin", "--depth=1"],
+            capture_output=True, text=True, timeout=120,
+        )
+        if result.returncode == 0:
+            result = subprocess.run(
+                ["git", "-C", str(yara_repo), "reset", "--hard", "origin/HEAD"],
+                capture_output=True, text=True, timeout=30,
+            )
+            if result.returncode == 0:
+                _print("  ✓ YARA rules updated", "green")
+            else:
+                _print(f"  ✗ YARA reset failed: {result.stderr[:100]}", "red")
+        else:
+            _print(f"  ✗ YARA fetch failed: {result.stderr[:100]}", "red")
+    else:
+        _print("  ✓ YARA rules repo not yet cloned — will clone on next --sources yara run", "dim")
+
+    # 8. Leave Malpedia + OTX caches — per-family/per-pulse, expensive to rebuild
     _print("\n  Malpedia + OTX caches preserved (clear manually if needed).", "dim")
     _print("  Run THEORY normally to rebuild Sigma + ThreatFox caches.\n", "dim")
     _print("Update complete.\n", "bold green")
@@ -601,6 +651,152 @@ def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
             profile["threatfox_ioc_count"]   = len(new_iocs)
             profile["threatfox_family_hits"]  = result.get("family_hits", {})
             logger.info("ThreatFox: added %d IOCs", len(new_iocs))
+
+        elif source_key == "malware_bazaar":
+            malware_names = [
+                m.get("name", "")
+                for m in (profile.get("malware") or [])
+                if m.get("name")
+            ]
+            if not malware_names:
+                return profile
+            abusech_key = os.environ.get("ABUSECH_API_KEY", "")
+            enricher_inst = enricher.__class__(api_key=abusech_key) if not abusech_key else enricher
+            if abusech_key:
+                enricher_inst = _load_class(enricher_path)(api_key=abusech_key)
+            else:
+                enricher_inst = enricher
+            result = enricher_inst.collect_for_malware_families(
+                malware_names, profile.get("actor_name", "")
+            )
+            if not result:
+                return profile
+            existing = profile.get("indicators", [])
+            seen = {
+                f"{i.get('type','')}:{i.get('value','').lower()}"
+                for i in existing
+            }
+            new_iocs = []
+            for ioc in (result.get("indicators") or []):
+                key = f"{ioc.get('type','')}:{ioc.get('value','').lower()}"
+                if key not in seen:
+                    seen.add(key)
+                    new_iocs.append(ioc)
+            profile["indicators"] = existing + new_iocs
+            profile["malware_bazaar_ioc_count"]  = len(new_iocs)
+            profile["malware_bazaar_family_hits"] = result.get("family_hits", {})
+            logger.info("MalwareBazaar: added %d sample hashes", len(new_iocs))
+
+        elif source_key == "urlhaus":
+            malware_names = [
+                m.get("name", "")
+                for m in (profile.get("malware") or [])
+                if m.get("name")
+            ]
+            if not malware_names:
+                return profile
+            abusech_key = os.environ.get("ABUSECH_API_KEY", "")
+            if abusech_key:
+                enricher_inst = _load_class(enricher_path)(api_key=abusech_key)
+            else:
+                enricher_inst = enricher
+            result = enricher_inst.collect_for_malware_families(
+                malware_names, profile.get("actor_name", "")
+            )
+            if not result:
+                return profile
+            existing = profile.get("indicators", [])
+            seen = {
+                f"{i.get('type','')}:{i.get('value','').lower()}"
+                for i in existing
+            }
+            new_iocs = []
+            for ioc in (result.get("indicators") or []):
+                key = f"{ioc.get('type','')}:{ioc.get('value','').lower()}"
+                if key not in seen:
+                    seen.add(key)
+                    new_iocs.append(ioc)
+            profile["indicators"] = existing + new_iocs
+            profile["urlhaus_ioc_count"]  = len(new_iocs)
+            profile["urlhaus_family_hits"] = result.get("family_hits", {})
+            logger.info("URLhaus: added %d distribution URLs", len(new_iocs))
+
+        elif source_key == "yara":
+            malware_names = [
+                m.get("name", "")
+                for m in (profile.get("malware") or [])
+                if m.get("name")
+            ]
+            if not malware_names:
+                return profile
+            yara_map = enricher.collect_for_malware_families(malware_names)
+            if not yara_map:
+                return profile
+            # Attach YARA rules to matching malware entries
+            for m in (profile.get("malware") or []):
+                name = (m.get("name") or "")
+                rules = yara_map.get(name, [])
+                if rules:
+                    m["yara_rules"]      = rules
+                    m["yara_rule_count"] = len(rules)
+            profile["yara_rule_count"] = sum(len(v) for v in yara_map.values())
+            logger.info(
+                "YARA: enriched %d families with %d rules",
+                len(yara_map), profile["yara_rule_count"],
+            )
+
+        elif source_key == "greynoise":
+            gn_key = os.environ.get("GREYNOISE_API_KEY", "")
+            if gn_key:
+                enricher_inst = _load_class(enricher_path)(api_key=gn_key)
+            else:
+                enricher_inst = enricher
+            gn_context = enricher_inst.enrich_ips(
+                profile.get("indicators", []),
+                profile.get("actor_name", ""),
+            )
+            if gn_context:
+                # Annotate each IP indicator with GreyNoise context
+                for ioc in (profile.get("indicators") or []):
+                    if ioc.get("type") == "ip":
+                        ctx = gn_context.get(ioc.get("value", ""))
+                        if ctx:
+                            ioc["greynoise"] = ctx
+                profile["greynoise_enriched"] = len(gn_context)
+                benign = sum(
+                    1 for c in gn_context.values()
+                    if c.get("riot") or c.get("classification") == "benign"
+                )
+                logger.info(
+                    "GreyNoise: enriched %d IPs (%d benign/RIOT)",
+                    len(gn_context), benign,
+                )
+
+        elif source_key == "abuseipdb":
+            aipdb_key = os.environ.get("ABUSEIPDB_API_KEY", "")
+            if aipdb_key:
+                enricher_inst = _load_class(enricher_path)(api_key=aipdb_key)
+            else:
+                enricher_inst = enricher
+            aipdb_context = enricher_inst.enrich_ips(
+                profile.get("indicators", []),
+                profile.get("actor_name", ""),
+            )
+            if aipdb_context:
+                for ioc in (profile.get("indicators") or []):
+                    if ioc.get("type") == "ip":
+                        ctx = aipdb_context.get(ioc.get("value", ""))
+                        if ctx:
+                            ioc["abuseipdb"] = ctx
+                profile["abuseipdb_enriched"] = len(aipdb_context)
+                high_abuse = sum(
+                    1 for c in aipdb_context.values()
+                    if c.get("abuse_confidence_score", 0) >= 75
+                )
+                logger.info(
+                    "AbuseIPDB: enriched %d IPs (%d high-abuse)",
+                    len(aipdb_context), high_abuse,
+                )
 
     except Exception as exc:
         logger.error("Enrichment %r failed: %s", source_key, exc)
