@@ -43,6 +43,23 @@ from datetime import datetime, timezone
 from typing import Any
 
 # ---------------------------------------------------------------------------
+# Load .env before anything else touches os.environ
+# ---------------------------------------------------------------------------
+# Collectors read their API keys via os.environ.get() at construction time.
+# If .env isn't loaded before the first collector is instantiated, every
+# key-requiring collector silently skips itself with a "no API key" message,
+# even when the key is sitting right there in .env.
+#
+# python-dotenv is already a hard dependency in pyproject.toml, so this
+# import should always succeed. The try/except is belt-and-suspenders for
+# unusual installs (e.g. someone pip-installing individual files).
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
+# ---------------------------------------------------------------------------
 # Logging — clean format, WARNING by default
 # ---------------------------------------------------------------------------
 

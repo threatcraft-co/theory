@@ -23,6 +23,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import os
 import time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -62,7 +63,9 @@ class AbuseIPDBCollector(BaseCollector):
 
     def __init__(self, api_key: str | None = None, config: dict | None = None):
         super().__init__(api_key=api_key, config=config or {})
-        self._abuseipdb_key = api_key or ""
+        # Fall back to env var so the collector works when instantiated
+        # with no arguments.
+        self._abuseipdb_key = api_key or os.environ.get("ABUSEIPDB_API_KEY", "")
 
     def query(self, actor_name: str) -> dict | None:
         """Standard interface stub -- AbuseIPDB is enrichment-only."""

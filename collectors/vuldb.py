@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import re
 import time
 from datetime import datetime, timezone, timedelta
@@ -66,7 +67,9 @@ class VulDBCollector(BaseCollector):
 
     def __init__(self, api_key: str | None = None, config: dict | None = None):
         super().__init__(api_key=api_key, config=config or {})
-        self._vuldb_key = api_key or ""
+        # Fall back to env var so the collector works when instantiated
+        # with no arguments (as _cli.py does during the collect phase).
+        self._vuldb_key = api_key or os.environ.get("VULDB_API_KEY", "")
 
     def query(self, actor_name: str) -> dict[str, Any]:
         """
