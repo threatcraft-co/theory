@@ -4,7 +4,7 @@
 
 **Multi-source threat actor intelligence for everyone.**
 
-THEORY is an open-source alternative to enterprise threat intelligence platforms. It generates analyst-grade dossiers on threat actors by aggregating data from MITRE ATT&CK, Malpedia, AlienVault OTX, SigmaHQ, ThreatFox, CISA, and vendor research blogs — then synthesizes everything using an LLM into a clean executive overview and actor-specific intelligence summaries.
+THEORY is an open-source alternative to enterprise threat intelligence platforms. It generates analyst-grade dossiers on threat actors by aggregating data from MITRE ATT&CK, MISP Galaxy, Malpedia, AlienVault OTX, SigmaHQ, YARA-Rules, ThreatFox, MalwareBazaar, URLhaus, GreyNoise, AbuseIPDB, VulDB, CISA, and vendor research blogs — then synthesizes everything using an LLM into a clean executive overview and actor-specific intelligence summaries.
 
 Built for threat intelligence analysts, detection engineers, security researchers, and students who believe good intelligence shouldn't require a six-figure subscription.
 
@@ -16,9 +16,11 @@ For any supported threat actor, THEORY generates:
 
 - **LLM-written synopsis** — 4-6 sentence executive overview synthesized from all available data, at the top of every dossier
 - **TTP table** — every known technique with tactic, confidence score, and detection guidance
-- **Detection opportunities** — Sigma rules mapped directly to actor TTPs
-- **Malware inventory** — all associated families with full descriptions
-- **IOC table** — deduplicated, defanged indicators from OTX and ThreatFox with confidence scores and malware family attribution
+- **Detection opportunities** — Sigma rules mapped to actor TTPs and YARA rules matched to malware families
+- **Malware inventory** — all associated families with full descriptions, sample hashes (MalwareBazaar), and YARA detection coverage
+- **IOC table** — deduplicated, defanged indicators from OTX, ThreatFox, MalwareBazaar, and URLhaus with confidence scores and malware family attribution
+- **IP enrichment** — GreyNoise noise/RIOT context and AbuseIPDB reputation scores annotate every public IP indicator so analysts can distinguish targeted infrastructure from internet background radiation
+- **Vulnerability intelligence** — CVEs from CISA KEV, NVD, and VulDB with CVSS scores, exploit availability, and remediation status
 - **Recent intelligence** — LLM-synthesized summaries of recent vendor research articles, with source attribution and links
 - **Campaigns** — full campaign descriptions with dates and ATT&CK links
 - **Targeted sectors** and CISA advisories
@@ -66,13 +68,21 @@ That's it. Your first dossier renders in the terminal and saves to `output/dossi
 |---|---|---|---|
 | `mitre` | MITRE ATT&CK (local bundle) | None | 7 days |
 | `cisa` | CISA Advisories + KEV | None | Per request |
+| `cisa_kev` | CISA KEV — 1600+ confirmed-exploited CVEs | None | 24 hours |
 | `malpedia` | Malpedia malware database | None | Per request |
+| `misp_galaxy` | MISP Galaxy — 1000+ actors with deep alias lists | None | 7 days |
 | `otx` | AlienVault OTX | `OTX_API_KEY` | Per request |
 | `sigma` | SigmaHQ detection rules (local clone) | `GITHUB_TOKEN` (optional) | 7 days |
+| `yara` | YARA-Rules file/memory detection rules (local clone) | None | 7 days |
 | `threatfox` | ThreatFox IOCs | None | 24 hours |
+| `malware_bazaar` | MalwareBazaar sample hashes | `ABUSECH_API_KEY` | 24 hours |
+| `urlhaus` | URLhaus malware distribution URLs | `ABUSECH_API_KEY` | 24 hours |
+| `greynoise` | GreyNoise IP noise/RIOT context | `GREYNOISE_API_KEY` | 7 days |
+| `abuseipdb` | AbuseIPDB IP reputation scores | `ABUSEIPDB_API_KEY` | 3 days |
+| `vuldb` | VulDB actor-CVE correlation | `VULDB_API_KEY` | 7 days |
 | `vendor` | Vendor intel synthesis (LLM) | LLM API key | 7 days |
 
-**Coming in v1.2 — IOC Enrichment Sources:**
+**Coming in v1.2 — Additional IOC Enrichment:**
 
 | Key | Source | Auth Required | Free Tier |
 |---|---|---|---|
@@ -99,17 +109,26 @@ theory --actor "Forest Blizzard"    # same actor, different name
 
 ### Choosing sources
 ```bash
-# Default (mitre + cisa + malpedia, no auth needed)
+# Default (mitre + cisa + cisa_kev + malpedia + misp_galaxy, no auth needed)
 theory --actor APT28
 
 # Add community IOCs
 theory --actor APT28 --sources mitre,cisa,malpedia,otx
 
-# Full enrichment including detection rules
-theory --actor APT28 --sources mitre,cisa,malpedia,otx,sigma,threatfox
+# Full enrichment including detection rules (Sigma + YARA)
+theory --actor APT28 --sources mitre,cisa,malpedia,otx,sigma,yara,threatfox
 
-# With vendor intelligence synthesis (requires LLM key in .env)
-theory --actor APT28 --sources mitre,cisa,malpedia,otx,sigma,threatfox,vendor
+# Complete abuse.ch trifecta (network + file + delivery IOCs)
+theory --actor APT28 --sources mitre,malpedia,threatfox,malware_bazaar,urlhaus
+
+# IP enrichment (GreyNoise + AbuseIPDB annotate every public IP)
+theory --actor APT28 --sources mitre,otx,threatfox,greynoise,abuseipdb
+
+# Vulnerability intelligence (CISA KEV + VulDB actor-CVE correlation)
+theory --actor APT28 --sources mitre,cisa_kev,vuldb
+
+# Everything, with vendor intelligence synthesis (requires LLM key in .env)
+theory --actor APT28 --sources mitre,cisa,malpedia,misp_galaxy,otx,sigma,yara,threatfox,malware_bazaar,urlhaus,greynoise,abuseipdb,vuldb,vendor
 ```
 
 ### Output formats
@@ -167,7 +186,7 @@ theory --list-sources   # all sources with auth and cache info
 
 ### Maintenance
 ```bash
-# Refresh ATT&CK bundle, Sigma rules, and APT campaign collection
+# Refresh ATT&CK bundle, Sigma rules, YARA rules, MISP Galaxy, CISA KEV, and APT campaign collection
 theory --update-bundles
 ```
 
@@ -241,6 +260,53 @@ theory --actor APT28 --sources mitre,sigma --no-save
 ```
 
 Detection rules are linked directly to actor TTPs in the dossier. See `docs/SIGMA_RATE_LIMITS.md` for full details.
+
+---
+
+## YARA Rules
+
+Where Sigma covers log-based and network detection, YARA covers file-based and memory detection. THEORY uses a local clone of the Yara-Rules/rules repository — no rate limits, no API, instant results.
+
+```bash
+# First run clones the repo (~50MB, ~1 minute, one time only)
+theory --actor APT28 --sources mitre,malpedia,yara --no-save
+
+# Every subsequent run is instant
+theory --actor APT28 --sources mitre,malpedia,yara --no-save
+```
+
+YARA rules are matched to malware family names in the actor profile (from MITRE, Malpedia, and MISP Galaxy) and attached to the corresponding malware entries in the dossier. Sigma and YARA together give complete detection coverage: network AND endpoint.
+
+---
+
+## IP Enrichment (GreyNoise + AbuseIPDB)
+
+Every public IP indicator in the dossier can be annotated with two independent enrichment signals:
+
+- **GreyNoise** distinguishes targeted activity from internet background noise. An IP flagged as RIOT (known benign service like a CDN or DNS resolver) or as scanning noise is almost certainly a false positive. This saves analysts from chasing leads that lead nowhere.
+- **AbuseIPDB** provides a community abuse-confidence score (0-100) reflecting how many independent reporters have flagged the IP as abusive.
+
+```bash
+# Enrich all IP IOCs with both sources
+theory --actor APT28 --sources mitre,otx,threatfox,greynoise,abuseipdb
+```
+
+Free tier limits are conservative on both — GreyNoise Community is 50 lookups/week and AbuseIPDB is 1000 checks/day — so THEORY caps enrichment at 25 IPs per run for GreyNoise and 50 for AbuseIPDB, and caches aggressively (7 days for GreyNoise, 3 for AbuseIPDB).
+
+---
+
+## abuse.ch Trifecta (ThreatFox + MalwareBazaar + URLhaus)
+
+One free API key from [auth.abuse.ch](https://auth.abuse.ch/) unlocks three complementary IOC sources that together cover every stage of a malware infrastructure lifecycle:
+
+- **ThreatFox** — command and control IOCs (IPs, domains, URLs) by malware family
+- **MalwareBazaar** — sample hashes (SHA256, MD5, SHA1) with file metadata and signatures
+- **URLhaus** — active and historical payload distribution URLs
+
+```bash
+# Complete abuse.ch coverage — network C2, file hashes, delivery URLs
+theory --actor APT28 --sources mitre,malpedia,threatfox,malware_bazaar,urlhaus
+```
 
 ---
 
@@ -368,11 +434,19 @@ theory.py                            ← compatibility shim (points to package)
 collectors/
   base.py                            ← base collector class
   mitre_attack.py                    ← MITRE ATT&CK (local STIX bundle)
-  cisa_advisories.py                 ← CISA advisories + KEV + alias table
+  cisa_advisories.py                 ← CISA advisories + alias table
+  cisa_kev.py                        ← CISA KEV catalog cross-referencing
+  misp_galaxy.py                     ← MISP Galaxy threat-actor cluster
   malpedia.py                        ← Malpedia malware database
   alienvault_otx.py                  ← AlienVault OTX pulses and IOCs
   sigma_rules.py                     ← SigmaHQ local clone (no rate limits)
-  threatfox.py                       ← ThreatFox IOC database (enrichment)
+  yara_rules.py                      ← YARA-Rules local clone (file/memory detection)
+  threatfox.py                       ← ThreatFox IOC database (network C2)
+  malware_bazaar.py                  ← MalwareBazaar sample hashes (file IOCs)
+  urlhaus.py                         ← URLhaus malware distribution URLs
+  greynoise.py                       ← GreyNoise IP noise/RIOT enrichment
+  abuseipdb.py                       ← AbuseIPDB IP reputation enrichment
+  vuldb.py                           ← VulDB actor-CVE correlation
   vendor_intel.py                    ← RSS feed fetcher + relevance scorer
   intelligence_synthesizer.py        ← LLM provider abstraction + synthesis
 
@@ -403,7 +477,7 @@ docs/
   SCHEDULED_UPDATES.md               ← Cron/launchd automation setup
   SECURITY_AUDIT_2026-06.md          ← Security audit documentation
 
-tests/                               ← 337 offline tests
+tests/                               ← 493+ offline tests
 ```
 
 ---

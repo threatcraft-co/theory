@@ -13,7 +13,7 @@ Before reporting an issue, it helps to understand what THEORY is and is not.
 **What THEORY is:**
 
 - A local command-line Python tool that runs on the user's machine.
-- A client that makes outbound HTTPS requests to public threat intelligence APIs (MITRE ATT&CK, CISA, AlienVault OTX, Malpedia, ThreatFox, SigmaHQ, vendor RSS feeds).
+- A client that makes outbound HTTPS requests to public threat intelligence APIs (MITRE ATT&CK, MISP Galaxy, CISA, CISA KEV, AlienVault OTX, Malpedia, ThreatFox, MalwareBazaar, URLhaus, GreyNoise, AbuseIPDB, VulDB, SigmaHQ, YARA-Rules, vendor RSS feeds).
 - A file writer that produces dossiers in the user's local `output/dossiers/` directory.
 
 **What THEORY is not:**
@@ -25,7 +25,7 @@ Before reporting an issue, it helps to understand what THEORY is and is not.
 The threat surface is therefore narrow and centers on:
 
 1. **Code injection or arbitrary execution** through actor names, file paths, or configuration values.
-2. **Path traversal** in file writes (cache, dossier output, Sigma clone).
+2. **Path traversal** in file writes (cache, dossier output, Sigma clone, YARA clone).
 3. **Supply chain risk** through dependencies declared in `pyproject.toml`.
 4. **Prompt injection** in LLM-synthesized content where attacker-controlled text from a third-party source (a vendor blog, an OTX pulse) reaches an LLM prompt. Mitigated by fenced input, a trust-boundary system prompt, and input sanitization — see the June 2026 audit for details.
 5. **XML parsing of attacker-influenceable feeds.** RSS/Atom sources are third-party content. Parsed with `defusedxml` to refuse entity expansion and external entity references.
@@ -41,7 +41,7 @@ If your finding fits one of those categories, it is in scope.
 The following are considered valid security issues:
 
 - Arbitrary code execution from any input vector (actor names, file paths, configuration files, environment variables, API responses, RSS feed contents).
-- Path traversal allowing writes outside `.cache/`, `output/dossiers/`, or the Sigma clone directory.
+- Path traversal allowing writes outside `.cache/`, `output/dossiers/`, the Sigma clone directory, or the YARA clone directory.
 - Local file disclosure beyond what the running user can already read.
 - Injection of malicious content into rendered dossiers (HTML, markdown, terminal) that bypasses IOC defanging or executes in the user's browser when opening an HTML dossier.
 - Prompt injection that bypasses the `<untrusted_article>` / `<untrusted_vendor_intel>` fencing and the `_sanitize_for_prompt` sanitizer, causing the LLM to produce attacker-chosen output that reaches the dossier without provenance.
@@ -136,7 +136,7 @@ Users running forks or modified versions are responsible for porting fixes thems
 
 For transparency, THEORY follows these practices in its own development:
 
-- **No secrets in source.** API keys are loaded from `.env` files which are gitignored. Anything pushed accidentally is purged from history with `git filter-repo`.
+- **No secrets in source.** API keys are loaded from `.env` files which are gitignored. Anything pushed accidentally is purged from history with `git filter-repo`. The `ABUSECH_API_KEY`, `GREYNOISE_API_KEY`, `ABUSEIPDB_API_KEY`, and `VULDB_API_KEY` variables are all loaded through the same `.env` mechanism as the older keys — no source code path holds them.
 - **Pre-commit hooks.** Contributors are asked to install `pre-commit` before their first commit (`pip install pre-commit && pre-commit install`). The hook set runs on every commit and includes `gitleaks` for content-based secret scanning against ~150 known credential patterns (AWS, GCP, Anthropic, OpenAI, GitHub, Slack, Stripe, and others), `detect-private-key` for SSH/TLS material, and a name-based guard that blocks `.env`, `*.pem`, `*.key`, and similar filenames. See `.pre-commit-config.yaml` for the full list. The hooks can be bypassed with `git commit --no-verify` in genuine emergencies; the intent is that this is rare and deliberate.
 - **Defanged output.** All URLs, domains, and IPs in markdown, HTML, and terminal output are defanged using `hxxp://` and `[.]` notation. Raw values are only present in the CSV IOC export, which exists specifically for SIEM ingestion where the platform handles defanging.
 - **Prompt-injection defense.** All third-party content that reaches an LLM prompt (vendor RSS bodies, prior synthesis output re-ingested into dossier openers) is wrapped in `<untrusted_article>` or `<untrusted_vendor_intel>` XML tags. The system prompt explicitly instructs the model to treat fenced content as data to be analyzed, never as instructions. A defense-in-depth sanitizer (`_sanitize_for_prompt`) neutralizes fence-break attempts by replacing angle brackets in fence-tag patterns with square brackets, and strips control characters. Both layers are covered by offline tests in `tests/test_security_hardening.py`.

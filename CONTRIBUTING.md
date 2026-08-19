@@ -109,6 +109,8 @@ If `--list-actors` shows your entry with the expected alias count, you're done.
 
 ## Adding a new intelligence source
 
+**Before you start:** open [`docs/NEW_SOURCE_CHECKLIST.md`](docs/NEW_SOURCE_CHECKLIST.md) and copy it into a scratch file or GitHub issue. It covers every file that needs updating (collector code, pipeline wiring in `_cli.py`, `.env.example`, README, CHANGELOG, SECURITY, DISCLAIMER, tests, and final verification steps). This list exists because things fall through the cracks otherwise.
+
 A source in THEORY consists of three components:
 
 ### 1. Collector (`collectors/<source_name>.py`)
@@ -249,7 +251,7 @@ the actor's techniques and targeted platforms. To add a new resource, edit
 
 ## Pull request checklist
 
-- [ ] All existing tests still pass (`pytest tests/ -v` — should show 310+ passing)
+- [ ] All existing tests still pass (`pytest tests/ -v` — should show 490+ passing)
 - [ ] New code has tests (fully offline, no real API calls)
 - [ ] Linter passes (`ruff check .` with the project's ignore list)
 - [ ] New actor entries are added to `config/actors.yaml`, include the MITRE Group ID if applicable, and have 3+ aliases

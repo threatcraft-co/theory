@@ -10,8 +10,9 @@ Governing entity jurisdiction: State of Delaware, United States
 
 THEORY is an open-source threat actor intelligence aggregation framework. It
 collects, normalizes, and synthesizes publicly available information from
-third-party sources including but not limited to MITRE ATT&CK, Malpedia,
-AlienVault OTX, SigmaHQ, ThreatFox, CISA, and vendor research blogs.
+third-party sources including but not limited to MITRE ATT&CK, MISP Galaxy,
+Malpedia, AlienVault OTX, SigmaHQ, YARA-Rules, ThreatFox, MalwareBazaar,
+URLhaus, GreyNoise, AbuseIPDB, VulDB, CISA, and vendor research blogs.
 
 THEORY does not produce original threat intelligence research. All data
 surfaced by THEORY originates from external sources that Threatcraft does
