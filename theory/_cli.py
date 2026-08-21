@@ -1044,6 +1044,21 @@ def run(
     except Exception as _exc:
         logger.warning("Actor overview synthesis failed: %s", _exc)
 
+    # ── 5½. Correlation ──────────────────────────────────────────────
+    # Cross-reference all enriched data: techniques ↔ malware ↔ IOCs ↔
+    # CVEs ↔ Sigma/YARA. Produces profile["correlations"] with linked
+    # intelligence, kill chain view, priority actions, and coverage stats.
+    try:
+        from processors.correlator import correlate
+        profile = correlate(profile)
+        logger.info(
+            "Correlation: %d priority actions, %d%% detection coverage",
+            len(profile.get("correlations", {}).get("priority_actions", [])),
+            profile.get("correlations", {}).get("coverage", {}).get("coverage_pct", 0),
+        )
+    except Exception as _exc:
+        logger.warning("Correlation engine failed: %s", _exc)
+        
     # ── 6. Output ─────────────────────────────────────────────────────
     if output == "json":
         _output_json(profile, save)
