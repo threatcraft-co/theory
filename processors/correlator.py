@@ -27,13 +27,15 @@ Usage in the pipeline:
   profile = correlate(profile)
   # profile["correlations"] now contains cross-referenced intelligence
 """
-
 from __future__ import annotations
 
 import logging
+import re
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from typing import Any
+
+_TECHNIQUE_ID_RE = re.compile(r"^T\d{4}")
 
 logger = logging.getLogger(__name__)
 
@@ -181,7 +183,7 @@ def _index_cve_references(cves: list[dict]) -> dict[str, list[dict]]:
     ref_index: dict[str, list[dict]] = defaultdict(list)
     for cve in cves:
         for ref in (cve.get("mitre_references") or []):
-            key = ref.strip().upper() if ref.startswith("T") else ref.strip().lower()
+            key = ref.strip().upper() if _TECHNIQUE_ID_RE.match(ref.strip()) else ref.strip().lower()
             ref_index[key].append(cve)
     return dict(ref_index)
 
