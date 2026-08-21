@@ -1,5 +1,5 @@
 __version__ = "1.0.0"
 __author__  = "Threatcraft"
-__email__   = "threatcraft@proton.me"
+__email__   = "admin@threatcraft.co"
 __url__     = "https://github.com/threatcraft-co/theory"
 __license__ = "MIT"

@@ -82,7 +82,7 @@ Three LLM providers in `collectors/intelligence_synthesizer.py` each carried a p
 
 ## Reporting issues
 
-Per [`SECURITY.md`](../SECURITY.md), report security issues privately to **threatcraft@proton.me** with the subject line `SECURITY: <brief description>`. Do not open public GitHub issues for security reports.
+Per [`SECURITY.md`](../SECURITY.md), report security issues privately to **admin@threatcraft.co** with the subject line `SECURITY: <brief description>`. Do not open public GitHub issues for security reports.
 
 ---
 

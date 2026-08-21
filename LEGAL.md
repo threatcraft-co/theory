@@ -220,7 +220,7 @@ For legal inquiries related to THEORY:
 
 **Threatcraft Holdings LLC dba Threatcraft**
 GitHub: github.com/threatcraft-co/theory
-Contact: threatcraft@proton.me
+Contact: admin@threatcraft.co
 
 *This document does not constitute legal advice. Users with jurisdiction-
 specific legal questions should consult qualified legal counsel in their
