@@ -10,6 +10,11 @@ Design: Dark intelligence-grade aesthetic. Deep navy/charcoal, red/amber/green
 confidence accents, monospace for technique IDs and IOCs. Collapsible sections,
 sortable TTP table, fresh IOC highlighting. Shareable as a single file.
 
+Now with correlator integration: renders profile["correlations"] as
+priority actions, kill chain timeline, coverage meter, and cross-referenced
+malware intel cards. Techniques and malware carry data attributes for
+cross-section highlighting when clicked.
+
 Usage:
   theory --actor APT28 --sources mitre,malpedia,otx --output html
   # writes: output/dossiers/apt28.html
@@ -50,6 +55,7 @@ class HtmlReporter:
         cves       = profile.get("cves", [])
         advisories = profile.get("advisories", [])
         vendor_intel = profile.get("vendor_intel", [])
+        correlations = profile.get("correlations", {})
         det_repos  = _match_detection_repos(profile)
         generated  = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
@@ -60,6 +66,15 @@ class HtmlReporter:
 
         # Partition IOCs by freshness
         fresh_iocs, aging_iocs, stale_iocs = _partition_iocs_three(indicators)
+
+        # Coverage stats (from correlator, or compute fallback)
+        coverage = correlations.get("coverage", {})
+        coverage_pct = coverage.get("coverage_pct", 0)
+        critical_gap_count = coverage.get("critical_gap_count", 0)
+
+        # Build IOC family lookup for malware cross-referencing
+        malware_intel = correlations.get("malware_intel", [])
+        malware_intel_by_name = {mi["name"].lower(): mi for mi in malware_intel}
 
         html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -100,16 +115,21 @@ class HtmlReporter:
         <div class="conf-item low"><span class="conf-num">{low}</span><span class="conf-label">LOW</span></div>
         <div class="conf-item iocs"><span class="conf-num">{len(indicators)}</span><span class="conf-label">IOCs</span></div>
       </div>
+      {_coverage_meter(coverage_pct, critical_gap_count, coverage) if coverage.get("total_techniques", 0) > 0 else ''}
     </div>
   </div>
 
+  {_section_priority_actions(correlations.get("priority_actions", [])) if correlations.get("priority_actions") else ''}
+
   {_section_overview(overview) if overview else ''}
 
-  {_section_ttps(techniques)}
+  {_section_kill_chain(correlations.get("kill_chain", [])) if correlations.get("kill_chain") else ''}
+
+  {_section_ttps(techniques, correlations.get("technique_intel", []))}
 
   {_section_iocs(fresh_iocs, aging_iocs, stale_iocs) if indicators else ''}
 
-  {_section_malware(malware) if malware else ''}
+  {_section_malware(malware, malware_intel_by_name) if malware else ''}
 
   {_section_campaigns(campaigns) if campaigns else ''}
 
@@ -143,6 +163,197 @@ class HtmlReporter:
 
 
 # ---------------------------------------------------------------------------
+# NEW: Coverage meter (hero-right addition)
+# ---------------------------------------------------------------------------
+
+def _coverage_meter(pct: int, critical_gaps: int, coverage: dict) -> str:
+    """Compact detection coverage meter shown in the hero-right area."""
+    if pct >= 70:
+        color_cls = "cov-good"
+    elif pct >= 40:
+        color_cls = "cov-med"
+    else:
+        color_cls = "cov-poor"
+
+    gap_label = ""
+    if critical_gaps > 0:
+        gap_label = f'<span class="cov-gap">{critical_gaps} critical gap{"s" if critical_gaps != 1 else ""}</span>'
+
+    return f"""
+    <div class="coverage-meter {color_cls}">
+      <div class="cov-header">
+        <span class="cov-title">DETECTION COVERAGE</span>
+        <span class="cov-pct">{pct}%</span>
+      </div>
+      <div class="cov-bar">
+        <div class="cov-fill" style="width:{pct}%"></div>
+      </div>
+      <div class="cov-detail">
+        <span>{coverage.get("with_any_detection", 0)}/{coverage.get("total_techniques", 0)} techniques covered</span>
+        {gap_label}
+      </div>
+    </div>"""
+
+
+# ---------------------------------------------------------------------------
+# NEW: Priority Actions panel
+# ---------------------------------------------------------------------------
+
+def _section_priority_actions(actions: list[dict]) -> str:
+    """Top-of-dossier ranked action list — what to do right now."""
+    if not actions:
+        return ""
+
+    # Action icon glyphs (simple unicode, keeps single-file promise)
+    action_glyphs = {
+        "block":   "◼",
+        "patch":   "▲",
+        "detect":  "◆",
+        "hunt":    "●",
+        "monitor": "○",
+    }
+
+    cards = ""
+    for a in actions:
+        action_type = a.get("action", "monitor")
+        urgency     = a.get("urgency", "low")
+        title       = a.get("title", "")
+        detail      = a.get("detail", "")
+        priority    = a.get("priority", 0)
+        glyph       = action_glyphs.get(action_type, "○")
+
+        # Extract any linked IDs for cross-referencing
+        malware_family = a.get("malware_family", "")
+        cve_ids        = a.get("cve_ids", [])
+        tech_ids       = a.get("technique_ids", [])
+
+        # Build meta pill row
+        meta_pills = []
+        if a.get("ioc_count"):
+            meta_pills.append(f'<span class="pa-pill">{a["ioc_count"]} IOCs</span>')
+        if malware_family:
+            meta_pills.append(f'<span class="pa-pill pa-pill-link" data-malware="{_esc(malware_family.lower())}">{_esc(malware_family)}</span>')
+        for cid in cve_ids[:5]:
+            meta_pills.append(f'<span class="pa-pill pa-pill-cve">{_esc(cid)}</span>')
+        if len(cve_ids) > 5:
+            meta_pills.append(f'<span class="pa-pill">+{len(cve_ids) - 5} more</span>')
+        for tid in tech_ids[:5]:
+            meta_pills.append(f'<span class="pa-pill pa-pill-link" data-technique="{_esc(tid)}">{_esc(tid)}</span>')
+        if len(tech_ids) > 5:
+            meta_pills.append(f'<span class="pa-pill">+{len(tech_ids) - 5} more</span>')
+        meta_html = f'<div class="pa-meta">{"".join(meta_pills)}</div>' if meta_pills else ""
+
+        cards += f"""<div class="pa-card pa-{urgency}" data-action="{action_type}">
+  <div class="pa-index">{priority:02d}</div>
+  <div class="pa-glyph">{glyph}</div>
+  <div class="pa-body">
+    <div class="pa-head">
+      <span class="pa-action-label">{action_type.upper()}</span>
+      <span class="pa-urgency">{urgency}</span>
+    </div>
+    <div class="pa-title">{_esc(title)}</div>
+    <div class="pa-detail">{_esc(detail)}</div>
+    {meta_html}
+  </div>
+</div>"""
+
+    return f"""
+  <div class="section priority-actions-section collapsible open" id="sec-actions">
+    <div class="section-header pa-section-header" onclick="toggle('sec-actions')">
+      <div class="pa-header-left">
+        <h2 class="section-title">Priority Actions <span class="section-count">{len(actions)}</span></h2>
+        <span class="pa-subhead">Ranked by urgency — start at the top</span>
+      </div>
+      <span class="section-toggle">▾</span>
+    </div>
+    <div class="section-body pa-body-wrap">
+      <div class="pa-grid">{cards}</div>
+    </div>
+  </div>"""
+
+
+# ---------------------------------------------------------------------------
+# NEW: Kill Chain timeline
+# ---------------------------------------------------------------------------
+
+def _section_kill_chain(phases: list[dict]) -> str:
+    """Horizontal kill-chain strip: all 14 tactics, populated ones highlighted."""
+    if not phases:
+        return ""
+
+    # Full ordered set of tactics — we render all 14, dimming empty ones
+    all_tactics = [
+        ("Reconnaissance",       "Recon",       0),
+        ("Resource Development", "Resource",    1),
+        ("Initial Access",       "Initial",     2),
+        ("Execution",            "Execution",   3),
+        ("Persistence",          "Persistence", 4),
+        ("Privilege Escalation", "PrivEsc",     5),
+        ("Defense Evasion",      "DefEvasion",  6),
+        ("Credential Access",    "CredAccess",  7),
+        ("Discovery",            "Discovery",   8),
+        ("Lateral Movement",     "Lateral",     9),
+        ("Collection",           "Collection",  10),
+        ("Command and Control",  "C2",          11),
+        ("Exfiltration",         "Exfil",       12),
+        ("Impact",               "Impact",      13),
+    ]
+
+    # Index active phases by tactic name
+    active = {p["tactic"]: p for p in phases}
+
+    nodes = ""
+    for tactic, short, idx in all_tactics:
+        phase = active.get(tactic)
+        if phase:
+            tcount = phase.get("technique_count", 0)
+            sigma  = phase.get("sigma_rule_count", 0)
+            gap    = phase.get("detection_gap", False)
+            # Coverage class: red if gap, green if any sigma, amber if techniques but no detection
+            if sigma > 0:
+                node_cls = "kc-covered"
+            elif gap:
+                node_cls = "kc-gap"
+            else:
+                node_cls = "kc-active"
+            sigma_badge = f'<span class="kc-sigma">σ{sigma}</span>' if sigma else ''
+            tech_ids    = phase.get("technique_ids", [])
+            data_attr   = f'data-technique-ids="{",".join(tech_ids)}"'
+            nodes += f"""<div class="kc-node {node_cls}" {data_attr} title="{_esc(tactic)} — {tcount} technique{'s' if tcount != 1 else ''}, {sigma} Sigma rule{'s' if sigma != 1 else ''}">
+  <div class="kc-num">{idx:02d}</div>
+  <div class="kc-label">{_esc(short)}</div>
+  <div class="kc-count">{tcount}</div>
+  {sigma_badge}
+</div>"""
+        else:
+            nodes += f"""<div class="kc-node kc-empty" title="{_esc(tactic)} — no observed techniques">
+  <div class="kc-num">{idx:02d}</div>
+  <div class="kc-label">{_esc(short)}</div>
+  <div class="kc-count">–</div>
+</div>"""
+
+    return f"""
+  <div class="section collapsible open" id="sec-killchain">
+    <div class="section-header" onclick="toggle('sec-killchain')">
+      <div class="pa-header-left">
+        <h2 class="section-title">Kill Chain</h2>
+        <span class="pa-subhead">MITRE ATT&amp;CK tactic sequence — hover for detail, click to filter TTPs</span>
+      </div>
+      <span class="section-toggle">▾</span>
+    </div>
+    <div class="section-body kc-body-wrap">
+      <div class="kc-strip">{nodes}</div>
+      <div class="kc-legend">
+        <span class="kc-legend-item"><span class="kc-swatch kc-covered"></span>Detection coverage</span>
+        <span class="kc-legend-item"><span class="kc-swatch kc-active"></span>Active, no detection string</span>
+        <span class="kc-legend-item"><span class="kc-swatch kc-gap"></span>Gap — no detection at all</span>
+        <span class="kc-legend-item"><span class="kc-swatch kc-empty"></span>Not observed</span>
+      </div>
+    </div>
+  </div>"""
+
+
+# ---------------------------------------------------------------------------
 # Section renderers
 # ---------------------------------------------------------------------------
 
@@ -160,9 +371,12 @@ def _section_overview(overview: str) -> str:
   </div>"""
 
 
-def _section_ttps(techniques: list[dict]) -> str:
+def _section_ttps(techniques: list[dict], technique_intel: list[dict]) -> str:
     if not techniques:
         return ""
+
+    # Build technique_intel lookup by TID
+    ti_by_tid = {ti["technique_id"]: ti for ti in technique_intel}
 
     rows = ""
     for t in sorted(techniques, key=lambda x: x.get("technique_id", "")):
@@ -176,10 +390,16 @@ def _section_ttps(techniques: list[dict]) -> str:
         sigma_badge = f'<span class="sigma-badge" title="{sigma} Sigma rules">σ {sigma}</span>' if sigma else ''
         conf_cls    = {"HIGH": "conf-high", "MEDIUM": "conf-med", "LOW": "conf-low"}.get(conf, "conf-low")
 
-        rows += f"""<tr data-tactic="{_esc(tac)}" data-conf="{conf}">
+        # Cross-reference indicators from correlator
+        ti = ti_by_tid.get(tid, {})
+        kev_badge = ""
+        if ti.get("kev_cve_ids"):
+            kev_badge = f'<span class="kev-badge" title="Linked to CISA KEV CVEs: {", ".join(ti["kev_cve_ids"])}">KEV</span>'
+
+        rows += f"""<tr data-tactic="{_esc(tac)}" data-conf="{conf}" data-tid="{_esc(tid)}" class="ttp-row">
   <td><a href="{att_url}" target="_blank" class="tid-link">{_esc(tid)}</a></td>
   <td class="tactic-cell">{_esc(tac)}</td>
-  <td>{_esc(name)}{sigma_badge}</td>
+  <td>{_esc(name)}{sigma_badge}{kev_badge}</td>
   <td><span class="conf-badge {conf_cls}">{conf}</span></td>
 </tr>"""
 
@@ -221,10 +441,11 @@ def _section_iocs(fresh: list, aging: list, stale: list) -> str:
             ioc_type = ioc.get("type", "")
             value    = _defang_html(ioc_type, ioc.get("value", ""))
             family   = ioc.get("malware_family", "")
+            family_attr = f' data-family="{_esc(family.lower())}"' if family else ""
             seen     = ioc.get("last_seen") or ioc.get("first_seen") or ""
             conf     = ioc.get("confidence", "")
             conf_str = str(conf) if conf else ""
-            rows += f'<tr class="{row_class}"><td class="mono">{_esc(ioc_type)}</td><td class="mono ioc-value">{_esc(value)}</td><td>{_esc(family)}</td><td>{_esc(seen)}</td><td>{_esc(conf_str)}</td></tr>'
+            rows += f'<tr class="{row_class} ioc-row"{family_attr}><td class="mono">{_esc(ioc_type)}</td><td class="mono ioc-value">{_esc(value)}</td><td>{_esc(family)}</td><td>{_esc(seen)}</td><td>{_esc(conf_str)}</td></tr>'
         return rows
 
     all_rows = _ioc_rows(fresh, "ioc-fresh") + _ioc_rows(aging, "ioc-aging") + _ioc_rows(stale, "ioc-stale")
@@ -255,22 +476,90 @@ def _section_iocs(fresh: list, aging: list, stale: list) -> str:
   </div>"""
 
 
-def _section_malware(malware: list) -> str:
+def _section_malware(malware: list, malware_intel_by_name: dict) -> str:
+    """Malware cards enhanced with correlator IOC/CVE/detection intelligence."""
     cards = ""
     for m in malware:
         name  = m.get("name", "")
         mtype = m.get("type", "malware")
         desc  = m.get("description", "")
-        yara  = m.get("yara_count", 0)
-        yara_badge = f'<span class="yara-badge">{yara} YARA</span>' if yara else ""
-        desc_html  = f'<p class="malware-desc">{_esc(desc[:300])}{"…" if len(desc) > 300 else ""}</p>' if desc else ""
-        cards += f"""<div class="malware-card">
-  <div class="malware-header">
-    <span class="malware-name">{_esc(name)}</span>
-    <span class="malware-type">{_esc(mtype)}</span>
-    {yara_badge}
+        yara  = m.get("yara_count", 0) or m.get("yara_rule_count", 0)
+
+        # Correlator intel for this malware family
+        mi = malware_intel_by_name.get(name.lower(), {})
+        ioc_count      = mi.get("ioc_count", 0)
+        iocs_fresh     = mi.get("iocs_fresh", 0)
+        iocs_aging     = mi.get("iocs_aging", 0)
+        iocs_stale     = mi.get("iocs_stale", 0)
+        iocs_by_type   = mi.get("iocs_by_type", {})
+        linked_cves    = mi.get("linked_cves", [])
+        linked_kev     = mi.get("linked_cves_kev", [])
+        has_sigma      = mi.get("has_sigma", False)
+
+        # Badges row
+        badges = []
+        if yara:
+            badges.append(f'<span class="mc-badge mc-badge-yara">{yara} YARA</span>')
+        if has_sigma:
+            badges.append('<span class="mc-badge mc-badge-sigma">Sigma</span>')
+        if linked_kev:
+            badges.append(f'<span class="mc-badge mc-badge-kev" title="KEV CVEs: {", ".join(linked_kev)}">KEV × {len(linked_kev)}</span>')
+        badges_html = "".join(badges)
+
+        # IOC intel row (only if we have IOCs)
+        ioc_row = ""
+        if ioc_count > 0:
+            type_summary_parts = []
+            type_labels = {"domain": "domains", "ip": "IPs", "url": "URLs",
+                           "hash_sha256": "SHA256", "hash_md5": "MD5",
+                           "hash_sha1": "SHA1", "email": "emails"}
+            for tkey, tlabel in type_labels.items():
+                if tkey in iocs_by_type:
+                    type_summary_parts.append(f'{iocs_by_type[tkey]} {tlabel}')
+            type_summary = ", ".join(type_summary_parts) if type_summary_parts else f"{ioc_count} indicators"
+
+            freshness_parts = []
+            if iocs_fresh:
+                freshness_parts.append(f'<span class="mc-fresh">{iocs_fresh} fresh</span>')
+            if iocs_aging:
+                freshness_parts.append(f'<span class="mc-aging">{iocs_aging} aging</span>')
+            if iocs_stale:
+                freshness_parts.append(f'<span class="mc-stale">{iocs_stale} stale</span>')
+            freshness_html = " · ".join(freshness_parts)
+
+            ioc_row = f"""<div class="mc-intel-row">
+  <span class="mc-intel-label">IOCs</span>
+  <span class="mc-intel-value">{ioc_count} — {_esc(type_summary)}</span>
+  <span class="mc-intel-freshness">{freshness_html}</span>
+</div>"""
+
+        # CVE intel row
+        cve_row = ""
+        if linked_cves:
+            cve_pills = ""
+            for cve_id in linked_cves[:8]:
+                is_kev = cve_id in linked_kev
+                cls = "mc-cve-pill mc-cve-kev" if is_kev else "mc-cve-pill"
+                cve_pills += f'<span class="{cls}">{_esc(cve_id)}</span>'
+            if len(linked_cves) > 8:
+                cve_pills += f'<span class="mc-cve-pill mc-cve-more">+{len(linked_cves) - 8}</span>'
+            cve_row = f"""<div class="mc-intel-row mc-intel-cves">
+  <span class="mc-intel-label">CVEs</span>
+  <div class="mc-cve-pills">{cve_pills}</div>
+</div>"""
+
+        desc_html = f'<p class="mc-desc">{_esc(desc[:220])}{"…" if len(desc) > 220 else ""}</p>' if desc else ""
+
+        # Malware card gets data attribute so IOCs can be highlighted when clicked
+        cards += f"""<div class="mc-card" data-malware="{_esc(name.lower())}" onclick="highlightMalware('{_esc(name.lower())}', this)">
+  <div class="mc-head">
+    <span class="mc-name">{_esc(name)}</span>
+    <span class="mc-type">{_esc(mtype)}</span>
+    <div class="mc-badges">{badges_html}</div>
   </div>
   {desc_html}
+  {ioc_row}
+  {cve_row}
 </div>"""
 
     return f"""
@@ -280,7 +569,8 @@ def _section_malware(malware: list) -> str:
       <span class="section-toggle">▾</span>
     </div>
     <div class="section-body">
-      <div class="malware-grid">{cards}</div>
+      <p class="section-desc">Click a card to highlight its IOCs in the section above.</p>
+      <div class="mc-grid">{cards}</div>
     </div>
   </div>"""
 
@@ -454,6 +744,11 @@ def _css() -> str:
   --fresh:     #3fb950;
   --aging:     #e3b341;
   --stale:     #6e7681;
+  /* Priority action urgency colors */
+  --u-critical: #f85149;
+  --u-high:     #ff9a3c;
+  --u-medium:   #e3b341;
+  --u-low:      #58a6ff;
   --mono:      'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
   --sans:      'IBM Plex Sans', 'Inter', system-ui, sans-serif;
 }
@@ -478,6 +773,7 @@ a:hover { text-decoration: underline; }
 /* Hero */
 .hero { display: flex; justify-content: space-between; align-items: flex-start;
   padding: 32px 0 24px; border-bottom: 1px solid var(--border); margin-bottom: 32px; gap: 24px; }
+.hero-right { display: flex; flex-direction: column; gap: 16px; align-items: flex-end; }
 .actor-name { font-family: var(--mono); font-size: 2.4rem; font-weight: 700;
   letter-spacing: -0.02em; color: var(--text); margin-bottom: 10px; }
 .mitre-badge { display: inline-block; font-family: var(--mono); font-size: 11px;
@@ -503,6 +799,27 @@ a:hover { text-decoration: underline; }
 .conf-item.low .conf-num  { color: var(--low); }
 .conf-item.iocs .conf-num { color: var(--accent); }
 
+/* Coverage meter (hero) */
+.coverage-meter { background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 16px; min-width: 320px; }
+.cov-header { display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 8px; }
+.cov-title { font-size: 10px; letter-spacing: 0.12em; color: var(--text2);
+  font-family: var(--mono); }
+.cov-pct { font-family: var(--mono); font-size: 1.4rem; font-weight: 700; }
+.cov-bar { background: var(--bg3); height: 6px; border-radius: 3px;
+  overflow: hidden; margin-bottom: 8px; }
+.cov-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
+.coverage-meter.cov-good  .cov-pct { color: var(--low); }
+.coverage-meter.cov-good  .cov-fill { background: var(--low); }
+.coverage-meter.cov-med   .cov-pct { color: var(--med); }
+.coverage-meter.cov-med   .cov-fill { background: var(--med); }
+.coverage-meter.cov-poor  .cov-pct { color: var(--high); }
+.coverage-meter.cov-poor  .cov-fill { background: var(--high); }
+.cov-detail { display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--text2); font-family: var(--mono); }
+.cov-gap { color: var(--high); font-weight: 600; }
+
 /* Sections */
 .section { margin-bottom: 24px; border: 1px solid var(--border);
   border-radius: 8px; overflow: hidden; }
@@ -521,6 +838,90 @@ a:hover { text-decoration: underline; }
 .section-desc { font-size: 13px; color: var(--text2); margin-bottom: 16px; }
 .subsection-title { font-size: 13px; font-weight: 600; margin: 20px 0 12px;
   color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ── PRIORITY ACTIONS ─────────────────────────────────────── */
+.priority-actions-section { border-color: var(--u-critical);
+  box-shadow: 0 0 0 1px rgba(248,81,73,0.08); }
+.pa-section-header { background: linear-gradient(90deg,
+  rgba(248,81,73,0.10) 0%, var(--bg2) 60%); }
+.pa-header-left { display: flex; flex-direction: column; gap: 2px; }
+.pa-subhead { font-size: 11px; color: var(--text2); letter-spacing: 0.02em; }
+.pa-body-wrap { padding: 16px 20px 20px; }
+.pa-grid { display: flex; flex-direction: column; gap: 8px; }
+.pa-card { display: grid;
+  grid-template-columns: 40px 32px 1fr;
+  align-items: stretch; gap: 0;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-left: 4px solid var(--u-low);
+  border-radius: 6px; overflow: hidden;
+  transition: border-color 0.15s, transform 0.1s; }
+.pa-card:hover { transform: translateX(2px); }
+.pa-card.pa-critical { border-left-color: var(--u-critical); }
+.pa-card.pa-high     { border-left-color: var(--u-high); }
+.pa-card.pa-medium   { border-left-color: var(--u-medium); }
+.pa-card.pa-low      { border-left-color: var(--u-low); }
+.pa-index { font-family: var(--mono); font-size: 11px; color: var(--text2);
+  padding: 14px 0 0 12px; letter-spacing: 0.05em; }
+.pa-glyph { font-size: 16px; padding: 14px 0 0 4px;
+  color: var(--text2); text-align: center; }
+.pa-card.pa-critical .pa-glyph { color: var(--u-critical); }
+.pa-card.pa-high     .pa-glyph { color: var(--u-high); }
+.pa-card.pa-medium   .pa-glyph { color: var(--u-medium); }
+.pa-card.pa-low      .pa-glyph { color: var(--u-low); }
+.pa-body { padding: 12px 16px 14px 8px; }
+.pa-head { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.pa-action-label { font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.14em; color: var(--text); }
+.pa-urgency { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text2); font-family: var(--mono); }
+.pa-card.pa-critical .pa-urgency { color: var(--u-critical); }
+.pa-card.pa-high     .pa-urgency { color: var(--u-high); }
+.pa-card.pa-medium   .pa-urgency { color: var(--u-medium); }
+.pa-card.pa-low      .pa-urgency { color: var(--u-low); }
+.pa-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.pa-detail { font-size: 13px; color: var(--text2); line-height: 1.6; }
+.pa-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.pa-pill { font-family: var(--mono); font-size: 10px; padding: 2px 8px;
+  border-radius: 3px; background: var(--bg3); color: var(--text2);
+  border: 1px solid var(--border); }
+.pa-pill-cve { color: var(--high); border-color: rgba(248,81,73,0.3); }
+.pa-pill-link { cursor: pointer; transition: all 0.15s; }
+.pa-pill-link:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── KILL CHAIN ───────────────────────────────────────────── */
+.kc-body-wrap { padding: 20px 20px 16px; }
+.kc-strip { display: grid; grid-template-columns: repeat(14, minmax(0, 1fr));
+  gap: 3px; margin-bottom: 14px; }
+.kc-node { background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 4px; padding: 8px 4px; text-align: center;
+  cursor: pointer; transition: transform 0.1s, border-color 0.15s;
+  position: relative; overflow: hidden; }
+.kc-node:hover { transform: translateY(-2px); border-color: var(--text2); }
+.kc-node::after { content: ""; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: transparent; }
+.kc-node.kc-covered::after { background: var(--low); }
+.kc-node.kc-active::after  { background: var(--med); }
+.kc-node.kc-gap::after     { background: var(--high); }
+.kc-node.kc-empty          { opacity: 0.35; cursor: default; }
+.kc-node.kc-empty:hover    { transform: none; }
+.kc-num { font-family: var(--mono); font-size: 9px; color: var(--text2);
+  margin-bottom: 2px; }
+.kc-label { font-size: 10px; font-weight: 600; color: var(--text);
+  line-height: 1.2; margin-bottom: 4px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kc-count { font-family: var(--mono); font-size: 14px; font-weight: 700;
+  color: var(--text); }
+.kc-node.kc-empty .kc-count { color: var(--text2); font-weight: 400; }
+.kc-sigma { display: inline-block; font-family: var(--mono); font-size: 9px;
+  color: var(--low); margin-top: 2px; }
+.kc-legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 11px;
+  color: var(--text2); }
+.kc-legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.kc-swatch { width: 12px; height: 3px; border-radius: 1px; display: inline-block; }
+.kc-swatch.kc-covered { background: var(--low); }
+.kc-swatch.kc-active  { background: var(--med); }
+.kc-swatch.kc-gap     { background: var(--high); }
+.kc-swatch.kc-empty   { background: var(--bg3); border: 1px solid var(--border); }
 
 /* Overview */
 .overview-text { font-size: 14px; line-height: 1.8; color: var(--text);
@@ -554,6 +955,12 @@ a:hover { text-decoration: underline; }
 .mono { font-family: var(--mono); font-size: 12px; }
 .ioc-value { word-break: break-all; max-width: 320px; }
 
+/* Cross-highlight state */
+.ioc-row.mc-highlighted td { background: rgba(88,166,255,0.08); }
+.ioc-row.mc-highlighted td:first-child { border-left-color: var(--accent) !important; border-left-width: 3px; }
+.ttp-row.tid-highlighted td { background: rgba(88,166,255,0.08); }
+.mc-card.mc-active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+
 /* Confidence badges */
 .conf-badge { font-family: var(--mono); font-size: 10px; font-weight: 700;
   padding: 2px 8px; border-radius: 3px; letter-spacing: 0.05em; }
@@ -561,10 +968,14 @@ a:hover { text-decoration: underline; }
 .conf-med  { background: rgba(227,179,65,0.15); color: var(--med);  border: 1px solid rgba(227,179,65,0.3); }
 .conf-low  { background: rgba(63,185,80,0.15);  color: var(--low);  border: 1px solid rgba(63,185,80,0.3); }
 
-/* Sigma badge */
+/* Sigma / KEV badges (inline on TTP name) */
 .sigma-badge { font-family: var(--mono); font-size: 10px; color: var(--accent);
   background: rgba(88,166,255,0.1); border: 1px solid rgba(88,166,255,0.2);
   padding: 1px 6px; border-radius: 3px; margin-left: 6px; }
+.kev-badge { font-family: var(--mono); font-size: 10px; color: var(--high);
+  background: rgba(248,81,73,0.12); border: 1px solid rgba(248,81,73,0.28);
+  padding: 1px 6px; border-radius: 3px; margin-left: 6px; font-weight: 700;
+  letter-spacing: 0.05em; }
 
 /* IOC rows */
 .ioc-fresh td:first-child { border-left: 3px solid var(--fresh); }
@@ -575,18 +986,46 @@ a:hover { text-decoration: underline; }
   padding: 8px 12px; background: var(--bg2); border-radius: 4px;
   border-left: 3px solid var(--med); }
 
-/* Malware cards */
-.malware-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
-.malware-card { background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 6px; padding: 14px; }
-.malware-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.malware-name { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text); }
-.malware-type { font-size: 11px; color: var(--text2); background: var(--bg3);
+/* ── MALWARE INTEL CARDS ─────────────────────────────────── */
+.mc-grid { display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+.mc-card { background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 14px; cursor: pointer;
+  transition: border-color 0.15s, transform 0.1s; }
+.mc-card:hover { border-color: var(--text2); transform: translateY(-1px); }
+.mc-head { display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap; margin-bottom: 8px; }
+.mc-name { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text); }
+.mc-type { font-size: 11px; color: var(--text2); background: var(--bg3);
   padding: 1px 8px; border-radius: 3px; border: 1px solid var(--border); }
-.malware-desc { font-size: 12px; color: var(--text2); line-height: 1.6; }
-.yara-badge { font-size: 10px; color: var(--med); background: rgba(227,179,65,0.1);
-  border: 1px solid rgba(227,179,65,0.2); padding: 1px 6px; border-radius: 3px;
-  margin-left: auto; font-family: var(--mono); }
+.mc-badges { display: flex; gap: 6px; margin-left: auto; }
+.mc-badge { font-family: var(--mono); font-size: 10px; padding: 1px 7px;
+  border-radius: 3px; font-weight: 700; letter-spacing: 0.05em; }
+.mc-badge-yara  { color: var(--med); background: rgba(227,179,65,0.1);
+  border: 1px solid rgba(227,179,65,0.25); }
+.mc-badge-sigma { color: var(--accent); background: rgba(88,166,255,0.1);
+  border: 1px solid rgba(88,166,255,0.25); }
+.mc-badge-kev   { color: var(--high); background: rgba(248,81,73,0.12);
+  border: 1px solid rgba(248,81,73,0.28); }
+.mc-desc { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 10px; }
+.mc-intel-row { display: flex; align-items: baseline; gap: 10px;
+  padding: 8px 0; border-top: 1px solid var(--border);
+  font-size: 12px; flex-wrap: wrap; }
+.mc-intel-cves { align-items: flex-start; }
+.mc-intel-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  color: var(--text2); min-width: 44px; }
+.mc-intel-value { color: var(--text); flex: 1; min-width: 0; }
+.mc-intel-freshness { font-size: 11px; font-family: var(--mono); }
+.mc-fresh { color: var(--fresh); }
+.mc-aging { color: var(--aging); }
+.mc-stale { color: var(--stale); }
+.mc-cve-pills { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; }
+.mc-cve-pill { font-family: var(--mono); font-size: 10px; padding: 1px 6px;
+  border-radius: 3px; background: var(--bg3); color: var(--text2);
+  border: 1px solid var(--border); }
+.mc-cve-pill.mc-cve-kev { color: var(--high); border-color: rgba(248,81,73,0.3);
+  background: rgba(248,81,73,0.06); }
+.mc-cve-pill.mc-cve-more { color: var(--text2); }
 
 /* Campaign cards */
 .campaign-card { background: var(--bg2); border: 1px solid var(--border);
@@ -641,10 +1080,25 @@ a:hover { text-decoration: underline; }
 .footer-link { color: var(--text2); }
 .footer-link:hover { color: var(--accent); }
 
+@media (max-width: 900px) {
+  .kc-strip { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .kc-label { font-size: 9px; }
+}
 @media (max-width: 768px) {
   .hero { flex-direction: column; }
+  .hero-right { align-items: flex-start; width: 100%; }
+  .coverage-meter { min-width: 0; width: 100%; }
   .conf-summary { flex-wrap: wrap; }
   .actor-name { font-size: 1.8rem; }
+  .pa-card { grid-template-columns: 32px 28px 1fr; }
+  .pa-index { padding-left: 8px; font-size: 10px; }
+}
+@media (max-width: 560px) {
+  .kc-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
 </style>"""
 
@@ -684,6 +1138,75 @@ function sortTable(tableId, col) {
   });
   rows.forEach(r => tbody.appendChild(r));
 }
+
+/* ── Cross-highlight: click a malware card, highlight matching IOCs ── */
+let _activeMalware = null;
+function highlightMalware(family, cardEl) {
+  const isSame = _activeMalware === family;
+  document.querySelectorAll('.mc-card.mc-active').forEach(c => c.classList.remove('mc-active'));
+  document.querySelectorAll('.ioc-row.mc-highlighted').forEach(r => r.classList.remove('mc-highlighted'));
+  if (isSame) { _activeMalware = null; return; }
+  _activeMalware = family;
+  cardEl.classList.add('mc-active');
+  document.querySelectorAll('.ioc-row[data-family]').forEach(row => {
+    const rf = row.dataset.family || '';
+    if (rf === family || rf.includes(family) || family.includes(rf)) {
+      row.classList.add('mc-highlighted');
+    }
+  });
+  const iocSection = document.getElementById('sec-iocs');
+  if (iocSection && !iocSection.classList.contains('open')) {
+    toggle('sec-iocs');
+  }
+}
+
+/* ── Kill chain node click → filter TTP table by that tactic's techniques ── */
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.kc-node:not(.kc-empty)').forEach(node => {
+    node.addEventListener('click', function() {
+      const ids = (node.dataset.techniqueIds || '').split(',').filter(Boolean);
+      if (!ids.length) return;
+      document.querySelectorAll('.ttp-row').forEach(row => {
+        row.style.display = ids.includes(row.dataset.tid) ? '' : 'none';
+        if (ids.includes(row.dataset.tid)) {
+          row.classList.add('tid-highlighted');
+          setTimeout(() => row.classList.remove('tid-highlighted'), 2000);
+        }
+      });
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      const ttpSection = document.getElementById('sec-ttps');
+      if (ttpSection && !ttpSection.classList.contains('open')) toggle('sec-ttps');
+      ttpSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  /* Priority-action pills that reference techniques or malware */
+  document.querySelectorAll('.pa-pill-link').forEach(pill => {
+    pill.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const tid  = pill.dataset.technique;
+      const mal  = pill.dataset.malware;
+      if (tid) {
+        const row = document.querySelector('.ttp-row[data-tid="' + tid + '"]');
+        if (row) {
+          const ttpSection = document.getElementById('sec-ttps');
+          if (ttpSection && !ttpSection.classList.contains('open')) toggle('sec-ttps');
+          row.classList.add('tid-highlighted');
+          row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => row.classList.remove('tid-highlighted'), 2600);
+        }
+      } else if (mal) {
+        const card = document.querySelector('.mc-card[data-malware="' + mal + '"]');
+        if (card) {
+          const mSection = document.getElementById('sec-malware');
+          if (mSection && !mSection.classList.contains('open')) toggle('sec-malware');
+          highlightMalware(mal, card);
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    });
+  });
+});
 </script>"""
 
 
