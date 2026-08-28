@@ -35,6 +35,47 @@ logger = logging.getLogger(__name__)
 OUTPUT_DIR = Path("output/dossiers")
 
 
+# ---------------------------------------------------------------------------
+# LOGO — drop your SVG contents into the triple-quoted strings below.
+# ---------------------------------------------------------------------------
+# Two options depending on your logo file:
+#
+# OPTION A — Single-color logo that inherits color from CSS:
+#   Paste your SVG ONCE into LOGO_SVG_MONO. Make sure any fill/stroke
+#   attributes are set to "currentColor" instead of hardcoded colors.
+#   The CSS will color it white in dark mode, black in light mode.
+#   Leave LOGO_SVG_DARK and LOGO_SVG_LIGHT as empty strings.
+#
+# OPTION B — Two separate logo files (e.g. multi-color with different
+# color palettes for each theme):
+#   Paste the dark-mode variant (white/light coloring) into LOGO_SVG_DARK.
+#   Paste the light-mode variant (black/dark coloring) into LOGO_SVG_LIGHT.
+#   Leave LOGO_SVG_MONO as an empty string.
+#
+# If ALL three are empty, the header falls back to the "THEORY" wordmark
+# so nothing breaks. Do NOT include <?xml ...?> or DOCTYPE lines — just
+# the <svg>...</svg> tag itself. Recommended height: 20-24px worth of
+# viewBox so it sits comfortably in the 40px header bar.
+
+LOGO_SVG_MONO: str = """"""
+
+LOGO_SVG_DARK: str = """"""
+
+LOGO_SVG_LIGHT: str = """"""
+
+
+def _logo_html() -> str:
+    """Render whichever logo option is populated, or fall back to wordmark."""
+    if LOGO_SVG_MONO.strip():
+        return f'<span class="header-logo header-logo-mono">{LOGO_SVG_MONO}</span>'
+    if LOGO_SVG_DARK.strip() or LOGO_SVG_LIGHT.strip():
+        dark_html  = f'<span class="header-logo header-logo-dark">{LOGO_SVG_DARK}</span>' if LOGO_SVG_DARK.strip() else ''
+        light_html = f'<span class="header-logo header-logo-light">{LOGO_SVG_LIGHT}</span>' if LOGO_SVG_LIGHT.strip() else ''
+        return dark_html + light_html
+    # Fallback: the existing wordmark
+    return '<span class="header-brand">THEORY</span>'
+
+
 class HtmlReporter:
 
     def build(self, profile: dict[str, Any]) -> str:
@@ -82,15 +123,41 @@ class HtmlReporter:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{_esc(actor)} — THEORY Intelligence Dossier</title>
+<script>
+  // Set theme before first paint to avoid a flash of the wrong theme.
+  (function() {{
+    try {{
+      var stored = localStorage.getItem('theory-dossier-theme');
+      var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      var theme = stored || (prefersLight ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    }} catch (e) {{
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }}
+  }})();
+</script>
 {_css()}
 </head>
 <body>
 <div class="header-bar">
-  <div class="header-brand">THEORY</div>
-  <div class="header-meta">
-    <span class="header-meta-item">Generated: {generated}</span>
-    <span class="header-meta-sep">·</span>
-    <span class="header-meta-item">Sources: {_esc(sources)}</span>
+  <div class="header-left">
+    {_logo_html()}
+  </div>
+  <div class="header-right">
+    <div class="header-meta">
+      <span class="header-meta-item">Generated: {generated}</span>
+      <span class="header-meta-sep">·</span>
+      <span class="header-meta-item">Sources: {_esc(sources)}</span>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+    </button>
   </div>
 </div>
 
@@ -730,7 +797,7 @@ def _section_sectors_cves(sectors: list, cves: list, advisories: list) -> str:
 
 def _css() -> str:
     return """<style>
-:root {
+:root, [data-theme="dark"] {
   --bg:        #0d1117;
   --bg2:       #161b22;
   --bg3:       #1c2333;
@@ -749,9 +816,35 @@ def _css() -> str:
   --u-high:     #ff9a3c;
   --u-medium:   #e3b341;
   --u-low:      #58a6ff;
+  /* Cross-highlight tint */
+  --highlight-tint: color-mix(in srgb, var(--accent) 8%, transparent);
+  /* Logo color for mono-SVG */
+  --logo-color: #ffffff;
   --mono:      'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
   --sans:      'IBM Plex Sans', 'Inter', system-ui, sans-serif;
 }
+[data-theme="light"] {
+  --bg:        #fbfbfc;
+  --bg2:       #ffffff;
+  --bg3:       #f4f5f7;
+  --border:    #e2e5eb;
+  --text:      #0f1419;
+  --text2:     #5b6472;
+  --accent:    #0369a1;
+  --high:      #dc2626;
+  --med:       #b45309;
+  --low:       #15803d;
+  --fresh:     #15803d;
+  --aging:     #b45309;
+  --stale:     #8a92a0;
+  --u-critical: #dc2626;
+  --u-high:     #c2410c;
+  --u-medium:   #b45309;
+  --u-low:      #0369a1;
+  --highlight-tint: color-mix(in srgb, var(--accent) 8%, transparent);
+  --logo-color: #0f1419;
+}
+html { transition: background-color 0.2s ease, color 0.2s ease; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--text); font-family: var(--sans);
   font-size: 14px; line-height: 1.6; }
@@ -762,10 +855,37 @@ a:hover { text-decoration: underline; }
 .header-bar { background: var(--bg2); border-bottom: 1px solid var(--border);
   padding: 10px 24px; display: flex; justify-content: space-between;
   align-items: center; position: sticky; top: 0; z-index: 100; }
+.header-left { display: flex; align-items: center; gap: 12px; }
+.header-right { display: flex; align-items: center; gap: 16px; }
 .header-brand { font-family: var(--mono); font-size: 13px; font-weight: 700;
   letter-spacing: 0.15em; color: var(--accent); }
 .header-meta { display: flex; gap: 12px; font-size: 12px; color: var(--text2); }
 .header-meta-sep { color: var(--border); }
+
+/* Logo slot */
+.header-logo { display: inline-flex; align-items: center; height: 24px; line-height: 0; }
+.header-logo svg { height: 24px; width: auto; display: block; }
+.header-logo-mono svg { color: var(--logo-color); fill: var(--logo-color); }
+/* Two-file variant: show dark logo in dark mode, light logo in light mode */
+[data-theme="dark"]  .header-logo-light { display: none; }
+[data-theme="light"] .header-logo-dark  { display: none; }
+
+/* Theme toggle button */
+.theme-toggle { background: transparent; border: 1px solid var(--border);
+  color: var(--text2); width: 32px; height: 32px; border-radius: 6px;
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+  transition: color 0.15s, border-color 0.15s, background 0.15s; padding: 0; }
+.theme-toggle:hover { color: var(--text); border-color: var(--text2); background: var(--bg3); }
+.theme-toggle svg { width: 15px; height: 15px; }
+.theme-toggle .icon-sun  { display: none; }
+.theme-toggle .icon-moon { display: block; }
+[data-theme="light"] .theme-toggle .icon-sun  { display: block; }
+[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+
+@media (max-width: 640px) {
+  .header-meta { display: none; }
+  .header-bar { padding: 10px 16px; }
+}
 
 /* Container */
 .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px 64px; }
@@ -841,9 +961,9 @@ a:hover { text-decoration: underline; }
 
 /* ── PRIORITY ACTIONS ─────────────────────────────────────── */
 .priority-actions-section { border-color: var(--u-critical);
-  box-shadow: 0 0 0 1px rgba(248,81,73,0.08); }
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--high) 8%, transparent); }
 .pa-section-header { background: linear-gradient(90deg,
-  rgba(248,81,73,0.10) 0%, var(--bg2) 60%); }
+  color-mix(in srgb, var(--high) 10%, transparent) 0%, var(--bg2) 60%); }
 .pa-header-left { display: flex; flex-direction: column; gap: 2px; }
 .pa-subhead { font-size: 11px; color: var(--text2); letter-spacing: 0.02em; }
 .pa-body-wrap { padding: 16px 20px 20px; }
@@ -884,7 +1004,7 @@ a:hover { text-decoration: underline; }
 .pa-pill { font-family: var(--mono); font-size: 10px; padding: 2px 8px;
   border-radius: 3px; background: var(--bg3); color: var(--text2);
   border: 1px solid var(--border); }
-.pa-pill-cve { color: var(--high); border-color: rgba(248,81,73,0.3); }
+.pa-pill-cve { color: var(--high); border-color: color-mix(in srgb, var(--high) 30%, transparent); }
 .pa-pill-link { cursor: pointer; transition: all 0.15s; }
 .pa-pill-link:hover { color: var(--accent); border-color: var(--accent); }
 
@@ -956,24 +1076,24 @@ a:hover { text-decoration: underline; }
 .ioc-value { word-break: break-all; max-width: 320px; }
 
 /* Cross-highlight state */
-.ioc-row.mc-highlighted td { background: rgba(88,166,255,0.08); }
+.ioc-row.mc-highlighted td { background: color-mix(in srgb, var(--accent) 8%, transparent); }
 .ioc-row.mc-highlighted td:first-child { border-left-color: var(--accent) !important; border-left-width: 3px; }
-.ttp-row.tid-highlighted td { background: rgba(88,166,255,0.08); }
+.ttp-row.tid-highlighted td { background: color-mix(in srgb, var(--accent) 8%, transparent); }
 .mc-card.mc-active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
 
 /* Confidence badges */
 .conf-badge { font-family: var(--mono); font-size: 10px; font-weight: 700;
   padding: 2px 8px; border-radius: 3px; letter-spacing: 0.05em; }
-.conf-high { background: rgba(248,81,73,0.15); color: var(--high); border: 1px solid rgba(248,81,73,0.3); }
-.conf-med  { background: rgba(227,179,65,0.15); color: var(--med);  border: 1px solid rgba(227,179,65,0.3); }
-.conf-low  { background: rgba(63,185,80,0.15);  color: var(--low);  border: 1px solid rgba(63,185,80,0.3); }
+.conf-high { background: color-mix(in srgb, var(--high) 15%, transparent); color: var(--high); border: 1px solid color-mix(in srgb, var(--high) 30%, transparent); }
+.conf-med  { background: color-mix(in srgb, var(--med) 15%, transparent); color: var(--med);  border: 1px solid color-mix(in srgb, var(--med) 30%, transparent); }
+.conf-low  { background: color-mix(in srgb, var(--low) 15%, transparent);  color: var(--low);  border: 1px solid color-mix(in srgb, var(--low) 30%, transparent); }
 
 /* Sigma / KEV badges (inline on TTP name) */
 .sigma-badge { font-family: var(--mono); font-size: 10px; color: var(--accent);
-  background: rgba(88,166,255,0.1); border: 1px solid rgba(88,166,255,0.2);
+  background: color-mix(in srgb, var(--accent) 10%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
   padding: 1px 6px; border-radius: 3px; margin-left: 6px; }
 .kev-badge { font-family: var(--mono); font-size: 10px; color: var(--high);
-  background: rgba(248,81,73,0.12); border: 1px solid rgba(248,81,73,0.28);
+  background: color-mix(in srgb, var(--high) 12%, transparent); border: 1px solid color-mix(in srgb, var(--high) 28%, transparent);
   padding: 1px 6px; border-radius: 3px; margin-left: 6px; font-weight: 700;
   letter-spacing: 0.05em; }
 
@@ -1001,12 +1121,12 @@ a:hover { text-decoration: underline; }
 .mc-badges { display: flex; gap: 6px; margin-left: auto; }
 .mc-badge { font-family: var(--mono); font-size: 10px; padding: 1px 7px;
   border-radius: 3px; font-weight: 700; letter-spacing: 0.05em; }
-.mc-badge-yara  { color: var(--med); background: rgba(227,179,65,0.1);
-  border: 1px solid rgba(227,179,65,0.25); }
-.mc-badge-sigma { color: var(--accent); background: rgba(88,166,255,0.1);
-  border: 1px solid rgba(88,166,255,0.25); }
-.mc-badge-kev   { color: var(--high); background: rgba(248,81,73,0.12);
-  border: 1px solid rgba(248,81,73,0.28); }
+.mc-badge-yara  { color: var(--med); background: color-mix(in srgb, var(--med) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--med) 25%, transparent); }
+.mc-badge-sigma { color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); }
+.mc-badge-kev   { color: var(--high); background: color-mix(in srgb, var(--high) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--high) 28%, transparent); }
 .mc-desc { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 10px; }
 .mc-intel-row { display: flex; align-items: baseline; gap: 10px;
   padding: 8px 0; border-top: 1px solid var(--border);
@@ -1023,8 +1143,8 @@ a:hover { text-decoration: underline; }
 .mc-cve-pill { font-family: var(--mono); font-size: 10px; padding: 1px 6px;
   border-radius: 3px; background: var(--bg3); color: var(--text2);
   border: 1px solid var(--border); }
-.mc-cve-pill.mc-cve-kev { color: var(--high); border-color: rgba(248,81,73,0.3);
-  background: rgba(248,81,73,0.06); }
+.mc-cve-pill.mc-cve-kev { color: var(--high); border-color: color-mix(in srgb, var(--high) 30%, transparent);
+  background: color-mix(in srgb, var(--high) 6%, transparent); }
 .mc-cve-pill.mc-cve-more { color: var(--text2); }
 
 /* Campaign cards */
@@ -1047,9 +1167,9 @@ a:hover { text-decoration: underline; }
 .intel-context { font-size: 12px; color: var(--text2); }
 .rel-badge { font-size: 10px; font-family: var(--mono); font-weight: 700;
   padding: 2px 7px; border-radius: 3px; margin-left: auto; }
-.rel-high { background: rgba(248,81,73,0.15); color: var(--high); }
-.rel-med  { background: rgba(227,179,65,0.15); color: var(--med); }
-.rel-low  { background: rgba(63,185,80,0.15);  color: var(--low); }
+.rel-high { background: color-mix(in srgb, var(--high) 15%, transparent); color: var(--high); }
+.rel-med  { background: color-mix(in srgb, var(--med) 15%, transparent); color: var(--med); }
+.rel-low  { background: color-mix(in srgb, var(--low) 15%, transparent);  color: var(--low); }
 
 /* Detection repos */
 .repo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px,1fr)); gap: 10px; }
@@ -1058,8 +1178,8 @@ a:hover { text-decoration: underline; }
 .repo-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
 .repo-name { font-size: 13px; font-weight: 600; color: var(--accent); }
 .repo-tier { font-size: 10px; padding: 1px 7px; border-radius: 3px; font-family: var(--mono); }
-.tier-official  { background: rgba(63,185,80,0.1); color: var(--low); border: 1px solid rgba(63,185,80,0.2); }
-.tier-community { background: rgba(139,148,158,0.1); color: var(--text2); border: 1px solid var(--border); }
+.tier-official  { background: color-mix(in srgb, var(--low) 10%, transparent); color: var(--low); border: 1px solid color-mix(in srgb, var(--low) 20%, transparent); }
+.tier-community { background: color-mix(in srgb, var(--text2) 10%, transparent); color: var(--text2); border: 1px solid var(--border); }
 .repo-platform { font-size: 11px; color: var(--text2); }
 
 /* Sectors */
@@ -1109,6 +1229,28 @@ a:hover { text-decoration: underline; }
 
 def _js() -> str:
     return """<script>
+/* ── Theme toggle ─────────────────────────────────────────── */
+(function() {
+  var toggle = document.getElementById('themeToggle');
+  if (!toggle) return;
+  toggle.addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next    = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theory-dossier-theme', next); } catch (e) {}
+  });
+  // Respect OS theme changes only if user hasn't chosen manually
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+      try {
+        if (!localStorage.getItem('theory-dossier-theme')) {
+          document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+        }
+      } catch (err) {}
+    });
+  }
+})();
+
 function toggle(id) {
   const el = document.getElementById(id);
   el.classList.toggle('open');

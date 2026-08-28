@@ -1,6 +1,6 @@
 # THEORY — Vendor Intelligence Feed Registry
 # ============================================
-# Verified working RSS feeds — April 2026.
+# Verified working RSS feeds — August 2026.
 # Run with --verbose to check feed health:
 #   python3 theory.py --actor APT28 --sources mitre,vendor --verbose
 #
@@ -40,13 +40,13 @@ sources:
 
   # ── Tier 2: Major Vendor Research ───────────────────────────────────
 
-  - name: Mandiant Threat Intelligence
-    url: https://www.mandiant.com/resources/blog
-    rss: https://www.mandiant.com/resources/blog/rss.xml
+  - name: Google Threat Intelligence (GTIG / Mandiant)
+    url: https://cloud.google.com/blog/topics/threat-intelligence
+    rss: https://cloud.google.com/blog/topics/threat-intelligence/rss/
     type: rss
     tier: 2
     apt_focus: true
-    tags: [apt, unc, nation-state, malware, campaigns]
+    tags: [apt, unc, gtig, mandiant, nation-state, campaigns]
     enabled: true
 
   - name: Google TAG
@@ -445,6 +445,24 @@ sources:
     tier: 3
     apt_focus: false
     tags: [supply-chain, vulnerabilities, code-security]
+    enabled: true
+
+  - name: The Record (Recorded Future News)
+    url: https://therecord.media
+    rss: https://therecord.media/feed/
+    type: rss
+    tier: 3
+    apt_focus: true
+    tags: [news, cybercrime, breaches, ransomware, nation-state, policy]
+    enabled: true
+
+  - name: VirusTotal Blog
+    url: https://blog.virustotal.com
+    rss: https://blog.virustotal.com/feeds/posts/default
+    type: rss
+    tier: 3
+    apt_focus: false
+    tags: [malware, samples, hunting, code-insights, crowdsourced]
     enabled: true
 
 # ── User Custom Sources ──────────────────────────────────────────────
