@@ -56,6 +56,11 @@ dev = [
     # Supply-chain advisory scanning in CI
     "pip-audit>=2.7",
 ]
+serve = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "sse-starlette>=2.0.0",
+]
 
 [project.scripts]
 theory = "theory:main"
@@ -73,10 +78,12 @@ include = [
     "mappers*",
     "processors*",
     "reporters*",
+    "server*",
 ]
 
 [tool.setuptools.package-data]
 "*" = ["config/*.yaml"]
+server = ["static/*.html", "static/*.css", "static/*.js"]
 
 [tool.ruff]
 line-length = 120

@@ -6,6 +6,12 @@
 # Install for development (includes pytest, ruff, pip-audit):
 #   pip install -e ".[dev]"
 #
+# Install with web UI (theory serve):
+#   pip install -e ".[serve]"
+#
+# Install everything:
+#   pip install -e ".[dev,serve]"
+#
 # Keeping this file as a pointer so tooling that expects requirements.txt
 # (Dependabot ecosystem detection, Read the Docs, some IDE inspectors)
 # still finds something at this path.

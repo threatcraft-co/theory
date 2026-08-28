@@ -2,4 +2,7 @@
 #
 # Install with:
 #   pip install -e ".[dev]"
+#
+# Include the web UI (theory serve):
+#   pip install -e ".[dev,serve]"
 -e .[dev]

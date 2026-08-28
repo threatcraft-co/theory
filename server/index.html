@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THEORY</title>
+<style>
+/* ================================================================
+   RESET
+   ================================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+button { font: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+/* ================================================================
+   TOKENS
+   ================================================================
+
+   Palette rationale: THEORY is an intelligence analysis tool, not a
+   consumer product. The dark theme uses a deep navy base (not pure
+   black) with a muted blue-violet accent that reads "analytical" rather
+   than "gaming." The light theme inverts to a cool paper-white.
+
+   Typography: monospace-forward. The tool's identity comes from its
+   terminal heritage. Headers and data use the mono stack; body text
+   uses the system sans for readability at smaller sizes.
+   ================================================================ */
+:root {
+  --mono: "JetBrains Mono", "Fira Code", "Cascadia Code", "SF Mono",
+          "Consolas", "Liberation Mono", monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+          "Helvetica Neue", sans-serif;
+  --radius: 5px;
+  --radius-lg: 8px;
+  --ease: 120ms ease;
+}
+
+[data-theme="dark"] {
+  --bg-0: #090c14;
+  --bg-1: #0f1320;
+  --bg-2: #161b2e;
+  --bg-3: #1e2540;
+  --border: #252d48;
+  --border-focus: #4a5a8a;
+  --text-0: #cdd4e8;
+  --text-1: #8892b0;
+  --text-2: #545e7a;
+  --accent: #7b8dda;
+  --accent-hover: #6474c4;
+  --accent-ghost: rgba(123, 141, 218, 0.08);
+  --accent-ghost-hover: rgba(123, 141, 218, 0.14);
+  --ok: #5cb882;
+  --ok-ghost: rgba(92, 184, 130, 0.1);
+  --warn: #d4a054;
+  --warn-ghost: rgba(212, 160, 84, 0.1);
+  --err: #c95f5f;
+  --err-ghost: rgba(201, 95, 95, 0.1);
+  --tag-bg: rgba(123, 141, 218, 0.1);
+  --tag-text: #8fa0e0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.4);
+  --code-bg: #0d1018;
+}
+
+[data-theme="light"] {
+  --bg-0: #f0f2f8;
+  --bg-1: #ffffff;
+  --bg-2: #e8eaf4;
+  --bg-3: #dcdfe8;
+  --border: #c8ccd8;
+  --border-focus: #8892b0;
+  --text-0: #1a2040;
+  --text-1: #4a5068;
+  --text-2: #8890a4;
+  --accent: #4a5cb0;
+  --accent-hover: #3c4d98;
+  --accent-ghost: rgba(74, 92, 176, 0.06);
+  --accent-ghost-hover: rgba(74, 92, 176, 0.12);
+  --ok: #2d8a58;
+  --ok-ghost: rgba(45, 138, 88, 0.08);
+  --warn: #b8860b;
+  --warn-ghost: rgba(184, 134, 11, 0.08);
+  --err: #b83a3a;
+  --err-ghost: rgba(184, 58, 58, 0.08);
+  --tag-bg: rgba(74, 92, 176, 0.08);
+  --tag-text: #4a5cb0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  --code-bg: #e4e6ee;
+}
+
+/* ================================================================
+   BASE
+   ================================================================ */
+html { font-size: 14px; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg-0);
+  color: var(--text-0);
+  line-height: 1.55;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--accent); color: #fff; }
+
+code, .mono {
+  font-family: var(--mono);
+  font-size: 0.92em;
+}
+
+/* ================================================================
+   SHELL: header, nav, main, footer
+   ================================================================ */
+.shell { display: flex; flex-direction: column; min-height: 100vh; }
+
+/* -- Header -- */
+.hdr {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 50px;
+  padding: 0 20px;
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.hdr-logo {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.hdr-nav { display: flex; gap: 1px; margin-left: 12px; }
+
+.hdr-nav button {
+  background: none;
+  border: none;
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: var(--radius);
+  transition: all var(--ease);
+}
+
+.hdr-nav button:hover { color: var(--text-1); background: var(--bg-2); }
+.hdr-nav button[aria-selected="true"] { color: var(--accent); background: var(--accent-ghost); }
+
+.hdr-spacer { flex: 1; }
+
+.hdr-theme {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  color: var(--text-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all var(--ease);
+}
+
+.hdr-theme:hover { border-color: var(--accent); color: var(--accent); }
+
+/* -- Main -- */
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 28px 20px 48px;
+}
+
+/* -- Footer -- */
+.ftr {
+  text-align: center;
+  padding: 14px 20px;
+  font-size: 11px;
+  color: var(--text-2);
+  border-top: 1px solid var(--border);
+}
+
+.ftr code { color: var(--text-1); }
+
+/* ================================================================
+   PAGE HEADER
+   ================================================================ */
+.pg-title {
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 2px;
+}
+
+.pg-sub {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-bottom: 24px;
+}
+
+/* ================================================================
+   CARDS
+   ================================================================ */
+.card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+
+.card-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-2);
+  margin-bottom: 12px;
+}
+
+/* ================================================================
+   INPUTS
+   ================================================================ */
+.inp {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--bg-0);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-0);
+  font-family: var(--mono);
+  font-size: 14px;
+  transition: border-color var(--ease);
+}
+
+.inp:focus { outline: none; border-color: var(--border-focus); }
+.inp::placeholder { color: var(--text-2); }
+
+.inp-lg { padding: 14px 16px; font-size: 15px; }
+
+.inp-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-2);
+  margin-bottom: 4px;
+}
+
+/* ================================================================
+   BUTTONS
+   ================================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 500;
+  transition: all var(--ease);
+}
+
+.btn-accent { background: var(--accent); color: #fff; }
+.btn-accent:hover { background: var(--accent-hover); }
+.btn-accent:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-ghost {
+  background: var(--bg-2);
+  color: var(--text-1);
+  border: 1px solid var(--border);
+}
+
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+.btn-danger { background: var(--err); color: #fff; }
+.btn-danger:hover { opacity: 0.85; }
+
+.btn-sm { padding: 5px 10px; font-size: 11px; }
+
+/* ================================================================
+   SOURCE TOGGLES
+   ================================================================ */
+.src-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 6px;
+}
+
+.src {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--bg-0);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 12px;
+  transition: all var(--ease);
+  cursor: pointer;
+  user-select: none;
+}
+
+.src:hover { border-color: var(--border-focus); }
+
+.src[data-on="true"] {
+  border-color: var(--accent);
+  background: var(--accent-ghost);
+}
+
+.src-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+  flex-shrink: 0;
+  transition: background var(--ease);
+}
+
+.src[data-on="true"] .src-dot { background: var(--ok); }
+
+.src-name { flex: 1; color: var(--text-0); }
+
+.src-type {
+  font-family: var(--mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+}
+
+/* ================================================================
+   FORMAT CHIPS
+   ================================================================ */
+.fmt-row { display: flex; flex-wrap: wrap; gap: 5px; }
+
+.fmt {
+  padding: 5px 11px;
+  background: var(--bg-0);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-1);
+  transition: all var(--ease);
+  cursor: pointer;
+  user-select: none;
+}
+
+.fmt:hover { border-color: var(--border-focus); }
+
+.fmt[data-on="true"] {
+  border-color: var(--accent);
+  background: var(--accent-ghost);
+  color: var(--accent);
+}
+
+/* ================================================================
+   PIPELINE PROGRESS
+   ================================================================ */
+.pipeline { margin-top: 20px; }
+
+.step-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.step-row:last-child { border-bottom: none; }
+
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+  transition: all 200ms ease;
+}
+
+.step-num[data-s="pending"]  { background: var(--bg-3); color: var(--text-2); }
+.step-num[data-s="running"]  { background: var(--accent-ghost); color: var(--accent); }
+.step-num[data-s="done"]     { background: var(--ok-ghost); color: var(--ok); }
+.step-num[data-s="error"]    { background: var(--err-ghost); color: var(--err); }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.step-num[data-s="running"] { animation: blink 1.4s ease-in-out infinite; }
+
+.step-text { flex: 1; }
+.step-text[data-s="pending"] { color: var(--text-2); }
+.step-text[data-s="running"] { color: var(--accent); font-weight: 500; }
+.step-text[data-s="done"]    { color: var(--text-2); }
+.step-text[data-s="error"]   { color: var(--err); }
+
+.step-time {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-2);
+  min-width: 48px;
+  text-align: right;
+}
+
+/* -- Completion / Error banners -- */
+.banner {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.banner-ok {
+  background: var(--ok-ghost);
+  border: 1px solid rgba(92, 184, 130, 0.25);
+  color: var(--ok);
+}
+
+.banner-err {
+  background: var(--err-ghost);
+  border: 1px solid rgba(201, 95, 95, 0.25);
+  color: var(--err);
+}
+
+.banner-icon { font-size: 16px; flex-shrink: 0; }
+
+/* ================================================================
+   HISTORY
+   ================================================================ */
+.dossier-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background var(--ease);
+}
+
+.dossier-row:last-child { border-bottom: none; }
+.dossier-row:hover { background: var(--bg-2); }
+
+.dossier-info { flex: 1; }
+
+.dossier-name {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.dossier-meta {
+  font-size: 11px;
+  color: var(--text-2);
+  margin-top: 1px;
+}
+
+.dossier-arrow { color: var(--text-2); font-size: 16px; }
+
+/* file list inside detail view */
+.flist-item {
+  display: flex;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: var(--radius);
+  transition: background var(--ease);
+}
+
+.flist-item:hover { background: var(--bg-2); }
+
+.flist-icon {
+  width: 24px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-2);
+  flex-shrink: 0;
+}
+
+.flist-name {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+}
+
+.flist-size {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-2);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-2);
+  margin-bottom: 14px;
+  cursor: pointer;
+  transition: color var(--ease);
+}
+
+.back-link:hover { color: var(--accent); }
+
+/* ================================================================
+   SETTINGS
+   ================================================================ */
+.disclaimer {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--accent-ghost);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 18px;
+  font-size: 12px;
+  color: var(--text-1);
+  line-height: 1.6;
+}
+
+.disclaimer-icon { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+
+.key-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.key-row:last-child { border-bottom: none; }
+
+.key-name {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--tag-text);
+  min-width: 180px;
+  flex-shrink: 0;
+}
+
+.key-val {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-2);
+  word-break: break-all;
+}
+
+.key-actions { display: flex; gap: 4px; flex-shrink: 0; }
+
+.add-key-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.add-key-row .inp { font-size: 12px; padding: 7px 10px; }
+
+/* ================================================================
+   CVE PLACEHOLDER
+   ================================================================ */
+.cve-empty {
+  text-align: center;
+  padding: 72px 20px;
+  color: var(--text-2);
+}
+
+.cve-empty h2 {
+  font-family: var(--mono);
+  font-size: 16px;
+  color: var(--text-1);
+  margin-bottom: 6px;
+}
+
+.cve-empty p { font-size: 13px; max-width: 480px; margin: 0 auto; line-height: 1.6; }
+.cve-empty p + p { margin-top: 6px; }
+
+/* ================================================================
+   EMPTY STATE
+   ================================================================ */
+.empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-2);
+  font-size: 13px;
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 600px) {
+  .hdr { padding: 0 10px; gap: 8px; }
+  .hdr-nav button { padding: 5px 8px; font-size: 11px; }
+  .main { padding: 20px 12px 40px; }
+  .src-grid { grid-template-columns: 1fr; }
+  .key-row { flex-wrap: wrap; }
+  .key-name { min-width: unset; width: 100%; }
+  .add-key-row { flex-wrap: wrap; }
+  .add-key-row .inp:first-child { flex: 1 0 100%; }
+}
+
+/* ================================================================
+   REDUCED MOTION
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="hdr">
+    <div class="hdr-logo">THEORY</div>
+    <nav class="hdr-nav" id="nav" role="tablist">
+      <button role="tab" aria-selected="true" data-pg="query">Query</button>
+      <button role="tab" aria-selected="false" data-pg="history">History</button>
+      <button role="tab" aria-selected="false" data-pg="settings">Settings</button>
+      <button role="tab" aria-selected="false" data-pg="cve">CVE</button>
+    </nav>
+    <div class="hdr-spacer"></div>
+    <button class="hdr-theme" id="themeBtn" aria-label="Toggle theme"></button>
+  </header>
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+  <main class="main" id="root"></main>
+
+  <footer class="ftr">
+    Running locally via <code>theory serve</code>
+  </footer>
+</div>
+
+<!-- ================================================================
+     PAGE TEMPLATES
+     ================================================================ -->
+
+<!-- QUERY PAGE -->
+<template id="t-query">
+  <div class="pg-title">Generate dossier</div>
+  <div class="pg-sub">Threat actor intelligence pipeline</div>
+
+  <div class="card">
+    <div class="card-label">Target actor</div>
+    <input class="inp inp-lg" id="q-actor" type="text"
+           placeholder="APT28, Lazarus Group, Volt Typhoon ..."
+           autocomplete="off" spellcheck="false" autofocus>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Intelligence sources</div>
+    <div class="src-grid" id="q-sources"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Output formats</div>
+    <div class="fmt-row" id="q-formats"></div>
+  </div>
+
+  <div style="display:flex; justify-content:flex-end; margin-top:16px;">
+    <button class="btn btn-accent" id="q-go">Generate dossier &#9654;</button>
+  </div>
+
+  <div class="pipeline" id="q-pipeline" hidden></div>
+</template>
+
+<!-- HISTORY PAGE -->
+<template id="t-history">
+  <div class="pg-title">Dossier history</div>
+  <div class="pg-sub">Past runs from output/dossiers/</div>
+  <div class="card" id="h-list-card">
+    <div id="h-list"><div class="empty">Loading ...</div></div>
+  </div>
+  <div id="h-detail" hidden>
+    <div class="back-link" id="h-back">&#8592; Back to list</div>
+    <div class="card">
+      <div class="card-label" id="h-detail-title"></div>
+      <div id="h-detail-files"></div>
+    </div>
+  </div>
+</template>
+
+<!-- SETTINGS PAGE -->
+<template id="t-settings">
+  <div class="pg-title">Settings</div>
+  <div class="pg-sub">API key management</div>
+
+  <div class="disclaimer">
+    <span class="disclaimer-icon">&#x1f512;</span>
+    <div>
+      Keys are stored in your local <code>.env</code> file and never leave
+      your machine. They are only sent to the intelligence APIs they
+      authenticate against, over HTTPS, by the collectors you enable.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Environment keys</div>
+    <div id="s-keys"><div class="empty">Loading ...</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Add key</div>
+    <div class="add-key-row">
+      <input class="inp" id="s-new-name" placeholder="KEY_NAME" style="flex:0 0 180px;">
+      <input class="inp" id="s-new-val" type="password" placeholder="Value" style="flex:1;">
+      <button class="btn btn-accent btn-sm" id="s-add">Add</button>
+    </div>
+  </div>
+</template>
+
+<!-- CVE PAGE -->
+<template id="t-cve">
+  <div class="cve-empty">
+    <h2>theory --cve</h2>
+    <p>
+      CVE-centered dossier mode. Pull advisories, map affected products,
+      cross-reference with known exploitation, and generate a standalone
+      CVE dossier as a new correlation layer.
+    </p>
+    <p style="color:var(--accent); margin-top:12px;">On the roadmap.</p>
+  </div>
+</template>
+
+<!-- ================================================================
+     APPLICATION JS
+     ================================================================ -->
+<script>
+(function () {
+  "use strict";
+
+  /* ==============================================================
+     THEME
+     ============================================================== */
+  const html = document.documentElement;
+  const themeBtn = document.getElementById("themeBtn");
+  const THEME_KEY = "theory-theme";
+
+  function applyTheme(t) {
+    html.dataset.theme = t;
+    themeBtn.textContent = t === "dark" ? "\u2600" : "\u263E";
+    localStorage.setItem(THEME_KEY, t);
+  }
+
+  applyTheme(localStorage.getItem(THEME_KEY) || "dark");
+  themeBtn.addEventListener("click", () =>
+    applyTheme(html.dataset.theme === "dark" ? "light" : "dark")
+  );
+
+  /* ==============================================================
+     ROUTER
+     ============================================================== */
+  const root = document.getElementById("root");
+  const navBtns = document.querySelectorAll("#nav button");
+  let currentPage = null;
+
+  function go(page) {
+    if (page === currentPage) return;
+    currentPage = page;
+    const tpl = document.getElementById("t-" + page);
+    root.innerHTML = "";
+    if (tpl) root.appendChild(tpl.content.cloneNode(true));
+    navBtns.forEach(b => b.setAttribute("aria-selected", b.dataset.pg === page));
+
+    const init = { query: initQuery, history: initHistory, settings: initSettings };
+    if (init[page]) init[page]();
+  }
+
+  navBtns.forEach(b => b.addEventListener("click", () => go(b.dataset.pg)));
+
+  /* ==============================================================
+     SHARED STATE
+     ============================================================== */
+  let enabledSources = new Set();
+  let selectedFormats = new Set(["all"]);
+
+  /* ==============================================================
+     API HELPERS
+     ============================================================== */
+  async function api(path, opts) {
+    const res = await fetch("/api" + path, opts);
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.detail || res.statusText);
+    }
+    return res.json();
+  }
+
+  function post(path, body) {
+    return api(path, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  }
+
+  /* ==============================================================
+     QUERY PAGE
+     ============================================================== */
+  async function initQuery() {
+    const actorInp   = document.getElementById("q-actor");
+    const srcGrid    = document.getElementById("q-sources");
+    const fmtRow     = document.getElementById("q-formats");
+    const goBtn      = document.getElementById("q-go");
+    const pipelineEl = document.getElementById("q-pipeline");
+
+    // -- Load sources
+    try {
+      const { sources } = await api("/sources");
+      enabledSources = new Set(sources.filter(s => s.enabled).map(s => s.id));
+      srcGrid.innerHTML = "";
+      sources.forEach(s => {
+        const el = document.createElement("div");
+        el.className = "src";
+        el.dataset.on = enabledSources.has(s.id);
+        el.innerHTML = `
+          <span class="src-dot"></span>
+          <span class="src-name">${esc(s.name)}</span>
+          <span class="src-type">${esc(s.type)}</span>
+        `;
+        el.addEventListener("click", () => {
+          if (enabledSources.has(s.id)) enabledSources.delete(s.id);
+          else enabledSources.add(s.id);
+          el.dataset.on = enabledSources.has(s.id);
+        });
+        srcGrid.appendChild(el);
+      });
+    } catch (e) {
+      srcGrid.innerHTML = `<div class="empty">Could not load sources.</div>`;
+    }
+
+    // -- Load formats
+    try {
+      const { formats } = await api("/formats");
+      fmtRow.innerHTML = "";
+      formats.forEach(f => {
+        const el = document.createElement("button");
+        el.className = "fmt";
+        el.dataset.on = selectedFormats.has(f.id);
+        el.textContent = f.label;
+        el.addEventListener("click", () => {
+          if (f.id === "all") {
+            selectedFormats = new Set(["all"]);
+          } else {
+            selectedFormats.delete("all");
+            if (selectedFormats.has(f.id)) selectedFormats.delete(f.id);
+            else selectedFormats.add(f.id);
+            if (selectedFormats.size === 0) selectedFormats.add("all");
+          }
+          fmtRow.querySelectorAll(".fmt").forEach(c => {
+            const cid = formats[Array.from(fmtRow.children).indexOf(c)].id;
+            c.dataset.on = selectedFormats.has(cid);
+          });
+        });
+        fmtRow.appendChild(el);
+      });
+    } catch (e) {
+      fmtRow.innerHTML = `<div class="empty">Could not load formats.</div>`;
+    }
+
+    // -- Generate
+    goBtn.addEventListener("click", () => startDossier(actorInp, goBtn, pipelineEl));
+
+    // Enter key triggers generate
+    actorInp.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") goBtn.click();
+    });
+  }
+
+  async function startDossier(actorInp, goBtn, pipelineEl) {
+    const actor = actorInp.value.trim();
+    if (!actor) { actorInp.focus(); return; }
+
+    goBtn.disabled = true;
+    goBtn.textContent = "Starting\u2026";
+    pipelineEl.hidden = false;
+
+    // Pre-render step rows from the pipeline-steps endpoint
+    let stepMeta = [];
+    try {
+      const { steps } = await api("/pipeline-steps");
+      stepMeta = steps;
+    } catch (_) {
+      // Fallback: we'll render as events arrive
+    }
+
+    pipelineEl.innerHTML = `
+      <div class="card">
+        <div class="card-label">Pipeline</div>
+        <div id="pp-steps"></div>
+        <div id="pp-banner"></div>
+      </div>
+    `;
+
+    const stepsEl  = document.getElementById("pp-steps");
+    const bannerEl = document.getElementById("pp-banner");
+
+    // Pre-render pending steps
+    const stepEls = {};
+    stepMeta.forEach(s => {
+      const row = document.createElement("div");
+      row.className = "step-row";
+      row.innerHTML = `
+        <span class="step-num" data-s="pending">${s.index}</span>
+        <span class="step-text" data-s="pending">${esc(s.description)}</span>
+        <span class="step-time"></span>
+      `;
+      stepsEl.appendChild(row);
+      stepEls[s.id] = row;
+    });
+
+    // Fire request
+    try {
+      const { job_id } = await post("/dossier", {
+        actor,
+        sources: [...enabledSources],
+        formats: [...selectedFormats],
+      });
+      subscribeSSE(job_id, stepEls, stepsEl, bannerEl, goBtn);
+    } catch (e) {
+      bannerEl.innerHTML = renderBanner("err", e.message);
+      goBtn.disabled = false;
+      goBtn.textContent = "Generate dossier \u25B6";
+    }
+  }
+
+  function subscribeSSE(jobId, stepEls, stepsEl, bannerEl, goBtn) {
+    const es = new EventSource("/api/dossier/" + jobId + "/progress");
+    let dynamicIndex = 0;
+
+    function finish() {
+      es.close();
+      goBtn.disabled = false;
+      goBtn.textContent = "Generate dossier \u25B6";
+    }
+
+    es.addEventListener("started", (e) => {
+      // Steps already pre-rendered. If not, we'll create them dynamically.
+      const d = JSON.parse(e.data);
+      dynamicIndex = 0;
+    });
+
+    es.addEventListener("step", (e) => {
+      const d = JSON.parse(e.data);
+      let row = stepEls[d.id];
+
+      // If step wasn't pre-rendered, create it
+      if (!row) {
+        row = document.createElement("div");
+        row.className = "step-row";
+        row.innerHTML = `
+          <span class="step-num" data-s="pending">${d.step}</span>
+          <span class="step-text" data-s="pending">${esc(d.description)}</span>
+          <span class="step-time"></span>
+        `;
+        stepsEl.appendChild(row);
+        stepEls[d.id] = row;
+      }
+
+      row.querySelector(".step-num").dataset.s = "running";
+      row.querySelector(".step-text").dataset.s = "running";
+      row.querySelector(".step-text").textContent = d.description;
+    });
+
+    es.addEventListener("step_done", (e) => {
+      const d = JSON.parse(e.data);
+      const row = stepEls[d.id];
+      if (!row) return;
+      row.querySelector(".step-num").dataset.s = "done";
+      row.querySelector(".step-num").textContent = "\u2713";
+      row.querySelector(".step-text").dataset.s = "done";
+      const timeEl = row.querySelector(".step-time");
+      if (d.duration_ms !== undefined) {
+        timeEl.textContent = d.duration_ms < 1000
+          ? d.duration_ms + "ms"
+          : (d.duration_ms / 1000).toFixed(1) + "s";
+      }
+    });
+
+    es.addEventListener("complete", (e) => {
+      const d = JSON.parse(e.data);
+      const totalSec = (d.total_duration_ms / 1000).toFixed(1);
+      let msg = `Dossier complete for <strong>${esc(d.actor)}</strong> in ${totalSec}s`;
+      if (d.files && d.files.length) {
+        msg += ` &middot; ${d.files.length} file${d.files.length > 1 ? "s" : ""}`;
+      }
+      bannerEl.innerHTML = renderBanner("ok", msg);
+      finish();
+    });
+
+    es.addEventListener("error", (e) => {
+      let msg = "Pipeline error";
+      try { msg = JSON.parse(e.data).message; } catch (_) {}
+      bannerEl.innerHTML = renderBanner("err", msg);
+      // Mark current running step as errored
+      Object.values(stepEls).forEach(row => {
+        const num = row.querySelector(".step-num");
+        if (num.dataset.s === "running") {
+          num.dataset.s = "error";
+          num.textContent = "\u2717";
+          row.querySelector(".step-text").dataset.s = "error";
+        }
+      });
+      finish();
+    });
+
+    es.onerror = () => { finish(); };
+  }
+
+  function renderBanner(type, html) {
+    const icon = type === "ok" ? "\u2713" : "\u2717";
+    const cls  = type === "ok" ? "banner-ok" : "banner-err";
+    return `<div class="banner ${cls}">
+      <span class="banner-icon">${icon}</span>
+      <span>${html}</span>
+    </div>`;
+  }
+
+  /* ==============================================================
+     HISTORY PAGE
+     ============================================================== */
+  async function initHistory() {
+    const listCard  = document.getElementById("h-list-card");
+    const listEl    = document.getElementById("h-list");
+    const detailEl  = document.getElementById("h-detail");
+    const backBtn   = document.getElementById("h-back");
+
+    backBtn.addEventListener("click", () => {
+      detailEl.hidden = true;
+      listCard.hidden = false;
+    });
+
+    try {
+      const { dossiers } = await api("/history");
+      if (!dossiers.length) {
+        listEl.innerHTML = `<div class="empty">No dossiers yet. Run a query to get started.</div>`;
+        return;
+      }
+      listEl.innerHTML = "";
+      dossiers.forEach(d => {
+        const row = document.createElement("div");
+        row.className = "dossier-row";
+        const date = new Date(d.created).toLocaleDateString(undefined, {
+          year: "numeric", month: "short", day: "numeric",
+          hour: "2-digit", minute: "2-digit",
+        });
+        const size = formatBytes(d.total_size || 0);
+        row.innerHTML = `
+          <div class="dossier-info">
+            <div class="dossier-name">${esc(d.name)}</div>
+            <div class="dossier-meta">${d.file_count} files &middot; ${size} &middot; ${date}</div>
+          </div>
+          <span class="dossier-arrow">&#8250;</span>
+        `;
+        row.addEventListener("click", () => openDossier(d.name, listCard, detailEl));
+        listEl.appendChild(row);
+      });
+    } catch (e) {
+      listEl.innerHTML = `<div class="empty">Could not load history.</div>`;
+    }
+  }
+
+  async function openDossier(name, listCard, detailEl) {
+    listCard.hidden = true;
+    detailEl.hidden = false;
+    document.getElementById("h-detail-title").textContent = name;
+    const filesEl = document.getElementById("h-detail-files");
+    filesEl.innerHTML = `<div class="empty">Loading ...</div>`;
+
+    try {
+      const { files } = await api("/history/" + encodeURIComponent(name));
+      filesEl.innerHTML = "";
+      files.forEach(f => {
+        const el = document.createElement("div");
+        el.className = "flist-item";
+        const icon = fileIcon(f.ext);
+        el.innerHTML = `
+          <span class="flist-icon">${icon}</span>
+          <a class="flist-name"
+             href="/api/history/${encodeURIComponent(name)}/${encodeURIComponent(f.name)}"
+             target="_blank">${esc(f.name)}</a>
+          <span class="flist-size">${esc(f.size_display)}</span>
+        `;
+        filesEl.appendChild(el);
+      });
+      if (!files.length) {
+        filesEl.innerHTML = `<div class="empty">No files in this dossier.</div>`;
+      }
+    } catch (e) {
+      filesEl.innerHTML = `<div class="empty">Could not load files.</div>`;
+    }
+  }
+
+  function fileIcon(ext) {
+    const m = {
+      ".html": "&#9672;", ".json": "{ }",  ".csv": "&#9638;",
+      ".md":   "&#9998;", ".yaml": "&#9670;", ".yml": "&#9670;",
+    };
+    return m[ext] || "&#9632;";
+  }
+
+  /* ==============================================================
+     SETTINGS PAGE
+     ============================================================== */
+  async function initSettings() {
+    await loadKeys();
+
+    document.getElementById("s-add").addEventListener("click", async () => {
+      const nameInp = document.getElementById("s-new-name");
+      const valInp  = document.getElementById("s-new-val");
+      const name = nameInp.value.trim();
+      const val  = valInp.value;
+      if (!name || !val) { nameInp.focus(); return; }
+
+      try {
+        await api("/settings/" + encodeURIComponent(name), {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ value: val }),
+        });
+        nameInp.value = "";
+        valInp.value  = "";
+        await loadKeys();
+      } catch (e) {
+        alert("Error: " + e.message);
+      }
+    });
+  }
+
+  async function loadKeys() {
+    const container = document.getElementById("s-keys");
+    try {
+      const { keys } = await api("/settings");
+      if (!keys.length) {
+        container.innerHTML = `<div class="empty">No keys configured. Add one below.</div>`;
+        return;
+      }
+      container.innerHTML = "";
+      keys.forEach(k => {
+        const row = document.createElement("div");
+        row.className = "key-row";
+        row.innerHTML = `
+          <span class="key-name">${esc(k.name)}</span>
+          <span class="key-val">${esc(k.masked)}</span>
+          <div class="key-actions">
+            <button class="btn btn-ghost btn-sm js-edit">Edit</button>
+            <button class="btn btn-danger btn-sm js-del">Del</button>
+          </div>
+        `;
+        row.querySelector(".js-edit").addEventListener("click", async () => {
+          const v = prompt("New value for " + k.name + ":");
+          if (v === null) return;
+          await api("/settings/" + encodeURIComponent(k.name), {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ value: v }),
+          });
+          await loadKeys();
+        });
+        row.querySelector(".js-del").addEventListener("click", async () => {
+          if (!confirm("Delete " + k.name + "?")) return;
+          await api("/settings/" + encodeURIComponent(k.name), { method: "DELETE" });
+          await loadKeys();
+        });
+        container.appendChild(row);
+      });
+    } catch (e) {
+      container.innerHTML = `<div class="empty">Could not load keys.</div>`;
+    }
+  }
+
+  /* ==============================================================
+     UTILS
+     ============================================================== */
+  function esc(s) {
+    const d = document.createElement("div");
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function formatBytes(n) {
+    if (n < 1024) return n + " B";
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + " KB";
+    return (n / (1024 * 1024)).toFixed(1) + " MB";
+  }
+
+  /* ==============================================================
+     BOOT
+     ============================================================== */
+  go("query");
+})();
+</script>
+</body>
+</html>
