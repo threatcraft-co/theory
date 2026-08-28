@@ -1619,6 +1619,14 @@ def _print_banner() -> None:
 
 
 def main(argv: list[str] | None = None) -> None:
+    # ── `theory serve` — intercept before argparse ────────────────────
+    # Serve is a separate command, not a flag, so we catch it early.
+    _args = argv if argv is not None else sys.argv[1:]
+    if _args and _args[0] == "serve":
+        from server.cli_serve import cmd_serve
+        cmd_serve(_args[1:])
+        return
+
     _print_banner()
     parser = _build_parser()
     args   = parser.parse_args(argv)
