@@ -125,11 +125,11 @@ def run_pipeline(
     _ensure_cli_importable()
 
     try:
-        from _cli import run
+        from theory._cli import run
     except ImportError as e:
         callback("error", {
             "step_id": "import",
-            "message": f"Could not import _cli.run: {e}. Make sure THEORY is installed.",
+            "message": f"Could not import theory._cli.run: {e}. Make sure THEORY is installed.",
             "traceback": traceback.format_exc(),
         })
         raise RuntimeError(f"Pipeline import failed: {e}") from e
