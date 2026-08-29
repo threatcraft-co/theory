@@ -22,7 +22,7 @@ from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from sse_starlette.sse import EventSourceResponse
 
-from .pipeline import PIPELINE_STEPS, run_pipeline
+from .pipeline import run_pipeline
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -104,33 +104,24 @@ def _mask(value: str) -> str:
 
 def _load_sources() -> list[dict[str, Any]]:
     """
-    Build the source list from config/feeds.yaml + known collectors.
-
-    Integration point: if you have a config loader, use it here.
-    This version reads feeds.yaml for RSS feeds and returns a hardcoded
-    collector list. Replace with your actual config loading.
+    Build the source list from _cli.py's real registry + config/feeds.yaml.
     """
     sources: list[dict[str, Any]] = []
 
-    # Collectors (hardcoded to match the current confirmed set)
-    collectors = [
-        ("otx",           "AlienVault OTX",   True),
-        ("misp",          "MISP Galaxy",       True),
-        ("cisa_kev",      "CISA KEV",          True),
-        ("malwarebazaar", "MalwareBazaar",     True),
-        ("urlhaus",       "URLhaus",           True),
-        ("greynoise",     "GreyNoise",         True),
-        ("abuseipdb",     "AbuseIPDB",         True),
-        ("yara_rules",    "YARA Rules",        True),
-        ("vuldb",         "VulDB",             True),
-    ]
-    for cid, name, enabled in collectors:
-        sources.append({
-            "id": cid,
-            "name": name,
-            "enabled": enabled,
-            "type": "collector",
-        })
+    try:
+        from _cli import SUPPORTED_SOURCES, SOURCE_DESCRIPTIONS, ENRICHMENT_SOURCES
+
+        for key, dotted in SUPPORTED_SOURCES.items():
+            src_type = "enrichment" if key in ENRICHMENT_SOURCES else "collector"
+            sources.append({
+                "id": key,
+                "name": SOURCE_DESCRIPTIONS.get(key, key),
+                "enabled": True,
+                "type": src_type,
+            })
+    except ImportError:
+        # Fallback if _cli can't be imported (shouldn't happen in normal use)
+        pass
 
     # RSS feeds from config/feeds.yaml
     if FEEDS_YAML.is_file():
@@ -148,16 +139,7 @@ def _load_sources() -> list[dict[str, Any]]:
                         "url": feed.get("url", ""),
                     })
         except Exception:
-            pass  # Degrade gracefully — feeds.yaml is optional for the UI
-
-    # Fallback: if no feeds.yaml found, include the confirmed RSS feeds
-    if not any(s["type"] == "feed" for s in sources):
-        for fid, name in [
-            ("rss_the_record",  "The Record"),
-            ("rss_gtig",        "Google Threat Intelligence / GTIG"),
-            ("rss_virustotal",  "VirusTotal Blog"),
-        ]:
-            sources.append({"id": fid, "name": name, "enabled": True, "type": "feed"})
+            pass
 
     return sources
 
@@ -280,11 +262,10 @@ async def get_output_formats():
 
 @app.get("/api/pipeline-steps")
 async def get_pipeline_steps():
-    """Return the ordered list of pipeline steps for the UI to pre-render."""
+    """Return the pipeline step(s) for the UI to pre-render."""
     return {
         "steps": [
-            {"id": s.id, "description": s.description, "index": i}
-            for i, s in enumerate(PIPELINE_STEPS, 1)
+            {"id": "pipeline", "description": "Running pipeline", "index": 1},
         ]
     }
 

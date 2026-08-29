@@ -1,260 +1,192 @@
 """
-Pipeline bridge — runs the same pipeline the CLI uses, with progress callbacks.
+Pipeline bridge — calls _cli.run() directly.
 
-INTEGRATION GUIDE
------------------
-This module is the single seam between the web UI and your existing pipeline.
-Replace the stubbed steps below with real imports from your pipeline modules.
-
-The callback signature is:
-    callback(event: str, data: dict) -> None
-
-Events emitted:
-    "started"   — { actor, total_steps }
-    "step"      — { step, total, id, description, status:"running" }
-    "step_done" — { step, total, id, description, status:"done", duration_ms }
-    "complete"  — { actor, output_dir, total_duration_ms, files }
-    "error"     — { step_id, message, traceback }
-
-To wire in a real step, replace:
-
-    _stub_delay()
-
-with something like:
-
-    from collectors import otx
-    raw = otx.collect(actor, api_key=os.getenv("OTX_API_KEY"))
-
-Each step function receives the actor name, accumulated state from prior steps,
-and the options dict from the API request. It returns whatever the next step
-needs as input.
+This is a thin wrapper that runs the same pipeline as the CLI
+and pushes SSE events for the web UI. The real work happens
+inside _cli.run(); this module just manages the async boundary
+and progress events.
 """
 
 from __future__ import annotations
 
-import os
 import time
 import traceback
-from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
 
 # Typing alias for the progress callback
 ProgressCallback = Callable[[str, dict[str, Any]], None]
 
+# Map of web UI source IDs → _cli.py source keys
+# (most are 1:1, but the UI uses some shortened names)
+SOURCE_ID_MAP: dict[str, str] = {
+    "otx":           "otx",
+    "misp":          "misp_galaxy",
+    "misp_galaxy":   "misp_galaxy",
+    "cisa_kev":      "cisa_kev",
+    "malwarebazaar": "malware_bazaar",
+    "malware_bazaar":"malware_bazaar",
+    "urlhaus":       "urlhaus",
+    "greynoise":     "greynoise",
+    "abuseipdb":     "abuseipdb",
+    "yara_rules":    "yara",
+    "yara":          "yara",
+    "vuldb":         "vuldb",
+    "mitre":         "mitre",
+    "cisa":          "cisa",
+    "malpedia":      "malpedia",
+    "sigma":         "sigma",
+    "threatfox":     "threatfox",
+    "vendor":        "vendor",
+}
 
-# ---------------------------------------------------------------------------
-# Step registry
-# ---------------------------------------------------------------------------
-
-@dataclass
-class PipelineStep:
-    """One step in the pipeline sequence."""
-    id: str
-    description: str
-    fn: Callable  # (actor, state, options) -> Any
-
-
-@dataclass
-class PipelineState:
-    """Accumulated state passed forward through the pipeline."""
-    actor: str
-    raw_intel: list[dict[str, Any]] = field(default_factory=list)
-    normalized: list[dict[str, Any]] = field(default_factory=list)
-    enriched: dict[str, Any] = field(default_factory=dict)
-    analysis: dict[str, Any] = field(default_factory=dict)
-    correlations: dict[str, Any] = field(default_factory=dict)
-    reports: dict[str, str] = field(default_factory=dict)
-    output_dir: str = ""
-
-
-# ---------------------------------------------------------------------------
-# Step implementations — replace stubs with real pipeline calls
-# ---------------------------------------------------------------------------
-
-def _stub_delay():
-    """Simulate work. Remove entirely once real collectors are wired in."""
-    time.sleep(1.5)
-
-
-def step_collect(actor: str, state: PipelineState, options: dict) -> PipelineState:
-    """
-    Step 1: Collect raw intelligence from enabled sources.
-
-    Integration point:
-        from collectors import run_collectors
-        from config import load_feeds
-
-        enabled = options.get("sources", [])
-        feeds = load_feeds()
-        state.raw_intel = run_collectors(actor, enabled_sources=enabled, feeds=feeds)
-    """
-    _stub_delay()
-    # Stub: pretend we got data from 13 sources
-    state.raw_intel = [{"source": "stub", "actor": actor, "data": {}}]
-    return state
+# Map of web UI format IDs → _cli.py --output values
+FORMAT_ID_MAP: dict[str, str] = {
+    "markdown":  "dossier",
+    "stix":      "stix",
+    "csv":       "csv",
+    "json":      "json",
+    "navigator": "navigator",
+    "executive": "exec",
+    "sigma":     "dossier",     # sigma gap is via --detection-path, not --output
+    "playbook":  "playbook",
+    "html":      "html",
+    "all":       "all",
+}
 
 
-def step_normalize(actor: str, state: PipelineState, options: dict) -> PipelineState:
-    """
-    Step 2: Normalize raw intelligence into a common schema.
-
-    Integration point:
-        from processors.normalizer import normalize
-        state.normalized = normalize(state.raw_intel)
-    """
-    _stub_delay()
-    state.normalized = state.raw_intel
-    return state
-
-
-def step_enrich(actor: str, state: PipelineState, options: dict) -> PipelineState:
-    """
-    Step 3: Enrich with ATT&CK technique mappings.
-
-    Integration point:
-        from processors.enricher import enrich
-        state.enriched = enrich(state.normalized)
-    """
-    _stub_delay()
-    state.enriched = {"techniques": [], "data": state.normalized}
-    return state
+def _resolve_sources(ui_sources: list[str]) -> list[str]:
+    """Map web UI source IDs to _cli.py source keys."""
+    resolved = []
+    seen = set()
+    for sid in ui_sources:
+        key = SOURCE_ID_MAP.get(sid, sid)
+        if key not in seen:
+            seen.add(key)
+            resolved.append(key)
+    return resolved
 
 
-def step_analyze(actor: str, state: PipelineState, options: dict) -> PipelineState:
-    """
-    Step 4: Run AI analysis (LLM pass).
-
-    Integration point:
-        from processors.analyzer import analyze
-        state.analysis = analyze(state.enriched, model=options.get("model"))
-    """
-    _stub_delay()
-    state.analysis = {"summary": "stub", "enriched": state.enriched}
-    return state
+def _resolve_output(ui_formats: list[str]) -> str:
+    """Map web UI format selections to a single _cli.py --output value."""
+    if "all" in ui_formats:
+        return "all"
+    if len(ui_formats) == 1:
+        return FORMAT_ID_MAP.get(ui_formats[0], "dossier")
+    # Multiple formats selected → use "all" (simplest correct behavior)
+    return "all"
 
 
-def step_correlate(actor: str, state: PipelineState, options: dict) -> PipelineState:
-    """
-    Step 5.5: Cross-reference across sources (correlator pipeline).
+def _find_latest_dossier(actor: str, before_dirs: set[str]) -> str | None:
+    """Find the dossier directory that appeared after the pipeline ran."""
+    output_dir = Path("output/dossiers")
+    if not output_dir.is_dir():
+        return None
+    current_dirs = {d.name for d in output_dir.iterdir() if d.is_dir()}
+    new_dirs = current_dirs - before_dirs
+    if new_dirs:
+        # Return the newest one
+        return str(output_dir / sorted(new_dirs)[-1])
+    # Fallback: look for a directory matching the actor name
+    actor_slug = actor.lower().replace(" ", "_")
+    for d in sorted(output_dir.iterdir(), reverse=True):
+        if d.is_dir() and actor_slug in d.name.lower():
+            return str(d)
+    return None
 
-    Integration point:
-        from processors.correlator import correlate
-        state.correlations = correlate(state.analysis)
-    """
-    _stub_delay()
-    state.correlations = {"cross_refs": [], "analysis": state.analysis}
-    return state
-
-
-def step_report(actor: str, state: PipelineState, options: dict) -> PipelineState:
-    """
-    Step 6: Generate output reports in selected formats.
-
-    Integration point:
-        from reporters import generate_reports
-        formats = options.get("formats", ["all"])
-        output_dir = generate_reports(
-            actor, state.correlations, state.analysis, formats=formats
-        )
-        state.output_dir = str(output_dir)
-        state.reports = {f.name: str(f) for f in output_dir.iterdir() if f.is_file()}
-    """
-    _stub_delay()
-    # Stub output directory
-    project_root = Path(__file__).resolve().parent.parent
-    output_dir = project_root / "output" / "dossiers" / actor.replace(" ", "_")
-    output_dir.mkdir(parents=True, exist_ok=True)
-    state.output_dir = str(output_dir)
-    state.reports = {}
-    return state
-
-
-# Ordered pipeline. This matches the CLI's step sequence exactly.
-PIPELINE_STEPS: list[PipelineStep] = [
-    PipelineStep("collect",    "Collecting intelligence",         step_collect),
-    PipelineStep("normalize",  "Normalizing collected data",      step_normalize),
-    PipelineStep("enrich",     "Enriching with ATT&CK mappings",  step_enrich),
-    PipelineStep("analyze",    "Running AI analysis",             step_analyze),
-    PipelineStep("correlate",  "Cross-referencing sources",       step_correlate),
-    PipelineStep("report",     "Generating output reports",       step_report),
-]
-
-
-# ---------------------------------------------------------------------------
-# Runner
-# ---------------------------------------------------------------------------
 
 def run_pipeline(
     actor: str,
     options: dict[str, Any],
     callback: ProgressCallback,
-) -> PipelineState:
+) -> dict[str, Any] | None:
     """
-    Execute the full pipeline with progress callbacks.
+    Execute the THEORY pipeline by calling _cli.run() directly.
 
     This runs synchronously — the web server calls it inside
     asyncio.to_thread() so the event loop stays free.
 
     Args:
-        actor:    Threat actor name (e.g. "APT28").
-        options:  Dict from the API request body (sources, formats, etc.).
-        callback: Progress callback — called with (event_type, data_dict).
+        actor:    Threat actor name.
+        options:  Dict from the API request body (sources, formats).
+        callback: Progress callback for SSE events.
 
     Returns:
-        Final PipelineState with all accumulated results.
-
-    Raises:
-        Exception: Re-raises any step exception after sending an error event.
+        The profile dict from _cli.run(), or None on failure.
     """
-    state = PipelineState(actor=actor)
-    total = len(PIPELINE_STEPS)
+    from _cli import run  # noqa: E402 — late import to avoid circular deps
+
+    ui_sources = options.get("sources", [])
+    ui_formats = options.get("formats", ["all"])
+
+    sources = _resolve_sources(ui_sources)
+    output_format = _resolve_output(ui_formats)
+
+    callback("started", {"actor": actor, "total_steps": 1})
+    callback("step", {
+        "step": 1,
+        "total": 1,
+        "id": "pipeline",
+        "description": f"Running pipeline for {actor}",
+        "status": "running",
+    })
+
+    # Snapshot existing dossier directories so we can detect the new one
+    output_dir = Path("output/dossiers")
+    before_dirs = set()
+    if output_dir.is_dir():
+        before_dirs = {d.name for d in output_dir.iterdir() if d.is_dir()}
+
     t_start = time.monotonic()
 
-    callback("started", {"actor": actor, "total_steps": total})
-
-    for i, step in enumerate(PIPELINE_STEPS, 1):
-        callback("step", {
-            "step": i,
-            "total": total,
-            "id": step.id,
-            "description": step.description,
-            "status": "running",
+    try:
+        profile = run(
+            actor=actor,
+            sources=sources,
+            output=output_format,
+            save=True,
+            verbose=False,
+        )
+    except Exception as exc:
+        callback("error", {
+            "step_id": "pipeline",
+            "message": str(exc),
+            "traceback": traceback.format_exc(),
         })
+        raise
 
-        t_step = time.monotonic()
-        try:
-            state = step.fn(actor, state, options)
-        except Exception as exc:
-            callback("error", {
-                "step_id": step.id,
-                "message": str(exc),
-                "traceback": traceback.format_exc(),
-            })
-            raise
+    elapsed_ms = int((time.monotonic() - t_start) * 1000)
 
-        elapsed_ms = int((time.monotonic() - t_step) * 1000)
-        callback("step_done", {
-            "step": i,
-            "total": total,
-            "id": step.id,
-            "description": step.description,
-            "status": "done",
-            "duration_ms": elapsed_ms,
+    if profile is None:
+        callback("error", {
+            "step_id": "pipeline",
+            "message": f"No data found for actor: {actor}",
+            "traceback": "",
         })
+        return None
 
-    total_ms = int((time.monotonic() - t_start) * 1000)
+    # Find the output directory and list files
+    dossier_path = _find_latest_dossier(actor, before_dirs)
     output_files = []
-    if state.output_dir:
-        out = Path(state.output_dir)
-        if out.is_dir():
-            output_files = sorted(f.name for f in out.iterdir() if f.is_file())
+    if dossier_path:
+        p = Path(dossier_path)
+        if p.is_dir():
+            output_files = sorted(f.name for f in p.iterdir() if f.is_file())
+
+    callback("step_done", {
+        "step": 1,
+        "total": 1,
+        "id": "pipeline",
+        "description": f"Running pipeline for {actor}",
+        "status": "done",
+        "duration_ms": elapsed_ms,
+    })
 
     callback("complete", {
         "actor": actor,
-        "output_dir": state.output_dir,
-        "total_duration_ms": total_ms,
+        "output_dir": dossier_path or "",
+        "total_duration_ms": elapsed_ms,
         "files": output_files,
     })
 
-    return state
+    return profile
