@@ -9,10 +9,17 @@ and progress events.
 
 from __future__ import annotations
 
+import sys
 import time
 import traceback
 from pathlib import Path
 from typing import Any, Callable
+
+# Ensure the project root (parent of server/) is on sys.path so that
+# `from _cli import run` resolves when uvicorn loads server.app.
+_PROJECT_ROOT = str(Path(__file__).resolve().parent.parent)
+if _PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, _PROJECT_ROOT)
 
 # Typing alias for the progress callback
 ProgressCallback = Callable[[str, dict[str, Any]], None]

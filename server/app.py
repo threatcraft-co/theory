@@ -104,24 +104,31 @@ def _mask(value: str) -> str:
 
 def _load_sources() -> list[dict[str, Any]]:
     """
-    Build the source list from _cli.py's real registry + config/feeds.yaml.
+    Source list matching _cli.py SUPPORTED_SOURCES + ENRICHMENT_SOURCES.
+
+    Hardcoded intentionally — avoids import-path issues when uvicorn
+    loads server.app. Update this list when you add/remove a source
+    in _cli.py.
     """
-    sources: list[dict[str, Any]] = []
-
-    try:
-        from _cli import SUPPORTED_SOURCES, SOURCE_DESCRIPTIONS, ENRICHMENT_SOURCES
-
-        for key, dotted in SUPPORTED_SOURCES.items():
-            src_type = "enrichment" if key in ENRICHMENT_SOURCES else "collector"
-            sources.append({
-                "id": key,
-                "name": SOURCE_DESCRIPTIONS.get(key, key),
-                "enabled": True,
-                "type": src_type,
-            })
-    except ImportError:
-        # Fallback if _cli can't be imported (shouldn't happen in normal use)
-        pass
+    sources: list[dict[str, Any]] = [
+        # ── Collectors (have a collector class, do collect + map) ──
+        {"id": "mitre",       "name": "MITRE ATT&CK",     "type": "collector",  "enabled": True},
+        {"id": "cisa",        "name": "CISA Advisories",   "type": "collector",  "enabled": True},
+        {"id": "cisa_kev",    "name": "CISA KEV",          "type": "collector",  "enabled": True},
+        {"id": "malpedia",    "name": "Malpedia",          "type": "collector",  "enabled": True},
+        {"id": "misp_galaxy", "name": "MISP Galaxy",       "type": "collector",  "enabled": True},
+        {"id": "otx",         "name": "AlienVault OTX",    "type": "collector",  "enabled": True},
+        {"id": "vuldb",       "name": "VulDB",             "type": "collector",  "enabled": True},
+        # ── Enrichment sources (post-collection enrichment pass) ──
+        {"id": "sigma",          "name": "Sigma Rules",       "type": "enrichment", "enabled": True},
+        {"id": "yara",           "name": "YARA Rules",        "type": "enrichment", "enabled": True},
+        {"id": "threatfox",      "name": "ThreatFox",         "type": "enrichment", "enabled": True},
+        {"id": "malware_bazaar", "name": "MalwareBazaar",     "type": "enrichment", "enabled": True},
+        {"id": "urlhaus",        "name": "URLhaus",           "type": "enrichment", "enabled": True},
+        {"id": "greynoise",      "name": "GreyNoise",         "type": "enrichment", "enabled": True},
+        {"id": "abuseipdb",      "name": "AbuseIPDB",         "type": "enrichment", "enabled": True},
+        {"id": "vendor",         "name": "Vendor Intel (LLM)","type": "enrichment", "enabled": False},
+    ]
 
     # RSS feeds from config/feeds.yaml
     if FEEDS_YAML.is_file():
