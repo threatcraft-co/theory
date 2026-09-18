@@ -39,8 +39,6 @@ dependencies = [
     "python-dateutil>=2.8",
     "jinja2>=3.1",
     "click>=8.1",
-    "shodan>=1.28",
-    "censys>=2.2",
     "watchdog>=3.0",
     "schedule>=1.2",
     # Hardened XML parser — refuses entity expansion (billion laughs)
@@ -60,6 +58,14 @@ serve = [
     "fastapi>=0.115.0",
     "uvicorn[standard]>=0.30.0",
     "sse-starlette>=2.0.0",
+]
+internet-scan = [
+    # Shodan/Censys collectors are on the v2.0 roadmap, not implemented yet.
+    # Kept as an installable extra (not a core dependency) since basic use
+    # of either service sits behind a paid tier, unlike everything else in
+    # THEORY's default install.
+    "shodan>=1.28",
+    "censys>=2.2",
 ]
 
 [project.scripts]

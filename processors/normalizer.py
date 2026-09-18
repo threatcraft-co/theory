@@ -14,7 +14,7 @@ from typing import Any
 
 from dateutil import parser as dateutil_parser
 
-from schema import (
+from theory.schema import (
     CANONICAL_INDICATOR_TYPES,
     CANONICAL_MOTIVATIONS,
     SECTOR_NORMALIZATION,

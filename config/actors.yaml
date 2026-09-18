@@ -1,484 +1,6538 @@
 # config/actors.yaml
-# ─────────────────────────────────────────────────────────────────────────────
-# THEORY Actor Alias Table
-#
-# This file defines the canonical actor names and all known aliases used
-# across intelligence sources. Any name or alias in this file will resolve
-# to the canonical name in dossier output and file naming.
-#
-# To add a new actor: add a new top-level key with aliases, origin, and
-# motivation. No Python knowledge required.
-#
-# Fields:
-#   aliases    — list of all known names in lowercase (include the canonical
-#                name itself in lowercase, MITRE Group ID, all vendor names)
-#   origin     — country or region of attribution (optional)
-#   motivation — primary motivation: espionage | financial | hacktivism |
-#                destruction | unknown
-#
-# Contributing: see CONTRIBUTING.md for alias guidelines.
-# ─────────────────────────────────────────────────────────────────────────────
+# Auto-expanded by scripts/import_misp_actors.py from MISP Galaxy
+# (github.com/MISP/misp-galaxy, CC0). Hand-curated entries are preserved
+# and only ever enriched, never overwritten. Re-run periodically to pick
+# up new actors/aliases as MISP Galaxy updates.
 
 actors:
-
-  # ── Russia ──────────────────────────────────────────────────────────────────
-
-  APT28:
-    origin: Russia
+  1937CN:
+    aliases:
+    - 1937cn
+    motivation: unknown
+    origin: China
+  313 Team:
+    aliases:
+    - 313 team
+    motivation: unknown
+    origin: IQ
+  ALTDOS:
+    aliases:
+    - altdos
+    motivation: unknown
+    origin: ''
+  ANDROMEDA SPIDER:
+    aliases:
+    - andromeda spider
+    motivation: unknown
+    origin: ''
+  ANTHROPOID SPIDER:
+    aliases:
+    - anthropoid spider
+    - cobaltgoblin
+    - empire monkey
+    motivation: unknown
+    origin: ''
+  APT-C-12:
+    aliases:
+    - apt-c-12
+    - blue mushroom
+    - nuclearcrisis
+    - sapphire mushroom
     motivation: espionage
+    origin: ''
+  APT-C-27:
     aliases:
-      - apt28
-      - fancy bear
-      - sofacy
-      - sofacy group
-      - pawn storm
-      - sednit
-      - strontium
-      - iron twilight
-      - threat group-4127
-      - tg-4127
-      - forest blizzard
-      - frozenlake
-      - gruesomelarch
-      - sig40
-      - grizzly steppe
-      - atk5
-      - fighting ursa
-      - itg05
-      - blue athena
-      - ta422
-      - t-apt-12
-      - apt-c-20
-      - uac-0028
-      - uac-0001
-      - bluedelta
-      - apt 28
-      - tsarteam
-      - group-4127
-      - grey-cloud
-      - snakemackerel
-      - swallowtail
-      - g0007
-
-  APT29:
-    origin: Russia
+    - apt-c-27
+    - atk80
+    - golden rat
+    - goldmouse
+    motivation: unknown
+    origin: Syria
+  APT-C-34:
+    aliases:
+    - apt-c-34
+    - golden falcon
+    motivation: unknown
+    origin: ''
+  APT-C-36:
+    aliases:
+    - apt-c-36
+    - blind eagle
     motivation: espionage
+    origin: ''
+  APT-C-60:
     aliases:
-      - apt29
-      - cozy bear
-      - cozyduke
-      - the dukes
-      - office monkeys
-      - midnight blizzard
-      - nobelium
-      - iron hemlock
-      - dark halo
-      - unc2452
-      - yttrium
-      - minidionis
-      - hammertoss
-      - g0016
-      - itg11
-      - npu
-      - cozy duke
-
-  Sandworm:
-    origin: Russia
-    motivation: destruction
+    - apt-c-60
+    - apt-q-12
+    motivation: unknown
+    origin: ''
+  APT.3102:
     aliases:
-      - sandworm
-      - sandworm team
-      - voodoo bear
-      - iridium
-      - seashell blizzard
-      - electrum
-      - quedagh
-      - iron viking
-      - telebots
-      - blackenergy
-      - g0034
-      - uac-0113
-      - uac-0082
-      - industroyer
-      - notpetya group
-
-  Turla:
-    origin: Russia
+    - apt.3102
+    motivation: unknown
+    origin: China
+  APT1:
+    aliases:
+    - apt1
+    - brown fox
+    - byzantine candor
+    - comment crew
+    - comment group
+    - comment panda
+    - g0006
+    - gif89a
+    - group 3
+    - pla unit 61398
+    - shadyrat
+    - tg-8223
     motivation: espionage
-    aliases:
-      - turla
-      - snake
-      - uroburos
-      - venomous bear
-      - krypton
-      - secret blizzard
-      - iron hunter
-      - waterbug
-      - g0010
-      - carbon spider
-      - penquin turla
-      - kazuar
-
-  Gamaredon:
-    origin: Russia
-    motivation: espionage
-    aliases:
-      - gamaredon
-      - primitive bear
-      - shuckworm
-      - actinium
-      - iron tilden
-      - uac-0010
-      - g0047
-      - armageddon
-      - callisto group
-
-  # ── China ────────────────────────────────────────────────────────────────────
-
+    origin: China
   APT10:
+    aliases:
+    - apt10
+    - atk41
+    - bronze riverside
+    - cicada
+    - cloud hopper
+    - cvnx
+    - g0045
+    - granite taurus
+    - happyyongzi
+    - hogfish
+    - menupass
+    - menupass team
+    - potassium
+    - purple typhoon
+    - red apollo
+    - stone panda
+    - ta429
+    motivation: espionage
     origin: China
-    motivation: espionage
+  APT12:
     aliases:
-      - apt10
-      - menupass
-      - stone panda
-      - bronze riverside
-      - potassium
-      - cvnx
-      - happyyongzi
-      - cloud hopper
-      - g0045
-      - red apollo
-      - hogfish
-
-  APT41:
+    - apt12
+    - beebus
+    - bronze globe
+    - calc team
+    - crimson iron
+    - dnscalc
+    - dyncalc
+    - group 22
+    - hexagon typhoon
+    - ixeshe
+    - numbered panda
+    - tg-2754
+    motivation: espionage
     origin: China
-    motivation: espionage
+  APT14:
     aliases:
-      - apt41
-      - double dragon
-      - barium
-      - winnti group
-      - bronze atlas
-      - wicked spider
-      - wicked panda
-      - lead
-      - g0096
-      - axiom
-      - blackfly
-
-  Volt Typhoon:
+    - aluminum
+    - anchor panda
+    - apt14
+    - qazteam
+    motivation: espionage
     origin: China
-    motivation: espionage
+  APT15:
     aliases:
-      - volt typhoon
-      - bronze silhouette
-      - vanguard panda
-      - dev-0391
-      - unc3236
-      - insidious taurus
-      - g1017
-
-  Salt Typhoon:
+    - apt15
+    - bronze davenport
+    - bronze idlewood
+    - bronze palace
+    - g0004
+    - ke3chang
+    - lurid
+    - metushy
+    - mirage
+    - nickel
+    - nylon typhoon
+    - playful dragon
+    - red vulture
+    - river castle
+    - royal apt
+    - social network team
+    - vixen panda
+    motivation: espionage
     origin: China
-    motivation: espionage
+  APT16:
     aliases:
-      - salt typhoon
-      - ghostemperor
-      - earth estries
-      - famsec
-      - unc2286
-      - g1045
-
-  APT40:
+    - apt16
+    - g0023
+    - svcmondr
+    motivation: espionage
     origin: China
-    motivation: espionage
+  APT18:
     aliases:
-      - apt40
-      - temp.periscope
-      - temp.jumper
-      - bronze mohawk
-      - leviathan
-      - gadolinium
-      - ta423
-      - g0065
-      - red ladon
-      - indrik spider
-
-  APT31:
+    - apt18
+    - apt4
+    - bronze edison
+    - dynamite panda
+    - g0026
+    - maverick panda
+    - pla navy
+    - salmon typhoon
+    - samurai panda
+    - satin typhoon
+    - scandium
+    - sodium
+    - tg-0416
+    - wekby
+    - wisp team
+    motivation: espionage
     origin: China
-    motivation: espionage
+  APT19:
     aliases:
-      - apt31
-      - zirconium
-      - judgment panda
-      - bronze vinewood
-      - g0128
-      - violet typhoon
-
-  APT34:
-    origin: Iran
+    - apt19
+    - black vine
+    - bronze firestone
+    - checkered typhoon
+    - codoso
+    - deep panda
+    - g0009
+    - g0073
+    - group 13
+    - kungfu kittens
+    - pinkpanther
+    - pupa
+    - shell crew
+    - sunshop group
+    - temp.avengers
+    - webmasters
     motivation: espionage
-    aliases:
-      - apt34
-      - oilrig
-      - crambus
-      - cobalt gypsy
-      - chrysene
-      - g0049
-      - helix kitten
-      - hazel sandstorm
-
-  BlackTech:
     origin: China
-    motivation: espionage
+  APT2:
     aliases:
-      - blacktech
-      - circuit panda
-      - radio panda
-      - palmerworm
-      - temp.overboard
-      - g0098
-
-  Earth Lusca:
+    - 4hcrew
+    - apt2
+    - g0024
+    - msupdater
+    - pla unit 61486
+    - putter panda
+    - searchfire
+    - sulphur
+    - tg-6952
+    motivation: espionage
     origin: China
+  APT20:
+    aliases:
+    - apt20
+    - crawling taurus
+    - ridge castle
+    - th3bug
+    - violin panda
+    motivation: unknown
+    origin: China
+  APT21:
+    aliases:
+    - apt21
+    - hammer panda
+    - nettraveler
+    - temp.zhenbao
     motivation: espionage
+    origin: China
+  APT22:
     aliases:
-      - earth lusca
-      - charcoal typhoon
-      - fishmonger
-      - bronze university
-      - ta428
-      - g1006
-
-  # ── North Korea (DPRK) ───────────────────────────────────────────────────────
-
-  Lazarus Group:
-    origin: North Korea
-    motivation: financial
+    - apt22
+    - bronze olive
+    - g0039
+    - group 46
+    - suckfly
+    motivation: unknown
+    origin: China
+  APT23:
     aliases:
-      - lazarus group
-      - lazarus
-      - hidden cobra
-      - zinc
-      - nickel academy
-      - diamond sleet
-      - apt38
-      - whois team
-      - g0032
-      - temp.hermit
-      - labyrinth chollima
-      - stardust chollima
-
-  Kimsuky:
-    origin: North Korea
+    - apt23
+    - bronze hobart
+    - earth centaur
+    - g0081
+    - keyboy
+    - pirate panda
+    - red orthrus
+    - tropic trooper
+    motivation: unknown
+    origin: China
+  APT24:
+    aliases:
+    - apt24
+    - g0011
+    - pitty panda
+    - temp.pittytiger
+    motivation: unknown
+    origin: China
+  APT26:
+    aliases:
+    - apt26
+    - bronze express
+    - jerseymikes
+    - taffeta typhoon
+    - technetium
+    - turbine panda
+    motivation: unknown
+    origin: China
+  APT27:
+    aliases:
+    - apt27
+    - bronze union
+    - budworm
+    - circle typhoon
+    - dev-0322
+    - earth smilodon
+    - emissary panda
+    - g0027
+    - greedytaotie
+    - group 35
+    - iron taurus
+    - iron tiger
+    - linen typhoon
+    - lucky mouse
+    - red phoenix
+    - shore castle
+    - temp.hippo
+    - tg-3390
+    - tiltedtemple
+    - ziptoken
     motivation: espionage
+    origin: Unknown
+  APT28:
     aliases:
-      - kimsuky
-      - black banshee
-      - emerald sleet
-      - velvet chollima
-      - thallium
-      - g0094
-      - ta406
-      - spring dragon
-
-  Andariel:
-    origin: North Korea
-    motivation: financial
-    aliases:
-      - andariel
-      - silent chollima
-      - stonefly
-      - plutonium
-      - g0138
-      - dark seoul
-      - operation troy
-
-  Bluenoroff:
-    origin: North Korea
-    motivation: financial
-    aliases:
-      - bluenoroff
-      - sapphire sleet
-      - copernicium
-
-  # ── Iran ──────────────────────────────────────────────────────────────────────
-
-  APT33:
-    origin: Iran
+    - apt 28
+    - apt-c-20
+    - apt28
+    - atk5
+    - blue athena
+    - bluedelta
+    - fancy bear
+    - fighting ursa
+    - forest blizzard
+    - frozenlake
+    - g0007
+    - grey-cloud
+    - group 74
+    - group-4127
+    - gruesomelarch
+    - iron twilight
+    - itg05
+    - lake relic
+    - pawn storm
+    - sednit
+    - sig40
+    - snakemackerel
+    - sofacy
+    - sofacy group
+    - strontium
+    - swallowtail
+    - t-apt-12
+    - ta422
+    - tg-4127
+    - threat group-4127
+    - tsar team
+    - tsarteam
+    - uac-0001
+    - uac-0028
     motivation: espionage
-    aliases:
-      - apt33
-      - refined kitten
-      - magnallium
-      - holmium
-      - elfin
-      - g0064
-      - peach sandstorm
-      - raspite
-
-  Charming Kitten:
-    origin: Iran
-    motivation: espionage
-    aliases:
-      - charming kitten
-      - apt35
-      - phosphorus
-      - mint sandstorm
-      - ta453
-      - newscaster
-      - g0059
-      - cobalt illusion
-      - tortoiseshell
-      - iridescent ursa
-
-  MuddyWater:
-    origin: Iran
-    motivation: espionage
-    aliases:
-      - muddywater
-      - mercury
-      - static kitten
-      - seedworm
-      - temp.zagros
-      - mango sandstorm
-      - g0069
-      - ta450
-
-  Moses Staff:
-    origin: Iran
-    motivation: destruction
-    aliases:
-      - moses staff
-      - cobalt sapling
-      - g1009
-
-  Agrius:
-    origin: Iran
-    motivation: destruction
-    aliases:
-      - agrius
-      - pink sandstorm
-      - americium
-      - unc2322
-      - g1030
-      - blackshadow
-
-  # ── Financially Motivated ─────────────────────────────────────────────────────
-
-  FIN7:
-    origin: unknown
-    motivation: financial
-    aliases:
-      - fin7
-      - carbanak
-      - navigator group
-      - sangria tempest
-      - g0046
-
-  FIN8:
-    origin: unknown
-    motivation: financial
-    aliases:
-      - fin8
-      - syssphinx
-      - g0061
-
-  FIN6:
-    origin: unknown
-    motivation: financial
-    aliases:
-      - fin6
-      - itg08
-      - skeleton spider
-      - g0037
-      - magecart group 6
-
-  Lapsus$:
-    origin: unknown
-    motivation: financial
-    aliases:
-      - lapsus$
-      - lapsus
-      - scatter swine
-      - dev-0537
-      - unc3661
-      - g1004
-      - strawberry tempest
-
-  Scattered Spider:
-    origin: unknown
-    motivation: financial
-    aliases:
-      - scattered spider
-      - 0ktapus
-      - starfraud
-      - unc3944
-      - muddled libra
-      - octo tempest
-      - g1015
-      - dev-0671
-      - roasted 0ktapus
-
-  Wizard Spider:
-    origin: unknown
-    motivation: financial
-    aliases:
-      - wizard spider
-      - unc1878
-      - gold blackburn
-      - g0102
-      - ryuk group
-      - conti group
-
-  TA505:
-    origin: unknown
-    motivation: financial
-    aliases:
-      - ta505
-      - cl0p group
-      - gold tahoe
-      - g0092
-      - hive0065
-
-  Cl0p:
-    origin: unknown
-    motivation: financial
-    aliases:
-      - cl0p
-      - clop
-      - fin11
-      - g0158
-
-  # ── Hacktivism / Gray Zone ────────────────────────────────────────────────────
-
-  KillNet:
     origin: Russia
-    motivation: hacktivism
+  APT29:
     aliases:
-      - killnet
-      - killmilk
-
-  Anonymous Sudan:
-    origin: unknown
-    motivation: hacktivism
-    aliases:
-      - anonymous sudan
-      - anonsud
-      - g1024
-
-  Predatory Sparrow:
-    origin: unknown
-    motivation: destruction
-    aliases:
-      - predatory sparrow
-      - gonjeshke darande
-
-  Equation Group:
-    origin: unknown
+    - apt29
+    - atk7
+    - blue kitsune
+    - bluebravo
+    - cloaked ursa
+    - cozy bear
+    - cozy duke
+    - cozyduke
+    - dark halo
+    - darkhalo
+    - g0016
+    - group 100
+    - hammertoss
+    - ice relic
+    - icecap
+    - iron hemlock
+    - itg11
+    - midnight blizzard
+    - minidionis
+    - nobelium
+    - npu
+    - office monkeys
+    - seaduke
+    - solar phoenix
+    - stellarparticle
+    - ta421
+    - the dukes
+    - uac-0029
+    - unc2452
+    - yttrium
     motivation: espionage
+    origin: Russia
+  APT3:
     aliases:
-      - equation group
-      - equation
-      - g0020
+    - apt3
+    - boron
+    - boyusec
+    - brocade typhoon
+    - bronze mayfair
+    - buckeye
+    - gothic panda
+    - group 6
+    - red sylvan
+    - tg-0110
+    - ups
+    motivation: espionage
+    origin: China
+  APT31:
+    aliases:
+    - apt31
+    - bronze vinewood
+    - g0128
+    - judgment panda
+    - red keres
+    - ta412
+    - tide castle
+    - violet typhoon
+    - zirconium
+    motivation: espionage
+    origin: China
+  APT32:
+    aliases:
+    - apt 32
+    - apt-32
+    - apt-c-00
+    - apt32
+    - atk17
+    - bismuth
+    - canvas cyclone
+    - cobalt kitty
+    - g0050
+    - ocean buffalo
+    - ocean lotus
+    - oceanlotus
+    - oceanlotus group
+    - pond loach
+    - sea lotus
+    - sealotus
+    - tin woodlawn
+    motivation: espionage
+    origin: Vietnam
+  APT33:
+    aliases:
+    - apt 33
+    - apt33
+    - atk35
+    - bleak ion
+    - cobalt trinity
+    - elfin
+    - g0064
+    - holmium
+    - leafminer
+    - magnallium
+    - peach sandstorm
+    - raspite
+    - refined kitten
+    - ta451
+    motivation: espionage
+    origin: Iran
+  APT34:
+    aliases:
+    - alibaba
+    - apt 34
+    - apt34
+    - atk40
+    - chrysene
+    - cleaver
+    - cobalt gypsy
+    - crambus
+    - earth simnavaz
+    - europium
+    - evasive serpens
+    - g0003
+    - g0049
+    - hazel sandstorm
+    - helix kitten
+    - irn2
+    - oilrig
+    - op cleaver
+    - operation cleaver
+    - solar ion
+    - ta452
+    - tarh andishan
+    - tg-2889
+    - twisted kitten
+    motivation: espionage
+    origin: Iran
+  APT37:
+    aliases:
+    - apt 37
+    - apt-c-28
+    - apt37
+    - atk4
+    - g0067
+    - group 123
+    - group123
+    - inkysquid
+    - moldy pisces
+    - operation daybreak
+    - operation erebus
+    - plain neptune
+    - reaper
+    - reaper group
+    - red eyes
+    - ricochet chollima
+    - scarcruft
+    - venus 121
+    motivation: unknown
+    origin: Korea (Democratic People's Republic of)
+  APT39:
+    aliases:
+    - apt39
+    - burgundy sandstorm
+    - chafer
+    - cinder ion
+    - cobalt hickman
+    - g0087
+    - itg07
+    - radio serpens
+    - remix kitten
+    - ta454
+    motivation: unknown
+    origin: Iran
+  APT40:
+    aliases:
+    - apt40
+    - atk29
+    - bronze mohawk
+    - g0065
+    - gadolinium
+    - gingham typhoon
+    - indrik spider
+    - island castle
+    - islanddreams
+    - itg09
+    - kryptonite panda
+    - leviathan
+    - manatee tempest
+    - mudcarp
+    - red ladon
+    - ta423
+    - temp.jumper
+    - temp.periscope
+    motivation: espionage
+    origin: China
+  APT41:
+    aliases:
+    - amoeba
+    - apt17
+    - apt41
+    - aurora panda
+    - axiom
+    - barium
+    - blackfly
+    - brass typhoon
+    - bronze atlas
+    - bronze export
+    - bronze keystone
+    - dogfish
+    - double dragon
+    - earth baku
+    - g0001
+    - g0025
+    - g0044
+    - g0096
+    - grayfly
+    - group 72
+    - group 8
+    - heart typhoon
+    - helium
+    - hidden lynx
+    - hoodoo
+    - lead
+    - leopard typhoon
+    - red kelpie
+    - spire castle
+    - ta415
+    - tailgater team
+    - tg-2633
+    - wicked panda
+    - wicked spider
+    - winnti
+    - winnti group
+    motivation: espionage
+    origin: China
+  APT42:
+    aliases:
+    - apt42
+    - calanque
+    - calanque ion
+    - unc788
+    motivation: espionage
+    origin: Iran (Islamic Republic of)
+  APT45:
+    aliases:
+    - apt45
+    - grass neptune
+    motivation: unknown
+    origin: North Korea
+  APT5:
+    aliases:
+    - apt5
+    - basalt castle
+    - bronze fleetwood
+    - keyhole panda
+    - manganese
+    - mulberry typhoon
+    - poisoned flight
+    - temp.bottle
+    motivation: unknown
+    origin: China
+  APT6:
+    aliases:
+    - 1.php group
+    - apt6
+    motivation: unknown
+    origin: China
+  APT73:
+    aliases:
+    - apt73
+    - eraleig
+    motivation: unknown
+    origin: ''
+  APT9:
+    aliases:
+    - apt9
+    - group 27
+    - nightshade panda
+    - red pegasus
+    motivation: unknown
+    origin: China
+  APTIran:
+    aliases:
+    - aptiran
+    motivation: unknown
+    origin: Iran
+  Ababil of Minab:
+    aliases:
+    - ababil of minab
+    motivation: unknown
+    origin: Iran
+  Actor240524:
+    aliases:
+    - actor240524
+    motivation: unknown
+    origin: ''
+  Adrastea:
+    aliases:
+    - adrastea
+    motivation: unknown
+    origin: ''
+  AeroBlade:
+    aliases:
+    - aeroblade
+    motivation: unknown
+    origin: ''
+  Aggressive Inventory Zombies:
+    aliases:
+    - aggressive inventory zombies
+    - aiz
+    motivation: unknown
+    origin: ''
+  Agrius:
+    aliases:
+    - agonizing serpens
+    - agrius
+    - americium
+    - black shadow
+    - blackshadow
+    - dev-0022
+    - g1030
+    - pink sandstorm
+    - spectral kitten
+    - unc2322
+    - unc2428
+    motivation: destruction
+    origin: Iran
+  Altahrea Team:
+    aliases:
+    - altahrea team
+    motivation: unknown
+    origin: IQ
+  Altoufan Team:
+    aliases:
+    - altoufan team
+    motivation: unknown
+    origin: ''
+  Amaranth-Dragon:
+    aliases:
+    - amaranth-dragon
+    motivation: unknown
+    origin: China
+  Andariel:
+    aliases:
+    - g0138
+    - gop
+    - guardian of peace
+    - onyx sleet
+    - operationtroy
+    - plutonium
+    - silent chollima
+    - stonefly
+    - 'subgroup: andariel'
+    motivation: financial
+    origin: North Korea
+  Angry Likho:
+    aliases:
+    - angry likho
+    - sticky werewolf
+    motivation: unknown
+    origin: Russia
+  Anonymous KSA:
+    aliases:
+    - anonymous ksa
+    motivation: unknown
+    origin: ''
+  Anonymous Sudan:
+    aliases:
+    - anonsud
+    - anonymous sudan
+    - g1024
+    motivation: hacktivism
+    origin: unknown
+  Anonymous64:
+    aliases:
+    - anonymous 64
+    - anonymous64
+    motivation: unknown
+    origin: TW
+  Antlion:
+    aliases:
+    - antlion
+    motivation: unknown
+    origin: China
+  Aoqin Dragon:
+    aliases:
+    - aoqin dragon
+    - unc94
+    motivation: unknown
+    origin: China
+  AppMilad:
+    aliases:
+    - appmilad
+    motivation: unknown
+    origin: Iran
+  ArcaneDoor:
+    aliases:
+    - arcanedoor
+    motivation: unknown
+    origin: ''
+  AridViper:
+    aliases:
+    - apt-c-23
+    - arid viper
+    - aridviper
+    - bearded barbie
+    - desert falcon
+    - desert falcons
+    - niobium
+    - pinstripe lightning
+    - renegade jackal
+    - scimitar
+    - two-tailed scorpion
+    motivation: espionage
+    origin: Palestine
+  Armored Likho:
+    aliases:
+    - armored likho
+    - eagle werewolf
+    motivation: unknown
+    origin: ''
+  Aslan Neferler Tim:
+    aliases:
+    - aslan neferler tim
+    - lion soldiers team
+    - phantom turk
+    motivation: hacktivism
+    origin: Turkey
+  Asnarök:
+    aliases:
+    - asnarök
+    - personal panda
+    motivation: unknown
+    origin: ''
+  AtlasCross:
+    aliases:
+    - atlascross
+    motivation: unknown
+    origin: ''
+  Attor:
+    aliases:
+    - attor
+    motivation: espionage
+    origin: ''
+  Avivore:
+    aliases:
+    - avivore
+    motivation: unknown
+    origin: China
+  Awaken Likho:
+    aliases:
+    - awaken likho
+    - core werewolf
+    motivation: unknown
+    origin: ''
+  Ayyıldız Tim:
+    aliases:
+    - ayyıldız tim
+    - crescent and star
+    motivation: hacktivism
+    origin: Turkey
+  AzzaSec:
+    aliases:
+    - azzasec
+    motivation: unknown
+    origin: IT
+  BAMBOO SPIDER:
+    aliases:
+    - bamboo spider
+    motivation: unknown
+    origin: ''
+  BANISHED KITTEN:
+    aliases:
+    - banished kitten
+    - dune
+    - red sandstorm
+    - storm-0842
+    motivation: espionage
+    origin: Iran (Islamic Republic of)
+  BIG PANDA:
+    aliases:
+    - big panda
+    motivation: unknown
+    origin: China
+  BITWISE SPIDER:
+    aliases:
+    - bitwise spider
+    motivation: unknown
+    origin: ''
+  BOSON SPIDER:
+    aliases:
+    - boson spider
+    motivation: unknown
+    origin: ''
+  BOSS SPIDER:
+    aliases:
+    - boss spider
+    - gold lowell
+    motivation: unknown
+    origin: ''
+  BREEZE COMET:
+    aliases:
+    - breeze comet
+    - unc5669
+    motivation: unknown
+    origin: ''
+  BRONZE EDGEWOOD:
+    aliases:
+    - bronze edgewood
+    - red hariasa
+    motivation: unknown
+    origin: China
+  BRONZE HIGHLAND:
+    aliases:
+    - bronze highland
+    - daggerfly
+    - evasive panda
+    motivation: espionage
+    origin: China
+  BRONZE SPIRAL:
+    aliases:
+    - bronze spiral
+    motivation: unknown
+    origin: China
+  BRONZE SPRING:
+    aliases:
+    - bronze spring
+    - unc302
+    motivation: unknown
+    origin: China
+  BRONZE STARLIGHT:
+    aliases:
+    - bronze starlight
+    - cinnamon tempest
+    - dev-0401
+    - emperor dragonfly
+    - slime34
+    motivation: unknown
+    origin: China
+  BRONZE VAPOR:
+    aliases:
+    - bronze vapor
+    motivation: unknown
+    origin: China
+  BackdoorDiplomacy:
+    aliases:
+    - backdip
+    - backdoordiplomacy
+    - cloudcomputating
+    - quarian
+    motivation: unknown
+    origin: ''
+  BadRory:
+    aliases:
+    - badrory
+    motivation: unknown
+    origin: ''
+  Bahamut:
+    aliases:
+    - bahamut
+    motivation: unknown
+    origin: ''
+  BatShadow:
+    aliases:
+    - batshadow
+    motivation: unknown
+    origin: Vietnam
+  BazarCall:
+    aliases:
+    - bazacall
+    - bazarcall
+    - bazzarcall
+    motivation: unknown
+    origin: ''
+  Bearlyfy:
+    aliases:
+    - bearlyfy
+    - labubu
+    motivation: unknown
+    origin: Ukraine
+  Beijing Group:
+    aliases:
+    - beijing group
+    - elderwood
+    - elderwood gang
+    - g0066
+    - sig22
+    - sneaky panda
+    motivation: espionage
+    origin: China
+  BelialDemon:
+    aliases:
+    - belialdemon
+    - matanbuchus
+    motivation: unknown
+    origin: ''
+  Belsen Group:
+    aliases:
+    - belsen group
+    motivation: unknown
+    origin: ''
+  BiBiGun:
+    aliases:
+    - bibigun
+    motivation: unknown
+    origin: Palestine
+  Bignosa:
+    aliases:
+    - bignosa
+    motivation: unknown
+    origin: KE
+  BlackJack:
+    aliases:
+    - blackjack
+    motivation: unknown
+    origin: Ukraine
+  BlackMaskers:
+    aliases:
+    - blackmaskers
+    - blackmaskers team
+    motivation: unknown
+    origin: ''
+  BlackOasis:
+    aliases:
+    - blackoasis
+    - g0063
+    motivation: unknown
+    origin: ''
+  BlackTech:
+    aliases:
+    - blacktech
+    - canary typhoon
+    - cavern castle
+    - circuit panda
+    - earth hundun
+    - g0098
+    - huapi
+    - manga taurus
+    - mobwork
+    - palmerworm
+    - radio panda
+    - red djinn
+    - shrouded crossbow
+    - t-apt-03
+    - temp.overboard
+    motivation: espionage
+    origin: China
+  Blackatom:
+    aliases:
+    - blackatom
+    motivation: espionage
+    origin: Palestine
+  Blackgear:
+    aliases:
+    - blackgear
+    - comnie
+    - topgear
+    motivation: unknown
+    origin: China
+  Blackmeta:
+    aliases:
+    - blackmeta
+    - sn blackmeta
+    motivation: unknown
+    origin: Palestine
+  Blacktail:
+    aliases:
+    - blacktail
+    motivation: unknown
+    origin: ''
+  Blackwood:
+    aliases:
+    - blackwood
+    motivation: unknown
+    origin: China
+  BladeHawk:
+    aliases:
+    - bladehawk
+    motivation: espionage
+    origin: ''
+  BladedFeline:
+    aliases:
+    - bladedfeline
+    motivation: unknown
+    origin: Iran
+  Blue Termite:
+    aliases:
+    - blue termite
+    - cloudy omega
+    - emdivi
+    motivation: espionage
+    origin: Unknown
+  Blue Tsunami:
+    aliases:
+    - black cube
+    - blue tsunami
+    motivation: unknown
+    origin: Israel
+  BlueBottle:
+    aliases:
+    - bluebottle
+    motivation: unknown
+    origin: ''
+  BlueHornet:
+    aliases:
+    - againstthewest
+    - apt49
+    - bluehornet
+    motivation: unknown
+    origin: ''
+  Bluenoroff:
+    aliases: []
+    motivation: financial
+    origin: North Korea
+  Bondnet:
+    aliases:
+    - bondnet
+    motivation: unknown
+    origin: ''
+  Booba Project:
+    aliases:
+    - booba project
+    motivation: unknown
+    origin: ''
+  Boolka:
+    aliases:
+    - boolka
+    motivation: unknown
+    origin: ''
+  Boulder Bear:
+    aliases:
+    - boulder bear
+    motivation: unknown
+    origin: Russia
+  BrazenBamboo:
+    aliases:
+    - brazenbamboo
+    motivation: unknown
+    origin: China
+  BreachLaboratory:
+    aliases:
+    - breachlaboratory
+    motivation: unknown
+    origin: ''
+  Budminer:
+    aliases:
+    - budminer
+    - budminer cyberespionage group
+    motivation: unknown
+    origin: China
+  BuhTrap:
+    aliases:
+    - buhtrap
+    motivation: unknown
+    origin: Russia
+  ByteToBreach:
+    aliases:
+    - bytetobreach
+    motivation: unknown
+    origin: ''
+  CIRCUS SPIDER:
+    aliases:
+    - circus spider
+    motivation: unknown
+    origin: Russia
+  CL-STA-0043:
+    aliases:
+    - cl-sta-0043
+    - phantom taurus
+    - tgr-sta-0043
+    motivation: unknown
+    origin: China
+  CL-STA-0048:
+    aliases:
+    - cl sta 0048
+    - cl-sta-0048
+    motivation: unknown
+    origin: China
+  CL-STA-1009:
+    aliases:
+    - cl-sta-1009
+    motivation: unknown
+    origin: ''
+  CL-STA-1020:
+    aliases:
+    - cl-sta-1020
+    motivation: unknown
+    origin: ''
+  CL-STA-1087:
+    aliases:
+    - cl-sta-1087
+    motivation: unknown
+    origin: China
+  CL-UNK-1068:
+    aliases:
+    - cl-unk-1068
+    motivation: unknown
+    origin: China
+  CLOCKWORK SPIDER:
+    aliases:
+    - clockwork spider
+    motivation: unknown
+    origin: ''
+  COBALT JUNO:
+    aliases:
+    - apt-c-38 (qianxin)
+    - cobalt juno
+    - saber lion
+    - tg-2884 (scwx ctu)
+    motivation: unknown
+    origin: ''
+  COBALT KATANA:
+    aliases:
+    - cobalt katana
+    - hive0081 (ibm)
+    - hunter serpens
+    - sectord01 (nhsc)
+    - xhunt campaign (palo alto)
+    motivation: unknown
+    origin: ''
+  CRPxO:
+    aliases:
+    - crpxo
+    motivation: unknown
+    origin: ''
+  CRYSTALRAY:
+    aliases:
+    - crystalray
+    motivation: unknown
+    origin: ''
+  Cadelle:
+    aliases:
+    - cadelle
+    motivation: unknown
+    origin: Iran
+  Caliente Bandits:
+    aliases:
+    - caliente bandits
+    - ta2721
+    motivation: unknown
+    origin: ''
+  Callisto:
+    aliases:
+    - blue callisto
+    - bluecharlie
+    - callisto
+    - cold relic
+    - coldriver
+    - gossamer bear
+    - iron frontier
+    - seaborgium
+    - star blizzard
+    - ta446
+    - tag-53
+    - unc4057
+    motivation: unknown
+    origin: Russia
+  Calypso:
+    aliases:
+    - bronze medley
+    - calypso
+    - red lamassu
+    motivation: unknown
+    origin: China
+  Camaro Dragon:
+    aliases:
+    - camaro dragon
+    motivation: unknown
+    origin: China
+  Caracal Kitten:
+    aliases:
+    - apt-q-58
+    - caracal kitten
+    motivation: unknown
+    origin: ''
+  Caramel Tsunami:
+    aliases:
+    - candiru
+    - caramel tsunami
+    - sourgum
+    motivation: unknown
+    origin: ''
+  Carderbee:
+    aliases:
+    - carderbee
+    motivation: unknown
+    origin: ''
+  CardinalLizard:
+    aliases:
+    - cardinallizard
+    motivation: unknown
+    origin: China
+  Careto:
+    aliases:
+    - careto
+    - mask
+    - the mask
+    - ugly face
+    motivation: espionage
+    origin: Spain
+  Carmine Tsunami:
+    aliases:
+    - carmine tsunami
+    - dev-0196
+    - quadream
+    motivation: unknown
+    origin: Israel
+  CashRewindo:
+    aliases:
+    - cashrewindo
+    motivation: unknown
+    origin: ''
+  Cavern Manticore:
+    aliases:
+    - cavern manticore
+    motivation: unknown
+    origin: Iran
+  CeranaKeeper:
+    aliases:
+    - ceranakeeper
+    motivation: unknown
+    origin: China
+  ChainedShark:
+    aliases:
+    - actor240820
+    - chainedshark
+    motivation: unknown
+    origin: ''
+  Chamelgang:
+    aliases:
+    - camofei
+    - chamelgang
+    motivation: unknown
+    origin: ''
+  Charming Kitten:
+    aliases:
+    - agent serpens
+    - apt35
+    - bohrium
+    - charming kitten
+    - charmingcypress
+    - cobalt illusion
+    - cobalt mirage
+    - crimson sandstorm
+    - cuboid sandstorm
+    - curium
+    - dev-0228
+    - dustycave
+    - g0058
+    - g0059
+    - group 83
+    - ikittens
+    - imperial kitten
+    - iridescent ursa
+    - magic hound
+    - mint sandstorm
+    - newsbeef
+    - newscaster
+    - newscaster team
+    - parastoo
+    - phosphorus
+    - rich ion
+    - smoke sandstorm
+    - ta453
+    - ta456
+    - tortoiseshell
+    - tunnelvision
+    - yellow liderc
+    motivation: espionage
+    origin: Iran
+  Chaya_004:
+    aliases:
+    - chaya_004
+    motivation: unknown
+    origin: China
+  Chernovite:
+    aliases:
+    - chernovite
+    motivation: unknown
+    origin: Russia
+  Chronus Group:
+    aliases:
+    - chronus group
+    motivation: unknown
+    origin: ''
+  CiberInteligenciaSV:
+    aliases:
+    - ciberinteligenciasv
+    motivation: unknown
+    origin: ''
+  Cl0p:
+    aliases:
+    - cl0p
+    - clop
+    - fin11
+    - g0158
+    - razor comet
+    - temp.warlock
+    - unc902
+    motivation: financial
+    origin: unknown
+  Clever Kitten:
+    aliases:
+    - clever kitten
+    - group 41
+    motivation: unknown
+    origin: Iran
+  CloudSorcerer:
+    aliases:
+    - cloudsorcerer
+    motivation: unknown
+    origin: ''
+  Cobalt:
+    aliases:
+    - cobalt
+    - cobalt gang
+    - cobalt group
+    - cobalt spider
+    - g0080
+    - gold kingswood
+    - mule libra
+    motivation: unknown
+    origin: ''
+  Codefinger:
+    aliases:
+    - codefinger
+    motivation: unknown
+    origin: ''
+  Coinbase Cartel:
+    aliases:
+    - coinbase cartel
+    motivation: unknown
+    origin: ''
+  Cold River:
+    aliases:
+    - cold river
+    - nahr el bared
+    - nahr elbard
+    motivation: unknown
+    origin: ''
+  ComicForm:
+    aliases:
+    - comicform
+    motivation: unknown
+    origin: ''
+  Common Raven:
+    aliases:
+    - common raven
+    - desktop-group
+    - nxsms
+    - opera1er
+    motivation: unknown
+    origin: ''
+  Conference Crew:
+    aliases:
+    - conference castle
+    - conference crew
+    motivation: unknown
+    origin: China
+  Confucious:
+    aliases:
+    - confucious
+    motivation: unknown
+    origin: India
+  Conquerors Electronic Army:
+    aliases:
+    - conquerors electronic army
+    motivation: unknown
+    origin: ''
+  Contagious Interview:
+    aliases:
+    - contagious interview
+    motivation: unknown
+    origin: ''
+  Copy-Paste:
+    aliases:
+    - copy-paste
+    motivation: espionage
+    origin: ''
+  CopyKittens:
+    aliases:
+    - copykittens
+    - g0052
+    - slayer kitten
+    motivation: espionage
+    origin: Iran (Islamic Republic of)
+  CoralRaider:
+    aliases:
+    - coralraider
+    motivation: unknown
+    origin: Vietnam
+  Corsair Jackal:
+    aliases:
+    - corsair jackal
+    - tunisiancyberarmy
+    motivation: unknown
+    origin: TN
+  Cosmic Lynx:
+    aliases:
+    - cosmic lynx
+    motivation: unknown
+    origin: ''
+  CosmicBeetle:
+    aliases:
+    - cosmicbeetle
+    motivation: unknown
+    origin: ''
+  CostaRicto:
+    aliases:
+    - costaricto
+    motivation: unknown
+    origin: ''
+  Cotton Sandstorm:
+    aliases:
+    - cotton sandstorm
+    - emennet pasargad
+    - haywire kitten
+    - holy souls
+    - marnanbridge
+    - neptunium
+    motivation: unknown
+    origin: Iran (Islamic Republic of)
+  CoughingDown:
+    aliases:
+    - coughingdown
+    motivation: unknown
+    origin: ''
+  Crimson Collective:
+    aliases:
+    - crimson collective
+    motivation: unknown
+    origin: ''
+  CryptoChameleon:
+    aliases:
+    - cryptochameleon
+    - unc5356
+    motivation: unknown
+    origin: ''
+  Curious Gorge:
+    aliases:
+    - curious gorge
+    - unc3742
+    motivation: espionage
+    origin: China
+  Curly COMrades:
+    aliases:
+    - curly comrades
+    motivation: unknown
+    origin: Russia
+  Cutting Kitten:
+    aliases:
+    - cutting kitten
+    - itsecteam
+    motivation: hacktivism
+    origin: Iran (Islamic Republic of)
+  Cyber Alliance:
+    aliases:
+    - cyber alliance
+    motivation: unknown
+    origin: Ukraine
+  Cyber Army of Russia Reborn:
+    aliases:
+    - cyber army of russia reborn
+    motivation: unknown
+    origin: ''
+  Cyber Av3ngers:
+    aliases:
+    - cyber av3ngers
+    - cyberav3ngers
+    - shahid kaveh group
+    motivation: unknown
+    origin: Iran
+  Cyber Berkut:
+    aliases:
+    - cyber berkut
+    motivation: unknown
+    origin: Russia
+  Cyber Caliphate Army:
+    aliases:
+    - cca
+    - cyber caliphate army
+    - cybercaliphate
+    - islamic state hacking division
+    - united cyber caliphate
+    - uuc
+    motivation: unknown
+    origin: ''
+  Cyber Islamic Resistance:
+    aliases:
+    - cyber islamic resistance
+    motivation: unknown
+    origin: Iran
+  Cyber Partisans:
+    aliases:
+    - cyber partisans
+    motivation: unknown
+    origin: Belarus
+  Cyber Serp:
+    aliases:
+    - cyber serp
+    - uac-0255
+    motivation: unknown
+    origin: Russia
+  Cyber Toufan:
+    aliases:
+    - cyber toufan
+    motivation: unknown
+    origin: Iran
+  Cyber fighters of Izz Ad-Din Al Qassam:
+    aliases:
+    - cyber fighters of izz ad-din al qassam
+    - fraternal jackal
+    motivation: unknown
+    origin: Iran
+  Cyber.Anarchy.Squad:
+    aliases:
+    - cyber anarchy squad
+    - cyber.anarchy.squad
+    motivation: unknown
+    origin: Ukraine
+  CyberNiggers:
+    aliases:
+    - cyberniggers
+    motivation: unknown
+    origin: ''
+  DAGGER PANDA:
+    aliases:
+    - dagger panda
+    - icefog
+    - pla unit 69010
+    - red foxtrot
+    - red wendigo
+    - redfoxtrot
+    - trident
+    - uat-7290
+    motivation: espionage
+    origin: China
+  DEV-0147:
+    aliases:
+    - dev-0147
+    motivation: unknown
+    origin: China
+  DEV-0270:
+    aliases:
+    - dev-0270
+    - nemesis kitten
+    - storm-0270
+    motivation: unknown
+    origin: Iran
+  DEV-0569:
+    aliases:
+    - dev-0569
+    - storm-0569
+    motivation: unknown
+    origin: ''
+  DEV-0928:
+    aliases:
+    - dev-0928
+    motivation: unknown
+    origin: ''
+  DEV-0950:
+    aliases:
+    - dev-0950
+    - lace tempest
+    motivation: unknown
+    origin: ''
+  DEV-1028:
+    aliases:
+    - dev-1028
+    motivation: unknown
+    origin: ''
+  DEXTOROUS SPIDER:
+    aliases:
+    - dextorous spider
+    motivation: unknown
+    origin: ''
+  DIZZY PANDA:
+    aliases:
+    - dizzy panda
+    - ladyboyle
+    motivation: unknown
+    origin: ''
+  DNSpionage:
+    aliases:
+    - cobalt edgewater
+    - dnspionage
+    motivation: unknown
+    origin: ''
+  DOPPEL SPIDER:
+    aliases:
+    - doppel spider
+    - gold heron
+    motivation: unknown
+    origin: ''
+  DUNGEON SPIDER:
+    aliases:
+    - dungeon spider
+    motivation: unknown
+    origin: ''
+  DaOnlySpark:
+    aliases:
+    - daonlyspark
+    motivation: unknown
+    origin: ''
+  Daixin Team:
+    aliases:
+    - daixin team
+    motivation: unknown
+    origin: ''
+  Dalbit:
+    aliases:
+    - dalbit
+    motivation: unknown
+    origin: China
+  Dancing Salome:
+    aliases:
+    - dancing salome
+    motivation: unknown
+    origin: ''
+  DangerousSavanna:
+    aliases:
+    - dangeroussavanna
+    motivation: unknown
+    origin: ''
+  Danti:
+    aliases:
+    - danti
+    motivation: unknown
+    origin: ''
+  Dark Basin:
+    aliases:
+    - dark basin
+    motivation: unknown
+    origin: ''
+  Dark Caracal:
+    aliases:
+    - dark caracal
+    - g0070
+    motivation: unknown
+    origin: Lebanon
+  DarkCasino:
+    aliases:
+    - darkcasino
+    motivation: unknown
+    origin: ''
+  DarkGaboon:
+    aliases:
+    - darkgaboon
+    - room155
+    - vengeful wolf
+    motivation: unknown
+    origin: ''
+  DarkHotel:
+    aliases:
+    - apt-c-06
+    - atk52
+    - darkhotel
+    - dubnium
+    - fallout team
+    - g0012
+    - karba
+    - luder
+    - nemim
+    - nemin
+    - pioneer
+    - shadow crane
+    - sig25
+    - t-apt-02
+    - tapaoux
+    - tungsten bridge
+    - zigzag hail
+    motivation: espionage
+    origin: Korea (Republic of)
+  DarkHydrus:
+    aliases:
+    - darkhydrus
+    - g0079
+    - lazymeerkat
+    - obscure serpens
+    motivation: unknown
+    origin: ''
+  DarkPink:
+    aliases:
+    - darkpink
+    - saaiwc
+    motivation: unknown
+    origin: ''
+  DarkRaaS:
+    aliases:
+    - darkraas
+    motivation: unknown
+    origin: ''
+  DarkSpectre:
+    aliases:
+    - darkspectre
+    motivation: unknown
+    origin: ''
+  DarkVishnya:
+    aliases:
+    - darkvishnya
+    motivation: unknown
+    origin: ''
+  Deadeye Jackal:
+    aliases:
+    - deadeye jackal
+    - sea
+    - syrianelectronicarmy
+    motivation: unknown
+    origin: Syria
+  DefrayX:
+    aliases:
+    - defrayx
+    - hive0091
+    motivation: unknown
+    origin: ''
+  Denim Tsunami:
+    aliases:
+    - denim tsunami
+    - dsirf
+    - knotweed
+    motivation: unknown
+    origin: AT
+  Desorden Group:
+    aliases:
+    - desorden group
+    motivation: unknown
+    origin: ''
+  DiceyF:
+    aliases:
+    - diceyf
+    motivation: unknown
+    origin: China
+  DieNet:
+    aliases:
+    - dienet
+    - shiite_harvest
+    motivation: unknown
+    origin: ''
+  Domestic Kitten:
+    aliases:
+    - apt-c-50
+    - bouncing golf
+    - domestic kitten
+    motivation: unknown
+    origin: Iran
+  DragonBreath:
+    aliases:
+    - apt-q-27,
+    - dragonbreath
+    - golden eye dog
+    motivation: unknown
+    origin: ''
+  DragonForce:
+    aliases:
+    - dragonforce
+    motivation: unknown
+    origin: MY
+  DragonOK:
+    aliases:
+    - bronze overbrook
+    - dragonok
+    - g0002
+    - g0017
+    - moafee
+    - shallow taurus
+    motivation: espionage
+    origin: China
+  DragonRank:
+    aliases:
+    - dragonrank
+    motivation: unknown
+    origin: ''
+  DragonSpark:
+    aliases:
+    - dragonspark
+    motivation: unknown
+    origin: China
+  Dragonbridge:
+    aliases:
+    - dragonbridge
+    - spamouflage dragon
+    motivation: unknown
+    origin: China
+  DriftingCloud:
+    aliases:
+    - driftingcloud
+    motivation: unknown
+    origin: China
+  DriveSurge:
+    aliases:
+    - drivesurge
+    motivation: unknown
+    origin: ''
+  Dust Storm:
+    aliases:
+    - dust storm
+    - g0031
+    motivation: unknown
+    origin: ''
+  DustSquad:
+    aliases:
+    - dustsquad
+    - nomadic octopus
+    motivation: unknown
+    origin: Russia
+  EC2 Grouper:
+    aliases:
+    - ec2 grouper
+    motivation: unknown
+    origin: ''
+  ELECTRIC PANDA:
+    aliases:
+    - electric panda
+    motivation: unknown
+    origin: China
+  ELOQUENT PANDA:
+    aliases:
+    - eloquent panda
+    motivation: unknown
+    origin: China
+  ELUSIVE COMET:
+    aliases:
+    - elusive comet
+    motivation: unknown
+    origin: North Korea
+  ENERGETIC BEAR:
+    aliases:
+    - allanite
+    - atk6
+    - berserk bear
+    - blue kraken
+    - bromine
+    - castle
+    - crouching yeti
+    - dragonfly
+    - dymalloy
+    - energetic bear
+    - g0035
+    - ghost blizzard
+    - group 24
+    - havex
+    - iron liberty
+    - itg15
+    - koala team
+    - palmetto fusion
+    - tg-4192
+    motivation: espionage
+    origin: Russian Federation
+  EXOTIC LILY:
+    aliases:
+    - dev-0413
+    - exotic lily
+    motivation: unknown
+    origin: ''
+  Earth Alux:
+    aliases:
+    - earth alux
+    motivation: unknown
+    origin: China
+  Earth Baxia:
+    aliases:
+    - earth baxia
+    motivation: unknown
+    origin: China
+  Earth Berberoka:
+    aliases:
+    - earth berberoka
+    - gamblingpuppet
+    motivation: unknown
+    origin: China
+  Earth Freybug:
+    aliases:
+    - earth freybug
+    motivation: unknown
+    origin: China
+  Earth Kapre:
+    aliases:
+    - earth kapre
+    - gold blade
+    - red wolf
+    - redcurl
+    motivation: unknown
+    origin: ''
+  Earth Kitsune:
+    aliases:
+    - earth kitsune
+    motivation: unknown
+    origin: ''
+  Earth Krahang:
+    aliases:
+    - earth krahang
+    motivation: unknown
+    origin: China
+  Earth Kurma:
+    aliases:
+    - earth kurma
+    motivation: unknown
+    origin: ''
+  Earth Lamia:
+    aliases:
+    - earth lamia
+    - unc5454
+    motivation: unknown
+    origin: China
+  Earth Longzhi:
+    aliases:
+    - earth longzhi
+    - snakecharmer
+    motivation: unknown
+    origin: ''
+  Earth Lusca:
+    aliases:
+    - aquatic panda
+    - bountyglad
+    - bronze dudley
+    - bronze university
+    - charcoal typhoon
+    - chromium
+    - colourful panda
+    - controlx
+    - earth lusca
+    - fishmonger
+    - g1006
+    - red dev 10
+    - red scylla
+    - redhotel
+    - ta428
+    - tag-22
+    motivation: espionage
+    origin: China
+  Earth Naga:
+    aliases:
+    - earth naga
+    motivation: unknown
+    origin: China
+  Earth Wendigo:
+    aliases:
+    - earth wendigo
+    motivation: unknown
+    origin: China
+  Earth Yako:
+    aliases:
+    - earth yako
+    - enelink
+    - operation restylink
+    motivation: unknown
+    origin: ''
+  Edalat-e Ali:
+    aliases:
+    - edalat-e ali
+    motivation: unknown
+    origin: Iran
+  Educated Manticore:
+    aliases:
+    - educated manticore
+    motivation: unknown
+    origin: Iran
+  El Machete:
+    aliases:
+    - apt-c-43
+    - el machete
+    - g0095
+    - machete
+    - machete-apt
+    motivation: espionage
+    origin: Unknown
+  Equation Group:
+    aliases:
+    - eqgrp
+    - equation
+    - equation group
+    - g0020
+    - tilded team
+    motivation: espionage
+    origin: unknown
+  Evil Corp:
+    aliases:
+    - evil corp
+    - gold drake
+    motivation: unknown
+    origin: ''
+  EvilPost:
+    aliases:
+    - evilpost
+    motivation: unknown
+    origin: ''
+  EvilTraffic:
+    aliases:
+    - eviltraffic
+    - operation eviltraffic
+    motivation: unknown
+    origin: ''
+  EvilWeb:
+    aliases:
+    - evilweb
+    motivation: unknown
+    origin: Russia
+  Evilbyte:
+    aliases:
+    - evilbyte
+    motivation: unknown
+    origin: ''
+  Evilnum:
+    aliases:
+    - deathstalker
+    - evilnum
+    - jointworm
+    - knockout spider
+    - ta4563
+    motivation: unknown
+    origin: ''
+  ExCobalt:
+    aliases:
+    - excobalt
+    motivation: unknown
+    origin: ''
+  ExfilSquad:
+    aliases:
+    - exfilsquad
+    motivation: unknown
+    origin: ''
+  Exilware:
+    aliases:
+    - exilware
+    motivation: unknown
+    origin: BR
+  FASTCash:
+    aliases:
+    - fastcash
+    motivation: unknown
+    origin: ''
+  FIN1:
+    aliases:
+    - fin1
+    motivation: unknown
+    origin: Russia
+  FIN10:
+    aliases:
+    - fin10
+    - g0051
+    motivation: unknown
+    origin: ''
+  FIN13:
+    aliases:
+    - elephant beetle
+    - fin13
+    - tg2003
+    motivation: unknown
+    origin: Russia
+  FIN5:
+    aliases:
+    - fin5
+    - g0053
+    motivation: unknown
+    origin: ''
+  FIN6:
+    aliases:
+    - atk88
+    - camouflage tempest
+    - fin6
+    - g0037
+    - gold franklin
+    - itg08
+    - magecart group 6
+    - skeleton spider
+    - squid comet
+    - storm-0538
+    - ta4557
+    - white giant
+    motivation: financial
+    origin: unknown
+  FIN7:
+    aliases:
+    - atk32
+    - calcium
+    - carbanak
+    - coreid
+    - elbrus
+    - fin7
+    - g0008
+    - g0046
+    - gold niagara
+    - jokerstash
+    - navigator group
+    - sangria tempest
+    - wild comet
+    motivation: financial
+    origin: unknown
+  FIN8:
+    aliases:
+    - atk113
+    - fin8
+    - g0061
+    - punch comet
+    - syssphinx
+    motivation: financial
+    origin: unknown
+  FOXY PANDA:
+    aliases:
+    - foxy panda
+    motivation: unknown
+    origin: China
+  Fail0verflow:
+    aliases:
+    - fail0verflow
+    - team twiizer
+    motivation: unknown
+    origin: ''
+  Femwar02:
+    aliases:
+    - femwar02
+    motivation: unknown
+    origin: Russia
+  Ferocious Kitten:
+    aliases:
+    - ferocious kitten
+    motivation: unknown
+    origin: Iran
+  FishMedley:
+    aliases:
+    - fishmedley
+    motivation: unknown
+    origin: ''
+  Fishing Elephant:
+    aliases:
+    - fishing elephant
+    - outrider tiger
+    motivation: unknown
+    origin: ''
+  Flash Kitten:
+    aliases:
+    - flash kitten
+    motivation: unknown
+    origin: ''
+  Flax Typhoon:
+    aliases:
+    - ethereal panda
+    - flax typhoon
+    - storm-0919
+    motivation: unknown
+    origin: China
+  FlowerStorm:
+    aliases:
+    - flowerstorm
+    motivation: unknown
+    origin: ''
+  Flying Kitten:
+    aliases:
+    - ajax security team
+    - ajaxsecurityteam
+    - flying kitten
+    - group 26
+    - saffron rose
+    - saffronrose
+    - sayad
+    motivation: espionage
+    origin: Iran (Islamic Republic of)
+  FlyingYeti:
+    aliases:
+    - flying yeti
+    - flyingyeti
+    - storm-1837
+    motivation: unknown
+    origin: Russia
+  Fox Kitten:
+    aliases:
+    - fox kitten
+    - lemon sandstorm
+    - parisite
+    - pioneer kitten
+    - rubidium
+    - unc757
+    motivation: unknown
+    origin: Iran
+  Fox Tempest:
+    aliases:
+    - fox tempest
+    motivation: unknown
+    origin: ''
+  FrostyNeighbor:
+    aliases:
+    - frostyneighbor
+    motivation: unknown
+    origin: Belarus
+  FulcrumSec:
+    aliases:
+    - fulcrumsec
+    motivation: unknown
+    origin: ''
+  FunkSec:
+    aliases:
+    - funksec
+    motivation: unknown
+    origin: ''
+  FusionCore:
+    aliases:
+    - fusioncore
+    motivation: unknown
+    origin: ''
+  Fxmsp:
+    aliases:
+    - fxmsp
+    motivation: unknown
+    origin: ''
+  GALLIUM:
+    aliases:
+    - alloy taurus
+    - gallium
+    - granite typhoon
+    - phantom panda
+    - red dev 4
+    motivation: unknown
+    origin: China
+  GC01:
+    aliases:
+    - gc01
+    - gc02
+    - golden chickens
+    - golden chickens 01
+    - golden chickens 02
+    - golden chickens01
+    - golden chickens02
+    motivation: unknown
+    origin: ''
+  GCMAN:
+    aliases:
+    - g0036
+    - gcman
+    motivation: unknown
+    origin: Russia
+  GHOST STADIUM:
+    aliases:
+    - ghost stadium
+    motivation: unknown
+    origin: China
+  GIBBERISH PANDA:
+    aliases:
+    - gibberish panda
+    motivation: unknown
+    origin: China
+  GOBLIN PANDA:
+    aliases:
+    - conimes
+    - cycldek
+    - goblin panda
+    motivation: unknown
+    origin: China
+  GOFFEE:
+    aliases:
+    - goffee
+    motivation: unknown
+    origin: ''
+  GOLD BURLAP:
+    aliases:
+    - cyborg spider
+    - gold burlap
+    motivation: unknown
+    origin: ''
+  GOLD CABIN:
+    aliases:
+    - atk236
+    - g0127
+    - gold cabin
+    - monster libra
+    - shakthak
+    - ta551
+    motivation: unknown
+    origin: ''
+  GOLD DUPONT:
+    aliases:
+    - gold dupont
+    - sprite spider
+    motivation: unknown
+    origin: ''
+  GOLD EVERGREEN:
+    aliases:
+    - gold evergreen
+    motivation: unknown
+    origin: ''
+  GOLD FAIRFAX:
+    aliases:
+    - gold fairfax
+    motivation: unknown
+    origin: ''
+  GOLD FLANDERS:
+    aliases:
+    - gold flanders
+    motivation: unknown
+    origin: ''
+  GOLD GALLEON:
+    aliases:
+    - gold galleon
+    motivation: unknown
+    origin: ''
+  GOLD GARDEN:
+    aliases:
+    - gold garden
+    motivation: unknown
+    origin: ''
+  GOLD MANSARD:
+    aliases:
+    - gold mansard
+    motivation: unknown
+    origin: ''
+  GOLD NORTHFIELD:
+    aliases:
+    - gold northfield
+    motivation: unknown
+    origin: ''
+  GOLD PRELUDE:
+    aliases:
+    - gold prelude
+    - ta569
+    - unc1543
+    motivation: unknown
+    origin: ''
+  GOLD REBELLION:
+    aliases:
+    - dark scorpius
+    - gold rebellion
+    - wandering spider
+    - white dev 115
+    motivation: unknown
+    origin: ''
+  GOLD RIVERVIEW:
+    aliases:
+    - gold riverview
+    motivation: unknown
+    origin: ''
+  GOLD SKYLINE:
+    aliases:
+    - gold skyline
+    motivation: unknown
+    origin: ''
+  GOLD SOUTHFIELD:
+    aliases:
+    - gold southfield
+    motivation: unknown
+    origin: ''
+  GOLD SYMPHONY:
+    aliases:
+    - gold symphony
+    motivation: unknown
+    origin: ''
+  GOLD WATERFALL:
+    aliases:
+    - gold waterfall
+    motivation: unknown
+    origin: ''
+  GOLD WINTER:
+    aliases:
+    - gold winter
+    motivation: unknown
+    origin: ''
+  GREF:
+    aliases:
+    - gref
+    motivation: unknown
+    origin: China
+  GRIM SPIDER:
+    aliases:
+    - gold ulrick
+    - grim spider
+    motivation: unknown
+    origin: ''
+  GTFire:
+    aliases:
+    - gtfire
+    motivation: unknown
+    origin: ''
+  GTG-1002:
+    aliases:
+    - gtg-1002
+    motivation: unknown
+    origin: China
+  GURU SPIDER:
+    aliases:
+    - guru spider
+    motivation: unknown
+    origin: ''
+  Gallmaker:
+    aliases:
+    - gallmaker
+    motivation: unknown
+    origin: ''
+  GamaCopy:
+    aliases:
+    - gamacopy
+    motivation: unknown
+    origin: ''
+  Gamaredon:
+    aliases:
+    - actinium
+    - aqua blizzard
+    - armageddon
+    - blue otso
+    - bluealpha
+    - callisto group
+    - dev-0157
+    - g0047
+    - gamaredon
+    - gamaredon group
+    - iron tilden
+    - primitive bear
+    - shuckworm
+    - trident ursa
+    - uac-0010
+    - winterflounder
+    motivation: espionage
+    origin: Russia
+  GambleForce:
+    aliases:
+    - gambleforce
+    motivation: unknown
+    origin: ''
+  Gammax:
+    aliases:
+    - gammax
+    motivation: unknown
+    origin: ''
+  Gelsemium:
+    aliases:
+    - gelsemium
+    - 狼毒草
+    motivation: unknown
+    origin: ''
+  Ghost Jackal:
+    aliases:
+    - ghost jackal
+    motivation: unknown
+    origin: ''
+  GhostNet:
+    aliases:
+    - ghostnet
+    - snooping dragon
+    motivation: unknown
+    origin: ''
+  GhostR:
+    aliases:
+    - ghostr
+    motivation: unknown
+    origin: ''
+  GhostRedirector:
+    aliases:
+    - ghostredirector
+    motivation: unknown
+    origin: China
+  GhostSec:
+    aliases:
+    - ghost security
+    - ghostsec
+    motivation: unknown
+    origin: ''
+  Ghostwriter:
+    aliases:
+    - dev-0257
+    - ghostwriter
+    - pushcha
+    - storm-0257
+    - ta445
+    - uac-0057
+    - unc1151
+    motivation: unknown
+    origin: Belarus
+  Gitloker:
+    aliases:
+    - gitloker
+    motivation: unknown
+    origin: ''
+  GlobalSecretGroup:
+    aliases:
+    - globalsecretgroup
+    motivation: unknown
+    origin: ''
+  Gnosticplayers:
+    aliases:
+    - gnosticplayers
+    motivation: unknown
+    origin: ''
+  GoldFactory:
+    aliases:
+    - goldfactory
+    motivation: unknown
+    origin: China
+  GoldenJackal:
+    aliases:
+    - goldenjackal
+    motivation: unknown
+    origin: ''
+  GopherWhisper:
+    aliases:
+    - gopherwhisper
+    motivation: unknown
+    origin: China
+  Gorilla:
+    aliases:
+    - gorilla
+    motivation: unknown
+    origin: ''
+  GozNym:
+    aliases:
+    - goznym
+    motivation: unknown
+    origin: ''
+  Gray Sandstorm:
+    aliases:
+    - dev-0343
+    - gray sandstorm
+    motivation: unknown
+    origin: Iran
+  GrayBravo:
+    aliases:
+    - graybravo
+    - tag-150
+    motivation: unknown
+    origin: ''
+  GrayCharlie:
+    aliases:
+    - graycharlie
+    motivation: unknown
+    origin: ''
+  Grayling:
+    aliases:
+    - grayling
+    motivation: unknown
+    origin: China
+  GreedyBear:
+    aliases:
+    - greedybear
+    motivation: unknown
+    origin: Russia
+  GreenSpot:
+    aliases:
+    - apt-q-20
+    - greenspot
+    - poisonvine
+    motivation: unknown
+    origin: TW
+  Greenbug:
+    aliases: []
+    motivation: unknown
+    origin: Iran
+  GreyEnergy:
+    aliases:
+    - greyenergy
+    motivation: unknown
+    origin: ''
+  GreyVibe:
+    aliases:
+    - greyvibe
+    motivation: unknown
+    origin: Russia
+  Groundbait:
+    aliases:
+    - groundbait
+    motivation: unknown
+    origin: Ukraine
+  Group5:
+    aliases:
+    - g0043
+    - group5
+    motivation: unknown
+    origin: ''
+  Guacamaya:
+    aliases:
+    - guacamaya
+    motivation: unknown
+    origin: ''
+  HAFNIUM:
+    aliases:
+    - atk233
+    - g0125
+    - hafnium
+    - murky panda
+    - operation exchange marauder
+    - red dev 13
+    - silk typhoon
+    motivation: unknown
+    origin: China
+  HAZY TIGER:
+    aliases:
+    - apt-c-08
+    - bitter
+    - hazy tiger
+    - orange yali
+    - t-apt-17
+    - ta397
+    motivation: unknown
+    origin: India
+  HIVE-0145:
+    aliases:
+    - hive-0145
+    - hive0145
+    motivation: unknown
+    origin: ''
+  HOUND SPIDER:
+    aliases:
+    - hound spider
+    motivation: unknown
+    origin: ''
+  HURRICANE PANDA:
+    aliases:
+    - hurricane panda
+    motivation: unknown
+    origin: China
+  Hacking Team:
+    aliases:
+    - hacking team
+    motivation: unknown
+    origin: ''
+  Hagga:
+    aliases:
+    - aggah
+    - hagga
+    - th-157
+    motivation: unknown
+    origin: ''
+  Handala:
+    aliases:
+    - handala
+    motivation: unknown
+    origin: Palestine
+  Head Mare:
+    aliases:
+    - head mare
+    motivation: unknown
+    origin: ''
+  HellHounds:
+    aliases:
+    - hellhounds
+    motivation: unknown
+    origin: ''
+  Hellsing:
+    aliases:
+    - hellsing
+    motivation: espionage
+    origin: China
+  HenBox:
+    aliases:
+    - henbox
+    motivation: espionage
+    origin: China
+  HexagonalRodent:
+    aliases:
+    - hexagonalrodent
+    motivation: unknown
+    origin: ''
+  Hezb:
+    aliases:
+    - hezb
+    - mimo
+    motivation: unknown
+    origin: ''
+  HiddenArt:
+    aliases:
+    - hiddenart
+    motivation: unknown
+    origin: Russia
+  Higaisa:
+    aliases:
+    - higaisa
+    motivation: unknown
+    origin: Korea (Republic of)
+  HikkI-Chan:
+    aliases:
+    - hikki-chan
+    motivation: unknown
+    origin: ''
+  Hive0117:
+    aliases:
+    - hive0117
+    motivation: unknown
+    origin: ''
+  Hive0137:
+    aliases:
+    - hive0137
+    motivation: unknown
+    origin: ''
+  Hive0163:
+    aliases:
+    - hive0163
+    motivation: unknown
+    origin: ''
+  HollowQuill:
+    aliases:
+    - hollowquill
+    motivation: unknown
+    origin: ''
+  HomeLand Justice:
+    aliases:
+    - homeland justice
+    motivation: unknown
+    origin: Iran
+  Honeybee:
+    aliases:
+    - g0072
+    - honeybee
+    motivation: unknown
+    origin: ''
+  HookAds:
+    aliases:
+    - hookads
+    motivation: unknown
+    origin: ''
+  Houken:
+    aliases:
+    - houken
+    motivation: unknown
+    origin: China
+  Houndstooth Typhoon:
+    aliases:
+    - deepclif
+    - dragnet panda
+    - hassium
+    - houndstooth typhoon
+    - isoon
+    motivation: unknown
+    origin: China
+  HummingBad:
+    aliases:
+    - hummingbad
+    motivation: unknown
+    origin: China
+  Hunt3r Kill3rs:
+    aliases:
+    - hunt3r kill3rs
+    motivation: unknown
+    origin: Russia
+  Hyadina:
+    aliases:
+    - hyadina
+    motivation: unknown
+    origin: ''
+  IMPERSONATING PANDA:
+    aliases:
+    - impersonating panda
+    motivation: unknown
+    origin: China
+  INDOHAXSEC TEAM:
+    aliases:
+    - indohaxsec team
+    motivation: unknown
+    origin: ID
+  INJ3CTOR3:
+    aliases:
+    - inj3ctor3
+    motivation: unknown
+    origin: ''
+  IRLeaks:
+    aliases:
+    - irleaks
+    motivation: unknown
+    origin: ''
+  IcePeony:
+    aliases:
+    - icepeony
+    motivation: unknown
+    origin: China
+  Inception Framework:
+    aliases:
+    - atk116
+    - blue odin
+    - clean ursa
+    - cloud atlas
+    - g0100
+    - inception framework
+    - oxygen
+    motivation: espionage
+    origin: Russian Federation
+  IndigoZebra:
+    aliases:
+    - indigozebra
+    motivation: unknown
+    origin: China
+  Infrastructure Destruction Squad:
+    aliases:
+    - dark engine
+    - infrastructure destruction squad
+    motivation: unknown
+    origin: Russia
+  Infy:
+    aliases:
+    - foudre
+    - infy
+    - operation mermaid
+    - prince of persia
+    motivation: espionage
+    origin: Iran (Islamic Republic of)
+  Inteid:
+    aliases:
+    - inteid
+    motivation: unknown
+    origin: ''
+  IntelBroker:
+    aliases:
+    - intelbroker
+    motivation: unknown
+    origin: ''
+  InvisiMole:
+    aliases:
+    - invisimole
+    motivation: espionage
+    origin: ''
+  Iron Group:
+    aliases:
+    - iron cyber group
+    - iron group
+    motivation: unknown
+    origin: ''
+  IronErn440:
+    aliases:
+    - ironern440
+    motivation: unknown
+    origin: ''
+  IronHusky:
+    aliases:
+    - ironhusky
+    motivation: unknown
+    origin: China
+  ItaDuke:
+    aliases:
+    - darkuniverse
+    - itaduke
+    - sig27
+    motivation: unknown
+    origin: ''
+  JACKPOT PANDA:
+    aliases:
+    - jackpot panda
+    motivation: unknown
+    origin: China
+  JINX-0126:
+    aliases:
+    - jinx-0126
+    motivation: unknown
+    origin: ''
+  JINX-0164:
+    aliases:
+    - jinx-0164
+    motivation: unknown
+    origin: North Korea
+  Jabaroot:
+    aliases:
+    - jabaroot
+    - jabaroot dz
+    motivation: unknown
+    origin: DZ
+  JadePuffer:
+    aliases:
+    - jadepuffer
+    motivation: unknown
+    origin: ''
+  JavaGhost:
+    aliases:
+    - javaghost
+    motivation: unknown
+    origin: ''
+  JuiceLedger:
+    aliases:
+    - juiceledger
+    motivation: unknown
+    origin: ''
+  KAX17:
+    aliases:
+    - kax17
+    motivation: unknown
+    origin: ''
+  Kairos:
+    aliases:
+    - kairos
+    motivation: unknown
+    origin: ''
+  Karakurt:
+    aliases:
+    - karakurt
+    - karakurt lair
+    motivation: unknown
+    origin: ''
+  Karkadann:
+    aliases:
+    - karkadann
+    - piwiks
+    motivation: unknown
+    origin: ''
+  Kasablanka:
+    aliases:
+    - kasablanka
+    motivation: unknown
+    origin: MA
+  Kazu:
+    aliases:
+    - kazu
+    motivation: unknown
+    origin: ''
+  Keksec:
+    aliases:
+    - keksec
+    motivation: unknown
+    origin: ''
+  KelvinSecurity:
+    aliases:
+    - kelvinsecurity
+    motivation: unknown
+    origin: ES
+  Keymous+:
+    aliases:
+    - keymous
+    - keymous plus
+    - keymous+
+    motivation: unknown
+    origin: ''
+  KillNet:
+    aliases:
+    - killmilk
+    - killnet
+    motivation: hacktivism
+    origin: Russia
+  Kimsuky:
+    aliases:
+    - apt43
+    - atk1
+    - billbug
+    - black banshee
+    - bronze elgin
+    - dragonfish
+    - emerald sleet
+    - g0030
+    - g0086
+    - g0094
+    - kimsuky
+    - lotus blossom
+    - lotus panda
+    - operation stolen pencil
+    - red salamander
+    - sparkling pisces
+    - spring dragon
+    - springtail
+    - st group
+    - ta406
+    - thallium
+    - velvet chollima
+    motivation: espionage
+    origin: North Korea
+  Kinsing:
+    aliases:
+    - kinsing
+    - money libra
+    motivation: unknown
+    origin: ''
+  Kiss-a-Dog:
+    aliases:
+    - kiss-a-dog
+    motivation: unknown
+    origin: ''
+  KromSec:
+    aliases:
+    - kromsec
+    motivation: unknown
+    origin: ''
+  Krybit:
+    aliases:
+    - krybit
+    motivation: unknown
+    origin: ''
+  LIMINAL PANDA:
+    aliases:
+    - liminal panda
+    motivation: unknown
+    origin: China
+  LUNAR SPIDER:
+    aliases:
+    - gold swathmore
+    - lunar spider
+    motivation: unknown
+    origin: ''
+  LYCEUM:
+    aliases:
+    - chrono kitten
+    - cobalt lyceum
+    - hexane
+    - lyceum
+    - mysticdome
+    - siamesekitten
+    - spirlin
+    - storm-0133
+    - unc1530
+    motivation: espionage
+    origin: Iran (Islamic Republic of)
+  LabHost:
+    aliases:
+    - labhost
+    motivation: unknown
+    origin: ''
+  Lamashtu:
+    aliases:
+    - lamashtu
+    motivation: unknown
+    origin: ''
+  Lancefly:
+    aliases:
+    - lancefly
+    motivation: unknown
+    origin: ''
+  Lapsus$:
+    aliases:
+    - dev-0537
+    - g1004
+    - lapsus
+    - lapsus$
+    - slippy spider
+    - strawberry tempest
+    - unc3661
+    motivation: financial
+    origin: unknown
+  Larva-208:
+    aliases:
+    - encrypthub
+    - larva-208
+    motivation: unknown
+    origin: ''
+  Larva-24005:
+    aliases:
+    - larva-24005
+    motivation: unknown
+    origin: North Korea
+  Larva-24009:
+    aliases:
+    - larva-24009
+    motivation: unknown
+    origin: ''
+  Larva-24010:
+    aliases:
+    - larva-24010
+    motivation: unknown
+    origin: ''
+  Larva-26002:
+    aliases:
+    - larva-26002
+    motivation: unknown
+    origin: ''
+  Larva-26005:
+    aliases:
+    - larva-26005
+    motivation: unknown
+    origin: ''
+  Larva-26009:
+    aliases:
+    - larva-26009
+    motivation: unknown
+    origin: ''
+  Larva-26010:
+    aliases:
+    - larva-26010
+    motivation: unknown
+    origin: ''
+  Larva‑25012:
+    aliases:
+    - larva‑25012
+    motivation: unknown
+    origin: ''
+  Lazarus Group:
+    aliases:
+    - appleworm
+    - apt 38
+    - apt-c-26
+    - apt38
+    - atk117
+    - atk3
+    - beagleboyz
+    - black artemis
+    - bureau 121
+    - citrine sleet
+    - covellite
+    - dev-0139
+    - dev-1222
+    - diamond sleet
+    - g0032
+    - g0082
+    - group 77
+    - hastati group
+    - hermit neptune
+    - hidden cobra
+    - labyrinth chollima
+    - lazarus
+    - lazarus group
+    - moonstone sleet
+    - newromanic cyber army team
+    - nickel academy
+    - nickel gladstone
+    - operation applejeus
+    - operation darkseoul
+    - operation ghostsecret
+    - stardust chollima
+    - 'subgroup: bluenoroff'
+    - ta404
+    - temp.hermit
+    - unit 121
+    - whois hacking team
+    - zinc
+    motivation: financial
+    origin: North Korea
+  Libyan Scorpions:
+    aliases:
+    - libyan scorpions
+    motivation: unknown
+    origin: LY
+  Lifting Zmiy:
+    aliases:
+    - lifting zmiy
+    motivation: unknown
+    origin: ''
+  LightBasin:
+    aliases:
+    - cl-cri-0025
+    - lightbasin
+    - unc1945
+    motivation: unknown
+    origin: ''
+  Lilac Typhoon:
+    aliases:
+    - dev-0234
+    - lilac typhoon
+    motivation: unknown
+    origin: China
+  LilacSquid:
+    aliases:
+    - lilacsquid
+    motivation: unknown
+    origin: ''
+  LinkC Pub:
+    aliases:
+    - linkc
+    - linkc pub
+    motivation: unknown
+    origin: ''
+  LofyGang:
+    aliases:
+    - lofygang
+    motivation: unknown
+    origin: ''
+  LongNosedGoblin:
+    aliases:
+    - longnosedgoblin
+    motivation: unknown
+    origin: China
+  Longhorn:
+    aliases:
+    - apt-c-39
+    - lamberts
+    - longhorn
+    - platinum terminal
+    - the lamberts
+    motivation: espionage
+    origin: United States
+  Lucky Cat:
+    aliases:
+    - lucky cat
+    - ta413
+    - white dev 9
+    motivation: unknown
+    origin: ''
+  LulzIntel:
+    aliases:
+    - lulzintel
+    motivation: unknown
+    origin: ''
+  LulzSec Black:
+    aliases:
+    - lulzsec black
+    motivation: unknown
+    origin: ''
+  Luna Moth:
+    aliases:
+    - luna moth
+    - silent ransom
+    - silentransomgroup
+    - tg2729
+    motivation: unknown
+    origin: ''
+  MAGNETIC SPIDER:
+    aliases:
+    - magnetic spider
+    motivation: unknown
+    origin: Russia
+  MALLARD SPIDER:
+    aliases:
+    - gold lagoon
+    - mallard spider
+    motivation: unknown
+    origin: ''
+  MIMIC SPIDER:
+    aliases:
+    - mimic spider
+    motivation: unknown
+    origin: ''
+  MORH4x:
+    aliases:
+    - morh4x
+    motivation: unknown
+    origin: MA
+  MUMMY SPIDER:
+    aliases:
+    - gold crestwood
+    - mummy spider
+    - ta542
+    motivation: unknown
+    origin: ''
+  MUSTANG PANDA:
+    aliases:
+    - basin
+    - basin castle
+    - bronze president
+    - earth preta
+    - hive0154
+    - honeymyte
+    - itg27
+    - luminousmoth
+    - mustang panda
+    - polaris
+    - red lich
+    - stately taurus
+    - ta416
+    - tantalum
+    - temp.hex
+    - twill typhoon
+    - unk_steadysplit
+    motivation: espionage
+    origin: China
+  Madi:
+    aliases:
+    - madi
+    motivation: espionage
+    origin: Iran (Islamic Republic of)
+  MageCart:
+    aliases:
+    - magecart
+    motivation: unknown
+    origin: ''
+  Magic Kitten:
+    aliases:
+    - group 42
+    - magic kitten
+    - voyeur
+    motivation: unknown
+    origin: Iran
+  MalKamak:
+    aliases:
+    - malkamak
+    motivation: unknown
+    origin: Iran
+  Malsmoke:
+    aliases:
+    - malsmoke
+    motivation: unknown
+    origin: ''
+  Malteiro:
+    aliases:
+    - malteiro
+    motivation: unknown
+    origin: ''
+  Mana Team:
+    aliases:
+    - mana team
+    motivation: unknown
+    origin: China
+  Markopolo:
+    aliases:
+    - markopolo
+    motivation: unknown
+    origin: ''
+  Massgrave:
+    aliases:
+    - massgrave
+    motivation: unknown
+    origin: ''
+  Metador:
+    aliases:
+    - metador
+    motivation: unknown
+    origin: ''
+  Mirage Tiger:
+    aliases:
+    - mirage tiger
+    motivation: unknown
+    origin: ''
+  MirrorFace:
+    aliases:
+    - earth kasha
+    - mirrorface
+    motivation: unknown
+    origin: China
+  Mocha Manakin:
+    aliases:
+    - mocha manakin
+    motivation: unknown
+    origin: ''
+  ModernStealer:
+    aliases:
+    - modernstealer
+    motivation: unknown
+    origin: ''
+  ModifiedElephant:
+    aliases:
+    - modifiedelephant
+    motivation: unknown
+    origin: ''
+  Mofang:
+    aliases:
+    - bronze walker
+    - mofang
+    - superman
+    motivation: espionage
+    origin: China
+  Mogilevich:
+    aliases:
+    - mogilevich
+    motivation: unknown
+    origin: ''
+  Molatori:
+    aliases:
+    - molatori
+    motivation: unknown
+    origin: ''
+  Molerats:
+    aliases:
+    - aluminum saratoga
+    - blackstem
+    - extreme jackal
+    - g0021
+    - gaza cybergang
+    - gaza hackers team
+    - molerats
+    - moonlight
+    - operation molerats
+    motivation: espionage
+    origin: Palestine
+  MoneyTaker:
+    aliases:
+    - moneytaker
+    motivation: unknown
+    origin: ''
+  Mora_001:
+    aliases:
+    - mora_001
+    motivation: unknown
+    origin: Russia
+  Moses Staff:
+    aliases:
+    - cobalt sapling
+    - dev-0500
+    - g1009
+    - marigold sandstorm
+    - moses staff
+    - mosesstaff
+    - vengeful kitten
+    motivation: destruction
+    origin: Iran
+  Moshen Dragon:
+    aliases:
+    - moshen dragon
+    motivation: unknown
+    origin: China
+  Moskalvzapoe:
+    aliases:
+    - man1
+    - moskalvzapoe
+    - ta511
+    motivation: unknown
+    origin: ''
+  MoustachedBouncer:
+    aliases:
+    - moustachedbouncer
+    motivation: espionage
+    origin: Belarus
+  Mr_Rot13:
+    aliases:
+    - mr_rot13
+    motivation: unknown
+    origin: ''
+  MuddyWater:
+    aliases:
+    - atk51
+    - boggy serpens
+    - cobalt ulster
+    - earth vetala
+    - g0069
+    - mango sandstorm
+    - mercury
+    - muddy ion
+    - muddycoast
+    - muddywater
+    - seedworm
+    - static kitten
+    - ta450
+    - temp.zagros
+    motivation: espionage
+    origin: Iran
+  MurenShark:
+    aliases:
+    - actor210426
+    - murenshark
+    motivation: unknown
+    origin: ''
+  Mustard Tempest:
+    aliases:
+    - dev-0206
+    - mustard tempest
+    - purple vallhund
+    motivation: unknown
+    origin: ''
+  Mysterious Elephant:
+    aliases:
+    - mysterious elephant
+    motivation: unknown
+    origin: ''
+  Mythic Likho:
+    aliases:
+    - arcane werewolf
+    - mythic likho
+    motivation: unknown
+    origin: ''
+  N4ughtysecTU:
+    aliases:
+    - n4ughtysectu
+    motivation: unknown
+    origin: BR
+  NARWHAL SPIDER:
+    aliases:
+    - gold essex
+    - narwhal spider
+    - storm-0302
+    - ta544
+    motivation: unknown
+    origin: ''
+  NB65:
+    aliases:
+    - nb65
+    - network battalion 65
+    motivation: unknown
+    origin: ''
+  NEODYMIUM:
+    aliases:
+    - g0055
+    - neodymium
+    motivation: unknown
+    origin: ''
+  NOCTURNAL SPIDER:
+    aliases:
+    - nocturnal spider
+    motivation: unknown
+    origin: ''
+  NOMAD PANDA:
+    aliases:
+    - nomad panda
+    motivation: unknown
+    origin: ''
+  NOTROBIN:
+    aliases:
+    - notrobin
+    motivation: unknown
+    origin: ''
+  Naikon:
+    aliases:
+    - apt30
+    - bronze geneva
+    - bronze sterling
+    - camerashy
+    - g0013
+    - g0019
+    - isthmus castle
+    - naikon
+    - naikon castle
+    - override panda
+    - pla unit 78020
+    motivation: espionage
+    origin: China
+  Nam3L3ss:
+    aliases:
+    - nam3l3ss
+    motivation: unknown
+    origin: ''
+  Narketing163:
+    aliases:
+    - narketing163
+    motivation: unknown
+    origin: ''
+  Natohub:
+    aliases:
+    - natohub
+    motivation: unknown
+    origin: ''
+  Nazar:
+    aliases:
+    - nazar
+    - sig37
+    motivation: unknown
+    origin: ''
+  NetRunnerPR:
+    aliases:
+    - netrunnerpr
+    motivation: unknown
+    origin: ''
+  NewsPenguin:
+    aliases:
+    - newspenguin
+    motivation: unknown
+    origin: ''
+  Nexus Zeta:
+    aliases:
+    - nexus zeta
+    motivation: unknown
+    origin: ''
+  Nickel Alley:
+    aliases:
+    - nickel alley
+    motivation: unknown
+    origin: North Korea
+  Night Dragon:
+    aliases:
+    - g0014
+    - night dragon
+    motivation: unknown
+    origin: China
+  NightEagle:
+    aliases:
+    - apt-q-95
+    - nighteagle
+    motivation: espionage
+    origin: US
+  Nitro:
+    aliases:
+    - covert grove
+    - nitro
+    motivation: unknown
+    origin: China
+  NoName057(16):
+    aliases:
+    - 05716nnm
+    - nnm05716
+    - noname057
+    - noname057(16)
+    - noname05716
+    motivation: hacktivism
+    origin: ''
+  Nullbulge:
+    aliases:
+    - nullbulge
+    motivation: unknown
+    origin: ''
+  NyxarGroup:
+    aliases:
+    - nyxargroup
+    motivation: unknown
+    origin: ''
+  OUTLAW SPIDER:
+    aliases:
+    - outlaw spider
+    motivation: unknown
+    origin: ''
+  OVERLORD SPIDER:
+    aliases:
+    - overlord spider
+    motivation: unknown
+    origin: ''
+  OilAlpha:
+    aliases:
+    - oilalpha
+    motivation: unknown
+    origin: ''
+  OldGremlin:
+    aliases:
+    - oldgremlin
+    motivation: unknown
+    origin: Russia
+  OnionDog:
+    aliases:
+    - oniondog
+    motivation: espionage
+    origin: Unknown
+  Opal Sleet:
+    aliases:
+    - konni
+    - opal sleet
+    - osmium
+    - vedalia
+    motivation: unknown
+    origin: North Korea
+  Operation BugDrop:
+    aliases:
+    - operation bugdrop
+    motivation: espionage
+    origin: Russian Federation
+  Operation C-Major:
+    aliases:
+    - apt 36
+    - apt36
+    - c-major
+    - copper fieldstone
+    - earth karkaddan
+    - green havildar
+    - mythic leopard
+    - operation c-major
+    - projectm
+    - storm-0156
+    - tmp.lapis
+    - transparent tribe
+    motivation: unknown
+    origin: Pakistan
+  Operation Cobalt Whisper:
+    aliases:
+    - operation cobalt whisper
+    motivation: unknown
+    origin: ''
+  Operation Comando:
+    aliases:
+    - operation comando
+    motivation: unknown
+    origin: ''
+  Operation DRBControl:
+    aliases:
+    - operation drbcontrol
+    motivation: unknown
+    origin: China
+  Operation Emmental:
+    aliases:
+    - operation emmental
+    - retefe gang
+    - retefe group
+    motivation: unknown
+    origin: Russia
+  Operation ForumTroll:
+    aliases:
+    - operation forumtroll
+    motivation: unknown
+    origin: ''
+  Operation Ghoul:
+    aliases:
+    - operation ghoul
+    motivation: unknown
+    origin: ''
+  Operation Kabar Cobra:
+    aliases:
+    - operation kabar cobra
+    motivation: unknown
+    origin: ''
+  Operation Parliament:
+    aliases:
+    - operation parliament
+    motivation: espionage
+    origin: Unknown
+  Operation Poison Needles:
+    aliases:
+    - operation poison needles
+    motivation: unknown
+    origin: ''
+  Operation Red Signature:
+    aliases:
+    - operation red signature
+    motivation: unknown
+    origin: China
+  Operation Shadow Force:
+    aliases:
+    - larva-24013
+    - operation shadow force
+    - ta-shadowcricket
+    motivation: unknown
+    origin: China
+  Operation ShadowHammer:
+    aliases:
+    - operation shadowhammer
+    motivation: unknown
+    origin: ''
+  Operation Sharpshooter:
+    aliases:
+    - operation sharpshooter
+    motivation: unknown
+    origin: ''
+  Operation Soft Cell:
+    aliases:
+    - operation soft cell
+    motivation: unknown
+    origin: ''
+  Operation Triangulation:
+    aliases:
+    - operation triangulation
+    motivation: unknown
+    origin: ''
+  Operation WizardOpium:
+    aliases:
+    - operation wizardopium
+    motivation: unknown
+    origin: ''
+  Operation Wocao:
+    aliases:
+    - operation wocao
+    motivation: unknown
+    origin: ''
+  Orangeworm:
+    aliases:
+    - orangeworm
+    motivation: unknown
+    origin: ''
+  Orova:
+    aliases:
+    - orova
+    motivation: unknown
+    origin: ''
+  OurMine:
+    aliases:
+    - ourmine
+    motivation: unknown
+    origin: ''
+  OverFlame:
+    aliases:
+    - overflame
+    motivation: unknown
+    origin: ''
+  PALE PANDA:
+    aliases:
+    - pale panda
+    motivation: unknown
+    origin: China
+  PARINACOTA:
+    aliases:
+    - parinacota
+    - wine tempest
+    motivation: unknown
+    origin: ''
+  PINCHY SPIDER:
+    aliases:
+    - pinchy spider
+    motivation: unknown
+    origin: ''
+  PIZZO SPIDER:
+    aliases:
+    - ambiorx
+    - dd4bc
+    - pizzo spider
+    motivation: unknown
+    origin: United States
+  PLATINUM:
+    aliases:
+    - atk33
+    - g0068
+    - platinum
+    - twoforone
+    motivation: unknown
+    origin: ''
+  POISON CARP:
+    aliases:
+    - earth empusa
+    - evil eye
+    - poison carp
+    - red dev 16
+    motivation: unknown
+    origin: ''
+  POISONUS PANDA:
+    aliases:
+    - poisonus panda
+    motivation: unknown
+    origin: China
+  POLONIUM:
+    aliases:
+    - greatrift
+    - incendiary jackal
+    - plaid rain
+    - polonium
+    - unc4453
+    motivation: espionage
+    origin: Lebanon
+  PREDATOR PANDA:
+    aliases:
+    - predator panda
+    motivation: unknown
+    origin: China
+  PROMETHIUM:
+    aliases:
+    - apt-c-41
+    - g0056
+    - promethium
+    - strongpity
+    motivation: unknown
+    origin: Turkey
+  Pacha Group:
+    aliases:
+    - pacha group
+    motivation: unknown
+    origin: ''
+  Packrat:
+    aliases:
+    - packrat
+    motivation: unknown
+    origin: ''
+  PassCV:
+    aliases:
+    - passcv
+    motivation: unknown
+    origin: China
+  Patched Lightning:
+    aliases:
+    - patched lightning
+    - storm-0113
+    motivation: unknown
+    origin: ''
+  PayTool:
+    aliases:
+    - paytool
+    motivation: unknown
+    origin: ''
+  Pearl Sleet:
+    aliases:
+    - dev-0215
+    - lawrencium
+    - pearl sleet
+    motivation: unknown
+    origin: North Korea
+  People's Cyber Army of Russia:
+    aliases:
+    - people's cyber army of russia
+    motivation: unknown
+    origin: ''
+  PerSwaysion:
+    aliases:
+    - perswaysion
+    motivation: unknown
+    origin: Vietnam
+  PhantomControl:
+    aliases:
+    - phantomcontrol
+    motivation: unknown
+    origin: ''
+  Phlox Tempest:
+    aliases:
+    - dev-0796
+    - phlox tempest
+    motivation: unknown
+    origin: ''
+  Pickaxe:
+    aliases:
+    - pickaxe
+    - prying libra
+    motivation: unknown
+    origin: ''
+  PlushDaemon:
+    aliases:
+    - plushdaemon
+    motivation: unknown
+    origin: China
+  PoisonSeed:
+    aliases:
+    - poisonseed
+    motivation: unknown
+    origin: ''
+  Poseidon Group:
+    aliases:
+    - g0033
+    - poseidon group
+    motivation: unknown
+    origin: BR
+  PowerPool:
+    aliases:
+    - iamtheking
+    - powerpool
+    motivation: unknown
+    origin: ''
+  Predatory Sparrow:
+    aliases:
+    - gonjeshke darande
+    - indra
+    - predatory sparrow
+    motivation: destruction
+    origin: unknown
+  ProCC:
+    aliases:
+    - procc
+    motivation: unknown
+    origin: ''
+  ProjectSauron:
+    aliases:
+    - g0041
+    - project sauron
+    - projectsauron
+    - sauron
+    - strider
+    motivation: espionage
+    origin: United States
+  Prolific Puma:
+    aliases:
+    - prolific puma
+    motivation: unknown
+    origin: ''
+  Prophet Spider:
+    aliases:
+    - gold melody
+    - prophet spider
+    - unc961
+    motivation: unknown
+    origin: ''
+  PurpleHaze:
+    aliases:
+    - purplehaze
+    motivation: unknown
+    origin: China
+  QTFY:
+    aliases:
+    - qtfy
+    motivation: unknown
+    origin: China
+  QUILTED TIGER:
+    aliases:
+    - apt-c-09
+    - atk11
+    - chinastrats
+    - dropping elephant
+    - g0040
+    - monsoon
+    - orange athos
+    - patchwork
+    - quilted tiger
+    - sarit
+    - thirsty gemini
+    - zinc emerson
+    motivation: espionage
+    origin: India
+  R00tK1T:
+    aliases:
+    - r00tk1t
+    motivation: unknown
+    origin: Israel
+  RANCOR:
+    aliases:
+    - g0075
+    - rancor
+    - rancor group
+    - rancor taurus
+    motivation: espionage
+    origin: China
+  RATPAK SPIDER:
+    aliases:
+    - ratpak spider
+    motivation: unknown
+    origin: ''
+  RAZOR TIGER:
+    aliases:
+    - apt-c-17
+    - rattlesnake
+    - razor tiger
+    - sidewinder
+    - t-apt-04
+    motivation: unknown
+    origin: India
+  REF2924:
+    aliases:
+    - ref2924
+    motivation: unknown
+    origin: China
+  REF5961:
+    aliases:
+    - ref5961
+    motivation: unknown
+    origin: ''
+  REF7707:
+    aliases:
+    - cl-sta-0049
+    - jewelbug
+    - ref7707
+    motivation: unknown
+    origin: China
+  RGB-TEAM:
+    aliases:
+    - rgb-team
+    motivation: unknown
+    origin: ''
+  RIDDLE SPIDER:
+    aliases:
+    - riddle spider
+    motivation: unknown
+    origin: ''
+  RTM:
+    aliases:
+    - g0048
+    - rtm
+    motivation: unknown
+    origin: ''
+  RUBYCARP:
+    aliases:
+    - rubycarp
+    motivation: unknown
+    origin: RO
+  RaHDit:
+    aliases:
+    - rahdit
+    - russian angry hackers did it
+    motivation: unknown
+    origin: Russia
+  RansomHouse:
+    aliases:
+    - ransomhouse
+    motivation: unknown
+    origin: ''
+  RansomHub:
+    aliases:
+    - ransomhub
+    motivation: unknown
+    origin: ''
+  RansomVC:
+    aliases:
+    - ransomed.vc
+    - ransomvc
+    motivation: unknown
+    origin: ''
+  Raspberry Typhoon:
+    aliases:
+    - radium
+    - raspberry typhoon
+    motivation: unknown
+    origin: China
+  Rebel Jackal:
+    aliases:
+    - fallagateam
+    - rebel jackal
+    motivation: unknown
+    origin: TN
+  Reckless Rabbit:
+    aliases:
+    - reckless rabbit
+    motivation: unknown
+    origin: ''
+  Red Charon:
+    aliases:
+    - red charon
+    motivation: unknown
+    origin: ''
+  Red Dev 17:
+    aliases:
+    - red dev 17
+    motivation: unknown
+    origin: China
+  Red Menshen:
+    aliases:
+    - earth bluecrow
+    - red dev 18
+    - red menshen
+    motivation: unknown
+    origin: China
+  Red Nue:
+    aliases:
+    - luoyu
+    - red nue
+    motivation: unknown
+    origin: China
+  Red-Lili:
+    aliases:
+    - red-lili
+    motivation: unknown
+    origin: ''
+  RedAlpha:
+    aliases:
+    - deepcliff
+    - red dev 3
+    - redalpha
+    motivation: unknown
+    origin: ''
+  RedDelta:
+    aliases:
+    - reddelta
+    motivation: unknown
+    origin: ''
+  RedEcho:
+    aliases:
+    - redecho
+    motivation: unknown
+    origin: ''
+  RedGolf:
+    aliases:
+    - redgolf
+    motivation: unknown
+    origin: China
+  RedJuliett:
+    aliases:
+    - redjuliett
+    motivation: unknown
+    origin: China
+  RedKitten:
+    aliases:
+    - redkitten
+    motivation: unknown
+    origin: ''
+  RedStinger:
+    aliases:
+    - bad magic
+    - redstinger
+    motivation: unknown
+    origin: ''
+  Redfly:
+    aliases:
+    - redfly
+    motivation: unknown
+    origin: ''
+  ResumeLooters:
+    aliases:
+    - resumelooters
+    motivation: unknown
+    origin: ''
+  Returned Libra:
+    aliases:
+    - 8220 mining group
+    - returned libra
+    motivation: unknown
+    origin: ''
+  RevengeHotels:
+    aliases:
+    - revengehotels
+    motivation: unknown
+    origin: ''
+  RipperSec:
+    aliases:
+    - rippersec
+    motivation: unknown
+    origin: MY
+  Roaming Mantis:
+    aliases:
+    - roaming mantis
+    - roaming mantis group
+    motivation: unknown
+    origin: ''
+  Roaming Tiger:
+    aliases:
+    - bronze woodland
+    - roaming tiger
+    - rotten tomato
+    motivation: unknown
+    origin: ''
+  Rocke:
+    aliases:
+    - aged libra
+    - rocke
+    motivation: unknown
+    origin: ''
+  Rocket Kitten:
+    aliases:
+    - operation woolen goldfish
+    - operation woolen-goldfish
+    - rocket kitten
+    - temp.beanie
+    - thamar reservoir
+    - timberworm
+    motivation: espionage
+    origin: Iran (Islamic Republic of)
+  RomCom:
+    aliases:
+    - romcom
+    - storm-0978
+    - uat-5647
+    motivation: unknown
+    origin: Russia
+  Ruby Sleet:
+    aliases:
+    - cerium
+    - ruby sleet
+    motivation: unknown
+    origin: North Korea
+  RuskiNet:
+    aliases:
+    - ruskinet
+    motivation: unknown
+    origin: Russia
+  Ruthless Rabbit:
+    aliases:
+    - ruthless rabbit
+    motivation: unknown
+    origin: Russia
+  SABRE PANDA:
+    aliases:
+    - sabre panda
+    motivation: unknown
+    origin: China
+  SALTY SPIDER:
+    aliases:
+    - salty spider
+    motivation: unknown
+    origin: ''
+  SAMBASPIDER:
+    aliases:
+    - sambaspider
+    motivation: unknown
+    origin: ''
+  SCARLETEEL:
+    aliases:
+    - scarleteel
+    motivation: unknown
+    origin: ''
+  SCULLY SPIDER:
+    aliases:
+    - scully spider
+    motivation: unknown
+    origin: ''
+  SEXi:
+    aliases:
+    - sexi
+    motivation: unknown
+    origin: ''
+  SHADOW-AETHER-015:
+    aliases:
+    - shadow-aether-015
+    motivation: unknown
+    origin: ''
+  SHADOW-VOID-042:
+    aliases:
+    - shadow-void-042
+    motivation: unknown
+    origin: ''
+  SHADOW-WATER-063:
+    aliases:
+    - shadow-water-063
+    motivation: unknown
+    origin: BR
+  SHARK SPIDER:
+    aliases:
+    - shark spider
+    motivation: unknown
+    origin: Russia
+  SILKFIN AGENCY:
+    aliases:
+    - silkfin agency
+    motivation: unknown
+    origin: ''
+  SINGING SPIDER:
+    aliases:
+    - singing spider
+    motivation: unknown
+    origin: ''
+  SLIME29:
+    aliases:
+    - slime29
+    motivation: unknown
+    origin: China
+  SLIME88:
+    aliases:
+    - slime88
+    motivation: unknown
+    origin: China
+  SMOKY SPIDER:
+    aliases:
+    - smoky spider
+    motivation: unknown
+    origin: ''
+  SNOWGLOBE:
+    aliases:
+    - animal farm
+    - atk8
+    - snowglobe
+    motivation: espionage
+    origin: France
+  SOLAR SPIDER:
+    aliases:
+    - solar spider
+    motivation: unknown
+    origin: ''
+  SPICY PANDA:
+    aliases:
+    - spicy panda
+    motivation: unknown
+    origin: China
+  SPIKEDWINE:
+    aliases:
+    - spikedwine
+    motivation: unknown
+    origin: ''
+  STAC5143:
+    aliases:
+    - stac5143
+    motivation: unknown
+    origin: ''
+  SWEED:
+    aliases:
+    - sweed
+    motivation: unknown
+    origin: ''
+  SYLHET GANG-SG:
+    aliases:
+    - sylhet gang-sg
+    motivation: unknown
+    origin: ''
+  Saad Tycoon:
+    aliases:
+    - saad tycoon
+    motivation: unknown
+    origin: ''
+  SaintBear:
+    aliases:
+    - bleeding bear
+    - cadet blizzard
+    - dev-0586
+    - dev-0587
+    - ember bear
+    - frozenvista
+    - lorec bear
+    - lorec53
+    - nascent ursa
+    - nodaria
+    - ruinous ursa
+    - saint bear
+    - saintbear
+    - storm-0587
+    - ta471
+    - uac-0056
+    - unc2589
+    motivation: destruction
+    origin: Russia
+  Salt Typhoon:
+    aliases:
+    - earth estries
+    - famoussparrow
+    - famsec
+    - g1045
+    - ghostemperor
+    - operator panda
+    - redmike
+    - salt typhoon
+    - unc2286
+    motivation: espionage
+    origin: China
+  SandCat:
+    aliases:
+    - sandcat
+    motivation: unknown
+    origin: ''
+  Sandman APT:
+    aliases:
+    - sandman apt
+    motivation: espionage
+    origin: China
+  Sands Casino:
+    aliases:
+    - sands casino
+    motivation: unknown
+    origin: Iran
+  Sandworm:
+    aliases:
+    - apt44
+    - blackenergy
+    - blue echidna
+    - electrum
+    - frozenbarents
+    - g0034
+    - industroyer
+    - iridium
+    - iron viking
+    - notpetya group
+    - quedagh
+    - sandworm
+    - sandworm relic
+    - sandworm team
+    - seashell blizzard
+    - telebots
+    - temp.noble
+    - uac-0082
+    - uac-0113
+    - uac-0145
+    - voodoo bear
+    motivation: destruction
+    origin: Russia
+  Sath-ı Müdafaa:
+    aliases:
+    - sath-ı müdafaa
+    motivation: hacktivism
+    origin: Turkey
+  ScamClub:
+    aliases:
+    - scamclub
+    motivation: unknown
+    origin: ''
+  Scarab:
+    aliases:
+    - scarab
+    motivation: espionage
+    origin: China
+  Scarlet Mimic:
+    aliases:
+    - g0029
+    - golfing taurus
+    - scarlet mimic
+    motivation: unknown
+    origin: China
+  Scarred Manticore:
+    aliases:
+    - scarred manticore
+    motivation: unknown
+    origin: Iran
+  Scattered Canary:
+    aliases:
+    - scattered canary
+    motivation: unknown
+    origin: NG
+  Scattered Lapsus Hunters:
+    aliases:
+    - scattered lapsus hunters
+    - scattered lapsus$ hunters
+    motivation: unknown
+    origin: ''
+  Scattered Spider:
+    aliases:
+    - 0ktapus
+    - dev-0671
+    - dev-0971
+    - g1015
+    - muddled libra
+    - octo tempest
+    - oktapus
+    - roasted 0ktapus
+    - scattered spider
+    - scattered swine
+    - starfraud
+    - storm-0971
+    - unc3944
+    motivation: financial
+    origin: unknown
+  ScreamedJungle:
+    aliases:
+    - screamedjungle
+    motivation: unknown
+    origin: ''
+  Scripted Sparrow:
+    aliases:
+    - scripted sparrow
+    motivation: unknown
+    origin: ''
+  Sea Turtle:
+    aliases:
+    - cosmic wolf
+    - marbled dust
+    - sea turtle
+    - silicon
+    - teal kurma
+    - unc1326
+    motivation: unknown
+    origin: Turkey
+  Shadow Network:
+    aliases:
+    - shadow network
+    motivation: unknown
+    origin: ''
+  Shadow-Earth-053:
+    aliases:
+    - shadow-earth-053
+    motivation: unknown
+    origin: China
+  ShadowByt3$:
+    aliases:
+    - shadowbyt3$
+    motivation: unknown
+    origin: ''
+  ShadowSyndicate:
+    aliases:
+    - shadowsyndicate
+    motivation: unknown
+    origin: ''
+  ShadyPanda:
+    aliases:
+    - shadypanda
+    motivation: unknown
+    origin: ''
+  ShaggyPanther:
+    aliases:
+    - shaggypanther
+    motivation: unknown
+    origin: China
+  Shahid Hemmat:
+    aliases:
+    - shahid hemmat
+    motivation: unknown
+    origin: Iran
+  Shamoon Group:
+    aliases:
+    - cutting sword of justice
+    - shamoon group
+    motivation: unknown
+    origin: Iran
+  SharpPanda:
+    aliases:
+    - sharp dragon
+    - sharppanda
+    motivation: unknown
+    origin: China
+  ShinyHunters:
+    aliases:
+    - shinyhunters
+    motivation: unknown
+    origin: ''
+  ShroudedSnooper:
+    aliases:
+    - shroudedsnooper
+    motivation: unknown
+    origin: ''
+  SideCopy:
+    aliases:
+    - sidecopy
+    motivation: unknown
+    origin: Pakistan
+  SiegedSec:
+    aliases:
+    - siegedsec
+    motivation: unknown
+    origin: ''
+  Siesta:
+    aliases:
+    - siesta
+    motivation: unknown
+    origin: ''
+  Silence group:
+    aliases:
+    - silence
+    - silence group
+    - whisper spider
+    motivation: unknown
+    origin: ''
+  Silent Librarian:
+    aliases:
+    - cobalt dickens
+    - mabna institute
+    - mabna institute group
+    - silent librarian
+    - ta407
+    - ta4900
+    - yellow nabu
+    motivation: unknown
+    origin: Iran
+  SilitNetwork:
+    aliases:
+    - silitnetwork
+    motivation: unknown
+    origin: ''
+  SilkParasite:
+    aliases:
+    - silkparasite
+    motivation: unknown
+    origin: China
+  SilkSpecter:
+    aliases:
+    - silkspecter
+    motivation: unknown
+    origin: China
+  SilverFish:
+    aliases:
+    - silverfish
+    motivation: unknown
+    origin: ''
+  SilverTerrier:
+    aliases:
+    - silverterrier
+    motivation: unknown
+    origin: NG
+  Sima:
+    aliases:
+    - sima
+    motivation: unknown
+    origin: Iran
+  SingularityMD:
+    aliases:
+    - singularitymd
+    motivation: unknown
+    origin: ''
+  Sinobi:
+    aliases:
+    - sinobi
+    motivation: unknown
+    origin: ''
+  SkidSec:
+    aliases:
+    - skidsec
+    - skidsec leaks
+    motivation: unknown
+    origin: ''
+  Slingshot:
+    aliases:
+    - slingshot
+    motivation: unknown
+    origin: ''
+  SlopAds:
+    aliases:
+    - slopads
+    motivation: unknown
+    origin: ''
+  SloppyLemming:
+    aliases:
+    - sloppylemming
+    motivation: unknown
+    origin: ''
+  Smishing Triad:
+    aliases:
+    - smishing triad
+    motivation: unknown
+    origin: China
+  SmugX:
+    aliases:
+    - smugx
+    motivation: unknown
+    origin: ''
+  Snake Wine:
+    aliases:
+    - snake wine
+    motivation: unknown
+    origin: ''
+  SneakyChef:
+    aliases:
+    - sneakychef
+    motivation: unknown
+    origin: China
+  SnowSoul:
+    aliases:
+    - snowsoul
+    motivation: unknown
+    origin: ''
+  Solntsepek:
+    aliases:
+    - solntsepek
+    motivation: unknown
+    origin: Russia
+  SongXY:
+    aliases:
+    - songxy
+    motivation: unknown
+    origin: ''
+  Sowbug:
+    aliases:
+    - g0054
+    - sowbug
+    motivation: espionage
+    origin: Unknown
+  Sp1d3r:
+    aliases:
+    - sp1d3r
+    motivation: unknown
+    origin: ''
+  SpaceBears:
+    aliases:
+    - spacebears
+    motivation: unknown
+    origin: Russia
+  SparklingGoblin:
+    aliases:
+    - sparklinggoblin
+    motivation: unknown
+    origin: ''
+  Stargazer Goblin:
+    aliases:
+    - stargazer goblin
+    motivation: unknown
+    origin: ''
+  Starry Addax:
+    aliases:
+    - starry addax
+    motivation: unknown
+    origin: ''
+  Stealth Falcon:
+    aliases:
+    - fruityarmor
+    - g0038
+    - stealth falcon
+    motivation: espionage
+    origin: United Arab Emirates
+  Stealth Mango and Tangelo:
+    aliases:
+    - stealth mango and tangelo
+    motivation: espionage
+    origin: Pakistan
+  Storm Cloud:
+    aliases:
+    - storm cloud
+    motivation: unknown
+    origin: China
+  Storm-0062:
+    aliases:
+    - darkshadow
+    - oro0lxy
+    - storm-0062
+    motivation: unknown
+    origin: China
+  Storm-0249:
+    aliases:
+    - dev-0249
+    - storm-0249
+    motivation: unknown
+    origin: ''
+  Storm-0252:
+    aliases:
+    - chatty spider
+    - storm-0252
+    motivation: unknown
+    origin: ''
+  Storm-0324:
+    aliases:
+    - dev-0324
+    - sagrid
+    - storm-0324
+    - ta543
+    motivation: unknown
+    origin: ''
+  Storm-0381:
+    aliases:
+    - dev-0381
+    - storm-0381
+    motivation: unknown
+    origin: Russia
+  Storm-0473:
+    aliases:
+    - storm-0473
+    - unc2849
+    motivation: unknown
+    origin: KZ
+  Storm-0494:
+    aliases:
+    - storm-0494
+    motivation: unknown
+    origin: ''
+  Storm-0501:
+    aliases:
+    - storm-0501
+    motivation: unknown
+    origin: ''
+  Storm-0506:
+    aliases:
+    - storm-0506
+    motivation: unknown
+    origin: ''
+  Storm-0530:
+    aliases:
+    - dev-0530
+    - h0lygh0st
+    - storm-0530
+    motivation: unknown
+    origin: North Korea
+  Storm-0539:
+    aliases:
+    - storm-0539
+    motivation: unknown
+    origin: ''
+  Storm-0558:
+    aliases:
+    - storm-0558
+    motivation: espionage
+    origin: China
+  Storm-0826:
+    aliases:
+    - storm-0826
+    motivation: unknown
+    origin: ''
+  Storm-0829:
+    aliases:
+    - dev-0829
+    - nwgen team
+    - storm-0829
+    motivation: unknown
+    origin: ''
+  Storm-0835:
+    aliases:
+    - storm-0835
+    motivation: unknown
+    origin: ''
+  Storm-0867:
+    aliases:
+    - dev-0867
+    - storm-0867
+    motivation: unknown
+    origin: EG
+  Storm-0940:
+    aliases:
+    - covertnetwork-1658
+    - orb07
+    - storm-0940
+    motivation: unknown
+    origin: China
+  Storm-1044:
+    aliases:
+    - dev-1044
+    - storm-1044
+    motivation: unknown
+    origin: ''
+  Storm-1084:
+    aliases:
+    - dev-1084
+    - storm-1084
+    motivation: unknown
+    origin: Iran
+  Storm-1099:
+    aliases:
+    - storm-1099
+    motivation: unknown
+    origin: Russia
+  Storm-1101:
+    aliases:
+    - dev-1101
+    - storm-1101
+    motivation: unknown
+    origin: ''
+  Storm-1113:
+    aliases:
+    - apothecary spider
+    - storm-1113
+    motivation: unknown
+    origin: ''
+  Storm-1133:
+    aliases:
+    - storm-1133
+    motivation: unknown
+    origin: Palestine
+  Storm-1152:
+    aliases:
+    - storm-1152
+    motivation: unknown
+    origin: Vietnam
+  Storm-1167:
+    aliases:
+    - dev-1167
+    - storm-1167
+    motivation: unknown
+    origin: ID
+  Storm-1175:
+    aliases:
+    - storm-1175
+    motivation: unknown
+    origin: China
+  Storm-1283:
+    aliases:
+    - storm-1283
+    motivation: unknown
+    origin: ''
+  Storm-1286:
+    aliases:
+    - storm-1286
+    motivation: unknown
+    origin: ''
+  Storm-1295:
+    aliases:
+    - dev-1295
+    - storm-1295
+    motivation: unknown
+    origin: ''
+  Storm-1516:
+    aliases:
+    - copycop
+    - storm-1516
+    motivation: unknown
+    origin: Russia
+  Storm-1567:
+    aliases:
+    - akira
+    - gold sahara
+    - punk spider
+    - storm-1567
+    motivation: unknown
+    origin: ''
+  Storm-1575:
+    aliases:
+    - storm-1575
+    motivation: unknown
+    origin: ''
+  Storm-1674:
+    aliases:
+    - storm-1674
+    motivation: unknown
+    origin: ''
+  Storm-1679:
+    aliases:
+    - storm-1679
+    motivation: unknown
+    origin: Russia
+  Storm-1747:
+    aliases:
+    - storm-1747
+    motivation: unknown
+    origin: ''
+  Storm-1849:
+    aliases:
+    - storm-1849
+    - uat4356
+    motivation: unknown
+    origin: ''
+  Storm-1977:
+    aliases:
+    - storm-1977
+    motivation: unknown
+    origin: ''
+  Storm-2077:
+    aliases:
+    - rednovember
+    - storm-2077
+    - tag-100
+    motivation: unknown
+    origin: China
+  Storm-2139:
+    aliases:
+    - storm-2139
+    motivation: unknown
+    origin: ''
+  Storm-2372:
+    aliases:
+    - storm-2372
+    motivation: unknown
+    origin: Russia
+  Storm-2460:
+    aliases:
+    - storm-2460
+    motivation: unknown
+    origin: ''
+  Storm-2561:
+    aliases:
+    - storm-2561
+    motivation: unknown
+    origin: ''
+  Storm-2603:
+    aliases:
+    - storm-2603
+    motivation: unknown
+    origin: China
+  Storm-2657:
+    aliases:
+    - storm-2657
+    motivation: unknown
+    origin: ''
+  Storm-2945:
+    aliases:
+    - storm-2945
+    motivation: unknown
+    origin: ''
+  Storm-2949:
+    aliases:
+    - storm-2949
+    motivation: unknown
+    origin: ''
+  StucxTeam:
+    aliases:
+    - stucxteam
+    motivation: unknown
+    origin: ''
+  Sunglow Blizzard:
+    aliases:
+    - dev-0665
+    - sunglow blizzard
+    motivation: unknown
+    origin: Russia
+  Swan Vector:
+    aliases:
+    - swan vector
+    motivation: unknown
+    origin: ''
+  TA2101:
+    aliases:
+    - dev-0216
+    - gold village
+    - maze team
+    - storm-0216
+    - ta2101
+    - tunnel spider
+    - twisted spider
+    - unc2198
+    motivation: unknown
+    origin: Russia
+  TA2536:
+    aliases:
+    - ta2536
+    motivation: unknown
+    origin: NG
+  TA2541:
+    aliases:
+    - ta2541
+    motivation: unknown
+    origin: ''
+  TA2552:
+    aliases:
+    - ta2552
+    motivation: unknown
+    origin: ''
+  TA2719:
+    aliases:
+    - ta2719
+    motivation: unknown
+    origin: ''
+  TA2722:
+    aliases:
+    - balikbayan foxes
+    - ta2722
+    motivation: unknown
+    origin: ''
+  TA2723:
+    aliases:
+    - ta2723
+    motivation: unknown
+    origin: ''
+  TA2725:
+    aliases:
+    - ta2725
+    motivation: unknown
+    origin: ''
+  TA402:
+    aliases:
+    - ta402
+    motivation: unknown
+    origin: Palestine
+  TA410:
+    aliases:
+    - ta410
+    motivation: unknown
+    origin: ''
+  TA444:
+    aliases:
+    - ta444
+    motivation: unknown
+    origin: North Korea
+  TA455:
+    aliases:
+    - ta455
+    motivation: unknown
+    origin: Iran
+  TA459:
+    aliases:
+    - g0062
+    - ta459
+    motivation: unknown
+    origin: China
+  TA482:
+    aliases:
+    - ta482
+    motivation: unknown
+    origin: Turkey
+  TA4903:
+    aliases:
+    - ta4903
+    motivation: unknown
+    origin: ''
+  TA4922:
+    aliases:
+    - ta4922
+    motivation: unknown
+    origin: China
+  TA499:
+    aliases:
+    - lexus
+    - ta499
+    - vovan
+    motivation: unknown
+    origin: ''
+  TA505:
+    aliases:
+    - atk103
+    - chimborazo
+    - cl0p group
+    - dudear
+    - g0092
+    - gold tahoe
+    - graceful spider
+    - hive0065
+    - monty spider
+    - sectorj04
+    - sectorj04 group
+    - spandex tempest
+    - ta505
+    motivation: financial
+    origin: unknown
+  TA516:
+    aliases:
+    - ta516
+    motivation: unknown
+    origin: ''
+  TA530:
+    aliases:
+    - ta530
+    motivation: unknown
+    origin: China
+  TA547:
+    aliases:
+    - ta547
+    motivation: unknown
+    origin: ''
+  TA554:
+    aliases:
+    - ta554
+    - th-163
+    motivation: unknown
+    origin: ''
+  TA555:
+    aliases:
+    - ta555
+    motivation: unknown
+    origin: ''
+  TA558:
+    aliases:
+    - ta558
+    motivation: unknown
+    origin: ''
+  TA570:
+    aliases:
+    - dev-0450
+    - ta570
+    motivation: unknown
+    origin: Russia
+  TA571:
+    aliases:
+    - ta571
+    motivation: unknown
+    origin: ''
+  TA575:
+    aliases:
+    - ta575
+    motivation: unknown
+    origin: ''
+  TA577:
+    aliases:
+    - hive0118
+    - ta577
+    motivation: unknown
+    origin: Russia
+  TA578:
+    aliases:
+    - ta578
+    motivation: unknown
+    origin: ''
+  TA579:
+    aliases:
+    - ta579
+    motivation: unknown
+    origin: ''
+  TA584:
+    aliases:
+    - storm-0900
+    - ta584
+    motivation: unknown
+    origin: ''
+  TA800:
+    aliases:
+    - ta800
+    motivation: unknown
+    origin: ''
+  TA829:
+    aliases:
+    - ta829
+    motivation: unknown
+    origin: Russia
+  TA866:
+    aliases:
+    - ta866
+    motivation: unknown
+    origin: ''
+  TAG-112:
+    aliases:
+    - tag-112
+    motivation: unknown
+    origin: China
+  TAG-124:
+    aliases:
+    - landupdate808
+    - tag-124
+    motivation: unknown
+    origin: ''
+  TAG-140:
+    aliases:
+    - tag-140
+    motivation: unknown
+    origin: Pakistan
+  TAG-28:
+    aliases:
+    - tag-28
+    motivation: unknown
+    origin: China
+  TAG-56:
+    aliases:
+    - tag-56
+    motivation: unknown
+    origin: Iran
+  TEMP.Veles:
+    aliases:
+    - atk91
+    - g0088
+    - temp.veles
+    - xenotime
+    motivation: unknown
+    origin: ''
+  TEMPER PANDA:
+    aliases:
+    - admin338
+    - admin@338
+    - g0018
+    - magnesium
+    - team338
+    - temper panda
+    motivation: espionage
+    origin: China
+  TEMP_Heretic:
+    aliases:
+    - temp_heretic
+    motivation: unknown
+    origin: China
+  TERBIUM:
+    aliases:
+    - terbium
+    motivation: unknown
+    origin: ''
+  TEST PANDA:
+    aliases:
+    - test panda
+    motivation: unknown
+    origin: China
+  TIDRONE:
+    aliases:
+    - earth ammit
+    - tidrone
+    - venom
+    motivation: unknown
+    origin: China
+  TINY SPIDER:
+    aliases:
+    - tiny spider
+    motivation: unknown
+    origin: ''
+  TOXCAR CYBER TEAM:
+    aliases:
+    - toxcar cyber team
+    motivation: unknown
+    origin: ''
+  TOXIC PANDA:
+    aliases:
+    - toxic panda
+    motivation: unknown
+    origin: China
+  TRACER KITTEN:
+    aliases:
+    - tracer kitten
+    motivation: unknown
+    origin: Iran
+  TRAVELING SPIDER:
+    aliases:
+    - traveling spider
+    motivation: unknown
+    origin: ''
+  TRIPLESTRENGTH:
+    aliases:
+    - triplestrength
+    motivation: unknown
+    origin: ''
+  Taidoor:
+    aliases:
+    - earth aughisky
+    - g0015
+    - taidoor
+    motivation: unknown
+    origin: ''
+  TaskMasters:
+    aliases:
+    - bluetraveller
+    - taskmasters
+    motivation: unknown
+    origin: China
+  Team-Xecuter:
+    aliases:
+    - team-xecuter
+    motivation: unknown
+    origin: ''
+  Team46:
+    aliases:
+    - taxoff
+    - team46
+    motivation: unknown
+    origin: ''
+  TeamPCP:
+    aliases:
+    - altered spider
+    - canisterworm
+    - deadcatx3
+    - pcpcat
+    - shellforce
+    - teampcp
+    motivation: unknown
+    origin: ''
+  TeamSpy Crew:
+    aliases:
+    - anger bear
+    - iron lyric
+    - team bear
+    - teamspy
+    - teamspy crew
+    motivation: espionage
+    origin: Russian Federation
+  TeamTNT:
+    aliases:
+    - adept libra
+    - teamtnt
+    motivation: unknown
+    origin: ''
+  TeamXRat:
+    aliases:
+    - corporacaoxrat
+    - corporationxrat
+    - teamxrat
+    motivation: unknown
+    origin: ''
+  Teleboyi:
+    aliases:
+    - teleboyi
+    motivation: unknown
+    origin: China
+  TempTick:
+    aliases:
+    - temptick
+    motivation: unknown
+    origin: China
+  TetrisPhantom:
+    aliases:
+    - tetrisphantom
+    motivation: unknown
+    origin: ''
+  The Big Bang:
+    aliases:
+    - the big bang
+    motivation: unknown
+    origin: ''
+  The Gentlemen:
+    aliases:
+    - the gentlemen
+    motivation: unknown
+    origin: ''
+  The Gorgon Group:
+    aliases:
+    - atk92
+    - g0078
+    - gorgon group
+    - pasty gemini
+    - subaat
+    - the gorgon group
+    motivation: unknown
+    origin: ''
+  The Shadow Brokers:
+    aliases:
+    - shadow brokers
+    - shadowbrokers
+    - the shadow brokers
+    - the shadowbrokers
+    - tsb
+    motivation: unknown
+    origin: ''
+  TheDarkOverlord:
+    aliases:
+    - thedarkoverlord
+    motivation: unknown
+    origin: ''
+  TheHatman:
+    aliases:
+    - thehatman
+    motivation: unknown
+    origin: ''
+  TheWizards:
+    aliases:
+    - thewizards
+    motivation: unknown
+    origin: ''
+  Threat Actor 888:
+    aliases:
+    - threat actor 888
+    motivation: unknown
+    origin: ''
+  Threatsec:
+    aliases:
+    - threatsec
+    motivation: unknown
+    origin: ''
+  Thrip:
+    aliases:
+    - atk78
+    - g0076
+    - thrip
+    motivation: espionage
+    origin: Unknown
+  TianWu:
+    aliases:
+    - tianwu
+    motivation: unknown
+    origin: China
+  Tick:
+    aliases:
+    - bronze butler
+    - g0060
+    - nian
+    - pla unit 61419
+    - redbaldknight
+    - stalker panda
+    - stalker taurus
+    - swirl typhoon
+    - temp.tick
+    - tick
+    - tick castle
+    motivation: espionage
+    origin: China
+  ToddyCat:
+    aliases:
+    - toddycat
+    - websiic
+    motivation: unknown
+    origin: ''
+  Tonto Team:
+    aliases:
+    - bronze huntley
+    - cactuspete
+    - copper
+    - earth akhlut
+    - g0131
+    - karma panda
+    - lone castle
+    - pla unit 65017
+    - red beifang
+    - tag-74
+    - tonto team
+    motivation: unknown
+    origin: China
+  TraderTraitor:
+    aliases:
+    - jade sleet
+    - pukchong
+    - tradertraitor
+    - unc4899
+    motivation: unknown
+    origin: North Korea
+  TridentLocker:
+    aliases:
+    - tridentlocker
+    motivation: unknown
+    origin: ''
+  Tstark:
+    aliases:
+    - tstark
+    motivation: unknown
+    origin: China
+  TunnelSnake:
+    aliases:
+    - tunnelsnake
+    motivation: unknown
+    origin: China
+  TurkHackTeam:
+    aliases:
+    - turk hack team
+    - turkhackteam
+    motivation: unknown
+    origin: Turkey
+  Turla:
+    aliases:
+    - atk13
+    - blue python
+    - g0010
+    - group 88
+    - hippo team
+    - iron hunter
+    - itg12
+    - kazuar
+    - krypton
+    - makersmark
+    - pacifier apt
+    - penquin turla
+    - pfinet
+    - popeye
+    - secret blizzard
+    - sig23
+    - snake
+    - summit
+    - tag_0530
+    - turla
+    - turla relic
+    - uac-0003
+    - uac-0024
+    - uac-0144
+    - unc4210
+    - uroburos
+    - venomous bear
+    - waterbug
+    - wraith
+    motivation: espionage
+    origin: Russia
+  TwoSail Junk:
+    aliases:
+    - operation poisoned news
+    - twosail junk
+    motivation: unknown
+    origin: ''
+  UAC-0006:
+    aliases:
+    - uac-0006
+    motivation: unknown
+    origin: ''
+  UAC-0020:
+    aliases:
+    - sicksync
+    - temp.vermin
+    - uac-0020
+    - vermin
+    - vermin relic
+    motivation: unknown
+    origin: Russia
+  UAC-0050:
+    aliases:
+    - uac-0050
+    motivation: unknown
+    origin: ''
+  UAC-0063:
+    aliases:
+    - uac-0063
+    motivation: unknown
+    origin: ''
+  UAC-0094:
+    aliases:
+    - uac-0094
+    motivation: unknown
+    origin: Russia
+  UAC-0099:
+    aliases:
+    - uac-0099
+    motivation: unknown
+    origin: ''
+  UAC-0102:
+    aliases:
+    - uac-0102
+    motivation: unknown
+    origin: ''
+  UAC-0118:
+    aliases:
+    - fromrussiawithlove
+    - frwl
+    - uac-0118
+    motivation: unknown
+    origin: ''
+  UAC-0149:
+    aliases:
+    - uac-0149
+    motivation: unknown
+    origin: ''
+  UAC-0154:
+    aliases:
+    - uac-0154
+    motivation: unknown
+    origin: ''
+  UAC-0184:
+    aliases:
+    - uac-0184
+    motivation: unknown
+    origin: ''
+  UAC-0185:
+    aliases:
+    - uac-0185
+    - unc4221
+    motivation: unknown
+    origin: ''
+  UAC-0194:
+    aliases:
+    - uac-0194
+    motivation: unknown
+    origin: Russia
+  UAC-0215:
+    aliases:
+    - uac-0215
+    motivation: unknown
+    origin: ''
+  UAC-0219:
+    aliases:
+    - uac-0219
+    motivation: unknown
+    origin: ''
+  UAC-0226:
+    aliases:
+    - uac-0226
+    motivation: unknown
+    origin: ''
+  UAC-0227:
+    aliases:
+    - uac-0227
+    motivation: unknown
+    origin: ''
+  UAC-0239:
+    aliases:
+    - uac-0239
+    motivation: unknown
+    origin: ''
+  UAC-0241:
+    aliases:
+    - uac-0241
+    motivation: unknown
+    origin: ''
+  UAC-0245:
+    aliases:
+    - uac-0245
+    motivation: unknown
+    origin: Russia
+  UAT-10362:
+    aliases:
+    - uat-10362
+    motivation: unknown
+    origin: ''
+  UAT-10608:
+    aliases:
+    - uat-10608
+    motivation: unknown
+    origin: ''
+  UAT-11795:
+    aliases:
+    - uat-11795
+    motivation: unknown
+    origin: Russia
+  UAT-5394:
+    aliases:
+    - uat-5394
+    motivation: unknown
+    origin: North Korea
+  UAT-5918:
+    aliases:
+    - uat-5918
+    motivation: unknown
+    origin: ''
+  UAT-6382:
+    aliases:
+    - uat-6382
+    motivation: unknown
+    origin: China
+  UAT-7237:
+    aliases:
+    - cl-sta-1062
+    - uat-7237
+    motivation: unknown
+    origin: China
+  UAT-7810:
+    aliases:
+    - uat-7810
+    motivation: unknown
+    origin: China
+  UAT-8099:
+    aliases:
+    - uat-8099
+    motivation: unknown
+    origin: China
+  UAT-8302:
+    aliases:
+    - uat-8302
+    motivation: unknown
+    origin: China
+  UAT-8616:
+    aliases:
+    - uat-8616
+    motivation: unknown
+    origin: ''
+  UAT-8837:
+    aliases:
+    - uat-8837
+    motivation: unknown
+    origin: China
+  UAT-9244:
+    aliases:
+    - uat-9244
+    motivation: unknown
+    origin: China
+  UAT-9686:
+    aliases:
+    - uat-9686
+    motivation: unknown
+    origin: China
+  UAT-9921:
+    aliases:
+    - uat-9921
+    - voidlink operator
+    motivation: unknown
+    origin: China
+  UNC1069:
+    aliases:
+    - cryptocore
+    - masan
+    - midnight neptune
+    - unc1069
+    motivation: unknown
+    origin: North Korea
+  UNC1088:
+    aliases:
+    - ravine castle
+    - unc1088
+    motivation: unknown
+    origin: China
+  UNC1549:
+    aliases:
+    - nimbus manticore
+    - unc1549
+    motivation: unknown
+    origin: Iran
+  UNC1860:
+    aliases:
+    - unc1860
+    motivation: unknown
+    origin: Iran
+  UNC215:
+    aliases:
+    - unc215
+    motivation: unknown
+    origin: China
+  UNC2447:
+    aliases:
+    - unc2447
+    motivation: unknown
+    origin: ''
+  UNC2465:
+    aliases:
+    - unc2465
+    motivation: unknown
+    origin: ''
+  UNC2529:
+    aliases:
+    - unc2529
+    motivation: unknown
+    origin: ''
+  UNC2565:
+    aliases:
+    - hive0127
+    - unc2565
+    motivation: unknown
+    origin: ''
+  UNC2630:
+    aliases:
+    - unc2630
+    motivation: unknown
+    origin: China
+  UNC2659:
+    aliases:
+    - unc2659
+    motivation: unknown
+    origin: ''
+  UNC2717:
+    aliases:
+    - unc2717
+    motivation: unknown
+    origin: China
+  UNC2814:
+    aliases:
+    - dark castle
+    - unc2814
+    motivation: unknown
+    origin: China
+  UNC2970:
+    aliases:
+    - unc2970
+    motivation: unknown
+    origin: North Korea
+  UNC3524:
+    aliases:
+    - unc3524
+    motivation: espionage
+    origin: ''
+  UNC3569:
+    aliases:
+    - unc3569
+    motivation: unknown
+    origin: China
+  UNC3886:
+    aliases:
+    - unc3886
+    motivation: unknown
+    origin: China
+  UNC3890:
+    aliases:
+    - unc3890
+    motivation: unknown
+    origin: Iran
+  UNC3973:
+    aliases:
+    - unc3973
+    motivation: unknown
+    origin: ''
+  UNC4191:
+    aliases:
+    - unc4191
+    motivation: unknown
+    origin: China
+  UNC4393:
+    aliases:
+    - cardinal
+    - curly spider
+    - stac5777
+    - storm-1811
+    - unc4393
+    motivation: unknown
+    origin: ''
+  UNC4487:
+    aliases:
+    - unc4487
+    motivation: unknown
+    origin: ''
+  UNC4536:
+    aliases:
+    - unc4536
+    motivation: unknown
+    origin: ''
+  UNC4540:
+    aliases:
+    - unc4540
+    motivation: unknown
+    origin: China
+  UNC4736:
+    aliases:
+    - unc4736
+    motivation: unknown
+    origin: North Korea
+  UNC4841:
+    aliases:
+    - slime57
+    - unc4841
+    motivation: unknown
+    origin: China
+  UNC4990:
+    aliases:
+    - unc4990
+    motivation: unknown
+    origin: IT
+  UNC5174:
+    aliases:
+    - unc5174
+    - uteus
+    motivation: unknown
+    origin: ''
+  UNC5266:
+    aliases:
+    - unc5266
+    motivation: unknown
+    origin: ''
+  UNC5291:
+    aliases:
+    - unc5291
+    motivation: unknown
+    origin: ''
+  UNC5325:
+    aliases:
+    - unc5325
+    motivation: unknown
+    origin: China
+  UNC5330:
+    aliases:
+    - unc5330
+    motivation: unknown
+    origin: China
+  UNC5337:
+    aliases:
+    - unc5337
+    motivation: unknown
+    origin: China
+  UNC5342:
+    aliases:
+    - unc5342
+    motivation: unknown
+    origin: North Korea
+  UNC5537:
+    aliases:
+    - unc5537
+    motivation: unknown
+    origin: ''
+  UNC5820:
+    aliases:
+    - unc5820
+    motivation: unknown
+    origin: ''
+  UNC6032:
+    aliases:
+    - unc6032
+    motivation: unknown
+    origin: Vietnam
+  UNC6040:
+    aliases:
+    - unc6040
+    motivation: unknown
+    origin: ''
+  UNC6148:
+    aliases:
+    - unc6148
+    motivation: unknown
+    origin: ''
+  UNC6201:
+    aliases:
+    - unc6201
+    motivation: unknown
+    origin: China
+  UNC6293:
+    aliases:
+    - unc6293
+    motivation: unknown
+    origin: Russia
+  UNC6353:
+    aliases:
+    - unc6353
+    motivation: unknown
+    origin: ''
+  UNC6384:
+    aliases:
+    - unc6384
+    - vertigo panda
+    motivation: unknown
+    origin: China
+  UNC6395:
+    aliases:
+    - unc6395
+    motivation: unknown
+    origin: ''
+  UNC6426:
+    aliases:
+    - unc6426
+    motivation: unknown
+    origin: ''
+  UNC6485:
+    aliases:
+    - unc6485
+    motivation: unknown
+    origin: ''
+  UNC6508:
+    aliases:
+    - unc6508
+    motivation: unknown
+    origin: China
+  UNC6619:
+    aliases:
+    - shadow campaigns
+    - tgr-sta-1030
+    - unc6619
+    motivation: unknown
+    origin: ''
+  UNC6671:
+    aliases:
+    - unc6671
+    motivation: unknown
+    origin: ''
+  UNC6691:
+    aliases:
+    - unc6691
+    motivation: unknown
+    origin: ''
+  UNC6692:
+    aliases:
+    - unc6692
+    motivation: unknown
+    origin: ''
+  UNC6748:
+    aliases:
+    - unc6748
+    motivation: unknown
+    origin: Russia
+  UNG0002:
+    aliases:
+    - ung0002
+    motivation: unknown
+    origin: ''
+  UNG0901:
+    aliases:
+    - operation cargotalon
+    - ung0901
+    - unknown-group-901
+    motivation: unknown
+    origin: ''
+  UNION PANDA:
+    aliases:
+    - union panda
+    motivation: unknown
+    origin: China
+  UNION SPIDER:
+    aliases:
+    - union spider
+    motivation: unknown
+    origin: Russia
+  UNK_AcademicFlare:
+    aliases:
+    - unk_academicflare
+    motivation: unknown
+    origin: Russia
+  UNK_DropPitch:
+    aliases:
+    - unk_droppitch
+    motivation: unknown
+    origin: ''
+  UNK_FistBump:
+    aliases:
+    - unk_fistbump
+    motivation: unknown
+    origin: ''
+  UNK_RemoteRogue:
+    aliases:
+    - unk_remoterogue
+    motivation: unknown
+    origin: Russia
+  UNK_SparkyCarp:
+    aliases:
+    - unk_sparkycarp
+    motivation: unknown
+    origin: ''
+  USDoD:
+    aliases:
+    - usdod
+    motivation: unknown
+    origin: ''
+  UTA0178:
+    aliases:
+    - red dev 61
+    - unc5221
+    - uta0178
+    motivation: unknown
+    origin: China
+  UTA0218:
+    aliases:
+    - uta0218
+    motivation: unknown
+    origin: ''
+  UTA0352:
+    aliases:
+    - uta0352
+    motivation: unknown
+    origin: Russia
+  UTA0355:
+    aliases:
+    - uta0355
+    motivation: unknown
+    origin: Russia
+  UTA0388:
+    aliases:
+    - uta0388
+    motivation: unknown
+    origin: China
+  UTA0533:
+    aliases:
+    - uta0533
+    motivation: unknown
+    origin: ''
+  UTG-Q-008:
+    aliases:
+    - utg-q-008
+    motivation: unknown
+    origin: ''
+  UTG-Q-010:
+    aliases:
+    - utg-q-010
+    motivation: unknown
+    origin: ''
+  Ukrainian Cyber Alliance:
+    aliases:
+    - uca
+    - ukrainian cyber alliance
+    motivation: unknown
+    origin: Ukraine
+  Unfading Sea Haze:
+    aliases:
+    - unfading sea haze
+    motivation: unknown
+    origin: China
+  Unit 8200:
+    aliases:
+    - duqu group
+    - unit 8200
+    motivation: espionage
+    origin: Israel
+  Unnamed Actor:
+    aliases:
+    - unnamed actor
+    motivation: espionage
+    origin: China
+  UnsolicitedBooker:
+    aliases:
+    - unsolicitedbooker
+    motivation: unknown
+    origin: China
+  Urpage:
+    aliases:
+    - urpage
+    motivation: unknown
+    origin: ''
+  UserSec:
+    aliases:
+    - usersec
+    motivation: unknown
+    origin: Russia
+  VENOM SPIDER:
+    aliases:
+    - badbullz
+    - badbullzvenom
+    - venom spider
+    motivation: unknown
+    origin: ''
+  VICEROY TIGER:
+    aliases:
+    - apt-c-35
+    - donot team
+    - operation hangover
+    - orange kala
+    - sectore02
+    - viceroy tiger
+    motivation: unknown
+    origin: India
+  VIKING SPIDER:
+    aliases:
+    - viking spider
+    motivation: unknown
+    origin: ''
+  Vanilla Tempest:
+    aliases:
+    - dev-0832
+    - vanilla tempest
+    - vice society
+    - vice spider
+    motivation: unknown
+    origin: Russia
+  VantaCore:
+    aliases:
+    - thor
+    - vantacore
+    motivation: unknown
+    origin: Ukraine
+  Velvet Tempest:
+    aliases:
+    - alpha spider
+    - alphv ransomware group
+    - dev-0504
+    - velvet tempest
+    motivation: unknown
+    origin: ''
+  ViceLeaker:
+    aliases:
+    - viceleaker
+    motivation: unknown
+    origin: ''
+  Vicious Panda:
+    aliases:
+    - sixlittlemonkeys
+    - vicious panda
+    motivation: unknown
+    origin: China
+  ViciousTrap:
+    aliases:
+    - vicioustrap
+    motivation: unknown
+    origin: ''
+  Viking Jackal:
+    aliases:
+    - viking jackal
+    - vikingdom
+    motivation: unknown
+    origin: AE
+  Void Arachne:
+    aliases:
+    - silver fox
+    - void arachne
+    motivation: unknown
+    origin: ''
+  Void Balaur:
+    aliases:
+    - void balaur
+    motivation: unknown
+    origin: ''
+  Void Banshee:
+    aliases:
+    - void banshee
+    motivation: unknown
+    origin: ''
+  Void Blizzard:
+    aliases:
+    - laundry bear
+    - ta488
+    - uac-0190
+    - void blizzard
+    motivation: unknown
+    origin: Russia
+  Void Manticore:
+    aliases:
+    - void manticore
+    motivation: unknown
+    origin: Iran
+  Void Rabisu:
+    aliases:
+    - tropical scorpius
+    - void rabisu
+    motivation: unknown
+    origin: ''
+  Volatile Cedar:
+    aliases:
+    - amethyst rain
+    - defttorero
+    - lebanese cedar
+    - volatile cedar
+    - volcanictimber
+    motivation: unknown
+    origin: Lebanon
+  Volt Typhoon:
+    aliases:
+    - bronze silhouette
+    - dev-0391
+    - g1017
+    - insidious taurus
+    - storm-0391
+    - unc3236
+    - vanguard panda
+    - volt typhoon
+    - voltzite
+    motivation: espionage
+    origin: China
+  VulzSecTeam:
+    aliases:
+    - vulzsec
+    - vulzsecteam
+    motivation: unknown
+    origin: ID
+  WARP PANDA:
+    aliases:
+    - warp panda
+    motivation: unknown
+    origin: China
+  WET PANDA:
+    aliases:
+    - red chimera
+    - wet panda
+    motivation: unknown
+    origin: China
+  WIP19:
+    aliases:
+    - wip19
+    motivation: unknown
+    origin: China
+  WIRTE:
+    aliases:
+    - ashen lepus
+    - wirte
+    motivation: unknown
+    origin: Palestine
+  WOLF SPIDER:
+    aliases:
+    - fin4
+    - g0085
+    - wolf spider
+    motivation: unknown
+    origin: RO
+  WageMole:
+    aliases:
+    - famous chollima
+    - nickel tapestry
+    - purplebravo
+    - storm-1877
+    - unc5267
+    - void dokkaebi
+    - wagemole
+    - waterplum
+    motivation: unknown
+    origin: North Korea
+  Wassonite:
+    aliases:
+    - wassonite
+    motivation: unknown
+    origin: North Korea
+  Watchdog:
+    aliases:
+    - thief libra
+    - watchdog
+    motivation: unknown
+    origin: ''
+  Water Bakunawa:
+    aliases:
+    - water bakunawa
+    motivation: unknown
+    origin: ''
+  Water Barghest:
+    aliases:
+    - water barghest
+    motivation: unknown
+    origin: ''
+  Water Curupira:
+    aliases:
+    - water curupira
+    motivation: unknown
+    origin: ''
+  Water Gamayun:
+    aliases:
+    - water gamayun
+    motivation: unknown
+    origin: Russia
+  Water Kurita:
+    aliases:
+    - water kurita
+    motivation: unknown
+    origin: ''
+  Water Labbu:
+    aliases:
+    - water labbu
+    motivation: unknown
+    origin: ''
+  Water Makara:
+    aliases:
+    - water makara
+    motivation: unknown
+    origin: ''
+  Water Orthrus:
+    aliases:
+    - water orthrus
+    motivation: unknown
+    origin: ''
+  Water Saci:
+    aliases:
+    - water saci
+    motivation: unknown
+    origin: BR
+  Water Sigbin:
+    aliases:
+    - 8220 gang
+    - water sigbin
+    motivation: unknown
+    origin: China
+  WeRedEvils:
+    aliases:
+    - weredevils
+    motivation: unknown
+    origin: Israel
+  Webworm:
+    aliases:
+    - space pirates
+    - webworm
+    motivation: unknown
+    origin: China
+  WeedSec:
+    aliases:
+    - weedsec
+    motivation: unknown
+    origin: ''
+  White Bear:
+    aliases:
+    - skipper turla
+    - white bear
+    motivation: espionage
+    origin: Russian Federation
+  WhiteCobra:
+    aliases:
+    - whitecobra
+    motivation: unknown
+    origin: ''
+  Whitefly:
+    aliases:
+    - whitefly
+    motivation: unknown
+    origin: ''
+  WildCard:
+    aliases:
+    - wildcard
+    motivation: unknown
+    origin: ''
+  WildNeutron:
+    aliases:
+    - butterfly
+    - morpho
+    - sphinx moth
+    - wildneutron
+    motivation: unknown
+    origin: ''
+  WildPressure:
+    aliases:
+    - wildpressure
+    motivation: unknown
+    origin: ''
+  WindShift:
+    aliases:
+    - windshift
+    - windy phoenix
+    motivation: unknown
+    origin: ''
+  Winter Vivern:
+    aliases:
+    - ta-473
+    - ta473
+    - tag-70
+    - uac-0114
+    - winter vivern
+    motivation: unknown
+    origin: Russia
+  Wisteria Tsunami:
+    aliases:
+    - cyberroot
+    - dev-0605
+    - mintedsoil
+    - wisteria tsunami
+    motivation: unknown
+    origin: ''
+  Witchetty:
+    aliases:
+    - lookingfrog
+    - witchetty
+    motivation: unknown
+    origin: China
+  Wizard Spider:
+    aliases:
+    - conti group
+    - dev-0193
+    - dev-0237
+    - fin12
+    - g0102
+    - gold blackburn
+    - periwinkle tempest
+    - pistachio tempest
+    - ryuk group
+    - storm-0193
+    - storm-0230
+    - temp.mixmaster
+    - trickbot llc
+    - unc1878
+    - unc2053
+    - wizard spider
+    motivation: financial
+    origin: unknown
+  Worok:
+    aliases:
+    - worok
+    motivation: espionage
+    origin: China
+  XDSpy:
+    aliases:
+    - xdspy
+    motivation: unknown
+    origin: ''
+  XakNet:
+    aliases:
+    - uac-0100
+    - uac-0106
+    - xaknet
+    motivation: unknown
+    origin: Russia
+  Xcatze:
+    aliases:
+    - xcatze
+    motivation: unknown
+    origin: ''
+  Xiaoqiying:
+    aliases:
+    - genesis day
+    - teng snake
+    - xiaoqiying
+    motivation: unknown
+    origin: China
+  XinXin:
+    aliases:
+    - black technology
+    - changqixinyun
+    - xinxin
+    motivation: unknown
+    origin: China
+  Yanbian Gang:
+    aliases:
+    - yanbian gang
+    motivation: unknown
+    origin: ''
+  YoroTrooper:
+    aliases:
+    - cavalry werewolf
+    - comrade saiga
+    - salted earth
+    - shadowsilk
+    - silent lynx
+    - sturgeon fisher
+    - sturgeonphisher
+    - yorotrooper
+    motivation: unknown
+    origin: KZ
+  Z-Pentest Alliance:
+    aliases:
+    - z-pentest
+    - z-pentest alliance
+    motivation: unknown
+    origin: Russia
+  ZOMBIE SPIDER:
+    aliases:
+    - zombie spider
+    motivation: unknown
+    origin: ''
+  Zarya:
+    aliases:
+    - uac-0109
+    - zarya
+    motivation: unknown
+    origin: Russia
+  ZeffSec:
+    aliases:
+    - zeff security
+    - zeffsec
+    motivation: unknown
+    origin: ''
+  ZeroBytes:
+    aliases:
+    - zerobytes
+    motivation: unknown
+    origin: FR
+  ZeroSevenGroup:
+    aliases:
+    - zerosevengroup
+    motivation: unknown
+    origin: ''
+  ZooPark:
+    aliases:
+    - zoopark
+    motivation: unknown
+    origin: ''
+  '[Unnamed group]':
+    aliases:
+    - '[unnamed group]'
+    motivation: unknown
+    origin: ''
+  '[Vault 7/8]':
+    aliases:
+    - '[vault 7/8]'
+    motivation: unknown
+    origin: ''
+  luoxk:
+    aliases:
+    - luoxk
+    motivation: unknown
+    origin: ''
+  puNK-003:
+    aliases:
+    - punk-003
+    motivation: unknown
+    origin: North Korea
