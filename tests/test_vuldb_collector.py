@@ -173,7 +173,12 @@ class TestVulDBCache:
 
 class TestQuery:
 
-    def test_missing_api_key_returns_empty_schema(self):
+    def test_missing_api_key_returns_empty_schema(self, monkeypatch):
+        # Same isolation issue as the AbuseIPDB test: api_key="" alone
+        # doesn't test the "no key" path since VulDBCollector falls back
+        # to os.environ.get("VULDB_API_KEY") when the constructor arg is
+        # falsy — a real key in the environment silently masks this test.
+        monkeypatch.delenv("VULDB_API_KEY", raising=False)
         collector = VulDBCollector(api_key="")
         result = collector.query("APT28")
         # Empty schema has all required keys but empty CVE list

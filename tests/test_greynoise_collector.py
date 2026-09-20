@@ -117,7 +117,12 @@ class TestGreyNoiseCache:
 
 class TestEnrichIps:
 
-    def test_missing_api_key_returns_empty(self):
+    def test_missing_api_key_returns_empty(self, monkeypatch):
+        # api_key="" alone doesn't test the "no key" path — the collector
+        # falls back to os.environ.get("GREYNOISE_API_KEY") when the
+        # constructor arg is falsy, so a real key in the environment
+        # (e.g. from a developer's .env) silently masks this test.
+        monkeypatch.delenv("GREYNOISE_API_KEY", raising=False)
         collector = GreyNoiseCollector(api_key="")
         result = collector.enrich_ips(
             [{"type": "ip", "value": "8.8.8.8"}],

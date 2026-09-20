@@ -114,7 +114,13 @@ class TestEnrichIps:
             "last_reported_at":       "2026-08-15T10:30:00+00:00",
         }
 
-    def test_missing_api_key_returns_empty(self):
+    def test_missing_api_key_returns_empty(self, monkeypatch):
+        # Passing api_key="" alone isn't enough to test the "no key"
+        # path — the collector falls back to os.environ.get("ABUSEIPDB_API_KEY")
+        # when the constructor arg is falsy, so a real key in the
+        # environment (e.g. from a developer's .env) silently masks
+        # this test unless the env var itself is cleared too.
+        monkeypatch.delenv("ABUSEIPDB_API_KEY", raising=False)
         collector = AbuseIPDBCollector(api_key="")
         result = collector.enrich_ips(
             [{"type": "ip", "value": "8.8.8.8"}], "APT28",

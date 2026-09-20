@@ -110,6 +110,29 @@ def test_map_attribute_known_type():
     assert ind["value"] == "1.1.1.1"
     assert ind["sources"] == ["circl_misp"]
     assert ind["description"] == "context"
+    assert ind["first_seen"] == "2023-07-22"   # not the raw epoch string
+
+
+def test_map_attribute_converts_epoch_timestamp_to_date():
+    c = _collector()
+    # 1534928976 -> 2018-08-22. Caught via the HTML reporter rendering a
+    # raw epoch integer under "Last Seen" instead of a date — MISP's
+    # 'timestamp' field is Unix epoch seconds, but every other THEORY
+    # collector reports first_seen/last_seen as YYYY-MM-DD.
+    ind = c._map_attribute({"type": "ip-dst", "value": "1.1.1.1", "timestamp": "1534928976"}, "")
+    assert ind["first_seen"] == "2018-08-22"
+
+
+def test_map_attribute_missing_timestamp_is_empty_not_crash():
+    c = _collector()
+    ind = c._map_attribute({"type": "ip-dst", "value": "1.1.1.1"}, "")
+    assert ind["first_seen"] == ""
+
+
+def test_map_attribute_malformed_timestamp_is_empty_not_crash():
+    c = _collector()
+    ind = c._map_attribute({"type": "ip-dst", "value": "1.1.1.1", "timestamp": "not-a-number"}, "")
+    assert ind["first_seen"] == ""
 
 
 def test_map_attribute_unknown_type_returns_none():

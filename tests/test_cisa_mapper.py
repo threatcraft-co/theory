@@ -45,6 +45,29 @@ class TestAliasResolver:
     def test_unknown_name_returns_itself(self):
         assert resolve_canonical("UnknownActorXYZ") == "UnknownActorXYZ"
 
+    def test_multi_word_alias_without_spaces(self):
+        # theory --actor scatteredspider (no space) should still resolve —
+        # a multi-word actor name typed as one concatenated word on the
+        # command line is a real, reported failure mode, not an edge case.
+        assert resolve_canonical("scatteredspider") == "Scattered Spider"
+        assert resolve_canonical("ScatteredSpider") == "Scattered Spider"
+
+    def test_multi_word_alias_with_hyphen_or_underscore(self):
+        assert resolve_canonical("scattered-spider") == "Scattered Spider"
+        assert resolve_canonical("Scattered_Spider") == "Scattered Spider"
+
+    def test_exact_match_still_takes_priority_over_normalized(self):
+        # Sanity: the space-preserving exact match path isn't disturbed
+        # by adding the normalized fallback.
+        assert resolve_canonical("Scattered Spider") == "Scattered Spider"
+        assert resolve_canonical("fancy bear") == "APT28"
+
+    def test_normalized_fallback_does_not_create_false_positives(self):
+        # A genuinely unknown, unrelated string must not accidentally
+        # collapse onto some real actor's normalized form.
+        result = resolve_canonical("totally not a real actor name xyz123")
+        assert result == "totally not a real actor name xyz123"
+
     def test_all_aliases_for_returns_set(self):
         aliases = all_aliases_for("APT28")
         assert isinstance(aliases, frozenset)
@@ -61,6 +84,23 @@ class TestAliasResolver:
     def test_all_aliases_for_unknown(self):
         aliases = all_aliases_for("RandomGroup99")
         assert "randomgroup99" in aliases
+
+
+class TestSuggestSimilar:
+
+    def test_typo_suggests_correct_actor(self):
+        from collectors.cisa_advisories import suggest_similar
+        suggestions = suggest_similar("scaterd spidr")
+        assert "Scattered Spider" in suggestions
+
+    def test_gibberish_returns_no_suggestions(self):
+        from collectors.cisa_advisories import suggest_similar
+        assert suggest_similar("zzznonexistentxyz123") == []
+
+    def test_respects_limit(self):
+        from collectors.cisa_advisories import suggest_similar
+        suggestions = suggest_similar("apt", limit=2)
+        assert len(suggestions) <= 2
 
     def test_alias_table_has_no_duplicate_aliases(self):
         """Each alias string should map to exactly one canonical name."""

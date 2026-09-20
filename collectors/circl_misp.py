@@ -224,13 +224,27 @@ class CirclMispCollector(BaseCollector):
             "confidence": 0,   # numeric placeholder; THEORY recomputes via source-count confidence
             "threat_type": "",
             "threat_label": "",
-            "first_seen": (attr.get("timestamp") or ""),
+            "first_seen": self._format_timestamp(attr.get("timestamp")),
             "last_seen": "",
             "tags": [],
             "malware": "",
             "description": event_info,
             "sources": [SOURCE_ID],
         }
+
+    @staticmethod
+    def _format_timestamp(raw_ts: Any) -> str:
+        """MISP attribute 'timestamp' is Unix epoch seconds (as a string
+        or int). Every other THEORY collector reports first_seen/last_seen
+        as a YYYY-MM-DD string — convert here so the reporters (which
+        expect and slice that format, e.g. threatfox.py's [:10]) don't
+        end up displaying a raw epoch integer instead of a date."""
+        if not raw_ts:
+            return ""
+        try:
+            return datetime.fromtimestamp(int(raw_ts), tz=timezone.utc).strftime("%Y-%m-%d")
+        except (ValueError, TypeError, OSError):
+            return ""
 
     # ------------------------------------------------------------------
     # Manifest + event loading with caching

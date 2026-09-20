@@ -68,6 +68,16 @@ import yaml as _yaml
 _ACTORS_YAML = _Path("config/actors.yaml")
 _ALIAS_TABLE_CACHE: dict[str, frozenset[str]] | None = None
 _ALIAS_TO_CANONICAL_CACHE: dict[str, str] | None = None
+_NORMALIZED_TO_CANONICAL_CACHE: dict[str, str] | None = None
+
+
+def _normalize_loose(name: str) -> str:
+    """Strip spaces/hyphens/underscores (in addition to case) so
+    'Scattered Spider', 'scattered-spider', 'scattered_spider', and
+    'scatteredspider' all normalize to the same key. Used as a fallback
+    when the exact (space-preserving) lookup misses — e.g. someone typing
+    a multi-word actor name as one concatenated word on the command line."""
+    return "".join(ch for ch in name.strip().lower() if ch.isalnum())
 
 
 def _load_actors_yaml() -> tuple[dict[str, frozenset[str]], dict[str, str]]:
@@ -76,12 +86,13 @@ def _load_actors_yaml() -> tuple[dict[str, frozenset[str]], dict[str, str]]:
     Returns (ALIAS_TABLE, _ALIAS_TO_CANONICAL).
     Falls back to empty dicts if the file is missing or malformed.
     """
-    global _ALIAS_TABLE_CACHE, _ALIAS_TO_CANONICAL_CACHE
+    global _ALIAS_TABLE_CACHE, _ALIAS_TO_CANONICAL_CACHE, _NORMALIZED_TO_CANONICAL_CACHE
     if _ALIAS_TABLE_CACHE is not None:
         return _ALIAS_TABLE_CACHE, _ALIAS_TO_CANONICAL_CACHE
 
     alias_table: dict[str, frozenset[str]] = {}
     alias_to_canonical: dict[str, str] = {}
+    normalized_to_canonical: dict[str, str] = {}
 
     try:
         data = _yaml.safe_load(_ACTORS_YAML.read_text(encoding="utf-8"))
@@ -94,7 +105,15 @@ def _load_actors_yaml() -> tuple[dict[str, frozenset[str]], dict[str, str]]:
             alias_table[canonical] = aliases
             for alias in aliases:
                 alias_to_canonical[alias] = canonical
+                normalized = _normalize_loose(alias)
+                # If two different aliases normalize to the same collapsed
+                # form (rare, but possible — e.g. two actors whose names
+                # differ only by a hyphen/space), first-seen wins rather
+                # than silently overwriting; the exact-match dict above is
+                # still authoritative for anything that isn't ambiguous.
+                normalized_to_canonical.setdefault(normalized, canonical)
             alias_to_canonical[canonical.lower()] = canonical
+            normalized_to_canonical.setdefault(_normalize_loose(canonical), canonical)
     except FileNotFoundError:
         logger.warning(
             "config/actors.yaml not found — alias resolution disabled. "
@@ -105,7 +124,13 @@ def _load_actors_yaml() -> tuple[dict[str, frozenset[str]], dict[str, str]]:
 
     _ALIAS_TABLE_CACHE = alias_table
     _ALIAS_TO_CANONICAL_CACHE = alias_to_canonical
+    _NORMALIZED_TO_CANONICAL_CACHE = normalized_to_canonical
     return alias_table, alias_to_canonical
+
+
+def _get_normalized_to_canonical() -> dict[str, str]:
+    _load_actors_yaml()
+    return _NORMALIZED_TO_CANONICAL_CACHE or {}
 
 
 def _get_alias_table() -> dict[str, frozenset[str]]:
@@ -138,10 +163,46 @@ ALIAS_TABLE = _AliasTableProxy()  # type: ignore[assignment]
 def resolve_canonical(name: str) -> str:
     """
     Map any actor name/alias to its canonical name.
-    Falls back to the input itself if unknown.
-    Reads from config/actors.yaml via _get_alias_to_canonical().
+
+    Tries an exact match first (space-preserving, case-insensitive), then
+    falls back to a normalized match (spaces/hyphens/underscores stripped)
+    so a multi-word actor name typed as one word on the command line —
+    e.g. `--actor scatteredspider` instead of `--actor "Scattered Spider"`
+    — still resolves correctly instead of silently returning an empty
+    profile.
+
+    Falls back to the input itself if truly unknown.
     """
-    return _get_alias_to_canonical().get(name.strip().lower(), name.strip())
+    cleaned = name.strip().lower()
+    exact = _get_alias_to_canonical().get(cleaned)
+    if exact:
+        return exact
+    normalized = _get_normalized_to_canonical().get(_normalize_loose(name))
+    if normalized:
+        return normalized
+    return name.strip()
+
+
+def suggest_similar(name: str, limit: int = 3) -> list[str]:
+    """Suggest close-match canonical actor names for an unresolved input,
+    for CLI 'did you mean' hints. Matches against both canonical names and
+    known aliases so a near-miss alias (not just a near-miss canonical
+    name) still surfaces a useful suggestion."""
+    import difflib
+
+    table = _get_alias_to_canonical()
+    if not table:
+        return []
+    cleaned = name.strip().lower()
+    matches = difflib.get_close_matches(cleaned, table.keys(), n=limit * 3, cutoff=0.6)
+    seen: list[str] = []
+    for m in matches:
+        canonical = table[m]
+        if canonical not in seen:
+            seen.append(canonical)
+        if len(seen) >= limit:
+            break
+    return seen
 
 
 def all_aliases_for(name: str) -> frozenset[str]:

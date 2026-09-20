@@ -94,8 +94,10 @@ SUPPORTED_SOURCES: dict[str, str | None] = {
     "cisa_kev":    "collectors.cisa_kev.CisaKevCollector",
     "malpedia":    "collectors.malpedia.MalpediaCollector",
     "misp_galaxy": "collectors.misp_galaxy.MispGalaxyCollector",
+    "circl_misp":  "collectors.circl_misp.CirclMispCollector",
     "otx":         "collectors.alienvault_otx.AlienVaultOTXCollector",
     "vuldb":       "collectors.vuldb.VulDBCollector",
+    "nvd":         "collectors.nvd.NVDCollector",
     # Enrichment-only — accepted by CLI but handled separately
     "sigma":          None,
     "yara":           None,
@@ -113,7 +115,9 @@ SOURCE_DESCRIPTIONS: dict[str, str] = {
     "cisa_kev":    "CISA KEV — 1600+ confirmed-exploited CVEs, ransomware flags (free, no auth)",
     "malpedia":    "Malpedia malware family database (free, no auth)",
     "misp_galaxy": "MISP Galaxy — 1000+ actors, aliases, attribution, target sectors (free, no auth)",
+    "circl_misp":  "CIRCL OSINT MISP feed — event-level indicators + campaign context by actor/alias match (free, no auth)",
     "otx":         "AlienVault OTX pulses + IOCs (free, requires OTX_API_KEY in .env)",
+    "nvd":         "NIST NVD — CVSS scores/vectors, CWE classification, references for CVEs already in the profile (free, optional NVD_API_KEY raises rate limit)",
     "sigma":          "SigmaHQ detection rules mapped to ATT&CK (free, optional GITHUB_TOKEN)",
     "yara":           "YARA file detection rules matched to malware families (free, local clone)",
     "threatfox":      "ThreatFox IOCs by malware family (free, no auth)",
@@ -153,7 +157,9 @@ MAPPER_REGISTRY: dict[str, str] = {
     "cisa_kev":    "collectors.cisa_kev.CisaKevMapper",
     "malpedia":    "collectors.malpedia.MalpediaMapper",
     "misp_galaxy": "collectors.misp_galaxy.MispGalaxyMapper",
+    "circl_misp":  "collectors.circl_misp.CirclMispMapper",
     "otx":         "collectors.alienvault_otx.AlienVaultOTXMapper",
+    "nvd":         "collectors.nvd.NVDMapper",
 }
 
 # Default source combination — good balance of coverage vs speed
@@ -190,7 +196,9 @@ def cmd_list_sources() -> None:
             "cisa_kev":       "24 hours (.cache/cisa_kev/)",
             "malpedia":       "per request (.cache/malpedia/)",
             "misp_galaxy":    "7 days (.cache/misp_galaxy/)",
+            "circl_misp":     "24h manifest / 7 days per event (.cache/circl_misp/)",
             "otx":            "per request (.cache/otx/)",
+            "nvd":            "30 days per CVE (.cache/nvd/)",
             "sigma":          "7 days (.cache/sigma-repo/)",
             "yara":           "7 days (.cache/yara-rules-repo/)",
             "threatfox":      "24 hours (.cache/threatfox/)",
@@ -867,6 +875,13 @@ def run(
 
     if not raw_records:
         print(f"\n[theory] No data found for actor: {actor!r}", file=sys.stderr)
+        try:
+            from collectors.cisa_advisories import suggest_similar
+            suggestions = suggest_similar(actor)
+        except Exception:
+            suggestions = []
+        if suggestions:
+            print(f"[theory] Did you mean: {', '.join(suggestions)}?", file=sys.stderr)
         print("[theory] Try --list-actors to see supported actors, or check your source keys with --list-sources.\n",
               file=sys.stderr)
         return None
@@ -964,6 +979,22 @@ def run(
             )
         except Exception as exc:
             logger.warning("CISA KEV enrichment failed: %s", exc)
+
+    # ── NVD cross-reference ───────────────────────────────────────────
+    # If nvd was in the sources list, enrich all CVEs (regardless of
+    # which source reported them) with CVSS scores/vectors, CWE
+    # classification, and reference links from the NVD API.
+    if "nvd" in collect_sources and profile.get("cves"):
+        try:
+            from collectors.nvd import enrich_profile_with_nvd
+            profile = enrich_profile_with_nvd(profile)
+            logger.info(
+                "NVD enrichment: %d/%d CVEs enriched with CVSS/CWE detail",
+                profile.get("nvd_enriched_count", 0),
+                len(profile.get("cves", [])),
+            )
+        except Exception as exc:
+            logger.warning("NVD enrichment failed: %s", exc)
 
     # Malpedia malware enrichment
     malpedia_meta: dict[str, dict] = {}
