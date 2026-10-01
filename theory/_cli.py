@@ -460,6 +460,43 @@ def cmd_update_bundles() -> None:
 
 
 # ---------------------------------------------------------------------------
+# theory ask — tool-calling LLM synthesis over local data only
+# ---------------------------------------------------------------------------
+
+def cmd_ask(argv: list[str]) -> None:
+    """`theory ask "<question>"` — natural-language questions answered
+    only from THEORY's own local data (the persistent correlation graph
+    and personal research notes), via collectors/intelligence_agent.py."""
+    if not argv or not " ".join(argv).strip():
+        print('\nusage: theory ask "<question>"')
+        print('example: theory ask "what do we know about 1.1.1.1?"\n')
+        sys.exit(1)
+
+    question = " ".join(argv).strip()
+
+    try:
+        from rich.console import Console
+        console = Console()
+    except ImportError:
+        console = None
+
+    def _p(msg: str, style: str = "") -> None:
+        if console:
+            console.print(f"[{style}]{msg}[/]" if style else msg)
+        else:
+            print(msg)
+
+    _p(f"\n[theory ask] {question}", "dim")
+
+    from collectors.intelligence_agent import ask
+    answer = ask(question)
+
+    _p("")
+    _p(answer)
+    _p("")
+
+
+# ---------------------------------------------------------------------------
 # Personal research redirect — theory --init-personal
 # ---------------------------------------------------------------------------
 
@@ -1902,6 +1939,14 @@ def main(argv: list[str] | None = None) -> None:
     if _args and _args[0] == "serve":
         from server.cli_serve import cmd_serve
         cmd_serve(_args[1:])
+        return
+
+    # ── `theory ask "<question>"` — tool-calling LLM synthesis ─────────
+    # Answers a natural-language question using only THEORY's own local
+    # data (the persistent correlation graph + personal research notes),
+    # via the provider-agnostic tool loop in collectors/intelligence_agent.py.
+    if _args and _args[0] == "ask":
+        cmd_ask(_args[1:])
         return
 
     _print_banner()
