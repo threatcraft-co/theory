@@ -457,6 +457,144 @@ def cmd_update_bundles() -> None:
 
 
 # ---------------------------------------------------------------------------
+# Cross-run graph queries — theory --ioc / --technique, standalone or
+# combined with --actor for a connection query
+# ---------------------------------------------------------------------------
+
+def _graph_console():
+    try:
+        from rich.console import Console
+        return Console()
+    except ImportError:
+        return None
+
+
+def cmd_query_ioc(value: str) -> bool:
+    """Standalone `theory --ioc VALUE` lookup against the persistent graph.
+
+    Returns True if the IOC has ever been recorded, False otherwise —
+    callers use this for an accurate process exit code.
+    """
+    from processors.graph import query_ioc
+    result  = query_ioc(value)
+    console = _graph_console()
+
+    def _p(msg: str, style: str = "") -> None:
+        if console:
+            console.print(f"[{style}]{msg}[/]" if style else msg)
+        else:
+            print(msg)
+
+    _p(f"\nTHEORY — Graph lookup: IOC {value!r}", "bold cyan")
+    if not result["found"]:
+        _p("  Not found. No prior `theory --actor` run has reported this indicator.", "dim")
+        _p("  Run an actor query with a source that collects IOCs (otx, threatfox, "
+           "malware_bazaar, urlhaus, abuseipdb, greynoise) to populate the graph.\n", "dim")
+        return False
+
+    _p(f"  Type:        {result.get('ioc_type') or 'unknown'}")
+    _p(f"  First seen:  {result['first_seen']}    Last seen: {result['last_seen']}")
+    _p(f"  Sources:     {', '.join(result['sources']) or '—'}")
+
+    if result["linked_actors"]:
+        _p("\n  Linked actors:", "bold")
+        for a in result["linked_actors"]:
+            _p(f"    - {a['label']}  (via {a['relation']}; {', '.join(a['sources']) or '—'})")
+    if result["linked_malware"]:
+        _p("\n  Linked malware:", "bold")
+        for m in result["linked_malware"]:
+            _p(f"    - {m['label']}")
+    if result["linked_techniques"]:
+        _p("\n  Linked techniques:", "bold")
+        for t in result["linked_techniques"]:
+            _p(f"    - {t['label']}")
+    if result["linked_cves"]:
+        _p("\n  Linked CVEs:", "bold")
+        for c in result["linked_cves"]:
+            _p(f"    - {c['label']}")
+    _p("")
+    return True
+
+
+def cmd_query_technique(technique_id: str) -> bool:
+    """Standalone `theory --technique ID` lookup against the persistent graph."""
+    from processors.graph import query_technique
+    result  = query_technique(technique_id)
+    console = _graph_console()
+
+    def _p(msg: str, style: str = "") -> None:
+        if console:
+            console.print(f"[{style}]{msg}[/]" if style else msg)
+        else:
+            print(msg)
+
+    _p(f"\nTHEORY — Graph lookup: technique {technique_id.strip().upper()!r}", "bold cyan")
+    if not result["found"]:
+        _p("  Not found. No prior `theory --actor` run has reported this technique.", "dim")
+        _p("  Run an actor query with --sources including mitre to populate the graph.\n", "dim")
+        return False
+
+    _p(f"  Name:        {result.get('label', '')}")
+    _p(f"  First seen:  {result['first_seen']}    Last seen: {result['last_seen']}")
+
+    if result["linked_actors"]:
+        _p("\n  Actors observed using this technique:", "bold")
+        for a in result["linked_actors"]:
+            _p(f"    - {a['label']}  ({', '.join(a['sources']) or '—'})")
+    else:
+        _p("\n  No actors linked yet.", "dim")
+    if result["linked_cves"]:
+        _p("\n  Linked CVEs:", "bold")
+        for c in result["linked_cves"]:
+            _p(f"    - {c['label']}")
+    _p("")
+    return True
+
+
+def cmd_find_connection(entity_a: tuple[str, str], entity_b: tuple[str, str]) -> bool:
+    """Cross-correlative / multi-axis query: `theory --actor X --ioc Y`
+    (or --technique). Prints whether the two are connected in the
+    persistent graph and through what — this is the "multi-flag query"
+    semantics: one combined question, not two independent lookups.
+    """
+    from processors.graph import find_connection
+    result  = find_connection(entity_a, entity_b)
+    console = _graph_console()
+
+    def _p(msg: str, style: str = "") -> None:
+        if console:
+            console.print(f"[{style}]{msg}[/]" if style else msg)
+        else:
+            print(msg)
+
+    a_label = f"{entity_a[0]}:{entity_a[1]}"
+    b_label = f"{entity_b[0]}:{entity_b[1]}"
+    _p(f"\nTHEORY — Connection query: {a_label}  <->  {b_label}", "bold cyan")
+
+    if not result["connected"]:
+        if result.get("reason") == "one_or_both_unknown":
+            for label, entity in (("entity_a", entity_a), ("entity_b", entity_b)):
+                known = result[label]["known"]
+                if not known:
+                    _p(f"  {entity[0]} {entity[1]!r} has no prior data in the graph.", "dim")
+            _p("  Cannot determine a connection — one or both entities are unrecorded.\n", "dim")
+        else:
+            _p("  No known connection. Both entities are in the graph, but THEORY has "
+               "never recorded a direct link or a shared relationship between them.\n", "yellow")
+        return False
+
+    if result["path"] == "direct":
+        _p(f"  CONNECTED — direct link ({result['relation']})", "bold green")
+        _p(f"  Sources:     {', '.join(result['sources']) or '—'}")
+        _p(f"  First seen:  {result['first_seen']}    Last seen: {result['last_seen']}\n")
+    else:
+        bridges = ", ".join(f"{b['type']}:{b['label']}" for b in result["bridges"])
+        _p("  CONNECTED — via shared relationship", "bold green")
+        _p(f"  Bridge(s):   {bridges}\n")
+    return True
+
+
+# ---------------------------------------------------------------------------
 # Progress bar support
 # ---------------------------------------------------------------------------
 
@@ -1089,7 +1227,23 @@ def run(
         )
     except Exception as _exc:
         logger.warning("Correlation engine failed: %s", _exc)
-        
+
+    # ── 5¾. Persistent correlation graph ─────────────────────────────
+    # Fold this run's entities (actor, IOCs, techniques, malware, CVEs,
+    # campaigns) into the local cross-run graph at output/graph/graph.json.
+    # This is what makes `theory --ioc`, `theory --technique`, and
+    # multi-flag connection queries (`theory --actor X --ioc Y`) possible —
+    # without it, every run would be an island with no memory of any
+    # other. Disable with --no-graph if you don't want this run recorded
+    # (e.g. one-off/throwaway queries, or researching something sensitive
+    # you don't want persisted even locally).
+    if not kwargs.get("no_graph"):
+        try:
+            from processors.graph import ingest_profile
+            ingest_profile(profile)
+        except Exception as _exc:
+            logger.warning("Graph ingestion failed: %s", _exc)
+
     # ── 6. Output ─────────────────────────────────────────────────────
     if output == "json":
         _output_json(profile, save)
@@ -1605,6 +1759,47 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Print output to terminal only — do not write files to output/dossiers/.",
     )
+    p.add_argument(
+        "--no-graph",
+        action="store_true",
+        help=(
+            "Don't record this run's entities (IOCs, techniques, malware, CVEs) "
+            "in the local persistent correlation graph at output/graph/graph.json."
+        ),
+    )
+
+    # ── Cross-run query modes ────────────────────────────────────────────
+    # These query the persistent correlation graph (processors/graph.py)
+    # built up from every prior `theory --actor` run — not just the data
+    # collected in the current invocation.
+    #
+    #   theory --ioc 1.1.1.1              -> standalone IOC lookup
+    #   theory --technique T1566          -> standalone technique lookup
+    #   theory --actor APT28 --ioc 1.1.1.1
+    #       -> a single cross-correlative question: is THIS actor
+    #          connected to THIS IOC in anything THEORY has ever
+    #          recorded — not two independent reports stapled together.
+    query = p.add_argument_group("cross-run graph queries")
+    query.add_argument(
+        "--ioc",
+        metavar="VALUE",
+        default="",
+        help=(
+            "Query the persistent correlation graph for an indicator (IP, domain, "
+            "hash, URL, email) across every past `theory --actor` run. "
+            "Combine with --actor to ask whether that actor is connected to this IOC."
+        ),
+    )
+    query.add_argument(
+        "--technique",
+        metavar="ID",
+        default="",
+        help=(
+            "Query the persistent correlation graph for an ATT&CK technique ID "
+            "(e.g. T1566) across every past `theory --actor` run. "
+            "Combine with --actor to ask whether that actor is connected to this technique."
+        ),
+    )
 
     # ── Verbosity ──────────────────────────────────────────────────────
     p.add_argument(
@@ -1675,10 +1870,23 @@ def main(argv: list[str] | None = None) -> None:
         cmd_update_bundles()
         return
 
+    # ── Standalone cross-run graph queries (no --actor) ────────────────
+    # `theory --ioc VALUE` / `theory --technique ID` on their own query
+    # the persistent correlation graph built up from every past
+    # `theory --actor` run — they don't collect anything new themselves.
+    if not args.actor and (args.ioc or args.technique):
+        found = True
+        if args.ioc:
+            found = cmd_query_ioc(args.ioc) and found
+        if args.technique:
+            found = cmd_query_technique(args.technique) and found
+        sys.exit(0 if found else 1)
+
     # ── Require --actor for everything else ───────────────────────────
     if not args.actor:
         parser.print_help()
-        print("\nerror: --actor is required. Try: theory --actor APT28\n")
+        print("\nerror: --actor is required (or use --ioc / --technique for a standalone graph lookup). "
+              "Try: theory --actor APT28\n")
         sys.exit(1)
 
     sources = [s.strip().lower() for s in args.sources.split(",") if s.strip()]
@@ -1711,7 +1919,20 @@ def main(argv: list[str] | None = None) -> None:
         sector           = args.sector,
         detection_path   = args.detection_path,
         playbook_format  = args.playbook_format,
+        no_graph         = args.no_graph,
     )
+
+    # ── Multi-flag cross-correlative query ─────────────────────────────
+    # `theory --actor X --ioc Y` (or --technique) is one combined
+    # question — is X connected to Y in anything THEORY has recorded —
+    # not the actor dossier and a separate IOC report stapled together.
+    # Runs after the actor pipeline so this run's own data has already
+    # been folded into the graph and is available to the connection query.
+    if profile and (args.ioc or args.technique):
+        if args.ioc:
+            cmd_find_connection(("actor", args.actor), ("ioc", args.ioc))
+        if args.technique:
+            cmd_find_connection(("actor", args.actor), ("technique", args.technique))
 
     sys.exit(0 if profile else 1)
 
