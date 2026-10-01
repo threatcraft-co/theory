@@ -476,6 +476,40 @@ def query_technique(technique_id: str, store: GraphStore | None = None) -> dict[
     }
 
 
+def query_cve(cve_id: str, store: GraphStore | None = None) -> dict[str, Any]:
+    """Standalone lookup: which actors (and techniques) does THEORY have
+    on record as attributed to this CVE, across every past run?
+
+    Symmetric with query_ioc/query_technique/query_actor — completes the
+    multi-axis query set (`--ioc`/`--technique`/`--attack-type`/`--cve`)
+    so a CVE can be looked up the same way an indicator or technique can,
+    without re-running collection."""
+    store = store or GraphStore.load()
+    node = store.get_node("cve", cve_id)
+    if node is None:
+        return {"found": False, "cve_id": canonical_id("cve", cve_id)}
+
+    key = _node_key("cve", node["id"])
+    buckets: dict[str, list[dict]] = {"actor": [], "technique": [], "malware": [], "campaign": []}
+    for other_key, edge in store.neighbors(key).items():
+        entry = _linked_entry(store, other_key, edge)
+        if entry and entry["type"] in buckets:
+            buckets[entry["type"]].append(entry)
+
+    return {
+        "found":             True,
+        "cve_id":            node["id"],
+        "kev_confirmed":     bool(node.get("meta", {}).get("kev_confirmed")),
+        "first_seen":        node["first_seen"],
+        "last_seen":         node["last_seen"],
+        "sources":           node["sources"],
+        "linked_actors":     buckets["actor"],
+        "linked_techniques": buckets["technique"],
+        "linked_malware":    buckets["malware"],
+        "linked_campaigns":  buckets["campaign"],
+    }
+
+
 # ---------------------------------------------------------------------------
 # Cross-correlative / multi-axis query — theory --actor X --ioc Y
 # ---------------------------------------------------------------------------

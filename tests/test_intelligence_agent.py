@@ -54,6 +54,7 @@ def isolated_graph(tmp_path, monkeypatch):
             "actor_name": "APT28",
             "indicators": [{"type": "ip", "value": "1.1.1.1", "sources": ["otx"]}],
             "techniques": [{"technique_id": "T1566", "technique_name": "Phishing", "sources": ["mitre"]}],
+            "cves": [{"cve_id": "CVE-2023-23397", "sources": ["cisa"], "kev_confirmed": True}],
         },
         store=store,
     )
@@ -104,6 +105,15 @@ class TestAskToolCalling:
         ])
         result = agent.ask("who uses T1566?", provider=stub)
         assert result == "APT28 uses T1566 (Phishing)."
+
+    def test_query_cve_tool(self):
+        stub = StubProvider([
+            "TOOL: query_cve CVE-2023-23397",
+            "APT28 is attributed to CVE-2023-23397 (KEV-confirmed).",
+        ])
+        result = agent.ask("who is linked to CVE-2023-23397?", provider=stub)
+        assert result == "APT28 is attributed to CVE-2023-23397 (KEV-confirmed)."
+        assert "APT28" in stub.calls[1][1]
 
     def test_query_actor_tool(self):
         stub = StubProvider([

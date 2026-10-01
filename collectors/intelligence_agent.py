@@ -34,6 +34,7 @@ Tools:
   query_ioc <value>        -> processors.graph.query_ioc
   query_technique <id>     -> processors.graph.query_technique
   query_actor <name>       -> processors.graph.query_actor
+  query_cve <id>           -> processors.graph.query_cve
   query_personal <name>    -> the user's own local research notes for that actor
 """
 from __future__ import annotations
@@ -55,7 +56,7 @@ intelligence tool — you must answer ONLY from what it has actually
 recorded, never from general knowledge, and say plainly when something
 is not in its data rather than guessing.
 
-You have four tools, each a local lookup against THEORY's own persistent
+You have five tools, each a local lookup against THEORY's own persistent
 correlation graph or the user's personal research notes — not the
 internet:
 
@@ -67,6 +68,8 @@ internet:
   query_actor <name>      - everything THEORY's graph has recorded for
                              an actor: linked IOCs, techniques, malware,
                              CVEs, campaigns.
+  query_cve <id>          - which actors, techniques, and malware THEORY
+                             has linked to a CVE (e.g. CVE-2023-23397).
   query_personal <name>   - the user's own local research notes tagged
                              to that actor (private, local-only data).
 
@@ -100,6 +103,11 @@ def _tool_query_actor(arg: str) -> dict[str, Any]:
     return query_actor(arg)
 
 
+def _tool_query_cve(arg: str) -> dict[str, Any]:
+    from processors.graph import query_cve
+    return query_cve(arg)
+
+
 def _tool_query_personal(arg: str) -> dict[str, Any]:
     from collectors.personal_intel import PersonalIntelCollector
     result = PersonalIntelCollector().query(arg)
@@ -116,6 +124,7 @@ TOOLS: dict[str, Callable[[str], Any]] = {
     "query_ioc":       _tool_query_ioc,
     "query_technique": _tool_query_technique,
     "query_actor":     _tool_query_actor,
+    "query_cve":       _tool_query_cve,
     "query_personal":  _tool_query_personal,
 }
 

@@ -820,6 +820,52 @@ def cmd_query_technique(technique_id: str) -> bool:
     return True
 
 
+def cmd_query_cve(cve_id: str) -> bool:
+    """Standalone `theory --cve ID` lookup against the persistent graph.
+
+    Symmetric with --ioc/--technique — completes the v2.0 multi-axis
+    query set originally seeded by the VulDB collector's actor-CVE
+    correlation data.
+    """
+    from processors.graph import query_cve
+    result  = query_cve(cve_id)
+    console = _graph_console()
+
+    def _p(msg: str, style: str = "") -> None:
+        if console:
+            console.print(f"[{style}]{msg}[/]" if style else msg)
+        else:
+            print(msg)
+
+    _p(f"\nTHEORY — Graph lookup: CVE {cve_id.strip().upper()!r}", "bold cyan")
+    if not result["found"]:
+        _p("  Not found. No prior `theory --actor` run has reported this CVE.", "dim")
+        _p("  Run an actor query with --sources including cisa_kev, nvd, or vuldb "
+           "to populate the graph.\n", "dim")
+        return False
+
+    kev_tag = "  [KEV-confirmed]" if result.get("kev_confirmed") else ""
+    _p(f"  First seen:  {result['first_seen']}    Last seen: {result['last_seen']}{kev_tag}")
+    _p(f"  Sources:     {', '.join(result['sources']) or '—'}")
+
+    if result["linked_actors"]:
+        _p("\n  Actors attributed to this CVE:", "bold")
+        for a in result["linked_actors"]:
+            _p(f"    - {a['label']}  ({', '.join(a['sources']) or '—'})")
+    else:
+        _p("\n  No actors linked yet.", "dim")
+    if result["linked_techniques"]:
+        _p("\n  Linked techniques:", "bold")
+        for t in result["linked_techniques"]:
+            _p(f"    - {t['label']}")
+    if result["linked_malware"]:
+        _p("\n  Linked malware:", "bold")
+        for m in result["linked_malware"]:
+            _p(f"    - {m['label']}")
+    _p("")
+    return True
+
+
 def cmd_query_attack_type(label: str) -> bool:
     """Standalone `theory --attack-type LABEL` lookup against the
     persistent graph (matched against actor motivations + malware type)."""
@@ -2057,9 +2103,11 @@ cross-run graph queries (persistent across every past run — see processors/gra
   theory --ioc 1.1.1.1                          # standalone: what do we know about this IOC
   theory --technique T1566                      # standalone: who uses this technique
   theory --attack-type ransomware               # standalone: actors/malware matching this type
+  theory --cve CVE-2023-23397                   # standalone: who's attributed to this CVE
   theory --actor APT28 --ioc 1.1.1.1            # is APT28 connected to this IOC? (one combined question)
   theory --actor APT28 --technique T1566        # is APT28 connected to this technique?
   theory --actor APT28 --attack-type espionage  # does APT28 match this attack type?
+  theory --actor APT28 --cve CVE-2023-23397     # is APT28 connected to this CVE?
 
 personal research (gitignored, two-layer redirect — see collectors/personal_intel.py):
   theory --init-personal                        # set up config/local_sources.yaml + starter file
@@ -2242,6 +2290,7 @@ def _build_parser() -> argparse.ArgumentParser:
     #
     #   theory --ioc 1.1.1.1              -> standalone IOC lookup
     #   theory --technique T1566          -> standalone technique lookup
+    #   theory --cve CVE-2023-23397       -> standalone CVE lookup
     #   theory --actor APT28 --ioc 1.1.1.1
     #       -> a single cross-correlative question: is THIS actor
     #          connected to THIS IOC in anything THEORY has ever
@@ -2276,6 +2325,16 @@ def _build_parser() -> argparse.ArgumentParser:
             "(e.g. ransomware, espionage, financial) matched against recorded actor "
             "motivations and malware types. Combine with --actor to check whether "
             "that actor matches this attack type."
+        ),
+    )
+    query.add_argument(
+        "--cve",
+        metavar="ID",
+        default="",
+        help=(
+            "Query the persistent correlation graph for a CVE (e.g. CVE-2023-23397) "
+            "across every past `theory --actor` run. "
+            "Combine with --actor to ask whether that actor is connected to this CVE."
         ),
     )
 
@@ -2388,7 +2447,7 @@ def main(argv: list[str] | None = None) -> None:
     # LABEL` on their own query the persistent correlation graph built up
     # from every past `theory --actor` run — they don't collect anything
     # new themselves.
-    if not args.actor and (args.ioc or args.technique or args.attack_type):
+    if not args.actor and (args.ioc or args.technique or args.attack_type or args.cve):
         found = True
         if args.ioc:
             found = cmd_query_ioc(args.ioc) and found
@@ -2396,12 +2455,14 @@ def main(argv: list[str] | None = None) -> None:
             found = cmd_query_technique(args.technique) and found
         if args.attack_type:
             found = cmd_query_attack_type(args.attack_type) and found
+        if args.cve:
+            found = cmd_query_cve(args.cve) and found
         sys.exit(0 if found else 1)
 
     # ── Require --actor for everything else ───────────────────────────
     if not args.actor:
         parser.print_help()
-        print("\nerror: --actor is required (or use --ioc / --technique / --attack-type "
+        print("\nerror: --actor is required (or use --ioc / --technique / --attack-type / --cve "
               "for a standalone graph lookup). Try: theory --actor APT28\n")
         sys.exit(1)
 
@@ -2457,11 +2518,13 @@ def main(argv: list[str] | None = None) -> None:
     # not the actor dossier and a separate IOC report stapled together.
     # Runs after the actor pipeline so this run's own data has already
     # been folded into the graph and is available to the connection query.
-    if profile and (args.ioc or args.technique):
+    if profile and (args.ioc or args.technique or args.cve):
         if args.ioc:
             cmd_find_connection(("actor", args.actor), ("ioc", args.ioc))
         if args.technique:
             cmd_find_connection(("actor", args.actor), ("technique", args.technique))
+        if args.cve:
+            cmd_find_connection(("actor", args.actor), ("cve", args.cve))
 
     if profile and args.attack_type:
         cmd_check_attack_type(args.actor, args.attack_type)
