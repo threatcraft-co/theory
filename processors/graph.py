@@ -239,7 +239,11 @@ def ingest_profile(profile: dict[str, Any], store: GraphStore | None = None) -> 
     actor_name = (profile.get("actor_name") or "").strip()
     if not actor_name:
         return store
-    actor_key = store.upsert_node("actor", actor_name, label=actor_name)
+    motivations = [m for m in (profile.get("motivations") or []) if m]
+    actor_key = store.upsert_node(
+        "actor", actor_name, label=actor_name,
+        meta={"motivations": motivations} if motivations else None,
+    )
 
     for ioc in (profile.get("indicators") or []):
         value = (ioc.get("value") or "").strip()
@@ -358,6 +362,60 @@ def query_ioc(value: str, store: GraphStore | None = None) -> dict[str, Any]:
         "linked_malware":     buckets["malware"],
         "linked_techniques":  buckets["technique"],
         "linked_cves":        buckets["cve"],
+    }
+
+
+def query_attack_type(label: str, store: GraphStore | None = None) -> dict[str, Any]:
+    """Standalone lookup: which actors and malware families does THEORY
+    have on record for a given attack-type label?
+
+    Deliberately grounded in only two fields THEORY already collects
+    reliably, rather than a separate, hand-built attack-type taxonomy
+    mapping attack types to techniques/CVEs — that kind of mapping is
+    fuzzy and easy to get subtly wrong, which matters a lot for a tool
+    people use operationally. Instead:
+
+      - actor.motivations  (CommonSchema's canonical field: financial,
+        espionage, hacktivism, destruction, unknown)
+      - malware.type       (freeform, but consistently populated by
+        collectors: ransomware, backdoor, trojan, loader, wiper, ...)
+
+    Matching is case-insensitive substring on both, so "ransom" matches
+    malware typed "ransomware", and "espionage" matches an actor whose
+    motivations list contains "espionage".
+    """
+    store = store or GraphStore.load()
+    needle = label.strip().lower()
+    if not needle:
+        return {"label": label, "matched_actors": [], "matched_malware": []}
+
+    matched_actors:  list[dict[str, Any]] = []
+    matched_malware: list[dict[str, Any]] = []
+
+    for key, node in store.nodes.items():
+        if node["type"] == "actor":
+            motivations = [m.lower() for m in (node.get("meta", {}).get("motivations") or [])]
+            if any(needle in m or m in needle for m in motivations):
+                matched_actors.append({"id": node["id"], "label": node.get("label", node["id"])})
+        elif node["type"] == "malware":
+            mtype = (node.get("meta", {}).get("malware_type") or "").lower()
+            if mtype and needle in mtype:
+                entry = {"id": node["id"], "label": node.get("label", node["id"]), "malware_type": mtype}
+                matched_malware.append(entry)
+                # Pull in actors linked to this malware too — an actor whose
+                # only signal for this attack type is "uses ransomware X",
+                # not a motivation tag, still belongs in the answer.
+                for other_key, edge in store.neighbors(key).items():
+                    other = store.nodes.get(other_key)
+                    if other and other["type"] == "actor" and not any(
+                        a["id"] == other["id"] for a in matched_actors
+                    ):
+                        matched_actors.append({"id": other["id"], "label": other.get("label", other["id"])})
+
+    return {
+        "label":           label.strip(),
+        "matched_actors":  matched_actors,
+        "matched_malware": matched_malware,
     }
 
 

@@ -18,6 +18,7 @@ from processors.graph import (
     find_connection,
     ingest_profile,
     query_actor,
+    query_attack_type,
     query_ioc,
     query_technique,
 )
@@ -203,6 +204,45 @@ class TestQueryIoc:
         result = query_ioc("1.1.1.1", store=store)
         assert result["ioc_type"] == "ip"
         assert result["first_seen"] and result["last_seen"]
+
+
+class TestQueryAttackType:
+
+    def test_matches_actor_by_motivation(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        ingest_profile({"actor_name": "APT28", "motivations": ["espionage"]}, store=store)
+        result = query_attack_type("espionage", store=store)
+        assert any(a["id"] == "APT28" for a in result["matched_actors"])
+
+    def test_matches_actor_via_malware_type(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        ingest_profile(
+            {"actor_name": "BlackCatGroup", "malware": [{"name": "BlackCat", "type": "ransomware"}]},
+            store=store,
+        )
+        result = query_attack_type("ransomware", store=store)
+        assert any(m["id"] == "blackcat" for m in result["matched_malware"])
+        assert any(a["id"] == "BlackCatGroup" for a in result["matched_actors"])
+
+    def test_substring_match_both_directions(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        ingest_profile({"actor_name": "APT28", "motivations": ["financial"]}, store=store)
+        # "financ" is a substring of "financial" — should still match
+        result = query_attack_type("financ", store=store)
+        assert any(a["id"] == "APT28" for a in result["matched_actors"])
+
+    def test_no_match_returns_empty_lists(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        ingest_profile({"actor_name": "APT28", "motivations": ["espionage"]}, store=store)
+        result = query_attack_type("wiper", store=store)
+        assert result["matched_actors"] == []
+        assert result["matched_malware"] == []
+
+    def test_empty_label_returns_empty_result(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        result = query_attack_type("   ", store=store)
+        assert result["matched_actors"] == []
+        assert result["matched_malware"] == []
 
 
 class TestQueryActor:
