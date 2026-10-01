@@ -19,6 +19,7 @@ from processors.graph import (
     ingest_profile,
     query_actor,
     query_attack_type,
+    query_cve,
     query_ioc,
     query_technique,
 )
@@ -294,6 +295,46 @@ class TestQueryTechnique:
         assert result["linked_cves"] == []
 
 
+class TestQueryCve:
+
+    def test_unknown_cve_not_found(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        result = query_cve("CVE-9999-99999", store=store)
+        assert result["found"] is False
+        assert result["cve_id"] == "CVE-9999-99999"
+
+    def test_known_cve_reports_linked_actor(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        ingest_profile(SAMPLE_PROFILE, store=store)
+        result = query_cve("CVE-2023-23397", store=store)
+        assert result["found"] is True
+        assert result["cve_id"] == "CVE-2023-23397"
+        assert any(a["label"] == "APT28" for a in result["linked_actors"])
+
+    def test_kev_confirmed_flag_passed_through(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        ingest_profile(SAMPLE_PROFILE, store=store)
+        result = query_cve("CVE-2023-23397", store=store)
+        assert result["kev_confirmed"] is True
+
+    def test_cve_lookup_is_case_insensitive(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        ingest_profile(SAMPLE_PROFILE, store=store)
+        result = query_cve("cve-2023-23397", store=store)
+        assert result["found"] is True
+
+    def test_cve_without_kev_confirmed_defaults_false(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        profile = {
+            "actor_name": "Turla",
+            "cves": [{"cve_id": "CVE-2020-00001", "sources": ["nvd"]}],
+        }
+        ingest_profile(profile, store=store)
+        result = query_cve("CVE-2020-00001", store=store)
+        assert result["found"] is True
+        assert result["kev_confirmed"] is False
+
+
 # ---------------------------------------------------------------------------
 # find_connection — cross-correlative / multi-axis query
 # ---------------------------------------------------------------------------
@@ -349,3 +390,12 @@ class TestFindConnection:
         assert result["reason"] == "one_or_both_unknown"
         assert result["entity_a"]["known"] is True
         assert result["entity_b"]["known"] is False
+
+    def test_actor_cve_direct_connection_found(self, tmp_path):
+        # Symmetric with --ioc/--technique: `theory --actor X --cve Y`
+        # is one combined question, backed by the same find_connection path.
+        store = GraphStore(path=tmp_path / "graph.json")
+        ingest_profile(SAMPLE_PROFILE, store=store)
+        result = find_connection(("actor", "APT28"), ("cve", "CVE-2023-23397"), store=store)
+        assert result["connected"] is True
+        assert result["path"] == "direct"
