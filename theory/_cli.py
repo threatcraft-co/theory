@@ -98,6 +98,7 @@ SUPPORTED_SOURCES: dict[str, str | None] = {
     "otx":         "collectors.alienvault_otx.AlienVaultOTXCollector",
     "vuldb":       "collectors.vuldb.VulDBCollector",
     "nvd":         "collectors.nvd.NVDCollector",
+    "personal":    "collectors.personal_intel.PersonalIntelCollector",
     # Enrichment-only — accepted by CLI but handled separately
     "sigma":          None,
     "yara":           None,
@@ -127,6 +128,7 @@ SOURCE_DESCRIPTIONS: dict[str, str] = {
     "abuseipdb":      "AbuseIPDB IP reputation scores from community reports (free, 1000/day)",
     "vuldb":          "VulDB actor-CVE correlation and exploit intelligence (free tier, 50 credits/day)",
     "vendor":         "Vendor intelligence synthesis — LLM-synthesized summaries from 35+ research blogs (requires LLM provider in .env)",
+    "personal":       "Your own local research indicators — gitignored redirect, never leaves your machine (set up with --init-personal)",
 }
 
 SOURCE_REQUIRES: dict[str, str] = {
@@ -207,6 +209,7 @@ def cmd_list_sources() -> None:
             "greynoise":      "7 days (.cache/greynoise/)",
             "abuseipdb":      "3 days (.cache/abuseipdb/)",
             "vuldb":          "7 days (.cache/vuldb/)",
+            "personal":       "none — reads your local file directly, every run",
         }
 
         for key, desc in SOURCE_DESCRIPTIONS.items():
@@ -454,6 +457,36 @@ def cmd_update_bundles() -> None:
     _print("\n  Malpedia + OTX caches preserved (clear manually if needed).", "dim")
     _print("  Run THEORY normally to rebuild Sigma + ThreatFox caches.\n", "dim")
     _print("Update complete.\n", "bold green")
+
+
+# ---------------------------------------------------------------------------
+# Personal research redirect — theory --init-personal
+# ---------------------------------------------------------------------------
+
+def cmd_init_personal(path: str | None) -> None:
+    """`theory --init-personal [--personal-path PATH]` — set up the
+    gitignored redirect + starter personal indicators file."""
+    from collectors.personal_intel import REDIRECT_PATH, init_personal
+    target = init_personal(path)
+
+    try:
+        from rich.console import Console
+        console = Console()
+    except ImportError:
+        console = None
+
+    def _p(msg: str, style: str = "") -> None:
+        if console:
+            console.print(f"[{style}]{msg}[/]" if style else msg)
+        else:
+            print(msg)
+
+    _p("\nTHEORY — Personal research redirect", "bold cyan")
+    _p(f"  Redirect (gitignored):  {REDIRECT_PATH.resolve()}")
+    _p(f"  Personal indicators:    {target}")
+    _p("\n  Add your own research to that file, then query it with:")
+    _p("    theory --actor APT28 --sources personal,mitre,cisa", "dim")
+    _p("\n  Nothing in either file is committed, shared, or uploaded by THEORY.\n", "dim")
 
 
 # ---------------------------------------------------------------------------
@@ -1828,6 +1861,24 @@ def _build_parser() -> argparse.ArgumentParser:
             "Run periodically to stay current with new ATT&CK releases and Sigma rules."
         ),
     )
+    info.add_argument(
+        "--init-personal",
+        action="store_true",
+        help=(
+            "Set up the personal research redirect: a gitignored config/local_sources.yaml "
+            "pointing at a private indicators file (default: ~/.theory/personal_indicators.yaml, "
+            "outside this repo). Then use --sources personal to query it alongside any actor."
+        ),
+    )
+    info.add_argument(
+        "--personal-path",
+        metavar="PATH",
+        default="",
+        help=(
+            "Use with --init-personal to point the redirect at a custom path instead of "
+            "the default ~/.theory/personal_indicators.yaml."
+        ),
+    )
 
     return p
 
@@ -1868,6 +1919,10 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.update_bundles:
         cmd_update_bundles()
+        return
+
+    if args.init_personal:
+        cmd_init_personal(args.personal_path or None)
         return
 
     # ── Standalone cross-run graph queries (no --actor) ────────────────

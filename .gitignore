@@ -48,6 +48,7 @@ secrets.yaml
 secrets.yml
 config/sources.yaml
 config/secrets.yaml
+config/local_sources.yaml
 
 # ─── THEORY runtime artifacts ───────────────────────────────────────────
 .cache/
