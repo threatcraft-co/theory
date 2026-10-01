@@ -17,9 +17,20 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
+#
+# BUG FIX (v2.0): this used to read {"mitre_attack", "cisa_advisories"}.
+# "mitre_attack" is correct — it's collectors/mitre_attack.py's real
+# SOURCE_ID. But collectors/cisa_advisories.py's real SOURCE_ID is "cisa",
+# not "cisa_advisories" — that string never appears anywhere in a real
+# pipeline run. The effect: any technique seen by exactly one source,
+# where that source was CISA, silently failed the high-provenance check
+# and was scored LOW instead of MEDIUM — understating confidence for
+# every CISA-only technique, with no error or warning anywhere to surface
+# it. Source identity here must match the collectors' actual SOURCE_ID
+# values, not their module names.
 _HIGH_PROVENANCE_SOURCES = frozenset({
     "mitre_attack",
-    "cisa_advisories",
+    "cisa",
 })
 
 

@@ -47,18 +47,18 @@ class TestTechniqueDeduplicate:
         assert "alienvault_otx" in result["techniques"][0]["_sources"]
     def test_different_techniques_both_kept(self):
         r1 = make_result("mitre_attack", techniques=[make_technique("T1566")])
-        r2 = make_result("cisa_advisories", techniques=[make_technique("T1078")])
+        r2 = make_result("cisa", techniques=[make_technique("T1078")])
         ids = [t["technique_id"] for t in deduplicate([r1, r2])["techniques"]]
         assert "T1566" in ids and "T1078" in ids
     def test_description_merged(self):
         r1 = make_result("mitre_attack", techniques=[make_technique("T1566", description="")])
-        r2 = make_result("cisa_advisories", techniques=[make_technique("T1566", description="Phishing details")])
+        r2 = make_result("cisa", techniques=[make_technique("T1566", description="Phishing details")])
         assert deduplicate([r1, r2])["techniques"][0]["description"] == "Phishing details"
     def test_detection_recs_merged_without_dupes(self):
         t1 = make_technique("T1566"); t1["detection_recs"] = ["Alert on email attachments"]
         t2 = make_technique("T1566"); t2["detection_recs"] = ["Alert on email attachments", "Monitor DNS"]
         r1 = make_result("mitre_attack", techniques=[t1])
-        r2 = make_result("cisa_advisories", techniques=[t2])
+        r2 = make_result("cisa", techniques=[t2])
         recs = deduplicate([r1, r2])["techniques"][0]["detection_recs"]
         assert recs.count("Alert on email attachments") == 1
         assert "Monitor DNS" in recs
@@ -75,10 +75,26 @@ class TestConfidenceWeighting:
         assert deduplicate([make_result("alienvault_otx", techniques=[make_technique("T1566")])])["techniques"][0]["confidence"] == "LOW"
     def test_two_source_indicator_is_high(self):
         r1 = make_result("mitre_attack", indicators=[make_indicator("domain", "evil.com")])
-        r2 = make_result("cisa_advisories", indicators=[make_indicator("domain", "evil.com")])
+        r2 = make_result("cisa", indicators=[make_indicator("domain", "evil.com")])
         assert deduplicate([r1, r2])["indicators"][0]["confidence"] == "HIGH"
     def test_single_cisa_indicator_is_medium(self):
-        assert deduplicate([make_result("cisa_advisories", indicators=[make_indicator("domain", "evil.com")])])["indicators"][0]["confidence"] == "MEDIUM"
+        assert deduplicate([make_result("cisa", indicators=[make_indicator("domain", "evil.com")])])["indicators"][0]["confidence"] == "MEDIUM"
+
+    def test_single_cisa_technique_is_medium(self):
+        # Regression: _HIGH_PROVENANCE_SOURCES used to contain the literal
+        # string "cisa_advisories", which is nothing — the real collector
+        # (collectors/cisa_advisories.py) reports source_id "cisa". Every
+        # CISA-only technique was silently scored LOW instead of MEDIUM.
+        # "cisa" (the real SOURCE_ID) must get MEDIUM on its own.
+        assert deduplicate([make_result("cisa", techniques=[make_technique("T1566")])])["techniques"][0]["confidence"] == "MEDIUM"
+
+    def test_fictional_cisa_advisories_string_does_not_get_medium(self):
+        # Locks in the fix the other direction: "cisa_advisories" is not a
+        # real source_id anywhere in the pipeline, so it must NOT be
+        # treated as high-provenance even if it reappears by accident.
+        assert deduplicate(
+            [make_result("cisa_advisories", techniques=[make_technique("T1566")])]
+        )["techniques"][0]["confidence"] == "LOW"
 
 
 class TestIndicatorDeduplicate:
@@ -116,7 +132,7 @@ class TestCampaignsNotDeduped:
     def test_all_campaigns_included(self):
         c1 = {"name": "Op Alpha", "date": "2023", "description": "A", "reference": "https://a.com"}
         c2 = {"name": "Op Beta", "date": "2024", "description": "B", "reference": "https://b.com"}
-        r1 = make_result("cisa_advisories", campaigns=[c1])
+        r1 = make_result("cisa", campaigns=[c1])
         r2 = make_result("mitre_attack", campaigns=[c2])
         assert len(deduplicate([r1, r2])["campaigns"]) == 2
 
@@ -141,6 +157,6 @@ class TestAliasDeduplicate:
 
 class TestSourceCitations:
     def test_all_sources_recorded(self):
-        r = deduplicate([make_result("mitre_attack"), make_result("cisa_advisories")])
+        r = deduplicate([make_result("mitre_attack"), make_result("cisa")])
         ids = [s["source_id"] for s in r["_sources"]]
-        assert "mitre_attack" in ids and "cisa_advisories" in ids
+        assert "mitre_attack" in ids and "cisa" in ids
