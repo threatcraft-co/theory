@@ -228,10 +228,10 @@ class CisaAdvisoriesCollector(BaseCollector):
 
         logger.info("CISA: searching for %r (canonical: %s)", actor_name, canonical)
 
-        kev_vulns    = self._fetch_kev(search_set)
         aa_advisories = self._fetch_advisories(search_set)
+        cves = self._cves_from_advisories(aa_advisories)
 
-        if not kev_vulns and not aa_advisories:
+        if not cves and not aa_advisories:
             logger.info("CISA: no data found for %r", actor_name)
             return None
 
@@ -248,7 +248,7 @@ class CisaAdvisoriesCollector(BaseCollector):
             "malware":      [],
             "campaigns":    [],
             "sectors":      self._sectors_from_advisories(aa_advisories),
-            "cves":         kev_vulns,
+            "cves":         cves,
             "advisories":   [
                 {
                     "title": a.get("title", ""),
@@ -257,44 +257,90 @@ class CisaAdvisoriesCollector(BaseCollector):
                 }
                 for a in aa_advisories
             ],
-            "raw_source":   "CISA KEV + Advisories",
+            "raw_source":   "CISA Advisories + KEV cross-reference",
         }
 
     # ------------------------------------------------------------------
-    # KEV catalog
+    # CVE attribution
     # ------------------------------------------------------------------
+    #
+    # IMPORTANT: CVE attribution comes from CVE IDs mentioned in the text
+    # of advisories already confirmed to be about this specific actor
+    # (via _advisory_matches, which requires the actor's name/alias to
+    # appear in the advisory's own title/summary/tags). This used to
+    # instead download the entire KEV catalog and substring-match the
+    # actor's name against KEV's free-text 'notes'/'vulnerabilityName'
+    # fields — but KEV has no actor-attribution field at all (it's
+    # purely CVE-centric: vendor, product, exploitation date), so that
+    # match was essentially coincidental whenever it hit, not a real
+    # actor-CVE association, and silently returned nothing the rest of
+    # the time. A CVE ID that literally appears in the body text of an
+    # advisory CISA wrote specifically about this actor is a real,
+    # scoped signal; a CVE whose KEV notes field happens to contain the
+    # same substring as the actor's name is not.
+    #
+    # The KEV catalog is still useful here — once we have real,
+    # actor-scoped CVE IDs, we cross-reference each one *by exact ID*
+    # against KEV to enrich it with vendor/product/due_date/date_added
+    # when available. That's a precise lookup, not a fuzzy one, so it's
+    # kept as enrichment rather than as the attribution source itself.
+    #
+    # For truly comprehensive, dedicated actor-to-CVE search, use the
+    # `vuldb` source — it queries a real per-actor CVE database directly
+    # rather than inferring attribution from advisory prose.
 
-    def _fetch_kev(self, search_set: frozenset[str]) -> list[dict]:
-        """
-        Download the KEV catalog and filter entries where the notes field
-        mentions any alias of the target actor.
-        """
+    def _cves_from_advisories(self, advisories: list[dict]) -> list[dict]:
+        seen: set[str] = set()
+        cve_ids: list[str] = []
+        for adv in advisories:
+            for cve_id in adv.get("cves", []):
+                if cve_id not in seen:
+                    seen.add(cve_id)
+                    cve_ids.append(cve_id)
+
+        if not cve_ids:
+            return []
+
+        kev_metadata = self._kev_metadata_for(cve_ids)
+        return [
+            {
+                "cve_id":      cve_id,
+                "product":     kev_metadata.get(cve_id, {}).get("product", ""),
+                "vendor":      kev_metadata.get(cve_id, {}).get("vendor", ""),
+                "description": kev_metadata.get(cve_id, {}).get("description", ""),
+                "due_date":    kev_metadata.get(cve_id, {}).get("due_date", ""),
+                "date_added":  kev_metadata.get(cve_id, {}).get("date_added", ""),
+                "sources":     [SOURCE_ID] + (["cisa_kev"] if cve_id in kev_metadata else []),
+            }
+            for cve_id in cve_ids
+        ]
+
+    @staticmethod
+    def _kev_metadata_for(cve_ids: list[str]) -> dict[str, dict]:
+        """Look up a specific set of CVE IDs against the KEV catalog by
+        exact ID match (not fuzzy text matching). Returns only entries
+        that actually exist in KEV; CVEs not in KEV simply get no extra
+        metadata, which is correct — not everything mentioned in an
+        advisory is a KEV-confirmed actively-exploited CVE."""
+        wanted = set(cve_ids)
         try:
             data = _fetch_json(KEV_URL)
         except Exception as exc:
             logger.warning("KEV fetch failed: %s", exc)
-            return []
+            return {}
 
-        vulns     = data.get("vulnerabilities", [])
-        matched   : list[dict] = []
-
-        for v in vulns:
-            notes = (v.get("notes") or "").lower()
-            name  = (v.get("vulnerabilityName") or "").lower()
-            text  = notes + " " + name
-
-            if any(alias in text for alias in search_set):
-                matched.append({
-                    "cve_id":      v.get("cveID", ""),
+        out: dict[str, dict] = {}
+        for v in data.get("vulnerabilities", []):
+            cid = v.get("cveID", "")
+            if cid in wanted:
+                out[cid] = {
                     "product":     v.get("product", ""),
                     "vendor":      v.get("vendorProject", ""),
                     "description": v.get("shortDescription", ""),
                     "due_date":    v.get("dueDate", ""),
                     "date_added":  v.get("dateAdded", ""),
-                })
-
-        logger.info("KEV: %d matching vulns for this actor", len(matched))
-        return matched
+                }
+        return out
 
     # ------------------------------------------------------------------
     # AA advisories
@@ -343,6 +389,9 @@ class CisaAdvisoriesCollector(BaseCollector):
             "summary":  item.get("summary", item.get("description", "")),
             "sectors":  _extract_sectors(item.get("tags", "") + " " + item.get("summary", "")),
             "techniques": _extract_technique_ids(
+                item.get("body", "") + " " + item.get("summary", "")
+            ),
+            "cves": _extract_cve_ids(
                 item.get("body", "") + " " + item.get("summary", "")
             ),
         }
@@ -420,6 +469,17 @@ def _extract_sectors(text: str) -> list[str]:
 
 def _extract_technique_ids(text: str) -> list[str]:
     return list(dict.fromkeys(re.findall(r"\bT\d{4}(?:\.\d{3})?\b", text)))
+
+
+def _extract_cve_ids(text: str) -> list[str]:
+    """Extract CVE IDs mentioned directly in advisory text. Scoped to
+    advisories already confirmed to be about a specific actor (see
+    _advisory_matches), so a CVE ID found here is a real, actor-relevant
+    signal — unlike matching an actor's name against KEV's unrelated
+    free-text notes field."""
+    return list(dict.fromkeys(
+        m.upper() for m in re.findall(r"\bCVE-\d{4}-\d{4,}\b", text, re.IGNORECASE)
+    ))
 
 
 def _fetch_advisory_xml(url: str, timeout: int = _TIMEOUT) -> list[dict]:

@@ -102,6 +102,9 @@ class TestSuggestSimilar:
         suggestions = suggest_similar("apt", limit=2)
         assert len(suggestions) <= 2
 
+
+class TestAliasTableIntegrity:
+
     def test_alias_table_has_no_duplicate_aliases(self):
         """Each alias string should map to exactly one canonical name."""
         seen: dict[str, str] = {}
@@ -112,6 +115,75 @@ class TestSuggestSimilar:
                     f"{seen[alias]!r} and {canonical!r}"
                 )
                 seen[alias] = canonical
+
+
+class TestCveExtraction:
+    """CVE attribution redesign: CVE IDs mentioned in the text of
+    advisories already confirmed to be about a specific actor, cross-
+    referenced against KEV by exact ID (not the old, unreliable
+    substring-match of the actor's name against KEV's free-text notes
+    field, which had no real actor-attribution basis)."""
+
+    def test_extract_cve_ids_finds_and_dedups(self):
+        from collectors.cisa_advisories import _extract_cve_ids
+        text = "Exploited CVE-2023-3519 and cve-2024-1234, then CVE-2023-3519 again."
+        assert _extract_cve_ids(text) == ["CVE-2023-3519", "CVE-2024-1234"]
+
+    def test_extract_cve_ids_empty_text(self):
+        from collectors.cisa_advisories import _extract_cve_ids
+        assert _extract_cve_ids("") == []
+        assert _extract_cve_ids("no cves mentioned here") == []
+
+    def test_collect_enriches_advisory_cve_with_exact_kev_match(self):
+        from collectors.cisa_advisories import CisaAdvisoriesCollector
+        from unittest.mock import patch
+
+        c = CisaAdvisoriesCollector()
+        fake_advisories = [{
+            "title": "Scattered Spider Advisory", "url": "https://cisa.gov/x", "date": "2026-01-01",
+            "summary": "Scattered Spider exploited CVE-2023-3519.",
+            "sectors": [], "techniques": [], "cves": ["CVE-2023-3519"],
+        }]
+        fake_kev = {"vulnerabilities": [
+            {"cveID": "CVE-2023-3519", "product": "NetScaler", "vendorProject": "Citrix",
+             "shortDescription": "Buffer overflow", "dueDate": "2023-08-09", "dateAdded": "2023-07-19"},
+            {"cveID": "CVE-9999-00000", "product": "unrelated", "vendorProject": "x"},
+        ]}
+        with patch.object(c, "_fetch_advisories", return_value=fake_advisories), \
+             patch("collectors.cisa_advisories._fetch_json", return_value=fake_kev):
+            result = c.collect("Scattered Spider")
+
+        assert len(result["cves"]) == 1   # the unrelated KEV entry must not leak in
+        cve = result["cves"][0]
+        assert cve["cve_id"] == "CVE-2023-3519"
+        assert cve["product"] == "NetScaler"
+        assert cve["vendor"] == "Citrix"
+        assert "cisa_kev" in cve["sources"]
+
+    def test_collect_surfaces_advisory_cve_not_in_kev(self):
+        from collectors.cisa_advisories import CisaAdvisoriesCollector
+        from unittest.mock import patch
+
+        c = CisaAdvisoriesCollector()
+        fake_advisories = [{
+            "title": "X", "url": "y", "date": "2026-01-01",
+            "summary": "x", "sectors": [], "techniques": [], "cves": ["CVE-2020-00000"],
+        }]
+        with patch.object(c, "_fetch_advisories", return_value=fake_advisories), \
+             patch("collectors.cisa_advisories._fetch_json", return_value={"vulnerabilities": []}):
+            result = c.collect("X")
+
+        assert result["cves"][0]["cve_id"] == "CVE-2020-00000"
+        assert result["cves"][0]["product"] == ""
+        assert result["cves"][0]["sources"] == ["cisa"]   # no cisa_kev tag — not KEV-confirmed
+
+    def test_collect_returns_none_with_no_advisories_and_no_cves(self):
+        from collectors.cisa_advisories import CisaAdvisoriesCollector
+        from unittest.mock import patch
+
+        c = CisaAdvisoriesCollector()
+        with patch.object(c, "_fetch_advisories", return_value=[]):
+            assert c.collect("nonexistent-actor-xyz") is None
 
 
 # ---------------------------------------------------------------------------
