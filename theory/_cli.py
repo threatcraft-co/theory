@@ -1766,6 +1766,21 @@ examples:
   theory --list-actors
   theory --update-bundles
 
+cross-run graph queries (persistent across every past run — see processors/graph.py):
+  theory --ioc 1.1.1.1                          # standalone: what do we know about this IOC
+  theory --technique T1566                      # standalone: who uses this technique
+  theory --attack-type ransomware               # standalone: actors/malware matching this type
+  theory --actor APT28 --ioc 1.1.1.1            # is APT28 connected to this IOC? (one combined question)
+  theory --actor APT28 --technique T1566        # is APT28 connected to this technique?
+  theory --actor APT28 --attack-type espionage  # does APT28 match this attack type?
+
+personal research (gitignored, two-layer redirect — see collectors/personal_intel.py):
+  theory --init-personal                        # set up config/local_sources.yaml + starter file
+  theory --actor APT28 --sources personal,mitre,cisa
+
+tool-calling LLM synthesis (answers only from THEORY's own local data):
+  theory ask "what do we know about 1.1.1.1?"
+
 notes:
   - --actor accepts any name or alias (e.g. "Cozy Bear" = APT29 = Midnight Blizzard)
   - Run --update-bundles periodically to refresh ATT&CK data, Sigma rules, MISP Galaxy, and CISA KEV
@@ -1775,7 +1790,9 @@ notes:
   - cisa_kev cross-references profile CVEs against 1600+ confirmed-exploited CVEs
   - Add otx for IOCs (free API key) and sigma for detection rule mapping
   - Set OTX_API_KEY and GITHUB_TOKEN in .env for best results
-  - Output files are saved to output/dossiers/
+  - Set ANTHROPIC_API_KEY, OPENAI_API_KEY, or run Ollama locally to enable `theory ask`
+  - Output files are saved to output/dossiers/; the correlation graph to output/graph/
+  - Use --no-save / --no-graph to keep a one-off run from writing anything to disk
 """
 
 
