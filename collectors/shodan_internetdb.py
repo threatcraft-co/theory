@@ -39,8 +39,8 @@ import logging
 import time
 from pathlib import Path
 from typing import Any
-from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 
 from collectors.base import BaseCollector
 
