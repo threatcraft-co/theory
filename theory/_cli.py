@@ -460,6 +460,119 @@ def cmd_update_bundles() -> None:
 
 
 # ---------------------------------------------------------------------------
+# theory diff — what changed for an actor since the last run
+# ---------------------------------------------------------------------------
+
+def cmd_diff(argv: list[str]) -> None:
+    """`theory diff --actor NAME [--from PATH --to PATH]`
+
+    By default compares output/dossiers/{slug}.previous.json against
+    {slug}.json — the one-step history JsonReporter.save() rotates in on
+    every run with --output json/all. --from/--to override both paths
+    for an ad hoc comparison of any two saved profiles.
+    """
+    import argparse as _argparse
+    import json as _json
+    from pathlib import Path as _Path
+
+    p = _argparse.ArgumentParser(prog="theory diff", description="Show what changed for an actor since the last run.")
+    p.add_argument("--actor", "-a", metavar="NAME", default="", help="Actor name or alias.")
+    p.add_argument("--from", dest="from_path", metavar="PATH", default="", help="Override the 'old' snapshot path.")
+    p.add_argument("--to",   dest="to_path",   metavar="PATH", default="", help="Override the 'new' snapshot path.")
+    args = p.parse_args(argv)
+
+    if not args.actor and not (args.from_path and args.to_path):
+        p.print_help()
+        print("\nerror: --actor is required (or pass both --from and --to).\n")
+        sys.exit(1)
+
+    if args.from_path and args.to_path:
+        old_path, new_path = _Path(args.from_path), _Path(args.to_path)
+    else:
+        try:
+            from collectors.cisa_advisories import resolve_canonical
+            slug = resolve_canonical(args.actor).lower().replace(" ", "_")
+        except Exception:
+            slug = args.actor.strip().lower().replace(" ", "_")
+        old_path = _Path("output/dossiers") / f"{slug}.previous.json"
+        new_path = _Path("output/dossiers") / f"{slug}.json"
+
+    if not new_path.exists():
+        print(f"\n[theory] No saved profile found at {new_path}.")
+        print("[theory] Run `theory --actor NAME --output json` (or --output all) at least once first.\n")
+        sys.exit(1)
+
+    try:
+        new_profile = _json.loads(new_path.read_text())
+    except Exception as exc:
+        print(f"\n[theory] Could not read {new_path}: {exc}\n")
+        sys.exit(1)
+
+    old_profile = None
+    if old_path.exists():
+        try:
+            old_profile = _json.loads(old_path.read_text())
+        except Exception as exc:
+            logger.warning("diff: could not read %s: %s", old_path, exc)
+
+    from processors.diff import diff_profiles
+    result = diff_profiles(old_profile, new_profile)
+    _print_diff(result)
+    sys.exit(0)
+
+
+def _print_diff(result: dict[str, Any]) -> None:
+    try:
+        from rich.console import Console
+        console = Console()
+    except ImportError:
+        console = None
+
+    def _p(msg: str, style: str = "") -> None:
+        if console:
+            console.print(f"[{style}]{msg}[/]" if style else msg)
+        else:
+            print(msg)
+
+    actor = result.get("actor_name", "unknown")
+    _p(f"\nTHEORY — Diff for {actor}", "bold cyan")
+
+    if result.get("is_first_run"):
+        _p("  No prior snapshot — this is the first recorded run for this actor.", "dim")
+        totals = {cat: len(result[cat]["added"]) for cat in ("techniques", "malware", "indicators", "cves", "campaigns")}
+        _p(f"  Recorded: {totals['techniques']} techniques, {totals['malware']} malware, "
+           f"{totals['indicators']} indicators, {totals['cves']} CVEs, {totals['campaigns']} campaigns.\n")
+        return
+
+    from processors.diff import has_changes
+    if not has_changes(result):
+        _p("  No changes since the last run.\n", "dim")
+        return
+
+    labels = {
+        "techniques": ("technique_id", "technique_name"),
+        "malware":    ("name", None),
+        "indicators": ("value", "type"),
+        "cves":       ("cve_id", None),
+        "campaigns":  ("name", None),
+    }
+    for cat, (id_field, extra_field) in labels.items():
+        c = result[cat]
+        if not (c["added"] or c["removed"] or c.get("confidence_changes")):
+            continue
+        _p(f"\n  {cat}:", "bold")
+        for item in c["added"]:
+            extra = f" ({item.get(extra_field)})" if extra_field and item.get(extra_field) else ""
+            _p(f"    + {item.get(id_field, '?')}{extra}", "green")
+        for item in c["removed"]:
+            extra = f" ({item.get(extra_field)})" if extra_field and item.get(extra_field) else ""
+            _p(f"    - {item.get(id_field, '?')}{extra}", "red")
+        for change in c.get("confidence_changes", []):
+            _p(f"    ~ {change['key']}: {change['from']} -> {change['to']}", "yellow")
+    _p("")
+
+
+# ---------------------------------------------------------------------------
 # theory ask — tool-calling LLM synthesis over local data only
 # ---------------------------------------------------------------------------
 
@@ -1781,6 +1894,10 @@ personal research (gitignored, two-layer redirect — see collectors/personal_in
 tool-calling LLM synthesis (answers only from THEORY's own local data):
   theory ask "what do we know about 1.1.1.1?"
 
+change tracking (one step of history, free, after any --output json/all run):
+  theory diff --actor APT28
+  theory diff --from old.json --to new.json
+
 notes:
   - --actor accepts any name or alias (e.g. "Cozy Bear" = APT29 = Midnight Blizzard)
   - Run --update-bundles periodically to refresh ATT&CK data, Sigma rules, MISP Galaxy, and CISA KEV
@@ -2040,6 +2157,11 @@ def main(argv: list[str] | None = None) -> None:
     # via the provider-agnostic tool loop in collectors/intelligence_agent.py.
     if _args and _args[0] == "ask":
         cmd_ask(_args[1:])
+        return
+
+    # ── `theory diff --actor NAME` — what changed since last run ───────
+    if _args and _args[0] == "diff":
+        cmd_diff(_args[1:])
         return
 
     _print_banner()
