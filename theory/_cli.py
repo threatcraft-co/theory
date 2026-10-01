@@ -1586,6 +1586,8 @@ def run(
                          playbook_format=kwargs.get("playbook_format", "markdown"))
     elif output == "html":
         _output_html(profile, save)
+    elif output == "sigma-skeleton":
+        _output_sigma_skeleton(profile, save)
     elif output == "all":
         _output_dossier(profile, save)
         _output_json(profile, save)
@@ -1934,6 +1936,47 @@ def _output_html(profile: dict[str, Any], save: bool) -> None:
         except BrokenPipeError:
             pass
 
+
+def _output_sigma_skeleton(profile: dict[str, Any], save: bool) -> None:
+    """Draft Sigma rule skeletons for every technique with no detection
+    coverage (processors/sigma_skeleton.py). Boilerplate only — every
+    skeleton still needs a real logsource + selection from the analyst's
+    own environment."""
+    import re as _re
+    from pathlib import Path as _Path
+    from processors.sigma_skeleton import generate_skeletons_for_gaps
+
+    clean   = _sanitize_profile(profile)
+    results = generate_skeletons_for_gaps(clean)
+
+    if not results:
+        print(
+            "\n[theory] No detection gaps found — nothing to generate skeletons for. "
+            "(Techniques need no sigma_rules/detection to count as a gap; "
+            "run with --sources including sigma for real coverage data.)\n",
+            file=sys.stderr,
+        )
+        return
+
+    combined = "\n---\n".join(r["skeleton"] for r in results)
+    try:
+        print(combined)
+    except BrokenPipeError:
+        pass
+
+    if save:
+        OUTPUT_DIR = _Path("output/dossiers")
+        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        slug = _re.sub(r"[^a-z0-9]", "_", (clean.get("actor_name") or "unknown").lower())
+        path = OUTPUT_DIR / f"{slug}_sigma_skeletons.yml"
+        path.write_text(combined, encoding="utf-8")
+        print(
+            f"\n[theory] {len(results)} Sigma rule skeleton(s) saved → {path}\n"
+            f"[theory] These are DRAFTS — fill in logsource/selection before using.",
+            file=sys.stderr,
+        )
+
+
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
@@ -1954,6 +1997,7 @@ examples:
   theory --actor APT28 --sources mitre,sigma --output playbook --playbook-format jira
   theory --actor APT28 --sources mitre,malpedia,misp_galaxy,cisa_kev,otx --output html
   theory --actor APT28 --sources mitre,sigma --detection-path ~/my-sigma-rules
+  theory --actor APT28 --sources mitre,sigma --output sigma-skeleton
   theory --list-sources
   theory --list-actors
   theory --update-bundles
@@ -2051,7 +2095,7 @@ def _build_parser() -> argparse.ArgumentParser:
     # ── Output format ──────────────────────────────────────────────────
     p.add_argument(
         "--output", "-o",
-        choices=["dossier", "json", "stix", "csv", "all", "exec", "navigator", "playbook", "html"],
+        choices=["dossier", "json", "stix", "csv", "all", "exec", "navigator", "playbook", "html", "sigma-skeleton"],
         default="dossier",
         metavar="FORMAT",
         help=(
@@ -2064,7 +2108,9 @@ def _build_parser() -> argparse.ArgumentParser:
             "exec = non-technical executive summary (BLUF, requires LLM key). "
             "navigator = ATT&CK Navigator layer JSON. "
             "playbook = IR playbook checklist (markdown or Jira format). "
-            "html = self-contained HTML dossier (shareable, opens in any browser)."
+            "html = self-contained HTML dossier (shareable, opens in any browser). "
+            "sigma-skeleton = draft Sigma rule skeletons for every detection gap "
+            "(boilerplate only — logsource/selection logic needs your own review)."
         ),
     )
 
