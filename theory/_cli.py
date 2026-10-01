@@ -108,6 +108,7 @@ SUPPORTED_SOURCES: dict[str, str | None] = {
     "greynoise":      None,
     "abuseipdb":      None,
     "shodan_internetdb": None,
+    "urlscan_io":     None,
     "vendor":         None,   # vendor intelligence synthesis (requires LLM provider)
 }
 
@@ -128,6 +129,7 @@ SOURCE_DESCRIPTIONS: dict[str, str] = {
     "greynoise":      "GreyNoise IP noise/RIOT context — distinguishes targeted vs background activity (free, 50/week)",
     "abuseipdb":      "AbuseIPDB IP reputation scores from community reports (free, 1000/day)",
     "shodan_internetdb": "Shodan InternetDB — open ports, hostnames, CPEs, known CVEs on an IP (free, no auth)",
+    "urlscan_io":     "urlscan.io public scan history for domains/URLs — prior verdicts, resolved IP/country (free, no auth; optional URLSCAN_API_KEY raises rate limit)",
     "vuldb":          "VulDB actor-CVE correlation and exploit intelligence (free tier, 50 credits/day)",
     "vendor":         "Vendor intelligence synthesis — LLM-synthesized summaries from 35+ research blogs (requires LLM provider in .env)",
     "personal":       "Your own local research indicators — gitignored redirect, never leaves your machine (set up with --init-personal)",
@@ -141,6 +143,7 @@ SOURCE_REQUIRES: dict[str, str] = {
     "greynoise":      "GREYNOISE_API_KEY",
     "abuseipdb":      "ABUSEIPDB_API_KEY",
     "vuldb":          "VULDB_API_KEY",
+    "urlscan_io":     "URLSCAN_API_KEY (optional, raises rate limit)",
     "vendor":         "ANTHROPIC_API_KEY or OPENAI_API_KEY or Ollama running locally",
 }
 
@@ -153,6 +156,7 @@ ENRICHMENT_SOURCES: dict[str, str] = {
     "greynoise":      "collectors.greynoise.GreyNoiseCollector",
     "abuseipdb":      "collectors.abuseipdb.AbuseIPDBCollector",
     "shodan_internetdb": "collectors.shodan_internetdb.ShodanInternetDBCollector",
+    "urlscan_io":     "collectors.urlscan_io.URLScanIOCollector",
     "vendor":         "collectors.vendor_intel.VendorIntelCollector",
 }
 
@@ -212,6 +216,7 @@ def cmd_list_sources() -> None:
             "greynoise":      "7 days (.cache/greynoise/)",
             "abuseipdb":      "3 days (.cache/abuseipdb/)",
             "shodan_internetdb": "24 hours (.cache/shodan_internetdb/)",
+            "urlscan_io":     "24 hours (.cache/urlscan_io/)",
             "vuldb":          "7 days (.cache/vuldb/)",
             "personal":       "none — reads your local file directly, every run",
         }
@@ -1307,6 +1312,29 @@ def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
                 logger.info(
                     "Shodan InternetDB: enriched %d IPs (%d with known CVEs)",
                     len(sdb_context), with_vulns,
+                )
+
+        elif source_key == "urlscan_io":
+            us_key = os.environ.get("URLSCAN_API_KEY", "")
+            if us_key:
+                enricher_inst = _load_class(enricher_path)(api_key=us_key)
+            else:
+                enricher_inst = enricher
+            us_context = enricher_inst.enrich_urls(
+                profile.get("indicators", []),
+                profile.get("actor_name", ""),
+            )
+            if us_context:
+                for ioc in (profile.get("indicators") or []):
+                    if ioc.get("type") in ("domain", "url"):
+                        ctx = us_context.get(ioc.get("value", ""))
+                        if ctx:
+                            ioc["urlscan_io"] = ctx
+                profile["urlscan_io_enriched"] = len(us_context)
+                malicious_hits = sum(1 for c in us_context.values() if c.get("malicious_count"))
+                logger.info(
+                    "urlscan.io: enriched %d domains/URLs (%d with malicious scans on record)",
+                    len(us_context), malicious_hits,
                 )
 
     except Exception as exc:
