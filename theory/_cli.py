@@ -107,6 +107,7 @@ SUPPORTED_SOURCES: dict[str, str | None] = {
     "urlhaus":        None,
     "greynoise":      None,
     "abuseipdb":      None,
+    "shodan_internetdb": None,
     "vendor":         None,   # vendor intelligence synthesis (requires LLM provider)
 }
 
@@ -126,6 +127,7 @@ SOURCE_DESCRIPTIONS: dict[str, str] = {
     "urlhaus":        "URLhaus malware distribution URLs by family (free, requires ABUSECH_API_KEY)",
     "greynoise":      "GreyNoise IP noise/RIOT context — distinguishes targeted vs background activity (free, 50/week)",
     "abuseipdb":      "AbuseIPDB IP reputation scores from community reports (free, 1000/day)",
+    "shodan_internetdb": "Shodan InternetDB — open ports, hostnames, CPEs, known CVEs on an IP (free, no auth)",
     "vuldb":          "VulDB actor-CVE correlation and exploit intelligence (free tier, 50 credits/day)",
     "vendor":         "Vendor intelligence synthesis — LLM-synthesized summaries from 35+ research blogs (requires LLM provider in .env)",
     "personal":       "Your own local research indicators — gitignored redirect, never leaves your machine (set up with --init-personal)",
@@ -150,6 +152,7 @@ ENRICHMENT_SOURCES: dict[str, str] = {
     "urlhaus":        "collectors.urlhaus.URLhausCollector",
     "greynoise":      "collectors.greynoise.GreyNoiseCollector",
     "abuseipdb":      "collectors.abuseipdb.AbuseIPDBCollector",
+    "shodan_internetdb": "collectors.shodan_internetdb.ShodanInternetDBCollector",
     "vendor":         "collectors.vendor_intel.VendorIntelCollector",
 }
 
@@ -208,6 +211,7 @@ def cmd_list_sources() -> None:
             "urlhaus":        "24 hours (.cache/urlhaus/)",
             "greynoise":      "7 days (.cache/greynoise/)",
             "abuseipdb":      "3 days (.cache/abuseipdb/)",
+            "shodan_internetdb": "24 hours (.cache/shodan_internetdb/)",
             "vuldb":          "7 days (.cache/vuldb/)",
             "personal":       "none — reads your local file directly, every run",
         }
@@ -1284,6 +1288,25 @@ def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
                 logger.info(
                     "AbuseIPDB: enriched %d IPs (%d high-abuse)",
                     len(aipdb_context), high_abuse,
+                )
+
+        elif source_key == "shodan_internetdb":
+            # No API key — enricher_inst is just the already-constructed enricher
+            sdb_context = enricher.enrich_ips(
+                profile.get("indicators", []),
+                profile.get("actor_name", ""),
+            )
+            if sdb_context:
+                for ioc in (profile.get("indicators") or []):
+                    if ioc.get("type") == "ip":
+                        ctx = sdb_context.get(ioc.get("value", ""))
+                        if ctx:
+                            ioc["shodan_internetdb"] = ctx
+                profile["shodan_internetdb_enriched"] = len(sdb_context)
+                with_vulns = sum(1 for c in sdb_context.values() if c.get("vulns"))
+                logger.info(
+                    "Shodan InternetDB: enriched %d IPs (%d with known CVEs)",
+                    len(sdb_context), with_vulns,
                 )
 
     except Exception as exc:
