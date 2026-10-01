@@ -573,6 +573,83 @@ def _print_diff(result: dict[str, Any]) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Watch mode — theory --actor X --watch
+# ---------------------------------------------------------------------------
+
+def run_watch(
+    actor:   str,
+    sources: list[str],
+    *,
+    interval:       float,
+    max_iterations: int | None = None,
+    sleep_fn=None,
+    run_fn=None,
+    **run_kwargs: Any,
+) -> None:
+    """`theory --actor X --watch` — re-run the actor pipeline every
+    `interval` seconds, reporting only what changed (via processors/diff)
+    since the last check in this watch session.
+
+    Diffing is done against the in-memory result of the previous
+    iteration, not by re-reading output/dossiers/{slug}.previous.json —
+    that file tracks history across separate `theory` invocations (for
+    `theory diff`), while this tracks history across iterations of one
+    long-running watch session. Decoupling the two means a plain
+    `theory --actor X` run elsewhere doesn't interfere with an active
+    watch, and watch's diffing needs no filesystem assumptions at all,
+    which is also what makes it fully testable with a stub run_fn.
+
+    max_iterations/sleep_fn/run_fn exist for tests — interactive use
+    leaves them at their defaults (loop forever, real time.sleep, the
+    real run()) and runs until interrupted (Ctrl+C).
+    """
+    import time as _time
+    sleep_fn = sleep_fn or _time.sleep
+    run_fn   = run_fn or run
+
+    console = _graph_console()
+
+    def _p(msg: str, style: str = "") -> None:
+        if console:
+            console.print(f"[{style}]{msg}[/]" if style else msg)
+        else:
+            print(msg)
+
+    from processors.diff import diff_profiles, has_changes
+
+    previous_profile: dict[str, Any] | None = None
+    iteration = 0
+
+    while max_iterations is None or iteration < max_iterations:
+        iteration += 1
+        _p(f"\n[watch] Run {iteration} for {actor}", "bold cyan")
+
+        try:
+            profile = run_fn(actor=actor, sources=sources, output="json",
+                              save=True, quiet=True, **run_kwargs)
+        except Exception as exc:
+            logger.warning("watch: run failed on iteration %d: %s", iteration, exc)
+            profile = None
+
+        if profile:
+            clean  = _sanitize_profile(profile)
+            result = diff_profiles(previous_profile, clean)
+            if result["is_first_run"]:
+                _p("  First check this session — nothing to diff against yet.", "dim")
+            elif has_changes(result):
+                _print_diff(result)
+            else:
+                _p("  No changes since last check.", "dim")
+            previous_profile = clean
+        else:
+            _p("  Run failed or returned no data — see warnings above.", "yellow")
+
+        if max_iterations is None or iteration < max_iterations:
+            _p(f"  Next check in {interval:.0f}s… (Ctrl+C to stop)", "dim")
+            sleep_fn(interval)
+
+
+# ---------------------------------------------------------------------------
 # theory ask — tool-calling LLM synthesis over local data only
 # ---------------------------------------------------------------------------
 
@@ -1494,7 +1571,7 @@ def run(
 
     # ── 6. Output ─────────────────────────────────────────────────────
     if output == "json":
-        _output_json(profile, save)
+        _output_json(profile, save, quiet=kwargs.get("quiet", False))
     elif output == "stix":
         _output_stix(profile, save)
     elif output == "csv":
@@ -1570,16 +1647,18 @@ def _output_csv(profile: dict[str, Any], save: bool) -> None:
         print(f"\n[theory] IOC CSV saved → {path}", file=sys.stderr)
 
 
-def _output_json(profile: dict[str, Any], save: bool) -> None:
+def _output_json(profile: dict[str, Any], save: bool, quiet: bool = False) -> None:
     clean = _sanitize_profile(profile)
-    try:
-        print(json.dumps(clean, indent=2, default=str))
-    except BrokenPipeError:
-        pass
+    if not quiet:
+        try:
+            print(json.dumps(clean, indent=2, default=str))
+        except BrokenPipeError:
+            pass
     if save:
         from reporters.json_reporter import JsonReporter
         path = JsonReporter().save(clean)
-        print(f"\n[theory] JSON saved → {path}", file=sys.stderr)
+        if not quiet:
+            print(f"\n[theory] JSON saved → {path}", file=sys.stderr)
 
 
 
@@ -1898,6 +1977,10 @@ change tracking (one step of history, free, after any --output json/all run):
   theory diff --actor APT28
   theory diff --from old.json --to new.json
 
+watch mode (re-run on a timer, report only what changed; Ctrl+C to stop):
+  theory --actor APT28 --watch
+  theory --actor APT28 --watch --watch-interval 900
+
 notes:
   - --actor accepts any name or alias (e.g. "Cozy Bear" = APT29 = Midnight Blizzard)
   - Run --update-bundles periodically to refresh ATT&CK data, Sigma rules, MISP Galaxy, and CISA KEV
@@ -2035,6 +2118,24 @@ def _build_parser() -> argparse.ArgumentParser:
             "Don't record this run's entities (IOCs, techniques, malware, CVEs) "
             "in the local persistent correlation graph at output/graph/graph.json."
         ),
+    )
+
+    # ── Watch mode ───────────────────────────────────────────────────────
+    p.add_argument(
+        "--watch",
+        action="store_true",
+        help=(
+            "Re-run this actor query on a timer (default: hourly) and report only what "
+            "changed since the last check (via `theory diff`'s comparison engine). "
+            "Runs until interrupted with Ctrl+C."
+        ),
+    )
+    p.add_argument(
+        "--watch-interval",
+        metavar="SECONDS",
+        type=float,
+        default=3600.0,
+        help="Seconds between checks in --watch mode (default: 3600 = hourly).",
     )
 
     # ── Cross-run query modes ────────────────────────────────────────────
@@ -2227,6 +2328,19 @@ def main(argv: list[str] | None = None) -> None:
             )
         except ImportError:
             pass  # skip hint if Rich not available
+
+    if args.watch:
+        try:
+            run_watch(
+                actor    = args.actor,
+                sources  = sources,
+                interval = args.watch_interval,
+                verbose  = args.verbose,
+                no_graph = args.no_graph,
+            )
+        except KeyboardInterrupt:
+            print("\n[theory] Watch stopped.\n")
+        sys.exit(0)
 
     profile = run(
         actor            = args.actor,
