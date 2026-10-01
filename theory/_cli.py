@@ -621,6 +621,71 @@ def cmd_query_technique(technique_id: str) -> bool:
     return True
 
 
+def cmd_query_attack_type(label: str) -> bool:
+    """Standalone `theory --attack-type LABEL` lookup against the
+    persistent graph (matched against actor motivations + malware type)."""
+    from processors.graph import query_attack_type
+    result  = query_attack_type(label)
+    console = _graph_console()
+
+    def _p(msg: str, style: str = "") -> None:
+        if console:
+            console.print(f"[{style}]{msg}[/]" if style else msg)
+        else:
+            print(msg)
+
+    _p(f"\nTHEORY — Graph lookup: attack type {label!r}", "bold cyan")
+    if not result["matched_actors"] and not result["matched_malware"]:
+        _p("  No matches. Nothing in the graph has a motivation or malware type "
+           f"matching {label!r} yet.", "dim")
+        _p("  This checks actor motivations and malware types recorded by past "
+           "`theory --actor` runs — not a separate attack-pattern taxonomy.\n", "dim")
+        return False
+
+    if result["matched_actors"]:
+        _p("\n  Matched actors:", "bold")
+        for a in result["matched_actors"]:
+            _p(f"    - {a['label']}")
+    if result["matched_malware"]:
+        _p("\n  Matched malware:", "bold")
+        for m in result["matched_malware"]:
+            _p(f"    - {m['label']}  ({m['malware_type']})")
+    _p("")
+    return True
+
+
+def cmd_check_attack_type(actor: str, label: str) -> bool:
+    """`theory --actor X --attack-type LABEL` — is this actor associated
+    with this attack type, per its recorded motivations/malware types?
+
+    Attack type isn't a graph node (see query_attack_type's docstring for
+    why), so this doesn't go through find_connection like --ioc/--technique
+    do — it just checks whether the actor appears in query_attack_type's
+    match list.
+    """
+    from processors.graph import canonical_id, query_attack_type
+    result  = query_attack_type(label)
+    console = _graph_console()
+
+    def _p(msg: str, style: str = "") -> None:
+        if console:
+            console.print(f"[{style}]{msg}[/]" if style else msg)
+        else:
+            print(msg)
+
+    actor_canon = canonical_id("actor", actor)
+    matched = any(a["id"] == actor_canon for a in result["matched_actors"])
+
+    _p(f"\nTHEORY — Attack-type check: actor:{actor_canon}  <->  attack-type:{label}", "bold cyan")
+    if matched:
+        _p("  MATCH — this actor's recorded motivations or malware are associated "
+           f"with {label!r}.\n", "bold green")
+    else:
+        _p(f"  No match — {actor_canon} has no recorded motivation or malware type "
+           f"matching {label!r}.\n", "yellow")
+    return matched
+
+
 def cmd_find_connection(entity_a: tuple[str, str], entity_b: tuple[str, str]) -> bool:
     """Cross-correlative / multi-axis query: `theory --actor X --ioc Y`
     (or --technique). Prints whether the two are connected in the
@@ -1870,6 +1935,17 @@ def _build_parser() -> argparse.ArgumentParser:
             "Combine with --actor to ask whether that actor is connected to this technique."
         ),
     )
+    query.add_argument(
+        "--attack-type",
+        metavar="LABEL",
+        default="",
+        help=(
+            "Query the persistent correlation graph for an attack-type label "
+            "(e.g. ransomware, espionage, financial) matched against recorded actor "
+            "motivations and malware types. Combine with --actor to check whether "
+            "that actor matches this attack type."
+        ),
+    )
 
     # ── Verbosity ──────────────────────────────────────────────────────
     p.add_argument(
@@ -1971,22 +2047,25 @@ def main(argv: list[str] | None = None) -> None:
         return
 
     # ── Standalone cross-run graph queries (no --actor) ────────────────
-    # `theory --ioc VALUE` / `theory --technique ID` on their own query
-    # the persistent correlation graph built up from every past
-    # `theory --actor` run — they don't collect anything new themselves.
-    if not args.actor and (args.ioc or args.technique):
+    # `theory --ioc VALUE` / `theory --technique ID` / `theory --attack-type
+    # LABEL` on their own query the persistent correlation graph built up
+    # from every past `theory --actor` run — they don't collect anything
+    # new themselves.
+    if not args.actor and (args.ioc or args.technique or args.attack_type):
         found = True
         if args.ioc:
             found = cmd_query_ioc(args.ioc) and found
         if args.technique:
             found = cmd_query_technique(args.technique) and found
+        if args.attack_type:
+            found = cmd_query_attack_type(args.attack_type) and found
         sys.exit(0 if found else 1)
 
     # ── Require --actor for everything else ───────────────────────────
     if not args.actor:
         parser.print_help()
-        print("\nerror: --actor is required (or use --ioc / --technique for a standalone graph lookup). "
-              "Try: theory --actor APT28\n")
+        print("\nerror: --actor is required (or use --ioc / --technique / --attack-type "
+              "for a standalone graph lookup). Try: theory --actor APT28\n")
         sys.exit(1)
 
     sources = [s.strip().lower() for s in args.sources.split(",") if s.strip()]
@@ -2033,6 +2112,9 @@ def main(argv: list[str] | None = None) -> None:
             cmd_find_connection(("actor", args.actor), ("ioc", args.ioc))
         if args.technique:
             cmd_find_connection(("actor", args.actor), ("technique", args.technique))
+
+    if profile and args.attack_type:
+        cmd_check_attack_type(args.actor, args.attack_type)
 
     sys.exit(0 if profile else 1)
 
