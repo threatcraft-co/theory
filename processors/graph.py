@@ -361,6 +361,36 @@ def query_ioc(value: str, store: GraphStore | None = None) -> dict[str, Any]:
     }
 
 
+def query_actor(actor_name: str, store: GraphStore | None = None) -> dict[str, Any]:
+    """Standalone lookup: everything THEORY's persistent graph has ever
+    recorded for this actor, across every past run — the graph-backed
+    counterpart to a full `theory --actor` dossier, but instant (no
+    collection) and scoped to whatever has already been ingested."""
+    store = store or GraphStore.load()
+    node = store.get_node("actor", actor_name)
+    if node is None:
+        return {"found": False, "actor_name": canonical_id("actor", actor_name)}
+
+    key = _node_key("actor", node["id"])
+    buckets: dict[str, list[dict]] = {"ioc": [], "technique": [], "malware": [], "cve": [], "campaign": []}
+    for other_key, edge in store.neighbors(key).items():
+        entry = _linked_entry(store, other_key, edge)
+        if entry and entry["type"] in buckets:
+            buckets[entry["type"]].append(entry)
+
+    return {
+        "found":            True,
+        "actor_name":       node["id"],
+        "first_seen":       node["first_seen"],
+        "last_seen":        node["last_seen"],
+        "linked_iocs":       buckets["ioc"],
+        "linked_techniques": buckets["technique"],
+        "linked_malware":    buckets["malware"],
+        "linked_cves":       buckets["cve"],
+        "linked_campaigns":  buckets["campaign"],
+    }
+
+
 def query_technique(technique_id: str, store: GraphStore | None = None) -> dict[str, Any]:
     """Standalone lookup: which actors (and which CVEs) does THEORY have
     on record for this ATT&CK technique, across every past run?"""

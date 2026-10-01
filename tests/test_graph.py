@@ -17,6 +17,7 @@ from processors.graph import (
     canonical_id,
     find_connection,
     ingest_profile,
+    query_actor,
     query_ioc,
     query_technique,
 )
@@ -202,6 +203,33 @@ class TestQueryIoc:
         result = query_ioc("1.1.1.1", store=store)
         assert result["ioc_type"] == "ip"
         assert result["first_seen"] and result["last_seen"]
+
+
+class TestQueryActor:
+
+    def test_unknown_actor_not_found(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        result = query_actor("Totally Unknown Actor", store=store)
+        assert result["found"] is False
+
+    def test_known_actor_reports_linked_entities(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        ingest_profile(SAMPLE_PROFILE, store=store)
+        result = query_actor("APT28", store=store)
+        assert result["found"] is True
+        assert result["actor_name"] == "APT28"
+        assert any(i["id"] == "1.1.1.1" for i in result["linked_iocs"])
+        assert any(t["id"] == "T1566" for t in result["linked_techniques"])
+        assert any(m["id"] == "x-agent" for m in result["linked_malware"])
+        assert any(c["id"] == "CVE-2023-23397" for c in result["linked_cves"])
+        assert any(c["id"] == "operation ghost" for c in result["linked_campaigns"])
+
+    def test_actor_lookup_resolves_alias(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        ingest_profile(SAMPLE_PROFILE, store=store)
+        result = query_actor("Fancy Bear", store=store)
+        assert result["found"] is True
+        assert result["actor_name"] == "APT28"
 
 
 class TestQueryTechnique:
