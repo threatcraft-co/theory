@@ -38,11 +38,11 @@ Use this checklist every time a new collector, enrichment source, or data feed i
 ### README.md
 
 - [ ] Row added to the **Sources** table (Key, Source, Auth Required, Cache)
-- [ ] If planned/future: row added to the "Coming in v1.2" table instead
+- [ ] If the source isn't implemented yet (planned/future), don't add it to the Sources table at all — note it in `CHANGELOG.md` or an issue instead. (There is no "coming soon" table in the README as of v2.0 — a past one went stale and was removed; don't reintroduce it.)
 - [ ] **Architecture** tree updated with the new collector file
 - [ ] Usage examples updated if the new source changes a recommended `--sources` combination
-- [ ] Intro paragraph updated if the source list at the top changed
-- [ ] Description paragraph updated if the source count changed (e.g. "7 intelligence sources" becomes "8")
+- [ ] Intro paragraph and "N sources, M of which need no key" line updated if the source count changed
+- [ ] Description paragraph updated if the source count changed (e.g. "20 intelligence sources" becomes "21")
 
 ### CHANGELOG.md
 

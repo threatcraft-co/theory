@@ -1,5 +1,7 @@
 # THEORY Web UI — `theory serve`
 
+> **Scope note (v2.0):** the persistent correlation graph, `--ioc`/`--technique`/`--attack-type`/`--cve` queries, `theory ask`, `theory diff`, and `--watch` are CLI-only for now. The web UI calls the same underlying `run()` pipeline as before and doesn't yet expose any of the v2.0 query/graph surface. Use the CLI directly for those.
+
 ## File placement
 
 The `server/` directory goes at your THEORY project root as a peer to `theory/`, `collectors/`, `reporters/`, etc:
