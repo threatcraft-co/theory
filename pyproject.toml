@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "theory-ti"
-version = "1.0.0"
+version = "2.0.0"
 description = "Multi-source threat actor intelligence platform"
 readme = "README.md"
 license = { text = "MIT" }
@@ -60,10 +60,14 @@ serve = [
     "sse-starlette>=2.0.0",
 ]
 internet-scan = [
-    # Shodan/Censys collectors are on the v2.0 roadmap, not implemented yet.
-    # Kept as an installable extra (not a core dependency) since basic use
-    # of either service sits behind a paid tier, unlike everything else in
-    # THEORY's default install.
+    # The PAID Shodan and Censys APIs — not implemented, not on a committed
+    # roadmap. Do not confuse with the `shodan_internetdb` source (v2.0),
+    # which is a different, free, keyless Shodan service (InternetDB) that
+    # needs no extra dependency and nothing from this group. Kept as an
+    # installable extra (not a core dependency) since basic use of either
+    # paid service sits behind a tier, unlike everything else in THEORY's
+    # default install. If implemented, VirusTotal would belong here too;
+    # v2.0 added urlscan.io instead, which covers similar ground keyless.
     "shodan>=1.28",
     "censys>=2.2",
 ]

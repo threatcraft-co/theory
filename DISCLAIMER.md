@@ -1,7 +1,7 @@
 # THEORY — Disclaimer and Limitation of Liability
 
 **Threatcraft Holdings LLC dba Threatcraft**
-Last updated: March 2026
+Last updated: October 2026 (v2.0)
 Governing entity jurisdiction: State of Delaware, United States
 
 ---
@@ -11,14 +11,25 @@ Governing entity jurisdiction: State of Delaware, United States
 THEORY is an open-source threat actor intelligence aggregation framework. It
 collects, normalizes, and synthesizes publicly available information from
 third-party sources including but not limited to MITRE ATT&CK, MISP Galaxy,
-Malpedia, AlienVault OTX, SigmaHQ, YARA-Rules, ThreatFox, MalwareBazaar,
-URLhaus, GreyNoise, AbuseIPDB, VulDB, CISA, and vendor research blogs.
+CIRCL MISP, Malpedia, AlienVault OTX, SigmaHQ, YARA-Rules, ThreatFox,
+MalwareBazaar, URLhaus, GreyNoise, AbuseIPDB, Shodan InternetDB, urlscan.io,
+VulDB, NIST NVD, CISA, CISA KEV, and vendor research blogs.
+
+As of v2.0, THEORY also maintains a **local persistent correlation graph**
+(`output/graph/graph.json`) that accumulates entities (indicators, techniques,
+malware, CVEs, campaigns) across every run on the user's own machine, and can
+answer natural-language questions about that locally-recorded data via an
+optional LLM tool-calling feature (`theory ask`). Both are entirely local:
+the graph is a file on the user's disk, and `theory ask` only ever queries
+that local file and the user's own optional personal-research notes — it does
+not send the graph's contents anywhere except to the user's own configured
+LLM provider, when that feature is used, subject to Section 8 below.
 
 THEORY does not produce original threat intelligence research. All data
 surfaced by THEORY originates from external sources that Threatcraft does
 not own, control, maintain, or independently verify. Threatcraft makes no
 claim of ownership over any data ingested, processed, or displayed by this
-tool.
+tool, including data accumulated in a user's own local correlation graph.
 
 ---
 
@@ -170,8 +181,14 @@ the time of ingestion.
 ## 8. AI-Generated Content
 
 THEORY optionally uses large language model (LLM) APIs to synthesize vendor
-intelligence articles into analyst summaries. Users should be aware that
-AI-generated content:
+intelligence articles into analyst summaries, to write dossier overviews and
+executive summaries, and — via `theory ask` — to answer natural-language
+questions grounded in the user's own locally-recorded data (the correlation
+graph and personal research notes). `theory ask` is designed to answer only
+from that local data and to say so when something is not recorded, but like
+any LLM-mediated feature it is still subject to the limitations below; it is
+not a guarantee against hallucination or misstatement of what the local data
+actually contains. Users should be aware that AI-generated content generally:
 
 - May contain hallucinations, inaccuracies, omissions, or misattributions
   not present in the underlying source material

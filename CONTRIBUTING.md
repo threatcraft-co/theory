@@ -32,8 +32,11 @@ pip install -e ".[dev]"
 # Download the ATT&CK bundle
 theory --update-bundles
 
-# Run tests before making changes (all should pass)
-pytest tests/ -v
+# Run tests before making changes (should show 806+ passing). Four
+# environment variables must be set to throwaway values so a real key in
+# your own shell/.env can't silently change which "missing key" code path
+# gets exercised — CI always runs with all secrets unset.
+ABUSEIPDB_API_KEY=fake VULDB_API_KEY=fake GREYNOISE_API_KEY=fake ABUSECH_API_KEY=fake pytest tests/ -v
 
 # Run linter
 ruff check . --select E,F,W --ignore E501,E402,W291,W292,W293,E701,E702,F401,F541,F841,F811,F821
@@ -46,6 +49,14 @@ ruff check . --select E,F,W --ignore E501,E402,W291,W292,W293,E701,E702,F401,F54
 Actors are defined in `config/actors.yaml` — no Python required. The file is
 loaded at runtime, and any name or alias in it resolves to the canonical actor
 name in dossier output and file naming.
+
+`config/actors.yaml` currently holds 1,019 actors (2,455 aliases), most of
+which came from a one-time, additive import from the MISP Galaxy threat-actor
+cluster (`scripts/import_misp_actors.py` — see that file's docstring if you
+ever want to re-run it to pull in newer MISP clusters; it never overwrites
+hand-curated entries, only unions alias lists and fills blank fields). For a
+single new actor, just hand-edit the YAML as below — you don't need the
+script.
 
 ### Format
 
@@ -170,7 +181,8 @@ the test suite. See `tests/test_threatfox_collector.py` for a good example.
 
 ### 4. Register in `theory/_cli.py`
 
-Add your source to `SUPPORTED_SOURCES` and `SOURCE_DESCRIPTIONS`:
+Add your source to `SUPPORTED_SOURCES` and `SOURCE_DESCRIPTIONS` (and, if it needs
+a key, `SOURCE_REQUIRES`):
 
 ```python
 SUPPORTED_SOURCES = {
@@ -182,12 +194,46 @@ SOURCE_DESCRIPTIONS = {
     # existing descriptions...
     "mysource": "My Source — description (auth requirements)",
 }
+
+SOURCE_REQUIRES = {
+    # only if your source needs an API key
+    "mysource": "MYSOURCE_API_KEY",
+}
 ```
+
+If your source is a **standard collector** (returns a full actor profile via
+`query(actor_name)`), that's it — it's picked up automatically. If it's an
+**enrichment-only post-processor** (like `greynoise`, `abuseipdb`,
+`shodan_internetdb`, or `urlscan_io` — it annotates IOCs already collected by
+other sources rather than returning its own profile), you also need:
+
+```python
+SUPPORTED_SOURCES = {
+    # ...
+    "mysource": None,   # enrichment-only sources map to None here
+}
+
+ENRICHMENT_SOURCES = {
+    # ...
+    "mysource": "collectors.my_source.MySourceCollector",
+}
+```
+
+plus a dispatch branch in `_enrich_profile()` that calls your collector's
+`enrich_ips()` (for IP indicators — see `greynoise.py`/`abuseipdb.py`/
+`shodan_internetdb.py`) or `enrich_urls()` (for domain/URL indicators — see
+`urlscan_io.py`) and annotates matching indicators with the result. Both
+`run()` and the standalone `_enrich_profile()` call this the same way the
+existing enrichment sources do — copy the nearest existing branch rather than
+inventing a new shape.
+
+Also add your source's cache TTL to the `cache_ttls` dict inside
+`cmd_list_sources()` so `theory --list-sources` reports it correctly.
 
 ### 5. Update the README
 
 Add a row to the Sources table in `README.md` so users can discover your
-collector.
+collector, and bump the source count mentioned near the top if it changed.
 
 ---
 
@@ -203,6 +249,21 @@ Edit `config/feeds.yaml` and add to the `sources` list:
   tier: 2              # 1=government, 2=major vendor, 3=community
   apt_focus: true      # true if the source specifically covers nation-state actors
   tags: [apt, malware, campaigns]
+  enabled: true
+```
+
+If the vendor doesn't publish an RSS feed, use `type: sitemap` instead — THEORY
+fetches the sitemap, filters by `url_pattern`, sorts by recency, and follows
+one level of sitemap indexes (gzipped sitemaps supported):
+
+```yaml
+- name: Vendor Without RSS
+  url: https://vendor.com/blog/
+  sitemap: https://vendor.com/sitemap.xml
+  type: sitemap
+  url_pattern: "/blog/"
+  tier: 2
+  tags: [vendor]
   enabled: true
 ```
 
@@ -251,7 +312,7 @@ the actor's techniques and targeted platforms. To add a new resource, edit
 
 ## Pull request checklist
 
-- [ ] All existing tests still pass (`pytest tests/ -v` — should show 490+ passing)
+- [ ] All existing tests still pass (`pytest tests/ -v` with the four `*_API_KEY=fake` env vars set — should show 806+ passing)
 - [ ] New code has tests (fully offline, no real API calls)
 - [ ] Linter passes (`ruff check .` with the project's ignore list)
 - [ ] New actor entries are added to `config/actors.yaml`, include the MITRE Group ID if applicable, and have 3+ aliases

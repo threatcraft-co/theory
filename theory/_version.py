@@ -1,4 +1,4 @@
-__version__ = "1.0.0"
+__version__ = "2.0.0"
 __author__  = "Threatcraft"
 __email__   = "admin@threatcraft.co"
 __url__     = "https://github.com/threatcraft-co/theory"

@@ -1,7 +1,7 @@
 # THEORY — Regional Legal Addenda
 
 **Threatcraft Holdings LLC dba Threatcraft**
-Last updated: March 2026
+Last updated: October 2026 (v2.0)
 
 This document contains jurisdiction-specific legal provisions that supplement
 the main `DISCLAIMER.md`. Users in the applicable regions should read both
@@ -101,13 +101,24 @@ THEORY is designed with data minimization principles in mind:
 - API keys and credentials remain local to the user's environment
 - Cached data is stored locally on the user's machine
 - No telemetry, usage tracking, or analytics data is collected by the tool
+- The persistent correlation graph (`output/graph/graph.json`, added in v2.0)
+  and the optional personal research notes (`--init-personal`) are both local
+  files on the user's own machine. Neither is transmitted to Threatcraft, and
+  neither leaves the user's machine at all unless the user explicitly shares
+  the file or uses an LLM-backed feature (`theory ask`, vendor synthesis,
+  dossier overviews) that sends relevant context to the user's own
+  configured LLM provider.
 
 ## EU.5 Third-Party API Processing
 
-When users configure THEORY with third-party API keys (OTX, Anthropic,
-OpenAI, GitHub), data may be transmitted to those providers. Users are
-responsible for ensuring that any such transmission complies with their
-own GDPR obligations and the terms of service of those providers.
+When users configure THEORY with third-party API keys or use sources that
+require no key but still make outbound requests — including but not limited
+to OTX, Anthropic, OpenAI, GitHub, abuse.ch (ThreatFox/MalwareBazaar/URLhaus),
+GreyNoise, AbuseIPDB, VulDB, NVD, Shodan InternetDB, and urlscan.io — data
+(such as an IP address, domain, or indicator value being enriched) may be
+transmitted to those providers. Users are responsible for ensuring that any
+such transmission complies with their own GDPR obligations and the terms of
+service of those providers.
 
 Threatcraft is not responsible for the data processing practices of
 any third-party API provider.
