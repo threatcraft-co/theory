@@ -31,7 +31,10 @@ logger = logging.getLogger(__name__)
 SOURCE_ID  = "alienvault_otx"
 BASE_URL   = "https://otx.alienvault.com"
 CACHE_DIR  = Path(".cache/otx")
-TIMEOUT    = 10    # shorter timeout — fail fast, don't block the pipeline
+TIMEOUT    = 20    # OTX's search endpoint can legitimately take 10-15s round
+                    # trip under normal latency variance — 10s left no margin
+                    # and was causing spurious timeouts on otherwise-healthy
+                    # requests (confirmed via raw urllib timing, Oct 2026)
 RETRY_MAX  = 2
 RETRY_WAIT = 2
 
