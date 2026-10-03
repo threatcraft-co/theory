@@ -53,7 +53,7 @@ _IOC_TYPE_MAP: dict[str, str] = {
 
 # OTX adversary slugs (the /adversaries/ endpoint uses these)
 _OTX_ACTOR_SLUGS: dict[str, str] = {
-    "APT28":          "APT28",
+    "APT28":          "APT 28",
     "APT29":          "APT29",
     "APT41":          "APT41",
     "Lazarus Group":  "Lazarus+Group",
@@ -152,7 +152,7 @@ class AlienVaultOTXCollector(BaseCollector):
     def _fetch_adversary_pulses(self, slug: str) -> list[dict]:
         url = f"{BASE_URL}/api/v1/adversaries/{quote(slug)}/pulses/?limit={_MAX_PULSES}"
         try:
-            data   = self._get(url, cache_key=f"adv_{slug.lower().replace('+','_')}")
+            data   = self._get(url, cache_key=f"adv_{slug.lower().replace('+','_').replace(' ','_')}")
             pulses = data.get("results", []) if isinstance(data, dict) else []
             logger.info("OTX adversary endpoint: %d pulses", len(pulses))
             return pulses
@@ -191,8 +191,17 @@ class AlienVaultOTXCollector(BaseCollector):
 
         logger.info("OTX search: %d unique pulse stubs", len(stub_ids))
 
-        # Fetch full pulse detail in parallel — much faster than serial
-        pids = list(stub_ids.keys())[:_MAX_PULSES]
+        # OTX's search API ranks by relevance/popularity, not recency, so
+        # without an explicit sort here we were consistently picking up
+        # old, heavily-referenced pulses (e.g. 2014-2017 CVEs) and missing
+        # more recent campaign data. Prioritize the most recently modified
+        # pulses before truncating to _MAX_PULSES.
+        ranked_stubs = sorted(
+            stub_ids.values(),
+            key=lambda p: (p.get("modified") or p.get("created") or ""),
+            reverse=True,
+        )
+        pids = [p.get("id", "") for p in ranked_stubs[:_MAX_PULSES] if p.get("id")]
         full_pulses: list[dict] = []
         with ThreadPoolExecutor(max_workers=5) as pool:
             futures = {pool.submit(self._fetch_pulse, pid): pid for pid in pids}
