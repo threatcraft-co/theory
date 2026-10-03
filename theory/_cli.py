@@ -123,7 +123,7 @@ SOURCE_DESCRIPTIONS: dict[str, str] = {
     "nvd":         "NIST NVD — CVSS scores/vectors, CWE classification, references for CVEs already in the profile (free, optional NVD_API_KEY raises rate limit)",
     "sigma":          "SigmaHQ detection rules mapped to ATT&CK (free, optional GITHUB_TOKEN)",
     "yara":           "YARA file detection rules matched to malware families (free, local clone)",
-    "threatfox":      "ThreatFox IOCs by malware family (free, no auth)",
+    "threatfox":      "ThreatFox IOCs by malware family (free, requires ABUSECH_API_KEY)",
     "malware_bazaar": "MalwareBazaar sample hashes by malware family (free, requires ABUSECH_API_KEY)",
     "urlhaus":        "URLhaus malware distribution URLs by family (free, requires ABUSECH_API_KEY)",
     "greynoise":      "GreyNoise IP noise/RIOT context — distinguishes targeted vs background activity (free, 50/week)",
@@ -138,6 +138,7 @@ SOURCE_DESCRIPTIONS: dict[str, str] = {
 SOURCE_REQUIRES: dict[str, str] = {
     "otx":            "OTX_API_KEY",
     "sigma":          "GITHUB_TOKEN (optional, recommended)",
+    "threatfox":      "ABUSECH_API_KEY",
     "malware_bazaar": "ABUSECH_API_KEY",
     "urlhaus":        "ABUSECH_API_KEY",
     "greynoise":      "GREYNOISE_API_KEY",
@@ -1174,7 +1175,12 @@ def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
             ]
             if not malware_names:
                 return profile
-            result = enricher.collect_for_malware_families(
+            abusech_key = os.environ.get("ABUSECH_API_KEY", "")
+            if abusech_key:
+                enricher_inst = _load_class(enricher_path)(api_key=abusech_key)
+            else:
+                enricher_inst = enricher
+            result = enricher_inst.collect_for_malware_families(
                 malware_names, profile.get("actor_name", "")
             )
             if not result:
