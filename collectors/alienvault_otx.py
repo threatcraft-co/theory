@@ -53,14 +53,14 @@ _IOC_TYPE_MAP: dict[str, str] = {
 
 # OTX adversary slugs (the /adversaries/ endpoint uses these)
 _OTX_ACTOR_SLUGS: dict[str, str] = {
-    "APT28":          "APT28",
-    "APT29":          "APT29",
-    "APT41":          "APT41",
+    "APT28":          "APT 28",
+    "APT29":          "APT 29",
+    "APT41":          "APT 41",
     "Lazarus Group":  "Lazarus+Group",
-    "APT10":          "APT10",
+    "APT10":          "APT 10",
     "Sandworm":       "Sandworm",
     "Turla":          "Turla",
-    "APT33":          "APT33",
+    "APT33":          "APT 33",
     "APT34":          "OilRig",
     "Kimsuky":        "Kimsuky",
     "FIN7":           "FIN7",
@@ -152,7 +152,7 @@ class AlienVaultOTXCollector(BaseCollector):
     def _fetch_adversary_pulses(self, slug: str) -> list[dict]:
         url = f"{BASE_URL}/api/v1/adversaries/{quote(slug)}/pulses/?limit={_MAX_PULSES}"
         try:
-            data   = self._get(url, cache_key=f"adv_{slug.lower().replace('+','_')}")
+            data   = self._get(url, cache_key=f"adv_{slug.lower().replace('+','_').replace(' ','_')}")
             pulses = data.get("results", []) if isinstance(data, dict) else []
             logger.info("OTX adversary endpoint: %d pulses", len(pulses))
             return pulses
