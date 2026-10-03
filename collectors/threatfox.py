@@ -4,7 +4,9 @@ collectors/threatfox.py
 Pulls IOCs from ThreatFox (abuse.ch) by malware family name.
 
 ThreatFox is purpose-built for machine-readable IOC consumption:
-  - Free, no auth required
+  - Requires ABUSECH_API_KEY (free at https://auth.abuse.ch/) — abuse.ch
+    now requires an Auth-Key on every request across all their APIs
+    (ThreatFox was previously keyless; this changed in late 2026)
   - Curated by abuse.ch with confidence scores
   - Tagged by malware family, threat type, and TLP
   - Updated continuously
@@ -30,6 +32,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import re
 import time
 from datetime import datetime, timezone, timedelta
@@ -89,6 +92,9 @@ class ThreatFoxCollector(BaseCollector):
 
     SOURCE_ID = SOURCE_ID
 
+    def __init__(self, api_key: str = ""):
+        self._abusech_key = api_key or os.environ.get("ABUSECH_API_KEY", "")
+
     def query(self, actor_name: str) -> dict | None:
         """Standard interface stub — ThreatFox is enrichment-only."""
         return None
@@ -109,6 +115,13 @@ class ThreatFoxCollector(BaseCollector):
             CommonSchema-compatible dict, or None if no IOCs found.
         """
         if not malware_names:
+            return None
+
+        if not self._abusech_key:
+            logger.warning(
+                "ThreatFox: skipped -- no ABUSECH_API_KEY. "
+                "Register free at https://auth.abuse.ch/"
+            )
             return None
 
         all_iocs:    list[dict] = []
@@ -292,13 +305,13 @@ class ThreatFoxCollector(BaseCollector):
     # HTTP
     # ------------------------------------------------------------------
 
-    @staticmethod
-    def _post(url: str, payload: bytes) -> Any:
+    def _post(self, url: str, payload: bytes) -> Any:
         req = Request(
             url,
             data=payload,
             headers={
                 "Content-Type": "application/json",
+                "Auth-Key":     self._abusech_key,
                 "User-Agent":   "THEORY/1.0 threat-intel-research",
             },
             method="POST",

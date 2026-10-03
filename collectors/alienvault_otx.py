@@ -54,13 +54,13 @@ _IOC_TYPE_MAP: dict[str, str] = {
 # OTX adversary slugs (the /adversaries/ endpoint uses these)
 _OTX_ACTOR_SLUGS: dict[str, str] = {
     "APT28":          "APT 28",
-    "APT29":          "APT29",
-    "APT41":          "APT41",
+    "APT29":          "APT 29",
+    "APT41":          "APT 41",
     "Lazarus Group":  "Lazarus+Group",
-    "APT10":          "APT10",
+    "APT10":          "APT 10",
     "Sandworm":       "Sandworm",
     "Turla":          "Turla",
-    "APT33":          "APT33",
+    "APT33":          "APT 33",
     "APT34":          "OilRig",
     "Kimsuky":        "Kimsuky",
     "FIN7":           "FIN7",
