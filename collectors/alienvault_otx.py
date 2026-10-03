@@ -271,6 +271,8 @@ class AlienVaultOTXCollector(BaseCollector):
 
         for pulse in pulses:
             for ind in (pulse.get("indicators") or []):
+                if not isinstance(ind, dict):
+                    continue
                 ioc_type = _IOC_TYPE_MAP.get(ind.get("type", ""), "")
                 if not ioc_type:
                     continue
@@ -312,7 +314,7 @@ class AlienVaultOTXCollector(BaseCollector):
                 pulse.get("description", ""),
                 " ".join(pulse.get("tags", [])),
                 " ".join(
-                    str(r.get("external_id", ""))
+                    str(r.get("external_id", "")) if isinstance(r, dict) else str(r)
                     for r in (pulse.get("attack_ids") or [])
                 ),
             ])
@@ -331,12 +333,19 @@ class AlienVaultOTXCollector(BaseCollector):
         # Also extract from attack_ids field directly
         for pulse in pulses:
             for atk in (pulse.get("attack_ids") or []):
-                tid = (atk.get("id") or atk.get("external_id") or "").strip().upper()
+                if isinstance(atk, dict):
+                    tid = (atk.get("id") or atk.get("external_id") or "").strip().upper()
+                    tname = atk.get("display_name", "")
+                elif isinstance(atk, str):
+                    tid = atk.strip().upper()
+                    tname = ""
+                else:
+                    continue
                 if re.match(r"^T\d{4}(?:\.\d{3})?$", tid) and tid not in seen:
                     seen.add(tid)
                     out.append({
                         "technique_id":   tid,
-                        "technique_name": atk.get("display_name", ""),
+                        "technique_name": tname,
                         "tactic":         "",
                         "tactics":        [],
                         "description":    "",
@@ -350,7 +359,16 @@ class AlienVaultOTXCollector(BaseCollector):
         out:  list[dict] = []
         for pulse in pulses:
             for mw in (pulse.get("malware_families") or []):
-                name = (mw.get("display_name") or mw.get("id") or "").strip()
+                # OTX pulses are crowd-sourced; malware_families entries are
+                # usually {"display_name": ..., "id": ...} but sometimes
+                # come back as plain strings. Handle both rather than
+                # crashing the whole collector on one oddly-shaped pulse.
+                if isinstance(mw, dict):
+                    name = (mw.get("display_name") or mw.get("id") or "").strip()
+                elif isinstance(mw, str):
+                    name = mw.strip()
+                else:
+                    continue
                 if name and name.lower() not in seen:
                     seen.add(name.lower())
                     out.append({
