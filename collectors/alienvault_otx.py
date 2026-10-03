@@ -17,6 +17,7 @@ import os
 import re
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
@@ -28,9 +29,12 @@ from collectors.cisa_advisories import resolve_canonical, all_aliases_for
 
 logger = logging.getLogger(__name__)
 
-SOURCE_ID  = "alienvault_otx"
-BASE_URL   = "https://otx.alienvault.com"
-CACHE_DIR  = Path(".cache/otx")
+SOURCE_ID       = "alienvault_otx"
+BASE_URL        = "https://otx.alienvault.com"
+CACHE_DIR       = Path(".cache/otx")
+CACHE_TTL_HOURS = 24   # was unbounded (cached forever) -- pulses/search
+                        # results are time-sensitive just like ThreatFox's,
+                        # which already uses this TTL
 TIMEOUT    = 20    # OTX's search endpoint can legitimately take 10-15s round
                     # trip under normal latency variance — 10s left no margin
                     # and was causing spurious timeouts on otherwise-healthy
@@ -229,8 +233,16 @@ class AlienVaultOTXCollector(BaseCollector):
             CACHE_DIR.mkdir(parents=True, exist_ok=True)
             cache_path = CACHE_DIR / f"{cache_key}.json"
             if cache_path.exists():
-                logger.debug("OTX cache hit: %s", cache_key)
-                return json.loads(cache_path.read_text(encoding="utf-8"))
+                try:
+                    cached    = json.loads(cache_path.read_text(encoding="utf-8"))
+                    cached_at = datetime.fromisoformat(cached.get("cached_at", "2000-01-01"))
+                    age       = datetime.now(timezone.utc) - cached_at.replace(tzinfo=timezone.utc)
+                    if age <= timedelta(hours=CACHE_TTL_HOURS):
+                        logger.debug("OTX cache hit: %s", cache_key)
+                        return cached.get("data")
+                    logger.debug("OTX cache stale: %s", cache_key)
+                except Exception:
+                    pass  # malformed/legacy cache entry -- refetch
 
         req = Request(url, headers={
             "X-OTX-API-KEY": self._api_key,
@@ -242,8 +254,10 @@ class AlienVaultOTXCollector(BaseCollector):
                 with urlopen(req, timeout=TIMEOUT) as resp:
                     data = json.loads(resp.read().decode("utf-8"))
                     if cache_key:
-                        cache_path.write_text(json.dumps(data, indent=2),
-                                              encoding="utf-8")
+                        cache_path.write_text(json.dumps({
+                            "cached_at": datetime.now(timezone.utc).isoformat(),
+                            "data":      data,
+                        }, indent=2), encoding="utf-8")
                     return data
             except HTTPError as exc:
                 if exc.code == 403:
