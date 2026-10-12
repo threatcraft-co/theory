@@ -952,19 +952,39 @@ def cmd_find_connection(entity_a: tuple[str, str], entity_b: tuple[str, str]) ->
                 if not known:
                     _p(f"  {entity[0]} {entity[1]!r} has no prior data in the graph.", "dim")
             _p("  Cannot determine a connection — one or both entities are unrecorded.\n", "dim")
+        elif result.get("reason") == "shared_tooling_only":
+            # Previously reported as CONNECTED. Two actors both using Cobalt
+            # Strike is not evidence they are related, and saying so sent
+            # analysts chasing shared commodity infrastructure.
+            hubs = ", ".join(
+                f"{b['label']} (used by {b['actor_degree']} actors)"
+                for b in result.get("hub_bridges", [])
+            )
+            _p("  NOT CONNECTED — only shared tooling links these.", "yellow")
+            _p(f"  Shared:      {hubs}", "dim")
+            _p("  Widely-used tooling is not attribution evidence.\n", "dim")
         else:
             _p("  No known connection. Both entities are in the graph, but THEORY has "
                "never recorded a direct link or a shared relationship between them.\n", "yellow")
         return False
 
+    verdict = result.get("verdict", "")
     if result["path"] == "direct":
-        _p(f"  CONNECTED — direct link ({result['relation']})", "bold green")
+        if verdict == "WEAK":
+            _p(f"  WEAK LINK — direct edge, but family-level only ({result['relation']})", "yellow")
+            _p("  This ties the entity to tooling the actor uses, not to the actor.", "dim")
+        else:
+            _p(f"  CONNECTED — direct link ({result['relation']})", "bold green")
         _p(f"  Sources:     {', '.join(result['sources']) or '—'}")
         _p(f"  First seen:  {result['first_seen']}    Last seen: {result['last_seen']}\n")
     else:
         bridges = ", ".join(f"{b['type']}:{b['label']}" for b in result["bridges"])
         _p("  CONNECTED — via shared relationship", "bold green")
-        _p(f"  Bridge(s):   {bridges}\n")
+        _p(f"  Bridge(s):   {bridges}")
+        if result.get("hub_bridges"):
+            ignored = ", ".join(b["label"] for b in result["hub_bridges"])
+            _p(f"  (ignored shared tooling: {ignored})", "dim")
+        _p("")
     return True
 
 
@@ -1067,11 +1087,22 @@ def _collect_and_map(actor: str, source_key: str) -> dict[str, Any] | None:
     return raw
 
 
+# source key -> (log label, profile count key, profile family-hits key)
+_ABUSECH_ENRICHERS: dict[str, tuple[str, str, str]] = {
+    "threatfox":      ("ThreatFox",      "threatfox_ioc_count",       "threatfox_family_hits"),
+    "malware_bazaar": ("MalwareBazaar",  "malware_bazaar_ioc_count",  "malware_bazaar_family_hits"),
+    "urlhaus":        ("URLhaus",        "urlhaus_ioc_count",         "urlhaus_family_hits"),
+}
+
+
 def _enrich_profile(
     profile: dict[str, Any],
     source_key: str,
     on_progress=None,
+    **kwargs: Any,
 ) -> dict[str, Any]:
+    from theory.attribution import FAMILY, split_families, tag_indicators
+
     enricher_path = ENRICHMENT_SOURCES.get(source_key)
     if not enricher_path:
         return profile
@@ -1163,108 +1194,55 @@ def _enrich_profile(
                     len(synthesized), provider.name,
                 )
 
-        elif source_key == "threatfox":
-            malware_names = [
-                m.get("name", "")
-                for m in (profile.get("malware") or [])
-                if m.get("name")
-            ]
-            if not malware_names:
-                return profile
-            abusech_key = os.environ.get("ABUSECH_API_KEY", "")
-            if abusech_key:
-                enricher_inst = _load_class(enricher_path)(api_key=abusech_key)
-            else:
-                enricher_inst = enricher
-            result = enricher_inst.collect_for_malware_families(
-                malware_names, profile.get("actor_name", "")
-            )
-            if not result:
-                return profile
-            existing = profile.get("indicators", [])
-            seen = {
-                f"{i.get('type','')}:{i.get('value','').lower()}"
-                for i in existing
-            }
-            new_iocs = []
-            for ioc in (result.get("indicators") or []):
-                key = f"{ioc.get('type','')}:{ioc.get('value','').lower()}"
-                if key not in seen:
-                    seen.add(key)
-                    new_iocs.append(ioc)
-            profile["indicators"] = existing + new_iocs
-            profile["threatfox_ioc_count"]   = len(new_iocs)
-            profile["threatfox_family_hits"]  = result.get("family_hits", {})
-            logger.info("ThreatFox: added %d IOCs", len(new_iocs))
+        elif source_key in _ABUSECH_ENRICHERS:
+            # ThreatFox, MalwareBazaar and URLhaus differ only in which
+            # endpoint they hit and what they call the result — the three
+            # blocks that used to live here were otherwise identical,
+            # including a dead inverted line in the MalwareBazaar copy.
+            label, count_key, hits_key = _ABUSECH_ENRICHERS[source_key]
 
-        elif source_key == "malware_bazaar":
-            malware_names = [
-                m.get("name", "")
-                for m in (profile.get("malware") or [])
-                if m.get("name")
-            ]
-            if not malware_names:
-                return profile
-            abusech_key = os.environ.get("ABUSECH_API_KEY", "")
-            enricher_inst = enricher.__class__(api_key=abusech_key) if not abusech_key else enricher
-            if abusech_key:
-                enricher_inst = _load_class(enricher_path)(api_key=abusech_key)
-            else:
-                enricher_inst = enricher
-            result = enricher_inst.collect_for_malware_families(
-                malware_names, profile.get("actor_name", "")
+            attributable, shared = split_families(
+                profile.get("malware") or [],
+                include_shared=bool(kwargs.get("include_shared_tooling")),
             )
-            if not result:
+            if shared:
+                logger.info(
+                    "%s: skipping %d shared tool(s) — %s. Their IOCs belong to "
+                    "the tool, not this actor. Use --include-shared-tooling to "
+                    "collect them anyway (they will be tagged shared_tool).",
+                    label, len(shared), ", ".join(sorted(shared)[:6]),
+                )
+            if not attributable:
                 return profile
-            existing = profile.get("indicators", [])
-            seen = {
-                f"{i.get('type','')}:{i.get('value','').lower()}"
-                for i in existing
-            }
-            new_iocs = []
-            for ioc in (result.get("indicators") or []):
-                key = f"{ioc.get('type','')}:{ioc.get('value','').lower()}"
-                if key not in seen:
-                    seen.add(key)
-                    new_iocs.append(ioc)
-            profile["indicators"] = existing + new_iocs
-            profile["malware_bazaar_ioc_count"]  = len(new_iocs)
-            profile["malware_bazaar_family_hits"] = result.get("family_hits", {})
-            logger.info("MalwareBazaar: added %d sample hashes", len(new_iocs))
 
-        elif source_key == "urlhaus":
-            malware_names = [
-                m.get("name", "")
-                for m in (profile.get("malware") or [])
-                if m.get("name")
-            ]
-            if not malware_names:
-                return profile
             abusech_key = os.environ.get("ABUSECH_API_KEY", "")
-            if abusech_key:
-                enricher_inst = _load_class(enricher_path)(api_key=abusech_key)
-            else:
-                enricher_inst = enricher
+            enricher_inst = (
+                _load_class(enricher_path)(api_key=abusech_key)
+                if abusech_key else enricher
+            )
             result = enricher_inst.collect_for_malware_families(
-                malware_names, profile.get("actor_name", "")
+                attributable, profile.get("actor_name", ""),
             )
             if not result:
                 return profile
+
             existing = profile.get("indicators", [])
             seen = {
-                f"{i.get('type','')}:{i.get('value','').lower()}"
+                f"{i.get('type','')}:{(i.get('value') or '').lower()}"
                 for i in existing
             }
             new_iocs = []
-            for ioc in (result.get("indicators") or []):
-                key = f"{ioc.get('type','')}:{ioc.get('value','').lower()}"
+            for ioc in tag_indicators(result.get("indicators") or [], FAMILY):
+                key = f"{ioc.get('type','')}:{(ioc.get('value') or '').lower()}"
                 if key not in seen:
                     seen.add(key)
                     new_iocs.append(ioc)
+
             profile["indicators"] = existing + new_iocs
-            profile["urlhaus_ioc_count"]  = len(new_iocs)
-            profile["urlhaus_family_hits"] = result.get("family_hits", {})
-            logger.info("URLhaus: added %d distribution URLs", len(new_iocs))
+            profile[count_key] = len(new_iocs)
+            profile[hits_key]  = result.get("family_hits", {})
+            logger.info("%s: added %d indicators (family-level attribution)",
+                        label, len(new_iocs))
 
         elif source_key == "yara":
             malware_names = [
@@ -1515,9 +1493,10 @@ def run(
                 profile = _enrich_profile(
                     profile, source_key,
                     on_progress=lambda: progress.advance(task),
+                    **kwargs,
                 )
         else:
-            profile = _enrich_profile(profile, source_key)
+            profile = _enrich_profile(profile, source_key, **kwargs)
 
     # ── 5. LLM Actor Overview ────────────────────────────────────────
     # Generate a synthesized actor synopsis using the full profile.
@@ -2212,6 +2191,16 @@ def _build_parser() -> argparse.ArgumentParser:
 
     # ── File saving ────────────────────────────────────────────────────
     p.add_argument(
+        "--include-shared-tooling",
+        action="store_true",
+        help=(
+            "Also collect IOCs for widely-shared tooling (Cobalt Strike, Mimikatz, "
+            "PsExec...). Off by default: those indicators belong to the tool, not "
+            "to this actor, and hundreds of unrelated groups use them. Anything "
+            "collected this way is tagged shared_tool in every output."
+        ),
+    )
+    p.add_argument(
         "--allow-unknown",
         action="store_true",
         help=(
@@ -2505,6 +2494,7 @@ def main(argv: list[str] | None = None) -> None:
         detection_path   = args.detection_path,
         playbook_format  = args.playbook_format,
         no_graph         = args.no_graph,
+        include_shared_tooling = args.include_shared_tooling,
     )
 
     # ── Multi-flag cross-correlative query ─────────────────────────────

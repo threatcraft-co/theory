@@ -57,11 +57,31 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from theory.attribution import (
+    ACTOR, SHARED_TOOL, WEIGHTS, attribution_of, is_shared_tooling, weight_of,
+)
+
 logger = logging.getLogger(__name__)
 
 GRAPH_PATH = Path("output/graph/graph.json")
 
 NODE_TYPES = frozenset({"actor", "ioc", "technique", "malware", "cve", "campaign"})
+
+# Connection verdicts. A boolean "connected" was too blunt: it could not
+# distinguish "CISA named this IP in an advisory about this actor" from
+# "both actors happen to use Cobalt Strike".
+DIRECT              = "DIRECT"
+INDIRECT            = "INDIRECT"
+WEAK                = "WEAK"
+SHARED_TOOLING_ONLY = "SHARED_TOOLING_ONLY"
+NONE                = "NONE"
+
+# An edge at or above this weight is actor-attributed evidence.
+_STRONG_EDGE = 0.8
+
+# A node linked to more actors than this is infrastructure/tooling in
+# practice, and two actors sharing it means nothing.
+_HUB_ACTOR_DEGREE = 3
 
 
 # ---------------------------------------------------------------------------
@@ -193,7 +213,24 @@ class GraphStore:
 
         return key
 
-    def upsert_edge(self, key_a: str, key_b: str, relation: str, source: str = "") -> None:
+    def upsert_edge(
+        self,
+        key_a: str,
+        key_b: str,
+        relation: str,
+        source: str = "",
+        weight: float = 1.0,
+    ) -> None:
+        """Record (or refresh) an undirected edge.
+
+        `weight` says how much this link means as attribution evidence:
+        1.0 for an actor-attributed link, 0.4 for a family-level one, 0.1
+        for shared tooling (see theory.attribution.WEIGHTS). Without it the
+        graph treated "CISA says this IP is APT28's" and "ThreatFox returned
+        this IP for Cobalt Strike, which APT28 uses among hundreds of other
+        groups" as the same fact, and answered connection queries
+        accordingly. The strongest observation wins on repeat sightings.
+        """
         if key_a == key_b:
             return
         today = _today()
@@ -201,12 +238,36 @@ class GraphStore:
             bucket = self.edges.setdefault(a, {})
             edge   = bucket.get(b)
             if edge is None:
-                edge = {"relation": relation, "sources": [], "first_seen": today, "last_seen": today}
+                edge = {
+                    "relation":   relation,
+                    "sources":    [],
+                    "first_seen": today,
+                    "last_seen":  today,
+                    "weight":     weight,
+                }
                 bucket[b] = edge
             else:
                 edge["last_seen"] = today
+                edge["weight"] = max(float(edge.get("weight", 1.0)), weight)
             if source and source not in edge["sources"]:
                 edge["sources"].append(source)
+
+    # ── degree, for hub suppression ─────────────────────────────────
+    def degree(self, key: str) -> int:
+        """How many distinct nodes this one connects to."""
+        return len(self.edges.get(key, {}))
+
+    def actor_degree(self, key: str) -> int:
+        """How many distinct ACTORS connect to this node.
+
+        A malware node linked to 40 actors is shared tooling in practice,
+        whatever its attribution level says — two actors sharing it is not
+        evidence they are related.
+        """
+        return sum(
+            1 for other in self.edges.get(key, {})
+            if other.startswith("actor:")
+        )
 
     # ── reads ───────────────────────────────────────────────────────
     def get_node(self, node_type: str, raw_id: str) -> dict[str, Any] | None:
@@ -256,10 +317,15 @@ def ingest_profile(profile: dict[str, Any], store: GraphStore | None = None) -> 
                 "ioc", value, label=value, source=src,
                 meta={"ioc_type": ioc.get("type", "")},
             )
+        # Weight the actor<->IOC link by how it was obtained. A ThreatFox
+        # hit for a shared tool is not the same claim as a CISA advisory
+        # naming the actor's own infrastructure.
+        ioc_weight = weight_of(ioc)
+        relation = "reported_ioc" if attribution_of(ioc) == ACTOR else "family_ioc"
         for src in ioc_sources:
-            store.upsert_edge(actor_key, ioc_key, "reported_ioc", source=src)
+            store.upsert_edge(actor_key, ioc_key, relation, source=src, weight=ioc_weight)
         if not ioc_sources:
-            store.upsert_edge(actor_key, ioc_key, "reported_ioc")
+            store.upsert_edge(actor_key, ioc_key, relation, weight=ioc_weight)
 
         family = (ioc.get("malware_family") or ioc.get("malware") or "").strip()
         if family:
@@ -286,8 +352,17 @@ def ingest_profile(profile: dict[str, Any], store: GraphStore | None = None) -> 
         name = (m.get("name") or "").strip()
         if not name:
             continue
-        mal_key = store.upsert_node("malware", name, label=name, meta={"malware_type": m.get("type", "")})
-        store.upsert_edge(actor_key, mal_key, "uses_malware")
+        mal_key = store.upsert_node(
+            "malware", name, label=name,
+            meta={
+                "malware_type": m.get("type", ""),
+                "shared_tooling": is_shared_tooling(name) or str(m.get("type", "")).lower() == "tool",
+            },
+        )
+        store.upsert_edge(
+            actor_key, mal_key, "uses_malware",
+            weight=WEIGHTS[SHARED_TOOL] if is_shared_tooling(name) else 1.0,
+        )
 
     for cve in (profile.get("cves") or []):
         cid = (cve.get("cve_id") or "").strip()
@@ -554,10 +629,13 @@ def find_connection(
 
     direct = store.neighbors(key_a).get(key_b)
     if direct:
+        weight = float(direct.get("weight", 1.0))
         return {
             "connected":  True,
+            "verdict":    DIRECT if weight >= _STRONG_EDGE else WEAK,
             "path":       "direct",
             "relation":   direct["relation"],
+            "weight":     weight,
             "sources":    direct["sources"],
             "first_seen": direct["first_seen"],
             "last_seen":  direct["last_seen"],
@@ -565,29 +643,68 @@ def find_connection(
             "entity_b":   {"type": type_b, "id": node_b["id"]},
         }
 
-    neighbors_a = set(store.neighbors(key_a).keys())
-    neighbors_b = set(store.neighbors(key_b).keys())
-    shared      = neighbors_a & neighbors_b
-    if shared:
-        bridges = []
-        for shared_key in sorted(shared):
-            bridge = store.nodes.get(shared_key)
-            if bridge:
-                bridges.append({
-                    "type":  bridge["type"],
-                    "id":    bridge["id"],
-                    "label": bridge.get("label", bridge["id"]),
-                })
+    # ── shared one-hop neighbours ───────────────────────────────────
+    #
+    # A shared neighbour used to be reported as CONNECTED outright. That
+    # made every pair of actors using the same commodity tool look related:
+    # APT28 and FIN7 both use Cobalt Strike, so FIN7's Cobalt Strike C2 came
+    # back as CONNECTED to APT28, bridged by the tool. A bridge is only
+    # evidence if it is specific to these two entities.
+    neighbors_a = store.neighbors(key_a)
+    neighbors_b = store.neighbors(key_b)
+    shared = set(neighbors_a) & set(neighbors_b)
+
+    bridges: list[dict[str, Any]] = []
+    hubs: list[dict[str, Any]] = []
+    for shared_key in sorted(shared):
+        bridge = store.nodes.get(shared_key)
+        if not bridge:
+            continue
+        link_weight = min(
+            float(neighbors_a[shared_key].get("weight", 1.0)),
+            float(neighbors_b[shared_key].get("weight", 1.0)),
+        )
+        entry = {
+            "type":       bridge["type"],
+            "id":         bridge["id"],
+            "label":      bridge.get("label", bridge["id"]),
+            "weight":     link_weight,
+            "actor_degree": store.actor_degree(shared_key),
+        }
+        is_hub = (
+            bridge.get("meta", {}).get("shared_tooling")
+            or entry["actor_degree"] > _HUB_ACTOR_DEGREE
+            or link_weight <= WEIGHTS[SHARED_TOOL]
+        )
+        (hubs if is_hub else bridges).append(entry)
+
+    if bridges:
         return {
             "connected": True,
+            "verdict":   INDIRECT,
             "path":      "shared_neighbor",
             "bridges":   bridges,
+            "hub_bridges": hubs,
             "entity_a":  {"type": type_a, "id": node_a["id"]},
             "entity_b":  {"type": type_b, "id": node_b["id"]},
         }
 
+    if hubs:
+        # Something links them, but only via infrastructure or tooling that
+        # many unrelated actors share. Reported honestly rather than as a
+        # connection.
+        return {
+            "connected":   False,
+            "verdict":     SHARED_TOOLING_ONLY,
+            "reason":      "shared_tooling_only",
+            "hub_bridges": hubs,
+            "entity_a":    {"type": type_a, "id": node_a["id"]},
+            "entity_b":    {"type": type_b, "id": node_b["id"]},
+        }
+
     return {
         "connected": False,
+        "verdict":   NONE,
         "reason":    "no_path_found",
         "entity_a":  {"type": type_a, "id": node_a["id"]},
         "entity_b":  {"type": type_b, "id": node_b["id"]},
