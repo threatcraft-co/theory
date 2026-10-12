@@ -4,7 +4,7 @@
 
 **Multi-source threat actor intelligence for everyone — with memory.**
 
-THEORY is an open-source alternative to enterprise threat intelligence platforms. It generates analyst-grade dossiers on threat actors by aggregating data from 20 free and keyless-by-default sources — MITRE ATT&CK, MISP Galaxy, CIRCL MISP, Malpedia, AlienVault OTX, SigmaHQ, YARA-Rules, ThreatFox, MalwareBazaar, URLhaus, GreyNoise, AbuseIPDB, Shodan InternetDB, urlscan.io, VulDB, NVD, CISA, CISA KEV, and vendor research blogs — then synthesizes everything using an LLM into a clean executive overview and actor-specific intelligence summaries.
+THEORY is an open-source alternative to enterprise threat intelligence platforms. It generates analyst-grade dossiers on threat actors by aggregating data from 20 free sources, 13 of which need no key at all — MITRE ATT&CK, MISP Galaxy, CIRCL MISP, Malpedia, AlienVault OTX, SigmaHQ, YARA-Rules, ThreatFox, MalwareBazaar, URLhaus, GreyNoise, AbuseIPDB, Shodan InternetDB, urlscan.io, VulDB, NVD, CISA, CISA KEV, and vendor research blogs — then synthesizes everything using an LLM into a clean executive overview and actor-specific intelligence summaries.
 
 As of v2.0, THEORY isn't stateless. Every run feeds a **persistent correlation graph** that accumulates across every query you've ever made, so you can ask "have I ever seen this IP?" or "is this actor connected to this CVE?" without re-running collection, track what's changed for an actor over time, and even watch one continuously.
 
@@ -61,7 +61,7 @@ theory --update-bundles
 # 5. Configure your API keys
 cp .env.example .env
 # Edit .env and add your OTX_API_KEY (free at otx.alienvault.com)
-# Everything else — including 2 of the 20 sources — needs no key at all
+# Everything else — 13 of the 20 sources — needs no key at all
 
 # 6. Run your first dossier
 theory --actor APT28
@@ -79,32 +79,34 @@ theory ask "what do we know about APT28's malware?"
 
 ## Sources
 
-20 sources, 15 of which need no API key or signup at all.
+20 sources, 13 of which need no API key or signup at all.
 
-| Key | Source | Auth Required | Cache |
+<!-- BEGIN GENERATED SOURCE TABLE -->
+| Source | What it adds | Auth | Cache |
 |---|---|---|---|
-| `mitre` | MITRE ATT&CK — techniques, malware, campaigns (local bundle) | None | 7 days |
-| `cisa` | CISA advisories + KEV catalog | None | Per request |
-| `cisa_kev` | CISA KEV — 1,600+ confirmed-exploited CVEs, ransomware flags | None | 24 hours |
-| `malpedia` | Malpedia malware family database | None | Per request |
-| `misp_galaxy` | MISP Galaxy — 1,000+ actors, aliases, attribution, target sectors | None | 7 days |
-| `circl_misp` | CIRCL OSINT MISP feed — event-level indicators + campaign context | None | 24h / 7 days |
-| `otx` | AlienVault OTX pulses + IOCs | `OTX_API_KEY` | Per request |
-| `nvd` | NIST NVD — CVSS scores, CWE classification, references | None (optional key raises rate limit) | 30 days/CVE |
-| `sigma` | SigmaHQ detection rules mapped to ATT&CK (local clone) | None (`GITHUB_TOKEN` optional) | 7 days |
-| `yara` | YARA file detection rules matched to malware families (local clone) | None | 7 days |
-| `threatfox` | ThreatFox IOCs by malware family | None | 24 hours |
-| `malware_bazaar` | MalwareBazaar sample hashes by malware family | `ABUSECH_API_KEY` | 24 hours |
-| `urlhaus` | URLhaus malware distribution URLs by family | `ABUSECH_API_KEY` | 24 hours |
-| `greynoise` | GreyNoise IP noise/RIOT context | `GREYNOISE_API_KEY` | 7 days |
-| `abuseipdb` | AbuseIPDB IP reputation scores from community reports | `ABUSEIPDB_API_KEY` | 3 days |
-| `shodan_internetdb` | Shodan InternetDB — open ports, hostnames, CPEs, known CVEs on an IP | None | 24 hours |
-| `urlscan_io` | urlscan.io public scan history for domains/URLs | None (optional key raises rate limit) | 24 hours |
-| `vuldb` | VulDB actor-CVE correlation and exploit intelligence | `VULDB_API_KEY` | 7 days |
-| `vendor` | Vendor intelligence synthesis — 50 research blogs, LLM-synthesized | LLM API key | 7 days |
-| `personal` | Your own local research indicators — gitignored, never leaves your machine | None | none (reads live) |
+| `mitre` | MITRE ATT&CK — techniques, software, campaigns (local bundle, offline) | None | 7 days (enterprise-attack.json) |
+| `misp_galaxy` | MISP Galaxy — 1000+ actors, aliases, attribution, target sectors (free, no auth) | None | 7 days |
+| `malpedia` | Malpedia malware family database (free, no auth) | None | per request |
+| `personal` | Your own local research indicators — never leaves your machine (--init-personal) | None | none — read fresh every run |
+| `cisa` | CISA cybersecurity advisories attributed to the actor (free, no auth) | None | per request |
+| `circl_misp` | CIRCL OSINT MISP feed — event-level indicators and campaign context (free, no auth) | None | 24h manifest / 7 days per event |
+| `otx` | AlienVault OTX pulses and IOCs (free, requires a key) | `OTX_API_KEY` | 24 hours |
+| `vendor` | Vendor research blogs, LLM-synthesised (requires an LLM provider) | LLM provider | 7 days per article |
+| `cisa_kev` | CISA KEV — flags profile CVEs as confirmed-exploited, adds ransomware use | None | 24 hours |
+| `nvd` | NIST NVD — CVSS scores/vectors, CWE classification for profile CVEs | `NVD_API_KEY` (optional) | 30 days per CVE |
+| `vuldb` | VulDB actor-CVE correlation and exploit intelligence (free tier) | `VULDB_API_KEY` | 7 days |
+| `sigma` | SigmaHQ detection rules mapped to ATT&CK techniques (free, local clone) | `GITHUB_TOKEN` (optional) | 7 days |
+| `yara` | YARA rules matched to malware families (free, local clone) | None | 7 days |
+| `threatfox` | ThreatFox IOCs by malware family (free, requires an abuse.ch key) | `ABUSECH_API_KEY` | 24 hours |
+| `malware_bazaar` | MalwareBazaar sample hashes by malware family (free, requires an abuse.ch key) | `ABUSECH_API_KEY` | 24 hours |
+| `urlhaus` | URLhaus malware distribution URLs by family (free, requires an abuse.ch key) | `ABUSECH_API_KEY` | 24 hours |
+| `greynoise` | GreyNoise — separates targeted activity from internet background noise | `GREYNOISE_API_KEY` | 7 days |
+| `abuseipdb` | AbuseIPDB community IP reputation scores | `ABUSEIPDB_API_KEY` | 3 days |
+| `shodan_internetdb` | Shodan InternetDB — open ports, hostnames, CPEs, known CVEs on an IP (free, no auth) | None | 24 hours |
+| `urlscan_io` | urlscan.io public scan history for domains/URLs (free, no auth) | `URLSCAN_API_KEY` (optional) | 24 hours |
+<!-- END GENERATED SOURCE TABLE -->
 
-`shodan_internetdb` is **not** the paid Shodan search API — it's Shodan's own free, keyless InternetDB lookup service, a deliberately different thing. The paid Shodan and Censys APIs remain unimplemented (see `pyproject.toml`'s `internet-scan` extra); VirusTotal was considered and skipped in favor of urlscan.io, which covers similar ground without a signup.
+`shodan_internetdb` is **not** the paid Shodan search API — it's Shodan's own free, keyless InternetDB lookup service, a deliberately different thing. The paid Shodan and Censys APIs remain unimplemented; the `internet-scan` extra that declared their SDKs was removed in v2.0, since nothing imported them. VirusTotal was considered and skipped in favor of urlscan.io, which covers similar ground without a signup.
 
 ```bash
 # Live status of all sources
@@ -288,22 +290,83 @@ Same pipeline as the CLI, nothing leaves your machine. See `server/README.md`. (
 
 ---
 
-## Alias resolution
+## Actor resolution
 
-THEORY knows **1,019 actors** by all their names (**2,455 aliases** total — expanded from an initial hand-curated ~35 via a one-time MISP Galaxy import). Any alias resolves to the same canonical dossier:
+THEORY knows **1033 actors**, 177 of them pinned to a specific MITRE ATT&CK group id. Any name THEORY recognises for an actor resolves to the same canonical dossier:
 
 ```bash
 theory --actor "Cozy Bear"          # → APT29
 theory --actor "Midnight Blizzard"  # → APT29
-theory --actor "Nobelium"           # → APT29
 theory --actor "NOBELIUM"           # → APT29 (case-insensitive)
+theory --actor scatteredspider      # → Scattered Spider (separators optional)
 ```
 
-The output file is always named by the canonical actor — `--actor "Fancy Bear"` produces `apt28.md`, not `fancy_bear.md`. Querying an actor THEORY doesn't have an alias entry for still works — it just falls back to the raw name you typed instead of resolving the full alias set, which costs some recall on sources other than `misp_galaxy` itself.
+The output file is named for the canonical actor — `--actor "Fancy Bear"` produces `apt28.md`.
+
+### Identity names vs. recall aliases
+
+Actor names do two different jobs, and conflating them was the cause of THEORY's worst class of bug before v2.0.
+
+**Identity names** answer *which actor is this?* They are matched exactly, and they are curated so that each one denotes exactly one actor. `--actor` resolves against these.
+
+**Recall aliases** answer *does this document mention the actor?* They are matched with word boundaries, and short or ambiguous names are excluded — `ups` is a real alias of APT3 and `lead` of APT41, but matching them inside "groups" and "leading" attributed unrelated advisories to both.
+
+Some names are **contested**: another catalog assigns them to a different group. MISP Galaxy lists `APT38` and `Moonstone Sleet` as synonyms of Lazarus Group, while MITRE tracks all three separately. Contested names are recorded but never used to resolve an actor, and where MITRE has its own group for one, THEORY does too. You can see the whole picture for any actor in `theory/data/actors.yaml`.
+
+### When THEORY doesn't know an actor
+
+Unknown input is an error with suggestions, not a guess:
 
 ```bash
-theory --list-actors    # see all 1,019 actors and their aliases
+$ theory --actor "Lazarus Grop"
+[theory] Unknown actor: 'Lazarus Grop'
+[theory] Did you mean: Lazarus Group?
 ```
+
+For an actor too new to be in any catalog, `--allow-unknown` searches free-text sources for the literal name and labels the dossier as unresolved.
+
+```bash
+theory --list-actors    # every known actor and its aliases
+```
+
+---
+
+## Indicator attribution
+
+Not every indicator in a dossier is tied to the actor equally well, and THEORY says which is which rather than presenting them all as the actor's own infrastructure.
+
+| Level | Meaning | Example |
+|---|---|---|
+| `actor` | A source explicitly attributes this to the actor | An IP named in a CISA advisory about them |
+| `family` | Tied to a malware family the actor uses | A ThreatFox IOC for X-Agent |
+| `shared_tool` | Tied to software many unrelated actors use | A Cobalt Strike C2 |
+
+This matters most on export. STIX asserts `indicator --indicates--> intrusion-set` only for `actor`-level evidence; family-level evidence points at the malware object instead, because that is what the source actually established. The IOC CSV carries an `attribution` column so commodity infrastructure can be filtered out before anything reaches a blocklist.
+
+By default, IOC enrichment skips widely-shared tooling entirely — querying ThreatFox for "Cobalt Strike" returns infrastructure belonging to hundreds of unrelated operators. Use `--include-shared-tooling` to collect it anyway; it will be tagged `shared_tool` everywhere it appears.
+
+The same distinction drives cross-run connection queries:
+
+```bash
+$ theory --actor APT28 --ioc 198.51.100.9
+NOT CONNECTED — only shared tooling links these.
+Shared:      Cobalt Strike (used by 2 actors)
+Widely-used tooling is not attribution evidence.
+```
+
+---
+
+## Where your data goes
+
+THEORY is local-first, and LLM synthesis is the one part that can leave your machine. It is opt-in by provider class:
+
+```bash
+theory --actor APT28 --llm off      # no synthesis at all
+theory --actor APT28 --llm local    # on-machine models only (Ollama) — the default
+theory --actor APT28 --llm cloud    # allow Claude / OpenAI
+```
+
+Set `THEORY_LLM` in `.env` to make a choice permanent. The default is `local`: simply having `ANTHROPIC_API_KEY` in your environment is not taken as consent to send actor profiles — including anything derived from `--sources personal` — to a third party on every run. When a cloud key is configured but the policy declines it, THEORY says so and names the flag.
 
 ---
 
@@ -652,7 +715,7 @@ test exercises — CI always runs with all secrets unset.
 - Python 3.11+
 - Dependencies installed via `pip install -e .`
 - ATT&CK bundle downloaded via `theory --update-bundles`
-- API keys: see `.env.example` for the full list with registration links — only `OTX_API_KEY` is needed for the default-plus-community experience; 15 of the 20 sources need no key at all
+- API keys: see `.env.example` for the full list with registration links — only `OTX_API_KEY` is needed for the default-plus-community experience; 13 of the 20 sources need no key at all
 
 ---
 
