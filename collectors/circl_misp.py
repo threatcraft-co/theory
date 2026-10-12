@@ -106,15 +106,20 @@ class CirclMispCollector(BaseCollector):
     # ------------------------------------------------------------------
 
     def query(self, actor_name: str) -> dict[str, Any] | None:
-        canonical = resolve_canonical(actor_name)
-        search_terms = self._search_terms(actor_name, canonical)
+        from theory.actors import registry
+
+        identity = registry().get(actor_name)
+        if identity is None:
+            logger.info("CIRCL MISP: %r is not a known actor — nothing to match", actor_name)
+            return None
+        canonical = identity.canonical
 
         manifest = self._load_manifest()
         if manifest is None:
             logger.warning("CIRCL MISP: manifest unavailable, skipping.")
             return None
 
-        matches = self._match_events(manifest, search_terms)
+        matches = self._match_events(manifest, identity)
         if not matches:
             logger.info("CIRCL MISP: no matching events for '%s'.", canonical)
             matches = []
@@ -180,24 +185,39 @@ class CirclMispCollector(BaseCollector):
     # ------------------------------------------------------------------
 
     def _search_terms(self, actor_name: str, canonical: str) -> list[str]:
-        terms = {actor_name.strip().lower(), canonical.strip().lower()}
-        for alias in ALIAS_TABLE.get(canonical, []):
-            terms.add(alias.strip().lower())
-        return [t for t in terms if t]
+        """Kept for API compatibility; matching now goes through
+        theory.actors.mentions (see _match_events)."""
+        from theory.actors import registry
+        identity = registry().get(canonical) or registry().get(actor_name)
+        return sorted(identity.recall_terms) if identity else []
 
     def _match_events(
-        self, manifest: dict[str, Any], search_terms: list[str]
+        self, manifest: dict[str, Any], identity
     ) -> list[tuple[str, dict]]:
+        """Select CIRCL events that are actually about this actor.
+
+        Was a substring test over the full alias set, which matched an
+        actor's short aliases inside unrelated words. Now a word-boundary
+        match over recall terms only.
+        """
+        from theory.actors import ActorIdentity, mentions, normalize_name
+
+        # Accept a bare list of terms as well as an ActorIdentity, so the
+        # matching semantics stay unit-testable without constructing a
+        # whole registry entry.
+        if not isinstance(identity, ActorIdentity):
+            identity = ActorIdentity(
+                canonical="(ad hoc)",
+                recall_terms=frozenset(normalize_name(t) for t in identity if t),
+            )
+
         matched: list[tuple[str, dict]] = []
         for event_uuid, meta in manifest.items():
-            haystack = (meta.get("info") or "").lower()
             tags = meta.get("Tag") or []
             tag_text = " ".join(
                 (t.get("name", "") if isinstance(t, dict) else str(t)) for t in tags
-            ).lower()
-            haystack = f"{haystack} {tag_text}"
-
-            if any(term in haystack for term in search_terms):
+            )
+            if mentions(identity, meta.get("info") or "", tag_text):
                 matched.append((event_uuid, meta))
 
         # Most recent first

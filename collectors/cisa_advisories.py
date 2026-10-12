@@ -224,12 +224,17 @@ class CisaAdvisoriesCollector(BaseCollector):
         return self.collect(actor_name)
 
     def collect(self, actor_name: str) -> dict[str, Any] | None:
-        canonical  = resolve_canonical(actor_name)
-        search_set = all_aliases_for(actor_name) | {actor_name.lower()}
+        from theory.actors import registry
+
+        identity = registry().get(actor_name)
+        if identity is None:
+            logger.info("CISA: %r is not a known actor — nothing to match against", actor_name)
+            return None
+        canonical = identity.canonical
 
         logger.info("CISA: searching for %r (canonical: %s)", actor_name, canonical)
 
-        aa_advisories = self._fetch_advisories(search_set)
+        aa_advisories = self._fetch_advisories(identity)
         cves = self._cves_from_advisories(aa_advisories)
 
         if not cves and not aa_advisories:
@@ -239,7 +244,7 @@ class CisaAdvisoriesCollector(BaseCollector):
         return {
             "actor_name":   canonical or actor_name,
             "source_id":    SOURCE_ID,
-            "aliases":      sorted(search_set - {canonical.lower()}),
+            "aliases":      sorted(identity.identity_names - {canonical.lower()}),
             "description":  "",
             "origin":       "",
             "first_seen":   "",
@@ -347,7 +352,7 @@ class CisaAdvisoriesCollector(BaseCollector):
     # AA advisories
     # ------------------------------------------------------------------
 
-    def _fetch_advisories(self, search_set: frozenset[str]) -> list[dict]:
+    def _fetch_advisories(self, identity) -> list[dict]:
         """
         Fetch CISA cybersecurity advisories and filter those attributing
         the target actor.  Tries the JSON feed first, falls back gracefully.
@@ -359,7 +364,7 @@ class CisaAdvisoriesCollector(BaseCollector):
             try:
                 items = _fetch_advisory_xml(url)
                 for item in items:
-                    if self._advisory_matches(item, search_set):
+                    if self._advisory_matches(item, identity):
                         advisories.append(self._normalise_advisory(item))
                 if advisories:
                     break
@@ -370,16 +375,29 @@ class CisaAdvisoriesCollector(BaseCollector):
         return advisories
 
     @staticmethod
-    def _advisory_matches(item: dict, search_set: frozenset[str]) -> bool:
-        """Return True if any alias appears in the advisory's text fields."""
-        haystack = " ".join([
-            (item.get("title")       or ""),
-            (item.get("summary")     or ""),
-            (item.get("description") or ""),
-            (item.get("tags")        or ""),
-            (item.get("body")        or ""),
-        ]).lower()
-        return any(alias in haystack for alias in search_set)
+    def _advisory_matches(item: dict, identity) -> bool:
+        """True if this advisory is actually about the actor.
+
+        Was a raw substring test over the full MISP-derived alias set. With
+        335 aliases of <=5 characters, many of them ordinary English words,
+        that attributed unrelated advisories to whoever happened to own a
+        matching substring: an Akira ransomware advisory matched APT3 (via
+        "ups" inside "groups") and APT41 (via "lead" inside "leading").
+
+        Now a word-boundary match over recall terms only — stop-words and
+        short non-identifier aliases are excluded, and identifier aliases
+        match exactly (apt4 never matches apt41).
+        """
+        from theory.actors import mentions
+
+        return bool(mentions(
+            identity,
+            item.get("title") or "",
+            item.get("summary") or "",
+            item.get("description") or "",
+            item.get("tags") or "",
+            item.get("body") or "",
+        ))
 
     @staticmethod
     def _normalise_advisory(item: dict) -> dict:

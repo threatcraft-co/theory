@@ -330,8 +330,18 @@ class VendorIntelCollector:
         title_lower = title.lower()
         body_lower  = body.lower()[:SUMMARY_SCORE_CHARS]
 
-        title_hits = sum(1 for t in search_terms if t in title_lower)
-        body_hits  = sum(body_lower.count(t) for t in search_terms)
+        # Word-boundary counting, not substring counting. With substrings,
+        # an actor whose alias set contains "ups" or "lead" scored hits on
+        # the words "groups" and "leading" in any security article, which
+        # is how unrelated reports ended up summarised as actor intel.
+        title_hits = sum(
+            1 for t in search_terms
+            if re.search(rf"(?<![a-z0-9]){re.escape(t)}(?![a-z0-9])", title_lower)
+        )
+        body_hits = sum(
+            len(re.findall(rf"(?<![a-z0-9]){re.escape(t)}(?![a-z0-9])", body_lower))
+            for t in search_terms
+        )
 
         score = 0
 
@@ -650,12 +660,29 @@ class VendorIntelCollector:
 
     @staticmethod
     def _build_search_terms(actor_name: str, aliases: list[str]) -> set[str]:
-        """Build lowercase search term set from actor name + aliases."""
-        terms: set[str] = {actor_name.lower()}
-        for alias in aliases:
-            clean = alias.strip().lower()
-            # Skip very short or ID-style aliases (G0007, TA422, etc.)
-            if len(clean) > 4 and not re.match(r"^[gtu][a-z]?\d+$", clean):
+        """Search terms for relevance scoring.
+
+        Prefers the curated recall set from theory.actors, which already
+        excludes stop-words and short ambiguous aliases. Falls back to a
+        filtered version of the passed-in aliases when the actor is not in
+        the registry.
+
+        Note the previous version added `actor_name` unconditionally,
+        bypassing its own length filter — so a two-letter actor name went
+        straight into substring scoring.
+        """
+        from theory.actors import STOP_ALIASES, is_id_alias, normalize_name, registry
+
+        identity = registry().get(actor_name)
+        if identity is not None and identity.recall_terms:
+            return set(identity.recall_terms)
+
+        terms: set[str] = set()
+        for alias in [actor_name, *aliases]:
+            clean = normalize_name(alias)
+            if not clean or clean in STOP_ALIASES:
+                continue
+            if len(clean) >= 4 or is_id_alias(clean):
                 terms.add(clean)
         return terms
 

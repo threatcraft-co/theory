@@ -157,19 +157,32 @@ def _normalize_timestamp_lenient(value: Any) -> str:
 
 
 def _normalize_motivations(values: Any) -> list[str]:
+    """Map motivations onto the canonical set.
+
+    "unknown" is a fallback for when nothing recognisable was supplied, not
+    an additional motivation: emitting ["espionage", "unknown"] (which is
+    what happened whenever a source listed one known and one unrecognised
+    value) reads as though the actor has a second, mysterious motive.
+    """
     if not isinstance(values, list):
         return []
-    result = []
+    recognized: list[str] = []
+    saw_unrecognized = False
     for v in values:
         if not isinstance(v, str):
             continue
         normalized = v.strip().lower()
+        if not normalized:
+            continue
         if normalized in CANONICAL_MOTIVATIONS:
-            result.append(normalized)
+            recognized.append(normalized)
         else:
-            if "unknown" not in result:
-                result.append("unknown")
-    return list(dict.fromkeys(result))
+            saw_unrecognized = True
+
+    deduped = [m for m in dict.fromkeys(recognized) if m != "unknown"]
+    if deduped:
+        return deduped
+    return ["unknown"] if (saw_unrecognized or "unknown" in recognized) else []
 
 
 def _normalize_sectors(values: Any) -> list[str]:

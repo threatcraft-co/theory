@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import pytest
 from mappers.cisa import CisaMapper
-from collectors.cisa_advisories import resolve_canonical, all_aliases_for, ALIAS_TABLE
+from collectors.cisa_advisories import resolve_canonical, all_aliases_for
 
 
 # ---------------------------------------------------------------------------
@@ -105,16 +105,29 @@ class TestSuggestSimilar:
 
 class TestAliasTableIntegrity:
 
-    def test_alias_table_has_no_duplicate_aliases(self):
-        """Each alias string should map to exactly one canonical name."""
+    def test_identity_names_map_to_exactly_one_actor(self):
+        """The invariant that actually matters: a name used to RESOLVE an
+        actor must denote exactly one.
+
+        This used to assert uniqueness across the whole alias union. That
+        union now deliberately retains contested names (apt17 stays listed
+        under APT41 for the analyst's reference, even though ATT&CK assigns
+        it to APT17), so uniqueness there is neither true nor desirable.
+        Identity names are the set resolution actually uses, and those must
+        be unambiguous — ambiguity there is what made `--actor APT41`
+        return APT17's dossier.
+        """
+        from theory.actors import registry
+
+        reg = registry()
         seen: dict[str, str] = {}
-        for canonical, aliases in ALIAS_TABLE.items():
-            for alias in aliases:
-                assert alias not in seen, (
-                    f"Alias {alias!r} appears in both "
-                    f"{seen[alias]!r} and {canonical!r}"
+        for canonical in reg.canonical_names():
+            for name in reg.identity(canonical).identity_names:
+                assert name not in seen, (
+                    f"Identity name {name!r} is claimed by both "
+                    f"{seen[name]!r} and {canonical!r} — resolution would be ambiguous"
                 )
-                seen[alias] = canonical
+                seen[name] = canonical
 
 
 class TestCveExtraction:
@@ -171,7 +184,7 @@ class TestCveExtraction:
         }]
         with patch.object(c, "_fetch_advisories", return_value=fake_advisories), \
              patch("collectors.cisa_advisories._fetch_json", return_value={"vulnerabilities": []}):
-            result = c.collect("X")
+            result = c.collect("APT28")
 
         assert result["cves"][0]["cve_id"] == "CVE-2020-00000"
         assert result["cves"][0]["product"] == ""
