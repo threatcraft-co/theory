@@ -120,6 +120,12 @@ class HtmlReporter:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- The report is self-contained, so it needs nothing from the network.
+     Saying so costs nothing and limits what embedded third-party content
+     (vendor article titles, advisory links) can do if any of it is
+     hostile. Inline script/style are required by the theme toggle and
+     the single stylesheet; no external origin is permitted. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; font-src data:; form-action 'none'; base-uri 'none'">
 <title>{_esc(actor)} — THEORY Intelligence Dossier</title>
 <script>
   // Set theme before first paint to avoid a flash of the wrong theme.
@@ -649,7 +655,9 @@ def _section_campaigns(campaigns: list) -> str:
         ls    = c.get("last_seen", "")
         url   = c.get("url", "")
         period = f'<span class="campaign-period">{_esc(str(fs)[:10])} – {_esc(str(ls)[:10])}</span>' if fs or ls else ""
-        link   = f'<a href="{_esc(url)}" target="_blank" class="campaign-link">ATT&amp;CK ↗</a>' if url else ""
+        _href  = _safe_href(url)
+        link   = (f'<a href="{_href}" target="_blank" rel="noopener noreferrer" '
+                  f'class="campaign-link">ATT&amp;CK ↗</a>') if _href else ""
         desc_html = f'<p class="campaign-desc">{_esc(desc)}</p>' if desc else ""
         items += f"""<div class="campaign-card">
   <div class="campaign-header">
@@ -681,7 +689,12 @@ def _section_vendor_intel(vendor_intel: list) -> str:
         land_sum  = item.get("landscape_summary", "")
         rel_cls   = "rel-high" if relevance >= 70 else "rel-med" if relevance >= 40 else "rel-low"
         rel_label = "HIGH" if relevance >= 70 else "MED" if relevance >= 40 else "LOW"
-        title_html = f'<a href="{_esc(url)}" target="_blank" class="intel-title">{_esc(title)}</a>' if url else f'<span class="intel-title">{_esc(title)}</span>'
+        _href = _safe_href(url)
+        title_html = (
+            f'<a href="{_href}" target="_blank" rel="noopener noreferrer" '
+            f'class="intel-title">{_esc(title)}</a>'
+            if _href else f'<span class="intel-title">{_esc(title)}</span>'
+        )
         actor_html = f'<p class="intel-summary">{_esc(actor_sum)}</p>' if actor_sum else ""
         land_html  = f'<p class="intel-context"><em>Context: {_esc(land_sum)}</em></p>' if land_sum else ""
         items += f"""<div class="intel-card">
@@ -712,7 +725,7 @@ def _section_detection_repos(repos: list) -> str:
         tier_cls = "tier-official" if repo.get("tier") == 1 else "tier-community"
         items += f"""<div class="repo-card">
   <div class="repo-header">
-    <a href="{_esc(repo['url'])}" target="_blank" class="repo-name">{_esc(repo['name'])}</a>
+    <a href="{_safe_href(repo['url']) or '#'}" target="_blank" rel="noopener noreferrer" class="repo-name">{_esc(repo['name'])}</a>
     <span class="repo-tier {tier_cls}">{tier}</span>
   </div>
   <div class="repo-platform">{_esc(repo.get('platform','').title())}</div>
@@ -739,9 +752,9 @@ def _advisory_item_html(a: dict) -> str:
     """
     date  = _esc(a.get("date", ""))
     title = _esc(a.get("title", ""))
-    url   = a.get("url", "")
+    url   = _safe_href(a.get("url", ""))
     if url:
-        link_open  = f'<a href="{_esc(url)}" target="_blank">'
+        link_open  = f'<a href="{url}" target="_blank" rel="noopener noreferrer">'
         link_close = "</a>"
     else:
         link_open  = "<span>"
@@ -1355,12 +1368,52 @@ document.addEventListener('DOMContentLoaded', function() {
 # ---------------------------------------------------------------------------
 
 def _esc(s: str) -> str:
-    """HTML-escape a string."""
+    """HTML-escape a string, including single quotes.
+
+    Single quotes matter because some attributes in this template are
+    single-quoted; escaping only double quotes leaves those breakable.
+    """
     return (str(s)
             .replace("&", "&amp;")
             .replace("<", "&lt;")
             .replace(">", "&gt;")
-            .replace('"', "&quot;"))
+            .replace('"', "&quot;")
+            .replace("'", "&#x27;"))
+
+
+_SAFE_URL_SCHEMES = frozenset({"http", "https", "mailto"})
+
+
+def _safe_href(url: str) -> str | None:
+    """Escaped URL if it is safe to link to, else None.
+
+    Report content comes from third parties — vendor RSS `link` fields,
+    CISA advisory URLs, campaign references. These were HTML-escaped but
+    never scheme-checked, so a `javascript:` URL from a compromised or
+    hostile feed became a clickable link in a report explicitly designed
+    to be shared with colleagues. Under `theory serve` the report is also
+    same-origin with the settings API.
+
+    Returns None for anything that is not http/https/mailto, and for
+    protocol-relative URLs (//evil.test), which inherit the page scheme.
+    """
+    from urllib.parse import urlsplit
+
+    raw = str(url or "").strip()
+    if not raw or raw.startswith("//"):
+        return None
+    # Control characters are stripped by browsers before scheme parsing,
+    # so "java\tscript:" would otherwise slip past a naive check.
+    cleaned = "".join(ch for ch in raw if ord(ch) > 0x20)
+    try:
+        scheme = urlsplit(cleaned).scheme.lower()
+    except ValueError:
+        return None
+    if scheme and scheme in _SAFE_URL_SCHEMES:
+        return _esc(cleaned)
+    if not scheme and not cleaned.startswith(("/", "\\")):
+        return None     # bare word, not a usable link
+    return None
 
 
 def _defang_html(ioc_type: str, value: str) -> str:

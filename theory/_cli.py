@@ -2191,6 +2191,17 @@ def _build_parser() -> argparse.ArgumentParser:
 
     # ── File saving ────────────────────────────────────────────────────
     p.add_argument(
+        "--llm",
+        choices=["off", "local", "cloud"],
+        default=None,
+        metavar="POLICY",
+        help=(
+            "Where LLM synthesis may run. local (default) = on-machine models "
+            "only (Ollama). cloud = allow hosted providers, which sends the "
+            "actor profile to them. off = no synthesis. Overrides THEORY_LLM."
+        ),
+    )
+    p.add_argument(
         "--include-shared-tooling",
         action="store_true",
         help=(
@@ -2423,6 +2434,11 @@ def main(argv: list[str] | None = None) -> None:
         print("\nerror: --actor is required (or use --ioc / --technique / --attack-type / --cve "
               "for a standalone graph lookup). Try: theory --actor APT28\n")
         sys.exit(1)
+
+    # --llm is an override of the THEORY_LLM policy read by
+    # collectors.intelligence_synthesizer.egress_policy().
+    if args.llm:
+        os.environ["THEORY_LLM"] = args.llm
 
     sources = [s.strip().lower() for s in args.sources.split(",") if s.strip()]
 
