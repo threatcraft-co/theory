@@ -9,11 +9,13 @@ and progress events.
 
 from __future__ import annotations
 
+import logging
 import sys
 import time
-import traceback
 from pathlib import Path
 from typing import Any, Callable
+
+logger = logging.getLogger(__name__)
 
 # Typing alias for the progress callback
 ProgressCallback = Callable[[str, dict[str, Any]], None]
@@ -127,10 +129,14 @@ def run_pipeline(
     try:
         from theory._cli import run
     except ImportError as e:
+        # Tracebacks are logged server-side, not streamed to the browser:
+        # they carry absolute paths, environment details and sometimes
+        # argument values, and this stream is reachable from a page the
+        # user merely visited.
+        logger.error("Pipeline import failed", exc_info=True)
         callback("error", {
             "step_id": "import",
             "message": f"Could not import theory._cli.run: {e}. Make sure THEORY is installed.",
-            "traceback": traceback.format_exc(),
         })
         raise RuntimeError(f"Pipeline import failed: {e}") from e
 
@@ -158,7 +164,8 @@ def run_pipeline(
     t_start = time.monotonic()
 
     try:
-        print(f"[theory-serve] Running pipeline for actor={actor}, sources={sources}, format={output_format}")
+        logger.info("Running pipeline for actor=%r sources=%s format=%s",
+                    actor, sources, output_format)
         profile = run(
             actor=actor,
             sources=sources,
@@ -166,39 +173,30 @@ def run_pipeline(
             save=True,
             verbose=False,
         )
-        print(f"[theory-serve] Pipeline completed. Profile: {profile is not None}")
     except Exception as exc:
-        print(f"[theory-serve] Pipeline exception: {exc}")
-        import traceback as tb
-        tb.print_exc()
+        logger.error("Pipeline failed for actor=%r", actor, exc_info=True)
         callback("error", {
             "step_id": "pipeline",
             "message": str(exc),
-            "traceback": traceback.format_exc(),
         })
         raise
 
     elapsed_ms = int((time.monotonic() - t_start) * 1000)
 
     if profile is None:
-        print(f"[theory-serve] Pipeline returned None for actor={actor}")
         callback("error", {
             "step_id": "pipeline",
             "message": f"No data found for actor: {actor}",
-            "traceback": "",
         })
         return None
 
     # Find the output directory and list files
-    print(f"[theory-serve] Looking for dossier in output/dossiers/")
     dossier_path = _find_latest_dossier(actor, before_dirs)
-    print(f"[theory-serve] Found dossier: {dossier_path}")
     output_files = []
     if dossier_path:
         p = Path(dossier_path)
         if p.is_dir():
             output_files = sorted(f.name for f in p.iterdir() if f.is_file())
-            print(f"[theory-serve] Dossier files: {output_files}")
 
     callback("step_done", {
         "step": 1,

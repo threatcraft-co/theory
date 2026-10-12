@@ -518,12 +518,24 @@ def _fetch_advisory_xml(url: str, timeout: int = _TIMEOUT) -> list[dict]:
     Fetch the CISA cybersecurity advisories XML feed and parse into item dicts.
     Returns a list of dicts with title, url, date, summary fields.
     """
-    import xml.etree.ElementTree as ET
+    # defusedxml, not the stdlib parser. SECURITY.md states that the
+    # stdlib parser "is not used on attacker-influenceable content" —
+    # until now this feed was the exception that made that false. The
+    # practical risk is low (CISA is a trustworthy origin and expat has
+    # its own mitigations), but a published guarantee should be true.
+    from defusedxml import ElementTree as ET
+    from defusedxml.common import DefusedXmlException
+
     req = Request(url, headers={"User-Agent": "THEORY/1.0 threat-intel-research"})
     with urlopen(req, timeout=timeout) as resp:
         raw = resp.read().decode("utf-8", errors="replace")
 
-    root = ET.fromstring(raw)
+    try:
+        root = ET.fromstring(raw)
+    except DefusedXmlException as exc:
+        logger.warning("CISA advisory feed rejected by hardened parser: %s", exc)
+        return []
+
     # Handle both RSS (<channel><item>) and Atom (<entry>) formats
     ns   = {"atom": "http://www.w3.org/2005/Atom"}
     items: list[dict] = []
