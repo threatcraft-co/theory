@@ -454,36 +454,48 @@ class CisaAdvisoriesCollector(BaseCollector):
 # Helpers
 # ---------------------------------------------------------------------------
 
-_SECTOR_KEYWORDS: dict[str, str] = {
-    "energy":          "Energy",
-    "electric":        "Energy",
-    "oil":             "Energy",
-    "gas":             "Energy",
-    "financial":       "Financial Services",
-    "bank":            "Financial Services",
-    "health":          "Healthcare",
-    "hospital":        "Healthcare",
-    "government":      "Government",
-    "federal":         "Government",
-    "defense":         "Defense",
-    "military":        "Defense",
-    "telecom":         "Telecommunications",
-    "transport":       "Transportation",
-    "water":           "Water",
-    "critical infra":  "Critical Infrastructure",
-    "manufacturing":   "Manufacturing",
-    "education":       "Education",
-    "academia":        "Education",
-}
+# Sector keywords are matched on word boundaries, and ambiguous bare words
+# are qualified. Substring matching produced nonsense: "banking trojan"
+# scored Financial Services, "health check" scored Healthcare, and
+# "watering hole" scored Water — all three from one sentence about a
+# phishing campaign.
+_SECTOR_PATTERNS: list[tuple[str, str]] = [
+    (r"energy|electric(?:al|ity)?\s+(?:grid|utility|sector)|power\s+(?:grid|plant|utility)", "Energy"),
+    (r"oil\s*(?:and|&)?\s*gas|petroleum|refiner(?:y|ies)|pipeline", "Energy"),
+    (r"financial\s+(?:services|sector|institutions?)|banking\s+(?:sector|industry)|\bbanks?\b|fintech", "Financial Services"),
+    (r"health\s*care|healthcare|hospitals?|medical\s+(?:centers?|facilities)|clinics?", "Healthcare"),
+    (r"governments?|federal\s+agenc(?:y|ies)|public\s+sector|ministr(?:y|ies)", "Government"),
+    (r"defen[cs]e\s+(?:sector|industrial|contractors?)|militar(?:y|ies)|armed\s+forces", "Defense"),
+    (r"telecom(?:munications?)?|mobile\s+operators?|isps?\b", "Telecommunications"),
+    (r"transport(?:ation)?|aviation|airlines?|railways?|maritime\s+shipping", "Transportation"),
+    (r"water\s+(?:utilit(?:y|ies)|treatment|sector|authority)|wastewater", "Water"),
+    (r"critical\s+infrastructure", "Critical Infrastructure"),
+    (r"manufactur(?:ing|ers?)|industrial\s+control", "Manufacturing"),
+    (r"education(?:al)?\s+(?:sector|institutions?)|universit(?:y|ies)|academia|schools?", "Education"),
+    (r"aerospace", "Aerospace"),
+    (r"technology\s+(?:sector|companies)|software\s+(?:vendors?|companies)", "Technology"),
+    (r"\bmedia\b|journalis(?:m|ts)|broadcasters?", "Media"),
+    (r"\bngos?\b|non-?governmental|civil\s+society", "NGO"),
+    (r"think\s+tanks?", "Think Tank"),
+]
+
+_SECTOR_COMPILED = [(re.compile(p, re.IGNORECASE), label) for p, label in _SECTOR_PATTERNS]
 
 
 def _extract_sectors(text: str) -> list[str]:
-    text_lower = text.lower()
-    found: dict[str, bool] = {}
-    for kw, sector in _SECTOR_KEYWORDS.items():
-        if kw in text_lower and sector not in found:
-            found[sector] = True
-    return list(found.keys())
+    """Infer target sectors from advisory prose.
+
+    Deliberately conservative: a false sector on a dossier is worse than a
+    missing one, because it drives the sector-specific framing in the
+    executive summary and playbook.
+    """
+    if not text:
+        return []
+    found: list[str] = []
+    for pattern, label in _SECTOR_COMPILED:
+        if label not in found and pattern.search(text):
+            found.append(label)
+    return found
 
 
 def _extract_technique_ids(text: str) -> list[str]:

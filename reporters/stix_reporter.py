@@ -221,16 +221,44 @@ class StixReporter:
             objects.append(ind)
             all_ids.append(ind_id)
 
-            # Relationship: indicator indicates actor
-            rel = self._relationship(
-                "indicates", ind_id, actor_stix_id, now,
-                description=f"IOC associated with {profile.get('actor_name','')}",
-            )
-            objects.append(rel)
-            all_ids.append(rel["id"])
+            # Relationship target depends on how the indicator was obtained.
+            #
+            # Previously every indicator asserted `indicates --> intrusion-set`
+            # regardless of provenance, so an IP that ThreatFox returned for
+            # Cobalt Strike was exported to MISP/OpenCTI as a confirmed
+            # indicator of this actor. Only actor-attributed evidence makes
+            # that claim now; family-level evidence points at the malware,
+            # which is what the source actually established.
+            from theory.attribution import ACTOR, attribution_of
 
-            # If IOC has a malware family, also link indicator → malware
+            level = attribution_of(ioc)
             family = (ioc.get("malware_family") or "").strip().lower()
+
+            if level == ACTOR:
+                rel = self._relationship(
+                    "indicates", ind_id, actor_stix_id, now,
+                    description=f"IOC attributed to {profile.get('actor_name','')}",
+                )
+                objects.append(rel)
+                all_ids.append(rel["id"])
+            elif family not in malware_name_to_stix:
+                # Family-level evidence with no malware object to point at
+                # would otherwise vanish from the bundle entirely. Keep the
+                # link to the actor but say what it actually means.
+                rel = self._relationship(
+                    "related-to", ind_id, actor_stix_id, now,
+                    description=(
+                        f"IOC linked to tooling used by {profile.get('actor_name','')} "
+                        f"({level} attribution) — not established as this actor's own "
+                        f"infrastructure"
+                    ),
+                )
+                objects.append(rel)
+                all_ids.append(rel["id"])
+
+            # If the IOC names a malware family we emitted, link to it.
+            # For family/shared_tool evidence this is the primary (and only)
+            # assertion; `family` is already computed above.
             if family and family in malware_name_to_stix:
                 rel2 = self._relationship(
                     "indicates", ind_id, malware_name_to_stix[family], now,

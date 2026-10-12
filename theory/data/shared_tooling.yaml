@@ -1,0 +1,127 @@
+# theory/data/shared_tooling.yaml
+# ---------------------------------------------------------------------------
+# Software used by so many different operators that an indicator tied to it
+# says nothing about WHICH actor is involved.
+#
+# Why this file exists
+# --------------------
+# The abuse.ch enrichers (ThreatFox, MalwareBazaar, URLhaus) are queried for
+# every malware name in a profile. MITRE's "software used by group" includes
+# tools as well as malware, so that list contained Cobalt Strike, Mimikatz,
+# PsExec and similar. The IOCs that came back were then written into the
+# dossier, exported as STIX `indicator --indicates--> intrusion-set`, listed
+# in the SIEM CSV, and stored in the persistent graph as actor-reported
+# infrastructure.
+#
+# The result: a Cobalt Strike C2 server used by one ransomware crew appeared
+# as APT28 infrastructure because both groups use Cobalt Strike. The graph
+# then answered "is APT28 connected to this IP?" with CONNECTED, bridged by
+# the shared tool.
+#
+# Anything listed here is skipped by family-level IOC enrichment unless
+# --include-shared-tooling is passed, and anything collected that way is
+# tagged attribution: shared_tool so reporters can keep it out of blocking
+# lists.
+#
+# This is about AMBIGUITY, not legitimacy: a tool belongs here if many
+# unrelated actors use it, whether it is criminal, commercial or built in.
+# ---------------------------------------------------------------------------
+
+shared_tooling:
+  # ── Commercial / open-source C2 and post-exploitation frameworks ──
+  - Cobalt Strike
+  - Sliver
+  - Brute Ratel C4
+  - Metasploit
+  - Meterpreter
+  - Empire
+  - PoshC2
+  - Covenant
+  - Havoc
+  - Mythic
+  - Pupy
+  - QuasarRAT
+  - Koadic
+
+  # ── Credential access ──
+  - Mimikatz
+  - LaZagne
+  - gsecdump
+  - pwdump
+  - Windows Credential Editor
+  - ProcDump
+  - Dumpert
+
+  # ── Discovery / lateral movement ──
+  - PsExec
+  - Impacket
+  - BloodHound
+  - SharpHound
+  - AdFind
+  - Advanced IP Scanner
+  - Advanced Port Scanner
+  - NetScan
+  - SoftPerfect Network Scanner
+  - Nmap
+  - CrackMapExec
+  - WMIExec
+  - Responder
+  - Rubeus
+  - Certify
+  - Seatbelt
+  - PowerSploit
+  - PowerView
+  - Nishang
+  - WinRM
+
+  # ── Remote access / tunnelling (dual-use) ──
+  - AnyDesk
+  - TeamViewer
+  - ScreenConnect
+  - ConnectWise
+  - Atera
+  - Splashtop
+  - RemoteUtilities
+  - ngrok
+  - Chisel
+  - plink
+  - PuTTY
+  - FRP
+  - Proxifier
+  - SoftEther VPN
+
+  # ── Exfiltration / staging ──
+  - Rclone
+  - MEGAsync
+  - WinSCP
+  - FileZilla
+  - 7-Zip
+  - WinRAR
+
+  # ── Living-off-the-land binaries ──
+  # Present in MITRE's software list but attribution-free by definition.
+  - certutil
+  - at
+  - schtasks
+  - netsh
+  - reg
+  - Reg
+  - Net
+  - Ping
+  - ipconfig
+  - systeminfo
+  - tasklist
+  - Arp
+  - cmd
+  - Esentutl
+  - BITSAdmin
+  - Expand
+  - Extract
+  - ftp
+  - Regsvr32
+  - Rundll32
+  - MSBuild
+  - InstallUtil
+  - Mshta
+  - PowerShell
+  - Windows Command Shell
