@@ -23,6 +23,8 @@ from typing import Any
 
 from collectors.base import BaseCollector
 
+from theory.paths import cache_path
+
 logger = logging.getLogger(__name__)
 
 try:
@@ -33,7 +35,7 @@ except ImportError:
     logger.warning("attackcti not installed. Provide a local bundle or install attackcti.")
 
 SOURCE_ID   = "mitre_attack"
-BUNDLE_PATH = Path(".cache/enterprise-attack.json")
+BUNDLE_PATH = cache_path("enterprise-attack.json")
 MAX_RETRIES = 2
 RETRY_DELAY = 3
 

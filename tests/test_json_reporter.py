@@ -16,13 +16,13 @@ from reporters.json_reporter import JsonReporter
 class TestSave:
 
     def test_writes_json_file_named_by_slug(self, tmp_path, monkeypatch):
-        monkeypatch.setattr(jr, "OUTPUT_DIR", tmp_path)
+        monkeypatch.setattr(jr, "_output_dir", lambda _p=tmp_path: _p)
         path = JsonReporter().save({"actor_name": "APT28", "techniques": []})
         assert path == tmp_path / "apt28.json"
         assert json.loads(path.read_text())["actor_name"] == "APT28"
 
     def test_slug_replaces_spaces(self, tmp_path, monkeypatch):
-        monkeypatch.setattr(jr, "OUTPUT_DIR", tmp_path)
+        monkeypatch.setattr(jr, "_output_dir", lambda _p=tmp_path: _p)
         path = JsonReporter().save({"actor_name": "Lazarus Group"})
         assert path.name == "lazarus_group.json"
 
@@ -30,12 +30,12 @@ class TestSave:
 class TestSnapshotRotation:
 
     def test_first_save_has_no_previous_file(self, tmp_path, monkeypatch):
-        monkeypatch.setattr(jr, "OUTPUT_DIR", tmp_path)
+        monkeypatch.setattr(jr, "_output_dir", lambda _p=tmp_path: _p)
         JsonReporter().save({"actor_name": "APT28", "techniques": []})
         assert not (tmp_path / "apt28.previous.json").exists()
 
     def test_second_save_rotates_first_into_previous(self, tmp_path, monkeypatch):
-        monkeypatch.setattr(jr, "OUTPUT_DIR", tmp_path)
+        monkeypatch.setattr(jr, "_output_dir", lambda _p=tmp_path: _p)
         reporter = JsonReporter()
         reporter.save({"actor_name": "APT28", "techniques": [{"technique_id": "T1566"}]})
         reporter.save({"actor_name": "APT28", "techniques": [{"technique_id": "T1566"}, {"technique_id": "T1078"}]})
@@ -47,7 +47,7 @@ class TestSnapshotRotation:
         assert len(current["techniques"]) == 2
 
     def test_third_save_rotates_second_not_first(self, tmp_path, monkeypatch):
-        monkeypatch.setattr(jr, "OUTPUT_DIR", tmp_path)
+        monkeypatch.setattr(jr, "_output_dir", lambda _p=tmp_path: _p)
         reporter = JsonReporter()
         reporter.save({"actor_name": "APT28", "techniques": [{"technique_id": "A"}]})
         reporter.save({"actor_name": "APT28", "techniques": [{"technique_id": "A"}, {"technique_id": "B"}]})

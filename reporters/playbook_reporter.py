@@ -35,7 +35,11 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-OUTPUT_DIR = Path("output/dossiers")
+# Resolved at call time via theory.paths so THEORY_HOME and
+# installed-package use work from any working directory.
+def _output_dir() -> Path:
+    from theory.paths import dossier_dir
+    return dossier_dir()
 
 # Freshness thresholds (days) — must match dossier.py
 _FRESH_DAYS  = 30
@@ -111,10 +115,10 @@ class PlaybookReporter:
         llm_provider:    Any = None,
     ) -> Path:
         """Build and save the playbook. Returns the saved path."""
-        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        _output_dir()
         slug = _canonical_slug(profile)
         ext  = "_jira.txt" if playbook_format == "jira" else "_playbook.md"
-        path = OUTPUT_DIR / f"{slug}{ext}"
+        path = _output_dir() / f"{slug}{ext}"
 
         content = self.build(profile, sector, playbook_format, llm_provider)
         path.write_text(content, encoding="utf-8")

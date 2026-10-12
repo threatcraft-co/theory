@@ -52,9 +52,11 @@ from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
 
+from theory.paths import cache_path
+
 logger = logging.getLogger(__name__)
 
-CACHE_DIR    = Path(".cache/intel_synthesis")
+CACHE_DIR    = cache_path("intel_synthesis")
 CACHE_TTL    = 7   # days
 MAX_TOKENS   = 400
 MAX_SYNTH_ITEMS = 15  # max articles to synthesize per run

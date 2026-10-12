@@ -37,6 +37,8 @@ from urllib.error import HTTPError, URLError
 
 from collectors.base import BaseCollector
 
+from theory.paths import cache_path
+
 try:
     from collectors.cisa_advisories import resolve_canonical
 except ImportError:
@@ -53,7 +55,7 @@ CLUSTER_URL = (
     "/main/clusters/threat-actor.json"
 )
 
-CACHE_DIR = Path(".cache/misp_galaxy")
+CACHE_DIR = cache_path("misp_galaxy")
 CACHE_FILE = CACHE_DIR / "threat-actor.json"
 CACHE_TTL_SECONDS = 7 * 24 * 3600   # 7 days
 

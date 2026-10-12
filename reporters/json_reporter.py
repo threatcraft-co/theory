@@ -18,15 +18,19 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-OUTPUT_DIR = Path("output/dossiers")
+# Resolved at call time via theory.paths so THEORY_HOME and
+# installed-package use work from any working directory.
+def _output_dir() -> Path:
+    from theory.paths import dossier_dir
+    return dossier_dir()
 
 
 class JsonReporter:
     def save(self, profile: dict[str, Any]) -> Path:
-        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        _output_dir()
         actor_slug    = profile.get("actor_name", "unknown").lower().replace(" ", "_")
-        path          = OUTPUT_DIR / f"{actor_slug}.json"
-        previous_path = OUTPUT_DIR / f"{actor_slug}.previous.json"
+        path          = _output_dir() / f"{actor_slug}.json"
+        previous_path = _output_dir() / f"{actor_slug}.previous.json"
 
         if path.exists():
             try:

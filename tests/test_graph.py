@@ -181,7 +181,10 @@ class TestIngestProfile:
 
     def test_ingest_without_store_loads_and_saves(self, tmp_path, monkeypatch):
         import processors.graph as graph_module
-        monkeypatch.setattr(graph_module, "GRAPH_PATH", tmp_path / "graph.json")
+        # The default path is resolved at call time via theory.paths, so a
+        # run from any directory reaches the same graph. Patch the resolver.
+        monkeypatch.setattr(graph_module, "_default_graph_path",
+                            lambda: tmp_path / "graph.json")
         ingest_profile(SAMPLE_PROFILE)
         assert (tmp_path / "graph.json").exists()
 
