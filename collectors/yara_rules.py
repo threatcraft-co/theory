@@ -40,10 +40,12 @@ import subprocess
 import sys
 from pathlib import Path
 
+from theory.paths import cache_path
+
 logger = logging.getLogger(__name__)
 
 YARA_REPO_URL  = "https://github.com/Yara-Rules/rules.git"
-YARA_REPO_PATH = Path(".cache/yara-rules-repo")
+YARA_REPO_PATH = cache_path("yara-rules-repo")
 MAX_RULES_PER_FAMILY = 10
 
 

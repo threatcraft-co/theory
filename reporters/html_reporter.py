@@ -30,7 +30,11 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-OUTPUT_DIR = Path("output/dossiers")
+# Resolved at call time via theory.paths so THEORY_HOME and
+# installed-package use work from any working directory.
+def _output_dir() -> Path:
+    from theory.paths import dossier_dir
+    return dossier_dir()
 
 
 # ---------------------------------------------------------------------------
@@ -225,9 +229,9 @@ class HtmlReporter:
         return html
 
     def save(self, profile: dict[str, Any]) -> Path:
-        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        _output_dir()
         slug = _canonical_slug(profile)
-        path = OUTPUT_DIR / f"{slug}.html"
+        path = _output_dir() / f"{slug}.html"
         path.write_text(self.build(profile), encoding="utf-8")
         logger.info("HTML dossier saved → %s", path)
         return path

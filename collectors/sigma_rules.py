@@ -32,10 +32,12 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from theory.paths import cache_path
+
 logger = logging.getLogger(__name__)
 
 SIGMA_REPO_URL  = "https://github.com/SigmaHQ/sigma.git"
-SIGMA_REPO_PATH = Path(".cache/sigma-repo")
+SIGMA_REPO_PATH = cache_path("sigma-repo")
 RULES_DIR       = SIGMA_REPO_PATH / "rules"
 MAX_RULES_PER_TECHNIQUE = 10   # raised from 5 — no cost to go higher now
 

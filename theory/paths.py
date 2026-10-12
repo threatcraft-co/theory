@@ -34,7 +34,7 @@ from pathlib import Path
 
 __all__ = [
     "PACKAGE_DATA_DIR", "config_dir", "config_file",
-    "cache_subdir", "cache_root", "output_dir", "dossier_dir", "graph_path",
+    "cache_path", "cache_subdir", "cache_root", "output_dir", "dossier_dir", "graph_path",
     "user_config_dir", "is_repo_checkout",
 ]
 
@@ -153,6 +153,18 @@ def cache_root() -> Path:
 def output_dir() -> Path:
     """Root of the generated-output tree."""
     return _home() / "output"
+
+
+def cache_path(name: str) -> Path:
+    """A path inside the cache tree, for a directory or a single file.
+
+    Collectors declare these at import time (CACHE_DIR = cache_path("otx")),
+    so the value follows THEORY_HOME and the repo-checkout detection rather
+    than whatever directory the process happens to start in. Parent
+    directories are created on demand by the caller, not here, so merely
+    importing a collector does not touch the filesystem.
+    """
+    return _cache_root() / name
 
 
 def cache_subdir(name: str) -> Path:

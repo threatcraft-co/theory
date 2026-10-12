@@ -25,7 +25,11 @@ from theory.attribution import attribution_of
 
 logger = logging.getLogger(__name__)
 
-OUTPUT_DIR = Path("output/dossiers")
+# Resolved at call time via theory.paths so THEORY_HOME and
+# installed-package use work from any working directory.
+def _output_dir() -> Path:
+    from theory.paths import dossier_dir
+    return dossier_dir()
 
 # Column order — matches what detection engineers expect
 COLUMNS = [
@@ -121,9 +125,9 @@ class CsvReporter:
 
     def save(self, profile: dict[str, Any]) -> Path:
         """Write IOC CSV to output/dossiers/<actor>_iocs.csv."""
-        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        _output_dir()
         actor_slug = _slugify(profile.get("actor_name", "unknown"))
-        path       = OUTPUT_DIR / f"{actor_slug}_iocs.csv"
+        path       = _output_dir() / f"{actor_slug}_iocs.csv"
 
         rows = self.build_rows(profile)
 

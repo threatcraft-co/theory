@@ -448,7 +448,7 @@ class TestSave:
 
     def test_file_written(self, tmp_path, monkeypatch):
         import reporters.stix_reporter as stix_module
-        monkeypatch.setattr(stix_module, "OUTPUT_DIR", tmp_path)
+        monkeypatch.setattr(stix_module, "_output_dir", lambda _p=tmp_path: _p)
 
         path = StixReporter().save(MINIMAL_PROFILE)
         assert path.exists()
@@ -458,7 +458,7 @@ class TestSave:
 
     def test_filename_slugified(self, tmp_path, monkeypatch):
         import reporters.stix_reporter as stix_module
-        monkeypatch.setattr(stix_module, "OUTPUT_DIR", tmp_path)
+        monkeypatch.setattr(stix_module, "_output_dir", lambda _p=tmp_path: _p)
 
         profile = {**MINIMAL_PROFILE, "actor_name": "Fancy Bear"}
         path    = StixReporter().save(profile)

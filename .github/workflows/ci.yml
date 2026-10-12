@@ -85,7 +85,15 @@ jobs:
         # Blocking: the resolved tree was clean at the v2.0 audit, so there
         # is no baseline of known findings to grandfather in. A new advisory
         # should fail the build rather than scroll past in a green log.
-        run: pip-audit --strict
+        #
+        # Audited from a frozen requirement list rather than the environment,
+        # because THEORY itself is installed editable and is not on PyPI —
+        # `pip-audit --strict` treats "could not be audited" as a failure, so
+        # auditing the environment directly fails on the project itself.
+        run: |
+          pip install -e .
+          pip freeze --exclude-editable > /tmp/resolved-requirements.txt
+          pip-audit --strict -r /tmp/resolved-requirements.txt
 
   package:
     name: Wheel builds and works outside the repo

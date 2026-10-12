@@ -26,7 +26,11 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-OUTPUT_DIR = Path("output/dossiers")
+# Resolved at call time via theory.paths so THEORY_HOME and
+# installed-package use work from any working directory.
+def _output_dir() -> Path:
+    from theory.paths import dossier_dir
+    return dossier_dir()
 
 try:
     from rich.console import Console
@@ -173,9 +177,9 @@ class DossierReporter:
             self._render_plain(profile)
 
     def save_markdown(self, profile: dict[str, Any]) -> Path:
-        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        _output_dir()
         actor_slug = _canonical_slug(profile)
-        path = OUTPUT_DIR / f"{actor_slug}.md"
+        path = _output_dir() / f"{actor_slug}.md"
         path.write_text(self._build_markdown(profile), encoding="utf-8")
         logger.info("Dossier saved → %s", path)
         return path

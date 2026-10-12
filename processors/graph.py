@@ -63,7 +63,21 @@ from theory.attribution import (
 
 logger = logging.getLogger(__name__)
 
-GRAPH_PATH = Path("output/graph/graph.json")
+def _default_graph_path() -> Path:
+    """Where the cross-run graph lives.
+
+    Resolved through theory.paths rather than relative to the working
+    directory, so a `theory` run from anywhere reads and writes the same
+    graph — otherwise the "persistent, cross-run" graph silently became a
+    different graph per directory the user happened to be standing in.
+    """
+    from theory.paths import graph_path
+    return graph_path()
+
+
+# Back-compat module attribute. Prefer _default_graph_path() in new code;
+# tests monkeypatch GraphStore(path=...) directly.
+GRAPH_PATH = _default_graph_path()
 
 NODE_TYPES = frozenset({"actor", "ioc", "technique", "malware", "cve", "campaign"})
 
@@ -160,7 +174,7 @@ class GraphStore:
     # ── persistence ──────────────────────────────────────────────────
     @classmethod
     def load(cls, path: Path | None = None) -> "GraphStore":
-        path = path or GRAPH_PATH
+        path = path or _default_graph_path()
         if not path.exists():
             return cls(path=path)
         try:

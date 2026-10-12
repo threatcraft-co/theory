@@ -26,18 +26,19 @@ import logging
 import os
 import time
 from datetime import datetime, timezone, timedelta
-from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
 from collectors.base import BaseCollector
 
+from theory.paths import cache_path
+
 logger = logging.getLogger(__name__)
 
 SOURCE_ID        = "abuseipdb"
 API_URL          = "https://api.abuseipdb.com/api/v2/check"
-CACHE_DIR        = Path(".cache/abuseipdb")
+CACHE_DIR        = cache_path("abuseipdb")
 CACHE_TTL_DAYS   = 3
 TIMEOUT          = 10
 RETRY_MAX        = 2

@@ -50,6 +50,8 @@ from urllib.error import HTTPError, URLError
 
 from collectors.base import BaseCollector
 
+from theory.paths import cache_path
+
 try:
     from collectors.cisa_advisories import resolve_canonical
 except ImportError:
@@ -62,7 +64,7 @@ SOURCE_ID = "nvd"
 
 API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0"
 
-CACHE_DIR = Path(".cache/nvd")
+CACHE_DIR = cache_path("nvd")
 CACHE_TTL_SECONDS = 30 * 24 * 3600   # 30 days — CVE metadata rarely changes once published
 
 TIMEOUT = 30

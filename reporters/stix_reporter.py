@@ -35,7 +35,11 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-OUTPUT_DIR   = Path("output/dossiers")
+# Resolved at call time via theory.paths so THEORY_HOME and
+# installed-package use work from any working directory.
+def _output_dir() -> Path:
+    from theory.paths import dossier_dir
+    return dossier_dir()
 SPEC_VERSION = "2.1"
 
 # THEORY's own identity object — stable ID so bundles are mergeable.
@@ -300,9 +304,9 @@ class StixReporter:
 
     def save(self, profile: dict[str, Any]) -> Path:
         """Build bundle and write to output/dossiers/<actor>.stix.json."""
-        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        _output_dir()
         actor_slug = _slugify(profile.get("actor_name", "unknown"))
-        path       = OUTPUT_DIR / f"{actor_slug}.stix.json"
+        path       = _output_dir() / f"{actor_slug}.stix.json"
         bundle     = self.build_bundle(profile)
         path.write_text(
             json.dumps(bundle, indent=2, ensure_ascii=False),

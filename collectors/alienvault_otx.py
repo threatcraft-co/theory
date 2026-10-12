@@ -26,11 +26,13 @@ from urllib.parse import quote
 
 from collectors.base import BaseCollector
 
+from theory.paths import cache_path
+
 logger = logging.getLogger(__name__)
 
 SOURCE_ID       = "alienvault_otx"
 BASE_URL        = "https://otx.alienvault.com"
-CACHE_DIR       = Path(".cache/otx")
+CACHE_DIR       = cache_path("otx")
 CACHE_TTL_HOURS = 24   # was unbounded (cached forever) -- pulses/search
                         # results are time-sensitive just like ThreatFox's,
                         # which already uses this TTL

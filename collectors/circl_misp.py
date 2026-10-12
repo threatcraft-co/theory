@@ -43,12 +43,13 @@ import json
 import logging
 import time
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
 from collectors.base import BaseCollector
+
+from theory.paths import cache_path
 
 try:
     from collectors.cisa_advisories import resolve_canonical, ALIAS_TABLE
@@ -64,7 +65,7 @@ SOURCE_ID = "circl_misp"
 FEED_BASE = "https://www.circl.lu/doc/misp/feed-osint"
 MANIFEST_URL = f"{FEED_BASE}/manifest.json"
 
-CACHE_DIR = Path(".cache/circl_misp")
+CACHE_DIR = cache_path("circl_misp")
 MANIFEST_CACHE = CACHE_DIR / "manifest.json"
 MANIFEST_CACHE_TTL_SECONDS = 24 * 3600   # 24 hours — feed updates frequently
 EVENT_CACHE_TTL_SECONDS = 7 * 24 * 3600  # events themselves rarely change once published

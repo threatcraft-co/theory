@@ -35,7 +35,6 @@ import hashlib
 import json
 import logging
 import time
-from pathlib import Path
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote
@@ -43,11 +42,13 @@ from urllib.request import Request, urlopen
 
 from collectors.base import BaseCollector
 
+from theory.paths import cache_path
+
 logger = logging.getLogger(__name__)
 
 SOURCE_ID       = "urlscan_io"
 API_BASE        = "https://urlscan.io/api/v1/search/"
-CACHE_DIR       = Path(".cache/urlscan_io")
+CACHE_DIR       = cache_path("urlscan_io")
 CACHE_TTL_HOURS = 24
 TIMEOUT         = 10
 RETRY_MAX       = 2

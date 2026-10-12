@@ -54,11 +54,13 @@ from urllib.error import HTTPError, URLError
 from defusedxml import ElementTree as ET
 from defusedxml.common import DefusedXmlException
 
+from theory.paths import cache_path
+
 from theory.paths import config_file
 
 logger = logging.getLogger(__name__)
 
-CACHE_DIR          = Path(".cache/vendor_intel")
+CACHE_DIR          = cache_path("vendor_intel")
 CACHE_TTL_HRS      = 24    # raised from 6 — feeds don't change that fast
 TIMEOUT            = 15    # per-feed connect+read timeout (seconds)
 MAX_ARTICLES       = 8     # max articles returned per feed per actor
@@ -76,7 +78,7 @@ SUMMARY_SCORE_CHARS = 2000   # score against same full content
 # Path to the CyberMonitor APT campaign collection (cloned by --update-bundles)
 
 # --- Sitemap collector constants ---
-SITEMAP_CACHE_DIR        = Path(".cache/vendor_intel/sitemap_articles")
+SITEMAP_CACHE_DIR        = cache_path("vendor_intel/sitemap_articles")
 SITEMAP_ARTICLE_TTL_DAYS = 7          # article HTML rarely changes
 SITEMAP_MAX_URLS_PER     = 25         # cap URLs fetched per sitemap
 SITEMAP_ARTICLE_CHARS    = 3500       # per-article HTML content cap
