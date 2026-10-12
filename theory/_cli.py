@@ -92,98 +92,57 @@ logger = logging.getLogger("theory")
 # Source registry
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Source registry
+# ---------------------------------------------------------------------------
+# These are derived views over theory.sources.SOURCES, which is the single
+# place a source is described. They used to be six hand-maintained tables
+# here plus two more in server/, and they had already drifted: the server's
+# copy was missing nvd, circl_misp, personal, shodan_internetdb and
+# urlscan_io, so those could not be selected from the web UI at all.
+
+from theory.sources import SOURCES as _SOURCE_SPECS
+from theory.sources import DEFAULT_SOURCES as _DEFAULT_SOURCE_KEYS
+
+
+def _dotted(impl: str | None) -> str | None:
+    """"module:Class" -> "module.Class" for _load_class()."""
+    return impl.replace(":", ".") if impl else None
+
+
+# key -> collector path, or None for enrichment-only sources
 SUPPORTED_SOURCES: dict[str, str | None] = {
-    "mitre":       "collectors.mitre_attack.MitreAttackCollector",
-    "cisa":        "collectors.cisa_advisories.CisaAdvisoriesCollector",
-    "cisa_kev":    "collectors.cisa_kev.CisaKevCollector",
-    "malpedia":    "collectors.malpedia.MalpediaCollector",
-    "misp_galaxy": "collectors.misp_galaxy.MispGalaxyCollector",
-    "circl_misp":  "collectors.circl_misp.CirclMispCollector",
-    "otx":         "collectors.alienvault_otx.AlienVaultOTXCollector",
-    "vuldb":       "collectors.vuldb.VulDBCollector",
-    "nvd":         "collectors.nvd.NVDCollector",
-    "personal":    "collectors.personal_intel.PersonalIntelCollector",
-    # Enrichment-only — accepted by CLI but handled separately
-    "sigma":          None,
-    "yara":           None,
-    "threatfox":      None,
-    "malware_bazaar": None,
-    "urlhaus":        None,
-    "greynoise":      None,
-    "abuseipdb":      None,
-    "shodan_internetdb": None,
-    "urlscan_io":     None,
-    "vendor":         None,   # vendor intelligence synthesis (requires LLM provider)
+    spec.key: (_dotted(spec.impl) if spec.kind != "enricher" else None)
+    for spec in _SOURCE_SPECS
 }
 
 SOURCE_DESCRIPTIONS: dict[str, str] = {
-    "mitre":       "MITRE ATT&CK — techniques, malware, campaigns (local bundle, offline)",
-    "cisa":        "CISA advisories + KEV catalog (free, no auth)",
-    "cisa_kev":    "CISA KEV — 1600+ confirmed-exploited CVEs, ransomware flags (free, no auth)",
-    "malpedia":    "Malpedia malware family database (free, no auth)",
-    "misp_galaxy": "MISP Galaxy — 1000+ actors, aliases, attribution, target sectors (free, no auth)",
-    "circl_misp":  "CIRCL OSINT MISP feed — event-level indicators + campaign context by actor/alias match (free, no auth)",
-    "otx":         "AlienVault OTX pulses + IOCs (free, requires OTX_API_KEY in .env)",
-    "nvd":         "NIST NVD — CVSS scores/vectors, CWE classification, references for CVEs already in the profile (free, optional NVD_API_KEY raises rate limit)",
-    "sigma":          "SigmaHQ detection rules mapped to ATT&CK (free, optional GITHUB_TOKEN)",
-    "yara":           "YARA file detection rules matched to malware families (free, local clone)",
-    "threatfox":      "ThreatFox IOCs by malware family (free, requires ABUSECH_API_KEY)",
-    "malware_bazaar": "MalwareBazaar sample hashes by malware family (free, requires ABUSECH_API_KEY)",
-    "urlhaus":        "URLhaus malware distribution URLs by family (free, requires ABUSECH_API_KEY)",
-    "greynoise":      "GreyNoise IP noise/RIOT context — distinguishes targeted vs background activity (free, 50/week)",
-    "abuseipdb":      "AbuseIPDB IP reputation scores from community reports (free, 1000/day)",
-    "shodan_internetdb": "Shodan InternetDB — open ports, hostnames, CPEs, known CVEs on an IP (free, no auth)",
-    "urlscan_io":     "urlscan.io public scan history for domains/URLs — prior verdicts, resolved IP/country (free, no auth; optional URLSCAN_API_KEY raises rate limit)",
-    "vuldb":          "VulDB actor-CVE correlation and exploit intelligence (free tier, 50 credits/day)",
-    "vendor":         "Vendor intelligence synthesis — LLM-synthesized summaries from 35+ research blogs (requires LLM provider in .env)",
-    "personal":       "Your own local research indicators — gitignored redirect, never leaves your machine (set up with --init-personal)",
+    spec.key: spec.description for spec in _SOURCE_SPECS
 }
 
 SOURCE_REQUIRES: dict[str, str] = {
-    "otx":            "OTX_API_KEY",
-    "sigma":          "GITHUB_TOKEN (optional, recommended)",
-    "threatfox":      "ABUSECH_API_KEY",
-    "malware_bazaar": "ABUSECH_API_KEY",
-    "urlhaus":        "ABUSECH_API_KEY",
-    "greynoise":      "GREYNOISE_API_KEY",
-    "abuseipdb":      "ABUSEIPDB_API_KEY",
-    "vuldb":          "VULDB_API_KEY",
-    "urlscan_io":     "URLSCAN_API_KEY (optional, raises rate limit)",
-    "vendor":         "ANTHROPIC_API_KEY or OPENAI_API_KEY or Ollama running locally",
+    spec.key: spec.auth for spec in _SOURCE_SPECS if spec.key_env
 }
 
 ENRICHMENT_SOURCES: dict[str, str] = {
-    "sigma":          "collectors.sigma_rules.SigmaCollector",
-    "yara":           "collectors.yara_rules.YaraRulesCollector",
-    "threatfox":      "collectors.threatfox.ThreatFoxCollector",
-    "malware_bazaar": "collectors.malware_bazaar.MalwareBazaarCollector",
-    "urlhaus":        "collectors.urlhaus.URLhausCollector",
-    "greynoise":      "collectors.greynoise.GreyNoiseCollector",
-    "abuseipdb":      "collectors.abuseipdb.AbuseIPDBCollector",
-    "shodan_internetdb": "collectors.shodan_internetdb.ShodanInternetDBCollector",
-    "urlscan_io":     "collectors.urlscan_io.URLScanIOCollector",
-    "vendor":         "collectors.vendor_intel.VendorIntelCollector",
+    spec.key: _dotted(spec.impl)
+    for spec in _SOURCE_SPECS
+    if spec.kind == "enricher" and spec.impl
 }
 
 MAPPER_REGISTRY: dict[str, str] = {
-    "mitre":       "mappers.mitre.MitreMapper",
-    "cisa":        "mappers.cisa.CisaMapper",
-    "cisa_kev":    "collectors.cisa_kev.CisaKevMapper",
-    "malpedia":    "collectors.malpedia.MalpediaMapper",
-    "misp_galaxy": "collectors.misp_galaxy.MispGalaxyMapper",
-    "circl_misp":  "collectors.circl_misp.CirclMispMapper",
-    "otx":         "collectors.alienvault_otx.AlienVaultOTXMapper",
-    "nvd":         "collectors.nvd.NVDMapper",
+    spec.key: _dotted(spec.mapper)
+    for spec in _SOURCE_SPECS
+    if spec.mapper
 }
 
-# Default source combination — good balance of coverage vs speed
-# All keyless and free, providing complementary intelligence:
-#   mitre       → techniques, software, campaigns
-#   cisa        → advisories, KEV CVEs (actor-attributed)
-#   cisa_kev    → 1600+ confirmed-exploited CVEs, ransomware flags
-#   malpedia    → malware families, YARA counts
-#   misp_galaxy → 1000+ actors, deep alias lists, attribution, target sectors
-DEFAULT_SOURCES = "mitre,cisa,cisa_kev,malpedia,misp_galaxy"
+SOURCE_CACHE_TTL: dict[str, str] = {
+    spec.key: spec.cache for spec in _SOURCE_SPECS
+}
+
+# Default source combination — keyless, free, and complementary.
+DEFAULT_SOURCES = ",".join(_DEFAULT_SOURCE_KEYS)
+
 
 
 # ---------------------------------------------------------------------------
@@ -204,27 +163,7 @@ def cmd_list_sources() -> None:
         t = Table("Key", "Description", "Auth Required", "Cache",
                   box=rich_box.SIMPLE_HEAD, header_style="bold magenta")
 
-        cache_ttls = {
-            "mitre":          "7 days (.cache/enterprise-attack.json)",
-            "cisa":           "per request",
-            "cisa_kev":       "24 hours (.cache/cisa_kev/)",
-            "malpedia":       "per request (.cache/malpedia/)",
-            "misp_galaxy":    "7 days (.cache/misp_galaxy/)",
-            "circl_misp":     "24h manifest / 7 days per event (.cache/circl_misp/)",
-            "otx":            "per request (.cache/otx/)",
-            "nvd":            "30 days per CVE (.cache/nvd/)",
-            "sigma":          "7 days (.cache/sigma-repo/)",
-            "yara":           "7 days (.cache/yara-rules-repo/)",
-            "threatfox":      "24 hours (.cache/threatfox/)",
-            "malware_bazaar": "24 hours (.cache/malware_bazaar/)",
-            "urlhaus":        "24 hours (.cache/urlhaus/)",
-            "greynoise":      "7 days (.cache/greynoise/)",
-            "abuseipdb":      "3 days (.cache/abuseipdb/)",
-            "shodan_internetdb": "24 hours (.cache/shodan_internetdb/)",
-            "urlscan_io":     "24 hours (.cache/urlscan_io/)",
-            "vuldb":          "7 days (.cache/vuldb/)",
-            "personal":       "none — reads your local file directly, every run",
-        }
+        cache_ttls = SOURCE_CACHE_TTL
 
         for key, desc in SOURCE_DESCRIPTIONS.items():
             auth = SOURCE_REQUIRES.get(key, "none")
@@ -403,38 +342,7 @@ def cmd_update_bundles() -> None:
     # 5. ThreatFox cache — let 24hr TTL handle expiry naturally
     _print("  ✓ ThreatFox cache preserved (24hr TTL handles expiry automatically)", "dim")
 
-    # 6. Clone/update CyberMonitor APT Campaign Collection (historical context)
-    apt_path = Path(".cache/apt-campaigns")
-    apt_url  = "https://github.com/CyberMonitor/APT_CyberCriminal_Campagin_Collections.git"
-    if apt_path.exists():
-        _print("  Updating APT campaign collection (git pull)…", "dim")
-        try:
-            r = subprocess.run(
-                ["git", "-C", str(apt_path), "pull", "--depth=1"],
-                capture_output=True, text=True, timeout=120,
-            )
-            if r.returncode == 0:
-                _print("  ✓ APT campaign collection updated", "green")
-            else:
-                _print(f"  ✗ APT campaign update failed: {r.stderr[:80]}", "red")
-        except Exception as exc:
-            _print(f"  ✗ APT campaign update error: {exc}", "red")
-    else:
-        _print("  Cloning CyberMonitor APT Campaign Collection (one time, ~200MB)…", "dim")
-        try:
-            r = subprocess.run(
-                ["git", "clone", "--depth", "1", "--filter=blob:none",
-                 "--no-tags", apt_url, str(apt_path)],
-                capture_output=True, text=True, timeout=300,
-            )
-            if r.returncode == 0:
-                _print("  ✓ APT campaign collection cloned → .cache/apt-campaigns/", "green")
-            else:
-                _print(f"  ✗ APT campaign clone failed: {r.stderr[:80]}", "red")
-        except Exception as exc:
-            _print(f"  ✗ APT campaign clone error: {exc}", "red")
-
-    # 7. YARA Rules repo
+    # 6. YARA Rules repo
     yara_repo = Path(".cache/yara-rules-repo")
     if yara_repo.exists():
         _print("  Updating YARA rules…", "dim")
@@ -456,7 +364,7 @@ def cmd_update_bundles() -> None:
     else:
         _print("  ✓ YARA rules repo not yet cloned — will clone on next --sources yara run", "dim")
 
-    # 8. Leave Malpedia + OTX caches — per-family/per-pulse, expensive to rebuild
+    # 7. Leave Malpedia + OTX caches — per-family/per-pulse, expensive to rebuild
     _print("\n  Malpedia + OTX caches preserved (clear manually if needed).", "dim")
     _print("  Run THEORY normally to rebuild Sigma + ThreatFox caches.\n", "dim")
     _print("Update complete.\n", "bold green")
@@ -1448,7 +1356,10 @@ def run(
     # which source reported them) with confirmed-exploited flags,
     # ransomware attribution, vendor/product metadata, and remediation
     # dates from the KEV catalog.
-    if "cisa_kev" in collect_sources and profile.get("cves"):
+    # Gate on the user's requested sources, not collect_sources: KEV is an
+    # enricher (it has no actor dimension of its own), so it never appears
+    # in the collection list.
+    if "cisa_kev" in sources and profile.get("cves"):
         try:
             from collectors.cisa_kev import enrich_profile_with_kev
             profile = enrich_profile_with_kev(profile)
@@ -1465,7 +1376,7 @@ def run(
     # If nvd was in the sources list, enrich all CVEs (regardless of
     # which source reported them) with CVSS scores/vectors, CWE
     # classification, and reference links from the NVD API.
-    if "nvd" in collect_sources and profile.get("cves"):
+    if "nvd" in sources and profile.get("cves"):
         try:
             from collectors.nvd import enrich_profile_with_nvd
             profile = enrich_profile_with_nvd(profile)

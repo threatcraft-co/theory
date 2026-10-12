@@ -249,3 +249,49 @@ class TestPathTraversal:
         csp = r.headers.get("content-security-policy", "")
         assert "sandbox" in csp
         assert "script-src" not in csp or "'unsafe-inline'" not in csp.split("script-src")[1][:30]
+
+
+class TestHistoryListing:
+    """The History page listed only sub-directories of output/dossiers/,
+    but every reporter writes flat files there — so it was always empty."""
+
+    def _write_outputs(self, app_module):
+        out = app_module.OUTPUT_DIR
+        out.mkdir(parents=True, exist_ok=True)
+        for name in ("apt28.md", "apt28.json", "apt28.html", "apt28_iocs.csv",
+                     "apt28.stix.json", "apt28.navigator.json",
+                     "lazarus_group.md", "lazarus_group_exec.md"):
+            (out / name).write_text("x")
+
+    def test_flat_files_are_grouped_by_actor(self, client, token):
+        import server.app as app_module
+        self._write_outputs(app_module)
+
+        body = client.get("/api/history", headers=auth(token)).json()
+        by_name = {d["name"]: d for d in body["dossiers"]}
+
+        assert "apt28" in by_name, f"flat files not listed: {body}"
+        assert "lazarus_group" in by_name
+        assert by_name["apt28"]["file_count"] == 6
+        assert "apt28_iocs.csv" in by_name["apt28"]["files"]
+        assert by_name["lazarus_group"]["file_count"] == 2
+
+    def test_detail_and_download_work_for_flat_files(self, client, token):
+        import server.app as app_module
+        self._write_outputs(app_module)
+
+        detail = client.get("/api/history/apt28", headers=auth(token))
+        assert detail.status_code == 200
+        assert {f["name"] for f in detail.json()["files"]} >= {"apt28.md", "apt28.html"}
+
+        served = client.get("/api/history/apt28/apt28.md", headers=auth(token))
+        assert served.status_code == 200
+
+    def test_legacy_directory_layout_still_listed(self, client, token):
+        import server.app as app_module
+        nested = app_module.OUTPUT_DIR / "old_actor"
+        nested.mkdir(parents=True, exist_ok=True)
+        (nested / "dossier.md").write_text("x")
+
+        names = [d["name"] for d in client.get("/api/history", headers=auth(token)).json()["dossiers"]]
+        assert "old_actor" in names

@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import logging
 import secrets
 import uuid
 from datetime import datetime, timezone
@@ -43,6 +44,8 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from .pipeline import run_pipeline
 
+logger = logging.getLogger(__name__)
+
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
@@ -52,7 +55,9 @@ STATIC_DIR = SERVER_DIR / "static"
 PROJECT_ROOT = SERVER_DIR.parent
 OUTPUT_DIR = PROJECT_ROOT / "output" / "dossiers"
 CONFIG_DIR = PROJECT_ROOT / "config"
-FEEDS_YAML = CONFIG_DIR / "feeds.yaml"
+from theory.paths import config_file as _config_file
+
+FEEDS_YAML = _config_file("feeds.yaml")
 ENV_FILE = PROJECT_ROOT / ".env"
 
 # ---------------------------------------------------------------------------
@@ -272,38 +277,45 @@ def _mask(value: str) -> str:
 
 
 def _load_sources() -> list[dict[str, Any]]:
-    """
-    Source list matching _cli.py SUPPORTED_SOURCES + ENRICHMENT_SOURCES.
+    """Source list, read from the single registry in theory.sources.
 
-    Hardcoded intentionally — avoids import-path issues when uvicorn
-    loads server.app. Update this list when you add/remove a source
-    in _cli.py.
+    This was a hand-maintained copy of _cli.py's tables, with a comment
+    saying to keep it in sync by hand. It had drifted: nvd, circl_misp,
+    personal, shodan_internetdb and urlscan_io were all missing, so they
+    could not be selected from the web UI at all.
     """
+    from theory.sources import SOURCES
+
+    label_overrides = {
+        "mitre": "MITRE ATT&CK", "cisa": "CISA Advisories", "cisa_kev": "CISA KEV",
+        "misp_galaxy": "MISP Galaxy", "otx": "AlienVault OTX", "circl_misp": "CIRCL MISP",
+        "nvd": "NIST NVD", "vuldb": "VulDB", "sigma": "Sigma Rules", "yara": "YARA Rules",
+        "threatfox": "ThreatFox", "malware_bazaar": "MalwareBazaar", "urlhaus": "URLhaus",
+        "greynoise": "GreyNoise", "abuseipdb": "AbuseIPDB",
+        "shodan_internetdb": "Shodan InternetDB", "urlscan_io": "urlscan.io",
+        "vendor": "Vendor Intel (LLM)", "malpedia": "Malpedia",
+        "personal": "Personal Research",
+    }
+
     sources: list[dict[str, Any]] = [
-        # ── Collectors (have a collector class, do collect + map) ──
-        {"id": "mitre",       "name": "MITRE ATT&CK",     "type": "collector",  "enabled": True},
-        {"id": "cisa",        "name": "CISA Advisories",   "type": "collector",  "enabled": True},
-        {"id": "cisa_kev",    "name": "CISA KEV",          "type": "collector",  "enabled": True},
-        {"id": "malpedia",    "name": "Malpedia",          "type": "collector",  "enabled": True},
-        {"id": "misp_galaxy", "name": "MISP Galaxy",       "type": "collector",  "enabled": True},
-        {"id": "otx",         "name": "AlienVault OTX",    "type": "collector",  "enabled": True},
-        {"id": "vuldb",       "name": "VulDB",             "type": "collector",  "enabled": True},
-        # ── Enrichment sources (post-collection enrichment pass) ──
-        {"id": "sigma",          "name": "Sigma Rules",       "type": "enrichment", "enabled": True},
-        {"id": "yara",           "name": "YARA Rules",        "type": "enrichment", "enabled": True},
-        {"id": "threatfox",      "name": "ThreatFox",         "type": "enrichment", "enabled": True},
-        {"id": "malware_bazaar", "name": "MalwareBazaar",     "type": "enrichment", "enabled": True},
-        {"id": "urlhaus",        "name": "URLhaus",           "type": "enrichment", "enabled": True},
-        {"id": "greynoise",      "name": "GreyNoise",         "type": "enrichment", "enabled": True},
-        {"id": "abuseipdb",      "name": "AbuseIPDB",         "type": "enrichment", "enabled": True},
-        {"id": "vendor",         "name": "Vendor Intel (LLM)","type": "enrichment", "enabled": False},
+        {
+            "id":          spec.key,
+            "name":        label_overrides.get(spec.key, spec.key.replace("_", " ").title()),
+            "type":        "enrichment" if spec.kind == "enricher" else "collector",
+            "kind":        spec.kind,
+            "description": spec.description,
+            "auth":        spec.auth,
+            "cache":       spec.cache,
+            "default":     spec.default,
+            "enabled":     spec.default,
+        }
+        for spec in SOURCES
     ]
 
-    # RSS feeds from config/feeds.yaml
+    # RSS feeds from the vendor feed registry
     if FEEDS_YAML.is_file():
         try:
-            with open(FEEDS_YAML) as f:
-                feeds_config = yaml.safe_load(f) or {}
+            feeds_config = yaml.safe_load(FEEDS_YAML.read_text()) or {}
             feeds = feeds_config.get("feeds", [])
             if isinstance(feeds, list):
                 for feed in feeds:
@@ -314,33 +326,71 @@ def _load_sources() -> list[dict[str, Any]]:
                         "type": "feed",
                         "url": feed.get("url", ""),
                     })
-        except Exception:
-            pass
+        except Exception as exc:
+            logger.warning("Could not read the vendor feed registry: %s", exc)
 
     return sources
 
 
 def _list_dossiers() -> list[dict[str, Any]]:
-    """Scan output/dossiers/ for past runs, newest first."""
+    """Group the files in output/dossiers/ by actor slug, newest first.
+
+    This used to list only sub-DIRECTORIES of output/dossiers/. Every
+    reporter writes flat files there (apt28.md, apt28.json, apt28.html,
+    apt28_iocs.csv ...), so the directory scan always found nothing and
+    the History page was permanently empty.
+    """
     if not OUTPUT_DIR.is_dir():
         return []
+
+    # Suffixes a reporter appends to the actor slug, longest first so
+    # "_coverage_gap" is stripped before "_gap" would be.
+    known_suffixes = (
+        "_sigma_skeletons", "_coverage_gap", "_playbook", "_exec", "_iocs",
+    )
+    known_extensions = (
+        ".previous.json", ".navigator.json", ".stix.json",
+        ".json", ".md", ".html", ".csv", ".yml", ".yaml", ".txt",
+    )
+
+    def slug_of(path: Path) -> str:
+        name = path.name
+        for ext in known_extensions:
+            if name.endswith(ext):
+                name = name[: -len(ext)]
+                break
+        else:
+            name = path.stem
+        for suffix in known_suffixes:
+            if name.endswith(suffix):
+                name = name[: -len(suffix)]
+                break
+        return name
+
+    grouped: dict[str, list[Path]] = {}
+    for entry in OUTPUT_DIR.iterdir():
+        if entry.is_dir():
+            # Tolerate the old per-actor directory layout too.
+            files = [f for f in entry.iterdir() if f.is_file()]
+            if files:
+                grouped.setdefault(entry.name, []).extend(files)
+        elif entry.is_file():
+            grouped.setdefault(slug_of(entry), []).append(entry)
+
     results: list[dict[str, Any]] = []
-    for entry in sorted(OUTPUT_DIR.iterdir(), reverse=True):
-        if not entry.is_dir():
+    for slug, files in grouped.items():
+        if not slug or not files:
             continue
-        files = sorted(f.name for f in entry.iterdir() if f.is_file())
-        if not files:
-            continue
-        stat = entry.stat()
+        newest = max(f.stat().st_mtime for f in files)
         results.append({
-            "name": entry.name,
-            "created": datetime.fromtimestamp(
-                stat.st_mtime, tz=timezone.utc
-            ).isoformat(),
+            "name":       slug,
+            "created":    datetime.fromtimestamp(newest, tz=timezone.utc).isoformat(),
             "file_count": len(files),
-            "files": files,
-            "total_size": sum(f.stat().st_size for f in entry.iterdir() if f.is_file()),
+            "files":      sorted(f.name for f in files),
+            "total_size": sum(f.stat().st_size for f in files),
         })
+
+    results.sort(key=lambda r: r["created"], reverse=True)
     return results
 
 
@@ -528,19 +578,23 @@ async def get_history():
 @app.get("/api/history/{name}")
 async def get_dossier_detail(name: str):
     """List files in a specific dossier output directory."""
-    dossier_dir = _safe_output_path(name)
-    if not dossier_dir.is_dir():
+    _safe_output_path(name)          # validates the component
+
+    entry = next((d for d in _list_dossiers() if d["name"] == name), None)
+    if entry is None:
         raise HTTPException(status_code=404, detail="Dossier not found")
 
     files = []
-    for f in sorted(dossier_dir.iterdir()):
-        if not f.is_file():
+    for filename in entry["files"]:
+        path = _safe_output_path(name, filename) if (OUTPUT_DIR / name).is_dir() \
+            else _safe_output_path(filename)
+        if not path.is_file():
             continue
         files.append({
-            "name": f.name,
-            "size": f.stat().st_size,
-            "size_display": _format_bytes(f.stat().st_size),
-            "ext": f.suffix.lower(),
+            "name": filename,
+            "size": path.stat().st_size,
+            "size_display": _format_bytes(path.stat().st_size),
+            "ext": path.suffix.lower(),
         })
 
     return {"name": name, "files": files}
@@ -554,7 +608,11 @@ async def serve_dossier_file(name: str, filename: str):
     HTML files are served with text/html so the browser renders them.
     Everything else gets content-disposition: attachment for download.
     """
-    file_path = _safe_output_path(name, filename)
+    # Flat layout (apt28.html) is what the reporters write; the nested
+    # layout is still accepted for anything produced by an older version.
+    nested = OUTPUT_DIR / name
+    file_path = (_safe_output_path(name, filename) if nested.is_dir()
+                 else _safe_output_path(filename))
 
     if not file_path.is_file():
         raise HTTPException(status_code=404, detail="File not found")
