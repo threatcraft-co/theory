@@ -2212,6 +2212,15 @@ def _build_parser() -> argparse.ArgumentParser:
 
     # ── File saving ────────────────────────────────────────────────────
     p.add_argument(
+        "--allow-unknown",
+        action="store_true",
+        help=(
+            "Run even when the actor is not in THEORY's table. Free-text sources "
+            "are searched for the literal name and the dossier is labelled "
+            "UNRESOLVED. Use for a brand-new actor no catalog has picked up yet."
+        ),
+    )
+    p.add_argument(
         "--no-save",
         action="store_true",
         help="Print output to terminal only — do not write files to output/dossiers/.",
@@ -2435,6 +2444,32 @@ def main(argv: list[str] | None = None) -> None:
         print(f"[theory] Available: {', '.join(SUPPORTED_SOURCES.keys())}")
         print("[theory] Run --list-sources for details.\n")
         sys.exit(1)
+
+    # ── Resolve the actor ONCE, before any collector runs ──────────────
+    # Previously each source guessed independently, and several would
+    # happily return a profile for a name THEORY had never heard of —
+    # `--actor a` produced a saved APT1 dossier. Failing here, with
+    # suggestions, is the honest answer.
+    if not args.allow_unknown:
+        from theory.actors import AmbiguousActor, ActorNotFound, registry
+
+        try:
+            _identity = registry().resolve(args.actor)
+        except AmbiguousActor as exc:
+            print(f"\n[theory] {args.actor!r} matches several actors: "
+                  f"{', '.join(exc.candidates)}.")
+            print("[theory] Use the exact name you mean.\n")
+            sys.exit(1)
+        except ActorNotFound as exc:
+            print(f"\n[theory] Unknown actor: {args.actor!r}")
+            if exc.suggestions:
+                print(f"[theory] Did you mean: {', '.join(exc.suggestions)}?")
+            print("[theory] Run --list-actors to see known actors, or pass "
+                  "--allow-unknown to search free-text sources by this literal name.\n")
+            sys.exit(1)
+        else:
+            if _identity.canonical.lower() != args.actor.strip().lower():
+                logger.info("Resolved %r -> %s", args.actor, _identity.canonical)
 
     # Hint: let users know OTX is available if not in their sources
     if "otx" not in sources:
