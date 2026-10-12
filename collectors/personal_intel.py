@@ -57,7 +57,26 @@ logger = logging.getLogger(__name__)
 
 SOURCE_ID = "personal"
 
-REDIRECT_PATH = Path("config/local_sources.yaml")
+def _resolve_redirect_path() -> Path:
+    """Where the redirect file lives.
+
+    Historically this sat at config/local_sources.yaml inside the repo,
+    which only worked when running from the repo root and put a (gitignored)
+    personal file inside the project tree. It now lives in the user's own
+    config directory — outside any checkout — but an existing in-repo
+    redirect still wins so nobody's current setup breaks on upgrade.
+    """
+    legacy = Path("config/local_sources.yaml")
+    try:
+        if legacy.is_file():
+            return legacy
+    except OSError:
+        pass
+    from theory.paths import user_config_dir
+    return user_config_dir() / "local_sources.yaml"
+
+
+REDIRECT_PATH = _resolve_redirect_path()
 DEFAULT_PERSONAL_PATH = Path.home() / ".theory" / "personal_indicators.yaml"
 
 CANONICAL_TYPES = frozenset({

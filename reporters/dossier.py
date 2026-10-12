@@ -104,7 +104,8 @@ def _load_detection_repos() -> list[dict]:
         return _DETECTION_REPOS_CACHE
     try:
         import yaml
-        config_path = Path("config/detection_repos.yaml")
+        from theory.paths import config_file
+        config_path = config_file("detection_repos.yaml")
         if not config_path.exists():
             return []
         data = yaml.safe_load(config_path.read_text(encoding="utf-8"))

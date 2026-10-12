@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ["3.11", "3.12"]
+        python-version: ["3.11", "3.12", "3.13"]
 
     steps:
       - name: Checkout repository
@@ -77,24 +77,47 @@ jobs:
         run: pip install ruff pip-audit
 
       - name: Run ruff
-        run: |
-          ruff check . --select E,F,W \
-            --ignore E501,E402,W291,W292,W293,E701,E702,E731,F401,F541,F841,F811,F821
-        # E501 = line too long
-        # E402 = module level import not at top
-        # W291/W292/W293 = trailing whitespace (ASCII banner lines)
-        # E701/E702 = multiple statements on one line (compact style throughout)
-        # E731 = lambda assignment (sort-key idiom in html/playbook reporters)
-        # F401 = imported but unused (conditional imports in collectors)
-        # F541 = f-string without placeholders
-        # F841 = local variable assigned but never used
-        # F811 = redefinition of unused name (type: ignore comments + proxy pattern)
-        # F821 = undefined name (dynamic function insertion pattern in _cli.py)
+        # Configuration lives in pyproject.toml [tool.ruff.lint] — a bare
+        # invocation here means local `ruff check .` and CI can never drift.
+        run: ruff check .
 
       - name: Audit dependencies for known vulnerabilities
-        # Reads pyproject.toml and checks the resolved tree against the
-        # Python Packaging Advisory Database. Initially non-blocking so
-        # findings surface without breaking CI — flip to blocking once
-        # any baseline advisories are triaged.
-        run: pip-audit --strict || true
-        continue-on-error: true
+        # Blocking: the resolved tree was clean at the v2.0 audit, so there
+        # is no baseline of known findings to grandfather in. A new advisory
+        # should fail the build rather than scroll past in a green log.
+        run: pip-audit --strict
+
+  package:
+    name: Wheel builds and works outside the repo
+    runs-on: ubuntu-latest
+    # The wheel used to ship with no config/*.yaml at all (the package-data
+    # glob pointed at a directory that isn't a package), so an installed
+    # THEORY silently lost alias resolution. This job fails if that returns.
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Build wheel
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build --wheel
+
+      - name: Install the wheel into a clean environment
+        run: |
+          python -m venv /tmp/smoke
+          /tmp/smoke/bin/pip install dist/*.whl
+
+      - name: Run from a directory that is not the repo
+        run: |
+          mkdir -p /tmp/elsewhere && cd /tmp/elsewhere
+          /tmp/smoke/bin/python - <<'PY'
+          from collectors.cisa_advisories import ALIAS_TABLE, resolve_canonical
+          assert len(ALIAS_TABLE) > 1000, f"alias table did not ship: {len(ALIAS_TABLE)} actors"
+          assert resolve_canonical("Fancy Bear") == "APT28"
+          print(f"OK — {len(ALIAS_TABLE)} actors available from the installed wheel")
+          PY

@@ -32,7 +32,7 @@ from __future__ import annotations
 import logging
 import re
 from collections import defaultdict
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from typing import Any
 
 _TECHNIQUE_ID_RE = re.compile(r"^T\d{4}")
@@ -413,12 +413,6 @@ def _build_kill_chain(
         tactic = (t.get("tactic") or "").strip()
         if tactic:
             by_tactic[tactic].append(t)
-
-    # Build malware set per tactic phase (all malware in the profile is
-    # implicitly relevant to each phase where the actor operates)
-    all_malware_with_iocs = {
-        m["name"] for m in malware_intel if m.get("ioc_count", 0) > 0
-    }
 
     # Build ordered phases
     phases: list[dict] = []

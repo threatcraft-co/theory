@@ -53,9 +53,13 @@ from typing import Any
 # python-dotenv is already a hard dependency in pyproject.toml, so this
 # import should always succeed. The try/except is belt-and-suspenders for
 # unusual installs (e.g. someone pip-installing individual files).
+# THEORY_DISABLE_DOTENV lets the test suite keep a developer's real .env
+# out of the test process — without it, tests behave differently on a
+# configured laptop than in CI.
 try:
     from dotenv import load_dotenv
-    load_dotenv()
+    if not os.environ.get("THEORY_DISABLE_DOTENV"):
+        load_dotenv()
 except ImportError:
     pass
 
@@ -293,8 +297,12 @@ def cmd_list_actors() -> None:
 def cmd_update_bundles() -> None:
     """Refresh the ATT&CK bundle and clear stale caches."""
     import subprocess
-    import shutil
     from pathlib import Path
+
+    from theory._net import (
+        DownloadError, download_json,
+        validate_attack_bundle, validate_kev_catalog, validate_misp_galaxy,
+    )
 
     try:
         from rich.console import Console
@@ -321,15 +329,13 @@ def cmd_update_bundles() -> None:
     _print(f"  Source: {url}", "dim")
 
     try:
-        result = subprocess.run(
-            ["curl", "-L", "--progress-bar", "-o", str(bundle_path), url],
-            check=True,
+        written, _ = download_json(
+            url, bundle_path, validate=validate_attack_bundle, timeout=300,
         )
-        size_mb = bundle_path.stat().st_size / 1_048_576
-        _print(f"  ✓ ATT&CK bundle updated ({size_mb:.1f} MB)", "green")
-    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
+        _print(f"  ✓ ATT&CK bundle updated ({written / 1_048_576:.1f} MB)", "green")
+    except DownloadError as exc:
         _print(f"  ✗ ATT&CK bundle update failed: {exc}", "red")
-        _print("  Run manually: curl -L {url} -o .cache/enterprise-attack.json", "dim")
+        _print("  The existing bundle (if any) was left untouched.", "dim")
 
     # 2. Update Sigma repo (fetch + reset to handle force-pushes)
     sigma_repo = Path(".cache/sigma-repo")
@@ -362,23 +368,17 @@ def cmd_update_bundles() -> None:
     )
     _print("  Updating MISP Galaxy threat-actor cluster…", "dim")
     try:
-        misp_cache.parent.mkdir(parents=True, exist_ok=True)
-        r = subprocess.run(
-            ["curl", "-sL", "-o", str(misp_cache), misp_url],
-            capture_output=True, text=True, timeout=60,
+        written, parsed = download_json(
+            misp_url, misp_cache, validate=validate_misp_galaxy, timeout=120,
         )
-        if r.returncode == 0 and misp_cache.exists():
-            import json as _json
-            count = len(_json.loads(misp_cache.read_text()).get("values", []))
-            size_kb = misp_cache.stat().st_size / 1024
-            _print(
-                f"  ✓ MISP Galaxy updated — {count} actors ({size_kb:.0f} KB)",
-                "green",
-            )
-        else:
-            _print(f"  ✗ MISP Galaxy update failed: {r.stderr[:80]}", "red")
-    except Exception as exc:
-        _print(f"  ✗ MISP Galaxy update error: {exc}", "red")
+        _print(
+            f"  ✓ MISP Galaxy updated — {len(parsed.get('values', []))} actors "
+            f"({written / 1024:.0f} KB)",
+            "green",
+        )
+    except DownloadError as exc:
+        _print(f"  ✗ MISP Galaxy update failed: {exc}", "red")
+        _print("  The existing cluster cache was left untouched.", "dim")
 
     # 4. CISA KEV catalog
     kev_cache = Path(".cache/cisa_kev/known_exploited_vulnerabilities.json")
@@ -388,24 +388,17 @@ def cmd_update_bundles() -> None:
     )
     _print("  Updating CISA KEV catalog…", "dim")
     try:
-        kev_cache.parent.mkdir(parents=True, exist_ok=True)
-        r = subprocess.run(
-            ["curl", "-sL", "-o", str(kev_cache), kev_url],
-            capture_output=True, text=True, timeout=60,
+        _, kev_data = download_json(
+            kev_url, kev_cache, validate=validate_kev_catalog, timeout=120,
         )
-        if r.returncode == 0 and kev_cache.exists():
-            import json as _json
-            kev_data = _json.loads(kev_cache.read_text())
-            count = kev_data.get("count", 0)
-            version = kev_data.get("catalogVersion", "unknown")
-            _print(
-                f"  ✓ CISA KEV updated — v{version}, {count} CVEs",
-                "green",
-            )
-        else:
-            _print(f"  ✗ CISA KEV update failed: {r.stderr[:80]}", "red")
-    except Exception as exc:
-        _print(f"  ✗ CISA KEV update error: {exc}", "red")
+        _print(
+            f"  ✓ CISA KEV updated — v{kev_data.get('catalogVersion', 'unknown')}, "
+            f"{kev_data.get('count', len(kev_data.get('vulnerabilities', [])))} CVEs",
+            "green",
+        )
+    except DownloadError as exc:
+        _print(f"  ✗ CISA KEV update failed: {exc}", "red")
+        _print("  The existing KEV cache was left untouched.", "dim")
 
     # 5. ThreatFox cache — let 24hr TTL handle expiry naturally
     _print("  ✓ ThreatFox cache preserved (24hr TTL handles expiry automatically)", "dim")
@@ -1074,7 +1067,11 @@ def _collect_and_map(actor: str, source_key: str) -> dict[str, Any] | None:
     return raw
 
 
-def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
+def _enrich_profile(
+    profile: dict[str, Any],
+    source_key: str,
+    on_progress=None,
+) -> dict[str, Any]:
     enricher_path = ENRICHMENT_SOURCES.get(source_key)
     if not enricher_path:
         return profile
@@ -1089,7 +1086,7 @@ def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
             ]
             if not tids:
                 return profile
-            sigma_map = enricher.collect_for_techniques(tids)
+            sigma_map = enricher.collect_for_techniques(tids, on_progress=on_progress)
             for t in (profile.get("techniques") or []):
                 tid   = t.get("technique_id", "")
                 rules = sigma_map.get(tid, [])
@@ -1126,13 +1123,12 @@ def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
             # the user typed --actor APT28.
             try:
                 from collectors.cisa_advisories import ALIAS_TABLE
-                canonical = actor_name
-                # Find canonical key (profile may have stored the resolved name)
+                # Find the canonical key (the profile may already hold the
+                # resolved name) and take its full alias set.
                 table_aliases: list[str] = []
                 for canon, alias_set in ALIAS_TABLE.items():
                     if (canon.lower() == actor_name.lower()
                             or actor_name.lower() in alias_set):
-                        canonical  = canon
                         table_aliases = list(alias_set)
                         break
                 aliases = table_aliases or (profile.get("aliases", []) or [])
@@ -1469,65 +1465,6 @@ def run(
     from processors.deduplicator import deduplicate
     profile = deduplicate(normalised)
 
-    # Remap normalizer field names → reporter field names
-    if not profile.get("origin") and profile.get("suspected_origin"):
-        profile["origin"] = profile["suspected_origin"]
-    if not profile.get("motivations"):
-        raw_mot = profile.get("motivation")
-        if raw_mot:
-            profile["motivations"] = [raw_mot] if isinstance(raw_mot, str) else list(raw_mot)
-    if not profile.get("sectors") and profile.get("target_sectors"):
-        profile["sectors"] = profile["target_sectors"]
-
-    # Restore technique metadata stripped by normalizer
-    _technique_meta: dict[str, dict] = {}
-    for raw in raw_records:
-        for t in (raw.get("techniques") or []):
-            tid = (t.get("technique_id") or "").strip().upper()
-            if tid and tid not in _technique_meta:
-                _technique_meta[tid] = {
-                    "technique_name": t.get("technique_name", ""),
-                    "detection":      t.get("detection", ""),
-                    "tactic":         t.get("tactic", ""),
-                }
-    for t in (profile.get("techniques") or []):
-        tid  = (t.get("technique_id") or "").upper()
-        meta = _technique_meta.get(tid, {})
-        if not t.get("name") and meta.get("technique_name"):
-            t["name"] = meta["technique_name"]
-        if not t.get("detection_recs") and meta.get("detection"):
-            t["detection_recs"] = [meta["detection"]]
-        t["technique_name"] = t.get("name") or meta.get("technique_name", "")
-        t["detection"]      = (t.get("detection_recs") or [meta.get("detection", "")])[0]
-        if not t.get("tactic") and meta.get("tactic"):
-            t["tactic"] = meta["tactic"]
-
-    # Pass through CISA/OTX/ThreatFox enrichments
-    all_cves: list = []; all_advisories: list = []; all_sectors: list = []; all_iocs: list = []
-    seen_cves: set[str] = set(); seen_adv: set[str] = set()
-    seen_sect: set[str] = set(); seen_iocs: set[str] = set()
-    for raw in raw_records:
-        for cve in (raw.get("cves") or []):
-            cid = cve.get("cve_id", "")
-            if cid and cid not in seen_cves:
-                seen_cves.add(cid); all_cves.append(cve)
-        for adv in (raw.get("advisories") or []):
-            key = adv.get("url") or adv.get("title", "")
-            if key and key not in seen_adv:
-                seen_adv.add(key); all_advisories.append(adv)
-        for s in (raw.get("sectors") or []):
-            if s and s.lower() not in seen_sect:
-                seen_sect.add(s.lower()); all_sectors.append(s)
-        for ioc in (raw.get("indicators") or []):
-            key = f"{ioc.get('type','')}:{ioc.get('value','').lower()}"
-            if key not in seen_iocs:
-                seen_iocs.add(key); all_iocs.append(ioc)
-
-    if all_cves:        profile["cves"]       = all_cves
-    if all_advisories:  profile["advisories"]  = all_advisories
-    if all_sectors and not profile.get("sectors"): profile["sectors"] = all_sectors
-    if all_iocs:        profile["indicators"]  = all_iocs
-
     # ── CISA KEV cross-reference ──────────────────────────────────────
     # If cisa_kev was in the sources list, enrich all CVEs (regardless of
     # which source reported them) with confirmed-exploited flags,
@@ -1562,59 +1499,23 @@ def run(
         except Exception as exc:
             logger.warning("NVD enrichment failed: %s", exc)
 
-    # Malpedia malware enrichment
-    malpedia_meta: dict[str, dict] = {}
-    for raw in raw_records:
-        if raw.get("source_id") == "malpedia":
-            for m in (raw.get("malware") or []):
-                name = (m.get("name") or "").lower()
-                if name: malpedia_meta[name] = m
-    for m in (profile.get("malware") or []):
-        name = (m.get("name") or "").lower()
-        meta = malpedia_meta.get(name, {})
-        if meta.get("aliases")    and not m.get("aliases"):    m["aliases"]    = meta["aliases"]
-        if meta.get("yara_count") and not m.get("yara_count"): m["yara_count"] = meta["yara_count"]
-        if meta.get("description") and not m.get("description"): m["description"] = meta["description"]
-
-    # Metadata
-    if not profile.get("origin") or not profile.get("motivations"):
-        for raw in raw_records:
-            if not profile.get("origin") and raw.get("origin"):
-                profile["origin"] = raw["origin"]
-            if not profile.get("motivations") and raw.get("motivations"):
-                profile["motivations"] = raw["motivations"]
-
-    profile["sources_cited"] = list({r.get("source_id", "unknown") for r in normalised})
-    for r in raw_records:
-        if r.get("mitre_id") or r.get("mitre_group_id"):
-            profile["mitre_group_id"] = r.get("mitre_id") or r.get("mitre_group_id")
-            break
+    # Deterministic source list. Previously built from a set(), so the
+    # order of sources_cited changed between runs on identical input.
+    profile["sources_cited"] = sorted({r.get("source_id", "unknown") for r in normalised})
 
     # ── 4. Enrichment (Sigma + ThreatFox) ────────────────────────────
     for source_key in enrich_sources:
         if source_key == "sigma" and progress:
-            tids = [t.get("technique_id","") for t in (profile.get("techniques") or []) if t.get("technique_id")]
+            tids = [t.get("technique_id", "") for t in (profile.get("techniques") or []) if t.get("technique_id")]
             with progress:
                 task = progress.add_task(
                     f"Fetching Sigma rules for [bold]{len(tids)} techniques[/]…",
                     total=len(tids),
                 )
-                # Monkey-patch the sigma collector to update progress
-                _orig_fetch = None
-                try:
-                    from collectors import sigma_rules as _sm
-                    _orig_fetch = _sm.SigmaCollector._find_rules_for_technique
-                    def _patched(self, tid):
-                        result = _orig_fetch(self, tid)
-                        progress.advance(task)
-                        return result
-                    _sm.SigmaCollector._find_rules_for_technique = _patched
-                    profile = _enrich_profile(profile, source_key)
-                finally:
-                    if _orig_fetch:
-                        _sm.SigmaCollector._fetch_rules_for_technique = _orig_fetch
-        elif source_key == "vendor":
-            profile = _enrich_profile(profile, source_key)
+                profile = _enrich_profile(
+                    profile, source_key,
+                    on_progress=lambda: progress.advance(task),
+                )
         else:
             profile = _enrich_profile(profile, source_key)
 
@@ -1765,6 +1666,59 @@ def _output_json(profile: dict[str, Any], save: bool, quiet: bool = False) -> No
         if not quiet:
             print(f"\n[theory] JSON saved → {path}", file=sys.stderr)
 
+
+
+def _output_exec(profile: dict[str, Any], save: bool, sector: str = "") -> None:
+    """Non-technical executive summary (BLUF) for `--output exec`.
+
+    This was referenced by run() but never defined — `--output exec` raised
+    NameError despite being an advertised option in --help, the README, and
+    the web UI's format list. The synthesizer method it calls has existed
+    all along; only the CLI glue was missing.
+    """
+    import re as _re
+    from theory.paths import dossier_dir
+
+    from collectors.intelligence_synthesizer import (
+        IntelligenceSynthesizer, load_provider,
+    )
+
+    provider = load_provider()
+    if not provider or not provider.available:
+        print(
+            "\n[theory] --output exec needs an LLM provider to write the summary.\n"
+            "[theory] Set ANTHROPIC_API_KEY or OPENAI_API_KEY in .env, or run Ollama locally.\n",
+            file=sys.stderr,
+        )
+        return
+
+    clean = _sanitize_profile(profile)
+    summary = IntelligenceSynthesizer(provider).synthesize_executive_summary(
+        profile      = clean,
+        queried_name = clean.get("actor_name", ""),
+        sector       = sector,
+    )
+    if not summary:
+        print("[theory] Executive summary generation returned nothing.", file=sys.stderr)
+        return
+
+    try:
+        print(summary)
+    except BrokenPipeError:
+        pass
+
+    if save:
+        slug = _re.sub(r"[^a-z0-9]", "_", (clean.get("actor_name") or "unknown").lower())
+        path = dossier_dir() / f"{slug}_exec.md"
+        header = f"# Executive Summary — {clean.get('actor_name', 'Unknown Actor')}\n"
+        if sector:
+            header += f"> Sector context: {sector}\n"
+        header += (
+            f"> Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}"
+            f" · synthesized by {provider.name}\n\n"
+        )
+        path.write_text(header + summary + "\n", encoding="utf-8")
+        print(f"\n[theory] Executive summary saved → {path}", file=sys.stderr)
 
 
 def _output_navigator(profile: dict[str, Any], save: bool) -> None:

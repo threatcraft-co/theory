@@ -41,12 +41,10 @@ import json
 import logging
 import os
 import re
-import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from pathlib import Path
-from typing import Any
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
@@ -55,6 +53,8 @@ from urllib.error import HTTPError, URLError
 # references, defeating billion-laughs / quadratic-blowup / XXE attacks.
 from defusedxml import ElementTree as ET
 from defusedxml.common import DefusedXmlException
+
+from theory.paths import config_file
 
 logger = logging.getLogger(__name__)
 
@@ -94,7 +94,7 @@ class VendorIntelCollector:
     """
 
     def __init__(self, feeds_path: Path | None = None):
-        self._feeds_path = feeds_path or Path("config/feeds.yaml")
+        self._feeds_path = feeds_path or config_file("feeds.yaml")
         self._feeds: list[dict] = []
         self._load_feeds()
 
@@ -372,10 +372,12 @@ class VendorIntelCollector:
         """
         hits    = {n: c for n, c in hit_counts.items() if c > 0}
         zeroes  = {n: c for n, c in hit_counts.items() if c == 0}
-        errored = {n: c for n, c in hit_counts.items() if c < 0}
+        # A negative hit count marks a feed that raised. Counted here so
+        # the summary distinguishes "feed returned nothing" from "feed broke".
+        errored_counts = {n: c for n, c in hit_counts.items() if c < 0}
 
         total_feeds   = len(hit_counts)
-        total_errors  = len(errors)
+        total_errors  = len(errors) or len(errored_counts)
         total_hits    = sum(hits.values())
 
         logger.info(

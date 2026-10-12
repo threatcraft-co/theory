@@ -8,8 +8,7 @@ All tests are offline — no network calls, no disk writes by default.
 
 from __future__ import annotations
 
-import pytest
-from reporters.dossier import DossierReporter, _slugify, _now_utc
+from reporters.dossier import DossierReporter, _slugify
 
 
 # ---------------------------------------------------------------------------

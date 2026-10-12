@@ -27,7 +27,6 @@ import os
 import time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from typing import Any
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError

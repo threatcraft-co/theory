@@ -22,10 +22,8 @@ Usage:
 
 from __future__ import annotations
 
-import json
 import logging
 import re
-import textwrap
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -1387,7 +1385,6 @@ def _partition_iocs_three(
     indicators: list[dict],
 ) -> tuple[list[dict], list[dict], list[dict]]:
     """Split IOCs into FRESH, AGING, STALE buckets."""
-    from datetime import timedelta
     now = datetime.now(timezone.utc)
     fresh, aging, stale = [], [], []
     for ioc in indicators:
@@ -1415,7 +1412,8 @@ def _match_detection_repos(profile: dict, max_results: int = 6) -> list[dict]:
     """Load and match detection repos — same logic as dossier.py."""
     try:
         import yaml
-        config_path = Path("config/detection_repos.yaml")
+        from theory.paths import config_file
+        config_path = config_file("detection_repos.yaml")
         if not config_path.exists():
             return []
         data  = yaml.safe_load(config_path.read_text(encoding="utf-8"))

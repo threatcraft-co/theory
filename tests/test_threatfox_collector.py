@@ -6,7 +6,6 @@ Unit tests for collectors/threatfox.py — fully offline.
 
 from __future__ import annotations
 
-import json
 import pytest
 from collectors.threatfox import ThreatFoxCollector, _slugify, _threat_priority
 
@@ -196,6 +195,16 @@ class TestThreatFoxCache:
 # ---------------------------------------------------------------------------
 
 class TestCollectForMalwareFamilies:
+
+    @pytest.fixture(autouse=True)
+    def _abusech_key(self, monkeypatch):
+        """abuse.ch has required an Auth-Key on every request since late 2026,
+        and the collector correctly refuses to serve cached data without one
+        (no key -> don't present stale abuse.ch data as if it were live).
+        These tests predate that change and exercise the post-auth path, so
+        they supply a key explicitly rather than inheriting one from the
+        developer's environment."""
+        monkeypatch.setenv("ABUSECH_API_KEY", "test-key-not-real")
 
     def test_empty_names_returns_none(self):
         collector = ThreatFoxCollector()
