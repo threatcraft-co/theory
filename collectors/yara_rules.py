@@ -35,12 +35,10 @@ License: GNU-GPLv2
 from __future__ import annotations
 
 import logging
-import os
 import re
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any
 
 logger = logging.getLogger(__name__)
 

@@ -62,10 +62,9 @@ _RETRY_WAIT = 2
 #   resolve_canonical(name) → str
 #   all_aliases_for(name)   → frozenset[str]
 
-from pathlib import Path as _Path
 import yaml as _yaml
 
-_ACTORS_YAML = _Path("config/actors.yaml")
+from theory.paths import config_file
 _ALIAS_TABLE_CACHE: dict[str, frozenset[str]] | None = None
 _ALIAS_TO_CANONICAL_CACHE: dict[str, str] | None = None
 _NORMALIZED_TO_CANONICAL_CACHE: dict[str, str] | None = None
@@ -94,8 +93,9 @@ def _load_actors_yaml() -> tuple[dict[str, frozenset[str]], dict[str, str]]:
     alias_to_canonical: dict[str, str] = {}
     normalized_to_canonical: dict[str, str] = {}
 
+    actors_yaml = config_file("actors.yaml")
     try:
-        data = _yaml.safe_load(_ACTORS_YAML.read_text(encoding="utf-8"))
+        data = _yaml.safe_load(actors_yaml.read_text(encoding="utf-8"))
         actors = data.get("actors", {}) or {}
         for canonical, meta in actors.items():
             if not isinstance(meta, dict):
@@ -116,11 +116,12 @@ def _load_actors_yaml() -> tuple[dict[str, frozenset[str]], dict[str, str]]:
             normalized_to_canonical.setdefault(_normalize_loose(canonical), canonical)
     except FileNotFoundError:
         logger.warning(
-            "config/actors.yaml not found — alias resolution disabled. "
-            "Run from the theory repo root or check your working directory."
+            "actors.yaml not found at %s — alias resolution disabled. "
+            "Set THEORY_CONFIG_DIR to point at a directory containing it.",
+            actors_yaml,
         )
     except Exception as exc:
-        logger.error("Failed to load config/actors.yaml: %s", exc)
+        logger.error("Failed to load %s: %s", actors_yaml, exc)
 
     _ALIAS_TABLE_CACHE = alias_table
     _ALIAS_TO_CANONICAL_CACHE = alias_to_canonical
@@ -544,7 +545,7 @@ def _fetch_json(url: str, timeout: int = _TIMEOUT) -> Any:
                 time.sleep(_RETRY_WAIT)
             else:
                 raise
-        except URLError as exc:
+        except URLError:
             if attempt < _RETRY_MAX:
                 time.sleep(_RETRY_WAIT)
             else:

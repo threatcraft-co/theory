@@ -206,6 +206,7 @@ class TestOTXMapper:
         types = [i["type"] for i in r["indicators"]]
         # The empty-value IP should be gone; we still have the valid IP
         assert r["indicators"][0]["value"] != ""
+        assert all(t for t in types), "every surviving indicator must have a type"
 
     def test_valid_malware_passes(self):
         r     = AlienVaultOTXMapper().map(MINIMAL_OTX)

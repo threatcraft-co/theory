@@ -11,7 +11,6 @@ the private IP filter, cache, and _lookup_ip HTTP handling paths.
 from __future__ import annotations
 
 import json
-import pytest
 from unittest.mock import patch, MagicMock
 
 from collectors.greynoise import GreyNoiseCollector, _is_private, _ip_hash

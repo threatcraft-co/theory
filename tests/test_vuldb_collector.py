@@ -10,7 +10,6 @@ entry parsing, cache, and the empty/missing-key paths.
 
 from __future__ import annotations
 
-import pytest
 from unittest.mock import patch
 
 from collectors.vuldb import VulDBCollector, _slugify

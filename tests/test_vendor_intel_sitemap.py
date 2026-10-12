@@ -12,16 +12,13 @@ Save this as tests/test_vendor_intel_sitemap.py in the theory repo.
 from __future__ import annotations
 
 import json
-import pytest
 from datetime import datetime, timezone, timedelta
-from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 from collectors.vendor_intel import (
     VendorIntelCollector,
     _extract_html_title,
     _extract_html_summary,
-    SITEMAP_NS,
 )
 
 

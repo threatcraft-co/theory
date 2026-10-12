@@ -46,7 +46,7 @@ import re
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 

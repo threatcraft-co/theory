@@ -33,6 +33,38 @@ _HIGH_PROVENANCE_SOURCES = frozenset({
     "cisa",
 })
 
+# Which source wins when two disagree on a single-valued field (origin,
+# first_seen, description, mitre_id). Ordered most to least authoritative
+# for actor metadata specifically — not a general quality ranking.
+#
+# Previously these fields were resolved first-non-empty over the raw record
+# list, which arrives in --sources order: `--sources otx,mitre` and
+# `--sources mitre,otx` could therefore report different origins for the
+# same actor.
+_SCALAR_FIELD_PRIORITY = (
+    "mitre_attack",
+    "misp_galaxy",
+    "malpedia",
+    "cisa",
+    "circl_misp",
+    "alienvault_otx",
+    "personal",
+)
+
+
+def _source_rank(record: dict) -> int:
+    sid = record.get("source_id") or record.get("source") or ""
+    try:
+        return _SCALAR_FIELD_PRIORITY.index(sid)
+    except ValueError:
+        return len(_SCALAR_FIELD_PRIORITY)
+
+
+def _by_source_priority(results: list[dict]) -> list[dict]:
+    """Stable sort by source authority, so scalar-field resolution does not
+    depend on the order the user passed --sources."""
+    return sorted(results, key=_source_rank)
+
 
 def deduplicate(results: list[dict]) -> dict:
     if not results:
@@ -49,25 +81,32 @@ def deduplicate(results: list[dict]) -> dict:
                 break
 
     # suspected_origin / origin — support both field names
-    for r in results:
-        val = r.get("suspected_origin") or r.get("origin")
+    for r in _by_source_priority(results):
+        val = r.get("origin") or r.get("suspected_origin")
         if val:
             unified["suspected_origin"] = val
             unified["origin"] = val
             break
 
     # first_seen
-    for r in results:
+    for r in _by_source_priority(results):
         val = r.get("first_seen")
         if val:
             unified["first_seen"] = val
             break
 
     # description
-    for r in results:
+    for r in _by_source_priority(results):
         val = r.get("description")
         if val:
             unified["description"] = val
+            break
+
+    for r in _by_source_priority(results):
+        val = r.get("mitre_id") or r.get("mitre_group_id")
+        if val:
+            unified["mitre_group_id"] = val
+            unified["mitre_id"] = val
             break
 
     # ── List fields ──────────────────────────────────────────────────
@@ -76,9 +115,11 @@ def deduplicate(results: list[dict]) -> dict:
     unified["motivations"] = _dedup_strings(
         _collect(results, "motivations") + _collect(results, "motivation")
     )
+    unified["motivation"]  = unified["motivations"]
     unified["sectors"]     = _dedup_strings(
         _collect(results, "sectors") + _collect(results, "target_sectors")
     )
+    unified["target_sectors"] = unified["sectors"]
 
     # ── Techniques ──────────────────────────────────────────────────
     unified["techniques"] = _merge_techniques(results)

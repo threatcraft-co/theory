@@ -125,7 +125,6 @@ class PlaybookReporter:
         """Print a compact terminal summary after saving."""
         try:
             from rich.console import Console
-            from rich.panel   import Panel
             console = Console(stderr=True)
         except ImportError:
             print(f"[theory] Playbook saved → {path}")
@@ -566,7 +565,6 @@ def _partition_iocs(
     indicators: list[dict],
 ) -> tuple[list[dict], list[dict]]:
     """Split indicators into FRESH and AGING buckets. Exclude STALE and UNKNOWN."""
-    from datetime import timedelta
     now = datetime.now(timezone.utc)
     fresh: list[dict] = []
     aging: list[dict] = []

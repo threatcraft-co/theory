@@ -189,6 +189,8 @@ class NavigatorReporter:
             detection   = t.get("detection", "")
 
             comment_parts = [f"Confidence: {confidence}"]
+            if name:
+                comment_parts.insert(0, name)
             if sigma_count:
                 top = sigma_rules[0].get("title", "")
                 comment_parts.append(

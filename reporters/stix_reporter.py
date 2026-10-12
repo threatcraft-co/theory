@@ -38,8 +38,16 @@ logger = logging.getLogger(__name__)
 OUTPUT_DIR   = Path("output/dossiers")
 SPEC_VERSION = "2.1"
 
-# THEORY's own identity object — stable ID so bundles are mergeable
-THEORY_IDENTITY_ID = "identity--5f6b2c4a-1234-4321-abcd-theory000001"
+# THEORY's own identity object — stable ID so bundles are mergeable.
+#
+# This was previously a hand-written string ending in "theory000001", which
+# is not valid hexadecimal and therefore not a valid UUID. Since every object
+# in every bundle carries created_by_ref pointing at it, that single malformed
+# identifier made whole bundles fail strict STIX validation. A UUIDv5 over a
+# fixed namespace keeps the "stable across runs, mergeable" property that the
+# hard-coded value was reaching for, while actually being a UUID.
+THEORY_IDENTITY_UUID = uuid.uuid5(uuid.NAMESPACE_URL, "https://github.com/threatcraft-co/theory")
+THEORY_IDENTITY_ID = f"identity--{THEORY_IDENTITY_UUID}"
 THEORY_IDENTITY = {
     "type":           "identity",
     "spec_version":   SPEC_VERSION,
@@ -66,8 +74,54 @@ _IOC_PATTERNS: dict[str, str] = {
     "cve":         "[vulnerability:name = '{value}']",
 }
 
-# Confidence score → STIX confidence (0-100)
-_CONFIDENCE_MAP = {"high": 85, "medium": 50, "low": 15, "": 50}
+# Confidence label → STIX confidence (0-100). The deduplicator emits
+# HIGH/MEDIUM/LOW strings while abuse.ch enrichers emit 0-100 integers, and
+# both land in the same indicators list — _stix_confidence normalises either.
+_CONFIDENCE_MAP = {"high": 85, "medium": 50, "low": 15}
+
+
+def _stix_confidence(conf) -> int | None:
+    """Normalise a THEORY confidence (int 0-100 or HIGH/MEDIUM/LOW) to a
+    STIX confidence integer. Returns None when there is nothing to assert,
+    so the field is omitted rather than guessed."""
+    if conf is None or conf == "":
+        return None
+    if isinstance(conf, bool):
+        return None
+    if isinstance(conf, (int, float)):
+        return max(0, min(int(conf), 100))
+    return _CONFIDENCE_MAP.get(str(conf).strip().lower())
+
+
+def _stix_quote(value: str) -> str:
+    """Escape a value for a single-quoted STIX pattern literal.
+
+    Backslash must be escaped first, otherwise escaping the quote would
+    produce a dangling escape (\' -> \\' is correct; ' -> \' is not
+    enough on its own when the value already contains a backslash)."""
+    return str(value).replace("\\", "\\\\").replace("'", "\\'")
+
+
+def _ip_pattern(value: str) -> str | None:
+    """Build the correct STIX pattern for an IPv4 or IPv6 indicator.
+
+    Every 'ip' indicator previously used an ipv4-addr pattern, so OTX IPv6
+    values and any unsplit ThreatFox ip:port values produced patterns that
+    are invalid STIX and are rejected or mis-ingested by MISP/OpenCTI.
+    Returns None for anything that is not a parseable address, so the
+    caller can skip it rather than emit a malformed object."""
+    import ipaddress
+    host = str(value).strip()
+    if host.startswith("[") and "]" in host:        # [2001:db8::1]:443
+        host = host[1:host.index("]")]
+    elif host.count(":") == 1:                       # 198.51.100.7:8443
+        host = host.split(":", 1)[0]
+    try:
+        ip = ipaddress.ip_address(host)
+    except ValueError:
+        return None
+    kind = "ipv4-addr" if ip.version == 4 else "ipv6-addr"
+    return f"[{kind}:value = '{ip}']"
 
 
 class StixReporter:
@@ -147,11 +201,16 @@ class StixReporter:
             if not value or not ioc_type:
                 continue
 
-            pattern_tmpl = _IOC_PATTERNS.get(ioc_type)
-            if not pattern_tmpl:
-                continue
-
-            pattern = pattern_tmpl.format(value=value.replace("'", "\\'"))
+            if ioc_type == "ip":
+                pattern = _ip_pattern(value)
+                if pattern is None:
+                    logger.debug("STIX: skipping unparseable IP indicator %r", value)
+                    continue
+            else:
+                pattern_tmpl = _IOC_PATTERNS.get(ioc_type)
+                if not pattern_tmpl:
+                    continue
+                pattern = pattern_tmpl.format(value=_stix_quote(value))
             if pattern in seen_patterns:
                 continue
             seen_patterns.add(pattern)
@@ -203,7 +262,11 @@ class StixReporter:
         return {
             "type":         "bundle",
             "id":           _make_id("bundle"),
-            "spec_version": SPEC_VERSION,
+            # No spec_version here. STIX 2.0 required it on the bundle; 2.1
+            # removed it and each SDO carries its own instead, so emitting it
+            # made the bundle invalid under both specs — 2.1 parsers reject it
+            # as an unexpected property. The per-object spec_version fields
+            # below are the 2.1-correct placement.
             "objects":      objects,
         }
 
@@ -364,8 +427,9 @@ class StixReporter:
             "indicator_types":   _map_indicator_type(ioc_type, threat_type),
         }
 
-        if conf:
-            obj["confidence"] = min(int(conf), 100)
+        stix_conf = _stix_confidence(conf)
+        if stix_conf is not None:
+            obj["confidence"] = stix_conf
 
         # Source attribution
         sources = ioc.get("sources", []) or []

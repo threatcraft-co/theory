@@ -20,7 +20,6 @@ All tests are fully offline. No network, no API keys required.
 
 from __future__ import annotations
 
-import pytest
 from unittest.mock import MagicMock
 
 from collectors.vendor_intel import _parse_rss_xml

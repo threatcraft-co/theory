@@ -92,24 +92,34 @@ include = [
 ]
 
 [tool.setuptools.package-data]
-"*" = ["config/*.yaml"]
+# config/ is not a package, so a "config/*.yaml" glob here matched nothing
+# and the wheel shipped with no alias table at all. The YAML now lives in
+# theory/data/ (a real package directory) and is resolved via theory.paths.
+theory = ["data/*.yaml"]
 server = ["static/*.html", "static/*.css", "static/*.js"]
 
 [tool.ruff]
 line-length = 120
 
 [tool.ruff.lint]
-# Ignore list mirrors the one CI applies via --ignore so local `ruff check .`
-# matches CI exactly.
+# This is the single source of truth for lint config — CI runs a bare
+# `ruff check .` so local and CI results cannot drift apart.
+#
+# F401/F821/F841 were previously suppressed repo-wide. They are correctness
+# rules, not style rules, and suppressing them hid real defects: F821 was
+# sitting on a call to an undefined _output_exec, which is why `--output
+# exec` raised NameError for every user who tried a documented flag.
+# Anything genuinely intentional gets a targeted `# noqa` instead.
+#
+# select is pinned explicitly rather than left to ruff's defaults, so that
+# upgrading ruff can't silently enlarge the rule set under CI.
+select = ["E", "F", "W"]
 ignore = [
     "E501",                          # line too long
     "E402",                          # module-level import not at top
     "W291", "W292", "W293",          # trailing whitespace (ASCII banner lines)
     "E701", "E702",                  # multiple statements on one line
     "E731",                          # lambda assignment (sort-key idiom)
-    "F401",                          # imported but unused (conditional imports)
     "F541",                          # f-string without placeholders
-    "F841",                          # local variable assigned but never used
     "F811",                          # redefinition of unused name (proxy pattern)
-    "F821",                          # undefined name (dynamic function insertion in _cli.py)
 ]

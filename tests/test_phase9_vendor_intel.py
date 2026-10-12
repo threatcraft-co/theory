@@ -9,8 +9,7 @@ cache logic, concurrent fetching, and synthesis prompt construction.
 from __future__ import annotations
 
 import json
-import pytest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 from collectors.vendor_intel import (
     VendorIntelCollector,
     _parse_rss_xml,
@@ -28,8 +27,6 @@ from collectors.intelligence_synthesizer import (
     OpenAIProvider,
     OllamaProvider,
     _article_hash,
-    ACTOR_SYNTHESIS_PROMPT,
-    LANDSCAPE_SYNTHESIS_PROMPT,
 )
 
 
@@ -363,7 +360,7 @@ class TestCacheConfig:
         import collectors.vendor_intel as vi_module
         monkeypatch.setattr(vi_module, "CACHE_DIR", tmp_path)
 
-        from datetime import datetime, timezone, timedelta
+        from datetime import datetime, timezone
         collector = VendorIntelCollector.__new__(VendorIntelCollector)
 
         fresh_time = datetime.now(timezone.utc).isoformat()
@@ -408,6 +405,7 @@ class TestConcurrentFetch:
         monkeypatch.setattr(collector, "_load_apt_campaign_context", lambda *a, **k: [])
 
         results = collector.collect("APT28", ["Fancy Bear"])
+        assert isinstance(results, list)
 
         # Only enabled feeds should be fetched
         assert "Feed A" in fetch_calls

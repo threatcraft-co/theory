@@ -1,5 +1,4 @@
 """tests/test_deduplicator.py — Full coverage for processors/deduplicator.py"""
-import pytest
 from processors.deduplicator import deduplicate
 
 
