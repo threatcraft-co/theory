@@ -435,7 +435,6 @@ class TestConcurrentFetch:
         ]
 
         monkeypatch.setattr(collector, "_fetch_feed_cached", mock_fetch_cached)
-        monkeypatch.setattr(collector, "_load_apt_campaign_context", lambda *a, **k: [])
 
         results = collector.collect("APT28", ["Fancy Bear"])
         assert isinstance(results, list)
@@ -473,7 +472,6 @@ class TestConcurrentFetch:
         ]
 
         monkeypatch.setattr(collector, "_fetch_feed_cached", mock_fetch_cached)
-        monkeypatch.setattr(collector, "_load_apt_campaign_context", lambda *a, **k: [])
 
         results = collector.collect("APT28", ["Fancy Bear"])
         assert len(results) >= 1
@@ -504,7 +502,6 @@ class TestConcurrentFetch:
         ]
 
         monkeypatch.setattr(collector, "_fetch_feed_cached", mock_fetch_cached)
-        monkeypatch.setattr(collector, "_load_apt_campaign_context", lambda *a, **k: [])
 
         results = collector.collect("APT28", [])
         urls = [r["url"] for r in results]
@@ -540,7 +537,6 @@ class TestConcurrentFetch:
         ]
 
         monkeypatch.setattr(collector, "_fetch_feed_cached", mock_fetch_cached)
-        monkeypatch.setattr(collector, "_load_apt_campaign_context", lambda *a, **k: [])
 
         results = collector.collect("APT28", [])
         assert len(results) >= 2

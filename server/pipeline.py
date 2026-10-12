@@ -27,28 +27,16 @@ def _ensure_cli_importable() -> None:
     if project_root not in sys.path:
         sys.path.insert(0, project_root)
 
-# Map of web UI source IDs → _cli.py source keys
-# (most are 1:1, but the UI uses some shortened names)
-SOURCE_ID_MAP: dict[str, str] = {
-    "otx":           "otx",
-    "misp":          "misp_galaxy",
-    "misp_galaxy":   "misp_galaxy",
-    "cisa_kev":      "cisa_kev",
-    "malwarebazaar": "malware_bazaar",
-    "malware_bazaar":"malware_bazaar",
-    "urlhaus":       "urlhaus",
-    "greynoise":     "greynoise",
-    "abuseipdb":     "abuseipdb",
-    "yara_rules":    "yara",
-    "yara":          "yara",
-    "vuldb":         "vuldb",
-    "mitre":         "mitre",
-    "cisa":          "cisa",
-    "malpedia":      "malpedia",
-    "sigma":         "sigma",
-    "threatfox":     "threatfox",
-    "vendor":        "vendor",
-}
+def _resolve_source_key(ui_id: str) -> str | None:
+    """Map a web UI source id to a canonical source key.
+
+    Was a hand-maintained dict here; aliases now live with the source
+    definition in theory.sources so there is one place to update.
+    """
+    from theory.sources import resolve
+    spec = resolve(ui_id)
+    return spec.key if spec else None
+
 
 # Map of web UI format IDs → _cli.py --output values
 FORMAT_ID_MAP: dict[str, str] = {
@@ -66,15 +54,28 @@ FORMAT_ID_MAP: dict[str, str] = {
 
 
 def _resolve_sources(ui_sources: list[str]) -> list[str]:
-    """Map web UI source IDs to _cli.py source keys."""
-    resolved = []
-    seen = set()
+    """Map web UI source IDs to canonical source keys.
+
+    An empty selection means "the defaults", not "no sources at all" —
+    passing [] through produced a run with zero collectors and a
+    misleading "No data found for actor" error.
+    """
+    from theory.sources import DEFAULT_SOURCES
+
+    if not ui_sources:
+        return list(DEFAULT_SOURCES)
+
+    resolved: list[str] = []
+    seen: set[str] = set()
     for sid in ui_sources:
-        key = SOURCE_ID_MAP.get(sid, sid)
+        key = _resolve_source_key(sid)
+        if key is None:
+            logger.warning("Ignoring unknown source from the web UI: %r", sid)
+            continue
         if key not in seen:
             seen.add(key)
             resolved.append(key)
-    return resolved
+    return resolved or list(DEFAULT_SOURCES)
 
 
 def _resolve_output(ui_formats: list[str]) -> str:

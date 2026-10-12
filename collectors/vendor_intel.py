@@ -74,7 +74,6 @@ SUMMARY_CACHE_CHARS = 2000
 SUMMARY_SCORE_CHARS = 2000   # score against same full content
 
 # Path to the CyberMonitor APT campaign collection (cloned by --update-bundles)
-APT_CAMPAIGNS_PATH = Path(".cache/apt-campaigns")
 
 # --- Sitemap collector constants ---
 SITEMAP_CACHE_DIR        = Path(".cache/vendor_intel/sitemap_articles")
@@ -190,12 +189,6 @@ class VendorIntelCollector:
             "VendorIntel: %d relevant articles from %d feeds for %r",
             len(unique), len(enabled_feeds), actor_name,
         )
-
-        # Augment with historical APT campaign context (local, no rate limits)
-        apt_articles = self._load_apt_campaign_context(actor_name, aliases)
-        for art in apt_articles:
-            art.setdefault("relevance", 50)
-        unique = unique + apt_articles
 
         return unique
 
@@ -409,61 +402,6 @@ class VendorIntelCollector:
     # ------------------------------------------------------------------
     # APT Campaign Collection (local, offline)
     # ------------------------------------------------------------------
-
-    def _load_apt_campaign_context(
-        self, actor_name: str, aliases: list[str]
-    ) -> list[dict]:
-        """
-        Search the local CyberMonitor APT Campaign Collection for reports
-        matching this actor. Returns article-like dicts compatible with the
-        vendor intel pipeline.
-        """
-        if not APT_CAMPAIGNS_PATH.exists():
-            logger.debug("APT campaign collection not present — run --update-bundles to clone")
-            return []
-
-        results: list[dict] = []
-        search_terms = [actor_name.lower()] + [a.lower() for a in aliases if len(a) > 4]
-
-        try:
-            for entry in APT_CAMPAIGNS_PATH.iterdir():
-                if not entry.is_dir():
-                    continue
-                folder_lower = entry.name.lower()
-                if not any(term in folder_lower for term in search_terms):
-                    continue
-
-                for report_file in sorted(entry.rglob("*.md"))[:10]:
-                    try:
-                        text  = report_file.read_text(encoding="utf-8", errors="replace")
-                        title = report_file.stem.replace("_", " ").replace("-", " ")
-                        for line in text.splitlines()[:5]:
-                            if line.startswith("#"):
-                                title = line.lstrip("#").strip()
-                                break
-                        summary = text[:800].strip()
-                        results.append({
-                            "title":   title,
-                            "url": (
-                                "https://github.com/CyberMonitor/"
-                                "APT_CyberCriminal_Campagin_Collections"
-                                f"/blob/master/{entry.name}/{report_file.name}"
-                            ),
-                            "source":  "CyberMonitor APT Collection",
-                            "content": summary,
-                            "date":    "",
-                        })
-                    except OSError:
-                        continue
-        except Exception as exc:
-            logger.debug("APT campaign collection search error: %s", exc)
-
-        if results:
-            logger.info(
-                "APT campaign collection: %d historical reports for %r",
-                len(results), actor_name,
-            )
-        return results
 
     # ------------------------------------------------------------------
     # Cache
