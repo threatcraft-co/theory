@@ -21,7 +21,17 @@ def cmd_serve(argv: list[str]) -> None:
     p.add_argument(
         "--host",
         default="127.0.0.1",
-        help="Bind address (default: 127.0.0.1).",
+        help="Bind address (default: 127.0.0.1). Non-loopback addresses "
+             "require --expose-api-keys.",
+    )
+    p.add_argument(
+        "--expose-api-keys",
+        action="store_true",
+        help=(
+            "Permit binding to a non-loopback address. The settings API can "
+            "read key names and rewrite .env, so this exposes your API keys "
+            "to anyone who can reach the port. Almost never what you want."
+        ),
     )
     p.add_argument(
         "--port",
@@ -42,6 +52,18 @@ def cmd_serve(argv: list[str]) -> None:
 
     args = p.parse_args(argv)
 
+    # Refuse to expose the settings API by accident.
+    if args.host not in {"127.0.0.1", "localhost", "::1"} and not args.expose_api_keys:
+        print(
+            f"\n  Refusing to bind to {args.host}.\n\n"
+            "  theory serve exposes a settings API that can read which API keys\n"
+            "  are configured and rewrite your .env. On a non-loopback address\n"
+            "  that is reachable by anyone who can reach the port.\n\n"
+            "  Use the default (127.0.0.1), or pass --expose-api-keys if you\n"
+            "  genuinely intend this.\n"
+        )
+        sys.exit(1)
+
     # Dependency check
     try:
         import uvicorn
@@ -53,10 +75,18 @@ def cmd_serve(argv: list[str]) -> None:
         )
         sys.exit(1)
 
-    url = f"http://{args.host}:{args.port}"
+    # The SPA reads this token from the URL fragment and echoes it in
+    # X-Theory-Token. Fragments are never sent to a server, so it stays out
+    # of Referer headers and proxy logs.
+    from server.app import SESSION_TOKEN
+
+    base = f"http://{args.host}:{args.port}"
+    url  = f"{base}/#token={SESSION_TOKEN}"
     print(f"\n  THEORY web UI")
     print(f"  {url}")
-    print(f"  API docs: {url}/api/docs\n")
+    print(f"\n  This URL carries a one-session access token. The API refuses")
+    print(f"  requests without it, which is what stops a web page you visit")
+    print(f"  from driving this server.\n")
 
     if not args.no_open and not args.reload:
         import threading

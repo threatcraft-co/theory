@@ -9,16 +9,13 @@ No real git clone or grep calls are made in tests.
 
 from __future__ import annotations
 
-import pytest
 from unittest.mock import patch, MagicMock
-from pathlib import Path
 
 from collectors.sigma_rules import (
     SigmaCollector,
     _parse_sigma_minimal,
     _summarise_condition,
     _rule_covers_technique,
-    _build_rule_dict,
 )
 
 

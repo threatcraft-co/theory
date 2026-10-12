@@ -34,18 +34,18 @@ import logging
 import os
 import time
 from datetime import datetime, timezone, timedelta
-from pathlib import Path
-from typing import Any
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
 from collectors.base import BaseCollector
 
+from theory.paths import cache_path
+
 logger = logging.getLogger(__name__)
 
 SOURCE_ID        = "greynoise"
 API_BASE         = "https://api.greynoise.io/v3/community"
-CACHE_DIR        = Path(".cache/greynoise")
+CACHE_DIR        = cache_path("greynoise")
 CACHE_TTL_DAYS   = 7
 TIMEOUT          = 10
 RETRY_MAX        = 2

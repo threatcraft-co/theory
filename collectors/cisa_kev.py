@@ -45,12 +45,13 @@ import logging
 import re
 import time
 from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
 from collectors.base import BaseCollector
+
+from theory.paths import cache_path
 
 try:
     from collectors.cisa_advisories import resolve_canonical
@@ -75,7 +76,7 @@ FALLBACK_URL = (
     "known_exploited_vulnerabilities.json"
 )
 
-CACHE_DIR = Path(".cache/cisa_kev")
+CACHE_DIR = cache_path("cisa_kev")
 CACHE_FILE = CACHE_DIR / "known_exploited_vulnerabilities.json"
 CACHE_TTL_SECONDS = 24 * 3600   # 24 hours (CISA updates on weekdays)
 

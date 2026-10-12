@@ -62,10 +62,9 @@ _RETRY_WAIT = 2
 #   resolve_canonical(name) → str
 #   all_aliases_for(name)   → frozenset[str]
 
-from pathlib import Path as _Path
 import yaml as _yaml
 
-_ACTORS_YAML = _Path("config/actors.yaml")
+from theory.paths import config_file
 _ALIAS_TABLE_CACHE: dict[str, frozenset[str]] | None = None
 _ALIAS_TO_CANONICAL_CACHE: dict[str, str] | None = None
 _NORMALIZED_TO_CANONICAL_CACHE: dict[str, str] | None = None
@@ -94,8 +93,9 @@ def _load_actors_yaml() -> tuple[dict[str, frozenset[str]], dict[str, str]]:
     alias_to_canonical: dict[str, str] = {}
     normalized_to_canonical: dict[str, str] = {}
 
+    actors_yaml = config_file("actors.yaml")
     try:
-        data = _yaml.safe_load(_ACTORS_YAML.read_text(encoding="utf-8"))
+        data = _yaml.safe_load(actors_yaml.read_text(encoding="utf-8"))
         actors = data.get("actors", {}) or {}
         for canonical, meta in actors.items():
             if not isinstance(meta, dict):
@@ -116,11 +116,12 @@ def _load_actors_yaml() -> tuple[dict[str, frozenset[str]], dict[str, str]]:
             normalized_to_canonical.setdefault(_normalize_loose(canonical), canonical)
     except FileNotFoundError:
         logger.warning(
-            "config/actors.yaml not found — alias resolution disabled. "
-            "Run from the theory repo root or check your working directory."
+            "actors.yaml not found at %s — alias resolution disabled. "
+            "Set THEORY_CONFIG_DIR to point at a directory containing it.",
+            actors_yaml,
         )
     except Exception as exc:
-        logger.error("Failed to load config/actors.yaml: %s", exc)
+        logger.error("Failed to load %s: %s", actors_yaml, exc)
 
     _ALIAS_TABLE_CACHE = alias_table
     _ALIAS_TO_CANONICAL_CACHE = alias_to_canonical
@@ -223,12 +224,17 @@ class CisaAdvisoriesCollector(BaseCollector):
         return self.collect(actor_name)
 
     def collect(self, actor_name: str) -> dict[str, Any] | None:
-        canonical  = resolve_canonical(actor_name)
-        search_set = all_aliases_for(actor_name) | {actor_name.lower()}
+        from theory.actors import registry
+
+        identity = registry().get(actor_name)
+        if identity is None:
+            logger.info("CISA: %r is not a known actor — nothing to match against", actor_name)
+            return None
+        canonical = identity.canonical
 
         logger.info("CISA: searching for %r (canonical: %s)", actor_name, canonical)
 
-        aa_advisories = self._fetch_advisories(search_set)
+        aa_advisories = self._fetch_advisories(identity)
         cves = self._cves_from_advisories(aa_advisories)
 
         if not cves and not aa_advisories:
@@ -238,7 +244,7 @@ class CisaAdvisoriesCollector(BaseCollector):
         return {
             "actor_name":   canonical or actor_name,
             "source_id":    SOURCE_ID,
-            "aliases":      sorted(search_set - {canonical.lower()}),
+            "aliases":      sorted(identity.identity_names - {canonical.lower()}),
             "description":  "",
             "origin":       "",
             "first_seen":   "",
@@ -346,7 +352,7 @@ class CisaAdvisoriesCollector(BaseCollector):
     # AA advisories
     # ------------------------------------------------------------------
 
-    def _fetch_advisories(self, search_set: frozenset[str]) -> list[dict]:
+    def _fetch_advisories(self, identity) -> list[dict]:
         """
         Fetch CISA cybersecurity advisories and filter those attributing
         the target actor.  Tries the JSON feed first, falls back gracefully.
@@ -358,7 +364,7 @@ class CisaAdvisoriesCollector(BaseCollector):
             try:
                 items = _fetch_advisory_xml(url)
                 for item in items:
-                    if self._advisory_matches(item, search_set):
+                    if self._advisory_matches(item, identity):
                         advisories.append(self._normalise_advisory(item))
                 if advisories:
                     break
@@ -369,16 +375,29 @@ class CisaAdvisoriesCollector(BaseCollector):
         return advisories
 
     @staticmethod
-    def _advisory_matches(item: dict, search_set: frozenset[str]) -> bool:
-        """Return True if any alias appears in the advisory's text fields."""
-        haystack = " ".join([
-            (item.get("title")       or ""),
-            (item.get("summary")     or ""),
-            (item.get("description") or ""),
-            (item.get("tags")        or ""),
-            (item.get("body")        or ""),
-        ]).lower()
-        return any(alias in haystack for alias in search_set)
+    def _advisory_matches(item: dict, identity) -> bool:
+        """True if this advisory is actually about the actor.
+
+        Was a raw substring test over the full MISP-derived alias set. With
+        335 aliases of <=5 characters, many of them ordinary English words,
+        that attributed unrelated advisories to whoever happened to own a
+        matching substring: an Akira ransomware advisory matched APT3 (via
+        "ups" inside "groups") and APT41 (via "lead" inside "leading").
+
+        Now a word-boundary match over recall terms only — stop-words and
+        short non-identifier aliases are excluded, and identifier aliases
+        match exactly (apt4 never matches apt41).
+        """
+        from theory.actors import mentions
+
+        return bool(mentions(
+            identity,
+            item.get("title") or "",
+            item.get("summary") or "",
+            item.get("description") or "",
+            item.get("tags") or "",
+            item.get("body") or "",
+        ))
 
     @staticmethod
     def _normalise_advisory(item: dict) -> dict:
@@ -435,36 +454,48 @@ class CisaAdvisoriesCollector(BaseCollector):
 # Helpers
 # ---------------------------------------------------------------------------
 
-_SECTOR_KEYWORDS: dict[str, str] = {
-    "energy":          "Energy",
-    "electric":        "Energy",
-    "oil":             "Energy",
-    "gas":             "Energy",
-    "financial":       "Financial Services",
-    "bank":            "Financial Services",
-    "health":          "Healthcare",
-    "hospital":        "Healthcare",
-    "government":      "Government",
-    "federal":         "Government",
-    "defense":         "Defense",
-    "military":        "Defense",
-    "telecom":         "Telecommunications",
-    "transport":       "Transportation",
-    "water":           "Water",
-    "critical infra":  "Critical Infrastructure",
-    "manufacturing":   "Manufacturing",
-    "education":       "Education",
-    "academia":        "Education",
-}
+# Sector keywords are matched on word boundaries, and ambiguous bare words
+# are qualified. Substring matching produced nonsense: "banking trojan"
+# scored Financial Services, "health check" scored Healthcare, and
+# "watering hole" scored Water — all three from one sentence about a
+# phishing campaign.
+_SECTOR_PATTERNS: list[tuple[str, str]] = [
+    (r"energy|electric(?:al|ity)?\s+(?:grid|utility|sector)|power\s+(?:grid|plant|utility)", "Energy"),
+    (r"oil\s*(?:and|&)?\s*gas|petroleum|refiner(?:y|ies)|pipeline", "Energy"),
+    (r"financial\s+(?:services|sector|institutions?)|banking\s+(?:sector|industry)|\bbanks?\b|fintech", "Financial Services"),
+    (r"health\s*care|healthcare|hospitals?|medical\s+(?:centers?|facilities)|clinics?", "Healthcare"),
+    (r"governments?|federal\s+agenc(?:y|ies)|public\s+sector|ministr(?:y|ies)", "Government"),
+    (r"defen[cs]e\s+(?:sector|industrial|contractors?)|militar(?:y|ies)|armed\s+forces", "Defense"),
+    (r"telecom(?:munications?)?|mobile\s+operators?|isps?\b", "Telecommunications"),
+    (r"transport(?:ation)?|aviation|airlines?|railways?|maritime\s+shipping", "Transportation"),
+    (r"water\s+(?:utilit(?:y|ies)|treatment|sector|authority)|wastewater", "Water"),
+    (r"critical\s+infrastructure", "Critical Infrastructure"),
+    (r"manufactur(?:ing|ers?)|industrial\s+control", "Manufacturing"),
+    (r"education(?:al)?\s+(?:sector|institutions?)|universit(?:y|ies)|academia|schools?", "Education"),
+    (r"aerospace", "Aerospace"),
+    (r"technology\s+(?:sector|companies)|software\s+(?:vendors?|companies)", "Technology"),
+    (r"\bmedia\b|journalis(?:m|ts)|broadcasters?", "Media"),
+    (r"\bngos?\b|non-?governmental|civil\s+society", "NGO"),
+    (r"think\s+tanks?", "Think Tank"),
+]
+
+_SECTOR_COMPILED = [(re.compile(p, re.IGNORECASE), label) for p, label in _SECTOR_PATTERNS]
 
 
 def _extract_sectors(text: str) -> list[str]:
-    text_lower = text.lower()
-    found: dict[str, bool] = {}
-    for kw, sector in _SECTOR_KEYWORDS.items():
-        if kw in text_lower and sector not in found:
-            found[sector] = True
-    return list(found.keys())
+    """Infer target sectors from advisory prose.
+
+    Deliberately conservative: a false sector on a dossier is worse than a
+    missing one, because it drives the sector-specific framing in the
+    executive summary and playbook.
+    """
+    if not text:
+        return []
+    found: list[str] = []
+    for pattern, label in _SECTOR_COMPILED:
+        if label not in found and pattern.search(text):
+            found.append(label)
+    return found
 
 
 def _extract_technique_ids(text: str) -> list[str]:
@@ -487,12 +518,24 @@ def _fetch_advisory_xml(url: str, timeout: int = _TIMEOUT) -> list[dict]:
     Fetch the CISA cybersecurity advisories XML feed and parse into item dicts.
     Returns a list of dicts with title, url, date, summary fields.
     """
-    import xml.etree.ElementTree as ET
+    # defusedxml, not the stdlib parser. SECURITY.md states that the
+    # stdlib parser "is not used on attacker-influenceable content" —
+    # until now this feed was the exception that made that false. The
+    # practical risk is low (CISA is a trustworthy origin and expat has
+    # its own mitigations), but a published guarantee should be true.
+    from defusedxml import ElementTree as ET
+    from defusedxml.common import DefusedXmlException
+
     req = Request(url, headers={"User-Agent": "THEORY/1.0 threat-intel-research"})
     with urlopen(req, timeout=timeout) as resp:
         raw = resp.read().decode("utf-8", errors="replace")
 
-    root = ET.fromstring(raw)
+    try:
+        root = ET.fromstring(raw)
+    except DefusedXmlException as exc:
+        logger.warning("CISA advisory feed rejected by hardened parser: %s", exc)
+        return []
+
     # Handle both RSS (<channel><item>) and Atom (<entry>) formats
     ns   = {"atom": "http://www.w3.org/2005/Atom"}
     items: list[dict] = []
@@ -544,7 +587,7 @@ def _fetch_json(url: str, timeout: int = _TIMEOUT) -> Any:
                 time.sleep(_RETRY_WAIT)
             else:
                 raise
-        except URLError as exc:
+        except URLError:
             if attempt < _RETRY_MAX:
                 time.sleep(_RETRY_WAIT)
             else:

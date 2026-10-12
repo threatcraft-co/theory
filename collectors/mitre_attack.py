@@ -22,7 +22,8 @@ from pathlib import Path
 from typing import Any
 
 from collectors.base import BaseCollector
-from collectors.cisa_advisories import all_aliases_for
+
+from theory.paths import cache_path
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +35,7 @@ except ImportError:
     logger.warning("attackcti not installed. Provide a local bundle or install attackcti.")
 
 SOURCE_ID   = "mitre_attack"
-BUNDLE_PATH = Path(".cache/enterprise-attack.json")
+BUNDLE_PATH = cache_path("enterprise-attack.json")
 MAX_RETRIES = 2
 RETRY_DELAY = 3
 
@@ -138,19 +139,73 @@ class MitreAttackCollector(BaseCollector):
     # ------------------------------------------------------------------
 
     def _resolve_actor(self, client, name: str):
-        search_names = all_aliases_for(name) | {name.strip().lower()}
+        """Find the ATT&CK group for an actor.
+
+        Resolution order, strictest first:
+
+          1. The pinned ATT&CK id from theory/data/actors.yaml. This is the
+             normal path and the only one that is unambiguous by
+             construction.
+          2. An exact match on the group's own name or aliases, using the
+             user's input and THEORY's canonical name only.
+
+        What this deliberately no longer does is search the full MISP-derived
+        alias set and take the first group that intersects it. MISP synonym
+        lists merge groups ATT&CK keeps separate, so that approach returned
+        APT38 for "Lazarus Group", APT17 for "APT41", and CURIUM for
+        "APT35" — every TTP, malware family and detection-coverage number
+        downstream inherited the wrong group with no warning.
+        """
+        from theory.actors import normalize_name, registry
+
         try:
             groups = client.get_groups()
         except Exception as exc:
             logger.error("get_groups() failed: %s", exc)
             return None
 
-        for group in groups:
-            group_name = (getattr(group, "name", "") or "").lower()
-            group_aliases = [(a or "").lower() for a in (getattr(group, "aliases", []) or [])]
-            all_group_names = {group_name} | set(group_aliases)
-            if search_names & all_group_names:
-                return group
+        # Revoked and deprecated groups are tombstones, not actors. The
+        # current bundle carries 6 revoked and 9 deprecated intrusion-sets.
+        live = [
+            g for g in groups
+            if not getattr(g, "revoked", False)
+            and not (g.get("x_mitre_deprecated") if hasattr(g, "get") else False)
+        ]
+
+        identity = registry().get(name)
+
+        # 1. Pinned id — exact, unambiguous
+        if identity is not None and identity.mitre_id:
+            for group in live:
+                if _group_attack_id(group) == identity.mitre_id:
+                    return group
+            logger.warning(
+                "%s is pinned to %s but that group is not in the local bundle "
+                "— it may have been revoked upstream. Falling back to a name match.",
+                identity.canonical, identity.mitre_id,
+            )
+
+        # 2. Exact name match on the user's input or THEORY's canonical name
+        wanted = {normalize_name(name)}
+        if identity is not None:
+            wanted.add(normalize_name(identity.canonical))
+
+        matches = []
+        for group in live:
+            names = {normalize_name(getattr(group, "name", "") or "")}
+            names |= {normalize_name(a) for a in (getattr(group, "aliases", []) or []) if a}
+            if wanted & names:
+                matches.append(group)
+
+        if len(matches) == 1:
+            return matches[0]
+        if len(matches) > 1:
+            logger.warning(
+                "%r matches %d ATT&CK groups (%s) — refusing to guess. "
+                "Pin a mitre_id for this actor in actors.yaml.",
+                name, len(matches),
+                ", ".join(sorted(_group_attack_id(g) for g in matches)),
+            )
         return None
 
     # ------------------------------------------------------------------
@@ -518,3 +573,12 @@ def _strip_markdown_links(text: str) -> str:
     # Leftover bare (url) at start of description (malformed STIX)
     text = re.sub(r"^\s*\(https?://[^)]+\)\s*", "", text)
     return text.strip()
+
+
+def _group_attack_id(group) -> str:
+    """ATT&CK group id (G0007) from a STIX intrusion-set's external refs."""
+    refs = getattr(group, "external_references", None) or []
+    for ref in refs:
+        if isinstance(ref, dict) and ref.get("source_name") == "mitre-attack":
+            return ref.get("external_id", "") or ""
+    return ""

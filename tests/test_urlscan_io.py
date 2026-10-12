@@ -11,7 +11,6 @@ Tests cover query building, cache, enrich_urls, and _lookup HTTP handling.
 from __future__ import annotations
 
 import json
-import pytest
 from unittest.mock import patch, MagicMock
 
 from collectors.urlscan_io import URLScanIOCollector, _build_query, _key_hash

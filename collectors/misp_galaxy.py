@@ -37,6 +37,8 @@ from urllib.error import HTTPError, URLError
 
 from collectors.base import BaseCollector
 
+from theory.paths import cache_path
+
 try:
     from collectors.cisa_advisories import resolve_canonical
 except ImportError:
@@ -53,7 +55,7 @@ CLUSTER_URL = (
     "/main/clusters/threat-actor.json"
 )
 
-CACHE_DIR = Path(".cache/misp_galaxy")
+CACHE_DIR = cache_path("misp_galaxy")
 CACHE_FILE = CACHE_DIR / "threat-actor.json"
 CACHE_TTL_SECONDS = 7 * 24 * 3600   # 7 days
 
@@ -301,12 +303,17 @@ class MispGalaxyCollector(BaseCollector):
         if lookup in self._by_alias:
             return self._by_alias[lookup]
 
-        # 4. Substring fallback for partial matches
-        #    (e.g. "Lazarus" matching "Lazarus Group")
-        for value_key, entry in self._by_value.items():
-            if lookup in value_key or value_key in lookup:
-                return entry
-
+        # There is deliberately no substring fallback here.
+        #
+        # It used to end with `if lookup in value_key or value_key in
+        # lookup: return entry`, first match wins. That meant `--actor a`
+        # returned APT1, `--actor APT123` returned APT1, `--actor Spider`
+        # returned WOLF SPIDER and `--actor x` returned FOXY PANDA — a
+        # confident, saved, graph-ingested dossier for an actor the user
+        # never asked about. Partial names are now handled properly by
+        # theory.actors (exact match on curated identity names, plus a
+        # separator-insensitive pass), and a genuine miss is reported as a
+        # miss with suggestions.
         return None
 
     # ------------------------------------------------------------------

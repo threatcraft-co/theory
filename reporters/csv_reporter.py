@@ -21,15 +21,27 @@ import logging
 from pathlib import Path
 from typing import Any
 
+from theory.attribution import attribution_of
+
 logger = logging.getLogger(__name__)
 
-OUTPUT_DIR = Path("output/dossiers")
+# Resolved at call time via theory.paths so THEORY_HOME and
+# installed-package use work from any working directory.
+def _output_dir() -> Path:
+    from theory.paths import dossier_dir
+    return dossier_dir()
 
 # Column order — matches what detection engineers expect
 COLUMNS = [
     "type",
     "value",
     "confidence",
+    # How strongly this indicator belongs to the actor: actor / family /
+    # shared_tool. This file feeds SIEM blocklists, so the distinction
+    # matters — a Cobalt Strike C2 is real infrastructure, but blocking it
+    # as "APT28" is wrong and will generate noise against every other
+    # operator of the same tool.
+    "attribution",
     "threat_type",
     "malware_family",
     "first_seen",
@@ -94,6 +106,7 @@ class CsvReporter:
                 "type":           ioc_type,
                 "value":          value,
                 "confidence":     conf_str,
+                "attribution":    attribution_of(ioc),
                 "threat_type":    (ioc.get("threat_type") or ioc.get("threat_label") or "").strip(),
                 "malware_family": (ioc.get("malware_family") or "").strip(),
                 "first_seen":     (ioc.get("first_seen") or "").strip(),
@@ -112,9 +125,9 @@ class CsvReporter:
 
     def save(self, profile: dict[str, Any]) -> Path:
         """Write IOC CSV to output/dossiers/<actor>_iocs.csv."""
-        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        _output_dir()
         actor_slug = _slugify(profile.get("actor_name", "unknown"))
-        path       = OUTPUT_DIR / f"{actor_slug}_iocs.csv"
+        path       = _output_dir() / f"{actor_slug}_iocs.csv"
 
         rows = self.build_rows(profile)
 

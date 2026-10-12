@@ -11,9 +11,7 @@ force-push tolerance behaviour.
 
 from __future__ import annotations
 
-import pytest
 from unittest.mock import patch, MagicMock
-from pathlib import Path
 
 from collectors.yara_rules import (
     YaraRulesCollector,

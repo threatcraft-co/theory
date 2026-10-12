@@ -10,8 +10,6 @@ real HTTP calls.
 
 from __future__ import annotations
 
-import pytest
-from unittest.mock import patch
 
 from collectors.urlhaus import URLhausCollector, _slugify
 

@@ -9,11 +9,13 @@ and progress events.
 
 from __future__ import annotations
 
+import logging
 import sys
 import time
-import traceback
 from pathlib import Path
 from typing import Any, Callable
+
+logger = logging.getLogger(__name__)
 
 # Typing alias for the progress callback
 ProgressCallback = Callable[[str, dict[str, Any]], None]
@@ -25,28 +27,16 @@ def _ensure_cli_importable() -> None:
     if project_root not in sys.path:
         sys.path.insert(0, project_root)
 
-# Map of web UI source IDs → _cli.py source keys
-# (most are 1:1, but the UI uses some shortened names)
-SOURCE_ID_MAP: dict[str, str] = {
-    "otx":           "otx",
-    "misp":          "misp_galaxy",
-    "misp_galaxy":   "misp_galaxy",
-    "cisa_kev":      "cisa_kev",
-    "malwarebazaar": "malware_bazaar",
-    "malware_bazaar":"malware_bazaar",
-    "urlhaus":       "urlhaus",
-    "greynoise":     "greynoise",
-    "abuseipdb":     "abuseipdb",
-    "yara_rules":    "yara",
-    "yara":          "yara",
-    "vuldb":         "vuldb",
-    "mitre":         "mitre",
-    "cisa":          "cisa",
-    "malpedia":      "malpedia",
-    "sigma":         "sigma",
-    "threatfox":     "threatfox",
-    "vendor":        "vendor",
-}
+def _resolve_source_key(ui_id: str) -> str | None:
+    """Map a web UI source id to a canonical source key.
+
+    Was a hand-maintained dict here; aliases now live with the source
+    definition in theory.sources so there is one place to update.
+    """
+    from theory.sources import resolve
+    spec = resolve(ui_id)
+    return spec.key if spec else None
+
 
 # Map of web UI format IDs → _cli.py --output values
 FORMAT_ID_MAP: dict[str, str] = {
@@ -64,15 +54,28 @@ FORMAT_ID_MAP: dict[str, str] = {
 
 
 def _resolve_sources(ui_sources: list[str]) -> list[str]:
-    """Map web UI source IDs to _cli.py source keys."""
-    resolved = []
-    seen = set()
+    """Map web UI source IDs to canonical source keys.
+
+    An empty selection means "the defaults", not "no sources at all" —
+    passing [] through produced a run with zero collectors and a
+    misleading "No data found for actor" error.
+    """
+    from theory.sources import DEFAULT_SOURCES
+
+    if not ui_sources:
+        return list(DEFAULT_SOURCES)
+
+    resolved: list[str] = []
+    seen: set[str] = set()
     for sid in ui_sources:
-        key = SOURCE_ID_MAP.get(sid, sid)
+        key = _resolve_source_key(sid)
+        if key is None:
+            logger.warning("Ignoring unknown source from the web UI: %r", sid)
+            continue
         if key not in seen:
             seen.add(key)
             resolved.append(key)
-    return resolved
+    return resolved or list(DEFAULT_SOURCES)
 
 
 def _resolve_output(ui_formats: list[str]) -> str:
@@ -127,10 +130,14 @@ def run_pipeline(
     try:
         from theory._cli import run
     except ImportError as e:
+        # Tracebacks are logged server-side, not streamed to the browser:
+        # they carry absolute paths, environment details and sometimes
+        # argument values, and this stream is reachable from a page the
+        # user merely visited.
+        logger.error("Pipeline import failed", exc_info=True)
         callback("error", {
             "step_id": "import",
             "message": f"Could not import theory._cli.run: {e}. Make sure THEORY is installed.",
-            "traceback": traceback.format_exc(),
         })
         raise RuntimeError(f"Pipeline import failed: {e}") from e
 
@@ -158,7 +165,8 @@ def run_pipeline(
     t_start = time.monotonic()
 
     try:
-        print(f"[theory-serve] Running pipeline for actor={actor}, sources={sources}, format={output_format}")
+        logger.info("Running pipeline for actor=%r sources=%s format=%s",
+                    actor, sources, output_format)
         profile = run(
             actor=actor,
             sources=sources,
@@ -166,39 +174,30 @@ def run_pipeline(
             save=True,
             verbose=False,
         )
-        print(f"[theory-serve] Pipeline completed. Profile: {profile is not None}")
     except Exception as exc:
-        print(f"[theory-serve] Pipeline exception: {exc}")
-        import traceback as tb
-        tb.print_exc()
+        logger.error("Pipeline failed for actor=%r", actor, exc_info=True)
         callback("error", {
             "step_id": "pipeline",
             "message": str(exc),
-            "traceback": traceback.format_exc(),
         })
         raise
 
     elapsed_ms = int((time.monotonic() - t_start) * 1000)
 
     if profile is None:
-        print(f"[theory-serve] Pipeline returned None for actor={actor}")
         callback("error", {
             "step_id": "pipeline",
             "message": f"No data found for actor: {actor}",
-            "traceback": "",
         })
         return None
 
     # Find the output directory and list files
-    print(f"[theory-serve] Looking for dossier in output/dossiers/")
     dossier_path = _find_latest_dossier(actor, before_dirs)
-    print(f"[theory-serve] Found dossier: {dossier_path}")
     output_files = []
     if dossier_path:
         p = Path(dossier_path)
         if p.is_dir():
             output_files = sorted(f.name for f in p.iterdir() if f.is_file())
-            print(f"[theory-serve] Dossier files: {output_files}")
 
     callback("step_done", {
         "step": 1,

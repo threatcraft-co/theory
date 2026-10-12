@@ -24,7 +24,6 @@ import json
 import logging
 import re
 import time
-from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
@@ -32,11 +31,13 @@ from urllib.error import HTTPError, URLError
 from collectors.base import BaseCollector
 from collectors.cisa_advisories import resolve_canonical
 
+from theory.paths import cache_path
+
 logger = logging.getLogger(__name__)
 
 SOURCE_ID  = "malpedia"
 BASE_URL   = "https://malpedia.caad.fkie.fraunhofer.de"
-CACHE_DIR  = Path(".cache/malpedia")
+CACHE_DIR  = cache_path("malpedia")
 TIMEOUT    = 15
 RETRY_MAX  = 2
 RETRY_WAIT = 2

@@ -47,7 +47,7 @@ class UnavailableProvider:
 @pytest.fixture(autouse=True)
 def isolated_graph(tmp_path, monkeypatch):
     path = tmp_path / "graph.json"
-    monkeypatch.setattr(graph_module, "GRAPH_PATH", path)
+    monkeypatch.setattr(graph_module, "_default_graph_path", lambda: path)
     store = GraphStore(path=path)
     ingest_profile(
         {

@@ -8,8 +8,7 @@ All tests are offline — no network calls, no disk writes by default.
 
 from __future__ import annotations
 
-import pytest
-from reporters.dossier import DossierReporter, _slugify, _now_utc
+from reporters.dossier import DossierReporter, _slugify
 
 
 # ---------------------------------------------------------------------------
@@ -161,7 +160,7 @@ class TestBuildMarkdown:
 class TestSaveMarkdown:
     def test_file_written(self, tmp_path, monkeypatch):
         import reporters.dossier as dossier_module
-        monkeypatch.setattr(dossier_module, "OUTPUT_DIR", tmp_path)
+        monkeypatch.setattr(dossier_module, "_output_dir", lambda _p=tmp_path: _p)
 
         reporter = DossierReporter()
         path = reporter.save_markdown(MINIMAL_PROFILE)
@@ -173,7 +172,7 @@ class TestSaveMarkdown:
     def test_filename_slugified(self, tmp_path, monkeypatch):
         """Filename uses canonical alias-table name, not the typed actor name."""
         import reporters.dossier as dossier_module
-        monkeypatch.setattr(dossier_module, "OUTPUT_DIR", tmp_path)
+        monkeypatch.setattr(dossier_module, "_output_dir", lambda _p=tmp_path: _p)
 
         # "Fancy Bear" is an alias for APT28 — canonical slug should be apt28
         profile = {**MINIMAL_PROFILE, "actor_name": "Fancy Bear"}
@@ -184,7 +183,7 @@ class TestSaveMarkdown:
     def test_filename_unknown_actor_falls_back_to_slugified_name(self, tmp_path, monkeypatch):
         """Actors not in ALIAS_TABLE fall back to slugified actor_name."""
         import reporters.dossier as dossier_module
-        monkeypatch.setattr(dossier_module, "OUTPUT_DIR", tmp_path)
+        monkeypatch.setattr(dossier_module, "_output_dir", lambda _p=tmp_path: _p)
 
         profile = {**MINIMAL_PROFILE, "actor_name": "Unknown Threat Actor"}
         reporter = DossierReporter()
