@@ -26,17 +26,18 @@ which required 6.5s delays per technique due to rate limiting.
 from __future__ import annotations
 
 import logging
-import os
 import re
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any
 
+from theory.paths import cache_path
+
 logger = logging.getLogger(__name__)
 
 SIGMA_REPO_URL  = "https://github.com/SigmaHQ/sigma.git"
-SIGMA_REPO_PATH = Path(".cache/sigma-repo")
+SIGMA_REPO_PATH = cache_path("sigma-repo")
 RULES_DIR       = SIGMA_REPO_PATH / "rules"
 MAX_RULES_PER_TECHNIQUE = 10   # raised from 5 — no cost to go higher now
 
@@ -163,12 +164,15 @@ class SigmaCollector:
         return True
 
     def collect_for_techniques(
-        self, technique_ids: list[str]
+        self, technique_ids: list[str], on_progress=None
     ) -> dict[str, list[dict]]:
         """
         For each technique ID, return a list of matching Sigma rules.
 
         Uses local grep on the cloned SigmaHQ repo — instant, no rate limits.
+
+        on_progress: optional zero-arg callable invoked once per technique,
+        for driving a progress bar without patching this class.
 
         Returns:
             Dict mapping technique_id → list of rule dicts, e.g.:
@@ -201,6 +205,13 @@ class SigmaCollector:
             rules = self._find_rules_for_technique(tid)
             if rules:
                 results[tid] = rules
+            if on_progress is not None:
+                # Caller-supplied progress tick. Replaces an earlier pattern
+                # where the CLI monkey-patched this class's method to drive a
+                # progress bar — that patch was never removed (it restored to
+                # a differently-named attribute), so wrappers stacked across
+                # runs and raced between concurrent server jobs.
+                on_progress()
 
         total = sum(len(v) for v in results.values())
         logger.info(

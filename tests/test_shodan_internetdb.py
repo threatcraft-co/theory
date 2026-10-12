@@ -13,7 +13,6 @@ path, which is InternetDB-specific).
 from __future__ import annotations
 
 import json
-import pytest
 from unittest.mock import patch, MagicMock
 
 from collectors.shodan_internetdb import ShodanInternetDBCollector, _is_private, _ip_hash

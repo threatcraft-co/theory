@@ -152,13 +152,41 @@ class TestBundleStructure:
         bundle = StixReporter().build_bundle(MINIMAL_PROFILE)
         assert bundle["type"] == "bundle"
 
-    def test_spec_version(self):
+    def test_bundle_has_no_spec_version(self):
+        """STIX 2.1 removed spec_version from the bundle object — each SDO
+        carries its own instead. Emitting it at bundle level made THEORY's
+        output fail strict 2.1 validation as an unexpected property (and it
+        was never valid 2.0 output either, since the objects are 2.1)."""
         bundle = StixReporter().build_bundle(MINIMAL_PROFILE)
-        assert bundle["spec_version"] == SPEC_VERSION
+        assert "spec_version" not in bundle
+
+    def test_objects_carry_spec_version(self):
+        bundle = StixReporter().build_bundle(MINIMAL_PROFILE)
+        sdos = [o for o in bundle["objects"] if o.get("type") != "relationship"]
+        assert sdos, "expected at least one SDO"
+        assert all(o.get("spec_version") == SPEC_VERSION for o in sdos)
 
     def test_bundle_id_format(self):
         bundle = StixReporter().build_bundle(MINIMAL_PROFILE)
         assert bundle["id"].startswith("bundle--")
+
+    def test_bundle_validates_against_stix2_library(self):
+        """End-to-end check against the reference implementation. Custom
+        x_theory_* properties are the spec's own extension mechanism, so
+        allow_custom=True is the correct strictness here."""
+        stix2 = pytest.importorskip("stix2")
+        bundle = StixReporter().build_bundle(MINIMAL_PROFILE)
+        stix2.parse(bundle, allow_custom=True, version="2.1")
+
+    def test_identity_id_is_a_valid_uuid(self):
+        """created_by_ref on every object points at THEORY's identity, so a
+        malformed identifier there invalidates the whole bundle."""
+        import uuid as _uuid
+        from reporters.stix_reporter import THEORY_IDENTITY_ID
+
+        prefix, _, uuid_part = THEORY_IDENTITY_ID.partition("--")
+        assert prefix == "identity"
+        _uuid.UUID(uuid_part)   # raises if not a real UUID
 
     def test_objects_is_list(self):
         bundle = StixReporter().build_bundle(MINIMAL_PROFILE)
@@ -420,7 +448,7 @@ class TestSave:
 
     def test_file_written(self, tmp_path, monkeypatch):
         import reporters.stix_reporter as stix_module
-        monkeypatch.setattr(stix_module, "OUTPUT_DIR", tmp_path)
+        monkeypatch.setattr(stix_module, "_output_dir", lambda _p=tmp_path: _p)
 
         path = StixReporter().save(MINIMAL_PROFILE)
         assert path.exists()
@@ -430,7 +458,7 @@ class TestSave:
 
     def test_filename_slugified(self, tmp_path, monkeypatch):
         import reporters.stix_reporter as stix_module
-        monkeypatch.setattr(stix_module, "OUTPUT_DIR", tmp_path)
+        monkeypatch.setattr(stix_module, "_output_dir", lambda _p=tmp_path: _p)
 
         profile = {**MINIMAL_PROFILE, "actor_name": "Fancy Bear"}
         path    = StixReporter().save(profile)

@@ -33,7 +33,6 @@ import os
 import re
 import time
 from datetime import datetime, timezone, timedelta
-from pathlib import Path
 from typing import Any
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -41,11 +40,13 @@ from urllib.error import HTTPError, URLError
 
 from collectors.base import BaseCollector
 
+from theory.paths import cache_path
+
 logger = logging.getLogger(__name__)
 
 SOURCE_ID        = "vuldb"
 API_URL          = "https://vuldb.com/?api"
-CACHE_DIR        = Path(".cache/vuldb")
+CACHE_DIR        = cache_path("vuldb")
 CACHE_TTL_DAYS   = 7
 TIMEOUT          = 15
 RETRY_MAX        = 2

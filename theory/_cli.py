@@ -53,9 +53,13 @@ from typing import Any
 # python-dotenv is already a hard dependency in pyproject.toml, so this
 # import should always succeed. The try/except is belt-and-suspenders for
 # unusual installs (e.g. someone pip-installing individual files).
+# THEORY_DISABLE_DOTENV lets the test suite keep a developer's real .env
+# out of the test process — without it, tests behave differently on a
+# configured laptop than in CI.
 try:
     from dotenv import load_dotenv
-    load_dotenv()
+    if not os.environ.get("THEORY_DISABLE_DOTENV"):
+        load_dotenv()
 except ImportError:
     pass
 
@@ -88,98 +92,57 @@ logger = logging.getLogger("theory")
 # Source registry
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Source registry
+# ---------------------------------------------------------------------------
+# These are derived views over theory.sources.SOURCES, which is the single
+# place a source is described. They used to be six hand-maintained tables
+# here plus two more in server/, and they had already drifted: the server's
+# copy was missing nvd, circl_misp, personal, shodan_internetdb and
+# urlscan_io, so those could not be selected from the web UI at all.
+
+from theory.sources import SOURCES as _SOURCE_SPECS
+from theory.sources import DEFAULT_SOURCES as _DEFAULT_SOURCE_KEYS
+
+
+def _dotted(impl: str | None) -> str | None:
+    """"module:Class" -> "module.Class" for _load_class()."""
+    return impl.replace(":", ".") if impl else None
+
+
+# key -> collector path, or None for enrichment-only sources
 SUPPORTED_SOURCES: dict[str, str | None] = {
-    "mitre":       "collectors.mitre_attack.MitreAttackCollector",
-    "cisa":        "collectors.cisa_advisories.CisaAdvisoriesCollector",
-    "cisa_kev":    "collectors.cisa_kev.CisaKevCollector",
-    "malpedia":    "collectors.malpedia.MalpediaCollector",
-    "misp_galaxy": "collectors.misp_galaxy.MispGalaxyCollector",
-    "circl_misp":  "collectors.circl_misp.CirclMispCollector",
-    "otx":         "collectors.alienvault_otx.AlienVaultOTXCollector",
-    "vuldb":       "collectors.vuldb.VulDBCollector",
-    "nvd":         "collectors.nvd.NVDCollector",
-    "personal":    "collectors.personal_intel.PersonalIntelCollector",
-    # Enrichment-only — accepted by CLI but handled separately
-    "sigma":          None,
-    "yara":           None,
-    "threatfox":      None,
-    "malware_bazaar": None,
-    "urlhaus":        None,
-    "greynoise":      None,
-    "abuseipdb":      None,
-    "shodan_internetdb": None,
-    "urlscan_io":     None,
-    "vendor":         None,   # vendor intelligence synthesis (requires LLM provider)
+    spec.key: (_dotted(spec.impl) if spec.kind != "enricher" else None)
+    for spec in _SOURCE_SPECS
 }
 
 SOURCE_DESCRIPTIONS: dict[str, str] = {
-    "mitre":       "MITRE ATT&CK — techniques, malware, campaigns (local bundle, offline)",
-    "cisa":        "CISA advisories + KEV catalog (free, no auth)",
-    "cisa_kev":    "CISA KEV — 1600+ confirmed-exploited CVEs, ransomware flags (free, no auth)",
-    "malpedia":    "Malpedia malware family database (free, no auth)",
-    "misp_galaxy": "MISP Galaxy — 1000+ actors, aliases, attribution, target sectors (free, no auth)",
-    "circl_misp":  "CIRCL OSINT MISP feed — event-level indicators + campaign context by actor/alias match (free, no auth)",
-    "otx":         "AlienVault OTX pulses + IOCs (free, requires OTX_API_KEY in .env)",
-    "nvd":         "NIST NVD — CVSS scores/vectors, CWE classification, references for CVEs already in the profile (free, optional NVD_API_KEY raises rate limit)",
-    "sigma":          "SigmaHQ detection rules mapped to ATT&CK (free, optional GITHUB_TOKEN)",
-    "yara":           "YARA file detection rules matched to malware families (free, local clone)",
-    "threatfox":      "ThreatFox IOCs by malware family (free, requires ABUSECH_API_KEY)",
-    "malware_bazaar": "MalwareBazaar sample hashes by malware family (free, requires ABUSECH_API_KEY)",
-    "urlhaus":        "URLhaus malware distribution URLs by family (free, requires ABUSECH_API_KEY)",
-    "greynoise":      "GreyNoise IP noise/RIOT context — distinguishes targeted vs background activity (free, 50/week)",
-    "abuseipdb":      "AbuseIPDB IP reputation scores from community reports (free, 1000/day)",
-    "shodan_internetdb": "Shodan InternetDB — open ports, hostnames, CPEs, known CVEs on an IP (free, no auth)",
-    "urlscan_io":     "urlscan.io public scan history for domains/URLs — prior verdicts, resolved IP/country (free, no auth; optional URLSCAN_API_KEY raises rate limit)",
-    "vuldb":          "VulDB actor-CVE correlation and exploit intelligence (free tier, 50 credits/day)",
-    "vendor":         "Vendor intelligence synthesis — LLM-synthesized summaries from 35+ research blogs (requires LLM provider in .env)",
-    "personal":       "Your own local research indicators — gitignored redirect, never leaves your machine (set up with --init-personal)",
+    spec.key: spec.description for spec in _SOURCE_SPECS
 }
 
 SOURCE_REQUIRES: dict[str, str] = {
-    "otx":            "OTX_API_KEY",
-    "sigma":          "GITHUB_TOKEN (optional, recommended)",
-    "threatfox":      "ABUSECH_API_KEY",
-    "malware_bazaar": "ABUSECH_API_KEY",
-    "urlhaus":        "ABUSECH_API_KEY",
-    "greynoise":      "GREYNOISE_API_KEY",
-    "abuseipdb":      "ABUSEIPDB_API_KEY",
-    "vuldb":          "VULDB_API_KEY",
-    "urlscan_io":     "URLSCAN_API_KEY (optional, raises rate limit)",
-    "vendor":         "ANTHROPIC_API_KEY or OPENAI_API_KEY or Ollama running locally",
+    spec.key: spec.auth for spec in _SOURCE_SPECS if spec.key_env
 }
 
 ENRICHMENT_SOURCES: dict[str, str] = {
-    "sigma":          "collectors.sigma_rules.SigmaCollector",
-    "yara":           "collectors.yara_rules.YaraRulesCollector",
-    "threatfox":      "collectors.threatfox.ThreatFoxCollector",
-    "malware_bazaar": "collectors.malware_bazaar.MalwareBazaarCollector",
-    "urlhaus":        "collectors.urlhaus.URLhausCollector",
-    "greynoise":      "collectors.greynoise.GreyNoiseCollector",
-    "abuseipdb":      "collectors.abuseipdb.AbuseIPDBCollector",
-    "shodan_internetdb": "collectors.shodan_internetdb.ShodanInternetDBCollector",
-    "urlscan_io":     "collectors.urlscan_io.URLScanIOCollector",
-    "vendor":         "collectors.vendor_intel.VendorIntelCollector",
+    spec.key: _dotted(spec.impl)
+    for spec in _SOURCE_SPECS
+    if spec.kind == "enricher" and spec.impl
 }
 
 MAPPER_REGISTRY: dict[str, str] = {
-    "mitre":       "mappers.mitre.MitreMapper",
-    "cisa":        "mappers.cisa.CisaMapper",
-    "cisa_kev":    "collectors.cisa_kev.CisaKevMapper",
-    "malpedia":    "collectors.malpedia.MalpediaMapper",
-    "misp_galaxy": "collectors.misp_galaxy.MispGalaxyMapper",
-    "circl_misp":  "collectors.circl_misp.CirclMispMapper",
-    "otx":         "collectors.alienvault_otx.AlienVaultOTXMapper",
-    "nvd":         "collectors.nvd.NVDMapper",
+    spec.key: _dotted(spec.mapper)
+    for spec in _SOURCE_SPECS
+    if spec.mapper
 }
 
-# Default source combination — good balance of coverage vs speed
-# All keyless and free, providing complementary intelligence:
-#   mitre       → techniques, software, campaigns
-#   cisa        → advisories, KEV CVEs (actor-attributed)
-#   cisa_kev    → 1600+ confirmed-exploited CVEs, ransomware flags
-#   malpedia    → malware families, YARA counts
-#   misp_galaxy → 1000+ actors, deep alias lists, attribution, target sectors
-DEFAULT_SOURCES = "mitre,cisa,cisa_kev,malpedia,misp_galaxy"
+SOURCE_CACHE_TTL: dict[str, str] = {
+    spec.key: spec.cache for spec in _SOURCE_SPECS
+}
+
+# Default source combination — keyless, free, and complementary.
+DEFAULT_SOURCES = ",".join(_DEFAULT_SOURCE_KEYS)
+
 
 
 # ---------------------------------------------------------------------------
@@ -200,27 +163,7 @@ def cmd_list_sources() -> None:
         t = Table("Key", "Description", "Auth Required", "Cache",
                   box=rich_box.SIMPLE_HEAD, header_style="bold magenta")
 
-        cache_ttls = {
-            "mitre":          "7 days (.cache/enterprise-attack.json)",
-            "cisa":           "per request",
-            "cisa_kev":       "24 hours (.cache/cisa_kev/)",
-            "malpedia":       "per request (.cache/malpedia/)",
-            "misp_galaxy":    "7 days (.cache/misp_galaxy/)",
-            "circl_misp":     "24h manifest / 7 days per event (.cache/circl_misp/)",
-            "otx":            "per request (.cache/otx/)",
-            "nvd":            "30 days per CVE (.cache/nvd/)",
-            "sigma":          "7 days (.cache/sigma-repo/)",
-            "yara":           "7 days (.cache/yara-rules-repo/)",
-            "threatfox":      "24 hours (.cache/threatfox/)",
-            "malware_bazaar": "24 hours (.cache/malware_bazaar/)",
-            "urlhaus":        "24 hours (.cache/urlhaus/)",
-            "greynoise":      "7 days (.cache/greynoise/)",
-            "abuseipdb":      "3 days (.cache/abuseipdb/)",
-            "shodan_internetdb": "24 hours (.cache/shodan_internetdb/)",
-            "urlscan_io":     "24 hours (.cache/urlscan_io/)",
-            "vuldb":          "7 days (.cache/vuldb/)",
-            "personal":       "none — reads your local file directly, every run",
-        }
+        cache_ttls = SOURCE_CACHE_TTL
 
         for key, desc in SOURCE_DESCRIPTIONS.items():
             auth = SOURCE_REQUIRES.get(key, "none")
@@ -293,8 +236,12 @@ def cmd_list_actors() -> None:
 def cmd_update_bundles() -> None:
     """Refresh the ATT&CK bundle and clear stale caches."""
     import subprocess
-    import shutil
     from pathlib import Path
+
+    from theory._net import (
+        DownloadError, download_json,
+        validate_attack_bundle, validate_kev_catalog, validate_misp_galaxy,
+    )
 
     try:
         from rich.console import Console
@@ -321,15 +268,13 @@ def cmd_update_bundles() -> None:
     _print(f"  Source: {url}", "dim")
 
     try:
-        result = subprocess.run(
-            ["curl", "-L", "--progress-bar", "-o", str(bundle_path), url],
-            check=True,
+        written, _ = download_json(
+            url, bundle_path, validate=validate_attack_bundle, timeout=300,
         )
-        size_mb = bundle_path.stat().st_size / 1_048_576
-        _print(f"  ✓ ATT&CK bundle updated ({size_mb:.1f} MB)", "green")
-    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
+        _print(f"  ✓ ATT&CK bundle updated ({written / 1_048_576:.1f} MB)", "green")
+    except DownloadError as exc:
         _print(f"  ✗ ATT&CK bundle update failed: {exc}", "red")
-        _print("  Run manually: curl -L {url} -o .cache/enterprise-attack.json", "dim")
+        _print("  The existing bundle (if any) was left untouched.", "dim")
 
     # 2. Update Sigma repo (fetch + reset to handle force-pushes)
     sigma_repo = Path(".cache/sigma-repo")
@@ -362,23 +307,17 @@ def cmd_update_bundles() -> None:
     )
     _print("  Updating MISP Galaxy threat-actor cluster…", "dim")
     try:
-        misp_cache.parent.mkdir(parents=True, exist_ok=True)
-        r = subprocess.run(
-            ["curl", "-sL", "-o", str(misp_cache), misp_url],
-            capture_output=True, text=True, timeout=60,
+        written, parsed = download_json(
+            misp_url, misp_cache, validate=validate_misp_galaxy, timeout=120,
         )
-        if r.returncode == 0 and misp_cache.exists():
-            import json as _json
-            count = len(_json.loads(misp_cache.read_text()).get("values", []))
-            size_kb = misp_cache.stat().st_size / 1024
-            _print(
-                f"  ✓ MISP Galaxy updated — {count} actors ({size_kb:.0f} KB)",
-                "green",
-            )
-        else:
-            _print(f"  ✗ MISP Galaxy update failed: {r.stderr[:80]}", "red")
-    except Exception as exc:
-        _print(f"  ✗ MISP Galaxy update error: {exc}", "red")
+        _print(
+            f"  ✓ MISP Galaxy updated — {len(parsed.get('values', []))} actors "
+            f"({written / 1024:.0f} KB)",
+            "green",
+        )
+    except DownloadError as exc:
+        _print(f"  ✗ MISP Galaxy update failed: {exc}", "red")
+        _print("  The existing cluster cache was left untouched.", "dim")
 
     # 4. CISA KEV catalog
     kev_cache = Path(".cache/cisa_kev/known_exploited_vulnerabilities.json")
@@ -388,60 +327,22 @@ def cmd_update_bundles() -> None:
     )
     _print("  Updating CISA KEV catalog…", "dim")
     try:
-        kev_cache.parent.mkdir(parents=True, exist_ok=True)
-        r = subprocess.run(
-            ["curl", "-sL", "-o", str(kev_cache), kev_url],
-            capture_output=True, text=True, timeout=60,
+        _, kev_data = download_json(
+            kev_url, kev_cache, validate=validate_kev_catalog, timeout=120,
         )
-        if r.returncode == 0 and kev_cache.exists():
-            import json as _json
-            kev_data = _json.loads(kev_cache.read_text())
-            count = kev_data.get("count", 0)
-            version = kev_data.get("catalogVersion", "unknown")
-            _print(
-                f"  ✓ CISA KEV updated — v{version}, {count} CVEs",
-                "green",
-            )
-        else:
-            _print(f"  ✗ CISA KEV update failed: {r.stderr[:80]}", "red")
-    except Exception as exc:
-        _print(f"  ✗ CISA KEV update error: {exc}", "red")
+        _print(
+            f"  ✓ CISA KEV updated — v{kev_data.get('catalogVersion', 'unknown')}, "
+            f"{kev_data.get('count', len(kev_data.get('vulnerabilities', [])))} CVEs",
+            "green",
+        )
+    except DownloadError as exc:
+        _print(f"  ✗ CISA KEV update failed: {exc}", "red")
+        _print("  The existing KEV cache was left untouched.", "dim")
 
     # 5. ThreatFox cache — let 24hr TTL handle expiry naturally
     _print("  ✓ ThreatFox cache preserved (24hr TTL handles expiry automatically)", "dim")
 
-    # 6. Clone/update CyberMonitor APT Campaign Collection (historical context)
-    apt_path = Path(".cache/apt-campaigns")
-    apt_url  = "https://github.com/CyberMonitor/APT_CyberCriminal_Campagin_Collections.git"
-    if apt_path.exists():
-        _print("  Updating APT campaign collection (git pull)…", "dim")
-        try:
-            r = subprocess.run(
-                ["git", "-C", str(apt_path), "pull", "--depth=1"],
-                capture_output=True, text=True, timeout=120,
-            )
-            if r.returncode == 0:
-                _print("  ✓ APT campaign collection updated", "green")
-            else:
-                _print(f"  ✗ APT campaign update failed: {r.stderr[:80]}", "red")
-        except Exception as exc:
-            _print(f"  ✗ APT campaign update error: {exc}", "red")
-    else:
-        _print("  Cloning CyberMonitor APT Campaign Collection (one time, ~200MB)…", "dim")
-        try:
-            r = subprocess.run(
-                ["git", "clone", "--depth", "1", "--filter=blob:none",
-                 "--no-tags", apt_url, str(apt_path)],
-                capture_output=True, text=True, timeout=300,
-            )
-            if r.returncode == 0:
-                _print("  ✓ APT campaign collection cloned → .cache/apt-campaigns/", "green")
-            else:
-                _print(f"  ✗ APT campaign clone failed: {r.stderr[:80]}", "red")
-        except Exception as exc:
-            _print(f"  ✗ APT campaign clone error: {exc}", "red")
-
-    # 7. YARA Rules repo
+    # 6. YARA Rules repo
     yara_repo = Path(".cache/yara-rules-repo")
     if yara_repo.exists():
         _print("  Updating YARA rules…", "dim")
@@ -463,7 +364,7 @@ def cmd_update_bundles() -> None:
     else:
         _print("  ✓ YARA rules repo not yet cloned — will clone on next --sources yara run", "dim")
 
-    # 8. Leave Malpedia + OTX caches — per-family/per-pulse, expensive to rebuild
+    # 7. Leave Malpedia + OTX caches — per-family/per-pulse, expensive to rebuild
     _print("\n  Malpedia + OTX caches preserved (clear manually if needed).", "dim")
     _print("  Run THEORY normally to rebuild Sigma + ThreatFox caches.\n", "dim")
     _print("Update complete.\n", "bold green")
@@ -959,19 +860,39 @@ def cmd_find_connection(entity_a: tuple[str, str], entity_b: tuple[str, str]) ->
                 if not known:
                     _p(f"  {entity[0]} {entity[1]!r} has no prior data in the graph.", "dim")
             _p("  Cannot determine a connection — one or both entities are unrecorded.\n", "dim")
+        elif result.get("reason") == "shared_tooling_only":
+            # Previously reported as CONNECTED. Two actors both using Cobalt
+            # Strike is not evidence they are related, and saying so sent
+            # analysts chasing shared commodity infrastructure.
+            hubs = ", ".join(
+                f"{b['label']} (used by {b['actor_degree']} actors)"
+                for b in result.get("hub_bridges", [])
+            )
+            _p("  NOT CONNECTED — only shared tooling links these.", "yellow")
+            _p(f"  Shared:      {hubs}", "dim")
+            _p("  Widely-used tooling is not attribution evidence.\n", "dim")
         else:
             _p("  No known connection. Both entities are in the graph, but THEORY has "
                "never recorded a direct link or a shared relationship between them.\n", "yellow")
         return False
 
+    verdict = result.get("verdict", "")
     if result["path"] == "direct":
-        _p(f"  CONNECTED — direct link ({result['relation']})", "bold green")
+        if verdict == "WEAK":
+            _p(f"  WEAK LINK — direct edge, but family-level only ({result['relation']})", "yellow")
+            _p("  This ties the entity to tooling the actor uses, not to the actor.", "dim")
+        else:
+            _p(f"  CONNECTED — direct link ({result['relation']})", "bold green")
         _p(f"  Sources:     {', '.join(result['sources']) or '—'}")
         _p(f"  First seen:  {result['first_seen']}    Last seen: {result['last_seen']}\n")
     else:
         bridges = ", ".join(f"{b['type']}:{b['label']}" for b in result["bridges"])
         _p("  CONNECTED — via shared relationship", "bold green")
-        _p(f"  Bridge(s):   {bridges}\n")
+        _p(f"  Bridge(s):   {bridges}")
+        if result.get("hub_bridges"):
+            ignored = ", ".join(b["label"] for b in result["hub_bridges"])
+            _p(f"  (ignored shared tooling: {ignored})", "dim")
+        _p("")
     return True
 
 
@@ -1074,7 +995,22 @@ def _collect_and_map(actor: str, source_key: str) -> dict[str, Any] | None:
     return raw
 
 
-def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
+# source key -> (log label, profile count key, profile family-hits key)
+_ABUSECH_ENRICHERS: dict[str, tuple[str, str, str]] = {
+    "threatfox":      ("ThreatFox",      "threatfox_ioc_count",       "threatfox_family_hits"),
+    "malware_bazaar": ("MalwareBazaar",  "malware_bazaar_ioc_count",  "malware_bazaar_family_hits"),
+    "urlhaus":        ("URLhaus",        "urlhaus_ioc_count",         "urlhaus_family_hits"),
+}
+
+
+def _enrich_profile(
+    profile: dict[str, Any],
+    source_key: str,
+    on_progress=None,
+    **kwargs: Any,
+) -> dict[str, Any]:
+    from theory.attribution import FAMILY, split_families, tag_indicators
+
     enricher_path = ENRICHMENT_SOURCES.get(source_key)
     if not enricher_path:
         return profile
@@ -1089,7 +1025,7 @@ def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
             ]
             if not tids:
                 return profile
-            sigma_map = enricher.collect_for_techniques(tids)
+            sigma_map = enricher.collect_for_techniques(tids, on_progress=on_progress)
             for t in (profile.get("techniques") or []):
                 tid   = t.get("technique_id", "")
                 rules = sigma_map.get(tid, [])
@@ -1126,13 +1062,12 @@ def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
             # the user typed --actor APT28.
             try:
                 from collectors.cisa_advisories import ALIAS_TABLE
-                canonical = actor_name
-                # Find canonical key (profile may have stored the resolved name)
+                # Find the canonical key (the profile may already hold the
+                # resolved name) and take its full alias set.
                 table_aliases: list[str] = []
                 for canon, alias_set in ALIAS_TABLE.items():
                     if (canon.lower() == actor_name.lower()
                             or actor_name.lower() in alias_set):
-                        canonical  = canon
                         table_aliases = list(alias_set)
                         break
                 aliases = table_aliases or (profile.get("aliases", []) or [])
@@ -1167,108 +1102,55 @@ def _enrich_profile(profile: dict[str, Any], source_key: str) -> dict[str, Any]:
                     len(synthesized), provider.name,
                 )
 
-        elif source_key == "threatfox":
-            malware_names = [
-                m.get("name", "")
-                for m in (profile.get("malware") or [])
-                if m.get("name")
-            ]
-            if not malware_names:
-                return profile
-            abusech_key = os.environ.get("ABUSECH_API_KEY", "")
-            if abusech_key:
-                enricher_inst = _load_class(enricher_path)(api_key=abusech_key)
-            else:
-                enricher_inst = enricher
-            result = enricher_inst.collect_for_malware_families(
-                malware_names, profile.get("actor_name", "")
-            )
-            if not result:
-                return profile
-            existing = profile.get("indicators", [])
-            seen = {
-                f"{i.get('type','')}:{i.get('value','').lower()}"
-                for i in existing
-            }
-            new_iocs = []
-            for ioc in (result.get("indicators") or []):
-                key = f"{ioc.get('type','')}:{ioc.get('value','').lower()}"
-                if key not in seen:
-                    seen.add(key)
-                    new_iocs.append(ioc)
-            profile["indicators"] = existing + new_iocs
-            profile["threatfox_ioc_count"]   = len(new_iocs)
-            profile["threatfox_family_hits"]  = result.get("family_hits", {})
-            logger.info("ThreatFox: added %d IOCs", len(new_iocs))
+        elif source_key in _ABUSECH_ENRICHERS:
+            # ThreatFox, MalwareBazaar and URLhaus differ only in which
+            # endpoint they hit and what they call the result — the three
+            # blocks that used to live here were otherwise identical,
+            # including a dead inverted line in the MalwareBazaar copy.
+            label, count_key, hits_key = _ABUSECH_ENRICHERS[source_key]
 
-        elif source_key == "malware_bazaar":
-            malware_names = [
-                m.get("name", "")
-                for m in (profile.get("malware") or [])
-                if m.get("name")
-            ]
-            if not malware_names:
-                return profile
-            abusech_key = os.environ.get("ABUSECH_API_KEY", "")
-            enricher_inst = enricher.__class__(api_key=abusech_key) if not abusech_key else enricher
-            if abusech_key:
-                enricher_inst = _load_class(enricher_path)(api_key=abusech_key)
-            else:
-                enricher_inst = enricher
-            result = enricher_inst.collect_for_malware_families(
-                malware_names, profile.get("actor_name", "")
+            attributable, shared = split_families(
+                profile.get("malware") or [],
+                include_shared=bool(kwargs.get("include_shared_tooling")),
             )
-            if not result:
+            if shared:
+                logger.info(
+                    "%s: skipping %d shared tool(s) — %s. Their IOCs belong to "
+                    "the tool, not this actor. Use --include-shared-tooling to "
+                    "collect them anyway (they will be tagged shared_tool).",
+                    label, len(shared), ", ".join(sorted(shared)[:6]),
+                )
+            if not attributable:
                 return profile
-            existing = profile.get("indicators", [])
-            seen = {
-                f"{i.get('type','')}:{i.get('value','').lower()}"
-                for i in existing
-            }
-            new_iocs = []
-            for ioc in (result.get("indicators") or []):
-                key = f"{ioc.get('type','')}:{ioc.get('value','').lower()}"
-                if key not in seen:
-                    seen.add(key)
-                    new_iocs.append(ioc)
-            profile["indicators"] = existing + new_iocs
-            profile["malware_bazaar_ioc_count"]  = len(new_iocs)
-            profile["malware_bazaar_family_hits"] = result.get("family_hits", {})
-            logger.info("MalwareBazaar: added %d sample hashes", len(new_iocs))
 
-        elif source_key == "urlhaus":
-            malware_names = [
-                m.get("name", "")
-                for m in (profile.get("malware") or [])
-                if m.get("name")
-            ]
-            if not malware_names:
-                return profile
             abusech_key = os.environ.get("ABUSECH_API_KEY", "")
-            if abusech_key:
-                enricher_inst = _load_class(enricher_path)(api_key=abusech_key)
-            else:
-                enricher_inst = enricher
+            enricher_inst = (
+                _load_class(enricher_path)(api_key=abusech_key)
+                if abusech_key else enricher
+            )
             result = enricher_inst.collect_for_malware_families(
-                malware_names, profile.get("actor_name", "")
+                attributable, profile.get("actor_name", ""),
             )
             if not result:
                 return profile
+
             existing = profile.get("indicators", [])
             seen = {
-                f"{i.get('type','')}:{i.get('value','').lower()}"
+                f"{i.get('type','')}:{(i.get('value') or '').lower()}"
                 for i in existing
             }
             new_iocs = []
-            for ioc in (result.get("indicators") or []):
-                key = f"{ioc.get('type','')}:{ioc.get('value','').lower()}"
+            for ioc in tag_indicators(result.get("indicators") or [], FAMILY):
+                key = f"{ioc.get('type','')}:{(ioc.get('value') or '').lower()}"
                 if key not in seen:
                     seen.add(key)
                     new_iocs.append(ioc)
+
             profile["indicators"] = existing + new_iocs
-            profile["urlhaus_ioc_count"]  = len(new_iocs)
-            profile["urlhaus_family_hits"] = result.get("family_hits", {})
-            logger.info("URLhaus: added %d distribution URLs", len(new_iocs))
+            profile[count_key] = len(new_iocs)
+            profile[hits_key]  = result.get("family_hits", {})
+            logger.info("%s: added %d indicators (family-level attribution)",
+                        label, len(new_iocs))
 
         elif source_key == "yara":
             malware_names = [
@@ -1469,71 +1351,15 @@ def run(
     from processors.deduplicator import deduplicate
     profile = deduplicate(normalised)
 
-    # Remap normalizer field names → reporter field names
-    if not profile.get("origin") and profile.get("suspected_origin"):
-        profile["origin"] = profile["suspected_origin"]
-    if not profile.get("motivations"):
-        raw_mot = profile.get("motivation")
-        if raw_mot:
-            profile["motivations"] = [raw_mot] if isinstance(raw_mot, str) else list(raw_mot)
-    if not profile.get("sectors") and profile.get("target_sectors"):
-        profile["sectors"] = profile["target_sectors"]
-
-    # Restore technique metadata stripped by normalizer
-    _technique_meta: dict[str, dict] = {}
-    for raw in raw_records:
-        for t in (raw.get("techniques") or []):
-            tid = (t.get("technique_id") or "").strip().upper()
-            if tid and tid not in _technique_meta:
-                _technique_meta[tid] = {
-                    "technique_name": t.get("technique_name", ""),
-                    "detection":      t.get("detection", ""),
-                    "tactic":         t.get("tactic", ""),
-                }
-    for t in (profile.get("techniques") or []):
-        tid  = (t.get("technique_id") or "").upper()
-        meta = _technique_meta.get(tid, {})
-        if not t.get("name") and meta.get("technique_name"):
-            t["name"] = meta["technique_name"]
-        if not t.get("detection_recs") and meta.get("detection"):
-            t["detection_recs"] = [meta["detection"]]
-        t["technique_name"] = t.get("name") or meta.get("technique_name", "")
-        t["detection"]      = (t.get("detection_recs") or [meta.get("detection", "")])[0]
-        if not t.get("tactic") and meta.get("tactic"):
-            t["tactic"] = meta["tactic"]
-
-    # Pass through CISA/OTX/ThreatFox enrichments
-    all_cves: list = []; all_advisories: list = []; all_sectors: list = []; all_iocs: list = []
-    seen_cves: set[str] = set(); seen_adv: set[str] = set()
-    seen_sect: set[str] = set(); seen_iocs: set[str] = set()
-    for raw in raw_records:
-        for cve in (raw.get("cves") or []):
-            cid = cve.get("cve_id", "")
-            if cid and cid not in seen_cves:
-                seen_cves.add(cid); all_cves.append(cve)
-        for adv in (raw.get("advisories") or []):
-            key = adv.get("url") or adv.get("title", "")
-            if key and key not in seen_adv:
-                seen_adv.add(key); all_advisories.append(adv)
-        for s in (raw.get("sectors") or []):
-            if s and s.lower() not in seen_sect:
-                seen_sect.add(s.lower()); all_sectors.append(s)
-        for ioc in (raw.get("indicators") or []):
-            key = f"{ioc.get('type','')}:{ioc.get('value','').lower()}"
-            if key not in seen_iocs:
-                seen_iocs.add(key); all_iocs.append(ioc)
-
-    if all_cves:        profile["cves"]       = all_cves
-    if all_advisories:  profile["advisories"]  = all_advisories
-    if all_sectors and not profile.get("sectors"): profile["sectors"] = all_sectors
-    if all_iocs:        profile["indicators"]  = all_iocs
-
     # ── CISA KEV cross-reference ──────────────────────────────────────
     # If cisa_kev was in the sources list, enrich all CVEs (regardless of
     # which source reported them) with confirmed-exploited flags,
     # ransomware attribution, vendor/product metadata, and remediation
     # dates from the KEV catalog.
-    if "cisa_kev" in collect_sources and profile.get("cves"):
+    # Gate on the user's requested sources, not collect_sources: KEV is an
+    # enricher (it has no actor dimension of its own), so it never appears
+    # in the collection list.
+    if "cisa_kev" in sources and profile.get("cves"):
         try:
             from collectors.cisa_kev import enrich_profile_with_kev
             profile = enrich_profile_with_kev(profile)
@@ -1550,7 +1376,7 @@ def run(
     # If nvd was in the sources list, enrich all CVEs (regardless of
     # which source reported them) with CVSS scores/vectors, CWE
     # classification, and reference links from the NVD API.
-    if "nvd" in collect_sources and profile.get("cves"):
+    if "nvd" in sources and profile.get("cves"):
         try:
             from collectors.nvd import enrich_profile_with_nvd
             profile = enrich_profile_with_nvd(profile)
@@ -1562,61 +1388,26 @@ def run(
         except Exception as exc:
             logger.warning("NVD enrichment failed: %s", exc)
 
-    # Malpedia malware enrichment
-    malpedia_meta: dict[str, dict] = {}
-    for raw in raw_records:
-        if raw.get("source_id") == "malpedia":
-            for m in (raw.get("malware") or []):
-                name = (m.get("name") or "").lower()
-                if name: malpedia_meta[name] = m
-    for m in (profile.get("malware") or []):
-        name = (m.get("name") or "").lower()
-        meta = malpedia_meta.get(name, {})
-        if meta.get("aliases")    and not m.get("aliases"):    m["aliases"]    = meta["aliases"]
-        if meta.get("yara_count") and not m.get("yara_count"): m["yara_count"] = meta["yara_count"]
-        if meta.get("description") and not m.get("description"): m["description"] = meta["description"]
-
-    # Metadata
-    if not profile.get("origin") or not profile.get("motivations"):
-        for raw in raw_records:
-            if not profile.get("origin") and raw.get("origin"):
-                profile["origin"] = raw["origin"]
-            if not profile.get("motivations") and raw.get("motivations"):
-                profile["motivations"] = raw["motivations"]
-
-    profile["sources_cited"] = list({r.get("source_id", "unknown") for r in normalised})
-    for r in raw_records:
-        if r.get("mitre_id") or r.get("mitre_group_id"):
-            profile["mitre_group_id"] = r.get("mitre_id") or r.get("mitre_group_id")
-            break
+    # Deterministic source list. Previously built from a set(), so the
+    # order of sources_cited changed between runs on identical input.
+    profile["sources_cited"] = sorted({r.get("source_id", "unknown") for r in normalised})
 
     # ── 4. Enrichment (Sigma + ThreatFox) ────────────────────────────
     for source_key in enrich_sources:
         if source_key == "sigma" and progress:
-            tids = [t.get("technique_id","") for t in (profile.get("techniques") or []) if t.get("technique_id")]
+            tids = [t.get("technique_id", "") for t in (profile.get("techniques") or []) if t.get("technique_id")]
             with progress:
                 task = progress.add_task(
                     f"Fetching Sigma rules for [bold]{len(tids)} techniques[/]…",
                     total=len(tids),
                 )
-                # Monkey-patch the sigma collector to update progress
-                _orig_fetch = None
-                try:
-                    from collectors import sigma_rules as _sm
-                    _orig_fetch = _sm.SigmaCollector._find_rules_for_technique
-                    def _patched(self, tid):
-                        result = _orig_fetch(self, tid)
-                        progress.advance(task)
-                        return result
-                    _sm.SigmaCollector._find_rules_for_technique = _patched
-                    profile = _enrich_profile(profile, source_key)
-                finally:
-                    if _orig_fetch:
-                        _sm.SigmaCollector._fetch_rules_for_technique = _orig_fetch
-        elif source_key == "vendor":
-            profile = _enrich_profile(profile, source_key)
+                profile = _enrich_profile(
+                    profile, source_key,
+                    on_progress=lambda: progress.advance(task),
+                    **kwargs,
+                )
         else:
-            profile = _enrich_profile(profile, source_key)
+            profile = _enrich_profile(profile, source_key, **kwargs)
 
     # ── 5. LLM Actor Overview ────────────────────────────────────────
     # Generate a synthesized actor synopsis using the full profile.
@@ -1765,6 +1556,59 @@ def _output_json(profile: dict[str, Any], save: bool, quiet: bool = False) -> No
         if not quiet:
             print(f"\n[theory] JSON saved → {path}", file=sys.stderr)
 
+
+
+def _output_exec(profile: dict[str, Any], save: bool, sector: str = "") -> None:
+    """Non-technical executive summary (BLUF) for `--output exec`.
+
+    This was referenced by run() but never defined — `--output exec` raised
+    NameError despite being an advertised option in --help, the README, and
+    the web UI's format list. The synthesizer method it calls has existed
+    all along; only the CLI glue was missing.
+    """
+    import re as _re
+    from theory.paths import dossier_dir
+
+    from collectors.intelligence_synthesizer import (
+        IntelligenceSynthesizer, load_provider,
+    )
+
+    provider = load_provider()
+    if not provider or not provider.available:
+        print(
+            "\n[theory] --output exec needs an LLM provider to write the summary.\n"
+            "[theory] Set ANTHROPIC_API_KEY or OPENAI_API_KEY in .env, or run Ollama locally.\n",
+            file=sys.stderr,
+        )
+        return
+
+    clean = _sanitize_profile(profile)
+    summary = IntelligenceSynthesizer(provider).synthesize_executive_summary(
+        profile      = clean,
+        queried_name = clean.get("actor_name", ""),
+        sector       = sector,
+    )
+    if not summary:
+        print("[theory] Executive summary generation returned nothing.", file=sys.stderr)
+        return
+
+    try:
+        print(summary)
+    except BrokenPipeError:
+        pass
+
+    if save:
+        slug = _re.sub(r"[^a-z0-9]", "_", (clean.get("actor_name") or "unknown").lower())
+        path = dossier_dir() / f"{slug}_exec.md"
+        header = f"# Executive Summary — {clean.get('actor_name', 'Unknown Actor')}\n"
+        if sector:
+            header += f"> Sector context: {sector}\n"
+        header += (
+            f"> Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}"
+            f" · synthesized by {provider.name}\n\n"
+        )
+        path.write_text(header + summary + "\n", encoding="utf-8")
+        print(f"\n[theory] Executive summary saved → {path}", file=sys.stderr)
 
 
 def _output_navigator(profile: dict[str, Any], save: bool) -> None:
@@ -2258,6 +2102,36 @@ def _build_parser() -> argparse.ArgumentParser:
 
     # ── File saving ────────────────────────────────────────────────────
     p.add_argument(
+        "--llm",
+        choices=["off", "local", "cloud"],
+        default=None,
+        metavar="POLICY",
+        help=(
+            "Where LLM synthesis may run. local (default) = on-machine models "
+            "only (Ollama). cloud = allow hosted providers, which sends the "
+            "actor profile to them. off = no synthesis. Overrides THEORY_LLM."
+        ),
+    )
+    p.add_argument(
+        "--include-shared-tooling",
+        action="store_true",
+        help=(
+            "Also collect IOCs for widely-shared tooling (Cobalt Strike, Mimikatz, "
+            "PsExec...). Off by default: those indicators belong to the tool, not "
+            "to this actor, and hundreds of unrelated groups use them. Anything "
+            "collected this way is tagged shared_tool in every output."
+        ),
+    )
+    p.add_argument(
+        "--allow-unknown",
+        action="store_true",
+        help=(
+            "Run even when the actor is not in THEORY's table. Free-text sources "
+            "are searched for the literal name and the dossier is labelled "
+            "UNRESOLVED. Use for a brand-new actor no catalog has picked up yet."
+        ),
+    )
+    p.add_argument(
         "--no-save",
         action="store_true",
         help="Print output to terminal only — do not write files to output/dossiers/.",
@@ -2472,6 +2346,11 @@ def main(argv: list[str] | None = None) -> None:
               "for a standalone graph lookup). Try: theory --actor APT28\n")
         sys.exit(1)
 
+    # --llm is an override of the THEORY_LLM policy read by
+    # collectors.intelligence_synthesizer.egress_policy().
+    if args.llm:
+        os.environ["THEORY_LLM"] = args.llm
+
     sources = [s.strip().lower() for s in args.sources.split(",") if s.strip()]
 
     # Validate sources
@@ -2481,6 +2360,32 @@ def main(argv: list[str] | None = None) -> None:
         print(f"[theory] Available: {', '.join(SUPPORTED_SOURCES.keys())}")
         print("[theory] Run --list-sources for details.\n")
         sys.exit(1)
+
+    # ── Resolve the actor ONCE, before any collector runs ──────────────
+    # Previously each source guessed independently, and several would
+    # happily return a profile for a name THEORY had never heard of —
+    # `--actor a` produced a saved APT1 dossier. Failing here, with
+    # suggestions, is the honest answer.
+    if not args.allow_unknown:
+        from theory.actors import AmbiguousActor, ActorNotFound, registry
+
+        try:
+            _identity = registry().resolve(args.actor)
+        except AmbiguousActor as exc:
+            print(f"\n[theory] {args.actor!r} matches several actors: "
+                  f"{', '.join(exc.candidates)}.")
+            print("[theory] Use the exact name you mean.\n")
+            sys.exit(1)
+        except ActorNotFound as exc:
+            print(f"\n[theory] Unknown actor: {args.actor!r}")
+            if exc.suggestions:
+                print(f"[theory] Did you mean: {', '.join(exc.suggestions)}?")
+            print("[theory] Run --list-actors to see known actors, or pass "
+                  "--allow-unknown to search free-text sources by this literal name.\n")
+            sys.exit(1)
+        else:
+            if _identity.canonical.lower() != args.actor.strip().lower():
+                logger.info("Resolved %r -> %s", args.actor, _identity.canonical)
 
     # Hint: let users know OTX is available if not in their sources
     if "otx" not in sources:
@@ -2516,6 +2421,7 @@ def main(argv: list[str] | None = None) -> None:
         detection_path   = args.detection_path,
         playbook_format  = args.playbook_format,
         no_graph         = args.no_graph,
+        include_shared_tooling = args.include_shared_tooling,
     )
 
     # ── Multi-flag cross-correlative query ─────────────────────────────

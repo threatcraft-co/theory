@@ -41,12 +41,10 @@ import json
 import logging
 import os
 import re
-import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from pathlib import Path
-from typing import Any
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
@@ -56,9 +54,13 @@ from urllib.error import HTTPError, URLError
 from defusedxml import ElementTree as ET
 from defusedxml.common import DefusedXmlException
 
+from theory.paths import cache_path
+
+from theory.paths import config_file
+
 logger = logging.getLogger(__name__)
 
-CACHE_DIR          = Path(".cache/vendor_intel")
+CACHE_DIR          = cache_path("vendor_intel")
 CACHE_TTL_HRS      = 24    # raised from 6 — feeds don't change that fast
 TIMEOUT            = 15    # per-feed connect+read timeout (seconds)
 MAX_ARTICLES       = 8     # max articles returned per feed per actor
@@ -74,10 +76,9 @@ SUMMARY_CACHE_CHARS = 2000
 SUMMARY_SCORE_CHARS = 2000   # score against same full content
 
 # Path to the CyberMonitor APT campaign collection (cloned by --update-bundles)
-APT_CAMPAIGNS_PATH = Path(".cache/apt-campaigns")
 
 # --- Sitemap collector constants ---
-SITEMAP_CACHE_DIR        = Path(".cache/vendor_intel/sitemap_articles")
+SITEMAP_CACHE_DIR        = cache_path("vendor_intel/sitemap_articles")
 SITEMAP_ARTICLE_TTL_DAYS = 7          # article HTML rarely changes
 SITEMAP_MAX_URLS_PER     = 25         # cap URLs fetched per sitemap
 SITEMAP_ARTICLE_CHARS    = 3500       # per-article HTML content cap
@@ -94,7 +95,7 @@ class VendorIntelCollector:
     """
 
     def __init__(self, feeds_path: Path | None = None):
-        self._feeds_path = feeds_path or Path("config/feeds.yaml")
+        self._feeds_path = feeds_path or config_file("feeds.yaml")
         self._feeds: list[dict] = []
         self._load_feeds()
 
@@ -190,12 +191,6 @@ class VendorIntelCollector:
             "VendorIntel: %d relevant articles from %d feeds for %r",
             len(unique), len(enabled_feeds), actor_name,
         )
-
-        # Augment with historical APT campaign context (local, no rate limits)
-        apt_articles = self._load_apt_campaign_context(actor_name, aliases)
-        for art in apt_articles:
-            art.setdefault("relevance", 50)
-        unique = unique + apt_articles
 
         return unique
 
@@ -330,8 +325,18 @@ class VendorIntelCollector:
         title_lower = title.lower()
         body_lower  = body.lower()[:SUMMARY_SCORE_CHARS]
 
-        title_hits = sum(1 for t in search_terms if t in title_lower)
-        body_hits  = sum(body_lower.count(t) for t in search_terms)
+        # Word-boundary counting, not substring counting. With substrings,
+        # an actor whose alias set contains "ups" or "lead" scored hits on
+        # the words "groups" and "leading" in any security article, which
+        # is how unrelated reports ended up summarised as actor intel.
+        title_hits = sum(
+            1 for t in search_terms
+            if re.search(rf"(?<![a-z0-9]){re.escape(t)}(?![a-z0-9])", title_lower)
+        )
+        body_hits = sum(
+            len(re.findall(rf"(?<![a-z0-9]){re.escape(t)}(?![a-z0-9])", body_lower))
+            for t in search_terms
+        )
 
         score = 0
 
@@ -372,10 +377,12 @@ class VendorIntelCollector:
         """
         hits    = {n: c for n, c in hit_counts.items() if c > 0}
         zeroes  = {n: c for n, c in hit_counts.items() if c == 0}
-        errored = {n: c for n, c in hit_counts.items() if c < 0}
+        # A negative hit count marks a feed that raised. Counted here so
+        # the summary distinguishes "feed returned nothing" from "feed broke".
+        errored_counts = {n: c for n, c in hit_counts.items() if c < 0}
 
         total_feeds   = len(hit_counts)
-        total_errors  = len(errors)
+        total_errors  = len(errors) or len(errored_counts)
         total_hits    = sum(hits.values())
 
         logger.info(
@@ -397,61 +404,6 @@ class VendorIntelCollector:
     # ------------------------------------------------------------------
     # APT Campaign Collection (local, offline)
     # ------------------------------------------------------------------
-
-    def _load_apt_campaign_context(
-        self, actor_name: str, aliases: list[str]
-    ) -> list[dict]:
-        """
-        Search the local CyberMonitor APT Campaign Collection for reports
-        matching this actor. Returns article-like dicts compatible with the
-        vendor intel pipeline.
-        """
-        if not APT_CAMPAIGNS_PATH.exists():
-            logger.debug("APT campaign collection not present — run --update-bundles to clone")
-            return []
-
-        results: list[dict] = []
-        search_terms = [actor_name.lower()] + [a.lower() for a in aliases if len(a) > 4]
-
-        try:
-            for entry in APT_CAMPAIGNS_PATH.iterdir():
-                if not entry.is_dir():
-                    continue
-                folder_lower = entry.name.lower()
-                if not any(term in folder_lower for term in search_terms):
-                    continue
-
-                for report_file in sorted(entry.rglob("*.md"))[:10]:
-                    try:
-                        text  = report_file.read_text(encoding="utf-8", errors="replace")
-                        title = report_file.stem.replace("_", " ").replace("-", " ")
-                        for line in text.splitlines()[:5]:
-                            if line.startswith("#"):
-                                title = line.lstrip("#").strip()
-                                break
-                        summary = text[:800].strip()
-                        results.append({
-                            "title":   title,
-                            "url": (
-                                "https://github.com/CyberMonitor/"
-                                "APT_CyberCriminal_Campagin_Collections"
-                                f"/blob/master/{entry.name}/{report_file.name}"
-                            ),
-                            "source":  "CyberMonitor APT Collection",
-                            "content": summary,
-                            "date":    "",
-                        })
-                    except OSError:
-                        continue
-        except Exception as exc:
-            logger.debug("APT campaign collection search error: %s", exc)
-
-        if results:
-            logger.info(
-                "APT campaign collection: %d historical reports for %r",
-                len(results), actor_name,
-            )
-        return results
 
     # ------------------------------------------------------------------
     # Cache
@@ -648,12 +600,29 @@ class VendorIntelCollector:
 
     @staticmethod
     def _build_search_terms(actor_name: str, aliases: list[str]) -> set[str]:
-        """Build lowercase search term set from actor name + aliases."""
-        terms: set[str] = {actor_name.lower()}
-        for alias in aliases:
-            clean = alias.strip().lower()
-            # Skip very short or ID-style aliases (G0007, TA422, etc.)
-            if len(clean) > 4 and not re.match(r"^[gtu][a-z]?\d+$", clean):
+        """Search terms for relevance scoring.
+
+        Prefers the curated recall set from theory.actors, which already
+        excludes stop-words and short ambiguous aliases. Falls back to a
+        filtered version of the passed-in aliases when the actor is not in
+        the registry.
+
+        Note the previous version added `actor_name` unconditionally,
+        bypassing its own length filter — so a two-letter actor name went
+        straight into substring scoring.
+        """
+        from theory.actors import STOP_ALIASES, is_id_alias, normalize_name, registry
+
+        identity = registry().get(actor_name)
+        if identity is not None and identity.recall_terms:
+            return set(identity.recall_terms)
+
+        terms: set[str] = set()
+        for alias in [actor_name, *aliases]:
+            clean = normalize_name(alias)
+            if not clean or clean in STOP_ALIASES:
+                continue
+            if len(clean) >= 4 or is_id_alias(clean):
                 terms.add(clean)
         return terms
 

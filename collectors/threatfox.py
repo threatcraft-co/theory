@@ -36,18 +36,19 @@ import os
 import re
 import time
 from datetime import datetime, timezone, timedelta
-from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
 from collectors.base import BaseCollector
 
+from theory.paths import cache_path
+
 logger = logging.getLogger(__name__)
 
 SOURCE_ID           = "threatfox"
 API_URL             = "https://threatfox-api.abuse.ch/api/v1/"
-CACHE_DIR           = Path(".cache/threatfox")
+CACHE_DIR           = cache_path("threatfox")
 CACHE_TTL_HOURS     = 24
 TIMEOUT             = 15
 RETRY_MAX           = 2

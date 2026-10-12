@@ -7,6 +7,108 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.0] — unreleased
+
+### Fixed — actor identity
+
+Actor resolution searched a MISP-derived alias set and returned the first
+ATT&CK group that intersected it. MISP synonym lists merge groups ATT&CK
+tracks separately, so eight well-known actors resolved to the wrong group,
+and every technique, malware family, detection-coverage figure and graph
+edge downstream inherited the error silently:
+
+| `--actor` | Returned | Correct |
+|---|---|---|
+| `Lazarus Group` | APT38 (G0082) | Lazarus Group (G0032) |
+| `APT41` | APT17 (G0025) | APT41 (G0096) |
+| `Winnti Group` | APT17 (G0025) | Winnti Group (G0044) |
+| `APT35` / `Charming Kitten` | CURIUM (G1012) | Magic Hound (G0059) |
+| `Carbanak` | FIN7 (G0046) | Carbanak (G0008) |
+| `APT30` | Naikon (G0019) | APT30 (G0013) |
+| `Moonstone Sleet` | APT38 (G0082) | Moonstone Sleet (G1036) |
+
+Resolution is now exact-match against curated identity names with a pinned
+ATT&CK id, and text matching uses word boundaries over a filtered alias
+set. `--actor a`, `--actor APT123` and `--actor Spider` previously each
+produced a confident, saved dossier (APT1, APT1, WOLF SPIDER); they now
+exit with suggestions. `--allow-unknown` covers genuinely new actors.
+
+### Fixed — attribution
+
+Indicators for shared tooling (Cobalt Strike, Mimikatz, PsExec) were
+collected and reported as the actor's own infrastructure, exported to
+STIX as `indicator --indicates--> intrusion-set`, and stored as actor
+edges in the graph — so the graph answered "is APT28 connected to this
+IP?" with CONNECTED when the only link was a tool both groups use.
+
+Indicators now carry an attribution level (actor / family / shared_tool).
+Shared tooling is excluded from family IOC enrichment by default
+(`--include-shared-tooling` to opt in), STIX points family-level evidence
+at the malware object rather than the actor, the SIEM CSV gains an
+`attribution` column, and connection queries return a verdict that
+distinguishes real links from shared infrastructure.
+
+### Fixed — pipeline
+
+- The actor description never reached any reporter, and collector
+  indicators arrived with no provenance, so corroboration between sources
+  was invisible and confidence was never assigned to them.
+- `--output exec` raised `NameError` — a documented flag that never worked.
+- STIX output did not validate: string confidences raised, IPv6 and
+  `ip:port` values were emitted as `ipv4-addr`, the bundle carried a
+  `spec_version` that STIX 2.1 forbids, and THEORY's identity id was not
+  a valid UUID.
+- `--update-bundles` used `curl` without `--fail`, so an HTTP error wrote
+  the error body over the ATT&CK bundle and MITRE silently vanished from
+  every dossier. Downloads are now validated and written atomically.
+- Scalar fields (origin, first_seen, description) resolved by `--sources`
+  order; they now resolve by source authority.
+- HIGH confidence required two source ids, which counted ATT&CK and its
+  MISP Galaxy import as mutual corroboration. It now requires two
+  independent evidence families.
+- Sector inference read "banking trojan" as Financial Services, "health
+  check" as Healthcare and "watering hole" as Water.
+
+### Fixed — security
+
+- `theory serve` was reachable from any page the user visited: no Host
+  pinning (DNS rebinding gave same-origin access to the settings API), no
+  token, and no content-type check on mutations. A newline in a setting
+  value could append arbitrary `KEY=VALUE` lines to `.env`.
+- The path guard was a string-prefix test that accepted sibling
+  directories, and one history endpoint had no guard at all.
+- HTML reports rendered `javascript:` URLs from vendor feeds as clickable
+  links, and were served same-origin with the settings API.
+- LLM synthesis ran against a hosted provider whenever a key was present,
+  sending actor profiles — including material from the `personal` source
+  — off the machine on every run. Now `THEORY_LLM` / `--llm`, defaulting
+  to local models only.
+- The CISA advisory feed was parsed with the stdlib XML parser, making
+  SECURITY.md's hardening claim untrue.
+
+### Changed
+
+- Config ships inside the package: a built wheel previously contained no
+  `config/*.yaml` at all, so an installed THEORY silently lost alias
+  resolution. All paths resolve through `theory/paths.py`.
+- One source registry (`theory/sources.py`) replaces eight hand-maintained
+  tables; five sources were missing from the web UI's copy.
+- The web UI's History page listed only sub-directories and was therefore
+  always empty; reporters write flat files.
+- LLM egress defaults to local. Set `THEORY_LLM=cloud` to restore the
+  previous behaviour.
+
+### Removed
+
+- CyberMonitor APT campaign collection: a ~200MB clone whose matcher could
+  never succeed against that repository's layout.
+- The OTX `/adversaries/` endpoint and its slug table: the endpoint does
+  not exist, so every run paid for a failing request.
+- Unused runtime dependencies (jinja2, click, watchdog, schedule,
+  feedparser) and the `internet-scan` extra, which declared SDKs for
+  collectors that were never written.
+
+
 ## [2.0.0] — 2026-10-02
 
 v2.0 turns THEORY from a stateless report generator into a tool with memory: every

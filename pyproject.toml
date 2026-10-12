@@ -16,7 +16,7 @@ keywords = [
     "osint", "stix", "sigma", "threat-hunting", "apt"
 ]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 4 - Beta",
     "Environment :: Console",
     "Intended Audience :: Information Technology",
     "Intended Audience :: Science/Research",
@@ -33,18 +33,21 @@ dependencies = [
     "rich>=13.0",
     "requests>=2.31",
     "python-dotenv>=1.0",
-    "stix2>=3.0",
     "pyyaml>=6.0",
-    "feedparser>=6.0",
     "python-dateutil>=2.8",
-    "jinja2>=3.1",
-    "click>=8.1",
-    "watchdog>=3.0",
-    "schedule>=1.2",
     # Hardened XML parser — refuses entity expansion (billion laughs)
-    # and external entity references (XXE) on attacker-influenceable RSS.
+    # and external entity references (XXE) on attacker-influenceable RSS
+    # and on the CISA advisory feed.
     "defusedxml>=0.7.1",
 ]
+# Removed in v2.0 — none of these were imported anywhere in the codebase:
+#   jinja2     reports are built with f-strings, not templates
+#   click      the CLI is argparse
+#   watchdog   nothing watches the filesystem (--watch is a sleep loop)
+#   schedule   scheduling is documented via cron/launchd, not in-process
+#   feedparser RSS/Atom parsing is hand-rolled on defusedxml
+#   stix2      bundles are built as plain dicts; stix2 is now a dev
+#              dependency, used to validate that output in tests
 
 [project.optional-dependencies]
 dev = [
@@ -53,24 +56,23 @@ dev = [
     "ruff>=0.4",
     # Supply-chain advisory scanning in CI
     "pip-audit>=2.7",
+    # Validates generated bundles against the reference implementation
+    # (tests/test_stix_reporter.py). Not needed at runtime.
+    "stix2>=3.0",
+    # Required by starlette's TestClient for the server security suite
+    "httpx2",
 ]
 serve = [
     "fastapi>=0.115.0",
     "uvicorn[standard]>=0.30.0",
     "sse-starlette>=2.0.0",
 ]
-internet-scan = [
-    # The PAID Shodan and Censys APIs — not implemented, not on a committed
-    # roadmap. Do not confuse with the `shodan_internetdb` source (v2.0),
-    # which is a different, free, keyless Shodan service (InternetDB) that
-    # needs no extra dependency and nothing from this group. Kept as an
-    # installable extra (not a core dependency) since basic use of either
-    # paid service sits behind a tier, unlike everything else in THEORY's
-    # default install. If implemented, VirusTotal would belong here too;
-    # v2.0 added urlscan.io instead, which covers similar ground keyless.
-    "shodan>=1.28",
-    "censys>=2.2",
-]
+# NOTE: the former [internet-scan] extra (shodan, censys) is gone. It
+# declared dependencies for collectors that do not exist and are not on a
+# committed roadmap, which meant `pip install -e ".[internet-scan]"`
+# installed two SDKs that nothing imports. The free, keyless
+# shodan_internetdb collector never needed them. If the paid APIs are ever
+# implemented, the extra comes back with the code.
 
 [project.scripts]
 theory = "theory:main"
@@ -92,24 +94,34 @@ include = [
 ]
 
 [tool.setuptools.package-data]
-"*" = ["config/*.yaml"]
+# config/ is not a package, so a "config/*.yaml" glob here matched nothing
+# and the wheel shipped with no alias table at all. The YAML now lives in
+# theory/data/ (a real package directory) and is resolved via theory.paths.
+theory = ["data/*.yaml"]
 server = ["static/*.html", "static/*.css", "static/*.js"]
 
 [tool.ruff]
 line-length = 120
 
 [tool.ruff.lint]
-# Ignore list mirrors the one CI applies via --ignore so local `ruff check .`
-# matches CI exactly.
+# This is the single source of truth for lint config — CI runs a bare
+# `ruff check .` so local and CI results cannot drift apart.
+#
+# F401/F821/F841 were previously suppressed repo-wide. They are correctness
+# rules, not style rules, and suppressing them hid real defects: F821 was
+# sitting on a call to an undefined _output_exec, which is why `--output
+# exec` raised NameError for every user who tried a documented flag.
+# Anything genuinely intentional gets a targeted `# noqa` instead.
+#
+# select is pinned explicitly rather than left to ruff's defaults, so that
+# upgrading ruff can't silently enlarge the rule set under CI.
+select = ["E", "F", "W"]
 ignore = [
     "E501",                          # line too long
     "E402",                          # module-level import not at top
     "W291", "W292", "W293",          # trailing whitespace (ASCII banner lines)
     "E701", "E702",                  # multiple statements on one line
     "E731",                          # lambda assignment (sort-key idiom)
-    "F401",                          # imported but unused (conditional imports)
     "F541",                          # f-string without placeholders
-    "F841",                          # local variable assigned but never used
     "F811",                          # redefinition of unused name (proxy pattern)
-    "F821",                          # undefined name (dynamic function insertion in _cli.py)
 ]

@@ -35,7 +35,11 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-OUTPUT_DIR = Path("output/dossiers")
+# Resolved at call time via theory.paths so THEORY_HOME and
+# installed-package use work from any working directory.
+def _output_dir() -> Path:
+    from theory.paths import dossier_dir
+    return dossier_dir()
 
 # Freshness thresholds (days) — must match dossier.py
 _FRESH_DAYS  = 30
@@ -111,10 +115,10 @@ class PlaybookReporter:
         llm_provider:    Any = None,
     ) -> Path:
         """Build and save the playbook. Returns the saved path."""
-        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        _output_dir()
         slug = _canonical_slug(profile)
         ext  = "_jira.txt" if playbook_format == "jira" else "_playbook.md"
-        path = OUTPUT_DIR / f"{slug}{ext}"
+        path = _output_dir() / f"{slug}{ext}"
 
         content = self.build(profile, sector, playbook_format, llm_provider)
         path.write_text(content, encoding="utf-8")
@@ -125,7 +129,6 @@ class PlaybookReporter:
         """Print a compact terminal summary after saving."""
         try:
             from rich.console import Console
-            from rich.panel   import Panel
             console = Console(stderr=True)
         except ImportError:
             print(f"[theory] Playbook saved → {path}")
@@ -566,7 +569,6 @@ def _partition_iocs(
     indicators: list[dict],
 ) -> tuple[list[dict], list[dict]]:
     """Split indicators into FRESH and AGING buckets. Exclude STALE and UNKNOWN."""
-    from datetime import timedelta
     now = datetime.now(timezone.utc)
     fresh: list[dict] = []
     aging: list[dict] = []

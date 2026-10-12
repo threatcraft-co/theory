@@ -21,17 +21,18 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
-from urllib.error import HTTPError, URLError
+from urllib.error import HTTPError
 from urllib.parse import quote
 
 from collectors.base import BaseCollector
-from collectors.cisa_advisories import resolve_canonical, all_aliases_for
+
+from theory.paths import cache_path
 
 logger = logging.getLogger(__name__)
 
 SOURCE_ID       = "alienvault_otx"
 BASE_URL        = "https://otx.alienvault.com"
-CACHE_DIR       = Path(".cache/otx")
+CACHE_DIR       = cache_path("otx")
 CACHE_TTL_HOURS = 24   # was unbounded (cached forever) -- pulses/search
                         # results are time-sensitive just like ThreatFox's,
                         # which already uses this TTL
@@ -55,24 +56,10 @@ _IOC_TYPE_MAP: dict[str, str] = {
     "CVE":             "cve",
 }
 
-# OTX adversary slugs (the /adversaries/ endpoint uses these)
-_OTX_ACTOR_SLUGS: dict[str, str] = {
-    "APT28":          "APT 28",
-    "APT29":          "APT 29",
-    "APT41":          "APT 41",
-    "Lazarus Group":  "Lazarus+Group",
-    "APT10":          "APT 10",
-    "Sandworm":       "Sandworm",
-    "Turla":          "Turla",
-    "APT33":          "APT 33",
-    "APT34":          "OilRig",
-    "Kimsuky":        "Kimsuky",
-    "FIN7":           "FIN7",
-    "Volt Typhoon":   "Volt+Typhoon",
-    "Scattered Spider": "Scattered+Spider",
-}
-
-_MAX_IOCS_PER_TYPE = 10
+# Per-type IOC cap. Was a hard 10 — at most 10 IPs, 10 domains and 10
+# hashes across up to 15 pulses, silently discarding the rest of what is
+# THEORY's main IOC source. Raise with THEORY_OTX_MAX_IOCS.
+_MAX_IOCS_PER_TYPE = int(os.environ.get("THEORY_OTX_MAX_IOCS", "200"))
 _MAX_PULSES        = 15   # reduced to limit network time
 # Only search canonical name + 2 most recognisable aliases to avoid timeouts
 _MAX_ALIAS_SEARCHES = 2
@@ -93,18 +80,26 @@ class AlienVaultOTXCollector(BaseCollector):
             logger.error("OTX_API_KEY not set. Add it to your .env file.")
             return None
 
-        canonical = resolve_canonical(actor_name)
-        slug      = _OTX_ACTOR_SLUGS.get(canonical, canonical)
-        aliases   = all_aliases_for(actor_name)
+        from theory.actors import registry
 
-        logger.info("OTX: querying actor %r (slug: %s)", canonical, slug)
+        identity = registry().get(actor_name)
+        if identity is None:
+            logger.info("OTX: %r is not a known actor", actor_name)
+            return None
+        canonical = identity.canonical
 
-        # 1. Try the adversary endpoint (returns pulse list with indicators)
-        pulses = self._fetch_adversary_pulses(slug)
+        logger.info("OTX: querying actor %r", canonical)
 
-        # 2. Fall back to pulse search — canonical name only first
-        if not pulses:
-            pulses = self._search_and_fetch_pulses(canonical, aliases)
+        # Pulse search, then fetch each pulse for its indicators.
+        #
+        # There used to be a /api/v1/adversaries/{slug}/pulses/ call ahead
+        # of this, with a hand-maintained slug table feeding it. That
+        # endpoint does not exist: it returns {"detail": "endpoint not
+        # found"} and is absent from AlienVault's own OTX-Python-SDK, whose
+        # full surface is search/pulses, pulses/{id}, indicators/... and
+        # users/... . Every run paid for one guaranteed-failing request,
+        # swallowed at debug level, before falling through to here.
+        pulses = self._search_and_fetch_pulses(identity)
 
         if not pulses:
             logger.info("OTX: no pulses found for %r", canonical)
@@ -150,35 +145,21 @@ class AlienVaultOTXCollector(BaseCollector):
         return ""
 
     # ------------------------------------------------------------------
-    # Adversary endpoint — returns pulses WITH indicators inline
+    # Pulse search — search returns stubs, fetch each pulse for IOCs
     # ------------------------------------------------------------------
 
-    def _fetch_adversary_pulses(self, slug: str) -> list[dict]:
-        url = f"{BASE_URL}/api/v1/adversaries/{quote(slug)}/pulses/?limit={_MAX_PULSES}"
-        try:
-            data   = self._get(url, cache_key=f"adv_{slug.lower().replace('+','_').replace(' ','_')}")
-            pulses = data.get("results", []) if isinstance(data, dict) else []
-            logger.info("OTX adversary endpoint: %d pulses", len(pulses))
-            return pulses
-        except Exception as exc:
-            logger.debug("OTX adversary endpoint failed for %r: %s", slug, exc)
-            return []
-
-    # ------------------------------------------------------------------
-    # Search fallback — search returns stubs, fetch each pulse for IOCs
-    # ------------------------------------------------------------------
-
-    def _search_and_fetch_pulses(
-        self, canonical: str, aliases: frozenset[str]
-    ) -> list[dict]:
-        # Search only canonical name + top N aliases to avoid timeouts
-        search_terms = [canonical]
-        # Pick short, distinctive aliases (avoid IDs like G0007, TA422)
-        clean_aliases = [
-            a for a in aliases
-            if len(a) > 4 and not re.match(r"^[gt]\d+$", a, re.I)
-        ]
-        search_terms += clean_aliases[:_MAX_ALIAS_SEARCHES]
+    def _search_and_fetch_pulses(self, identity) -> list[dict]:
+        canonical = identity.canonical
+        # Deterministic alias choice. This used to slice a list built from a
+        # frozenset, so WHICH two aliases were searched changed between runs
+        # under hash randomisation and OTX results for the same actor were
+        # not reproducible. Multi-word vendor names first (most distinctive),
+        # then alphabetical for a stable tie-break.
+        extra = sorted(
+            (t for t in identity.recall_terms if t != canonical.lower()),
+            key=lambda t: (-len(t.split()), -len(t), t),
+        )
+        search_terms = [canonical] + extra[:_MAX_ALIAS_SEARCHES]
 
         stub_ids:  dict[str, dict] = {}   # id → stub
         for term in search_terms:
@@ -200,6 +181,27 @@ class AlienVaultOTXCollector(BaseCollector):
         # old, heavily-referenced pulses (e.g. 2014-2017 CVEs) and missing
         # more recent campaign data. Prioritize the most recently modified
         # pulses before truncating to _MAX_PULSES.
+        # OTX search ranks by relevance/popularity and will happily return
+        # pulses that merely mention a related term. Require an actual
+        # word-boundary mention of the actor in the stub before spending a
+        # request on it.
+        from theory.actors import mentions
+
+        relevant = [
+            stub for stub in stub_ids.values()
+            if mentions(
+                identity,
+                stub.get("name") or "",
+                stub.get("description") or "",
+                " ".join(stub.get("tags") or []),
+                " ".join(str(a) for a in (stub.get("adversary") or [])) if isinstance(stub.get("adversary"), list) else str(stub.get("adversary") or ""),
+            )
+        ]
+        if relevant:
+            stub_ids = {s.get("id", ""): s for s in relevant if s.get("id")}
+            logger.info("OTX: %d of %d stubs actually mention %s",
+                        len(stub_ids), len(relevant), canonical)
+
         ranked_stubs = sorted(
             stub_ids.values(),
             key=lambda p: (p.get("modified") or p.get("created") or ""),
@@ -310,14 +312,21 @@ class AlienVaultOTXCollector(BaseCollector):
         return result
 
     def _extract_sectors(self, pulses: list[dict]) -> list[str]:
+        """Sectors from pulse tags.
+
+        Tags are short, user-supplied labels, so an exact (normalised) tag
+        match is right here — substring matching turned the tag "multimedia"
+        into Media and "mongodb" into NGO.
+        """
         seen:    set[str]  = set()
         sectors: list[str] = []
         for pulse in pulses:
             for tag in (pulse.get("tags") or []):
-                for kw, sector in _SECTOR_MAP.items():
-                    if kw in tag.lower() and sector.lower() not in seen:
-                        seen.add(sector.lower())
-                        sectors.append(sector)
+                key = str(tag).strip().lower()
+                sector = _SECTOR_MAP.get(key)
+                if sector and sector.lower() not in seen:
+                    seen.add(sector.lower())
+                    sectors.append(sector)
         return sectors
 
     def _extract_techniques(self, pulses: list[dict]) -> list[dict]:

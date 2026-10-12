@@ -167,7 +167,9 @@ def test_query_returns_indicators_and_campaign_for_matched_event():
     # Isolate this test from the real actors.yaml alias table (APT28's real
     # alias list includes "Fancy Bear", which would also match event-uuid-3
     # and is exercised separately in test_match_events_matches_alias_not_just_canonical).
-    with patch.object(c, "_search_terms", return_value=["apt28"]), \
+    from theory.actors import ActorIdentity
+    narrow = ActorIdentity(canonical="APT28", recall_terms=frozenset({"apt28"}))
+    with patch("theory.actors.ActorRegistry.get", return_value=narrow), \
          patch.object(c, "_load_manifest", return_value=SAMPLE_MANIFEST), \
          patch.object(c, "_load_event", return_value=SAMPLE_EVENT):
         profile = c.query("APT28")
@@ -182,11 +184,29 @@ def test_query_returns_indicators_and_campaign_for_matched_event():
     assert len(profile["indicators"]) == 3   # ip, domain, sha256 — url/unsupported dropped
 
 
-def test_query_handles_no_matches_gracefully():
+def test_query_returns_none_for_an_actor_theory_does_not_know():
+    """An unrecognised name must not produce a profile at all.
+
+    Previously every collector returned a schema-shaped record regardless,
+    so a typo'd or unknown actor still yielded a saved dossier and a new
+    node in the persistent graph. Resolution failing is now a real answer.
+    """
     c = _collector()
     with patch.object(c, "_load_manifest", return_value=SAMPLE_MANIFEST):
-        profile = c.query("Totally Unrelated Actor XYZ")
+        assert c.query("Totally Unrelated Actor XYZ") is None
 
+
+def test_query_handles_known_actor_with_no_matching_events():
+    """A real actor with nothing in this feed still gets a valid, empty
+    profile — that is a different answer from "no such actor"."""
+    from theory.actors import ActorIdentity
+    c = _collector()
+    no_hits = ActorIdentity(canonical="APT28", recall_terms=frozenset({"zzz-no-such-term"}))
+    with patch("theory.actors.ActorRegistry.get", return_value=no_hits), \
+         patch.object(c, "_load_manifest", return_value=SAMPLE_MANIFEST):
+        profile = c.query("APT28")
+
+    assert profile is not None
     assert profile["indicators"] == []
     assert profile["campaigns"] == []
 

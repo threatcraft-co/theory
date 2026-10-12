@@ -38,7 +38,11 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
-OUTPUT_DIR   = Path("output/dossiers")
+# Resolved at call time via theory.paths so THEORY_HOME and
+# installed-package use work from any working directory.
+def _output_dir() -> Path:
+    from theory.paths import dossier_dir
+    return dossier_dir()
 LAYER_FORMAT = "4.5"
 NAVIGATOR_VERSION = "5.1.0"
 ATTACK_VERSION    = "16"    # current ATT&CK version as of 2026
@@ -189,6 +193,8 @@ class NavigatorReporter:
             detection   = t.get("detection", "")
 
             comment_parts = [f"Confidence: {confidence}"]
+            if name:
+                comment_parts.insert(0, name)
             if sigma_count:
                 top = sigma_rules[0].get("title", "")
                 comment_parts.append(
@@ -228,7 +234,7 @@ class NavigatorReporter:
 
     def save(self, profile: dict[str, Any]) -> Path:
         """Write the Navigator layer to output/dossiers/<actor>.navigator.json"""
-        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        _output_dir()
         slug = _slugify(profile.get("actor_name", "unknown"))
 
         # Use canonical slug if possible
@@ -242,7 +248,7 @@ class NavigatorReporter:
         except Exception:
             pass
 
-        path  = OUTPUT_DIR / f"{slug}.navigator.json"
+        path  = _output_dir() / f"{slug}.navigator.json"
         layer = self.build_layer(profile)
         path.write_text(
             json.dumps(layer, indent=2, ensure_ascii=False),

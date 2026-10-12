@@ -51,11 +51,12 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
-from urllib.error import HTTPError
+
+from theory.paths import cache_path
 
 logger = logging.getLogger(__name__)
 
-CACHE_DIR    = Path(".cache/intel_synthesis")
+CACHE_DIR    = cache_path("intel_synthesis")
 CACHE_TTL    = 7   # days
 MAX_TOKENS   = 400
 MAX_SYNTH_ITEMS = 15  # max articles to synthesize per run
@@ -295,16 +296,58 @@ class OllamaProvider(LLMProvider):
         return data.get("response", "").strip()
 
 
+#: Which providers each egress policy permits.
+#: THEORY_LLM (or --llm) selects the policy.
+#:
+#:   local  — on-machine models only. The default: merely having
+#:            ANTHROPIC_API_KEY exported should not silently ship an
+#:            actor profile to a third party on every run.
+#:   cloud  — hosted providers allowed.
+#:   off    — no synthesis at all.
+_EGRESS_POLICIES: dict[str, frozenset[str]] = {
+    "off":   frozenset(),
+    "local": frozenset({"ollama"}),
+    "cloud": frozenset({"claude", "openai", "ollama"}),
+}
+
+DEFAULT_EGRESS_POLICY = "local"
+
+
+def egress_policy() -> str:
+    """The configured LLM egress policy (off / local / cloud)."""
+    value = _load_env_value("THEORY_LLM", DEFAULT_EGRESS_POLICY).strip().lower()
+    if value in _EGRESS_POLICIES:
+        return value
+    if value:
+        logger.warning(
+            "Unknown THEORY_LLM=%r — expected off/local/cloud. Using %r.",
+            value, DEFAULT_EGRESS_POLICY,
+        )
+    return DEFAULT_EGRESS_POLICY
+
+
 def load_provider() -> LLMProvider | None:
     """
-    Load the configured LLM provider from .env.
-    Returns None if no provider is available.
+    Load the configured LLM provider, subject to the egress policy.
+    Returns None if nothing is permitted and available.
 
     Priority:
-      1. THEORY_LLM_PROVIDER env var (explicit choice)
-      2. Auto-detect: Claude → OpenAI → Ollama
+      1. THEORY_LLM / --llm egress policy gates what may be used at all
+      2. THEORY_LLM_PROVIDER env var (explicit choice within the policy)
+      3. Auto-detect in policy order
+
+    Previously this auto-detected a cloud provider whenever a key happened
+    to be in the environment, and every actor run then sent the profile
+    summary (actor, aliases, techniques, malware, campaigns, description)
+    to that provider — regardless of --sources, and including material
+    derived from the `personal` source, whose whole premise is that it
+    never leaves the machine.
     """
-    preferred = _load_env_value("THEORY_LLM_PROVIDER").lower()
+    policy = egress_policy()
+    permitted = _EGRESS_POLICIES[policy]
+    if not permitted:
+        logger.debug("LLM synthesis disabled (THEORY_LLM=off)")
+        return None
 
     providers = {
         "claude": ClaudeProvider,
@@ -312,28 +355,58 @@ def load_provider() -> LLMProvider | None:
         "ollama": OllamaProvider,
     }
 
+    preferred = _load_env_value("THEORY_LLM_PROVIDER").lower()
     if preferred and preferred in providers:
-        p = providers[preferred]()
-        if p.available:
-            logger.info("LLM provider: %s (explicit)", preferred)
-            return p
+        if preferred not in permitted:
+            logger.warning(
+                "THEORY_LLM_PROVIDER=%s is a hosted provider, but THEORY_LLM=%s "
+                "permits only %s. Pass --llm cloud to allow it.",
+                preferred, policy, ", ".join(sorted(permitted)) or "nothing",
+            )
         else:
+            p = providers[preferred]()
+            if p.available:
+                logger.info("LLM provider: %s (explicit)", preferred)
+                return p
             logger.warning(
                 "Preferred provider %r is not available — "
-                "check your API key in .env", preferred
+                "check your API key in .env", preferred,
             )
 
-    # Auto-detect
     for name, cls in providers.items():
+        if name not in permitted:
+            continue
         p = cls()
         if p.available:
-            logger.info("LLM provider: %s (auto-detected)", name)
+            logger.info("LLM provider: %s (auto-detected, policy=%s)", name, policy)
             return p
 
-    logger.warning(
-        "No LLM provider available. Set ANTHROPIC_API_KEY, OPENAI_API_KEY, "
-        "or start Ollama to enable vendor intelligence synthesis."
-    )
+    if policy == "local":
+        # Distinguish "nothing configured" from "you have a cloud key and
+        # the default policy declined to use it". The second case is a
+        # behaviour change for anyone upgrading, so it is a warning, not a
+        # debug line they will never see.
+        has_cloud_key = bool(
+            _load_env_value("ANTHROPIC_API_KEY") or _load_env_value("OPENAI_API_KEY")
+        )
+        if has_cloud_key:
+            logger.warning(
+                "LLM synthesis skipped: a hosted provider key is configured, but "
+                "THEORY_LLM=local (the default) keeps actor profiles on this "
+                "machine. Pass --llm cloud, or set THEORY_LLM=cloud in .env, to "
+                "use it."
+            )
+        else:
+            logger.info(
+                "No local LLM available (THEORY_LLM=local). Start Ollama, or pass "
+                "--llm cloud to allow a hosted provider — note that sends the "
+                "actor profile off your machine."
+            )
+    else:
+        logger.warning(
+            "No LLM provider available. Set ANTHROPIC_API_KEY, OPENAI_API_KEY, "
+            "or start Ollama to enable synthesis."
+        )
     return None
 
 

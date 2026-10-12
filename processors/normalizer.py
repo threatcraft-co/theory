@@ -44,24 +44,58 @@ def normalize(data: dict[str, Any]) -> CommonSchema:
     if not source_id or not isinstance(source_id, str):
         raise NormalizationError("CommonSchema missing required field: source_id")
 
+    # Collectors emit origin/motivations/sectors; the schema historically
+    # named them suspected_origin/motivation/target_sectors. Accept either
+    # spelling on the way in and emit BOTH on the way out, so neither the
+    # deduplicator nor the reporters have to guess — and so nothing has to
+    # reach back into the raw records to recover a field the normalizer
+    # dropped, which is what the pipeline used to do.
+    origin = data.get("origin") or data.get("suspected_origin")
+    motivations = data.get("motivations") or data.get("motivation") or []
+    sectors = data.get("sectors") or data.get("target_sectors") or []
+
+    normalized_motivations = _normalize_motivations(motivations)
+    normalized_sectors = _normalize_sectors(sectors)
+    origin_str = _coerce_str(origin)
+
     return {
         "actor_name": _normalize_actor_name(actor_name),
         "aliases": _normalize_string_list(data.get("aliases", [])),
         "source_id": source_id.strip(),
         "source_url": _coerce_str(data.get("source_url")),
         "retrieved_at": _normalize_timestamp(data.get("retrieved_at")),
-        "suspected_origin": _coerce_str(data.get("suspected_origin")),
-        "motivation": _normalize_motivations(data.get("motivation", [])),
+
+        # Attribution — both spellings, same value
+        "origin": origin_str,
+        "suspected_origin": origin_str,
+        "motivations": normalized_motivations,
+        "motivation": normalized_motivations,
         "first_seen": _normalize_timestamp_lenient(data.get("first_seen")),
         "sponsorship": _coerce_str(data.get("sponsorship")),
-        "target_sectors": _normalize_sectors(data.get("target_sectors", [])),
+
+        # Narrative — previously dropped entirely, which is why every
+        # dossier's actor description came out empty.
+        "description": _coerce_str(data.get("description")),
+
+        # Target profile — both spellings, same value
+        "sectors": normalized_sectors,
+        "target_sectors": normalized_sectors,
         "target_countries": _normalize_string_list(data.get("target_countries", [])),
+
         "techniques": _normalize_techniques(data.get("techniques", []), source_id),
         "malware": _normalize_malware(data.get("malware", [])),
-        "indicators": _normalize_indicators(data.get("indicators", [])),
+        "indicators": _normalize_indicators(data.get("indicators", []), source_id),
         "campaigns": _normalize_campaigns(data.get("campaigns", [])),
         "cves": _normalize_cves(data.get("cves", []), source_id),
+
+        # Advisory records (CISA) — previously dropped, then re-read from
+        # the raw records by the pipeline as a workaround.
+        "advisories": _normalize_advisories(data.get("advisories", [])),
+
+        # Provenance / passthrough metadata the reporters surface
         "source_citation": _coerce_str(data.get("source_citation")) or source_id,
+        "raw_source": _coerce_str(data.get("raw_source")),
+        "mitre_id": _coerce_str(data.get("mitre_id") or data.get("mitre_group_id")),
     }
 
 
@@ -123,19 +157,32 @@ def _normalize_timestamp_lenient(value: Any) -> str:
 
 
 def _normalize_motivations(values: Any) -> list[str]:
+    """Map motivations onto the canonical set.
+
+    "unknown" is a fallback for when nothing recognisable was supplied, not
+    an additional motivation: emitting ["espionage", "unknown"] (which is
+    what happened whenever a source listed one known and one unrecognised
+    value) reads as though the actor has a second, mysterious motive.
+    """
     if not isinstance(values, list):
         return []
-    result = []
+    recognized: list[str] = []
+    saw_unrecognized = False
     for v in values:
         if not isinstance(v, str):
             continue
         normalized = v.strip().lower()
+        if not normalized:
+            continue
         if normalized in CANONICAL_MOTIVATIONS:
-            result.append(normalized)
+            recognized.append(normalized)
         else:
-            if "unknown" not in result:
-                result.append("unknown")
-    return list(dict.fromkeys(result))
+            saw_unrecognized = True
+
+    deduped = [m for m in dict.fromkeys(recognized) if m != "unknown"]
+    if deduped:
+        return deduped
+    return ["unknown"] if (saw_unrecognized or "unknown" in recognized) else []
 
 
 def _normalize_sectors(values: Any) -> list[str]:
@@ -170,18 +217,28 @@ def _normalize_techniques(values: Any, source_id: str) -> list[dict[str, Any]]:
         normalized_id = _normalize_technique_id(str(raw_id))
         if normalized_id is None:
             continue
+        # technique_name and name are the same thing under two names:
+        # collectors emit technique_name, reporters read both.
+        name = _coerce_str(entry.get("name") or entry.get("technique_name"))
+        detection = _coerce_str(entry.get("detection"))
+        detection_recs = entry.get("detection_recs") or ([detection] if detection else [])
+        sources = entry.get("sources") or [source_id]
         result.append({
             "technique_id": normalized_id,
-            "name": _coerce_str(entry.get("name")),
+            "name": name,
+            "technique_name": name,
             "tactic": _coerce_str(entry.get("tactic")),
+            "tactics": entry.get("tactics") or [],
             "description": _coerce_str(entry.get("description")),
+            "detection": detection,
+            "detection_recs": list(detection_recs),
             "source": _coerce_str(entry.get("source")) or source_id,
-            "detection_recs": entry.get("detection_recs", []),
+            "sources": list(sources) if isinstance(sources, list) else [source_id],
         })
     return result
 
 
-def _normalize_indicators(values: Any) -> list[dict[str, Any]]:
+def _normalize_indicators(values: Any, source_id: str = "") -> list[dict[str, Any]]:
     if not isinstance(values, list):
         return []
     type_aliases = {
@@ -202,13 +259,26 @@ def _normalize_indicators(values: Any) -> list[dict[str, Any]]:
         value = _coerce_str(entry.get("value"))
         if not value:
             continue
-        result.append({
+        # Carry provenance and enrichment through. Dropping these is what
+        # made every collector IOC arrive at the deduplicator with no
+        # sources list, so corroboration was never detected and confidence
+        # was never assigned.
+        sources = entry.get("sources") or ([source_id] if source_id else [])
+        normalized = {
             "type": canonical_type,
             "value": value,
-            "context": _coerce_str(entry.get("context")),
-            "first_seen": _normalize_timestamp_lenient(entry.get("first_seen")),
-            "sources": entry.get("sources", []),
-        })
+            "context": _coerce_str(entry.get("context")) or _coerce_str(entry.get("description")),
+            "description": _coerce_str(entry.get("description")),
+            "first_seen": _normalize_timestamp_lenient(
+                entry.get("first_seen") or entry.get("created")
+            ),
+            "sources": list(sources) if isinstance(sources, list) else [str(sources)],
+        }
+        for optional in ("confidence", "malware_family", "threat_type",
+                         "threat_label", "last_seen", "tags", "attribution"):
+            if entry.get(optional) not in (None, "", [], {}):
+                normalized[optional] = entry[optional]
+        result.append(normalized)
     return result
 
 
@@ -222,11 +292,16 @@ def _normalize_malware(values: Any) -> list[dict[str, Any]]:
         name = _coerce_str(entry.get("name"))
         if not name:
             continue
-        result.append({
+        normalized = {
             "name": name,
             "type": _coerce_str(entry.get("type")),
             "description": _coerce_str(entry.get("description")),
-        })
+        }
+        for optional in ("aliases", "yara_count", "sources", "malpedia_url",
+                         "yara_rules", "yara_rule_count"):
+            if entry.get(optional) not in (None, "", [], {}):
+                normalized[optional] = entry[optional]
+        result.append(normalized)
     return result
 
 
@@ -238,15 +313,23 @@ def _normalize_campaigns(values: Any) -> list[dict[str, Any]]:
         if not isinstance(entry, dict):
             continue
         description = _coerce_str(entry.get("description"))
-        reference = _coerce_str(entry.get("reference"))
-        if not description and not reference:
+        reference = _coerce_str(entry.get("reference") or entry.get("url"))
+        name = _coerce_str(entry.get("name"))
+        # A named campaign is worth keeping even with no prose or link —
+        # dropping it lost MITRE campaign names that carry only dates.
+        if not name and not description and not reference:
             continue
-        result.append({
-            "name": _coerce_str(entry.get("name")),
+        normalized = {
+            "name": name,
             "date": _normalize_timestamp_lenient(entry.get("date")),
             "description": description,
             "reference": reference,
-        })
+            "url": reference,
+        }
+        for optional in ("first_seen", "last_seen"):
+            if entry.get(optional) not in (None, "", [], {}):
+                normalized[optional] = entry[optional]
+        result.append(normalized)
     return result
 
 
@@ -344,3 +427,28 @@ def _normalize_cves(values: Any, source_id: str) -> list[dict[str, Any]]:
         seen[normalized_id] = normalized_entry
 
     return list(seen.values())
+
+
+def _normalize_advisories(values: Any) -> list[dict[str, Any]]:
+    """Normalize advisory records (currently CISA only).
+
+    Previously absent: advisories were dropped by the normalizer and the
+    pipeline re-read them from the raw collector records to put them back.
+    """
+    if not isinstance(values, list):
+        return []
+    result: list[dict[str, Any]] = []
+    for entry in values:
+        if not isinstance(entry, dict):
+            continue
+        title = _coerce_str(entry.get("title"))
+        url = _coerce_str(entry.get("url"))
+        if not title and not url:
+            continue
+        result.append({
+            "title": title,
+            "url": url,
+            "date": _coerce_str(entry.get("date")),
+            "summary": _coerce_str(entry.get("summary")),
+        })
+    return result

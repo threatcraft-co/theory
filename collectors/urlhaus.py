@@ -31,7 +31,6 @@ import os
 import re
 import time
 from datetime import datetime, timezone, timedelta
-from pathlib import Path
 from typing import Any
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -39,12 +38,14 @@ from urllib.error import HTTPError, URLError
 
 from collectors.base import BaseCollector
 
+from theory.paths import cache_path
+
 logger = logging.getLogger(__name__)
 
 SOURCE_ID             = "urlhaus"
 API_BASE              = "https://urlhaus-api.abuse.ch/v1"
 TAG_ENDPOINT          = f"{API_BASE}/tag/"
-CACHE_DIR             = Path(".cache/urlhaus")
+CACHE_DIR             = cache_path("urlhaus")
 CACHE_TTL_HOURS       = 24
 TIMEOUT               = 15
 RETRY_MAX             = 2

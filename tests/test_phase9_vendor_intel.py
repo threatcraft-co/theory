@@ -9,8 +9,7 @@ cache logic, concurrent fetching, and synthesis prompt construction.
 from __future__ import annotations
 
 import json
-import pytest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 from collectors.vendor_intel import (
     VendorIntelCollector,
     _parse_rss_xml,
@@ -28,8 +27,6 @@ from collectors.intelligence_synthesizer import (
     OpenAIProvider,
     OllamaProvider,
     _article_hash,
-    ACTOR_SYNTHESIS_PROMPT,
-    LANDSCAPE_SYNTHESIS_PROMPT,
 )
 
 
@@ -269,13 +266,46 @@ class TestSearchTerms:
         assert "fancy bear" in terms
         assert "sofacy" in terms
 
-    def test_short_aliases_excluded(self):
+    def test_identifier_aliases_are_kept_now_that_matching_is_bounded(self):
+        """G0007 / TA422 used to be dropped from search terms because
+        matching was substring-based and short tokens were unsafe. Matching
+        is now word-bounded with exact trailing digits, which makes these
+        both safe and strongly indicative — an article containing the
+        standalone token "TA422" really is about that actor.
+
+        The ambiguity they were excluded for is handled directly instead:
+        see test_identifier_alias_does_not_match_longer_id below.
+        """
         terms = VendorIntelCollector._build_search_terms(
             "APT28", ["G0007", "TA422", "Fancy Bear"]
         )
-        assert "g0007" not in terms
-        assert "ta422" not in terms
         assert "fancy bear" in terms
+        assert {"g0007", "ta422"} <= terms
+
+    def test_identifier_alias_does_not_match_longer_id(self):
+        """atk5 must not match atk51; apt4 must not match apt41."""
+        import re
+
+        from theory.actors import ActorIdentity, mentions
+
+        identity = ActorIdentity(
+            canonical="Test", recall_terms=frozenset({"atk5", "apt4"}),
+        )
+        assert mentions(identity, "atk51 and apt41 were observed") == []
+        assert mentions(identity, "atk5 was observed") == ["atk5"]
+        assert mentions(identity, "APT 4 was observed") == ["apt 4"]
+        del re
+
+    def test_stop_word_aliases_never_become_search_terms(self):
+        """`ups` and `lead` are real aliases (APT3, APT41) but ordinary
+        English words — they are what made unrelated advisories match."""
+        terms = VendorIntelCollector._build_search_terms(
+            "SomeUnknownActor", ["ups", "lead", "snake", "Real Alias Name"]
+        )
+        assert "ups" not in terms
+        assert "lead" not in terms
+        assert "snake" not in terms
+        assert "real alias name" in terms
 
     def test_terms_are_lowercase(self):
         terms = VendorIntelCollector._build_search_terms("APT28", ["FANCY BEAR"])
@@ -363,7 +393,7 @@ class TestCacheConfig:
         import collectors.vendor_intel as vi_module
         monkeypatch.setattr(vi_module, "CACHE_DIR", tmp_path)
 
-        from datetime import datetime, timezone, timedelta
+        from datetime import datetime, timezone
         collector = VendorIntelCollector.__new__(VendorIntelCollector)
 
         fresh_time = datetime.now(timezone.utc).isoformat()
@@ -405,9 +435,9 @@ class TestConcurrentFetch:
         ]
 
         monkeypatch.setattr(collector, "_fetch_feed_cached", mock_fetch_cached)
-        monkeypatch.setattr(collector, "_load_apt_campaign_context", lambda *a, **k: [])
 
         results = collector.collect("APT28", ["Fancy Bear"])
+        assert isinstance(results, list)
 
         # Only enabled feeds should be fetched
         assert "Feed A" in fetch_calls
@@ -442,7 +472,6 @@ class TestConcurrentFetch:
         ]
 
         monkeypatch.setattr(collector, "_fetch_feed_cached", mock_fetch_cached)
-        monkeypatch.setattr(collector, "_load_apt_campaign_context", lambda *a, **k: [])
 
         results = collector.collect("APT28", ["Fancy Bear"])
         assert len(results) >= 1
@@ -473,7 +502,6 @@ class TestConcurrentFetch:
         ]
 
         monkeypatch.setattr(collector, "_fetch_feed_cached", mock_fetch_cached)
-        monkeypatch.setattr(collector, "_load_apt_campaign_context", lambda *a, **k: [])
 
         results = collector.collect("APT28", [])
         urls = [r["url"] for r in results]
@@ -509,7 +537,6 @@ class TestConcurrentFetch:
         ]
 
         monkeypatch.setattr(collector, "_fetch_feed_cached", mock_fetch_cached)
-        monkeypatch.setattr(collector, "_load_apt_campaign_context", lambda *a, **k: [])
 
         results = collector.collect("APT28", [])
         assert len(results) >= 2

@@ -8,7 +8,6 @@ touch output/graph/graph.json.
 
 from __future__ import annotations
 
-from pathlib import Path
 
 import pytest
 
@@ -182,7 +181,10 @@ class TestIngestProfile:
 
     def test_ingest_without_store_loads_and_saves(self, tmp_path, monkeypatch):
         import processors.graph as graph_module
-        monkeypatch.setattr(graph_module, "GRAPH_PATH", tmp_path / "graph.json")
+        # The default path is resolved at call time via theory.paths, so a
+        # run from any directory reaches the same graph. Patch the resolver.
+        monkeypatch.setattr(graph_module, "_default_graph_path",
+                            lambda: tmp_path / "graph.json")
         ingest_profile(SAMPLE_PROFILE)
         assert (tmp_path / "graph.json").exists()
 
@@ -342,12 +344,45 @@ class TestQueryCve:
 class TestFindConnection:
 
     def test_direct_connection_found(self, tmp_path):
+        """This IOC is known via a malware family rather than attributed to
+        the actor directly, so the edge records that: family_ioc, and a WEAK
+        verdict. Both are still a connection — just an honestly labelled one."""
         store = GraphStore(path=tmp_path / "graph.json")
         ingest_profile(SAMPLE_PROFILE, store=store)
         result = find_connection(("actor", "APT28"), ("ioc", "1.1.1.1"), store=store)
         assert result["connected"] is True
         assert result["path"] == "direct"
+        assert result["relation"] == "family_ioc"
+        assert result["verdict"] == "WEAK"
+
+    def test_actor_attributed_ioc_is_a_strong_direct_link(self, tmp_path):
+        store = GraphStore(path=tmp_path / "graph.json")
+        ingest_profile({
+            "actor_name": "APT28",
+            "indicators": [{"type": "ip", "value": "203.0.113.5",
+                            "sources": ["cisa"], "attribution": "actor"}],
+        }, store=store)
+        result = find_connection(("actor", "APT28"), ("ioc", "203.0.113.5"), store=store)
+        assert result["verdict"] == "DIRECT"
         assert result["relation"] == "reported_ioc"
+
+    def test_shared_tooling_is_not_reported_as_a_connection(self, tmp_path):
+        """Two actors using Cobalt Strike does not connect one to the
+        other's infrastructure. This used to return CONNECTED, bridged by
+        the tool, sending analysts after commodity C2."""
+        store = GraphStore(path=tmp_path / "graph.json")
+        ingest_profile({"actor_name": "APT28",
+                        "malware": [{"name": "Cobalt Strike", "type": "tool"}]}, store=store)
+        ingest_profile({"actor_name": "FIN7",
+                        "malware": [{"name": "Cobalt Strike", "type": "tool"}],
+                        "indicators": [{"type": "ip", "value": "198.51.100.9",
+                                        "sources": ["threatfox"],
+                                        "malware_family": "Cobalt Strike",
+                                        "attribution": "shared_tool"}]}, store=store)
+        result = find_connection(("actor", "APT28"), ("ioc", "198.51.100.9"), store=store)
+        assert result["connected"] is False
+        assert result["verdict"] == "SHARED_TOOLING_ONLY"
+        assert [b["label"] for b in result["hub_bridges"]] == ["Cobalt Strike"]
 
     def test_connection_resolves_actor_alias(self, tmp_path):
         store = GraphStore(path=tmp_path / "graph.json")
