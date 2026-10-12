@@ -234,3 +234,47 @@ def identity_sources() -> list[SourceSpec]:
 def resolve(key: str) -> SourceSpec | None:
     """Look up a source by canonical key or alias."""
     return BY_KEY.get(str(key).strip().lower())
+
+
+# ---------------------------------------------------------------------------
+# Documentation
+# ---------------------------------------------------------------------------
+
+README_TABLE_START = "<!-- BEGIN GENERATED SOURCE TABLE -->"
+README_TABLE_END = "<!-- END GENERATED SOURCE TABLE -->"
+
+
+def markdown_table() -> str:
+    """The source table as it appears in README.md.
+
+    Generated rather than hand-written: the hand-written version had
+    drifted (it still listed threatfox as keyless after abuse.ch began
+    requiring an Auth-Key on every request), and a reader has no way to
+    tell a stale row from a current one. tests/test_docs_in_sync.py fails
+    if README.md does not match this output.
+    """
+    rows = [
+        "| Source | What it adds | Auth | Cache |",
+        "|---|---|---|---|",
+    ]
+    for spec in SOURCES:
+        auth = "None" if not spec.key_env else (
+            f"`{spec.key_env}`" if spec.key_required
+            else f"`{spec.key_env}` (optional)"
+        )
+        if spec.key == "vendor":
+            auth = "LLM provider"
+        rows.append(
+            f"| `{spec.key}` | {spec.description} | {auth} | {spec.cache} |"
+        )
+    return "\n".join(rows)
+
+
+def counts() -> dict[str, int]:
+    """Figures quoted in prose, so they cannot drift either."""
+    return {
+        "total": len(SOURCES),
+        "keyless": sum(1 for s in SOURCES if not s.key_required),
+        "key_required": sum(1 for s in SOURCES if s.key_required),
+        "defaults": sum(1 for s in SOURCES if s.default),
+    }
