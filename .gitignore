@@ -69,3 +69,6 @@ Thumbs.db
 Desktop.ini
 *.orig
 *.rej
+
+# Demo workspace (demo.sh)
+.demo/
