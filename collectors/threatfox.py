@@ -24,31 +24,30 @@ Confidence scoring:
   75-99   → MEDIUM
   <75     → LOW
 
-Cache: .cache/threatfox/{family_slug}.json, TTL 24 hours
+Cache: .cache/threatfox/, TTL 24 hours (see theory.disk_cache). Only real answers
+are cached; failures and error replies are not.
 (IOCs are time-sensitive — shorter TTL than Sigma/Malpedia)
 """
 
 from __future__ import annotations
 
-import json
 import logging
 import os
 import re
 import time
-from datetime import datetime, timezone, timedelta
+from datetime import timedelta
 from typing import Any
-from urllib.request import Request, urlopen
-from urllib.error import HTTPError, URLError
 
+from collectors._abusech import interpret_query_status
 from collectors.base import BaseCollector
 
-from theory.paths import cache_path
+from theory.disk_cache import DiskCache
+from theory.http_client import BadResponse, HttpClient, HttpError
 
 logger = logging.getLogger(__name__)
 
 SOURCE_ID           = "threatfox"
 API_URL             = "https://threatfox-api.abuse.ch/api/v1/"
-CACHE_DIR           = cache_path("threatfox")
 CACHE_TTL_HOURS     = 24
 TIMEOUT             = 15
 RETRY_MAX           = 2
@@ -95,6 +94,11 @@ class ThreatFoxCollector(BaseCollector):
 
     def __init__(self, api_key: str = ""):
         self._abusech_key = api_key or os.environ.get("ABUSECH_API_KEY", "")
+        self._http = HttpClient(
+            timeout=TIMEOUT, attempts=RETRY_MAX, backoff=RETRY_WAIT,
+            headers={"Auth-Key": self._abusech_key},
+        )
+        self._cache = DiskCache(SOURCE_ID, ttl=timedelta(hours=CACHE_TTL_HOURS))
 
     def query(self, actor_name: str) -> dict | None:
         """Standard interface stub — ThreatFox is enrichment-only."""
@@ -134,8 +138,13 @@ class ThreatFoxCollector(BaseCollector):
             len(malware_names), actor_name,
         )
 
+        failed: dict[str, str] = {}
         for family_name in malware_names:
-            iocs = self._fetch_family_iocs(family_name)
+            try:
+                iocs = self._fetch_family_iocs(family_name)
+            except HttpError as exc:
+                failed[family_name] = str(exc)
+                continue
             if iocs:
                 family_hits[family_name] = len(iocs)
                 for ioc in iocs:
@@ -144,7 +153,15 @@ class ThreatFoxCollector(BaseCollector):
                         seen_values.add(key)
                         ioc["malware_family"] = family_name
                         all_iocs.append(ioc)
-            time.sleep(0.3)  # polite pacing — abuse.ch is a community resource
+
+        if failed:
+            # Not cached: the next run asks again rather than believing
+            # "no IOCs" for a day because of one timeout or a bad key.
+            logger.warning(
+                "ThreatFox: %d of %d families could not be queried (not cached); "
+                "first error: %s",
+                len(failed), len(malware_names), next(iter(failed.values())),
+            )
 
         if not all_iocs:
             logger.info("ThreatFox: no IOCs found for any malware family")
@@ -186,46 +203,31 @@ class ThreatFoxCollector(BaseCollector):
     # ------------------------------------------------------------------
 
     def _fetch_family_iocs(self, family_name: str) -> list[dict]:
-        """Query ThreatFox for IOCs tagged to a specific malware family."""
-        cache_key  = _slugify(family_name)
-        cached     = self._load_cache(cache_key)
-        if cached is not None:
-            return cached
+        """Query ThreatFox for IOCs tagged to a specific malware family.
 
-        payload = json.dumps({
-            "query":        "taginfo",
-            "tag":          family_name,
-            "limit":        MAX_IOCS_PER_FAMILY,
-        }).encode("utf-8")
+        Returns [] when ThreatFox answered that it has nothing. Raises
+        HttpError when the question could not be answered (timeout, 5xx,
+        429, bad key); those outcomes are never cached.
+        """
+        def load() -> list[dict]:
+            data = self._http.post_json(API_URL, {
+                "query": "taginfo",
+                "tag":   family_name,
+                "limit": MAX_IOCS_PER_FAMILY,
+            })
+            time.sleep(0.3)  # polite pacing — abuse.ch is a community resource
+            if not interpret_query_status(data, source="ThreatFox", url=API_URL):
+                logger.debug("ThreatFox: no results for %r", family_name)
+                return []
+            raw_iocs = data.get("data") or []
+            if not isinstance(raw_iocs, list):
+                raise BadResponse("ThreatFox: unexpected data shape", url=API_URL, status=200)
+            parsed = [self._parse_ioc(ioc) for ioc in raw_iocs]
+            parsed = [ioc for ioc in parsed if ioc]  # drop None
+            logger.debug("ThreatFox: %d IOCs for %r", len(parsed), family_name)
+            return parsed
 
-        try:
-            data = self._post(API_URL, payload)
-        except Exception as exc:
-            logger.debug("ThreatFox fetch failed for %r: %s", family_name, exc)
-            self._save_cache(cache_key, [])
-            return []
-
-        if not isinstance(data, dict):
-            self._save_cache(cache_key, [])
-            return []
-
-        query_status = data.get("query_status", "")
-        if query_status == "no_results":
-            logger.debug("ThreatFox: no results for %r", family_name)
-            self._save_cache(cache_key, [])
-            return []
-
-        raw_iocs = data.get("data", []) or []
-        if not isinstance(raw_iocs, list):
-            self._save_cache(cache_key, [])
-            return []
-
-        parsed = [self._parse_ioc(ioc) for ioc in raw_iocs]
-        parsed = [ioc for ioc in parsed if ioc]  # drop None
-
-        self._save_cache(cache_key, parsed)
-        logger.debug("ThreatFox: %d IOCs for %r", len(parsed), family_name)
-        return parsed
+        return self._cache.fetch(_slugify(family_name), load, default=[])
 
     # ------------------------------------------------------------------
     # IOC parsing
@@ -271,67 +273,6 @@ class ThreatFoxCollector(BaseCollector):
             "description":   f"{threat_label} — {malware_name}" if malware_name else threat_label,
             "sources":       [SOURCE_ID],
         }
-
-    # ------------------------------------------------------------------
-    # Cache
-    # ------------------------------------------------------------------
-
-    def _load_cache(self, cache_key: str) -> list[dict] | None:
-        cache_path = CACHE_DIR / f"{cache_key}.json"
-        if not cache_path.exists():
-            return None
-        try:
-            data      = json.loads(cache_path.read_text(encoding="utf-8"))
-            cached_at = datetime.fromisoformat(data.get("cached_at", "2000-01-01"))
-            age       = datetime.now(timezone.utc) - cached_at.replace(tzinfo=timezone.utc)
-            if age > timedelta(hours=CACHE_TTL_HOURS):
-                logger.debug("ThreatFox cache stale for %s", cache_key)
-                return None
-            return data.get("iocs", [])
-        except Exception:
-            return None
-
-    def _save_cache(self, cache_key: str, iocs: list[dict]) -> None:
-        CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        cache_path = CACHE_DIR / f"{cache_key}.json"
-        cache_path.write_text(
-            json.dumps({
-                "cached_at": datetime.now(timezone.utc).isoformat(),
-                "iocs":      iocs,
-            }, indent=2),
-            encoding="utf-8",
-        )
-
-    # ------------------------------------------------------------------
-    # HTTP
-    # ------------------------------------------------------------------
-
-    def _post(self, url: str, payload: bytes) -> Any:
-        req = Request(
-            url,
-            data=payload,
-            headers={
-                "Content-Type": "application/json",
-                "Auth-Key":     self._abusech_key,
-                "User-Agent":   "THEORY/1.0 threat-intel-research",
-            },
-            method="POST",
-        )
-        for attempt in range(1, RETRY_MAX + 1):
-            try:
-                with urlopen(req, timeout=TIMEOUT) as resp:
-                    return json.loads(resp.read().decode("utf-8"))
-            except HTTPError as exc:
-                if exc.code == 429 and attempt < RETRY_MAX:
-                    time.sleep(RETRY_WAIT * attempt)
-                else:
-                    raise
-            except URLError:
-                if attempt < RETRY_MAX:
-                    time.sleep(RETRY_WAIT)
-                else:
-                    raise
-        return {}
 
 
 # ---------------------------------------------------------------------------
