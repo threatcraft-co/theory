@@ -25,43 +25,33 @@ No results (empty list) means "nobody has scanned this (that's
 public)" — not an error, and is cached as a miss the same as a real
 empty result so a re-run doesn't keep re-querying a dead end.
 
-Cache: .cache/urlscan_io/{key_hash}.json, TTL 24 hours (scan history
-for a domain can grow day to day as new scans are submitted by other
-users).
+Cache: .cache/urlscan_io/, TTL 24 hours (see theory.disk_cache). Scan history
+for a domain can grow day to day as new scans are submitted by other users.
+"No scans on record" is remembered as a miss; a 429, timeout or 5xx is not
+cached (search quotas are tight, and one 429 used to blank every remaining
+domain for a day).
 """
 from __future__ import annotations
 
-import hashlib
-import json
 import logging
-import time
-from typing import Any
-from urllib.error import HTTPError, URLError
-from urllib.parse import quote
-from urllib.request import Request, urlopen
+from datetime import timedelta
 
+from collectors._enrich import enrich_keys
 from collectors.base import BaseCollector
 
-from theory.paths import cache_path
+from theory.disk_cache import DiskCache
+from theory.http_client import HttpClient, NotFound
 
 logger = logging.getLogger(__name__)
 
 SOURCE_ID       = "urlscan_io"
 API_BASE        = "https://urlscan.io/api/v1/search/"
-CACHE_DIR       = cache_path("urlscan_io")
 CACHE_TTL_HOURS = 24
 TIMEOUT         = 10
 RETRY_MAX       = 2
 RETRY_WAIT      = 2
 MAX_PER_RUN     = 40
 MAX_RESULTS     = 5  # most recent scans only — this is a "has anyone seen this" check, not deep research
-
-_EMPTY_RESULT: dict[str, Any] = {"scan_count": 0, "malicious_count": 0, "scans": []}
-
-
-def _key_hash(key: str) -> str:
-    return hashlib.sha256(key.encode("utf-8")).hexdigest()[:16]
-
 
 def _build_query(ioc_type: str, value: str) -> str | None:
     if ioc_type == "domain":
@@ -82,6 +72,11 @@ class URLScanIOCollector(BaseCollector):
 
     def __init__(self, api_key: str | None = None, config: dict | None = None):
         super().__init__(api_key=api_key, config=config or {})
+        headers = {"API-Key": self.api_key} if self.api_key else {}
+        self._http = HttpClient(
+            timeout=TIMEOUT, attempts=RETRY_MAX, backoff=RETRY_WAIT, headers=headers,
+        )
+        self._cache = DiskCache(SOURCE_ID, ttl=timedelta(hours=CACHE_TTL_HOURS))
 
     def query(self, actor_name: str) -> dict | None:
         """Standard interface stub — urlscan.io is enrichment-only."""
@@ -114,26 +109,19 @@ class URLScanIOCollector(BaseCollector):
             len(values), len(targets), actor_name,
         )
 
-        results: dict[str, dict] = {}
-        lookup_count = 0
-
-        for value in values:
-            cached = self._load_cache(value)
-            if cached is not None:
-                if cached.get("scan_count", 0) > 0:
-                    results[value] = cached
-                continue
-
+        def load(value: str) -> dict | None:
             context = self._lookup(targets[value], value)
-            if context is not None:
-                self._save_cache(value, context)
-                lookup_count += 1
-                if context.get("scan_count", 0) > 0:
-                    results[value] = context
-            else:
-                self._save_cache(value, dict(_EMPTY_RESULT))
+            # "No scans on record" is an answer, but not an annotation:
+            # remember it as a miss and leave the indicator unannotated.
+            if context is None or not context.get("scan_count", 0):
+                return None
+            return context
 
-            time.sleep(0.3)  # polite pacing on a shared free service
+        results, stats = enrich_keys(
+            values, cache=self._cache, load=load,
+            source="urlscan.io", pace=0.3,   # polite pacing on a shared free service
+        )
+        lookup_count = stats.live
 
         with_hits = sum(1 for r in results.values() if r.get("malicious_count"))
         logger.info(
@@ -147,35 +135,23 @@ class URLScanIOCollector(BaseCollector):
     # ------------------------------------------------------------------
 
     def _lookup(self, ioc_type: str, value: str) -> dict | None:
+        """Search urlscan.io for one domain/URL.
+
+        Returns a (possibly zero-count) result dict when urlscan.io answered,
+        including 404; None for an indicator type it cannot search. Raises
+        HttpError when the question could not be answered (429, timeout,
+        5xx); those are not cached.
+        """
         query = _build_query(ioc_type, value)
         if not query:
             return None
 
-        url = f"{API_BASE}?q={quote(query)}"
-        headers = {"Accept": "application/json", "User-Agent": "THEORY/1.0 threat-intel-research"}
-        if self.api_key:
-            headers["API-Key"] = self.api_key
-        req = Request(url, headers=headers)
-
-        for attempt in range(1, RETRY_MAX + 1):
-            try:
-                with urlopen(req, timeout=TIMEOUT) as resp:
-                    data = json.loads(resp.read().decode("utf-8"))
-                    return self._parse_results(data.get("results", []) or [])
-            except HTTPError as exc:
-                if exc.code == 404:
-                    return dict(_EMPTY_RESULT)
-                if attempt < RETRY_MAX:
-                    time.sleep(RETRY_WAIT * attempt)
-                else:
-                    logger.debug("urlscan.io lookup failed for %s: HTTP %d", value, exc.code)
-                    return None
-            except URLError:
-                if attempt < RETRY_MAX:
-                    time.sleep(RETRY_WAIT)
-                else:
-                    return None
-        return None
+        try:
+            data = self._http.get_json(API_BASE, params={"q": query})
+        except NotFound:
+            return {"scan_count": 0, "malicious_count": 0, "scans": []}
+        raw_results = data.get("results") if isinstance(data, dict) else None
+        return self._parse_results(raw_results or [])
 
     @staticmethod
     def _parse_results(raw_results: list[dict]) -> dict:
@@ -201,33 +177,3 @@ class URLScanIOCollector(BaseCollector):
             "malicious_count": malicious_count,
             "scans":           scans,
         }
-
-    # ------------------------------------------------------------------
-    # Cache
-    # ------------------------------------------------------------------
-
-    def _load_cache(self, value: str) -> dict | None:
-        cache_path = CACHE_DIR / f"{_key_hash(value)}.json"
-        if not cache_path.exists():
-            return None
-        try:
-            payload = json.loads(cache_path.read_text(encoding="utf-8"))
-        except (json.JSONDecodeError, OSError):
-            return None
-
-        cached_at = payload.get("_cached_at", 0)
-        if time.time() - cached_at > CACHE_TTL_HOURS * 3600:
-            return None  # stale
-
-        return payload.get("data")
-
-    def _save_cache(self, value: str, data: dict) -> None:
-        CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        cache_path = CACHE_DIR / f"{_key_hash(value)}.json"
-        try:
-            cache_path.write_text(
-                json.dumps({"_cached_at": time.time(), "data": data}),
-                encoding="utf-8",
-            )
-        except OSError as exc:
-            logger.warning("urlscan.io: failed to write cache for %s: %s", value, exc)
