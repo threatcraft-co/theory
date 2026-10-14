@@ -22,30 +22,30 @@ API: GET https://api.greynoise.io/v3/community/{ip}
 Auth: GREYNOISE_API_KEY (free at greynoise.io, non-free-email required)
 Rate: 50 lookups/week on Community tier
 
-Cache: .cache/greynoise/{ip_hash}.json, TTL 7 days
-(IP reputation changes slowly; long cache is safe)
+Cache: .cache/greynoise/, TTL 7 days (see theory.disk_cache). IP reputation
+changes slowly, so a long TTL is safe, but only for real answers: a 429 or a
+network error is never cached (see collectors/_enrich.py). The Community
+quota is small enough that burning it and then caching "unknown" for a week
+would be worse than useless.
 """
 
 from __future__ import annotations
 
-import hashlib
-import json
 import logging
 import os
-import time
-from datetime import datetime, timezone, timedelta
-from urllib.request import Request, urlopen
-from urllib.error import HTTPError, URLError
+from datetime import timedelta
 
+from collectors._enrich import enrich_keys
+from collectors._ip import is_public_ip
 from collectors.base import BaseCollector
 
-from theory.paths import cache_path
+from theory.disk_cache import DiskCache
+from theory.http_client import HttpClient, NotFound
 
 logger = logging.getLogger(__name__)
 
 SOURCE_ID        = "greynoise"
 API_BASE         = "https://api.greynoise.io/v3/community"
-CACHE_DIR        = cache_path("greynoise")
 CACHE_TTL_DAYS   = 7
 TIMEOUT          = 10
 RETRY_MAX        = 2
@@ -72,6 +72,14 @@ class GreyNoiseCollector(BaseCollector):
         # Fall back to env var so the collector works when instantiated
         # with no arguments.
         self._gn_key = api_key or os.environ.get("GREYNOISE_API_KEY", "")
+        # The Community quota is weekly, so a 429 is not worth waiting out:
+        # enrich_keys stops the run instead. Other transient errors retry.
+        self._http = HttpClient(
+            timeout=TIMEOUT, attempts=RETRY_MAX, backoff=RETRY_WAIT,
+            headers={"key": self._gn_key},
+            retry_statuses={500, 502, 503, 504},
+        )
+        self._cache = DiskCache(SOURCE_ID, ttl=timedelta(days=CACHE_TTL_DAYS))
 
     def query(self, actor_name: str) -> dict | None:
         """Standard interface stub -- GreyNoise is enrichment-only."""
@@ -114,7 +122,7 @@ class GreyNoiseCollector(BaseCollector):
         for ioc in indicators:
             if ioc.get("type") == "ip":
                 ip_val = ioc.get("value", "").strip()
-                if ip_val and not _is_private(ip_val):
+                if ip_val and is_public_ip(ip_val):
                     ip_set.add(ip_val)
 
         if not ip_set:
@@ -127,29 +135,11 @@ class GreyNoiseCollector(BaseCollector):
             len(ips), len(ip_set), actor_name,
         )
 
-        results: dict[str, dict] = {}
-        lookup_count = 0
-
-        for ip in ips:
-            # Check cache first
-            cached = self._load_cache(ip)
-            if cached is not None:
-                results[ip] = cached
-                continue
-
-            # Live lookup
-            context = self._lookup_ip(ip)
-            if context:
-                results[ip] = context
-                self._save_cache(ip, context)
-                lookup_count += 1
-            else:
-                # Cache the miss so we don't retry
-                miss = {"noise": False, "riot": False, "classification": "unknown",
-                        "name": "", "last_seen": "", "link": ""}
-                self._save_cache(ip, miss)
-
-            time.sleep(0.5)  # polite pacing
+        results, stats = enrich_keys(
+            ips, cache=self._cache, load=self._lookup_ip,
+            source="GreyNoise", pace=0.5,
+        )
+        lookup_count = stats.live
 
         benign_count = sum(
             1 for r in results.values()
@@ -170,108 +160,30 @@ class GreyNoiseCollector(BaseCollector):
     # ------------------------------------------------------------------
 
     def _lookup_ip(self, ip: str) -> dict | None:
-        """Query GreyNoise Community API for a single IP."""
-        url = f"{API_BASE}/{ip}"
-        req = Request(
-            url,
-            headers={
-                "key":        self._gn_key,
-                "Accept":     "application/json",
-                "User-Agent": "THEORY/1.0 threat-intel-research",
-            },
-            method="GET",
-        )
+        """Query GreyNoise Community API for a single IP.
 
-        for attempt in range(1, RETRY_MAX + 1):
-            try:
-                with urlopen(req, timeout=TIMEOUT) as resp:
-                    data = json.loads(resp.read().decode("utf-8"))
-                    if data.get("message") == "Success":
-                        return {
-                            "noise":          data.get("noise", False),
-                            "riot":           data.get("riot", False),
-                            "classification": data.get("classification", "unknown"),
-                            "name":           data.get("name", ""),
-                            "last_seen":      data.get("last_seen", ""),
-                            "link":           data.get("link", ""),
-                        }
-                    return None
-            except HTTPError as exc:
-                if exc.code == 404:
-                    # IP not in GreyNoise dataset
-                    return None
-                if exc.code == 429:
-                    logger.warning(
-                        "GreyNoise: rate limited. Community tier allows "
-                        "50 lookups/week. Stopping enrichment."
-                    )
-                    return None
-                if attempt < RETRY_MAX:
-                    time.sleep(RETRY_WAIT * attempt)
-                else:
-                    logger.debug("GreyNoise lookup failed for %s: HTTP %d", ip, exc.code)
-                    return None
-            except URLError:
-                if attempt < RETRY_MAX:
-                    time.sleep(RETRY_WAIT)
-                else:
-                    return None
-        return None
-
-    # ------------------------------------------------------------------
-    # Cache
-    # ------------------------------------------------------------------
-
-    def _load_cache(self, ip: str) -> dict | None:
-        cache_path = CACHE_DIR / f"{_ip_hash(ip)}.json"
-        if not cache_path.exists():
-            return None
+        Returns None when GreyNoise answered that it has nothing on this IP
+        (a real answer, cacheable). Raises HttpError when the question could
+        not be answered (429, timeout, 5xx, bad key); those are not cached.
+        """
         try:
-            data = json.loads(cache_path.read_text(encoding="utf-8"))
-            cached_at = datetime.fromisoformat(data.get("cached_at", "2000-01-01"))
-            age = datetime.now(timezone.utc) - cached_at.replace(tzinfo=timezone.utc)
-            if age > timedelta(days=CACHE_TTL_DAYS):
-                return None
-            return data.get("context")
-        except Exception:
-            return None
+            data = self._http.get_json(f"{API_BASE}/{ip}")
+        except NotFound:
+            return None  # IP not in GreyNoise dataset
 
-    def _save_cache(self, ip: str, context: dict) -> None:
-        CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        cache_path = CACHE_DIR / f"{_ip_hash(ip)}.json"
-        cache_path.write_text(
-            json.dumps({
-                "cached_at": datetime.now(timezone.utc).isoformat(),
-                "ip":        ip,
-                "context":   context,
-            }, indent=2),
-            encoding="utf-8",
-        )
+        if not isinstance(data, dict) or data.get("message") != "Success":
+            return None
+        return {
+            "noise":          data.get("noise", False),
+            "riot":           data.get("riot", False),
+            "classification": data.get("classification", "unknown"),
+            "name":           data.get("name", ""),
+            "last_seen":      data.get("last_seen", ""),
+            "link":           data.get("link", ""),
+        }
 
 
 # ---------------------------------------------------------------------------
 # Utilities
 # ---------------------------------------------------------------------------
 
-def _ip_hash(ip: str) -> str:
-    """Hash an IP to a safe cache filename."""
-    return hashlib.sha256(ip.encode()).hexdigest()[:16]
-
-
-def _is_private(ip: str) -> bool:
-    """Quick check for RFC1918 / loopback / link-local addresses."""
-    return (
-        ip.startswith("10.")
-        or ip.startswith("172.16.") or ip.startswith("172.17.")
-        or ip.startswith("172.18.") or ip.startswith("172.19.")
-        or ip.startswith("172.2") or ip.startswith("172.30.")
-        or ip.startswith("172.31.")
-        or ip.startswith("192.168.")
-        or ip.startswith("127.")
-        or ip.startswith("0.")
-        or ip.startswith("169.254.")
-        or ip == "::1"
-        or ip.startswith("fe80:")
-        or ip.startswith("fc00:")
-        or ip.startswith("fd")
-    )

@@ -33,6 +33,62 @@ set. `--actor a`, `--actor APT123` and `--actor Spider` previously each
 produced a confident, saved dossier (APT1, APT1, WOLF SPIDER); they now
 exit with suggestions. `--allow-unknown` covers genuinely new actors.
 
+### Fixed — failed requests were cached as "no data"
+
+Several collectors turned *any* failure into "the source has nothing on this"
+and cached it, so one bad minute silently blanked an indicator for days:
+
+| Source | What was cached on a timeout / 429 / 5xx | For how long |
+|---|---|---|
+| GreyNoise | `classification: unknown` | 7 days |
+| AbuseIPDB | `abuse_confidence_score: -1` | 3 days |
+| ThreatFox, URLhaus, MalwareBazaar | `[]` (no IOCs) | 24 hours |
+| urlscan.io, Shodan InternetDB | empty result | 24 hours |
+
+Rate limits were the worst case. GreyNoise's Community tier allows about 50
+lookups a week; the collector logged "stopping enrichment", did not stop, and
+cached every remaining IP as "unknown" for a week. abuse.ch reports a revoked
+or invalid Auth-Key as an HTTP 200 with a `query_status` string, which
+ThreatFox and URLhaus read as "no results" and cached.
+
+Only a real answer is cached now. A 404 / `no_results` is remembered as a
+miss; timeouts, 429s, 5xx, bad keys and error replies are not cached and are
+retried next run. A 429 stops the run, three failures in a row stop the run
+(an offline machine now fails in seconds, not minutes), and a run that was cut
+short logs one warning saying so.
+
+A remembered miss is also now left out of the results consistently. Before,
+the run that created it did not annotate the IP but every later run did, with
+a sentinel value, so the same IP was annotated or not depending on cache
+state.
+
+On upgrade, existing cache files for these sources are ignored and refetched
+once (the cache format changed).
+
+### Fixed — private-IP filtering
+
+GreyNoise and AbuseIPDB decided "private" with string prefixes.
+`startswith("172.2")` matched public space (172.2.0.0/16 and
+172.200.0.0-172.255.255.255), so those IPs were never enriched, and malformed
+strings were sent to the API and spent quota on a guaranteed miss. CGNAT,
+multicast and documentation ranges were missed. All three IP collectors now
+share one `is_public_ip()` built on `ipaddress`. IPs in the previously skipped
+public ranges are now enriched, so a run may spend slightly more quota.
+
+### Changed — one HTTP client and one cache
+
+`theory/http_client.py` (`HttpClient`) and `theory/disk_cache.py`
+(`DiskCache`) replace the `urlopen` + retry loop + `_load_cache`/`_save_cache`
+copied into each collector. Seven collectors are migrated (ThreatFox, URLhaus,
+MalwareBazaar, AbuseIPDB, GreyNoise, Shodan InternetDB, urlscan.io), with
+about 640 lines of duplicated HTTP and cache code removed from them. Requests
+are https-only, size-capped and retried with backoff; error messages and logs
+carry scheme, host and path only, never a query string or header, so an API
+key sent in a URL cannot leak into a debug log. Cache keys are slug plus hash,
+writes are atomic, and the cache directory is resolved on use so
+`THEORY_HOME` is honoured. Remaining collectors are migrated in later
+releases.
+
 ### Fixed — attribution
 
 Indicators for shared tooling (Cobalt Strike, Mimikatz, PsExec) were

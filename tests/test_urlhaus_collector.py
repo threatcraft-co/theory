@@ -12,6 +12,22 @@ from __future__ import annotations
 
 
 from collectors.urlhaus import URLhausCollector, _slugify
+from datetime import timedelta
+
+import collectors.urlhaus as uh_module
+from theory.disk_cache import DiskCache
+
+
+def make_collector(tmp_path, clock=None):
+    """A collector whose cache lives in tmp_path (never the real cache dir)."""
+    collector = URLhausCollector(api_key="test")
+    kwargs = {"clock": clock} if clock else {}
+    collector._cache = DiskCache(
+        "urlhaus", ttl=timedelta(hours=uh_module.CACHE_TTL_HOURS),
+        root=tmp_path, **kwargs,
+    )
+    return collector
+
 
 
 # ---------------------------------------------------------------------------
@@ -149,38 +165,27 @@ class TestParseUrl:
 
 class TestURLhausCache:
 
-    def test_save_and_load(self, tmp_path, monkeypatch):
-        import collectors.urlhaus as uh_module
-        monkeypatch.setattr(uh_module, "CACHE_DIR", tmp_path)
-
-        collector = URLhausCollector(api_key="test")
+    def test_save_and_load(self, tmp_path):
+        collector = make_collector(tmp_path)
         urls = [{"type": "url", "value": "http://evil.com/x", "confidence": 90}]
-        collector._save_cache("emotet", urls)
-        assert collector._load_cache("emotet") == urls
+        collector._cache.put("emotet", urls)
+        assert collector._cache.get("emotet").value == urls
 
-    def test_missing_returns_none(self, tmp_path, monkeypatch):
-        import collectors.urlhaus as uh_module
-        monkeypatch.setattr(uh_module, "CACHE_DIR", tmp_path)
+    def test_missing_returns_none(self, tmp_path):
+        collector = make_collector(tmp_path)
+        assert collector._cache.get("nonexistent") is None
 
-        collector = URLhausCollector(api_key="test")
-        assert collector._load_cache("nonexistent") is None
+    def test_empty_cache_returns_empty_list(self, tmp_path):
+        collector = make_collector(tmp_path)
+        collector._cache.put("no_results", [])
+        assert collector._cache.get("no_results").value == []
 
-    def test_empty_cache_returns_empty_list(self, tmp_path, monkeypatch):
-        import collectors.urlhaus as uh_module
-        monkeypatch.setattr(uh_module, "CACHE_DIR", tmp_path)
-
-        collector = URLhausCollector(api_key="test")
-        collector._save_cache("no_results", [])
-        assert collector._load_cache("no_results") == []
-
-    def test_stale_cache_returns_none(self, tmp_path, monkeypatch):
-        import collectors.urlhaus as uh_module
-        monkeypatch.setattr(uh_module, "CACHE_DIR", tmp_path)
-        monkeypatch.setattr(uh_module, "CACHE_TTL_HOURS", 0)
-
-        collector = URLhausCollector(api_key="test")
-        collector._save_cache("stale", [{"type": "url", "value": "http://e.com"}])
-        assert collector._load_cache("stale") is None
+    def test_stale_cache_returns_none(self, tmp_path):
+        now = [1_000_000.0]
+        collector = make_collector(tmp_path, clock=lambda: now[0])
+        collector._cache.put("stale", [{"type": "url", "value": "http://e.com"}])
+        now[0] += 25 * 3600
+        assert collector._cache.get("stale") is None
 
 
 # ---------------------------------------------------------------------------
@@ -222,25 +227,19 @@ class TestCollectForMalwareFamilies:
             "host": "old.com", "reporter": "r2", "payload_hashes": [],
         }
 
-    def test_uses_cache(self, tmp_path, monkeypatch):
-        import collectors.urlhaus as uh_module
-        monkeypatch.setattr(uh_module, "CACHE_DIR", tmp_path)
-
-        collector = URLhausCollector(api_key="test")
-        collector._save_cache("emotet", [self._online_url()])
+    def test_uses_cache(self, tmp_path):
+        collector = make_collector(tmp_path)
+        collector._cache.put("emotet", [self._online_url()])
 
         result = collector.collect_for_malware_families(["Emotet"], "APT28")
         assert result is not None
         assert len(result["indicators"]) == 1
 
-    def test_deduplicates_across_families(self, tmp_path, monkeypatch):
-        import collectors.urlhaus as uh_module
-        monkeypatch.setattr(uh_module, "CACHE_DIR", tmp_path)
-
-        collector = URLhausCollector(api_key="test")
+    def test_deduplicates_across_families(self, tmp_path):
+        collector = make_collector(tmp_path)
         shared = [self._online_url("http://shared.com/x")]
-        collector._save_cache("emotet", shared)
-        collector._save_cache("trickbot", shared)
+        collector._cache.put("emotet", shared)
+        collector._cache.put("trickbot", shared)
 
         result = collector.collect_for_malware_families(
             ["Emotet", "TrickBot"], "APT28",
@@ -248,36 +247,31 @@ class TestCollectForMalwareFamilies:
         values = [i["value"] for i in result["indicators"]]
         assert values.count("http://shared.com/x") == 1
 
-    def test_active_urls_present_in_output(self, tmp_path, monkeypatch):
+    def test_active_urls_present_in_output(self, tmp_path):
         # NOTE: The current sort key `(0 if online else 1, first_seen)` with
         # reverse=True places offline URLs first, which is likely not intended.
         # Rather than encoding that specific ordering here, this test asserts
         # only that both statuses survive the pipeline. If the sort is fixed
         # to put active URLs first, add a follow-up test then.
-        import collectors.urlhaus as uh_module
-        monkeypatch.setattr(uh_module, "CACHE_DIR", tmp_path)
 
-        collector = URLhausCollector(api_key="test")
+        collector = make_collector(tmp_path)
         mixed = [
             self._offline_url("http://old.com/x"),
             self._online_url("http://live.com/x"),
         ]
-        collector._save_cache("emotet", mixed)
+        collector._cache.put("emotet", mixed)
 
         result = collector.collect_for_malware_families(["Emotet"], "APT28")
         statuses = [i["url_status"] for i in result["indicators"]]
         assert "online" in statuses
         assert "offline" in statuses
 
-    def test_ioc_cap_applied(self, tmp_path, monkeypatch):
-        import collectors.urlhaus as uh_module
-        monkeypatch.setattr(uh_module, "CACHE_DIR", tmp_path)
-
-        collector = URLhausCollector(api_key="test")
+    def test_ioc_cap_applied(self, tmp_path):
+        collector = make_collector(tmp_path)
         # 250 URLs across two families -> should cap at 200 in the aggregate.
         cache_urls = [self._online_url(f"http://e.com/{i}") for i in range(150)]
-        collector._save_cache("emotet",   cache_urls)
-        collector._save_cache("trickbot", cache_urls)   # will dedupe fully
+        collector._cache.put("emotet",   cache_urls)
+        collector._cache.put("trickbot", cache_urls)   # will dedupe fully
 
         result = collector.collect_for_malware_families(
             ["Emotet", "TrickBot"], "APT28",
@@ -285,30 +279,21 @@ class TestCollectForMalwareFamilies:
         assert result is not None
         assert len(result["indicators"]) <= 200
 
-    def test_family_hits_tracked(self, tmp_path, monkeypatch):
-        import collectors.urlhaus as uh_module
-        monkeypatch.setattr(uh_module, "CACHE_DIR", tmp_path)
-
-        collector = URLhausCollector(api_key="test")
-        collector._save_cache("emotet", [self._online_url()])
+    def test_family_hits_tracked(self, tmp_path):
+        collector = make_collector(tmp_path)
+        collector._cache.put("emotet", [self._online_url()])
         result = collector.collect_for_malware_families(["Emotet"], "APT28")
         assert result["family_hits"] == {"Emotet": 1}
 
-    def test_malware_family_tagged_on_ioc(self, tmp_path, monkeypatch):
-        import collectors.urlhaus as uh_module
-        monkeypatch.setattr(uh_module, "CACHE_DIR", tmp_path)
-
-        collector = URLhausCollector(api_key="test")
-        collector._save_cache("emotet", [self._online_url()])
+    def test_malware_family_tagged_on_ioc(self, tmp_path):
+        collector = make_collector(tmp_path)
+        collector._cache.put("emotet", [self._online_url()])
         result = collector.collect_for_malware_families(["Emotet"], "APT28")
         assert result["indicators"][0]["malware_family"] == "Emotet"
 
-    def test_returns_none_when_all_empty(self, tmp_path, monkeypatch):
-        import collectors.urlhaus as uh_module
-        monkeypatch.setattr(uh_module, "CACHE_DIR", tmp_path)
-
-        collector = URLhausCollector(api_key="test")
-        collector._save_cache("obscure", [])
+    def test_returns_none_when_all_empty(self, tmp_path):
+        collector = make_collector(tmp_path)
+        collector._cache.put("obscure", [])
         result = collector.collect_for_malware_families(["Obscure"], "APT28")
         assert result is None
 
