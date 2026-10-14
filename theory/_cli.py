@@ -604,7 +604,7 @@ def cmd_ask(argv: list[str]) -> None:
 def cmd_init_personal(path: str | None) -> None:
     """`theory --init-personal [--personal-path PATH]` — set up the
     gitignored redirect + starter personal indicators file."""
-    from collectors.personal_intel import REDIRECT_PATH, init_personal
+    from collectors.personal_intel import init_personal, redirect_path
     target = init_personal(path)
 
     try:
@@ -620,7 +620,7 @@ def cmd_init_personal(path: str | None) -> None:
             print(msg)
 
     _p("\nTHEORY — Personal research redirect", "bold cyan")
-    _p(f"  Redirect (gitignored):  {REDIRECT_PATH.resolve()}")
+    _p(f"  Redirect (gitignored):  {redirect_path().resolve()}")
     _p(f"  Personal indicators:    {target}")
     _p("\n  Add your own research to that file, then query it with:")
     _p("    theory --actor APT28 --sources personal,mitre,cisa", "dim")

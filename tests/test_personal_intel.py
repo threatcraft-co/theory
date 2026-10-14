@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import pytest
 
+from pathlib import Path
+
 import collectors.personal_intel as pi
 
 
@@ -161,3 +163,37 @@ class TestQuery:
         target.write_text("indicators: \"not a list\"\n")
         result = pi.PersonalIntelCollector().query("APT28")
         assert result is None
+
+
+class TestRedirectResolvedAtCallTime:
+    """The redirect location must follow the environment *now*, not whatever it
+    was when the module was first imported (a long-lived process, `theory
+    serve`, or a test that changes directory would otherwise read and write the
+    wrong place)."""
+
+    @pytest.fixture(autouse=True)
+    def _use_real_resolution(self, monkeypatch):
+        monkeypatch.setattr(pi, "REDIRECT_PATH", None)
+
+    def test_follows_the_user_config_dir_as_it_changes(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        first, second = tmp_path / "cfg1", tmp_path / "cfg2"
+        monkeypatch.setattr("theory.paths.user_config_dir", lambda: first)
+        assert pi.redirect_path() == first / "local_sources.yaml"
+        monkeypatch.setattr("theory.paths.user_config_dir", lambda: second)
+        assert pi.redirect_path() == second / "local_sources.yaml"
+
+    def test_existing_in_repo_redirect_still_wins(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.setattr("theory.paths.user_config_dir", lambda: tmp_path / "cfg")
+        legacy = tmp_path / "config" / "local_sources.yaml"
+        legacy.parent.mkdir()
+        legacy.write_text("personal_indicators_path: x\n")
+        assert pi.redirect_path() == Path("config/local_sources.yaml")
+
+    def test_init_personal_writes_to_the_current_location(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        cfg = tmp_path / "cfg"
+        monkeypatch.setattr("theory.paths.user_config_dir", lambda: cfg)
+        pi.init_personal(str(tmp_path / "mine.yaml"))
+        assert (cfg / "local_sources.yaml").is_file()
