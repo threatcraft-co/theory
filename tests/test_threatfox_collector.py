@@ -6,8 +6,24 @@ Unit tests for collectors/threatfox.py — fully offline.
 
 from __future__ import annotations
 
+from datetime import timedelta
+
 import pytest
+
+import collectors.threatfox as tf_module
 from collectors.threatfox import ThreatFoxCollector, _slugify, _threat_priority
+from theory.disk_cache import DiskCache
+
+
+def make_collector(tmp_path, clock=None):
+    """A collector whose cache lives in tmp_path (never the real cache dir)."""
+    collector = ThreatFoxCollector()
+    kwargs = {"clock": clock} if clock else {}
+    collector._cache = DiskCache(
+        "threatfox", ttl=timedelta(hours=tf_module.CACHE_TTL_HOURS),
+        root=tmp_path, **kwargs,
+    )
+    return collector
 
 
 # ---------------------------------------------------------------------------
@@ -154,40 +170,32 @@ class TestParseIoc:
 
 class TestThreatFoxCache:
 
-    def test_save_and_load(self, tmp_path, monkeypatch):
-        import collectors.threatfox as tf_module
-        monkeypatch.setattr(tf_module, "CACHE_DIR", tmp_path)
+    def test_save_and_load(self, tmp_path):
 
-        collector = ThreatFoxCollector()
+        collector = make_collector(tmp_path)
         iocs = [{"type": "ip", "value": "1.2.3.4", "confidence": 100}]
-        collector._save_cache("zebrocy", iocs)
-        loaded = collector._load_cache("zebrocy")
-        assert loaded == iocs
+        collector._cache.put("zebrocy", iocs)
+        loaded = collector._cache.get("zebrocy")
+        assert loaded.value == iocs
 
-    def test_missing_returns_none(self, tmp_path, monkeypatch):
-        import collectors.threatfox as tf_module
-        monkeypatch.setattr(tf_module, "CACHE_DIR", tmp_path)
+    def test_missing_returns_none(self, tmp_path):
 
-        collector = ThreatFoxCollector()
-        assert collector._load_cache("nonexistent") is None
+        collector = make_collector(tmp_path)
+        assert collector._cache.get("nonexistent") is None
 
-    def test_empty_cache_returns_empty_list(self, tmp_path, monkeypatch):
-        import collectors.threatfox as tf_module
-        monkeypatch.setattr(tf_module, "CACHE_DIR", tmp_path)
+    def test_empty_cache_returns_empty_list(self, tmp_path):
 
-        collector = ThreatFoxCollector()
-        collector._save_cache("no_results", [])
-        loaded = collector._load_cache("no_results")
-        assert loaded == []
+        collector = make_collector(tmp_path)
+        collector._cache.put("no_results", [])
+        loaded = collector._cache.get("no_results")
+        assert loaded.value == []
 
-    def test_stale_cache_returns_none(self, tmp_path, monkeypatch):
-        import collectors.threatfox as tf_module
-        monkeypatch.setattr(tf_module, "CACHE_DIR", tmp_path)
-        monkeypatch.setattr(tf_module, "CACHE_TTL_HOURS", 0)
-
-        collector = ThreatFoxCollector()
-        collector._save_cache("stale", [{"type": "ip", "value": "1.2.3.4"}])
-        assert collector._load_cache("stale") is None
+    def test_stale_cache_returns_none(self, tmp_path):
+        now = [1_000_000.0]
+        collector = make_collector(tmp_path, clock=lambda: now[0])
+        collector._cache.put("stale", [{"type": "ip", "value": "1.2.3.4"}])
+        now[0] += 25 * 3600
+        assert collector._cache.get("stale") is None
 
 
 # ---------------------------------------------------------------------------
@@ -211,11 +219,9 @@ class TestCollectForMalwareFamilies:
         result = collector.collect_for_malware_families([], "APT28")
         assert result is None
 
-    def test_uses_cache(self, tmp_path, monkeypatch):
-        import collectors.threatfox as tf_module
-        monkeypatch.setattr(tf_module, "CACHE_DIR", tmp_path)
+    def test_uses_cache(self, tmp_path):
 
-        collector = ThreatFoxCollector()
+        collector = make_collector(tmp_path)
         cached_iocs = [{
             "type": "ip", "value": "1.2.3.4", "confidence": 100,
             "threat_type": "botnet_cc", "threat_label": "Botnet C2",
@@ -223,18 +229,16 @@ class TestCollectForMalwareFamilies:
             "malware": "Zebrocy", "description": "Botnet C2 — Zebrocy",
             "sources": ["threatfox"],
         }]
-        collector._save_cache("zebrocy", cached_iocs)
+        collector._cache.put("zebrocy", cached_iocs)
 
         result = collector.collect_for_malware_families(["Zebrocy"], "APT28")
         assert result is not None
         assert len(result["indicators"]) == 1
         assert result["indicators"][0]["value"] == "1.2.3.4"
 
-    def test_deduplicates_across_families(self, tmp_path, monkeypatch):
-        import collectors.threatfox as tf_module
-        monkeypatch.setattr(tf_module, "CACHE_DIR", tmp_path)
+    def test_deduplicates_across_families(self, tmp_path):
 
-        collector = ThreatFoxCollector()
+        collector = make_collector(tmp_path)
         shared_ioc = [{
             "type": "ip", "value": "5.5.5.5", "confidence": 100,
             "threat_type": "botnet_cc", "threat_label": "Botnet C2",
@@ -242,8 +246,8 @@ class TestCollectForMalwareFamilies:
             "malware": "Zebrocy", "description": "", "sources": ["threatfox"],
         }]
         # Same IP appears in both family caches
-        collector._save_cache("zebrocy",   shared_ioc)
-        collector._save_cache("x_agent",   shared_ioc)
+        collector._cache.put("zebrocy",   shared_ioc)
+        collector._cache.put("x_agent",   shared_ioc)
 
         result = collector.collect_for_malware_families(["Zebrocy", "X-Agent"], "APT28")
         assert result is not None
@@ -251,11 +255,9 @@ class TestCollectForMalwareFamilies:
         values = [i["value"] for i in result["indicators"]]
         assert values.count("5.5.5.5") == 1
 
-    def test_sorted_by_confidence_desc(self, tmp_path, monkeypatch):
-        import collectors.threatfox as tf_module
-        monkeypatch.setattr(tf_module, "CACHE_DIR", tmp_path)
+    def test_sorted_by_confidence_desc(self, tmp_path):
 
-        collector = ThreatFoxCollector()
+        collector = make_collector(tmp_path)
         iocs = [
             {"type": "ip", "value": "1.1.1.1", "confidence": 50,
              "threat_type": "botnet_cc", "threat_label": "Botnet C2",
@@ -266,33 +268,29 @@ class TestCollectForMalwareFamilies:
              "first_seen": "", "last_seen": "", "tags": [],
              "malware": "X", "description": "", "sources": ["threatfox"]},
         ]
-        collector._save_cache("x_agent", iocs)
+        collector._cache.put("x_agent", iocs)
 
         result = collector.collect_for_malware_families(["X-Agent"], "APT28")
         assert result is not None
         # Highest confidence first
         assert result["indicators"][0]["confidence"] == 100
 
-    def test_malware_family_tagged_on_ioc(self, tmp_path, monkeypatch):
-        import collectors.threatfox as tf_module
-        monkeypatch.setattr(tf_module, "CACHE_DIR", tmp_path)
+    def test_malware_family_tagged_on_ioc(self, tmp_path):
 
-        collector = ThreatFoxCollector()
+        collector = make_collector(tmp_path)
         iocs = [{"type": "domain", "value": "evil.com", "confidence": 80,
                  "threat_type": "botnet_cc", "threat_label": "Botnet C2",
                  "first_seen": "2024-01-01", "last_seen": "", "tags": [],
                  "malware": "CHOPSTICK", "description": "", "sources": ["threatfox"]}]
-        collector._save_cache("chopstick", iocs)
+        collector._cache.put("chopstick", iocs)
 
         result = collector.collect_for_malware_families(["CHOPSTICK"], "APT28")
         assert result["indicators"][0]["malware_family"] == "CHOPSTICK"
 
-    def test_returns_none_when_all_empty(self, tmp_path, monkeypatch):
-        import collectors.threatfox as tf_module
-        monkeypatch.setattr(tf_module, "CACHE_DIR", tmp_path)
+    def test_returns_none_when_all_empty(self, tmp_path):
 
-        collector = ThreatFoxCollector()
-        collector._save_cache("obscure_malware", [])
+        collector = make_collector(tmp_path)
+        collector._cache.put("obscure_malware", [])
 
         result = collector.collect_for_malware_families(["Obscure Malware"], "APT28")
         assert result is None

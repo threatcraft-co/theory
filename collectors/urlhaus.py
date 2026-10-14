@@ -20,32 +20,30 @@ Endpoint: https://urlhaus-api.abuse.ch/v1/tag/ (POST, form-encoded)
 Auth: requires ABUSECH_API_KEY (free at https://auth.abuse.ch/).
       Same key works across all abuse.ch services.
 
-Cache: .cache/urlhaus/{family_slug}.json, TTL 24 hours
+Cache: .cache/urlhaus/, TTL 24 hours (see theory.disk_cache). Only real answers
+are cached; failures and error replies are not.
 """
 
 from __future__ import annotations
 
-import json
 import logging
 import os
 import re
 import time
-from datetime import datetime, timezone, timedelta
+from datetime import timedelta
 from typing import Any
-from urllib.parse import urlencode
-from urllib.request import Request, urlopen
-from urllib.error import HTTPError, URLError
 
+from collectors._abusech import interpret_query_status
 from collectors.base import BaseCollector
 
-from theory.paths import cache_path
+from theory.disk_cache import DiskCache
+from theory.http_client import BadResponse, HttpClient, HttpError
 
 logger = logging.getLogger(__name__)
 
 SOURCE_ID             = "urlhaus"
 API_BASE              = "https://urlhaus-api.abuse.ch/v1"
 TAG_ENDPOINT          = f"{API_BASE}/tag/"
-CACHE_DIR             = cache_path("urlhaus")
 CACHE_TTL_HOURS       = 24
 TIMEOUT               = 15
 RETRY_MAX             = 2
@@ -78,6 +76,11 @@ class URLhausCollector(BaseCollector):
         # Fall back to env var so the collector works when instantiated
         # with no arguments.
         self._abusech_key = api_key or os.environ.get("ABUSECH_API_KEY", "")
+        self._http = HttpClient(
+            timeout=TIMEOUT, attempts=RETRY_MAX, backoff=RETRY_WAIT,
+            headers={"Auth-Key": self._abusech_key},
+        )
+        self._cache = DiskCache(SOURCE_ID, ttl=timedelta(hours=CACHE_TTL_HOURS))
 
     def query(self, actor_name: str) -> dict | None:
         """Standard interface stub -- URLhaus is enrichment-only."""
@@ -117,8 +120,13 @@ class URLhausCollector(BaseCollector):
             len(malware_names), actor_name,
         )
 
+        failed: dict[str, str] = {}
         for family_name in malware_names:
-            urls = self._fetch_family_urls(family_name)
+            try:
+                urls = self._fetch_family_urls(family_name)
+            except HttpError as exc:
+                failed[family_name] = str(exc)
+                continue
             if urls:
                 family_hits[family_name] = len(urls)
                 for url_ioc in urls:
@@ -127,7 +135,15 @@ class URLhausCollector(BaseCollector):
                         seen_urls.add(key)
                         url_ioc["malware_family"] = family_name
                         all_iocs.append(url_ioc)
-            time.sleep(0.3)
+
+        if failed:
+            # Not cached: the next run asks again rather than believing
+            # "nothing found" for a day because of one timeout or a bad key.
+            logger.warning(
+                "URLhaus: %d of %d families could not be queried (not cached); "
+                "first error: %s",
+                len(failed), len(malware_names), next(iter(failed.values())),
+            )
 
         if not all_iocs:
             logger.info("URLhaus: no URLs found for any malware family")
@@ -171,45 +187,29 @@ class URLhausCollector(BaseCollector):
     # ------------------------------------------------------------------
 
     def _fetch_family_urls(self, family_name: str) -> list[dict]:
-        """Query URLhaus for URLs tagged with a malware family."""
-        cache_key = _slugify(family_name)
-        cached = self._load_cache(cache_key)
-        if cached is not None:
-            return cached
+        """Query URLhaus for URLs tagged with a malware family.
 
-        form_data = urlencode({
-            "tag":   family_name,
-            "limit": MAX_URLS_PER_FAMILY,
-        }).encode("utf-8")
+        Returns [] when URLhaus answered that it has nothing. Raises
+        HttpError when the question could not be answered (timeout, 5xx, 429,
+        bad key); those outcomes are never cached.
+        """
+        def load() -> list[dict]:
+            data = self._http.post_form(
+                TAG_ENDPOINT, {"tag": family_name, "limit": MAX_URLS_PER_FAMILY},
+            )
+            time.sleep(0.3)  # polite pacing — abuse.ch is a community resource
+            if not interpret_query_status(data, source="URLhaus", url=TAG_ENDPOINT):
+                logger.debug("URLhaus: no results for %r", family_name)
+                return []
+            raw = data.get("urls") or []
+            if not isinstance(raw, list):
+                raise BadResponse("URLhaus: unexpected data shape", url=TAG_ENDPOINT, status=200)
+            parsed = [self._parse_url(item) for item in raw]
+            parsed = [item for item in parsed if item]
+            logger.debug("URLhaus: %d urls for %r", len(parsed), family_name)
+            return parsed
 
-        try:
-            data = self._api_post(TAG_ENDPOINT, form_data)
-        except Exception as exc:
-            logger.debug("URLhaus fetch failed for %r: %s", family_name, exc)
-            self._save_cache(cache_key, [])
-            return []
-
-        if not isinstance(data, dict):
-            self._save_cache(cache_key, [])
-            return []
-
-        query_status = data.get("query_status", "")
-        if query_status == "no_results":
-            logger.debug("URLhaus: no results for %r", family_name)
-            self._save_cache(cache_key, [])
-            return []
-
-        raw_urls = data.get("urls", []) or []
-        if not isinstance(raw_urls, list):
-            self._save_cache(cache_key, [])
-            return []
-
-        parsed = [self._parse_url(u) for u in raw_urls]
-        parsed = [u for u in parsed if u]
-
-        self._save_cache(cache_key, parsed)
-        logger.debug("URLhaus: %d URLs for %r", len(parsed), family_name)
-        return parsed
+        return self._cache.fetch(_slugify(family_name), load, default=[])
 
     # ------------------------------------------------------------------
     # URL parsing
@@ -270,68 +270,6 @@ class URLhausCollector(BaseCollector):
             "reporter":        reporter,
             "payload_hashes":  payload_hashes,
         }
-
-    # ------------------------------------------------------------------
-    # Cache
-    # ------------------------------------------------------------------
-
-    def _load_cache(self, cache_key: str) -> list[dict] | None:
-        cache_path = CACHE_DIR / f"{cache_key}.json"
-        if not cache_path.exists():
-            return None
-        try:
-            data = json.loads(cache_path.read_text(encoding="utf-8"))
-            cached_at = datetime.fromisoformat(data.get("cached_at", "2000-01-01"))
-            age = datetime.now(timezone.utc) - cached_at.replace(tzinfo=timezone.utc)
-            if age > timedelta(hours=CACHE_TTL_HOURS):
-                logger.debug("URLhaus cache stale for %s", cache_key)
-                return None
-            return data.get("urls", [])
-        except Exception:
-            return None
-
-    def _save_cache(self, cache_key: str, urls: list[dict]) -> None:
-        CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        cache_path = CACHE_DIR / f"{cache_key}.json"
-        cache_path.write_text(
-            json.dumps({
-                "cached_at": datetime.now(timezone.utc).isoformat(),
-                "urls":      urls,
-            }, indent=2),
-            encoding="utf-8",
-        )
-
-    # ------------------------------------------------------------------
-    # HTTP
-    # ------------------------------------------------------------------
-
-    def _api_post(self, url: str, form_data: bytes) -> Any:
-        """POST form-encoded data to URLhaus API."""
-        req = Request(
-            url,
-            data=form_data,
-            headers={
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Auth-Key":     self._abusech_key,
-                "User-Agent":   "THEORY/1.0 threat-intel-research",
-            },
-            method="POST",
-        )
-        for attempt in range(1, RETRY_MAX + 1):
-            try:
-                with urlopen(req, timeout=TIMEOUT) as resp:
-                    return json.loads(resp.read().decode("utf-8"))
-            except HTTPError as exc:
-                if exc.code == 429 and attempt < RETRY_MAX:
-                    time.sleep(RETRY_WAIT * attempt)
-                else:
-                    raise
-            except URLError:
-                if attempt < RETRY_MAX:
-                    time.sleep(RETRY_WAIT)
-                else:
-                    raise
-        return {}
 
 
 # ---------------------------------------------------------------------------
