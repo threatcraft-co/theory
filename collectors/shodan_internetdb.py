@@ -33,11 +33,11 @@ GreyNoise/AbuseIPDB cache for longer.
 """
 from __future__ import annotations
 
-import ipaddress
 import logging
 from datetime import timedelta
 
 from collectors._enrich import enrich_keys
+from collectors._ip import is_public_ip
 from collectors.base import BaseCollector
 
 from theory.disk_cache import DiskCache
@@ -55,14 +55,6 @@ RETRY_WAIT      = 2
 # Conservative cap — InternetDB publishes no documented rate limit, but
 # THEORY doesn't lean on that; keeps one run's enrichment pass bounded.
 MAX_IPS_PER_RUN = 40
-
-
-def _is_private(ip: str) -> bool:
-    try:
-        addr = ipaddress.ip_address(ip)
-        return addr.is_private or addr.is_loopback or addr.is_link_local or addr.is_reserved
-    except ValueError:
-        return True  # not a parseable IP at all — don't waste a lookup on it
 
 
 class ShodanInternetDBCollector(BaseCollector):
@@ -95,7 +87,7 @@ class ShodanInternetDBCollector(BaseCollector):
         for ioc in indicators:
             if ioc.get("type") == "ip":
                 ip_val = (ioc.get("value") or "").strip()
-                if ip_val and not _is_private(ip_val):
+                if ip_val and is_public_ip(ip_val):
                     ip_set.add(ip_val)
 
         if not ip_set:

@@ -37,26 +37,7 @@ def make_collector(tmp_path, clock=None):
 @pytest.fixture(autouse=True)
 def _no_sleep(monkeypatch):
     monkeypatch.setattr("time.sleep", lambda s: None)
-from collectors.abuseipdb import AbuseIPDBCollector, _is_private
-
-
-# ---------------------------------------------------------------------------
-# _is_private tests
-# ---------------------------------------------------------------------------
-
-class TestIsPrivate:
-
-    def test_rfc1918_10(self):
-        assert _is_private("10.0.0.1") is True
-
-    def test_rfc1918_192(self):
-        assert _is_private("192.168.1.1") is True
-
-    def test_loopback(self):
-        assert _is_private("127.0.0.1") is True
-
-    def test_public_ipv4(self):
-        assert _is_private("8.8.8.8") is False
+from collectors.abuseipdb import AbuseIPDBCollector
 
 
 # ---------------------------------------------------------------------------
