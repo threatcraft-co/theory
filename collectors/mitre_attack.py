@@ -32,7 +32,11 @@ try:
     _ATTACKCTI_AVAILABLE = True
 except ImportError:
     _ATTACKCTI_AVAILABLE = False
-    logger.warning("attackcti not installed. Provide a local bundle or install attackcti.")
+    # attackcti is an optional fallback for when there is no local bundle. Warning here, at
+    # import time, fired on every run of every user with a local bundle (the normal
+    # setup) and put a scary line at the top of every dossier. _get_client() already
+    # logs an error if there is neither a bundle nor attackcti.
+    logger.debug("attackcti not installed; using the local ATT&CK bundle only.")
 
 SOURCE_ID   = "mitre_attack"
 BUNDLE_PATH = cache_path("enterprise-attack.json")
