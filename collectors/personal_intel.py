@@ -76,7 +76,17 @@ def _resolve_redirect_path() -> Path:
     return user_config_dir() / "local_sources.yaml"
 
 
-REDIRECT_PATH = _resolve_redirect_path()
+# Override hook, mainly for tests: when set, it wins over the resolved location.
+# Left as None in normal use so the location is worked out each time it is
+# needed (current directory, XDG_CONFIG_HOME and friends), not frozen at the
+# moment this module happened to be imported.
+REDIRECT_PATH: Path | None = None
+
+
+def redirect_path() -> Path:
+    """The redirect file's location, resolved now."""
+    return REDIRECT_PATH if REDIRECT_PATH is not None else _resolve_redirect_path()
+
 DEFAULT_PERSONAL_PATH = Path.home() / ".theory" / "personal_indicators.yaml"
 
 CANONICAL_TYPES = frozenset({
@@ -140,8 +150,9 @@ def init_personal(path: str | None = None) -> Path:
     """
     target = Path(path).expanduser().resolve() if path else DEFAULT_PERSONAL_PATH.resolve()
 
-    REDIRECT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    REDIRECT_PATH.write_text(REDIRECT_TEMPLATE.format(path=str(target)))
+    redirect = redirect_path()
+    redirect.parent.mkdir(parents=True, exist_ok=True)
+    redirect.write_text(REDIRECT_TEMPLATE.format(path=str(target)))
 
     target.parent.mkdir(parents=True, exist_ok=True)
     if not target.exists():
@@ -153,12 +164,13 @@ def init_personal(path: str | None = None) -> Path:
 def _load_redirect() -> Path | None:
     """Read config/local_sources.yaml and return the configured personal
     indicators path, or None if it hasn't been set up."""
-    if yaml is None or not REDIRECT_PATH.exists():
+    redirect = redirect_path()
+    if yaml is None or not redirect.exists():
         return None
     try:
-        data = yaml.safe_load(REDIRECT_PATH.read_text()) or {}
+        data = yaml.safe_load(redirect.read_text()) or {}
     except Exception as exc:
-        logger.warning("personal: could not read %s: %s", REDIRECT_PATH, exc)
+        logger.warning("personal: could not read %s: %s", redirect, exc)
         return None
     raw_path = data.get("personal_indicators_path") if isinstance(data, dict) else None
     if not raw_path:
