@@ -65,6 +65,14 @@ state.
 On upgrade, existing cache files for these sources are ignored and refetched
 once (the cache format changed).
 
+### Fixed — spurious "attackcti not installed" warning
+
+`collectors/mitre_attack.py` logged a WARNING at import time whenever the
+optional `attackcti` package was absent, which is the normal setup (the local
+ATT&CK bundle is used instead). Every dossier started with a scary line about
+a package nobody needed. It is now a debug message; the error for "no bundle
+and no attackcti" is unchanged.
+
 ### Fixed — private-IP filtering
 
 GreyNoise and AbuseIPDB decided "private" with string prefixes.

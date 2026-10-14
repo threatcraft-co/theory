@@ -69,6 +69,8 @@ theory --actor APT28
 
 That's it. Your first dossier renders in the terminal and saves to `output/dossiers/apt28.md` — and the run is now in your local correlation graph at `output/graph/graph.json`, ready to query.
 
+Want a guided tour instead? `./demo.sh` walks through identity resolution, a dossier, attribution levels, every output format, the graph and change tracking, in a throwaway workspace that ignores your API keys.
+
 ```bash
 # Ask the graph directly, any time after that first run
 theory --ioc 1.1.1.1
@@ -250,7 +252,7 @@ theory --init-personal
 theory --actor APT28 --sources personal,mitre,cisa
 ```
 
-Two-layer, gitignored indirection: `config/local_sources.yaml` → a private file outside the repo entirely (default `~/.theory/personal_indicators.yaml`, overridable with `--personal-path`). Even an accidental commit of the redirect leaks only a path, never your research.
+Two-layer, gitignored indirection: a small redirect file (in your OS user-config directory, e.g. `~/.config/theory/local_sources.yaml` on Linux; an existing `config/local_sources.yaml` in the working directory still wins) → a private file outside the repo entirely (default `~/.theory/personal_indicators.yaml`, overridable with `--personal-path`). Even an accidental commit of the redirect leaks only a path, never your research.
 
 ### Detection coverage gap analysis
 ```bash
@@ -265,7 +267,7 @@ theory --actor APT28 --sources mitre,sigma --output sigma-skeleton
 
 ### Browse what's available
 ```bash
-theory --list-actors    # 1,019 supported actors with 2,455 aliases
+theory --list-actors    # 1,033 supported actors with 2,477 aliases
 theory --list-sources   # all 20 sources with auth and cache info
 ```
 
@@ -358,7 +360,11 @@ Widely-used tooling is not attribution evidence.
 
 ## Where your data goes
 
-THEORY is local-first, and LLM synthesis is the one part that can leave your machine. It is opt-in by provider class:
+THEORY is local-first: dossiers, the correlation graph, your personal notes and every cache stay on your machine. Two things can send data out, and you control both.
+
+**1. Source lookups.** Each source you enable is queried over HTTPS. Collectors that look an actor or malware family up (Malpedia, OTX, ThreatFox and so on) send that name; ATT&CK, Sigma and YARA run from local copies after `--update-bundles`. The enrichment sources send the **indicator itself** to a third party: public IPs to GreyNoise, AbuseIPDB and Shodan InternetDB, and domains/URLs to urlscan.io. If an indicator is sensitive (for instance one from your own incident), leave those sources out with `--sources`. Private and reserved addresses are never sent. Your API keys are read from your environment or `.env` and are sent only to the service they belong to.
+
+**2. LLM synthesis.** This is the one part that can send the *whole actor profile* off your machine. It is opt-in by provider class:
 
 ```bash
 theory --actor APT28 --llm off      # no synthesis at all
@@ -448,6 +454,8 @@ theory --actor APT28 --sources mitre,otx,threatfox,greynoise,abuseipdb,shodan_in
 ```
 
 Free tier limits are conservative — GreyNoise Community is 50 lookups/week and AbuseIPDB is 1,000 checks/day, so THEORY caps enrichment per run (25 for GreyNoise, 50 for AbuseIPDB, 40 for Shodan InternetDB and urlscan.io) and caches aggressively (7 days for GreyNoise, 3 for AbuseIPDB, 24 hours for the two newer keyless sources since open ports and scan history change faster than IP reputation).
+
+Only real answers are cached. "This IP isn't in the database" is remembered for the cache period; a timeout, a rate limit (HTTP 429), a server error or a rejected key is **not**, so a bad minute never turns into days of silently missing context. If a source rate-limits you, THEORY stops querying it for the rest of that run (still using anything already cached), and three failures in a row stop it too. Either way you get one warning saying how many lookups were skipped and that the next run will retry them.
 
 ---
 
@@ -567,7 +575,7 @@ The IOC CSV export (`--output csv`) retains raw values for SIEM ingestion, where
 
 ## Adding custom feeds
 
-Add your own RSS feeds to `config/feeds.yaml`:
+Add your own RSS feeds to `theory/data/feeds.yaml` (or a `config/feeds.yaml` in your working directory, which overrides it):
 
 ```yaml
 custom:
@@ -621,15 +629,23 @@ theory --actor APT28 --sources mitre,malpedia,otx --output stix
 theory/                              ← Python package (CLI entry point)
   __init__.py                        ← public API: main(), run()
   __main__.py                        ← enables python -m theory
-  _cli.py                            ← pipeline orchestrator
+  _cli.py                            ← pipeline orchestrator and CLI
   _version.py                        ← version string
-
-theory.py                            ← compatibility shim (points to package)
+  actors.py                          ← actor identity vs recall resolution (exact match, never substring)
+  attribution.py                     ← three attribution levels: actor / family / shared_tool
+  sources.py                         ← the one source registry (CLI, web UI and README table derive from it)
+  paths.py                           ← every filesystem location (config, cache, output, graph)
+  schema.py                          ← profile schema
+  http_client.py                     ← shared HTTPS client: retries, size cap, typed errors, no secrets in logs
+  disk_cache.py                      ← shared TTL cache: caches real answers, never failures
+  _net.py                            ← validated, atomic downloads for --update-bundles
+  data/                              ← packaged config: actors.yaml, feeds.yaml,
+                                       detection_repos.yaml, shared_tooling.yaml
 
 collectors/
   base.py                            ← base collector class
   mitre_attack.py                    ← MITRE ATT&CK (local STIX bundle)
-  cisa_advisories.py                 ← CISA advisories + alias table
+  cisa_advisories.py                 ← CISA advisories
   cisa_kev.py                        ← CISA KEV catalog cross-referencing
   misp_galaxy.py                     ← MISP Galaxy threat-actor cluster
   circl_misp.py                      ← CIRCL OSINT MISP feed
@@ -641,10 +657,13 @@ collectors/
   threatfox.py                       ← ThreatFox IOC database (network C2)
   malware_bazaar.py                  ← MalwareBazaar sample hashes (file IOCs)
   urlhaus.py                         ← URLhaus malware distribution URLs
+  _abusech.py                        ← shared abuse.ch reply handling (query_status allowlist)
   greynoise.py                       ← GreyNoise IP noise/RIOT enrichment
   abuseipdb.py                       ← AbuseIPDB IP reputation enrichment
   shodan_internetdb.py               ← Shodan InternetDB IP enrichment (free, keyless)
   urlscan_io.py                      ← urlscan.io domain/URL scan-history enrichment
+  _enrich.py                         ← shared per-indicator enrichment loop (cache, pacing, stop on 429)
+  _ip.py                             ← is_public_ip(): which IPs may be sent to third parties
   vuldb.py                           ← VulDB actor-CVE correlation
   vendor_intel.py                    ← RSS/sitemap feed fetcher + relevance scorer
   intelligence_synthesizer.py        ← LLM provider abstraction + synthesis
@@ -672,15 +691,15 @@ reporters/
   navigator_reporter.py              ← ATT&CK Navigator layer export
   playbook_reporter.py               ← IR playbook (markdown + Jira)
 
-server/                              ← optional local web UI (`theory serve`, FastAPI + SSE)
+server/                              ← optional local web UI (`theory serve`, FastAPI + SSE; experimental)
 
 config/
-  feeds.yaml                         ← 50 verified vendor intelligence feeds
-  detection_repos.yaml               ← curated detection repo registry
-  actors.yaml                        ← 1,019 actors / 2,455 aliases (curated + MISP Galaxy import)
+  sources.yaml.example               ← legacy example; not read by v2.0 (API keys go in .env)
+                                       (a config/ directory in your working dir overrides theory/data/)
 
 scripts/
-  import_misp_actors.py              ← one-time, additive MISP Galaxy actor-table expansion
+  build_actor_identities.py          ← regenerates theory/data/actors.yaml (identity/recall split)
+  import_misp_actors.py              ← additive MISP Galaxy actor-table expansion
 
 docs/
   SIGMA_RATE_LIMITS.md               ← Sigma architecture docs
@@ -688,8 +707,10 @@ docs/
   SECURITY_AUDIT_2026-06.md          ← Security audit documentation
   NEW_SOURCE_CHECKLIST.md            ← checklist for adding a new collector
 
-tests/                               ← 806+ offline tests
+tests/                               ← offline test suite (hermetic: no network, no real keys, no real user dirs)
 ```
+
+The two ideas to know before changing anything: **identity vs recall** (`--actor` resolves by exact match against `identity_names`; looser `recall_aliases` only decide whether a document mentions an actor) and **failures are never cached** (only a definitive "the source has nothing" is). Both are enforced by tests.
 
 ---
 
@@ -702,18 +723,16 @@ pytest tests/test_stix_reporter.py -v         # STIX only
 pytest tests/test_security_hardening.py -v    # security hardening
 ```
 
-All tests run fully offline — no API keys required. Four environment variables
-(`ABUSEIPDB_API_KEY`, `VULDB_API_KEY`, `GREYNOISE_API_KEY`, `ABUSECH_API_KEY`) should
-be set to throwaway values (e.g. `fake`) when running the suite locally, so a real
-key in your own `.env` can't accidentally change which code path a "missing key"
-test exercises — CI always runs with all secrets unset.
+All tests run fully offline and need no API keys. `tests/conftest.py` is hermetic: it clears every THEORY and API-key environment variable, disables `.env` loading, points `THEORY_HOME` at a temp directory and runs each test in a temp working directory, so a key in your own shell or `.env` cannot change what a test exercises and a test run cannot touch your real caches or graph. The suite needs the `dev` and `serve` extras (`pip install -e ".[dev,serve]"`), and lint is just `ruff check .`.
+
+Run it on Python 3.11 as well as your newest interpreter: 3.11 is the supported floor and rejects syntax newer versions accept.
 
 ---
 
 ## Requirements
 
 - Python 3.11+
-- Dependencies installed via `pip install -e .`
+- Dependencies installed via `pip install -e .` (`pip install -e ".[dev,serve]"` for development and the optional web UI)
 - ATT&CK bundle downloaded via `theory --update-bundles`
 - API keys: see `.env.example` for the full list with registration links — only `OTX_API_KEY` is needed for the default-plus-community experience; 13 of the 20 sources need no key at all
 
@@ -723,11 +742,11 @@ test exercises — CI always runs with all secrets unset.
 
 See `CONTRIBUTING.md` for the full guide. Quick reference:
 
-**Adding a new actor** — edit `config/actors.yaml` and add a new entry with the canonical name, aliases, and metadata. See the existing entries in that file for the schema.
+**Adding a new actor** — edit `theory/data/actors.yaml` and add a new entry. Names that `--actor` should resolve go in `identity_names`; see [CONTRIBUTING.md](CONTRIBUTING.md#adding-a-new-actor-easiest-contribution) for the schema and rules.
 
 **Adding a new source** — implement collector, mapper, and tests. See `CONTRIBUTING.md` and `docs/NEW_SOURCE_CHECKLIST.md`.
 
-**Adding a vendor feed** — edit `config/feeds.yaml` and add to the `sources` list (RSS or sitemap).
+**Adding a vendor feed** — edit `theory/data/feeds.yaml` and add to the `sources` list (RSS or sitemap).
 
 **Reporting issues** — `github.com/threatcraft-co/theory/issues`
 
