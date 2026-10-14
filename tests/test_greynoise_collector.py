@@ -17,7 +17,7 @@ from unittest.mock import patch
 import pytest
 
 import collectors.greynoise as gn_module
-from collectors.greynoise import GreyNoiseCollector, _is_private
+from collectors.greynoise import GreyNoiseCollector
 from tests._http_fakes import http_error, net_error, ok, seam
 from theory.disk_cache import DiskCache
 from theory.http_client import BadResponse, HttpError, RateLimited, TransportError
@@ -37,43 +37,6 @@ def make_collector(tmp_path, clock=None):
 @pytest.fixture(autouse=True)
 def _no_sleep(monkeypatch):
     monkeypatch.setattr("time.sleep", lambda s: None)
-
-
-# ---------------------------------------------------------------------------
-# _is_private tests
-# ---------------------------------------------------------------------------
-
-class TestIsPrivate:
-
-    def test_rfc1918_10(self):
-        assert _is_private("10.0.0.1") is True
-
-    def test_rfc1918_192(self):
-        assert _is_private("192.168.1.1") is True
-
-    def test_rfc1918_172_16(self):
-        assert _is_private("172.16.0.1") is True
-
-    def test_loopback(self):
-        assert _is_private("127.0.0.1") is True
-
-    def test_link_local(self):
-        assert _is_private("169.254.1.1") is True
-
-    def test_ipv6_loopback(self):
-        assert _is_private("::1") is True
-
-    def test_ipv6_link_local(self):
-        assert _is_private("fe80::1") is True
-
-    def test_ipv6_unique_local(self):
-        assert _is_private("fd00::1") is True
-
-    def test_public_ipv4(self):
-        assert _is_private("8.8.8.8") is False
-
-    def test_public_ipv4_not_reserved(self):
-        assert _is_private("185.220.101.1") is False
 
 
 # ---------------------------------------------------------------------------

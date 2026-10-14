@@ -27,6 +27,7 @@ import os
 from datetime import timedelta
 
 from collectors._enrich import enrich_keys
+from collectors._ip import is_public_ip
 from collectors.base import BaseCollector
 
 from theory.disk_cache import DiskCache
@@ -117,7 +118,7 @@ class AbuseIPDBCollector(BaseCollector):
         for ioc in indicators:
             if ioc.get("type") == "ip":
                 ip_val = ioc.get("value", "").strip()
-                if ip_val and not _is_private(ip_val):
+                if ip_val and is_public_ip(ip_val):
                     ip_set.add(ip_val)
 
         if not ip_set:
@@ -190,20 +191,3 @@ class AbuseIPDBCollector(BaseCollector):
 # Utilities
 # ---------------------------------------------------------------------------
 
-def _is_private(ip: str) -> bool:
-    """Quick check for RFC1918 / loopback / link-local addresses."""
-    return (
-        ip.startswith("10.")
-        or ip.startswith("172.16.") or ip.startswith("172.17.")
-        or ip.startswith("172.18.") or ip.startswith("172.19.")
-        or ip.startswith("172.2") or ip.startswith("172.30.")
-        or ip.startswith("172.31.")
-        or ip.startswith("192.168.")
-        or ip.startswith("127.")
-        or ip.startswith("0.")
-        or ip.startswith("169.254.")
-        or ip == "::1"
-        or ip.startswith("fe80:")
-        or ip.startswith("fc00:")
-        or ip.startswith("fd")
-    )

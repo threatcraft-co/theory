@@ -37,48 +37,7 @@ def make_collector(tmp_path, clock=None):
 @pytest.fixture(autouse=True)
 def _no_sleep(monkeypatch):
     monkeypatch.setattr("time.sleep", lambda s: None)
-from collectors.shodan_internetdb import ShodanInternetDBCollector, _is_private
-
-
-# ---------------------------------------------------------------------------
-# _is_private tests
-# ---------------------------------------------------------------------------
-
-class TestIsPrivate:
-
-    def test_rfc1918_10(self):
-        assert _is_private("10.0.0.1") is True
-
-    def test_rfc1918_192(self):
-        assert _is_private("192.168.1.1") is True
-
-    def test_rfc1918_172_16(self):
-        assert _is_private("172.16.0.1") is True
-
-    def test_loopback(self):
-        assert _is_private("127.0.0.1") is True
-
-    def test_link_local(self):
-        assert _is_private("169.254.1.1") is True
-
-    def test_ipv6_loopback(self):
-        assert _is_private("::1") is True
-
-    def test_ipv6_link_local(self):
-        assert _is_private("fe80::1") is True
-
-    def test_ipv6_unique_local(self):
-        assert _is_private("fd00::1") is True
-
-    def test_public_ipv4(self):
-        assert _is_private("8.8.8.8") is False
-
-    def test_public_ipv4_not_reserved(self):
-        assert _is_private("185.220.101.1") is False
-
-    def test_invalid_ip_treated_as_private(self):
-        # Not a parseable IP at all -> don't waste a lookup on it.
-        assert _is_private("not-an-ip") is True
+from collectors.shodan_internetdb import ShodanInternetDBCollector
 
 
 # ---------------------------------------------------------------------------
