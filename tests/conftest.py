@@ -65,6 +65,13 @@ def hermetic_env(monkeypatch, tmp_path):
 
     # Relative cache/output paths land here instead of in the repo
     monkeypatch.chdir(tmp_path)
+
+    # Belt and braces: from a temp CWD, theory.paths would otherwise fall
+    # back to the *real* per-user cache/data dirs. Pin them to the temp dir
+    # so a test that forgets to inject a cache root cannot read or write
+    # outside it. Tests that exercise path resolution set/unset this
+    # themselves.
+    monkeypatch.setenv("THEORY_HOME", str(tmp_path / "theory_home"))
     yield
 
 

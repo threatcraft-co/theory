@@ -11,10 +11,13 @@ Use this checklist every time a new collector, enrichment source, or data feed i
 - [ ] `SOURCE_ID` class attribute set (matches the key used in `_cli.py` registries)
 - [ ] `REQUIRES_API_KEY` set correctly (`True` or `False`)
 - [ ] `query()` method implemented (standard collectors) or enrichment entry point documented
-- [ ] Cache implemented with documented TTL in `.cache/<source_name>/`
-- [ ] User-Agent header set to `THEORY/1.0 threat-intel-research` (or the constant from `base.py`)
-- [ ] Rate limiting handled gracefully (HTTP 429 catch, backoff, informative log message with free tier limits)
-- [ ] Network errors handled without raising (try/except, return None or empty)
+- [ ] Requests go through `theory.http_client.HttpClient`, not `urlopen`/`requests` directly (https-only, retry/backoff, response size cap, typed errors, and no query string or header ever reaches a log line, all for free). The default User-Agent identifies THEORY; don't override it unless the API requires
+- [ ] Responses are cached with `theory.disk_cache.DiskCache` and a documented TTL, in `.cache/<source_name>/`
+- [ ] **Only real answers are cached.** "The source has nothing" (404, `no_results`) is remembered as a miss (`DiskCache.fetch` does this when the loader raises `NotFound`). A timeout, 429, 5xx, bad key, or an error reply sent as HTTP 200 is **never** cached: it says nothing about the indicator. Treat any status string you do not recognise as an error, not as "empty"
+- [ ] Rate limiting handled: quota-based APIs (daily/weekly caps) pass `retry_statuses` without 429 and stop the run on `RateLimited` instead of continuing and caching misses; log the free-tier limit
+- [ ] Per-indicator enrichment sources use `collectors/_enrich.enrich_keys` (cache, pacing, stop-on-429, stop after repeated failures, one summary warning) and `collectors/_ip.is_public_ip` for IP filtering, rather than their own loop or `startswith` checks
+- [ ] Failure-mode tests exist: a timeout, 429, 5xx and an error-as-200 each leave the cache empty and the next run retries. See `tests/test_abusech_failure_modes.py` and `tests/test_greynoise_collector.py` for the pattern, and `tests/_http_fakes.py` for the shared fakes
+- [ ] `HttpError` is handled at the collector boundary and reported once (a single warning), not swallowed into an empty result
 - [ ] Returns CommonSchema-compatible dict (standard collectors) or documented enrichment dict
 
 ## Pipeline wiring (`theory/_cli.py`)
