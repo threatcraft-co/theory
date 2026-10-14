@@ -10,7 +10,7 @@ by the security community, for the security community.
 - **Add a new actor** to the alias table (easiest, no Python required)
 - **Add a new intelligence source** (collector + mapper + tests)
 - **Add a vendor feed** to the RSS registry
-- **Add a detection repository** to `config/detection_repos.yaml`
+- **Add a detection repository** to `theory/data/detection_repos.yaml`
 - **Fix a bug** or improve an existing collector
 - **Improve documentation**
 - **Report issues** at github.com/threatcraft-co/theory/issues
@@ -27,36 +27,52 @@ git clone https://github.com/threatcraft-co/theory
 cd theory
 python -m venv venv
 source venv/bin/activate
-pip install -e ".[dev]"
+pip install -e ".[dev,serve]"
 
 # Download the ATT&CK bundle
 theory --update-bundles
 
-# Run tests before making changes (should show 806+ passing). Four
-# environment variables must be set to throwaway values so a real key in
-# your own shell/.env can't silently change which "missing key" code path
-# gets exercised — CI always runs with all secrets unset.
-ABUSEIPDB_API_KEY=fake VULDB_API_KEY=fake GREYNOISE_API_KEY=fake ABUSECH_API_KEY=fake pytest tests/ -v
+# Run the tests before making changes. The suite is hermetic (it clears API
+# keys and points THEORY_HOME at a temp directory), so no special environment
+# is needed. Run it on Python 3.11 too - that is the supported floor.
+pytest tests/ -q
 
-# Run linter
-ruff check . --select E,F,W --ignore E501,E402,W291,W292,W293,E701,E702,F401,F541,F841,F811,F821
+# Run the linter (configuration lives in pyproject.toml; CI runs it bare)
+ruff check .
 ```
 
 ---
 
 ## Adding a new actor (easiest contribution)
 
-Actors are defined in `config/actors.yaml` — no Python required. The file is
-loaded at runtime, and any name or alias in it resolves to the canonical actor
-name in dossier output and file naming.
+Actors are defined in `theory/data/actors.yaml` - no Python required. It ships
+inside the package and is loaded at runtime. (A `config/actors.yaml` in your
+working directory, or in `$THEORY_CONFIG_DIR`, overrides it for local use.)
 
-`config/actors.yaml` currently holds 1,019 actors (2,455 aliases), most of
-which came from a one-time, additive import from the MISP Galaxy threat-actor
-cluster (`scripts/import_misp_actors.py` — see that file's docstring if you
-ever want to re-run it to pull in newer MISP clusters; it never overwrites
-hand-curated entries, only unions alias lists and fills blank fields). For a
-single new actor, just hand-edit the YAML as below — you don't need the
-script.
+`theory/data/actors.yaml` currently holds 1,033 actors, most of which came from
+the MISP Galaxy threat-actor cluster and MITRE ATT&CK via
+`scripts/build_actor_identities.py`. For a single new actor, hand-edit the YAML
+as below - you don't need the script.
+
+### Two kinds of name
+
+THEORY keeps two lists per actor because they do two different jobs, and mixing
+them up was the source of the worst bug in v1:
+
+- **`identity_names`** answer *"which actor did the user mean?"* `--actor X`
+  resolves by **exact match** against these. A name belongs here only if it
+  denotes **this actor and no other**.
+- **`recall_aliases`** answer *"does this document mention the actor?"* They
+  are matched on word boundaries. If you leave this out, it is derived from
+  `identity_names` (minus stop-words and very short names).
+
+A name that vendors use for *different* groups (for example one catalog merges
+APT41 with Winnti while another keeps them apart) goes under `contested`
+instead: it is recorded for the analyst but never used to resolve or match.
+
+> An entry with only `aliases:` is **not enough**. Its canonical name will
+> resolve, but none of its aliases will, and `--actor <alias>` fails with
+> "Unknown actor".
 
 ### Format
 
@@ -65,56 +81,59 @@ actors:
   Charming Kitten:
     origin: Iran
     motivation: espionage
+    mitre_id: G0059              # optional: the pinned ATT&CK group
     aliases:
       - charming kitten
       - apt35
       - phosphorus
       - mint sandstorm
       - ta453
-      - cobalt illusion
-      - g0059
-      - newscaster
-      - cobalt mirage
+    identity_names:              # exact-match names for --actor
+      - charming kitten
+      - apt35
+      - phosphorus
+      - mint sandstorm
+      - ta453
 ```
 
 ### Fields
 
-| Field        | Required | Description                                                    |
-| ------------ | -------- | -------------------------------------------------------------- |
-| `aliases`    | Yes      | List of all known names in **lowercase**                       |
-| `origin`     | No       | Country or region of attribution (`Russia`, `China`, `Iran`, `North Korea`, `unknown`) |
-| `motivation` | No       | Primary motivation: `espionage`, `financial`, `hacktivism`, `destruction`, `unknown` |
+| Field            | Required | Description |
+| ---------------- | -------- | ----------- |
+| `aliases`        | Yes      | Every known name, **lowercase** |
+| `identity_names` | Yes      | The subset that unambiguously means *this* actor (lowercase). Include the canonical name |
+| `recall_aliases` | No       | Names usable as evidence in free text. Derived from `identity_names` if omitted |
+| `contested`      | No       | Names another catalog assigns to a different group |
+| `mitre_id`       | No       | Pinned ATT&CK group id (`G0059`). Only set it if you have checked ATT&CK's own page for the group |
+| `origin`         | No       | Country or region of attribution (`Russia`, `China`, `Iran`, `North Korea`, `unknown`) |
+| `motivation`     | No       | `espionage`, `financial`, `hacktivism`, `destruction`, `unknown` |
 
 ### Rules
 
-- All aliases must be **lowercase**.
-- The top-level key (canonical name) uses title case — it appears in dossier output and filenames.
-- Include the **canonical name itself in lowercase** as one of the aliases.
-- Include the **MITRE Group ID** (e.g. `g0007`) if the actor is tracked in ATT&CK.
-- Include all major vendor naming conventions you know of:
-  - **Microsoft Blizzard taxonomy** (e.g. `forest blizzard`, `midnight blizzard`)
-  - **CrowdStrike animal taxonomy** (e.g. `fancy bear`, `cozy bear`)
-  - **Mandiant FIN/APT numbering** (e.g. `apt28`, `fin7`)
-  - **Secureworks Iron/Bronze/Cobalt taxonomy** (e.g. `iron twilight`, `cobalt gypsy`)
-  - **Proofpoint TA numbering** (e.g. `ta422`)
-  - **CISA UAC designations** when relevant
-- No duplicate aliases across different actors.
+- All names are **lowercase**; the top-level key (canonical name) uses its usual capitalisation.
+- Include the **canonical name in lowercase** and, if the actor is in ATT&CK, the **MITRE Group ID** (e.g. `g0007`).
+- Cover the major vendor taxonomies you know of: Microsoft (`forest blizzard`), CrowdStrike (`fancy bear`), Mandiant (`apt28`, `fin7`), Secureworks (`iron twilight`), Proofpoint (`ta422`), CISA designations.
+- **Never put a name in `identity_names` that another actor also uses.** If two groups share a name, list it under `contested` for both.
+- Don't reuse a MITRE group id for a second actor.
 - Open a PR with a link to at least one authoritative source confirming the actor exists (MITRE ATT&CK page, vendor research, government advisory).
 
 ### Verifying your addition
 
-After editing `config/actors.yaml`:
-
 ```bash
-# Confirm the YAML parses correctly
-python -c "import yaml; yaml.safe_load(open('config/actors.yaml'))"
+# Confirm the YAML parses
+python -c "import yaml; yaml.safe_load(open('theory/data/actors.yaml'))"
 
-# Confirm alias resolution works
+# Confirm every name resolves to the right actor
 theory --list-actors                  # your actor should appear in the table
 theory --actor "your alias here"      # should resolve to the canonical name
+
+# The identity tests catch merged or ambiguous names
+pytest tests/test_actor_identity.py -q
 ```
 
-If `--list-actors` shows your entry with the expected alias count, you're done.
+If you regenerate the file with `scripts/build_actor_identities.py`, only a
+hand-pinned `mitre_id` is preserved. Review the diff and re-apply any other
+hand edit.
 
 ---
 
@@ -239,7 +258,7 @@ collector, and bump the source count mentioned near the top if it changed.
 
 ## Adding a vendor feed
 
-Edit `config/feeds.yaml` and add to the `sources` list:
+Edit `theory/data/feeds.yaml` and add to the `sources` list:
 
 ```yaml
 - name: Vendor Research Blog
@@ -289,7 +308,7 @@ be rejected. Stale or broken feeds degrade dossier quality.
 
 THEORY surfaces a list of curated detection repos in every dossier, matched to
 the actor's techniques and targeted platforms. To add a new resource, edit
-`config/detection_repos.yaml`:
+`theory/data/detection_repos.yaml`:
 
 ```yaml
 - name: "My Detection Library"
@@ -315,7 +334,7 @@ the actor's techniques and targeted platforms. To add a new resource, edit
 - [ ] All existing tests still pass (`pytest tests/ -v` with the four `*_API_KEY=fake` env vars set — should show 806+ passing)
 - [ ] New code has tests (fully offline, no real API calls)
 - [ ] Linter passes (`ruff check .` with the project's ignore list)
-- [ ] New actor entries are added to `config/actors.yaml`, include the MITRE Group ID if applicable, and have 3+ aliases
+- [ ] New actor entries are added to `theory/data/actors.yaml`, include `identity_names` (an `aliases`-only entry will not resolve), include the MITRE Group ID if applicable, and have 3+ aliases
 - [ ] No duplicate aliases with existing entries (verify with `theory --list-actors`)
 - [ ] New sources include a collector, a mapper, a test file, and a `SUPPORTED_SOURCES` entry
 - [ ] New vendor feeds have been verified to return entries
