@@ -641,6 +641,7 @@ theory/                              ← Python package (CLI entry point)
   _net.py                            ← validated, atomic downloads for --update-bundles
   data/                              ← packaged config: actors.yaml, feeds.yaml,
                                        detection_repos.yaml, shared_tooling.yaml
+                                       (a ./config/ or $THEORY_CONFIG_DIR copy of any file overrides it)
 
 collectors/
   base.py                            ← base collector class
@@ -692,10 +693,6 @@ reporters/
   playbook_reporter.py               ← IR playbook (markdown + Jira)
 
 server/                              ← optional local web UI (`theory serve`, FastAPI + SSE; experimental)
-
-config/
-  sources.yaml.example               ← legacy example; not read by v2.0 (API keys go in .env)
-                                       (a config/ directory in your working dir overrides theory/data/)
 
 scripts/
   build_actor_identities.py          ← regenerates theory/data/actors.yaml (identity/recall split)
