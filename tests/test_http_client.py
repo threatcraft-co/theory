@@ -9,16 +9,14 @@ All network access goes through the single seam `theory.http_client._urlopen`.
 
 from __future__ import annotations
 
-import io
 import json
 import logging
 import urllib.error
-from email.message import Message
-from unittest.mock import patch
 
 import pytest
 
 from theory import http_client
+from tests._http_fakes import FakeResponse, http_error, ok, seam
 from theory.http_client import (
     BadResponse,
     HttpClient,
@@ -31,31 +29,6 @@ from theory.http_client import (
 URL = "https://example.test/api/v1/lookup"
 
 
-class FakeResponse:
-    def __init__(self, body: bytes = b"{}"):
-        self._body = io.BytesIO(body)
-
-    def read(self, n: int = -1) -> bytes:
-        return self._body.read(n)
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *exc):
-        return False
-
-
-def http_error(code: int, retry_after: str | None = None) -> urllib.error.HTTPError:
-    headers = Message()
-    if retry_after is not None:
-        headers["Retry-After"] = retry_after
-    return urllib.error.HTTPError(URL, code, "err", headers, io.BytesIO(b""))
-
-
-def ok(payload) -> FakeResponse:
-    return FakeResponse(json.dumps(payload).encode())
-
-
 @pytest.fixture
 def sleeps():
     return []
@@ -64,19 +37,6 @@ def sleeps():
 @pytest.fixture
 def client(sleeps):
     return HttpClient(sleep=sleeps.append)
-
-
-def seam(*responses):
-    """Patch the single urlopen seam with a queue of responses/exceptions."""
-    queue = list(responses)
-
-    def fake(req, timeout=None):
-        item = queue.pop(0)
-        if isinstance(item, BaseException):
-            raise item
-        return item
-
-    return patch.object(http_client, "_urlopen", side_effect=fake)
 
 
 class TestSuccess:

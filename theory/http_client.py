@@ -125,7 +125,7 @@ class HttpClient:
         headers: Mapping[str, str] | None = None,
         retry_statuses: Iterable[int] = DEFAULT_RETRY_STATUSES,
         require_https: bool = True,
-        sleep: Callable[[float], None] = time.sleep,
+        sleep: Callable[[float], None] | None = None,
     ) -> None:
         if attempts < 1:
             raise ValueError("attempts must be >= 1")
@@ -137,7 +137,7 @@ class HttpClient:
         self.headers = dict(headers or {})
         self.retry_statuses = frozenset(retry_statuses)
         self.require_https = require_https
-        self._sleep = sleep
+        self._sleep = sleep   # None -> time.sleep, looked up at call time
 
     # -- public API ---------------------------------------------------------
 
@@ -262,7 +262,7 @@ class HttpClient:
 
             if attempt < self.attempts:
                 delay = retry_after if retry_after is not None else self.backoff * attempt
-                self._sleep(min(delay, MAX_RETRY_AFTER))
+                (self._sleep or time.sleep)(min(delay, MAX_RETRY_AFTER))
 
         assert last is not None
         raise last
