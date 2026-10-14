@@ -2006,6 +2006,11 @@ BANNER_SUBTITLE = (
 )
 
 
+def _package_version() -> str:
+    from theory._version import __version__
+    return __version__
+
+
 def _build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="theory",
@@ -2227,6 +2232,12 @@ def _build_parser() -> argparse.ArgumentParser:
 
     # ── Info commands ──────────────────────────────────────────────────
     info = p.add_argument_group("information commands (no actor required)")
+    info.add_argument(
+        "--version",
+        action="version",
+        version=f"theory {_package_version()}",
+        help="Print the installed THEORY version and exit. Include it in bug reports.",
+    )
     info.add_argument(
         "--list-sources",
         action="store_true",

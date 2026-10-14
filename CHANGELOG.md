@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [2.0.0] — unreleased
+## [2.0.0] — 2026-10-14
 
 v2.0 turns THEORY from a stateless report generator into a tool with memory: every
 `--actor` run now feeds a persistent correlation graph that later runs and standalone
@@ -83,6 +83,7 @@ to a pinned ATT&CK group, and every indicator carries how strongly it belongs to
   require a key and leak the indicator to a third party. An optional
   `URLSCAN_API_KEY` raises the rate limit but is never required.
 - **`--cve ID`** flag and `query_cve()` — see "Multi-axis cross-run queries" above.
+- **`theory --version`** — prints the installed version, for bug reports (SECURITY.md already asked for it).
 - **New offline tests** across the graph, personal research redirect, LLM
   tool-calling, diff engine, watch mode, Sigma skeleton generator, and the two new
   IP/domain enrichment collectors.
