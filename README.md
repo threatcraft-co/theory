@@ -69,6 +69,8 @@ theory --actor APT28
 
 That's it. Your first dossier renders in the terminal and saves to `output/dossiers/apt28.md` — and the run is now in your local correlation graph at `output/graph/graph.json`, ready to query.
 
+Want a guided tour instead? `./demo.sh` walks through identity resolution, a dossier, attribution levels, every output format, the graph and change tracking, in a throwaway workspace that ignores your API keys.
+
 ```bash
 # Ask the graph directly, any time after that first run
 theory --ioc 1.1.1.1
