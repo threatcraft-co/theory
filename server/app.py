@@ -590,10 +590,21 @@ async def get_dossier_detail(name: str):
         raise HTTPException(status_code=404, detail="Dossier not found")
 
     files = []
+    nested = (OUTPUT_DIR / name).is_dir()
     for filename in entry["files"]:
-        path = _safe_output_path(name, filename) if (OUTPUT_DIR / name).is_dir() \
-            else _safe_output_path(filename)
-        if not path.is_file():
+        # Try nested first (output/dossiers/<slug>/<file>), then flat
+        # (output/dossiers/<file>). An empty slug directory can coexist
+        # with flat files, so a blanket is_dir() check isn't enough.
+        path = None
+        if nested:
+            candidate = _safe_output_path(name, filename)
+            if candidate.is_file():
+                path = candidate
+        if path is None:
+            candidate = _safe_output_path(filename)
+            if candidate.is_file():
+                path = candidate
+        if path is None:
             continue
         files.append({
             "name": filename,
@@ -613,13 +624,19 @@ async def serve_dossier_file(name: str, filename: str):
     HTML files are served with text/html so the browser renders them.
     Everything else gets content-disposition: attachment for download.
     """
-    # Flat layout (apt28.html) is what the reporters write; the nested
-    # layout is still accepted for anything produced by an older version.
-    nested = OUTPUT_DIR / name
-    file_path = (_safe_output_path(name, filename) if nested.is_dir()
-                 else _safe_output_path(filename))
-
-    if not file_path.is_file():
+    # Try nested layout (output/dossiers/<slug>/<file>) first, then flat
+    # (output/dossiers/<file>). Both may coexist when an empty slug
+    # directory sits beside flat files.
+    file_path = None
+    if (OUTPUT_DIR / name).is_dir():
+        candidate = _safe_output_path(name, filename)
+        if candidate.is_file():
+            file_path = candidate
+    if file_path is None:
+        candidate = _safe_output_path(filename)
+        if candidate.is_file():
+            file_path = candidate
+    if file_path is None:
         raise HTTPException(status_code=404, detail="File not found")
 
     suffix = file_path.suffix.lower()
