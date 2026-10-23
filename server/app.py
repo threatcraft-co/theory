@@ -103,9 +103,14 @@ class _ApiGuard(BaseHTTPMiddleware):
         if origin is not None and not _is_local_origin(origin):
             return JSONResponse({"detail": "cross-origin request refused"}, status_code=403)
 
-        if not secrets.compare_digest(
-            request.headers.get("x-theory-token", ""), SESSION_TOKEN
-        ):
+        # Accept the token from X-Theory-Token header (normal fetches) or
+        # from a ?token= query parameter (EventSource — it cannot set headers).
+        # The query-param path is safe here: TrustedHostMiddleware already
+        # pins us to loopback, and the token is per-process and short-lived.
+        token = request.headers.get("x-theory-token", "")
+        if not token:
+            token = request.query_params.get("token", "")
+        if not secrets.compare_digest(token, SESSION_TOKEN):
             return JSONResponse(
                 {"detail": "missing or invalid session token — open the URL "
                            "printed by `theory serve`"},

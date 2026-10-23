@@ -4,36 +4,59 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>THEORY</title>
+<meta name="description" content="Local threat-intelligence dossier generator">
 <style>
 /* ================================================================
    RESET
    ================================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-button { font: inherit; cursor: pointer; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
+input { font: inherit; }
 
 /* ================================================================
    TOKENS
-   ================================================================
 
-   Palette rationale: THEORY is an intelligence analysis tool, not a
-   consumer product. The dark theme uses a deep navy base (not pure
-   black) with a muted blue-violet accent that reads "analytical" rather
-   than "gaming." The light theme inverts to a cool paper-white.
+   Palette: deep navy base (not pure black), muted blue-violet accent.
+   Analytical, not decorative. Light mode inverts to cool paper-white.
 
-   Typography: monospace-forward. The tool's identity comes from its
-   terminal heritage. Headers and data use the mono stack; body text
-   uses the system sans for readability at smaller sizes.
+   Spacing: strict 8pt scale. Every margin, padding, and gap is a
+   multiple of 8 (with 4px allowed for tight optical adjustments).
+
+   Typography: monospace-forward. Headers and data use the mono stack;
+   body text uses system sans for readability at smaller sizes.
    ================================================================ */
 :root {
+  /* type */
   --mono: "JetBrains Mono", "Fira Code", "Cascadia Code", "SF Mono",
           "Consolas", "Liberation Mono", monospace;
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
           "Helvetica Neue", sans-serif;
-  --radius: 5px;
-  --radius-lg: 8px;
-  --ease: 120ms ease;
+
+  /* type scale — minor third (1.2) */
+  --text-xs:  11px;
+  --text-sm:  12px;
+  --text-md:  14px;
+  --text-lg:  16px;
+  --text-xl:  20px;
+
+  /* spacing — 8pt scale */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 40px;
+  --sp-8: 48px;
+
+  /* shape */
+  --radius: 6px;
+  --radius-sm: 4px;
+
+  /* motion */
+  --ease: 100ms ease;
 }
 
 [data-theme="dark"] {
@@ -58,8 +81,9 @@ ul { list-style: none; }
   --err-ghost: rgba(201, 95, 95, 0.1);
   --tag-bg: rgba(123, 141, 218, 0.1);
   --tag-text: #8fa0e0;
-  --shadow: 0 1px 3px rgba(0,0,0,0.4);
-  --code-bg: #0d1018;
+  --shadow: 0 1px 2px rgba(0,0,0,0.3);
+  --skeleton-from: #161b2e;
+  --skeleton-to: #1e2540;
 }
 
 [data-theme="light"] {
@@ -84,14 +108,15 @@ ul { list-style: none; }
   --err-ghost: rgba(184, 58, 58, 0.08);
   --tag-bg: rgba(74, 92, 176, 0.08);
   --tag-text: #4a5cb0;
-  --shadow: 0 1px 3px rgba(0,0,0,0.06);
-  --code-bg: #e4e6ee;
+  --shadow: 0 1px 2px rgba(0,0,0,0.05);
+  --skeleton-from: #e8eaf4;
+  --skeleton-to: #dcdfe8;
 }
 
 /* ================================================================
    BASE
    ================================================================ */
-html { font-size: 14px; }
+html { font-size: var(--text-md); }
 
 body {
   font-family: var(--sans);
@@ -110,6 +135,37 @@ code, .mono {
 }
 
 /* ================================================================
+   SKELETON / LOADING
+   ================================================================ */
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+.skel {
+  background: linear-gradient(90deg,
+    var(--skeleton-from) 0%,
+    var(--skeleton-to) 50%,
+    var(--skeleton-from) 100%);
+  background-size: 400px 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skel-line {
+  height: 14px;
+  margin-bottom: var(--sp-2);
+  width: 100%;
+}
+
+.skel-line:last-child { width: 60%; }
+
+.skel-block {
+  height: 40px;
+  margin-bottom: var(--sp-2);
+}
+
+/* ================================================================
    SHELL: header, nav, main, footer
    ================================================================ */
 .shell { display: flex; flex-direction: column; min-height: 100vh; }
@@ -118,9 +174,9 @@ code, .mono {
 .hdr {
   display: flex;
   align-items: center;
-  gap: 16px;
-  height: 50px;
-  padding: 0 20px;
+  gap: var(--sp-4);
+  height: 48px;
+  padding: 0 var(--sp-5);
   background: var(--bg-1);
   border-bottom: 1px solid var(--border);
   position: sticky;
@@ -132,44 +188,70 @@ code, .mono {
   font-family: var(--mono);
   font-size: 15px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   color: var(--accent);
   flex-shrink: 0;
 }
 
-.hdr-nav { display: flex; gap: 1px; margin-left: 12px; }
+.hdr-nav {
+  display: flex;
+  gap: 0;
+  margin-left: var(--sp-2);
+}
 
 .hdr-nav button {
-  background: none;
-  border: none;
   color: var(--text-2);
-  font-size: 12px;
+  font-size: var(--text-sm);
   font-weight: 500;
-  padding: 6px 12px;
-  border-radius: var(--radius);
-  transition: all var(--ease);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-sm);
+  transition: color var(--ease), background var(--ease);
 }
 
 .hdr-nav button:hover { color: var(--text-1); background: var(--bg-2); }
-.hdr-nav button[aria-selected="true"] { color: var(--accent); background: var(--accent-ghost); }
+.hdr-nav button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
 
-.hdr-spacer { flex: 1; }
+.hdr-nav button[aria-selected="true"] {
+  color: var(--accent);
+  background: var(--accent-ghost);
+}
+
+.hdr-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.hdr-status {
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  color: var(--text-2);
+  padding: var(--sp-1) var(--sp-2);
+}
 
 .hdr-theme {
-  width: 30px;
-  height: 30px;
-  border-radius: var(--radius);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--bg-2);
   color: var(--text-1);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  transition: all var(--ease);
+  font-size: var(--text-md);
+  transition: border-color var(--ease), color var(--ease);
 }
 
 .hdr-theme:hover { border-color: var(--accent); color: var(--accent); }
+.hdr-theme:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
 
 /* -- Main -- */
 .main {
@@ -177,14 +259,14 @@ code, .mono {
   width: 100%;
   max-width: 880px;
   margin: 0 auto;
-  padding: 28px 20px 48px;
+  padding: var(--sp-6) var(--sp-5) var(--sp-8);
 }
 
 /* -- Footer -- */
 .ftr {
   text-align: center;
-  padding: 14px 20px;
-  font-size: 11px;
+  padding: var(--sp-3) var(--sp-5);
+  font-size: var(--text-xs);
   color: var(--text-2);
   border-top: 1px solid var(--border);
 }
@@ -194,18 +276,22 @@ code, .mono {
 /* ================================================================
    PAGE HEADER
    ================================================================ */
+.pg-hd {
+  margin-bottom: var(--sp-5);
+}
+
 .pg-title {
   font-family: var(--mono);
-  font-size: 18px;
+  font-size: var(--text-xl);
   font-weight: 600;
-  letter-spacing: 0.02em;
-  margin-bottom: 2px;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
 }
 
 .pg-sub {
-  font-size: 13px;
+  font-size: var(--text-sm);
   color: var(--text-2);
-  margin-bottom: 24px;
+  margin-top: var(--sp-1);
 }
 
 /* ================================================================
@@ -214,20 +300,18 @@ code, .mono {
 .card {
   background: var(--bg-1);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 18px;
-  margin-bottom: 14px;
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-3);
   box-shadow: var(--shadow);
 }
 
-.card-label {
+.card-hd {
   font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-2);
-  margin-bottom: 12px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-1);
+  margin-bottom: var(--sp-3);
 }
 
 /* ================================================================
@@ -235,27 +319,19 @@ code, .mono {
    ================================================================ */
 .inp {
   width: 100%;
-  padding: 10px 14px;
+  padding: 10px var(--sp-3);
   background: var(--bg-0);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   color: var(--text-0);
   font-family: var(--mono);
-  font-size: 14px;
+  font-size: var(--text-md);
   transition: border-color var(--ease);
 }
 
 .inp:focus { outline: none; border-color: var(--border-focus); }
 .inp::placeholder { color: var(--text-2); }
-
-.inp-lg { padding: 14px 16px; font-size: 15px; }
-
-.inp-label {
-  display: block;
-  font-size: 12px;
-  color: var(--text-2);
-  margin-bottom: 4px;
-}
+.inp-lg { padding: var(--sp-3) var(--sp-4); font-size: 15px; }
 
 /* ================================================================
    BUTTONS
@@ -263,18 +339,23 @@ code, .mono {
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 9px 18px;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 13px;
+  padding: 9px var(--sp-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
   font-weight: 500;
-  transition: all var(--ease);
+  transition: background var(--ease), border-color var(--ease), opacity var(--ease);
+  white-space: nowrap;
 }
 
 .btn-accent { background: var(--accent); color: #fff; }
 .btn-accent:hover { background: var(--accent-hover); }
 .btn-accent:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-accent:focus-visible {
+  outline: 2px solid var(--text-0);
+  outline-offset: 2px;
+}
 
 .btn-ghost {
   background: var(--bg-2);
@@ -287,27 +368,33 @@ code, .mono {
 .btn-danger { background: var(--err); color: #fff; }
 .btn-danger:hover { opacity: 0.85; }
 
-.btn-sm { padding: 5px 10px; font-size: 11px; }
+.btn-sm { padding: var(--sp-1) var(--sp-2); font-size: var(--text-xs); }
+
+/* loading state */
+.btn[data-loading="true"] {
+  pointer-events: none;
+  opacity: 0.6;
+}
 
 /* ================================================================
    SOURCE TOGGLES
    ================================================================ */
 .src-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 6px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--sp-2);
 }
 
 .src {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
+  gap: var(--sp-2);
+  padding: var(--sp-2) 10px;
   background: var(--bg-0);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 12px;
-  transition: all var(--ease);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  transition: border-color var(--ease), background var(--ease);
   cursor: pointer;
   user-select: none;
 }
@@ -320,8 +407,8 @@ code, .mono {
 }
 
 .src-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--border);
   flex-shrink: 0;
@@ -329,34 +416,47 @@ code, .mono {
 }
 
 .src[data-on="true"] .src-dot { background: var(--ok); }
-
 .src-name { flex: 1; color: var(--text-0); }
 
 .src-type {
   font-family: var(--mono);
   font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   padding: 2px 5px;
   border-radius: 3px;
   background: var(--tag-bg);
   color: var(--tag-text);
 }
 
+.src-actions {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+
+.src-actions button {
+  font-size: var(--text-xs);
+  color: var(--text-2);
+  padding: var(--sp-1) 0;
+  transition: color var(--ease);
+}
+
+.src-actions button:hover { color: var(--accent); }
+
 /* ================================================================
    FORMAT CHIPS
    ================================================================ */
-.fmt-row { display: flex; flex-wrap: wrap; gap: 5px; }
+.fmt-row { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
 
 .fmt {
-  padding: 5px 11px;
+  padding: var(--sp-1) 10px;
   background: var(--bg-0);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--text-1);
-  transition: all var(--ease);
+  transition: border-color var(--ease), background var(--ease), color var(--ease);
   cursor: pointer;
   user-select: none;
 }
@@ -372,7 +472,7 @@ code, .mono {
 /* ================================================================
    PIPELINE PROGRESS
    ================================================================ */
-.pipeline { margin-top: 20px; }
+.pipeline { margin-top: var(--sp-4); }
 
 .step-row {
   display: flex;
@@ -380,75 +480,74 @@ code, .mono {
   gap: 10px;
   padding: 9px 0;
   border-bottom: 1px solid var(--border);
-  font-size: 13px;
+  font-size: var(--text-sm);
 }
 
 .step-row:last-child { border-bottom: none; }
 
-.step-num {
-  width: 26px;
-  height: 26px;
+.step-ind {
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: var(--text-xs);
   font-weight: 600;
   flex-shrink: 0;
-  transition: all 200ms ease;
+  transition: all 180ms ease;
 }
 
-.step-num[data-s="pending"]  { background: var(--bg-3); color: var(--text-2); }
-.step-num[data-s="running"]  { background: var(--accent-ghost); color: var(--accent); }
-.step-num[data-s="done"]     { background: var(--ok-ghost); color: var(--ok); }
-.step-num[data-s="error"]    { background: var(--err-ghost); color: var(--err); }
+.step-ind[data-s="pending"]  { background: var(--bg-3); color: var(--text-2); }
+.step-ind[data-s="running"]  { background: var(--accent-ghost); color: var(--accent); }
+.step-ind[data-s="done"]     { background: var(--ok-ghost); color: var(--ok); }
+.step-ind[data-s="error"]    { background: var(--err-ghost); color: var(--err); }
 
-@keyframes blink {
+@keyframes pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.5; }
 }
 
-.step-num[data-s="running"] { animation: blink 1.4s ease-in-out infinite; }
+.step-ind[data-s="running"] { animation: pulse 1.6s ease-in-out infinite; }
 
-.step-text { flex: 1; }
-.step-text[data-s="pending"] { color: var(--text-2); }
-.step-text[data-s="running"] { color: var(--accent); font-weight: 500; }
-.step-text[data-s="done"]    { color: var(--text-2); }
-.step-text[data-s="error"]   { color: var(--err); }
+.step-label { flex: 1; }
+.step-label[data-s="pending"] { color: var(--text-2); }
+.step-label[data-s="running"] { color: var(--accent); font-weight: 500; }
+.step-label[data-s="done"]    { color: var(--text-2); }
+.step-label[data-s="error"]   { color: var(--err); }
 
-.step-time {
+.step-dur {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--text-2);
   min-width: 48px;
   text-align: right;
 }
 
-/* -- Completion / Error banners -- */
+/* Banners */
 .banner {
-  margin-top: 14px;
-  padding: 12px 16px;
-  border-radius: var(--radius);
-  font-size: 13px;
+  margin-top: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  line-height: 1.5;
 }
 
 .banner-ok {
   background: var(--ok-ghost);
-  border: 1px solid rgba(92, 184, 130, 0.25);
+  border: 1px solid rgba(92, 184, 130, 0.2);
   color: var(--ok);
 }
 
 .banner-err {
   background: var(--err-ghost);
-  border: 1px solid rgba(201, 95, 95, 0.25);
+  border: 1px solid rgba(201, 95, 95, 0.2);
   color: var(--err);
 }
-
-.banner-icon { font-size: 16px; flex-shrink: 0; }
 
 /* ================================================================
    HISTORY
@@ -456,10 +555,11 @@ code, .mono {
 .dossier-row {
   display: flex;
   align-items: center;
-  padding: 12px 14px;
+  padding: var(--sp-3) var(--sp-3);
   border-bottom: 1px solid var(--border);
   cursor: pointer;
   transition: background var(--ease);
+  border-radius: var(--radius-sm);
 }
 
 .dossier-row:last-child { border-bottom: none; }
@@ -469,24 +569,24 @@ code, .mono {
 
 .dossier-name {
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: var(--text-sm);
   font-weight: 500;
 }
 
 .dossier-meta {
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--text-2);
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
-.dossier-arrow { color: var(--text-2); font-size: 16px; }
+.dossier-arrow { color: var(--text-2); font-size: var(--text-lg); }
 
-/* file list inside detail view */
+/* file list */
 .flist-item {
   display: flex;
   align-items: center;
-  padding: 7px 10px;
-  border-radius: var(--radius);
+  padding: var(--sp-2) 10px;
+  border-radius: var(--radius-sm);
   transition: background var(--ease);
 }
 
@@ -495,7 +595,7 @@ code, .mono {
 .flist-icon {
   width: 24px;
   text-align: center;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--text-2);
   flex-shrink: 0;
 }
@@ -503,23 +603,25 @@ code, .mono {
 .flist-name {
   flex: 1;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--accent);
 }
 
+.flist-name:hover { text-decoration: underline; }
+
 .flist-size {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--text-2);
 }
 
 .back-link {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 12px;
+  gap: var(--sp-1);
+  font-size: var(--text-sm);
   color: var(--text-2);
-  margin-bottom: 14px;
+  margin-bottom: var(--sp-3);
   cursor: pointer;
   transition: color var(--ease);
 }
@@ -529,21 +631,21 @@ code, .mono {
 /* ================================================================
    SETTINGS
    ================================================================ */
-.disclaimer {
+.notice {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 12px 14px;
+  padding: var(--sp-3) var(--sp-3);
   background: var(--accent-ghost);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  margin-bottom: 18px;
-  font-size: 12px;
+  border-radius: var(--radius);
+  margin-bottom: var(--sp-4);
+  font-size: var(--text-sm);
   color: var(--text-1);
   line-height: 1.6;
 }
 
-.disclaimer-icon { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+.notice-icon { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
 
 .key-row {
   display: flex;
@@ -557,71 +659,119 @@ code, .mono {
 
 .key-name {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--tag-text);
-  min-width: 180px;
+  min-width: 160px;
   flex-shrink: 0;
 }
 
 .key-val {
   flex: 1;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--text-2);
   word-break: break-all;
 }
 
-.key-actions { display: flex; gap: 4px; flex-shrink: 0; }
+.key-actions { display: flex; gap: var(--sp-1); flex-shrink: 0; }
 
-.add-key-row {
+.add-key-form {
   display: flex;
-  gap: 6px;
+  gap: var(--sp-2);
   align-items: center;
 }
 
-.add-key-row .inp { font-size: 12px; padding: 7px 10px; }
+.add-key-form .inp { font-size: var(--text-sm); padding: var(--sp-2) 10px; }
 
 /* ================================================================
    CVE PLACEHOLDER
    ================================================================ */
 .cve-empty {
   text-align: center;
-  padding: 72px 20px;
+  padding: 64px var(--sp-5);
   color: var(--text-2);
 }
 
 .cve-empty h2 {
   font-family: var(--mono);
-  font-size: 16px;
+  font-size: var(--text-lg);
   color: var(--text-1);
-  margin-bottom: 6px;
+  margin-bottom: var(--sp-2);
 }
 
-.cve-empty p { font-size: 13px; max-width: 480px; margin: 0 auto; line-height: 1.6; }
-.cve-empty p + p { margin-top: 6px; }
+.cve-empty p {
+  font-size: var(--text-sm);
+  max-width: 440px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.cve-empty p + p { margin-top: var(--sp-2); }
 
 /* ================================================================
    EMPTY STATE
    ================================================================ */
 .empty {
   text-align: center;
-  padding: 40px 20px;
+  padding: var(--sp-7) var(--sp-5);
   color: var(--text-2);
-  font-size: 13px;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.empty-sm { padding: var(--sp-4) var(--sp-5); }
+
+/* ================================================================
+   TOAST
+   ================================================================ */
+.toast-container {
+  position: fixed;
+  bottom: var(--sp-5);
+  right: var(--sp-5);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.toast {
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  max-width: 360px;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: toastIn 200ms ease forwards;
+}
+
+.toast-ok { background: var(--ok); color: #fff; }
+.toast-err { background: var(--err); color: #fff; }
+
+@keyframes toastIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.toast-out {
+  animation: toastOut 150ms ease forwards;
+}
+
+@keyframes toastOut {
+  to { opacity: 0; transform: translateY(4px); }
 }
 
 /* ================================================================
    RESPONSIVE
    ================================================================ */
 @media (max-width: 600px) {
-  .hdr { padding: 0 10px; gap: 8px; }
-  .hdr-nav button { padding: 5px 8px; font-size: 11px; }
-  .main { padding: 20px 12px 40px; }
+  .hdr { padding: 0 var(--sp-3); gap: var(--sp-2); }
+  .hdr-nav button { padding: var(--sp-1) var(--sp-2); font-size: var(--text-xs); }
+  .main { padding: var(--sp-4) var(--sp-4) var(--sp-7); }
   .src-grid { grid-template-columns: 1fr; }
   .key-row { flex-wrap: wrap; }
   .key-name { min-width: unset; width: 100%; }
-  .add-key-row { flex-wrap: wrap; }
-  .add-key-row .inp:first-child { flex: 1 0 100%; }
+  .add-key-form { flex-wrap: wrap; }
+  .add-key-form .inp:first-child { flex: 1 0 100%; }
 }
 
 /* ================================================================
@@ -638,24 +788,19 @@ code, .mono {
 <body>
 <div class="shell">
 
-  <!-- ============================================================
-       HEADER
-       ============================================================ -->
   <header class="hdr">
     <div class="hdr-logo">THEORY</div>
     <nav class="hdr-nav" id="nav" role="tablist">
       <button role="tab" aria-selected="true" data-pg="query">Query</button>
       <button role="tab" aria-selected="false" data-pg="history">History</button>
       <button role="tab" aria-selected="false" data-pg="settings">Settings</button>
-      <button role="tab" aria-selected="false" data-pg="cve">CVE</button>
     </nav>
-    <div class="hdr-spacer"></div>
-    <button class="hdr-theme" id="themeBtn" aria-label="Toggle theme"></button>
+    <div class="hdr-right">
+      <span class="hdr-status" id="connStatus"></span>
+      <button class="hdr-theme" id="themeBtn" aria-label="Toggle theme"></button>
+    </div>
   </header>
 
-  <!-- ============================================================
-       MAIN
-       ============================================================ -->
   <main class="main" id="root"></main>
 
   <footer class="ftr">
@@ -663,103 +808,141 @@ code, .mono {
   </footer>
 </div>
 
+<div class="toast-container" id="toasts"></div>
+
 <!-- ================================================================
      PAGE TEMPLATES
      ================================================================ -->
 
-<!-- QUERY PAGE -->
 <template id="t-query">
-  <div class="pg-title">Generate dossier</div>
-  <div class="pg-sub">Threat actor intelligence pipeline</div>
+  <div class="pg-hd">
+    <div class="pg-title">Generate dossier</div>
+    <div class="pg-sub">Threat actor intelligence pipeline</div>
+  </div>
 
   <div class="card">
-    <div class="card-label">Target actor</div>
+    <div class="card-hd">Target actor</div>
     <input class="inp inp-lg" id="q-actor" type="text"
            placeholder="APT28, Lazarus Group, Volt Typhoon ..."
            autocomplete="off" spellcheck="false" autofocus>
   </div>
 
   <div class="card">
-    <div class="card-label">Intelligence sources</div>
-    <div class="src-grid" id="q-sources"></div>
+    <div class="card-hd">Intelligence sources</div>
+    <div class="src-grid" id="q-sources">
+      <div class="skel skel-block"></div>
+      <div class="skel skel-block"></div>
+      <div class="skel skel-block"></div>
+    </div>
+    <div class="src-actions" id="q-src-actions" hidden>
+      <button id="q-src-all">Select all</button>
+      <button id="q-src-none">Clear</button>
+      <button id="q-src-defaults">Defaults</button>
+    </div>
   </div>
 
   <div class="card">
-    <div class="card-label">Output formats</div>
-    <div class="fmt-row" id="q-formats"></div>
+    <div class="card-hd">Output formats</div>
+    <div class="fmt-row" id="q-formats">
+      <div class="skel" style="width:80px;height:28px;display:inline-block"></div>
+      <div class="skel" style="width:60px;height:28px;display:inline-block"></div>
+      <div class="skel" style="width:90px;height:28px;display:inline-block"></div>
+    </div>
   </div>
 
-  <div style="display:flex; justify-content:flex-end; margin-top:16px;">
-    <button class="btn btn-accent" id="q-go">Generate dossier &#9654;</button>
+  <div style="display:flex; justify-content:flex-end; margin-top:var(--sp-4);">
+    <button class="btn btn-accent" id="q-go">Generate dossier</button>
   </div>
 
   <div class="pipeline" id="q-pipeline" hidden></div>
 </template>
 
-<!-- HISTORY PAGE -->
 <template id="t-history">
-  <div class="pg-title">Dossier history</div>
-  <div class="pg-sub">Past runs from output/dossiers/</div>
+  <div class="pg-hd">
+    <div class="pg-title">Dossier history</div>
+    <div class="pg-sub">Past runs stored in output/dossiers/</div>
+  </div>
   <div class="card" id="h-list-card">
-    <div id="h-list"><div class="empty">Loading ...</div></div>
+    <div id="h-list">
+      <div class="skel skel-line"></div>
+      <div class="skel skel-line"></div>
+      <div class="skel skel-line" style="width:40%"></div>
+    </div>
   </div>
   <div id="h-detail" hidden>
-    <div class="back-link" id="h-back">&#8592; Back to list</div>
+    <div class="back-link" id="h-back" tabindex="0" role="button">&#8592; Back</div>
     <div class="card">
-      <div class="card-label" id="h-detail-title"></div>
+      <div class="card-hd" id="h-detail-title"></div>
       <div id="h-detail-files"></div>
     </div>
   </div>
 </template>
 
-<!-- SETTINGS PAGE -->
 <template id="t-settings">
-  <div class="pg-title">Settings</div>
-  <div class="pg-sub">API key management</div>
+  <div class="pg-hd">
+    <div class="pg-title">Settings</div>
+    <div class="pg-sub">API key management</div>
+  </div>
 
-  <div class="disclaimer">
-    <span class="disclaimer-icon">&#x1f512;</span>
+  <div class="notice">
+    <span class="notice-icon">&#x1f512;</span>
     <div>
       Keys are stored in your local <code>.env</code> file and never leave
-      your machine. They are only sent to the intelligence APIs they
+      your machine. They are sent only to the intelligence APIs they
       authenticate against, over HTTPS, by the collectors you enable.
     </div>
   </div>
 
   <div class="card">
-    <div class="card-label">Environment keys</div>
-    <div id="s-keys"><div class="empty">Loading ...</div></div>
+    <div class="card-hd">Configured keys</div>
+    <div id="s-keys">
+      <div class="skel skel-line"></div>
+      <div class="skel skel-line"></div>
+    </div>
   </div>
 
   <div class="card">
-    <div class="card-label">Add key</div>
-    <div class="add-key-row">
-      <input class="inp" id="s-new-name" placeholder="KEY_NAME" style="flex:0 0 180px;">
+    <div class="card-hd">Add a key</div>
+    <div class="add-key-form">
+      <input class="inp" id="s-new-name" placeholder="KEY_NAME" style="flex:0 0 160px;">
       <input class="inp" id="s-new-val" type="password" placeholder="Value" style="flex:1;">
       <button class="btn btn-accent btn-sm" id="s-add">Add</button>
     </div>
   </div>
 </template>
 
-<!-- CVE PAGE -->
-<template id="t-cve">
-  <div class="cve-empty">
-    <h2>theory --cve</h2>
-    <p>
-      CVE-centered dossier mode. Pull advisories, map affected products,
-      cross-reference with known exploitation, and generate a standalone
-      CVE dossier as a new correlation layer.
-    </p>
-    <p style="color:var(--accent); margin-top:12px;">On the roadmap.</p>
-  </div>
-</template>
-
 <!-- ================================================================
-     APPLICATION JS
+     APPLICATION
      ================================================================ -->
 <script>
 (function () {
   "use strict";
+
+  /* ==============================================================
+     SESSION TOKEN
+
+     The server generates a per-process token and embeds it in the
+     launch URL fragment (#token=...). We read it here and include
+     it in every API request. Fragments are never sent to a server,
+     so the token stays out of Referer headers and proxy logs.
+     ============================================================== */
+  let SESSION_TOKEN = "";
+
+  function extractToken() {
+    const hash = window.location.hash;
+    if (hash) {
+      const m = hash.match(/token=([^&]+)/);
+      if (m) {
+        SESSION_TOKEN = decodeURIComponent(m[1]);
+        // Clean the token from the visible URL without reloading
+        if (history.replaceState) {
+          history.replaceState(null, "", window.location.pathname);
+        }
+      }
+    }
+  }
+
+  extractToken();
 
   /* ==============================================================
      THEME
@@ -770,49 +953,99 @@ code, .mono {
 
   function applyTheme(t) {
     html.dataset.theme = t;
-    themeBtn.textContent = t === "dark" ? "\u2600" : "\u263E";
-    localStorage.setItem(THEME_KEY, t);
+    themeBtn.textContent = t === "dark" ? "☀" : "☾";
+    try { localStorage.setItem(THEME_KEY, t); } catch (_) {}
   }
 
-  applyTheme(localStorage.getItem(THEME_KEY) || "dark");
-  themeBtn.addEventListener("click", () =>
-    applyTheme(html.dataset.theme === "dark" ? "light" : "dark")
-  );
+  (function () {
+    var saved;
+    try { saved = localStorage.getItem(THEME_KEY); } catch (_) {}
+    applyTheme(saved || "dark");
+  })();
+
+  themeBtn.addEventListener("click", function () {
+    applyTheme(html.dataset.theme === "dark" ? "light" : "dark");
+  });
+
+  /* ==============================================================
+     CONNECTION STATUS
+     ============================================================== */
+  var connEl = document.getElementById("connStatus");
+
+  function setConn(ok) {
+    connEl.textContent = ok ? "connected" : "disconnected";
+    connEl.style.color = ok ? "var(--ok)" : "var(--err)";
+  }
+
+  /* ==============================================================
+     TOAST
+     ============================================================== */
+  var toastsEl = document.getElementById("toasts");
+
+  function toast(msg, type) {
+    type = type || "ok";
+    var el = document.createElement("div");
+    el.className = "toast toast-" + type;
+    el.textContent = msg;
+    toastsEl.appendChild(el);
+    setTimeout(function () {
+      el.classList.add("toast-out");
+      setTimeout(function () { el.remove(); }, 150);
+    }, 3000);
+  }
 
   /* ==============================================================
      ROUTER
      ============================================================== */
-  const root = document.getElementById("root");
-  const navBtns = document.querySelectorAll("#nav button");
-  let currentPage = null;
+  var root = document.getElementById("root");
+  var navBtns = document.querySelectorAll("#nav button");
+  var currentPage = null;
 
   function go(page) {
     if (page === currentPage) return;
     currentPage = page;
-    const tpl = document.getElementById("t-" + page);
+    var tpl = document.getElementById("t-" + page);
     root.innerHTML = "";
     if (tpl) root.appendChild(tpl.content.cloneNode(true));
-    navBtns.forEach(b => b.setAttribute("aria-selected", b.dataset.pg === page));
-
-    const init = { query: initQuery, history: initHistory, settings: initSettings };
+    navBtns.forEach(function (b) {
+      b.setAttribute("aria-selected", b.dataset.pg === page);
+    });
+    var init = { query: initQuery, history: initHistory, settings: initSettings };
     if (init[page]) init[page]();
   }
 
-  navBtns.forEach(b => b.addEventListener("click", () => go(b.dataset.pg)));
-
-  /* ==============================================================
-     SHARED STATE
-     ============================================================== */
-  let enabledSources = new Set();
-  let selectedFormats = new Set(["all"]);
+  navBtns.forEach(function (b) {
+    b.addEventListener("click", function () { go(b.dataset.pg); });
+  });
 
   /* ==============================================================
      API HELPERS
      ============================================================== */
+  function apiHeaders(extra) {
+    var h = { "X-Theory-Token": SESSION_TOKEN };
+    if (extra) {
+      for (var k in extra) h[k] = extra[k];
+    }
+    return h;
+  }
+
   async function api(path, opts) {
-    const res = await fetch("/api" + path, opts);
+    opts = opts || {};
+    opts.headers = apiHeaders(opts.headers);
+
+    var res;
+    try {
+      res = await fetch("/api" + path, opts);
+    } catch (e) {
+      setConn(false);
+      throw new Error("Network error — is theory serve running?");
+    }
+
+    setConn(true);
+
     if (!res.ok) {
-      const body = await res.json().catch(() => ({}));
+      var body;
+      try { body = await res.json(); } catch (_) { body = {}; }
       throw new Error(body.detail || res.statusText);
     }
     return res.json();
@@ -829,266 +1062,304 @@ code, .mono {
   /* ==============================================================
      QUERY PAGE
      ============================================================== */
+  var enabledSources = new Set();
+  var defaultSourceIds = new Set();
+  var selectedFormats = new Set(["all"]);
+  var allSourcesList = [];
+
   async function initQuery() {
-    const actorInp   = document.getElementById("q-actor");
-    const srcGrid    = document.getElementById("q-sources");
-    const fmtRow     = document.getElementById("q-formats");
-    const goBtn      = document.getElementById("q-go");
-    const pipelineEl = document.getElementById("q-pipeline");
+    var actorInp   = document.getElementById("q-actor");
+    var srcGrid    = document.getElementById("q-sources");
+    var srcActions = document.getElementById("q-src-actions");
+    var fmtRow     = document.getElementById("q-formats");
+    var goBtn      = document.getElementById("q-go");
+    var pipelineEl = document.getElementById("q-pipeline");
 
-    // -- Load sources
+    // Load sources
     try {
-      const { sources } = await api("/sources");
-      enabledSources = new Set(sources.filter(s => s.enabled).map(s => s.id));
-      srcGrid.innerHTML = "";
-      sources.forEach(s => {
-        const el = document.createElement("div");
-        el.className = "src";
-        el.dataset.on = enabledSources.has(s.id);
-        el.innerHTML = `
-          <span class="src-dot"></span>
-          <span class="src-name">${esc(s.name)}</span>
-          <span class="src-type">${esc(s.type)}</span>
-        `;
-        el.addEventListener("click", () => {
-          if (enabledSources.has(s.id)) enabledSources.delete(s.id);
-          else enabledSources.add(s.id);
-          el.dataset.on = enabledSources.has(s.id);
-        });
-        srcGrid.appendChild(el);
+      var data = await api("/sources");
+      allSourcesList = data.sources;
+      defaultSourceIds = new Set(allSourcesList.filter(function (s) { return s.enabled; }).map(function (s) { return s.id; }));
+      enabledSources = new Set(defaultSourceIds);
+      renderSources(srcGrid, allSourcesList);
+      srcActions.hidden = false;
+
+      document.getElementById("q-src-all").addEventListener("click", function () {
+        enabledSources = new Set(allSourcesList.map(function (s) { return s.id; }));
+        refreshSourceGrid(srcGrid);
+      });
+      document.getElementById("q-src-none").addEventListener("click", function () {
+        enabledSources = new Set();
+        refreshSourceGrid(srcGrid);
+      });
+      document.getElementById("q-src-defaults").addEventListener("click", function () {
+        enabledSources = new Set(defaultSourceIds);
+        refreshSourceGrid(srcGrid);
       });
     } catch (e) {
-      srcGrid.innerHTML = `<div class="empty">Could not load sources.</div>`;
+      srcGrid.innerHTML = '<div class="empty empty-sm">Could not load sources. ' + esc(e.message) + '</div>';
     }
 
-    // -- Load formats
+    // Load formats
     try {
-      const { formats } = await api("/formats");
-      fmtRow.innerHTML = "";
-      formats.forEach(f => {
-        const el = document.createElement("button");
-        el.className = "fmt";
-        el.dataset.on = selectedFormats.has(f.id);
-        el.textContent = f.label;
-        el.addEventListener("click", () => {
-          if (f.id === "all") {
-            selectedFormats = new Set(["all"]);
-          } else {
-            selectedFormats.delete("all");
-            if (selectedFormats.has(f.id)) selectedFormats.delete(f.id);
-            else selectedFormats.add(f.id);
-            if (selectedFormats.size === 0) selectedFormats.add("all");
-          }
-          fmtRow.querySelectorAll(".fmt").forEach(c => {
-            const cid = formats[Array.from(fmtRow.children).indexOf(c)].id;
-            c.dataset.on = selectedFormats.has(cid);
-          });
-        });
-        fmtRow.appendChild(el);
-      });
+      var fdata = await api("/formats");
+      renderFormats(fmtRow, fdata.formats);
     } catch (e) {
-      fmtRow.innerHTML = `<div class="empty">Could not load formats.</div>`;
+      fmtRow.innerHTML = '<div class="empty empty-sm">Could not load formats.</div>';
     }
 
-    // -- Generate
-    goBtn.addEventListener("click", () => startDossier(actorInp, goBtn, pipelineEl));
+    // Generate button
+    goBtn.addEventListener("click", function () {
+      startDossier(actorInp, goBtn, pipelineEl);
+    });
 
-    // Enter key triggers generate
-    actorInp.addEventListener("keydown", (e) => {
+    actorInp.addEventListener("keydown", function (e) {
       if (e.key === "Enter") goBtn.click();
     });
   }
 
+  function renderSources(container, sources) {
+    container.innerHTML = "";
+    sources.forEach(function (s) {
+      var el = document.createElement("div");
+      el.className = "src";
+      el.dataset.on = enabledSources.has(s.id);
+      el.dataset.sid = s.id;
+      el.innerHTML =
+        '<span class="src-dot"></span>' +
+        '<span class="src-name">' + esc(s.name) + '</span>' +
+        '<span class="src-type">' + esc(s.type) + '</span>';
+      el.addEventListener("click", function () {
+        if (enabledSources.has(s.id)) enabledSources.delete(s.id);
+        else enabledSources.add(s.id);
+        el.dataset.on = enabledSources.has(s.id);
+      });
+      container.appendChild(el);
+    });
+  }
+
+  function refreshSourceGrid(container) {
+    container.querySelectorAll(".src").forEach(function (el) {
+      el.dataset.on = enabledSources.has(el.dataset.sid);
+    });
+  }
+
+  function renderFormats(container, formats) {
+    container.innerHTML = "";
+    formats.forEach(function (f) {
+      var el = document.createElement("button");
+      el.className = "fmt";
+      el.dataset.on = selectedFormats.has(f.id);
+      el.dataset.fid = f.id;
+      el.textContent = f.label;
+      el.addEventListener("click", function () {
+        if (f.id === "all") {
+          selectedFormats = new Set(["all"]);
+        } else {
+          selectedFormats.delete("all");
+          if (selectedFormats.has(f.id)) selectedFormats.delete(f.id);
+          else selectedFormats.add(f.id);
+          if (selectedFormats.size === 0) selectedFormats.add("all");
+        }
+        container.querySelectorAll(".fmt").forEach(function (c) {
+          c.dataset.on = selectedFormats.has(c.dataset.fid);
+        });
+      });
+      container.appendChild(el);
+    });
+  }
+
   async function startDossier(actorInp, goBtn, pipelineEl) {
-    const actor = actorInp.value.trim();
+    var actor = actorInp.value.trim();
     if (!actor) { actorInp.focus(); return; }
 
     goBtn.disabled = true;
-    goBtn.textContent = "Starting\u2026";
+    goBtn.dataset.loading = "true";
+    goBtn.textContent = "Starting…";
     pipelineEl.hidden = false;
 
-    // Pre-render step rows from the pipeline-steps endpoint
-    let stepMeta = [];
+    // Pre-render step rows
+    var stepMeta = [];
     try {
-      const { steps } = await api("/pipeline-steps");
-      stepMeta = steps;
-    } catch (_) {
-      // Fallback: we'll render as events arrive
-    }
+      var d = await api("/pipeline-steps");
+      stepMeta = d.steps;
+    } catch (_) {}
 
-    pipelineEl.innerHTML = `
-      <div class="card">
-        <div class="card-label">Pipeline</div>
-        <div id="pp-steps"></div>
-        <div id="pp-banner"></div>
-      </div>
-    `;
+    pipelineEl.innerHTML =
+      '<div class="card">' +
+        '<div class="card-hd">Pipeline</div>' +
+        '<div id="pp-steps"></div>' +
+        '<div id="pp-banner"></div>' +
+      '</div>';
 
-    const stepsEl  = document.getElementById("pp-steps");
-    const bannerEl = document.getElementById("pp-banner");
+    var stepsEl  = document.getElementById("pp-steps");
+    var bannerEl = document.getElementById("pp-banner");
 
-    // Pre-render pending steps
-    const stepEls = {};
-    stepMeta.forEach(s => {
-      const row = document.createElement("div");
+    var stepEls = {};
+    stepMeta.forEach(function (s) {
+      var row = document.createElement("div");
       row.className = "step-row";
-      row.innerHTML = `
-        <span class="step-num" data-s="pending">${s.index}</span>
-        <span class="step-text" data-s="pending">${esc(s.description)}</span>
-        <span class="step-time"></span>
-      `;
+      row.innerHTML =
+        '<span class="step-ind" data-s="pending">' + s.index + '</span>' +
+        '<span class="step-label" data-s="pending">' + esc(s.description) + '</span>' +
+        '<span class="step-dur"></span>';
       stepsEl.appendChild(row);
       stepEls[s.id] = row;
     });
 
-    // Fire request
+    // Start pipeline
     try {
-      const { job_id } = await post("/dossier", {
-        actor,
-        sources: [...enabledSources],
-        formats: [...selectedFormats],
+      var res = await post("/dossier", {
+        actor: actor,
+        sources: Array.from(enabledSources),
+        formats: Array.from(selectedFormats),
       });
-      subscribeSSE(job_id, stepEls, stepsEl, bannerEl, goBtn);
+      subscribeSSE(res.job_id, stepEls, stepsEl, bannerEl, goBtn);
     } catch (e) {
-      bannerEl.innerHTML = renderBanner("err", e.message);
-      goBtn.disabled = false;
-      goBtn.textContent = "Generate dossier \u25B6";
+      bannerEl.innerHTML = renderBanner("err", esc(e.message));
+      resetGoBtn(goBtn);
     }
   }
 
   function subscribeSSE(jobId, stepEls, stepsEl, bannerEl, goBtn) {
-    const es = new EventSource("/api/dossier/" + jobId + "/progress");
-    let dynamicIndex = 0;
+    // EventSource can't send custom headers, so pass the token as a query param.
+    var url = "/api/dossier/" + jobId + "/progress?token=" + encodeURIComponent(SESSION_TOKEN);
+    var es = new EventSource(url);
 
     function finish() {
       es.close();
-      goBtn.disabled = false;
-      goBtn.textContent = "Generate dossier \u25B6";
+      resetGoBtn(goBtn);
     }
 
-    es.addEventListener("started", (e) => {
-      // Steps already pre-rendered. If not, we'll create them dynamically.
-      const d = JSON.parse(e.data);
-      dynamicIndex = 0;
-    });
+    es.addEventListener("started", function () {});
 
-    es.addEventListener("step", (e) => {
-      const d = JSON.parse(e.data);
-      let row = stepEls[d.id];
-
-      // If step wasn't pre-rendered, create it
+    es.addEventListener("step", function (e) {
+      var d = JSON.parse(e.data);
+      var row = stepEls[d.id];
       if (!row) {
         row = document.createElement("div");
         row.className = "step-row";
-        row.innerHTML = `
-          <span class="step-num" data-s="pending">${d.step}</span>
-          <span class="step-text" data-s="pending">${esc(d.description)}</span>
-          <span class="step-time"></span>
-        `;
+        row.innerHTML =
+          '<span class="step-ind" data-s="pending">' + d.step + '</span>' +
+          '<span class="step-label" data-s="pending">' + esc(d.description) + '</span>' +
+          '<span class="step-dur"></span>';
         stepsEl.appendChild(row);
         stepEls[d.id] = row;
       }
-
-      row.querySelector(".step-num").dataset.s = "running";
-      row.querySelector(".step-text").dataset.s = "running";
-      row.querySelector(".step-text").textContent = d.description;
+      row.querySelector(".step-ind").dataset.s = "running";
+      row.querySelector(".step-label").dataset.s = "running";
+      row.querySelector(".step-label").textContent = d.description;
     });
 
-    es.addEventListener("step_done", (e) => {
-      const d = JSON.parse(e.data);
-      const row = stepEls[d.id];
+    es.addEventListener("step_done", function (e) {
+      var d = JSON.parse(e.data);
+      var row = stepEls[d.id];
       if (!row) return;
-      row.querySelector(".step-num").dataset.s = "done";
-      row.querySelector(".step-num").textContent = "\u2713";
-      row.querySelector(".step-text").dataset.s = "done";
-      const timeEl = row.querySelector(".step-time");
+      row.querySelector(".step-ind").dataset.s = "done";
+      row.querySelector(".step-ind").textContent = "✓";
+      row.querySelector(".step-label").dataset.s = "done";
+      var dur = row.querySelector(".step-dur");
       if (d.duration_ms !== undefined) {
-        timeEl.textContent = d.duration_ms < 1000
+        dur.textContent = d.duration_ms < 1000
           ? d.duration_ms + "ms"
           : (d.duration_ms / 1000).toFixed(1) + "s";
       }
     });
 
-    es.addEventListener("complete", (e) => {
-      const d = JSON.parse(e.data);
-      const totalSec = (d.total_duration_ms / 1000).toFixed(1);
-      let msg = `Dossier complete for <strong>${esc(d.actor)}</strong> in ${totalSec}s`;
+    es.addEventListener("complete", function (e) {
+      var d = JSON.parse(e.data);
+      var sec = (d.total_duration_ms / 1000).toFixed(1);
+      var msg = "Dossier complete for <strong>" + esc(d.actor) + "</strong> in " + sec + "s";
       if (d.files && d.files.length) {
-        msg += ` &middot; ${d.files.length} file${d.files.length > 1 ? "s" : ""}`;
+        msg += " · " + d.files.length + " file" + (d.files.length > 1 ? "s" : "");
       }
       bannerEl.innerHTML = renderBanner("ok", msg);
+      toast("Dossier generated for " + d.actor);
       finish();
     });
 
-    es.addEventListener("error", (e) => {
-      let msg = "Pipeline error";
+    es.addEventListener("error", function (e) {
+      var msg = "Pipeline error";
       try { msg = JSON.parse(e.data).message; } catch (_) {}
-      bannerEl.innerHTML = renderBanner("err", msg);
-      // Mark current running step as errored
-      Object.values(stepEls).forEach(row => {
-        const num = row.querySelector(".step-num");
-        if (num.dataset.s === "running") {
-          num.dataset.s = "error";
-          num.textContent = "\u2717";
-          row.querySelector(".step-text").dataset.s = "error";
+      bannerEl.innerHTML = renderBanner("err", esc(msg));
+      Object.values(stepEls).forEach(function (row) {
+        var ind = row.querySelector(".step-ind");
+        if (ind.dataset.s === "running") {
+          ind.dataset.s = "error";
+          ind.textContent = "✗";
+          row.querySelector(".step-label").dataset.s = "error";
         }
       });
       finish();
     });
 
-    es.onerror = () => { finish(); };
+    es.onerror = function () { finish(); };
+  }
+
+  function resetGoBtn(btn) {
+    btn.disabled = false;
+    btn.dataset.loading = "false";
+    btn.textContent = "Generate dossier";
   }
 
   function renderBanner(type, html) {
-    const icon = type === "ok" ? "\u2713" : "\u2717";
-    const cls  = type === "ok" ? "banner-ok" : "banner-err";
-    return `<div class="banner ${cls}">
-      <span class="banner-icon">${icon}</span>
-      <span>${html}</span>
-    </div>`;
+    var icon = type === "ok" ? "✓" : "✗";
+    var cls  = type === "ok" ? "banner-ok" : "banner-err";
+    return '<div class="banner ' + cls + '">' +
+      '<span>' + icon + '</span>' +
+      '<span>' + html + '</span>' +
+    '</div>';
   }
 
   /* ==============================================================
      HISTORY PAGE
      ============================================================== */
   async function initHistory() {
-    const listCard  = document.getElementById("h-list-card");
-    const listEl    = document.getElementById("h-list");
-    const detailEl  = document.getElementById("h-detail");
-    const backBtn   = document.getElementById("h-back");
+    var listCard  = document.getElementById("h-list-card");
+    var listEl    = document.getElementById("h-list");
+    var detailEl  = document.getElementById("h-detail");
+    var backBtn   = document.getElementById("h-back");
 
-    backBtn.addEventListener("click", () => {
+    backBtn.addEventListener("click", function () {
       detailEl.hidden = true;
       listCard.hidden = false;
     });
+    backBtn.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); backBtn.click(); }
+    });
 
     try {
-      const { dossiers } = await api("/history");
+      var data = await api("/history");
+      var dossiers = data.dossiers;
       if (!dossiers.length) {
-        listEl.innerHTML = `<div class="empty">No dossiers yet. Run a query to get started.</div>`;
+        listEl.innerHTML = '<div class="empty">No dossiers yet. Generate one from the Query tab.</div>';
         return;
       }
       listEl.innerHTML = "";
-      dossiers.forEach(d => {
-        const row = document.createElement("div");
+      dossiers.forEach(function (d) {
+        var row = document.createElement("div");
         row.className = "dossier-row";
-        const date = new Date(d.created).toLocaleDateString(undefined, {
+        row.tabIndex = 0;
+        row.setAttribute("role", "button");
+        var date = new Date(d.created).toLocaleDateString(undefined, {
           year: "numeric", month: "short", day: "numeric",
           hour: "2-digit", minute: "2-digit",
         });
-        const size = formatBytes(d.total_size || 0);
-        row.innerHTML = `
-          <div class="dossier-info">
-            <div class="dossier-name">${esc(d.name)}</div>
-            <div class="dossier-meta">${d.file_count} files &middot; ${size} &middot; ${date}</div>
-          </div>
-          <span class="dossier-arrow">&#8250;</span>
-        `;
-        row.addEventListener("click", () => openDossier(d.name, listCard, detailEl));
+        var size = formatBytes(d.total_size || 0);
+        row.innerHTML =
+          '<div class="dossier-info">' +
+            '<div class="dossier-name">' + esc(d.name) + '</div>' +
+            '<div class="dossier-meta">' + d.file_count + ' files · ' + size + ' · ' + date + '</div>' +
+          '</div>' +
+          '<span class="dossier-arrow">›</span>';
+        row.addEventListener("click", function () { openDossier(d.name, listCard, detailEl); });
+        row.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); row.click(); }
+        });
         listEl.appendChild(row);
       });
     } catch (e) {
-      listEl.innerHTML = `<div class="empty">Could not load history.</div>`;
+      listEl.innerHTML = '<div class="empty">Could not load history. ' + esc(e.message) + '</div>';
     }
   }
 
@@ -1096,39 +1367,42 @@ code, .mono {
     listCard.hidden = true;
     detailEl.hidden = false;
     document.getElementById("h-detail-title").textContent = name;
-    const filesEl = document.getElementById("h-detail-files");
-    filesEl.innerHTML = `<div class="empty">Loading ...</div>`;
+    var filesEl = document.getElementById("h-detail-files");
+    filesEl.innerHTML =
+      '<div class="skel skel-line"></div>' +
+      '<div class="skel skel-line"></div>' +
+      '<div class="skel skel-line" style="width:40%"></div>';
 
     try {
-      const { files } = await api("/history/" + encodeURIComponent(name));
+      var data = await api("/history/" + encodeURIComponent(name));
+      var files = data.files;
       filesEl.innerHTML = "";
-      files.forEach(f => {
-        const el = document.createElement("div");
+      files.forEach(function (f) {
+        var el = document.createElement("div");
         el.className = "flist-item";
-        const icon = fileIcon(f.ext);
-        el.innerHTML = `
-          <span class="flist-icon">${icon}</span>
-          <a class="flist-name"
-             href="/api/history/${encodeURIComponent(name)}/${encodeURIComponent(f.name)}"
-             target="_blank">${esc(f.name)}</a>
-          <span class="flist-size">${esc(f.size_display)}</span>
-        `;
+        el.innerHTML =
+          '<span class="flist-icon">' + fileIcon(f.ext) + '</span>' +
+          '<a class="flist-name" href="/api/history/' +
+            encodeURIComponent(name) + '/' + encodeURIComponent(f.name) +
+            '?token=' + encodeURIComponent(SESSION_TOKEN) +
+            '" target="_blank">' + esc(f.name) + '</a>' +
+          '<span class="flist-size">' + esc(f.size_display) + '</span>';
         filesEl.appendChild(el);
       });
       if (!files.length) {
-        filesEl.innerHTML = `<div class="empty">No files in this dossier.</div>`;
+        filesEl.innerHTML = '<div class="empty empty-sm">No files in this dossier.</div>';
       }
     } catch (e) {
-      filesEl.innerHTML = `<div class="empty">Could not load files.</div>`;
+      filesEl.innerHTML = '<div class="empty empty-sm">Could not load files. ' + esc(e.message) + '</div>';
     }
   }
 
   function fileIcon(ext) {
-    const m = {
-      ".html": "&#9672;", ".json": "{ }",  ".csv": "&#9638;",
-      ".md":   "&#9998;", ".yaml": "&#9670;", ".yml": "&#9670;",
+    var m = {
+      ".html": "◈", ".json": "{ }",  ".csv": "▦",
+      ".md":   "✎", ".yaml": "◆", ".yml": "◆",
     };
-    return m[ext] || "&#9632;";
+    return m[ext] || "■";
   }
 
   /* ==============================================================
@@ -1137,11 +1411,11 @@ code, .mono {
   async function initSettings() {
     await loadKeys();
 
-    document.getElementById("s-add").addEventListener("click", async () => {
-      const nameInp = document.getElementById("s-new-name");
-      const valInp  = document.getElementById("s-new-val");
-      const name = nameInp.value.trim();
-      const val  = valInp.value;
+    document.getElementById("s-add").addEventListener("click", async function () {
+      var nameInp = document.getElementById("s-new-name");
+      var valInp  = document.getElementById("s-new-val");
+      var name = nameInp.value.trim();
+      var val  = valInp.value;
       if (!name || !val) { nameInp.focus(); return; }
 
       try {
@@ -1152,52 +1426,66 @@ code, .mono {
         });
         nameInp.value = "";
         valInp.value  = "";
+        toast("Added " + name);
         await loadKeys();
       } catch (e) {
-        alert("Error: " + e.message);
+        toast("Error: " + e.message, "err");
       }
     });
   }
 
   async function loadKeys() {
-    const container = document.getElementById("s-keys");
+    var container = document.getElementById("s-keys");
     try {
-      const { keys } = await api("/settings");
+      var data = await api("/settings");
+      var keys = data.keys;
       if (!keys.length) {
-        container.innerHTML = `<div class="empty">No keys configured. Add one below.</div>`;
+        container.innerHTML = '<div class="empty empty-sm">No keys configured. Add one below.</div>';
         return;
       }
       container.innerHTML = "";
-      keys.forEach(k => {
-        const row = document.createElement("div");
+      keys.forEach(function (k) {
+        var row = document.createElement("div");
         row.className = "key-row";
-        row.innerHTML = `
-          <span class="key-name">${esc(k.name)}</span>
-          <span class="key-val">${esc(k.masked)}</span>
-          <div class="key-actions">
-            <button class="btn btn-ghost btn-sm js-edit">Edit</button>
-            <button class="btn btn-danger btn-sm js-del">Del</button>
-          </div>
-        `;
-        row.querySelector(".js-edit").addEventListener("click", async () => {
-          const v = prompt("New value for " + k.name + ":");
+        row.innerHTML =
+          '<span class="key-name">' + esc(k.name) + '</span>' +
+          '<span class="key-val">' + esc(k.masked) + '</span>' +
+          '<div class="key-actions">' +
+            '<button class="btn btn-ghost btn-sm js-edit">Edit</button>' +
+            '<button class="btn btn-danger btn-sm js-del">Del</button>' +
+          '</div>';
+
+        row.querySelector(".js-edit").addEventListener("click", async function () {
+          var v = prompt("New value for " + k.name + ":");
           if (v === null) return;
-          await api("/settings/" + encodeURIComponent(k.name), {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ value: v }),
-          });
-          await loadKeys();
+          try {
+            await api("/settings/" + encodeURIComponent(k.name), {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ value: v }),
+            });
+            toast("Updated " + k.name);
+            await loadKeys();
+          } catch (e) {
+            toast("Error: " + e.message, "err");
+          }
         });
-        row.querySelector(".js-del").addEventListener("click", async () => {
+
+        row.querySelector(".js-del").addEventListener("click", async function () {
           if (!confirm("Delete " + k.name + "?")) return;
-          await api("/settings/" + encodeURIComponent(k.name), { method: "DELETE" });
-          await loadKeys();
+          try {
+            await api("/settings/" + encodeURIComponent(k.name), { method: "DELETE" });
+            toast("Deleted " + k.name);
+            await loadKeys();
+          } catch (e) {
+            toast("Error: " + e.message, "err");
+          }
         });
+
         container.appendChild(row);
       });
     } catch (e) {
-      container.innerHTML = `<div class="empty">Could not load keys.</div>`;
+      container.innerHTML = '<div class="empty empty-sm">Could not load keys. ' + esc(e.message) + '</div>';
     }
   }
 
@@ -1205,20 +1493,28 @@ code, .mono {
      UTILS
      ============================================================== */
   function esc(s) {
-    const d = document.createElement("div");
-    d.textContent = s;
+    if (s == null) return "";
+    var d = document.createElement("div");
+    d.textContent = String(s);
     return d.innerHTML;
   }
 
   function formatBytes(n) {
     if (n < 1024) return n + " B";
-    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + " KB";
-    return (n / (1024 * 1024)).toFixed(1) + " MB";
+    if (n < 1048576) return (n / 1024).toFixed(1) + " KB";
+    return (n / 1048576).toFixed(1) + " MB";
   }
 
   /* ==============================================================
      BOOT
      ============================================================== */
+  // Verify connection on load
+  api("/formats").then(function () {
+    setConn(true);
+  }).catch(function () {
+    setConn(false);
+  });
+
   go("query");
 })();
 </script>
